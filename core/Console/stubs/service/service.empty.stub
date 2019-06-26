@@ -1,0 +1,23 @@
+<?php
+
+namespace DummyNamespace;
+
+use Core\Application\Service\Service;
+use Illuminate\Http\Request;
+
+class DummyClass extends Service
+{
+    /**
+     * The property on class instances.
+     *
+     * @var \Illuminate\Database\Eloquent\Model
+     */
+    protected $model;
+
+    /**
+     * The Request instance.
+     *
+     * @var \Illuminate\Http\Request
+     */
+    protected $request;
+}

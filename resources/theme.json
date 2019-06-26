@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "code": "default",
+  "description": "The default theme for Crowfeather.",
+  "preview": {
+    "hintpath": "Default::themes.thumbnail",
+    "img": "preview.png",
+    "credit": "Photo by Amarnath Tade on Unsplash",
+    "url": "https://unsplash.com/@amarnathtade"
+  },
+  "author": {
+    "name": "Crowfeather",
+    "email": "team@codrasil.io"
+  },
+  "colors": {
+    "primary": "#0c5689",
+    "secondary": "#f9fafb",
+    "accent": "#ffffff",
+    "success": "#86d067",
+    "info": "#00b8d6",
+    "warning": "#ffda3e",
+    "danger": "#f44336",
+    "light": "#f8f9fa",
+    "dark": "#343a40",
+    "text": "#333333",
+    "card": "#ffffff",
+    "sidebar": "#f7f7f7",
+    "workspace": "#f7f7f7"
+  }
+}

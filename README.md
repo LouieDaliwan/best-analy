@@ -3,7 +3,7 @@ A PHP Web Application Framework
 
 ### About Pluma
 Pluma is a web management system framework, automating most of the tasks when developing CRUD-like applications.
-The software is based on [Laravel](https://github.com/laravel/laravel), a framework with expressive, elegant syntax that provide power tools required for large, robust applications. Pluma adds various view scaffolding, console commands, and an administrative dashboard to get starting in a project painless.
+The software is based on [Laravel](https://github.com/laravel/laravel), a framework with expressive, elegant syntax that provide power tools required for large, robust applications. Pluma adds various view scaffolding, console commands, and an administrative dashboard to get starting in a project painlessly and swiftly.
 
 ### Features
 * Administrative Dashboard

@@ -29,6 +29,7 @@ class OptimizeClearCommand extends Command
     {
         $this->call('module:clear');
         $this->call('sidebar:clear');
+        $this->call('widgets:clear');
 
         parent::handle();
     }

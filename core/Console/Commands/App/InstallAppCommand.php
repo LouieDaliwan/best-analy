@@ -65,8 +65,8 @@ class InstallAppCommand extends Command
         $this->callApplicationBanner();
         $this->promptWelcomeMessage();
         $this->copyEnvironmentFile();
-        // $this->generateApplicationKey();
-        // $this->defineAppDetails();
+        $this->generateApplicationKey();
+        $this->defineAppDetails();
         $this->defineDatabaseDetails();
         $this->defineMailDetails();
         $this->reloadEnvironment();

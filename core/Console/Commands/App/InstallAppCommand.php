@@ -53,13 +53,13 @@ class InstallAppCommand extends Command
     public function handle()
     {
         $this->callApplicationBanner();
-        // $this->promptWelcomeMessage();
-        // $this->copyEnvironmentFile();
-        // $this->generateApplicationKey();
-        // $this->defineAppDetails();
-        // $this->defineDatabaseDetails();
-        // $this->defineMailDetails();
-        // $this->runMigrations();
+        $this->promptWelcomeMessage();
+        $this->copyEnvironmentFile();
+        $this->generateApplicationKey();
+        $this->defineAppDetails();
+        $this->defineDatabaseDetails();
+        $this->defineMailDetails();
+        $this->runMigrations();
         $this->runOptimizations();
     }
 

@@ -29,6 +29,8 @@
 	<rule ref="Generic.Formatting">
     <exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning"/>
     <exclude name="Generic.Formatting.NoSpaceAfterCast.SpaceFound"/>
+    <exclude name="Generic.Formatting.SpaceBeforeCast.NoSpace"/>
+    <exclude name="Generic.Commenting.DocComment.MissingShort"/>
   </rule>
   <rule ref="Generic.PHP.DeprecatedFunctions"/>
 	<rule ref="Generic.PHP.ForbiddenFunctions"/>

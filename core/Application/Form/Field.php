@@ -18,7 +18,7 @@ class Field extends HtmlString
     /**
      * Create a new HTML string instance.
      *
-     * @param  string  $name
+     * @param  string $name
      * @return void
      */
     public function __construct($name)
@@ -29,7 +29,7 @@ class Field extends HtmlString
     /**
      * Set the name of the input field.
      *
-     * @param string $name
+     * @param  string $name
      * @return \Application\Form\Field
      */
     public function name($name = 'text')
@@ -42,7 +42,7 @@ class Field extends HtmlString
     /**
      * Set the type of the input field.
      *
-     * @param string $type
+     * @param  string $type
      * @return \Application\Form\Field
      */
     public function type($type = 'text')
@@ -83,8 +83,8 @@ class Field extends HtmlString
     }
 
     /**
-     * @param string $method
-     * @param array $attributes
+     * @param  string $method
+     * @param  array  $attributes
      * @return \Application\Form\Field
      */
     public function __call($method, $attributes)

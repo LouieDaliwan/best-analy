@@ -33,12 +33,11 @@ class Repository implements RepositoryInterface
      * Constructor to bind model to a repository.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
-     * @param \Illuminate\Http\Request $user
+     * @param \Illuminate\Http\Request            $request
      */
     public function __construct(Model $model, Request $request)
     {
         $this->model = $model;
-
         $this->request = $request;
     }
 
@@ -85,7 +84,8 @@ class Repository implements RepositoryInterface
     /**
      * Retrieve model resource details.
      *
-     * @param int $id
+     * @param  integer $id
+     * @return \Core\Models\Model
      */
     public function find(int $id):? Model
     {
@@ -95,7 +95,7 @@ class Repository implements RepositoryInterface
     /**
      * Create model resource.
      *
-     * @param array $attributes
+     * @param  array $attributes
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function store(array $attributes):? Model
@@ -106,8 +106,9 @@ class Repository implements RepositoryInterface
     /**
      * Update model resource.
      *
-     * @param int    $id
-     * @param array  $data
+     * @param  integer $id
+     * @param  array   $attributes
+     * @return boolean
      */
     public function update(int $id, array $attributes): bool
     {
@@ -117,7 +118,8 @@ class Repository implements RepositoryInterface
     /**
      * Permanently delete model resource.
      *
-     * @param int|array $id
+     * @param  integer|array $id
+     * @return boolean
      */
     public function delete($id)
     {
@@ -133,7 +135,8 @@ class Repository implements RepositoryInterface
     /**
      * Soft delete model resource.
      *
-     * @param int|array $id
+     * @param  integer|array $id
+     * @return boolean
      */
     public function destroy($id)
     {
@@ -148,7 +151,8 @@ class Repository implements RepositoryInterface
     /**
      * Restore model resource.
      *
-     * @param int|array $id
+     * @param  integer|array $id
+     * @return boolean
      */
     public function restore($id)
     {
@@ -162,9 +166,10 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * @param string $method
-     * @param array $attributes
+     * Call the model's method magically.
      *
+     * @param  string $method
+     * @param  array  $attributes
      * @return mixed
      */
     public function __call($method, $attributes)

@@ -25,7 +25,7 @@ class InstallAppCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Interactively perform app detail registration to env, database migrations and seeds, and superadmin user registration.';
+    protected $description = 'Interactively perform application setup';
 
     /**
      * The Filesystem instance.

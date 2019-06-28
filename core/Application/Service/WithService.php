@@ -3,6 +3,7 @@
 namespace Core\Application\Service;
 
 use Core\Application\Service\Service;
+use Illuminate\Config\Repository;
 
 trait WithService
 {
@@ -21,8 +22,12 @@ trait WithService
      */
     public function service()
     {
-        return $this->service;
         if ($this->service instanceof Service) {
+            return $this->service;
+        }
+
+        if ($this->service instanceof Repository) {
+            return $this->service;
         }
 
         throw new \Exception("{$this->service} is not instance of \Core\Application\Service\Service.", 1);

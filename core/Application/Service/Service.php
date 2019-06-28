@@ -211,6 +211,8 @@ abstract class Service implements ServiceInterface
     }
 
     /**
+     * Call the model's method magically.
+     *
      * @param  string $method
      * @param  array  $attributes
      * @return mixed

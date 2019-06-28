@@ -54,7 +54,8 @@ trait MenuBuilder
     /**
      * Retrieve the key on each collection.
      *
-     * @param  array $items
+     * @param  array  $items
+     * @param  string $key
      * @return array
      */
     protected function mapKey($items, $key)

@@ -1,5 +1,5 @@
 {
-  "name": "pluma/pluma",
+  "name": "codrasil/crowfeather",
   "description": "A PHP Management System Framework",
   "type": "project",
   "license": "MIT",
@@ -7,10 +7,6 @@
     {
       "name": "John Lioneil Dionisio",
       "email": "john.dionisio1@gmail.com"
-    },
-    {
-      "name": "Princess Ellen Alto",
-      "email": "altoprincessellen@gmail.com"
     }
   ],
   "minimum-stability": "dev",

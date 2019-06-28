@@ -3,6 +3,7 @@
 namespace Core\Application\Widget\Factories;
 
 use Core\Application\Application;
+use Core\Exceptions\WidgetNotFoundErrorException;
 use Core\Manifests\WidgetManifest;
 use Exception;
 
@@ -52,19 +53,19 @@ class WidgetFactory
      * @param  string     $widget
      * @param  array|null $attributes
      * @return string
-     * @throws Exception Widget variable should be an array.
-     * @throws Exception Widget class should exist.
+     * @throws WidgetNotFoundErrorException Widget variable should be an array.
+     * @throws WidgetNotFoundErrorException Widget class should exist.
      */
     public function make($widget, $attributes = [])
     {
         $widget = $this->find($widget);
 
         if (! is_array($widget)) {
-            throw new Exception("Widget with alias '".$widget."' not found", 1);
+            throw new WidgetNotFoundErrorException("Widget with alias '".$widget."' not found");
         }
 
         if (array_key_exists('fullname', $widget) && ! class_exists($widget['fullname'])) {
-            throw new Exception('Class "'.$widget.'" does not exist', 1);
+            throw new WidgetNotFoundErrorException('Class "'.$widget.'" does not exist', 1);
         }
 
         return $this->app->make($widget['fullname'], $attributes)->render($attributes);

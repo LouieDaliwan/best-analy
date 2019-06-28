@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
-class RestrictedResourceException extends Exception
+class WidgetNotFoundErrorException extends Exception
 {
     /**
      * Report the resource requested for download is
@@ -17,16 +17,6 @@ class RestrictedResourceException extends Exception
      */
     public function report()
     {
-        Log::debug('Restricted resource.');
-    }
-
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function render()
-    {
-        return abort(Response::HTTP_UNAUTHORIZED);
+        Log::error('Restricted resource.');
     }
 }

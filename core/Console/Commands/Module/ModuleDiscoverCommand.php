@@ -29,8 +29,12 @@ class ModuleDiscoverCommand extends Command
      */
     public function handle(ModuleManifest $manifest)
     {
-        $this->call('module:clear');
+        if (file_exists($this->laravel->getCachedModulesPath())) {
+            $this->call('module:clear');
+        }
 
+        $manifest->build();
+        $this->callSilent('module:clear');
         $manifest->build();
 
         foreach ($manifest->modules()->pluck('name') ?? [] as $module) {

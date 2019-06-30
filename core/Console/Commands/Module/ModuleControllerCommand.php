@@ -37,8 +37,7 @@ class ModuleControllerCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return bool|null
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @return void
      */
     public function handle()
     {
@@ -72,22 +71,9 @@ class ModuleControllerCommand extends Command
     }
 
     /**
-     * Get the destination class path.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    protected function getPath($name)
-    {
-        $name = Str::replaceFirst($this->rootNamespace(), '', $name);
-
-        return $this->module['path'].'/'.str_replace('\\', '/', $name).'.php';
-    }
-
-    /**
      * Build the model replacement values.
      *
-     * @param  array  $replace
+     * @param  array $replace
      * @return array
      */
     protected function buildModelReplacements(array $replace)
@@ -113,10 +99,10 @@ class ModuleControllerCommand extends Command
     /**
      * Get the fully-qualified model class name.
      *
-     * @param  string  $model
+     * @param  string $model
      * @return string
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException Model name contains invalid characters.
      */
     protected function parseModel($model)
     {
@@ -140,20 +126,10 @@ class ModuleControllerCommand extends Command
      */
     protected function getOptions()
     {
-        return [
+        return array_merge([
+            ['force', null, InputOption::VALUE_NONE, 'Create the class even if the file already exists'],
+            ['module', null, InputOption::VALUE_OPTIONAL, 'Specify the module the resource will belong to.'],
             ['admin', 'a', InputOption::VALUE_NONE, 'Generate an admin controller.'],
-
-            ['module', null, InputOption::VALUE_OPTIONAL, 'Generate a resource controller for the given module.'],
-
-            ['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate a resource controller for the given model.'],
-
-            ['resource', 'r', InputOption::VALUE_NONE, 'Generate a resource controller class.'],
-
-            ['invokable', 'i', InputOption::VALUE_NONE, 'Generate a single method, invokable controller class.'],
-
-            ['parent', 'p', InputOption::VALUE_OPTIONAL, 'Generate a nested resource controller class.'],
-
-            ['api', null, InputOption::VALUE_NONE, 'Exclude the create and edit methods from the controller.'],
-        ];
+        ], parent::getOptions());
     }
 }

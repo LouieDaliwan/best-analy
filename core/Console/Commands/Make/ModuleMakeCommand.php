@@ -2,14 +2,16 @@
 
 namespace Core\Console\Commands\Make;
 
+use Core\Console\Commands\QualifyModule;
 use Core\Support\Module\ModuleTrait;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Composer;
+use Symfony\Component\Console\Input\InputOption;
 
 class ModuleMakeCommand extends Command
 {
-    use ModuleTrait;
+    use ModuleTrait, QualifyModule;
 
     /**
      * The name and signature of the console command.
@@ -27,6 +29,14 @@ class ModuleMakeCommand extends Command
      * @var string
      */
     protected $description = 'Generate a new module';
+
+    /**
+     * The module details to be
+     * written to the module's manifest file.
+     *
+     * @var array
+     */
+    protected $details = [];
 
     /**
      * The filesystem instance.
@@ -71,6 +81,8 @@ class ModuleMakeCommand extends Command
      */
     public function handle()
     {
+        $this->qualifyModuleDetails();
+
         $this->generateFolders();
 
         $this->generateManifestFile();
@@ -80,6 +92,20 @@ class ModuleMakeCommand extends Command
         $this->generateModuleFiles();
 
         $this->composer->dumpAutoloads();
+    }
+
+    /**
+     * Ask user for module details.
+     *
+     * @return void
+     */
+    protected function qualifyModuleDetails(): void
+    {
+        $this->details = [
+            'description' => $this->ask(trans('console.description', ['name' => $this->argument('name')])),
+            'author' => $this->ask(trans('console.author'), config('app.name')),
+            'version' => $this->ask(trans('console.version'), '1.0.0'),
+        ];
     }
 
     /**
@@ -94,6 +120,7 @@ class ModuleMakeCommand extends Command
         $directories = [
             "$module/config",
             "$module/Http/Controllers",
+            "$module/Http/Requests",
             "$module/database/factories",
             "$module/database/migrations",
             "$module/database/seeds",
@@ -101,7 +128,6 @@ class ModuleMakeCommand extends Command
             "$module/Observers",
             "$module/Providers",
             "$module/Services",
-            "$module/Requests",
             "$module/routes",
             "$module/views/admin",
         ];
@@ -121,8 +147,10 @@ class ModuleMakeCommand extends Command
     {
         $this->files->put($this->getModuleDirectory(), $this->getManifestData());
 
-        $this->callSilent('module:clear');
-        $this->callSilent('module:discover');
+        $this->call('module:clear');
+        $this->call('module:discover');
+
+        $this->composer->dumpAutoloads();
     }
 
     /**
@@ -134,15 +162,17 @@ class ModuleMakeCommand extends Command
      */
     protected function generateConfigFiles()
     {
+        $modulePath = modules_path($this->argument('name'));
+
         $this->call('make:config', [
             '--type' => 'sidebar',
-            '--module' => $this->argument('name'),
+            '--module' => $modulePath,
             '--force' => true,
         ]);
 
         $this->call('make:config', [
             '--type' => 'permissions',
-            '--module' => $this->argument('name'),
+            '--module' => $modulePath,
             '--force' => true,
         ]);
     }
@@ -154,47 +184,72 @@ class ModuleMakeCommand extends Command
      */
     protected function generateModuleFiles()
     {
-        $this->call('module:controller', [
-            'name' => $this->argument('name').'Controller',
-            '--module' => $this->argument('name'),
-            '--admin' => true,
-            '-n' => true,
-        ]);
+        $modulePath = modules_path($this->argument('name'));
 
-        $this->call('module:model', [
-            'name' => 'Models/'.$this->argument('name'),
-            '--module' => $this->argument('name'),
-            '-n' => true,
-        ]);
-
-        $this->call('module:views', [
-            '--module' => $this->argument('name'),
-            '-n' => true,
-        ]);
-
-        $this->call('make:migration', [
-            'name' => 'create_'.snake_case(str_plural($this->argument('name'))).'_table',
-            '--module' => $this->argument('name'),
+        $this->call('make:service', [
+            'name' => $this->argument('name').'Service',
+            '--module' => $modulePath,
+            '--force' => true,
             '-n' => true,
         ]);
 
         $this->composer->dumpAutoloads();
 
+        $this->call('module:controller', [
+            'name' => $this->argument('name').'Controller',
+            '--module' => $modulePath,
+            '--admin' => true,
+            '--force' => true,
+            '-n' => true,
+        ]);
+
+        $this->call('module:model', [
+            'name' => 'Models/'.$this->argument('name'),
+            '--module' => $modulePath,
+            '--force' => true,
+            '-n' => true,
+        ]);
+
+        $this->call('module:views', [
+            '--module' => $modulePath,
+            '--force' => true,
+            '-n' => true,
+        ]);
+
+        $this->composer->dumpAutoloads();
+
+        $this->call('make:migration', [
+            'name' => 'create_'.snake_case(str_plural($this->argument('name'))).'_table',
+            '--module' => $modulePath,
+            '--force' => true,
+            '-n' => true,
+        ]);
+
         $this->call('module:observer', [
             'name' => $this->argument('name').'Observer',
-            '--module' => $this->argument('name'),
+            '--module' => $modulePath,
+            '--force' => true,
             '-n' => true,
         ]);
 
         $this->call('module:provider', [
             'name' => $this->argument('name').'ServiceProvider',
-            '--module' => $this->argument('name'),
+            '--module' => $modulePath,
+            '--force' => true,
             '-n' => true,
         ]);
 
-        $this->call('make:service', [
-            'name' => $this->argument('name').'Service',
-            '--module' => $this->argument('name'),
+        $this->call('module:request', [
+            'name' => $this->argument('name').'Request',
+            '--module' => $modulePath,
+            '--force' => true,
+            '-n' => true,
+        ]);
+
+        $this->call('make:route', [
+            '--admin' => true,
+            '--module' => $modulePath,
+            '--force' => true,
             '-n' => true,
         ]);
     }
@@ -206,7 +261,7 @@ class ModuleMakeCommand extends Command
      */
     protected function getManifestData()
     {
-        $data = ['name' => $this->argument('name')];
+        $data = array_merge(['name' => $this->argument('name')], $this->details);
 
         return preg_replace('/^(  +?)\\1(?=[^ ])/m', '$1', json_encode($data, JSON_PRETTY_PRINT));
     }

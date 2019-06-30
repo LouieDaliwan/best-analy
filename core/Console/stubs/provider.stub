@@ -2,6 +2,8 @@
 
 namespace DummyNamespace;
 
+use DummyModuleName\Services\DummyModuleNameService;
+use DummyModuleName\Services\DummyModuleNameServiceInterface;
 use Core\Providers\BaseServiceProvider;
 
 class DummyClass extends BaseServiceProvider
@@ -11,9 +13,7 @@ class DummyClass extends BaseServiceProvider
      *
      * @var array
      */
-    protected $providers = [
-        //
-    ];
+    protected $providers = [];
 
     /**
      * Register services.
@@ -22,7 +22,7 @@ class DummyClass extends BaseServiceProvider
      */
     public function register()
     {
-        parent::register();
+        $this->app->bind(DummyModuleNameServiceInterface::class, DummyModuleNameService::class);
     }
 
     /**

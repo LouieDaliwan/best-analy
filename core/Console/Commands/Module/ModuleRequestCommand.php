@@ -4,10 +4,10 @@ namespace Core\Console\Commands\Module;
 
 use Core\Console\Commands\QualifyModule;
 use Core\Support\Module\ModuleTrait;
-use Illuminate\Foundation\Console\ObserverMakeCommand;
-use Symfony\Component\Console\Input\InputOption;
+use Illuminate\Console\Command;
+use Illuminate\Foundation\Console\RequestMakeCommand;
 
-class ModuleObserverCommand extends ObserverMakeCommand
+class ModuleRequestCommand extends RequestMakeCommand
 {
     use ModuleTrait, QualifyModule;
 
@@ -16,26 +16,26 @@ class ModuleObserverCommand extends ObserverMakeCommand
      *
      * @var string
      */
-    protected $name = 'module:observer';
+    protected $name = 'module:request';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new observer class';
+    protected $description = 'Create a new form request class';
 
     /**
      * The type of class being generated.
      *
      * @var string
      */
-    protected $type = 'Observer';
+    protected $type = 'Request';
 
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return mixed
      */
     public function handle()
     {

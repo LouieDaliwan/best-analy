@@ -24,7 +24,8 @@ class MigrateMakeCommand extends BaseCommand
         {--path= : The location where the migration file should be created}
         {--module= : The module the file belongs to}
         {--realpath : Indicate any provided migration file paths are pre-resolved absolute paths}
-        {--fullpath : Output the full path of the migration}';
+        {--fullpath : Output the full path of the migration}
+        {--force : Create the class even if the file already exists}';
 
     /**
      * The console command description.

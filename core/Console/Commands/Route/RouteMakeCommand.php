@@ -1,13 +1,13 @@
 <?php
 
-namespace Core\Console\Commands\Make;
+namespace Core\Console\Commands\Route;
 
 use Core\Console\Commands\QualifyModule;
 use Core\Support\Module\ModuleTrait;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 
-class MakeConfigCommand extends Command
+class RouteMakeCommand extends Command
 {
     use ModuleTrait, QualifyModule;
 
@@ -16,11 +16,13 @@ class MakeConfigCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:config
+    protected $signature = 'make:route
                            {--module= : The module the config file will belong to}
-                           {--type= : The config type to generate}
-                           {--name= : The name of the config keys}
-                           {--force : Overwrite existing views by default}
+                           {--type= : The type of route to generate}
+                           {--admin : Generate an admin route}
+                           {--web : Generate a public route}
+                           {--api : Generate an API route}
+                           {--force : Overwrite existing route by default}
                            ';
 
     /**
@@ -28,7 +30,7 @@ class MakeConfigCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Create a new configuration file';
+    protected $description = 'Generate route file for a given module';
 
     /**
      * The type of the configuration file.
@@ -36,12 +38,12 @@ class MakeConfigCommand extends Command
      * @var array
      */
     protected $types = [
-        'composers',
-        'menus',
-        'permissions',
-        'roles',
-        'sidebar',
-        'widgets',
+        'admin',
+        'api',
+        'assets',
+        'channels',
+        'console',
+        'web',
     ];
 
     /**
@@ -68,9 +70,9 @@ class MakeConfigCommand extends Command
 
         $this->qualifyModule();
 
-        $this->createDirectories();
+        $this->createRouteDirectoryifNotExists();
 
-        $this->exportConfig();
+        $this->generateRouteFile();
     }
 
     /**
@@ -80,7 +82,19 @@ class MakeConfigCommand extends Command
      */
     protected function qualifyType()
     {
-        if (! $this->option('type') || ! in_array($this->option('type'), $this->types)) {
+        if ($this->option('admin')) {
+            $type = 'admin';
+        }
+
+        if ($this->option('api')) {
+            $type = 'api';
+        }
+
+        if ($this->option('web')) {
+            $type = 'web';
+        }
+
+        if (! isset($type) && (! $this->option('type') || ! in_array($this->option('type'), $this->types))) {
             $type = $this->choice('Specify the type of the configuration file', $this->types);
         }
 
@@ -94,11 +108,9 @@ class MakeConfigCommand extends Command
      *
      * @return void
      */
-    protected function createDirectories()
+    protected function createRouteDirectoryifNotExists()
     {
-        $path = basename($this->getPath('config'), '.php');
-
-        if (! is_dir($directory = $path)) {
+        if (! is_dir($directory = $this->getPath('routes', $withExtension = false))) {
             mkdir($directory, 0755, true);
         }
     }
@@ -108,21 +120,26 @@ class MakeConfigCommand extends Command
      *
      * @return void
      */
-    protected function exportConfig()
+    protected function generateRouteFile()
     {
         $type = $this->option('type');
-        if (file_exists($path = $this->getPath('config/'.$type)) && ! $this->option('force')) {
-            if (! $this->confirm("The [{$type}] config already exists. Do you want to replace it?")) {
+
+        if (file_exists($path = $this->getPath('routes/'.$type)) && ! $this->option('force')) {
+            if (! $this->confirm("The [{$type}] route already exists. Do you want to replace it?")) {
                 return;
             }
         }
 
         $replace = $this->buildReplacements();
 
+        if (! file_exists(stubs_path('routes/'.$type.'.stub'))) {
+            $type = 'route.empty';
+        }
+
         $stub = str_replace(
             array_keys($replace),
             array_values($replace),
-            $this->files->get(stubs_path('config/'.$type.'.stub'))
+            $this->files->get(stubs_path('routes/'.$type.'.stub'))
         );
 
         $this->files->put($path, $stub);
@@ -137,18 +154,12 @@ class MakeConfigCommand extends Command
      */
     protected function buildReplacements()
     {
-        $name = strtolower(
-            ! empty($this->option('name'))
-            ? $this->option('name')
-            : basename($this->module['path'])
-        );
+        $name = strtolower(basename($this->module['path']));
 
         return [
             'dummy-singular-name' => str_singular($name),
             'dummy-plural-name' => str_plural($name),
-            'DummyPluralText' => ucwords(str_plural($name)),
-            'DummySingularText' => ucwords(str_singular($name)),
-            'DummyText' => $this->option('name'),
+            'DummyText' => ucwords($name),
         ];
     }
 }

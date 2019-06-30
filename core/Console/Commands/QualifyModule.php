@@ -17,13 +17,15 @@ trait QualifyModule
         $this->callSilent('module:clear');
         $this->callSilent('module:discover');
 
-        $module = $this->module($this->option('module'));
+        $module = $this->module($this->input->getOption('module'));
 
-        if (! empty($this->option('module')) && is_null($module)) {
+        $force = $this->input->hasOption('force') ? $this->input->getOption('force') : false;
+
+        if (! empty($this->input->getOption('module')) && is_null($module) && ! $force) {
             $this->error("Module {$this->option('module')} not found!");
         }
 
-        if (is_null($module) || ! $module) {
+        if (! $force && (is_null($module) || ! $module)) {
             $module = $this->module(
                 $this->choice(
                     'Pick the module the file will belong',
@@ -32,7 +34,7 @@ trait QualifyModule
             );
         }
 
-        $this->input->setOption('module', $module['path']);
+        $this->input->setOption('module', $module['path'] ?? $this->option('module'));
 
         return $this->input->getOption('module');
     }
@@ -47,6 +49,7 @@ trait QualifyModule
     protected function getPath($name, $withExtension = true)
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
+        $this->module['path'] = $this->module['path'] ?? $this->input->getOption('module');
 
         return $this->module['path'].'/'.str_replace('\\', '/', $name).($withExtension ? '.php' : null);
     }
@@ -62,14 +65,43 @@ trait QualifyModule
     }
 
     /**
+     * Get the module name for the class.
+     *
+     * @return string
+     */
+    protected function getModuleName()
+    {
+        return basename(dirname($this->getPath('module', false)));
+    }
+
+    /**
+     * Replace the namespace for the given stub.
+     *
+     * @param  string $stub
+     * @param  string $name
+     * @return $this
+     */
+    protected function replaceNamespace(&$stub, $name)
+    {
+        $stub = str_replace(
+            ['DummyModuleName', 'DummyNamespace', 'DummyRootNamespace', 'NamespacedDummyUserModel'],
+            [$this->getModuleName(), $this->getNamespace($name), $this->rootNamespace(), $this->userProviderModel()],
+            $stub
+        );
+
+        return $this;
+    }
+
+    /**
      * Get the console command options.
      *
      * @return array
      */
     protected function getOptions()
     {
-        return array_merge(parent::getOptions(), [
-            ['module', null, InputOption::VALUE_OPTIONAL, 'Specify the module the resource will belong to.'],
-        ]);
+        return array_merge([
+            ['force', null, InputOption::VALUE_NONE, 'Create the class even if the file already exists'],
+            ['module', null, InputOption::VALUE_OPTIONAL, 'Specify the module the resource will belong to'],
+        ], parent::getOptions());
     }
 }

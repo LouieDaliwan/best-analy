@@ -42,9 +42,9 @@ class WidgetServiceProvider extends ServiceProvider
      */
     protected function bindRouteParameters()
     {
-        // $this->app['router']->bind('widget', function ($alias) {
-        //     return $this->app['core.widget']->find($alias);
-        // });
+        $this->app['router']->bind('widget', function ($alias) {
+            return $this->app['core.widget']->find($alias);
+        });
     }
 
     /**

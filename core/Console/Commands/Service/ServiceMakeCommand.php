@@ -44,6 +44,8 @@ class ServiceMakeCommand extends GeneratorCommand
         $this->qualifyModule();
 
         parent::handle();
+
+        $this->generateServiceInterface();
     }
 
     /**
@@ -134,15 +136,55 @@ class ServiceMakeCommand extends GeneratorCommand
     }
 
     /**
+     * Generate the companion interface.
+     *
+     * @return void
+     */
+    protected function generateServiceInterface()
+    {
+        $name = parent::qualifyClass($this->getInterfaceName());
+        $path = $this->getPath($name);
+
+        $this->makeDirectory($path);
+
+        $this->files->put($path, $this->buildInterfaceClass($name));
+    }
+
+    /**
+     * Retrieve the interface name.
+     *
+     * @return string
+     */
+    protected function getInterfaceName(): string
+    {
+        return $this->argument('name').'Interface';
+    }
+
+    /**
+     * Build the interface class with the given name.
+     *
+     * @param  string $name
+     * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException File not found.
+     */
+    protected function buildInterfaceClass($name)
+    {
+        $stub = $this->files->get(stubs_path('service/service.interface.stub'));
+
+        return parent::replaceNamespace($stub, $name)->replaceClass($stub, $name);
+    }
+
+    /**
      * Get the console command options.
      *
      * @return array
      */
     protected function getOptions()
     {
-        return array_merge(parent::getOptions(), [
-            ['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate a service for the given model.'],
+        return array_merge([
+            ['force', null, InputOption::VALUE_NONE, 'Create the class even if the file already exists'],
             ['module', null, InputOption::VALUE_OPTIONAL, 'Specify the module the resource will belong to.'],
-        ]);
+            ['model', 'm', InputOption::VALUE_OPTIONAL, 'Generate a service for the given model.'],
+        ], parent::getOptions());
     }
 }

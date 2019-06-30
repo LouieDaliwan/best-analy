@@ -2,6 +2,7 @@
 
 namespace DummyNamespace;
 
+use DummyModuleName\Services\DummyModuleNameServiceInterface;
 use Core\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,9 @@ class DummyClass extends AdminController
     /**
      * Create a new controller instance.
      *
-     * @param ServiceInterface $service
+     * @param \DummyModuleName\Services\DummyModuleNameServiceInterface $service
      */
-    public function __construct(ServiceInterface $service)
+    public function __construct(DummyModuleNameServiceInterface $service)
     {
         $this->service = $service;
     }
@@ -24,7 +25,7 @@ class DummyClass extends AdminController
      */
     public function index()
     {
-        //
+        return view('theme::admin.index');
     }
 
     /**
@@ -34,7 +35,7 @@ class DummyClass extends AdminController
      */
     public function create()
     {
-        //
+        return view('theme::admin.create');
     }
 
     /**
@@ -45,7 +46,7 @@ class DummyClass extends AdminController
      */
     public function store(Request $request)
     {
-        //
+        return back();
     }
 
     /**
@@ -56,7 +57,7 @@ class DummyClass extends AdminController
      */
     public function show($id)
     {
-        //
+        return view('theme::admin.show');
     }
 
     /**
@@ -67,7 +68,7 @@ class DummyClass extends AdminController
      */
     public function edit($id)
     {
-        //
+        return view('theme::admin.edit');
     }
 
     /**
@@ -79,7 +80,7 @@ class DummyClass extends AdminController
      */
     public function update(Request $request, $id)
     {
-        //
+        return back();
     }
 
     /**
@@ -90,6 +91,6 @@ class DummyClass extends AdminController
      */
     public function destroy($id)
     {
-        //
+        return back();
     }
 }

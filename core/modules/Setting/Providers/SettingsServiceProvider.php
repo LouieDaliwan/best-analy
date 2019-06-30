@@ -16,4 +16,24 @@ class SettingsServiceProvider extends BaseServiceProvider
     protected $providers = [
         //
     ];
+
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        parent::register();
+    }
+
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        parent::boot();
+    }
 }

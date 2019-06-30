@@ -12,7 +12,7 @@
         @endforeach --}}
 
         <div class="row">
-          {{-- <div class="col-lg">@widget('inspiring')</div> --}}
+          {{-- <div class="col-lg">@widget('xx:pors')</div> --}}
           <div class="col-lg">@widget('app:details')</div>
           <div class="col-lg">@widget('user:count')</div>
         </div>

@@ -1,7 +1,9 @@
 'use strict';
 
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const config = require('./resources/build/config.js');
 const path = require('path');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = (env, arg) => {
   return {
@@ -15,5 +17,14 @@ module.exports = (env, arg) => {
     },
     cache: true,
     devtool: 'source-map',
+    plugins: [
+      new StyleLintPlugin(),
+      new BrowserSyncPlugin({
+        host: 'localhost',
+        port: 3000,
+        open: false,
+        proxy: 'http://localhost:8000/',
+      }),
+    ],
   }
 }

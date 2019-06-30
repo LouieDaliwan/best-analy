@@ -27,7 +27,7 @@ class AnnouncementService extends Service implements AnnouncementServiceInterfac
      * Constructor to bind model to a repository.
      *
      * @param  \Announcement\Models\Announcement $model
-     * @param  \Illuminate\Http\Request         $request
+     * @param  \Illuminate\Http\Request          $request
      * @return void
      */
     public function __construct(Announcement $model, Request $request)

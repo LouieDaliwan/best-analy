@@ -20,8 +20,6 @@ class AnnouncementsTest extends TestCase
     use DatabaseMigrations, RefreshDatabase, WithFaker;
 
     /**
-     * A basic test example.
-     *
      * @test
      * @group  feature
      * @group  feature:announcements
@@ -34,11 +32,11 @@ class AnnouncementsTest extends TestCase
         $service = $this->app->make(AnnouncementServiceInterface::class);
 
         // Actions
-        dd($service);
+        // dd();
         $actual = $service->list();
 
+
         // Assertions
-        // $this->assertTrue(true);
         $this->assertInstanceOf(LengthAwarePaginator::class, $actual);
     }
 }

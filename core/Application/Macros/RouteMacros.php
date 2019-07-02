@@ -17,6 +17,7 @@ abstract class RouteMacros
         static::registerSoftDeletes();
         static::registerPortResource();
         static::registerResetResource();
+        static::registerOwnedResource();
     }
 
     /**
@@ -72,6 +73,18 @@ abstract class RouteMacros
             $singular = str_singular($name);
             Route::get($name, "$controller@all")->name("$name.all");
             Route::get(sprintf("%s/{%s?}", $name, $singular), "$controller@single")->name("$name.single");
+        });
+    }
+
+    /**
+     * Register owned routes.
+     *
+     * @return void
+     */
+    protected static function registerOwnedResource()
+    {
+        Route::macro('ownedResource', function ($name, $controller) {
+            Route::get(sprintf("%s/owned", $name), "$controller")->name("$name.owned");
         });
     }
 }

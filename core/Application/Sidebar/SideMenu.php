@@ -151,7 +151,9 @@ class SideMenu
      */
     public function uri()
     {
-        return '/'.$this->request()->route()->uri();
+        return '/'.($this->request()->route()
+            ? $this->request()->route()->uri()
+            : null);
     }
 
     /**
@@ -192,7 +194,7 @@ class SideMenu
      */
     public function active()
     {
-        $currentUrl = $this->request()->route()->getName();
+        $currentUrl = $this->request()->route() ? $this->request()->route()->getName() : '/';
         $routes = $this->key('routes');
 
         if (is_array($routes) && in_array($currentUrl, $routes)) {

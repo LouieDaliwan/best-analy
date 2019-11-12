@@ -3,6 +3,7 @@
 namespace User\Services;
 
 use Core\Application\Service\Service;
+use Core\Support\Traits\Randomizer;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +12,8 @@ use User\Models\User;
 
 class UserService extends Service implements UserServiceInterface
 {
-    use Concerns\SavesAccountRecord;
+    use Concerns\SavesAccountRecord,
+        Randomizer;
 
     /**
      * The relations to eager load on every query.

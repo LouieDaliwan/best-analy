@@ -14,6 +14,14 @@ $factory->define(User::class, function (Faker $faker) {
         'email' => $email = $faker->unique()->email(),
         'username' => str_slug($email),
         'password' => $faker->password,
-        'type' => RoleCode::TEST,
+        'type' => 'user',
     ];
 });
+
+$factory->state(User::class, 'superadmin', [
+    'type' => RoleCode::SUPERADMIN,
+]);
+
+$factory->state(User::class, 'test', [
+    'type' => RoleCode::TEST,
+]);

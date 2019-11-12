@@ -83,6 +83,13 @@ return [
                 'description' => 'View list of all users moved to trash',
             ],
 
+            'divider:user' => [
+                'name' => 'divider:user',
+                'is:divider' => true,
+                'always:viewable' => true,
+                'order' => 4,
+            ],
+
             /**
              *------------------------------------------------------------------
              * Role Module

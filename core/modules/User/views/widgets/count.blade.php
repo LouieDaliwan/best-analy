@@ -1,6 +1,14 @@
-@card
-  @slot('body')
-    @icon('mdi mdi-account')
-    @lang('User Count'): {{ $count }}
+@glance
+  @slot('text')
+    {{ __('User Count') }}
   @endslot
-@endcard
+
+  @slot('count')
+    {{ $count }}
+  @endslot
+
+  @slot('icon')
+    {{ __('account-outline') }}
+  @endslot
+@endglance
+

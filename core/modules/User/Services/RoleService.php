@@ -60,8 +60,8 @@ class RoleService extends Service implements RoleServiceInterface
     {
         $this->defaults()->filter(function ($role) use ($data) {
             return is_array($data) ? in_array($role['code'], $data['roles']) : $data;
-        })->map(function ($role) {
-            return $this->updateOrCreate(
+        })->each(function ($role) {
+            $this->updateOrCreate(
                 ['code' => $role['code']],
                 collect($role)->except('permissions')->toArray()
             )->permissions()->sync(

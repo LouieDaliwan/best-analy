@@ -2,17 +2,15 @@
 
 namespace Core\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    /**
-     * The repository instance.
-     *
-     * @var \Core\Support\Repository\Repository
-     */
-    protected $repository;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
      * Create a new controller instance.
@@ -22,15 +20,5 @@ class Controller extends BaseController
     public function __construct()
     {
         $this->middleware('web');
-    }
-
-    /**
-     * Retrieve the Repository instance.
-     *
-     * @return Core\Support\Repository\Repository
-     */
-    public function repository()
-    {
-        return $this->repository;
     }
 }

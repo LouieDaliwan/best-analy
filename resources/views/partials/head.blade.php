@@ -32,6 +32,7 @@
     <link rel="manifest" href="{{ theme('dist/favicons/manifest.json') }}">
     <link rel="mask-icon" color="{{ theme()->detail('colors.primary') }}" href="{{ theme('dist/favicons/safari-pinned-tab.svg') }}">
     <meta name="theme-color" content="{{ theme()->detail('colors.primary') }}">
+
   @show
   @stack('seo')
     <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
@@ -45,7 +46,6 @@
   @show
   @stack('before:css')
     <style id="critical-css">{!! theme()->inlined() !!}</style>
-    <link rel="preload" href="{{ theme('dist/css/vendor.css') }}?v={{ theme()->version() }}" as="style" onload="this.rel='stylesheet'">
     <link rel="preload" href="{{ theme('dist/css/fonts.css') }}?v={{ theme()->version() }}" as="style" onload="this.rel='stylesheet'">
     <link rel="preload" href="{{ theme('dist/css/app.css') }}?v={{ theme()->version() }}" as="style" onload="this.rel='stylesheet'">
     <link rel="preload" href="{{ theme('dist/js/vendor.js') }}?v={{ theme()->version() }}" as="script">
@@ -53,7 +53,6 @@
   @show
   <!-- css -->
   @stack('css')
-    <noscript><link rel="stylesheet" href="{{ theme('dist/css/vendor.css') }}?v={{ theme()->version() }}"></noscript>
     <noscript><link rel="stylesheet" href="{{ theme('dist/css/fonts.css') }}?v={{ theme()->version() }}"></noscript>
     <noscript><link rel="stylesheet" href="{{ theme('dist/css/app.css') }}?v={{ theme()->version() }}"></noscript>
   @show

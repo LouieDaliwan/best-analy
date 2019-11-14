@@ -1,1 +1,7 @@
-<img src="{{ $param }}" width="{{ $size ?? $width ?? $height ?? '35px' }}" height="{{ $size ?? $height ?? $width ?? '35px' }}" class="rounded-circle {{ $class ?? null }}">
+<v-avatar
+  class="{{ $class ?? null }}"
+  color="{{ $color ?? null }}"
+  size="{{ $size ?? '40' }}"
+  >
+  <img src="{{ $param }}">
+</v-avatar>

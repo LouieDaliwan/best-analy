@@ -142,7 +142,7 @@ class ThemeRepository extends Repository implements Contracts\ThemeRepositoryInt
     /**
      * Retrieve the theme path.
      *
-     * @param string $path
+     * @param  string $path
      * @return string
      */
     protected function theme($path = '')

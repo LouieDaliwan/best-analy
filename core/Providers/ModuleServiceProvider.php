@@ -76,7 +76,7 @@ class ModuleServiceProvider extends BaseServiceProvider
         $providers = glob(
             $this->module['path'].
             DIRECTORY_SEPARATOR.'Providers'.
-            DIRECTORY_SEPARATOR.'*'.'ServiceProvider.php'
+            DIRECTORY_SEPARATOR.'*ServiceProvider.php'
         );
 
         foreach ($providers as $path) {

@@ -1,20 +1,24 @@
 @include('theme::partials.head')
 
 @section('app')
-  <div id="app" data-app class="app">
-    @stack('before:main')
+  <div id="app">
+    @app
+      @section('master')
+        @stack('before:main')
 
-    @section('main')
-      <main id="main" data-main class="main">
-        @stack('before:page')
+        @section('main')
+          <main id="main">
+            @stack('before:page')
 
-        @yield('page')
+            @yield('page')
 
-        @stack('after:page')
-      </main>
-    @show
+            @stack('after:page')
+          </main>
+        @show
 
-    @stack('after:main')
+        @stack('after:main')
+      @show
+    @endapp
   </div>
 @show
 

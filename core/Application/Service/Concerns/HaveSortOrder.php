@@ -9,7 +9,7 @@ trait HaveSortOrder
     /**
      * Sort and order based on the url parameters.
      *
-     * @return \Core\Application\Service\Service
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function sortAndOrder()
     {

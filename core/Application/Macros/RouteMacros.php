@@ -13,11 +13,12 @@ abstract class RouteMacros
      */
     public static function register(): void
     {
-        static::registerPublicResource();
-        static::registerSoftDeletes();
-        static::registerPortResource();
-        static::registerResetResource();
         static::registerOwnedResource();
+        static::registerPortResource();
+        static::registerPublicResource();
+        static::registerPublishResource();
+        static::registerResetResource();
+        static::registerSoftDeletes();
     }
 
     /**
@@ -70,9 +71,12 @@ abstract class RouteMacros
     protected static function registerPublicResource()
     {
         Route::macro('publicResource', function ($name, $controller) {
-            $singular = str_singular($name);
+            $singular = sprintf('%sslug', str_singular($name));
+
             Route::get($name, "$controller@all")->name("$name.all");
-            Route::get(sprintf("%s/{%s?}", $name, $singular), "$controller@single")->name("$name.single");
+            Route::get(sprintf("%s/{%s?}", $name, $singular), "$controller@single")
+                ->where($singular, '.*')
+                ->name("$name.single");
         });
     }
 
@@ -85,6 +89,26 @@ abstract class RouteMacros
     {
         Route::macro('ownedResource', function ($name, $controller) {
             Route::get(sprintf("%s/owned", $name), "$controller")->name("$name.owned");
+        });
+    }
+
+    /**
+     * Register publishing routes.
+     *
+     * @return void
+     */
+    protected static function registerPublishResource()
+    {
+        Route::macro('publishResource', function ($name, $controller) {
+            $singular = str_singular($name);
+            Route::post(sprintf("%s/{%s}/publish", $name, $singular), "$controller@publish")
+                ->name("$name.publish");
+            Route::post(sprintf("%s/{%s}/unpublish", $name, $singular), "$controller@unpublish")
+                ->name("$name.unpublish");
+            Route::post(sprintf("%s/{%s}/draft", $name, $singular), "$controller@draft")
+                ->name("$name.draft");
+            Route::get(sprintf("%s/preview/{%s}", $name, $singular), "$controller@preview")
+                ->name("$name.preview");
         });
     }
 }

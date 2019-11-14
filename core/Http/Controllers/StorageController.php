@@ -2,11 +2,14 @@
 
 namespace Core\Http\Controllers;
 
+use Core\Application\Repository\WithRepository;
 use Core\Repositories\Contracts\StorageRepositoryInterface;
 use Illuminate\Http\Request;
 
 class StorageController extends Controller
 {
+    use WithRepository;
+
     /**
      * Initialize the repository instance.
      *
@@ -22,8 +25,8 @@ class StorageController extends Controller
     /**
      * Retrieve the file from storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param string $file
+     * @param  \Illuminate\Http\Request $request
+     * @param  string                   $file
      * @return \Illuminate\Http\Response
      */
     public function fetch(Request $request, $file = '')
@@ -34,8 +37,8 @@ class StorageController extends Controller
     /**
      * Retrieve the file from storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param string $file
+     * @param  \Illuminate\Http\Request $request
+     * @param  string                   $file
      * @return \Illuminate\Http\Response
      */
     public function vendor(Request $request, $file = '')

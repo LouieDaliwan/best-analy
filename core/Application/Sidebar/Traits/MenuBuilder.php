@@ -30,7 +30,7 @@ trait MenuBuilder
     {
         foreach ($menus as &$menu) {
             if ($menu->hasChild()) {
-                $children = $this->sidemenus($menu->children(), $options);
+                $children = collect($this->sidemenus($menu->children(), $options));
                 $menu->set($options['children'], $children);
                 $menu->set($options['active:keys'], $this->mapKey($children, $options['children']));
             }

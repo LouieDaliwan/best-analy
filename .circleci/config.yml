@@ -54,6 +54,11 @@ jobs:
       - run: touch database/database.sqlite
       - run: php console migrate --env=testing --database=testing --force
 
+      # run tests with phpunit inside core/ folder
+      - run: ./vendor/bin/phpunit core/modules/
+      - run: ~/.composer/vendor/bin/phpcs --standard=./ruleset.xml core/modules/
+      # - run: ./vendor/bin/phpunit tests/
+
       # run tests with phpunit or codecept
       - run: ./vendor/bin/phpunit modules/
       - run: ~/.composer/vendor/bin/phpcs --standard=./ruleset.xml modules/

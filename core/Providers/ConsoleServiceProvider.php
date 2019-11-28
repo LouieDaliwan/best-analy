@@ -46,42 +46,42 @@ class ConsoleServiceProvider extends ArtisanServiceProvider
      */
     protected function overrideFoundationCommands()
     {
-        // Override the AppNameCommand
+        // Override the AppNameCommand.
         $this->app->singleton('command.app.name', function ($app) {
             return new AppNameCommand($app['composer'], $app['files']);
         });
 
-        // Override the ModelMakeCommand
+        // Override the ModelMakeCommand.
         $this->app->singleton('command.model.make', function ($app) {
             return new ModelMakeCommand($app['files']);
         });
 
-        // Override the TestMakeCommand
+        // Override the TestMakeCommand.
         $this->app->singleton('command.test.make', function ($app) {
             return new TestMakeCommand($app['files']);
         });
 
-        // Override the ServeCommand
+        // Override the ServeCommand.
         $this->app->extend('command.serve', function () {
             return new ServeCommand;
         });
 
-        // Override the RouteListCommand
+        // Override the RouteListCommand.
         $this->app->singleton('command.route.list', function ($app) {
             return new RouteListCommand($app['router'], $app['manifest:module']);
         });
 
-        // Override the AuthMakeCommand
+        // Override the AuthMakeCommand.
         $this->app->extend('command.make.auth', function () {
             return new AuthMakeCommand;
         });
 
-        // Override the OptimizeCommand
+        // Override the OptimizeCommand.
         $this->app->extend('command.optimize', function ($app) {
             return new OptimizeCommand;
         });
 
-        // Override the ViewCacheCommand
+        // Override the ViewCacheCommand.
         $this->app->extend('command.view.cache', function ($app) {
             return new ViewCacheCommand;
         });
@@ -92,12 +92,12 @@ class ConsoleServiceProvider extends ArtisanServiceProvider
             return $app['migrator'];
         });
 
-        // Override the MigrateCommand
+        // Override the MigrateCommand.
         $this->app->singleton('command.migrate', function ($app) {
             return new MigrateCommand($app['migrator']);
         });
 
-        // Override the MakeMigrateCommand
+        // Override the MakeMigrateCommand.
         $this->app->singleton('command.make.migration', function ($app) {
             // Once we have the migration creator registered, we will create the command
             // and inject the creator. The creator is responsible for the actual file
@@ -109,14 +109,19 @@ class ConsoleServiceProvider extends ArtisanServiceProvider
             return new MigrateMakeCommand($creator, $composer);
         });
 
-        // Override the RollbackCommand
+        // Override the RollbackCommand.
         $this->app->singleton('command.migrate.rollback', function ($app) {
             return new MigrateRollbackCommand($app['migrator']);
         });
 
-        // Override the StatusCommand
+        // Override the StatusCommand.
         $this->app->singleton('command.migrate.status', function ($app) {
             return new StatusCommand($app['migrator']);
+        });
+
+        // Override the ResourceMakeCommand.
+        $this->app->singleton('command.make.resource', function ($app) {
+            return new ResourceMakeCommand($app['files']);
         });
     }
 }

@@ -6,6 +6,7 @@ use Core\Http\Guards\AdminGuard;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -15,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        //
+        // Add policy entries.
     ];
 
     /**
@@ -28,6 +29,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         $this->registerAdminGuard();
+
+        $this->registerPassportRoutes();
     }
 
     /**
@@ -41,5 +44,16 @@ class AuthServiceProvider extends ServiceProvider
         Auth::extend('admin', function ($app, $name, array $config) {
             return new AdminGuard($app->request, Auth::createUserProvider($config['provider']));
         });
+    }
+
+    /**
+     * Register any authentication/authorization services
+     * for the laravel/passport package.
+     *
+     * @return void
+     */
+    protected function registerPassportRoutes()
+    {
+        Passport::routes();
     }
 }

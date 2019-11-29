@@ -11,6 +11,6 @@
  *
  */
 
-Route::prefix('v1')->middleware('auth:api')->group(function () {
+Route::prefix('v1')->as('api.v1.')->middleware('auth:api')->group(function () {
     Route::apiResource('users', 'Api\UserController');
 });

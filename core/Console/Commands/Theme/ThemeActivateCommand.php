@@ -36,11 +36,11 @@ class ThemeActivateCommand extends Command
             $theme = $this->choice('Pick the theme to activate', $manifest->themes()->pluck('name', 'code')->toArray());
         }
 
-        $manifest->activate($theme);
+        if ($manifest->activate($theme)) {
+            $this->line("Theme <info>{$theme}</> is activated");
+        }
 
-        $this->line("Theme <info>{$theme}</> is activated");
-
-        settings(['active_theme', $theme])->save();
+        settings(['app:theme' => $theme])->save();
         $this->line("Theme <info>{$theme}</> saved to settings");
     }
 }

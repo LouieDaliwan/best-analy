@@ -9,7 +9,8 @@
     "watch": "npm run development -- --watch",
     "watch-poll": "npm run watch -- --watch-poll",
     "build": "npm run production",
-    "production": "webpack -p --mode production"
+    "production": "webpack -p --mode production",
+    "theme": "node resources/js/theme.js"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",

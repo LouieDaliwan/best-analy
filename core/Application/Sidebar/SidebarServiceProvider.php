@@ -45,7 +45,7 @@ class SidebarServiceProvider extends ServiceProvider
         $this->app->bind(SidebarInterface::class, Sidebar::class);
 
         $this->app->instance('sidebar', new Sidebar(
-            $sidebar = $this->app['manifest:sidebar'],
+            $manifest = $this->app['manifest:sidebar'],
             $this->app['request']
         ));
     }

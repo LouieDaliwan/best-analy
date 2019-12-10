@@ -47,7 +47,7 @@ return [
         'name' => 'module:customer',
         'route:url' => '#',
         'order' => 50,
-        'icon' => 'mdi mdi-pencil-outline',
+        'icon' => 'mdi mdi-folder-account',
         'text' => 'Customers',
         'description' => 'Manage customers',
         'children' => [

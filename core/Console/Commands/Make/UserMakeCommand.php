@@ -4,6 +4,7 @@ namespace Core\Console\Commands\Make;
 
 use Illuminate\Console\Command;
 use User\Models\User;
+use User\Services\RoleServiceInterface;
 use User\Services\UserServiceInterface;
 
 class UserMakeCommand extends Command
@@ -36,13 +37,15 @@ class UserMakeCommand extends Command
      * Create a new command instance.
      *
      * @param  \User\Services\UserServiceInterface $service
+     * @param  \User\Services\RoleServiceInterface $roles
      * @return void
      */
-    public function __construct(UserServiceInterface $service)
+    public function __construct(UserServiceInterface $service, RoleServiceInterface $roles)
     {
         parent::__construct();
 
         $this->service = $service;
+        $this->roles = $roles;
     }
 
     /**
@@ -82,12 +85,12 @@ class UserMakeCommand extends Command
         }
         $user['password'] = $this->ask('Password (visible)');
         $this->password = $user['password'];
-        $user['password'] = $this->service->hash($user['password']);
+        $user['password'] = $user['password'];
         $roles = collect($this->choice(
             'Specify the role associated with the user',
-            $this->service->role()->pluck('code', 'id')->toArray()
+            $this->roles->pluck('code', 'id')->toArray()
         ))->map(function ($role) {
-            return $this->service->role()->whereCode($role)->first()->getKey();
+            return $this->roles->whereCode($role)->first()->getKey();
         })->toArray();
 
         $model = $this->service->create($user);
@@ -123,7 +126,7 @@ class UserMakeCommand extends Command
     /**
      * Display fancy table.
      *
-     * @param array $user
+     * @param  array $user
      * @return void
      */
     protected function display($user)

@@ -7,7 +7,6 @@ use Setting\Services\SettingServiceInterface;
 
 class SetSettingsCommand extends Command
 {
-
     /**
      * The name and signature of the console command.
      *

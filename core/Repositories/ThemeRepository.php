@@ -158,7 +158,7 @@ class ThemeRepository extends Repository implements Contracts\ThemeRepositoryInt
      */
     protected function theme($path = '')
     {
-        return $this->manifest->getActiveThemePath().DIRECTORY_SEPARATOR.urldecode($path);
+        return $this->path(urldecode($path));
     }
 
     /**
@@ -170,9 +170,20 @@ class ThemeRepository extends Repository implements Contracts\ThemeRepositoryInt
     public function active($path = null)
     {
         if (! is_null($path)) {
-            return $this->manifest->getActiveThemePath().DIRECTORY_SEPARATOR.$path;
+            return $this->path($path);
         }
 
         return $this->theme;
+    }
+
+    /**
+     * Retrieve the realpath of the active theme.
+     *
+     * @param  string $path
+     * @return string
+     */
+    public function path($path = null): string
+    {
+        return ($this->theme['path'] ?? resource_path()).DIRECTORY_SEPARATOR.$path;
     }
 }

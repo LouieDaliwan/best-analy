@@ -179,16 +179,6 @@ class ThemeManifest
     }
 
     /**
-     * Retrieve the path to the current theme.
-     *
-     * @return string
-     */
-    public function getActiveThemePath(): string
-    {
-        return $this->theme['path'] ?? resource_path();
-    }
-
-    /**
      * Set the active theme variable.
      *
      * @param string $theme

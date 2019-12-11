@@ -2,13 +2,12 @@
 
 namespace Core\Console\Commands\Settings;
 
-use Core\Application\Service\WithService;
+
 use Illuminate\Console\Command;
 use Setting\Services\SettingServiceInterface;
 
 class SetSettingsCommand extends Command
 {
-    use WithService;
 
     /**
      * The name and signature of the console command.
@@ -26,30 +25,21 @@ class SetSettingsCommand extends Command
     protected $description = 'Add a key-value pair to the settings database.';
 
     /**
-     * Create a new command instance.
-     *
-     * @param  \Setting\Services\SettingServiceInterface $service
-     * @return void
-     */
-    public function __construct(SettingServiceInterface $service)
-    {
-        parent::__construct();
-
-        $this->service = $service;
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle()
     {
-        foreach ($this->argument('keys') as $keys) {
-            $key = $this->parseString($keys, 0);
-            $value = $this->parseString($keys, 1);
-            $this->service()->set($key, $value)->save();
-            $this->info("key {$key} with value '{$value}' saved to settings database.");
+        try {
+            foreach ($this->argument('keys') as $keys) {
+                $key = $this->parseString($keys, 0);
+                $value = $this->parseString($keys, 1);
+                settings([$key => $value])->save();
+                $this->info("key {$key} with value '{$value}' saved to settings database.");
+            }
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
         }
     }
 

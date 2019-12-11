@@ -35,6 +35,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Core\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class
         ],
 
         'api' => [
@@ -63,5 +64,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'ttl' => \Barryvdh\HttpCache\Middleware\SetTtl::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'json.force' => \Core\Http\Middleware\ForceJsonResponse::class,
+        'client.credentials' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
     ];
 }

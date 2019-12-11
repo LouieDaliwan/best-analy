@@ -49,32 +49,6 @@ return [
         'order' => 50,
         'icon' => 'mdi mdi-folder-account',
         'text' => 'Customers',
-        'description' => 'Manage customers',
-        'children' => [
-            'view-customers' => [
-                'name' => 'view-customers',
-                'order' => 1,
-                'route:name' => 'customers.index',
-                'permissions' => ['customers.index'],
-                'text' => 'All Customers',
-                'description' => 'View the list of all customers',
-            ],
-            'create-customer' => [
-                'name' => 'create-customer',
-                'order' => 2,
-                'route:name' => 'customers.create',
-                'permissions' => ['customers.create', 'customers.store'],
-                'text' => 'Create Customer',
-                'description' => 'Create new customer',
-            ],
-            'trashed-customer' => [
-                'name' => 'trashed-customer',
-                'order' => 3,
-                'route:name' => 'customers.trashed',
-                'permissions' => ['customers.trashed'],
-                'text' => 'Trashed Customers',
-                'description' => 'View list of all customers moved to trash',
-            ],
-        ],
+        'description' => 'Manage customer information',
     ],
 ];

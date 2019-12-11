@@ -2,7 +2,6 @@
 
 namespace Core\Console\Commands\Settings;
 
-
 use Illuminate\Console\Command;
 use Setting\Services\SettingServiceInterface;
 

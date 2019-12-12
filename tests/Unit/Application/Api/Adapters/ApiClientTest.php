@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Api\Adapters;
+namespace Tests\Unit\Application\Api\Adapters;
 
 use Core\Api\Adapters\ApiClient;
 use GuzzleHttp\Client;

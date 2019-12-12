@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Api\Adapters;
+namespace Core\Application\Api\Adapters;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;

@@ -21,7 +21,7 @@ Route::middleware('json.force')->prefix('v1')->group(function () {
 });
 
 Route::middleware(['auth:api', 'json.force', 'client.credentials'])->prefix('v1')->group(function () {
-    Route::post('validate/token', 'Api\ValidateToken')->name('token.validate');
+    Route::post('validate/token', 'Api\ValidateToken')->name('validate.token');
 
     Route::get('logout', 'Api\Auth\LoginController@logout')->name('logout');
     Route::post('logout', 'Api\Auth\LoginController@logout')->name('logout');

@@ -6,7 +6,10 @@
           <v-col lg="12" class="text-center">
             <div style="filter: grayscale(0.9);"><man-on-laptop width="200" height="auto"></man-on-laptop></div>
             <p>Empty State Illustration <br>goes here</p>
-            <v-btn @click.prevent="add">{{ trans('Add Item') }}</v-btn>
+            <v-btn @click.prevent="add" large>
+              <v-icon left>mdi-plus-circle-outline</v-icon>
+              {{ trans('Add Item') }}
+            </v-btn>
           </v-col>
         </v-row>
       </slot>
@@ -46,7 +49,10 @@
     <v-row v-if="repeaters.length" no-gutters>
       <v-col>
         <slot name="action" :on="{on: add}">
-          <v-btn @click.prevent="add">{{ trans('Add Item') }}</v-btn>
+          <v-btn @click.prevent="add" large>
+            <v-icon left>mdi-plus-circle-outline</v-icon>
+            {{ trans('Add Item') }}
+          </v-btn>
         </slot>
       </v-col>
     </v-row>

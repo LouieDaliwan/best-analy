@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-lg>
     <validation-observer ref="signin-form" v-slot="{ passes }">
-      <form v-on:submit.prevent="submit">
+      <v-form :disabled="loading" v-on:submit.prevent="submit">
         <validation-provider name="username" rules="required" v-slot="{ errors }">
           <v-text-field
             :error-messages="errors"
@@ -30,8 +30,14 @@
             v-model="auth.password"
           ></v-text-field>
         </validation-provider>
-        <v-btn type="submit" color="primary" x-large block>{{ trans('Sign in') }}</v-btn>
-      </form>
+        <v-btn type="submit" :disabled="loading" :loading="loading" color="primary" x-large block>
+          {{ trans('Sign in') }}
+          <template v-slot:loader>
+            <v-slide-x-transition><v-icon dark class="mdi-spin mr-3">mdi-loading</v-icon></v-slide-x-transition>
+            {{ trans('Signing in...') }}
+          </template>
+        </v-btn>
+      </v-form>
 
     </validation-observer>
   </v-container>
@@ -53,6 +59,7 @@ export default {
         username: '',
         password: '',
       },
+      loading: false,
       showPassword: false,
     }
   },
@@ -67,10 +74,17 @@ export default {
     submit (e) {
       const { username, password } = this.auth
 
+      this.loading = true
       this.$store
         .dispatch('auth/login', { username, password })
-        .then(() => this.$router.push({name: 'dashboard'}))
-        .catch(err => this.$refs['signin-form'].setErrors(err.response.data.errors))
+        .then(() => {
+          this.$store.dispatch('sidebar/toggle', {model: true})
+          this.$router.push({name: 'dashboard'})
+        })
+        .catch(err => {
+          this.loading = false
+          this.$refs['signin-form'].setErrors(err.response.data.errors)
+        })
 
       e.preventDefault()
     }

@@ -15,9 +15,9 @@
       </v-container>
 
       <v-container>
-        <v-slide-y-reverse-transition mode="out-in">
+        <v-slide-y-transition mode="out-in">
           <router-view></router-view>
-        </v-slide-y-reverse-transition>
+        </v-slide-y-transition>
       </v-container>
     </v-content>
     <!-- # Main Content -->
@@ -43,6 +43,11 @@ export default {
         if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
           store.dispatch['auth/logout']
         }
+
+        if (err.status === 403 && err.config && !err.config.__isRetryRequest) {
+          this.$router.push({name: '403'})
+        }
+
         throw err;
       });
     });

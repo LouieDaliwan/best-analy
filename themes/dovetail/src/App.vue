@@ -5,9 +5,14 @@
 </template>
 
 <script>
-import axios from 'axios'
+import $api from '@/routes/api'
 
 export default {
-  created: function () {}
+  created: function () {
+    window.axios.get($api.settings.app)
+      .then(response => {
+        this.$store.dispatch('app/set', response.data)
+      })
+  }
 }
 </script>

@@ -1,4 +1,3 @@
-import app from '@/config/app'
 import VM from '@/mixins/localstorage'
 
 export const state = () => ({
@@ -10,9 +9,9 @@ export const state = () => ({
     floating: VM.methods.localstorage('sidebar.floating') === 'true',
     mini: VM.methods.localstorage('sidebar.mini') === 'true',
 
-    title: app.title,
-    logo: app.logo,
-    tagline: app.tagline,
+    title: '',
+    logo: '',
+    tagline: '',
     // menus: menus.children,
   },
 })

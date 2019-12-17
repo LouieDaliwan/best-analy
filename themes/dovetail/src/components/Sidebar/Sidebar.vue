@@ -14,7 +14,7 @@
           <img src="/logo.png" width="40px">
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title class="primary--text" v-html="sidebar.title"></v-list-item-title>
+          <v-list-item-title class="primary--text" v-html="app.title"></v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -103,19 +103,33 @@
 <script>
 import menus from '@/config/sidebar'
 import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'Sidebar',
+
   computed: {
     ...mapGetters({
       sidebar: 'sidebar/sidebar',
       dark: 'theme/dark',
     }),
+
+    app: function () {
+      return {
+        title: this.$store.getters['app/title'],
+        tagline: this.$store.getters['app/tagline'],
+        author: this.$store.getters['app/author'],
+        year: this.$store.getters['app/year'],
+      }
+    },
+
     vuetify: function () {
       return this.$vuetify
     },
+
     menus: function () {
       return menus
     },
+
     sidebarmodel: {
       set (value) {
         this.toggle({ model: value })
@@ -125,12 +139,14 @@ export default {
       },
     },
   },
+
   methods: {
     ...mapActions({
       toggle: 'sidebar/toggle',
       clip: 'sidebar/clip',
       toggleTheme: 'theme/toggle',
     }),
+
     active (path) {
       const children = path.children.map(function (child) {
         return child.name

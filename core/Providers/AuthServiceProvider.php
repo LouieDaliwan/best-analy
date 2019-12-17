@@ -55,15 +55,19 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected function registerPassportRoutes()
     {
-        if (theme()->active()->has('spa') && theme()->active()->get('spa')) {
-            Passport::routes(function ($router) {
-                $router->forAccessTokens();
-                $router->forPersonalAccessTokens();
-                $router->forTransientTokens();
-            });
+        try {
+            if (theme()->active()->has('spa') && theme()->active()->get('spa')) {
+                Passport::routes(function ($router) {
+                    $router->forAccessTokens();
+                    $router->forPersonalAccessTokens();
+                    $router->forTransientTokens();
+                });
 
-            Passport::tokensExpireIn(Carbon::now()->addMinutes(settings('token:expiration:minutes', 10)));
-            Passport::refreshTokensExpireIn(Carbon::now()->addDays(settings('token:refresh:days', 10)));
+                Passport::tokensExpireIn(Carbon::now()->addMinutes(settings('token:expiration:minutes', 10)));
+                Passport::refreshTokensExpireIn(Carbon::now()->addDays(settings('token:refresh:days', 10)));
+            }
+        } catch (\Exception $e) {
+            unset($e);
         }
     }
 }

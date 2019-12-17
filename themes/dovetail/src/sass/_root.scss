@@ -1,0 +1,54 @@
+:root {
+  // Body
+  --body-bg: #{$body-bg};
+  --body-color: #{$body-color};
+
+  // Breadcrumbs
+  --breadcrumbs-padding: #{$breadcrumbs-padding};
+
+  // Global
+  --box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  // Card
+  --card-border-radius: 8px;
+  --card-border-color: #{$card-border-color};
+  --card-border-color-dark: #{$card-border-color-dark};
+  --card-border-width: 1px;
+  --card-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 0 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.1);
+
+  // Color
+  --text: #{$text};
+  --text-muted: #{$muted};
+
+  // Font
+  --font-family-base: #{$font-family-base};
+  --font-family-monospace: #{$font-family-monospace};
+  --font-family-primary: 'Rubik', #{$font-family-base};
+  --font-family-sans-serif: #{$font-family-sans-serif};
+  --font-size-base: #{$font-size-base};
+  --font-base: #{$font-base};
+  --font-size-root: #{$font-size-root};
+
+  // Sidebar
+  --sidebar-bg-dark: #{$sidebar-bg-dark};
+
+  // Toolbar
+  --toolbar-bg-dark: #{$toolbar-bg-dark};
+
+  // Workspace
+  --workspace-bg: #{$workspace};
+  --workspace-bg-dark: #{$workspace-dark};
+
+  // Contextual
+  --error: #{$error};
+  --success: #{$success};
+  --info: #{$info};
+  --warning: #{$warning};
+  --accent: #{$accent};
+
+  // Contextual
+  --soft-error: #{$soft-error};
+  --soft-success: #{$soft-success};
+  --soft-info: #{$soft-info};
+  --soft-warning: #{$soft-warning};
+}

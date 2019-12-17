@@ -1,0 +1,8 @@
+.v-btn {
+  letter-spacing: 0;
+  text-transform: capitalize;
+
+  &__content {
+    font-size: var(--font-size-root);
+  }
+}

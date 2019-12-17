@@ -30,7 +30,7 @@ class InspiringQuote extends AbstractWidget
      *
      * @var integer|float|boolean
      */
-    protected $intervals = 10000;
+    protected $intervals = false;
 
     /**
      * Render the widget into the view.

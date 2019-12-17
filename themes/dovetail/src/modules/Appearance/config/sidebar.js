@@ -4,9 +4,10 @@ export default [
     name: 'appearance',
     meta: {
       title: 'Appearance',
-      icon: 'color_lens',
+      icon: 'mdi-palette',
       authenticatable: true,
       sort: 500,
+      permission: 'appearance.menus',
     },
     children: [
       // Menu Appearance
@@ -15,9 +16,9 @@ export default [
         name: 'appearance.menus',
         meta: {
           title: 'Menus',
-          icon: 'home',
           authenticatable: true,
           sort: 501,
+          permission: 'appearance.menus',
         },
       },
       // Theme Appearance
@@ -26,9 +27,9 @@ export default [
         name: 'appearance.themes',
         meta: {
           title: 'Themes',
-          icon: 'mdi-palette',
           authenticatable: true,
           sort: 502,
+          permission: 'appearance.themes',
         }
       }
     ],

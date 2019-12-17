@@ -1,3 +1,5 @@
+import store from '@/store'
+
 export default [
   {
     path: '/auth',
@@ -13,7 +15,7 @@ export default [
     children: [
       {
         path: '/login',
-        name: 'login.show',
+        name: 'login',
         component: () => import('../Signin.vue'),
         meta: {
           title: 'Sign In',
@@ -21,24 +23,24 @@ export default [
           icon: 'mdi-account-key',
         },
         beforeEnter: (to, from, next) => {
-          next();
-          // if (user() || false) {
-          //   next({ name: 'admin' })
-          // } else {
-          //   next()
-          // }
+          const isAuthenticated = store.getters['auth/isAuthenticated']
+
+          if (isAuthenticated) {
+            return next({name: 'dashboard'})
+          }
+
+          return next()
         },
       },
       {
         path: '/logout',
-        name: 'login.logout',
-        meta: {
-          title: 'Signout',
-          icon: 'mdi-account-key',
-        },
+        name: 'logout',
         beforeEnter: (to, from, next) => {
-          logout()
-          next({ name: 'login.show' })
+          store.dispatch('auth/logout')
+            .then(response => {
+              window.location = '/login'
+              // return this.$router.push({ name: 'login' })
+            })
         },
       },
 

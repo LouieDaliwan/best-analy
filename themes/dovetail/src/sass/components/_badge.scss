@@ -1,0 +1,32 @@
+.dt-badge {
+  border-radius: 0.275rem;
+  display: inline-block;
+  font-size: 0.703125rem;
+  line-height: 1;
+  padding: 0.25em 0.4em;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+
+  &-soft {
+    &-success {
+      background-color: var(--soft-success);
+      color: var(--success);
+    }
+
+    &-error {
+      background-color: var(--soft-error);
+      color: var(--error);
+    }
+
+    &-info {
+      background-color: var(--soft-info);
+      color: var(--info);
+    }
+
+    &-warning {
+      background-color: var(--soft-warning);
+      color: var(--warning);
+    }
+  }
+}

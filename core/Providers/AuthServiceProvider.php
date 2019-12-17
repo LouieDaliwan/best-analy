@@ -2,10 +2,12 @@
 
 namespace Core\Providers;
 
+use Carbon\Carbon;
 use Core\Http\Guards\AdminGuard;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         $this->registerAdminGuard();
+
+        $this->registerPassportRoutes();
     }
 
     /**
@@ -41,5 +45,25 @@ class AuthServiceProvider extends ServiceProvider
         Auth::extend('admin', function ($app, $name, array $config) {
             return new AdminGuard($app->request, Auth::createUserProvider($config['provider']));
         });
+    }
+
+    /**
+     * Register any authentication/authorization services
+     * for the laravel/passport package.
+     *
+     * @return void
+     */
+    protected function registerPassportRoutes()
+    {
+        if (theme()->active()->has('spa') && theme()->active()->get('spa')) {
+            Passport::routes(function ($router) {
+                $router->forAccessTokens();
+                $router->forPersonalAccessTokens();
+                $router->forTransientTokens();
+            });
+
+            Passport::tokensExpireIn(Carbon::now()->addMinutes(settings('token:expiration:minutes', 10)));
+            Passport::refreshTokensExpireIn(Carbon::now()->addDays(settings('token:refresh:days', 10)));
+        }
     }
 }

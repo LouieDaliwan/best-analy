@@ -1,0 +1,18 @@
+.v-card {
+  &:not(.v-card--flat) {
+    box-shadow: var(--box-shadow);
+  }
+
+  &__text,
+  &__title {
+    padding: 20px;
+  }
+}
+
+.theme--light {
+  .v-card {
+    &:not(.v-card--flat) {
+      border: 1px solid var(--card-border-color);
+    }
+  }
+}

@@ -1,0 +1,14 @@
+export default {
+  set: function (to, from, next) {
+    const route = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
+
+    if (route && route.meta) {
+      document.title = route.meta.title;
+      if (route.meta.metatags) {
+        document
+          .querySelector('head meta[name="description"]')
+          .setAttribute('content', route.meta.metatags.description)
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ export default [
       icon: 'mdi-account-settings',
       authenticatable: true,
       sort: 5,
+      permission: 'users.index',
     },
     children: [
       // Admin User
@@ -15,9 +16,9 @@ export default [
         name: 'users.index',
         meta: {
           title: 'All Users',
-          icon: 'mdi-home',
           authenticatable: true,
           sort: 5,
+          permission: 'users.index',
         },
       },
     ],

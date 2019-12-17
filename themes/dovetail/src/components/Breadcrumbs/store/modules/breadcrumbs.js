@@ -1,13 +1,12 @@
 export const state = () => ({
   breadcrumbs: {
-    model: true,
-    items: [],
-    // leaf: null,
+    show: true,
   }
 })
 
 export const getters = {
-  breadcrumbs: state => state.breadcrumbs
+  breadcrumbs: state => state.breadcrumbs,
+  isShowing: state => state.breadcrumbs.show,
 }
 
 export const mutations = {
@@ -16,7 +15,7 @@ export const mutations = {
   },
 
   'TOGGLE' (state, payload) {
-    state.breadcrumbs.model = payload.model
+    state.breadcrumbs.show = payload.show
   },
 }
 

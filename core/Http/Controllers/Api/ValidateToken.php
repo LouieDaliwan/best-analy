@@ -2,10 +2,10 @@
 
 namespace Core\Http\Controllers\Api;
 
+use Core\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
-use Core\Http\Controllers\Controller;
 
-class ValidateToken extends Controller
+class ValidateToken extends ApiController
 {
     /**
      * Handle the incoming request.

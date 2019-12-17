@@ -1,9 +1,7 @@
-import * as logo from '@/assets/logo.png'
-
 export default {
-  title: 'Rippl3s',
+  title: 'SSA Innovations',
   tagline: 'Make each ripple count today',
-  logo: logo,
+  logo: "",
 
   dark: false,
 }

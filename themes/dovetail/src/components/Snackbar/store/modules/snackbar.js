@@ -1,70 +1,48 @@
+import store from '@/store'
+
 export const state = () => ({
   snackbar: {
     // Toggle
-    model: false,
+    show: false,
 
     // Typography
     text: 'text',
-    icon: 'info',
+    icon: false,
 
     // Settings
-    color: '',
+    color: 'dark',
     timeout: 8000,
     mode: null, // e.g. multi-line, vertical
 
     // Position
     x: 'center',
-    y: 'bottom',
+    y: 'top',
 
     // Button
-    button: true,
-    buttonIcon: false,
-    buttonText: 'Okay',
-    buttonCallback: () => {}
+    button: {
+      show: true,
+      icon: false,
+      text: 'Close',
+      callback: () => { store.dispatch('snackbar/toggle', {show: false}) }
+    },
   }
 })
 
 export const getters = {
-  snackbar: state => state.snackbar
+  snackbar: state => state.snackbar,
+  isShowing: state => state.snackbar.show,
 }
 
 export const mutations = {
-  SHOW_TOAST: (state, payload) => {
-    payload = Object.assign(state.snackbar, payload, { model: true })
-    state.snackbar = {
-      color: payload.color,
-      icon: payload.icon,
-      close: payload.close,
-      type: payload.type,
-      timeout: payload.timeout,
-      model: payload.model,
-      title: payload.title,
-      text: payload.text,
-      x: payload.x,
-      y: payload.y
-    }
-  },
-  HIDE_TOAST: (state, payload) => {
-    payload = Object.assign(state.snackbar, payload, { model: false })
-    state.snackbar = payload
-  },
   TOGGLE_TOAST: (state, payload) => {
-    payload = Object.assign(state.snackbar, payload)
-    state.snackbar = payload
+    state.snackbar = window._.merge({}, state.snackbar, payload)
   },
-
-  emptyState () {
-    this.replaceState({ snackbar: null })
-  }
 }
 
 export const actions = {
-  showToast: (context, payload) => {
-    context.commit('SHOW_TOAST', payload)
+  toggle: (context, payload) => {
+    context.commit('TOGGLE_TOAST', payload)
   },
-  hideToast: (context, payload) => {
-    context.commit('HIDE_TOAST', payload)
-  }
 }
 
 export const snackbar = {

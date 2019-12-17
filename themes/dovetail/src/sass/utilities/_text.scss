@@ -1,0 +1,52 @@
+.theme--light {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    color: var(--text);
+  }
+}
+
+.theme--dark {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    color: var(--accent);
+  }
+}
+
+.text {
+  &--truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 150px;
+  }
+
+  &--decoration {
+    &-none {
+      text-decoration: none;
+    }
+  }
+
+  &--ellipsis {
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: center;
+    display: -webkit-box;
+    flex-direction: column;
+    justify-content: space-around;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    line-height: 1.4;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

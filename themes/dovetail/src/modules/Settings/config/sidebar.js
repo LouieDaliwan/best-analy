@@ -7,39 +7,29 @@ export default [
       icon: 'mdi-tune',
       authenticatable: true,
       sort: 500,
+      permission: 'settings.preferences',
     },
     children: [
-      // Preferences
+      // General
       {
-        code: 'settings.preferences',
-        name: 'settings.preferences',
-        meta: {
-          title: 'Preferences',
-          icon: 'home',
-          authenticatable: true,
-          sort: 501,
-        },
-      },
-      // General Display
-      {
-        code: 'settings.general.display',
-        name: 'settings.general.display',
+        code: 'settings.general',
+        name: 'settings.general',
         meta: {
           title: 'General',
-          icon: 'home',
           authenticatable: true,
           sort: 501,
+          permission: 'settings.preferences',
         },
       },
       // Branding
       {
-        code: 'settings.branding.general',
-        name: 'settings.branding.general',
+        code: 'settings.branding',
+        name: 'settings.branding',
         meta: {
           title: 'Branding',
-          icon: 'home',
           authenticatable: true,
           sort: 501,
+          permission: 'settings.branding',
         },
       },
       // System
@@ -48,10 +38,10 @@ export default [
         name: 'settings.system',
         meta: {
           title: 'System',
-          icon: 'home',
           authenticatable: true,
           sort: 501,
         },
+        permission: 'settings.system',
       },
     ],
   }

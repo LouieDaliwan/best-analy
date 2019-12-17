@@ -1,0 +1,5 @@
+src/dist
+src/build
+src/**/*.ttf
+src/**/_variables.scss
+src/**/_reset.scss

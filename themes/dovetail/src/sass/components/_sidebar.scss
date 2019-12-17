@@ -1,0 +1,17 @@
+.dt-sidebar {
+  .v-list-item {
+    &__title {
+      font-size: 15px;
+    }
+
+    &__icon i {
+      font-size: var(--font-base);
+    }
+  }
+}
+
+.theme--dark {
+  .v-navigation-drawer {
+    background-color: var(--sidebar-bg-dark);
+  }
+}

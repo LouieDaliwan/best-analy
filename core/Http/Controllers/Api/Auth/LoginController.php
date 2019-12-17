@@ -6,6 +6,7 @@ use Core\Http\Controllers\Api\ApiController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use User\Http\Resources\User as UserResource;
 
 class LoginController extends ApiController
 {
@@ -78,42 +79,15 @@ class LoginController extends ApiController
     /**
      * The user has been authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed                     $user
-     * @return mixed
+     * @param  \Illuminate\Http\Request $request
+     * @param  \User\Models\User        $user
+     * @return \Illuminate\Http\Response
      */
     protected function authenticated(Request $request, $user)
     {
-        $client = DB::table('oauth_clients')->where('password_client', true)->first();
-
-        $data = [
-            'grant_type' => 'password',
-            'client_id' => $client->id,
-            'client_secret' => $client->secret,
-            'username' => $request->username,
-            'password' => $request->password,
-        ];
-
-        $request = Request::create('/oauth/token', 'POST', $data);
-
-        $response = app()->handle($request);
-
-        // Check if the request was successful.
-        if ($response->getStatusCode() != 200) {
-            return response()->json([
-                'message' => 'Wrong email or password',
-                'status' => 422
-            ], 422);
-        }
-
-        // Get the data from the response.
-        $data = json_decode($response->getContent());
-
-        // Format the final response in a desirable format.
         return response()->json([
-            'token' => $data->access_token,
-            'user' => $user,
-            'status' => 200
+            'user' => new UserResource($request->user()),
+            'token' => $user->createToken($user->username)->accessToken,
         ]);
     }
 }

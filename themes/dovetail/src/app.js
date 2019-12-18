@@ -12,6 +12,7 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import router from './plugins/router'
 import './plugins/vee-validate'
+import './plugins/shortkey'
 
 import '@/mixins'
 

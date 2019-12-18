@@ -9,15 +9,20 @@
 
           <v-card-text>
             <slot name="text">
-              <p class="muted--text font-weight-bold mb-0" v-text="trans('No resource found')"></p>
-              <p class="muted--text" v-text="trans('This page returned empty results.')"></p>
+              <p class="muted--text font-weight-bold mb-0" v-text="trans('No items yet')"></p>
+              <p class="muted--text" v-text="trans('Start adding key-value pairs.')"></p>
             </slot>
           </v-card-text>
 
-          <v-btn color="secondary" @click.prevent="add" large>
-            <v-icon left>mdi-plus-circle-outline</v-icon>
-            {{ trans('Add Item') }}
-          </v-btn>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on" v-shortkey="['ctrl', 'd']" @shortkey="add" @click="add" color="secondary" large>
+                <v-icon left>mdi-plus-circle-outline</v-icon>
+                {{ trans('Add Item') }}
+              </v-btn>
+            </template>
+            <span v-text="trans('ctrl+d')"></span>
+          </v-tooltip>
         </div>
       </slot>
     </template>
@@ -29,6 +34,9 @@
           outlined
           hide-details
           autocomplete="off"
+          autofocus
+          v-shortkey.avoid
+          class="dt-repeater--key"
           v-model="item.key"
           ></v-text-field>
       </v-col>
@@ -38,6 +46,7 @@
           outlined
           hide-details
           autocomplete="off"
+          class="dt-repeater--value"
           v-model="item.value"
         ></v-text-field>
       </v-col>
@@ -58,10 +67,15 @@
     <v-row v-if="repeaters.length" no-gutters>
       <v-col>
         <slot name="action" :on="{on: add}">
-          <v-btn @click.prevent="add" large>
-            <v-icon left>mdi-plus-circle-outline</v-icon>
-            {{ trans('Add Item') }}
-          </v-btn>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on" v-shortkey="['ctrl', 'd']" @shortkey="add" @click="add" large>
+                <v-icon left>mdi-plus-circle-outline</v-icon>
+                {{ trans('Add Item') }}
+              </v-btn>
+            </template>
+            <span v-text="trans('ctrl+d')"></span>
+          </v-tooltip>
         </slot>
       </v-col>
     </v-row>

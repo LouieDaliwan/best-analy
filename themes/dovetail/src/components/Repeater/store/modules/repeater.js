@@ -2,7 +2,7 @@ export const state = () => ({
   repeater: {
     defaults: [{key: '', value: ''}],
     template: {key: '', value: ''},
-    items: [{key: '', value: ''}],
+    items: [],
   }
 })
 

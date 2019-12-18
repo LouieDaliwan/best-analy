@@ -26,7 +26,20 @@ Route::middleware(['auth:api', 'json.force', 'client.credentials'])->prefix('v1'
     Route::get('logout', 'Api\Auth\LoginController@logout')->name('logout');
     Route::post('logout', 'Api\Auth\LoginController@logout')->name('logout');
 
-    // Route::get('user', function (Request $request) {
-    //     return $request->user();
-    // });
+    Route::get('user', function (Request $request) {
+        return $request->user();
+    });
+});
+
+/**
+ *------------------------------------------------------------------------------
+ * App Settings Route
+ *------------------------------------------------------------------------------
+ *
+ * Here is where you can register API routes for retrieving
+ * application settings.
+ *
+ */
+Route::middleware(['auth:api', 'json.force'])->prefix('v1')->group(function () {
+    Route::get('settings/app', 'Api\Settings\AppSettings')->name('settings.app');
 });

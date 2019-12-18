@@ -64,10 +64,13 @@ export const actions = {
       commit('AUTH_REQUEST')
       axios({url: $api.logout, data: null, method: 'post'})
         .then((response) => {
+          localStorage.removeItem('user')
+          localStorage.removeItem('token')
           resolve(response)
         })
         .catch(err => {
           commit('AUTH_ERROR')
+          localStorage.removeItem('user')
           localStorage.removeItem('token')
           reject(err)
         })

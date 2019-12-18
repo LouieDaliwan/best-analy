@@ -3,23 +3,23 @@
     <v-row align="center" justify="center">
       <v-img
         class="mb-3"
-        src="/logo.png"
-        lazy-src="/logo.png"
+        :src="app.logo"
+        :lazy-src="app.logo"
         :max-width="brand"
       ></v-img>
     </v-row>
-    <h3 class="mb-3">{{ __('LMS v3') }}</h3>
-    <p class="text--muted">{{ __('Sign in with your Rippl3s account') }}</p>
+    <h3 class="mb-3">{{ app.title }}</h3>
   </div>
 </template>
 
 <script>
+import app from '@/config/app'
+
 export default {
-  data () {
-    return {
-      brand: 100
-    }
-  }
+  data: () => ({
+    app,
+    brand: 120,
+  }),
 }
 </script>
 

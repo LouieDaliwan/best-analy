@@ -11,10 +11,10 @@
     <v-list>
       <v-list-item>
         <v-list-item-avatar>
-          <img src="/logo.png" width="40px">
+          <img :src="app.logo" :lazy-src="app.logo" width="40px">
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title class="primary--text" v-html="sidebar.title"></v-list-item-title>
+          <v-list-item-title class="primary--text" v-html="app.title"></v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -101,21 +101,31 @@
   </v-navigation-drawer>
 </template>
 <script>
+import app from '@/config/app'
 import menus from '@/config/sidebar'
 import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'Sidebar',
+
   computed: {
     ...mapGetters({
       sidebar: 'sidebar/sidebar',
       dark: 'theme/dark',
     }),
+
+    app: function () {
+      return app
+    },
+
     vuetify: function () {
       return this.$vuetify
     },
+
     menus: function () {
       return menus
     },
+
     sidebarmodel: {
       set (value) {
         this.toggle({ model: value })
@@ -125,17 +135,18 @@ export default {
       },
     },
   },
+
   methods: {
     ...mapActions({
       toggle: 'sidebar/toggle',
       clip: 'sidebar/clip',
       toggleTheme: 'theme/toggle',
     }),
+
     active (path) {
-      const children = path.children.map(function (child) {
+      return window._.includes(path.children.map(function (child) {
         return child.name
-      })
-      return window._.includes(children, this.$route.name)
+      }), this.$route.name)
     }
   },
 }

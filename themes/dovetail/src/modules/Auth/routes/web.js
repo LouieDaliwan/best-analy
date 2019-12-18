@@ -4,7 +4,7 @@ export default [
   {
     path: '/auth',
     name: 'auth',
-    redirect: { name: 'login.show' },
+    redirect: { name: 'login' },
     component: () => import('@/components/Layouts/Auth.vue'),
     meta: {
       title: 'Login',
@@ -22,7 +22,7 @@ export default [
           sort: 0,
           icon: 'mdi-account-key',
         },
-        beforeEnter: (to, from, next) => {
+        beforeRouteEnter: (to, from, next) => {
           const isAuthenticated = store.getters['auth/isAuthenticated']
 
           if (isAuthenticated) {
@@ -35,11 +35,11 @@ export default [
       {
         path: '/logout',
         name: 'logout',
-        beforeEnter: (to, from, next) => {
+        beforeRouteEnter: (to, from, next) => {
           store.dispatch('auth/logout')
             .then(response => {
-              window.location = '/login'
-              // return this.$router.push({ name: 'login' })
+              // window.location = '/login'
+              return this.$router.go({ name: 'login' })
             })
         },
       },

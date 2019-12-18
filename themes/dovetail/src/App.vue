@@ -5,9 +5,7 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
-  created: function () {}
+  name: 'App'
 }
 </script>

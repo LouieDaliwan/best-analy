@@ -34,7 +34,7 @@
         ></v-text-field>
       </v-col>
       <v-col cols="1" align-center>
-        <context-prompt v-showssd="i != 0">
+        <context-prompt>
           <v-card max-width="280">
             <v-card-title>{{ trans('Remove Item') }}</v-card-title>
             <v-card-text>{{ trans('Doing so will permanently remove the key-value pair from the list. Are you sure you want to proceed?') }}</v-card-text>

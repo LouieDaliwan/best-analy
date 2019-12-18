@@ -5,14 +5,25 @@
 
   &__text,
   &__title {
-    padding: 20px;
+    font-size: var(--font-size-base);
+    padding: var(--padding-base);
+  }
+
+  &__title {
+    font-weight: 700;
   }
 }
 
 .theme--light {
   .v-card {
+    color: var(--text);
+
     &:not(.v-card--flat) {
       border: 1px solid var(--card-border-color);
+    }
+
+    .v-card__text {
+      color: var(--text);
     }
   }
 }

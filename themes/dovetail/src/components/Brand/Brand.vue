@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center mb-3">
+  <section class="text-center mb-3">
     <v-row align="center" justify="center">
       <v-img
         class="mb-3"
@@ -8,8 +8,9 @@
         :max-width="brand"
       ></v-img>
     </v-row>
-    <h3 class="mb-3">{{ app.title }}</h3>
-  </div>
+    <h3 class="mb-3" v-text="app.title"></h3>
+    <p class="muted--text" v-text="app.tagline"></p>
+  </section>
 </template>
 
 <script>

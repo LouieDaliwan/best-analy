@@ -1,7 +1,7 @@
 export const state = () => ({
   glance: {
-    title: 'Test',
-    count: '12',
+    title: 'Glance',
+    count: '0',
     icon: 'mdi-account-outline'
   }
 })

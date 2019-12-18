@@ -11,7 +11,7 @@
           exact
           :to="{name: item.name}"
           >
-          <small>{{ item.text }}</small>
+          <small v-text="item.text"></small>
         </v-breadcrumbs-item>
       </template>
     </v-breadcrumbs>

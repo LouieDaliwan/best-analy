@@ -30,6 +30,8 @@
   --soft-success: #ccf7e5;
   --soft-info: #d7eff6;
   --soft-warning: #fdf3d9;
+  --padding-base: 20px;
+  --margin-base: 20px;
 }
 
 html {
@@ -286,11 +288,24 @@ pre {
 
 .v-card__text,
 .v-card__title {
-  padding: 20px;
+  font-size: var(--font-size-base);
+  padding: var(--padding-base);
+}
+
+.v-card__title {
+  font-weight: 700;
+}
+
+.theme--light .v-card {
+  color: var(--text);
 }
 
 .theme--light .v-card:not(.v-card--flat) {
   border: 1px solid var(--card-border-color);
+}
+
+.theme--light .v-card .v-card__text {
+  color: var(--text);
 }
 
 .nav-link {
@@ -311,6 +326,11 @@ pre {
 
 .theme--dark .v-navigation-drawer {
   background-color: var(--sidebar-bg-dark);
+}
+
+.v-subheader {
+  padding-left: var(--padding-base);
+  padding-right: var(--padding-base);
 }
 
 .theme--dark .v-toolbar {

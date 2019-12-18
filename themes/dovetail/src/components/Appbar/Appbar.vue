@@ -31,7 +31,7 @@
                       <div v-text="user.role" class="muted--text overline"></div>
                     </div>
                 </template>
-                <span>{{ trans(user.displayname) }}</span>
+                <span v-text="user.displayname"></span>
               </v-tooltip>
             </div>
           </div>
@@ -43,24 +43,27 @@
               <v-icon small class="text--muted">mdi-account-outline</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>{{ trans('My Profile') }}</v-list-item-title>
+              <v-list-item-title v-text="trans('My Profile')"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+
           <v-list-item>
             <v-list-item-action>
               <v-icon small class="text--muted">mdi-tune</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>{{ trans('Settings') }}</v-list-item-title>
+              <v-list-item-title v-text="trans('Settings')"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+
           <v-divider></v-divider>
+
           <v-list-item exact :to="{name: 'logout'}">
             <v-list-item-action>
               <v-icon small class="text--muted">mdi-power</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>{{ trans('Logout') }}</v-list-item-title>
+              <v-list-item-title v-text="trans('Logout')"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -70,12 +73,9 @@
 </template>
 
 <script>
-// import { user } from '@/utils/user'
 import { mapGetters, mapActions } from 'vuex'
-import store from '@/store'
 
 export default {
-  store,
   name: 'Appbar',
 
   data () {

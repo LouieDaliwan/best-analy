@@ -7,8 +7,12 @@
     >
     <v-card :class="{ 'text-xs-center': dialog.alignment == 'center' }">
       <slot name="illustration"></slot>
-      <v-card-title class="headline"><slot name="title">{{ trans(dialog.title) }}</slot></v-card-title>
-      <v-card-text><slot name="text">{{ trans(dialog.text) }}</slot></v-card-text>
+      <v-card-title class="headline">
+        <slot name="title">{{ trans(dialog.title) }}</slot>
+      </v-card-title>
+      <v-card-text>
+        <slot name="text">{{ trans(dialog.text) }}</slot>
+      </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
 
@@ -17,8 +21,8 @@
           :color="dialog.buttons.cancel.color"
           @click.native="dialog.buttons.cancel.callback()"
           text
+          v-text="trans(dialog.buttons.cancel.text)"
           >
-          {{ trans(dialog.buttons.cancel.text) }}
         </v-btn>
 
         <v-btn
@@ -26,8 +30,8 @@
           :color="dialog.buttons.action.color"
           @click.native="dialog.buttons.action.callback()"
           text
+          v-text="trans(dialog.buttons.action.text)"
           >
-          {{ trans(dialog.buttons.action.text) }}
         </v-btn>
       </v-card-actions>
     </v-card>

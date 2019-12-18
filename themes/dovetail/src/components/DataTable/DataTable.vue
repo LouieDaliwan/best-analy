@@ -1,10 +1,10 @@
 <template>
-  <v-slide-y-transition>
+  <v-fade-transition mode="in-out">
     <v-card>
       <v-data-table
         v-model="selected"
         :headers="headers"
-        :items="desserts"
+        :items="datasets"
         :single-select="singleSelect"
         item-key="name"
         show-select
@@ -14,7 +14,7 @@
         </template>
       </v-data-table>
     </v-card>
-  </v-slide-y-transition>
+  </v-fade-transition>
 </template>
 
 <script>

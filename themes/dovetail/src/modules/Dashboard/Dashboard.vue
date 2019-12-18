@@ -14,7 +14,7 @@
       <template v-else>
         <data-iterator :items="courses"></data-iterator>
       </template>
-  </section>
+
     <!-- <v-col>
       <cannot code="unexisting.permission">
         <div>You are not permitted to 'unexisting.permission'</div>
@@ -24,7 +24,7 @@
         <div>you can delete library entries</div>
       </can>
     </v-col> -->
-
+  </section>
 </template>
 
 <script>

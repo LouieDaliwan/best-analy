@@ -10,6 +10,7 @@
           <div class="text-center">
             <brand></brand>
           </div>
+
           <v-fade-transition mode="out-in">
             <login-form></login-form>
           </v-fade-transition>

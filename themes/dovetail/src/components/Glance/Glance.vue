@@ -9,11 +9,9 @@
             >
           </h3>
           <div class="d-flex align-center">
-            <h1 class="font-weight-regular">
-              {{ dataset.count }}
-            </h1>
+            <h1 class="font-weight-regular" v-text="dataset.count"></h1>
             <div v-if="dataset.badge" class="dt-badge dt-badge-soft-error mx-2">
-              +{{ dataset.deactivated }} {{ __('Deactivated') }}
+              +<span v-text="dataset.deactivated"></span> <span v-text="trans('Deactivated')"></span>
             </div>
           </div>
         </div>
@@ -26,11 +24,9 @@
 </template>
 
 <script>
-import store from '@/store'
 import { mapGetters } from 'vuex'
 
 export default {
-  store,
   name: 'Glance',
 
   props: ['items'],

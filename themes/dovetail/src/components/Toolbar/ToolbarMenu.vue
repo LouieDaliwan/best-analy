@@ -9,7 +9,7 @@
       <v-text-field
         single-line
         prepend-inner-icon="mdi mdi-magnify"
-        placeholder="Search"
+        placeholder="Search (''ctrl + /'' to focus)"
         filled
         rounded
         dense

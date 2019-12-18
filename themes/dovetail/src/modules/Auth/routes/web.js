@@ -38,48 +38,10 @@ export default [
         beforeRouteEnter: (to, from, next) => {
           store.dispatch('auth/logout')
             .then(response => {
-              // window.location = '/login'
-              return this.$router.go({ name: 'login' })
+              window.location = '/login'
             })
         },
       },
-
-      // Register
-      // {
-      //   path: '/register',
-      //   name: 'register.show',
-      //   component: () => import('../Signup.vue'),
-      //   meta: {
-      //     title: 'Sign Up',
-      //     sort: 0,
-      //     icon: 'mdi-account-key',
-      //   },
-      //   beforeEnter: (to, from, next) => {
-      //     if (user()) {
-      //       next({ name: 'admin' })
-      //     } else {
-      //       next()
-      //     }
-      //   },
-      // },
-
-      // // Passwords
-      // {
-      //   path: 'forgot/password',
-      //   name: 'password.forgot',
-      //   component: () => import('../ForgotPassword.vue'),
-      //   meta: {
-      //     title: 'Forgot Password',
-      //     icon: 'mdi-account-key',
-      //   },
-      //   beforeEnter: (to, from, next) => {
-      //     if (user()) {
-      //       next({ name: 'admin' })
-      //     } else {
-      //       next()
-      //     }
-      //   },
-      // },
     ],
   },
 ];

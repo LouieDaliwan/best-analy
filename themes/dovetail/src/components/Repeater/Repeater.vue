@@ -1,19 +1,27 @@
 <template>
-  <v-container fluid class="pa-0">
+  <section>
     <template v-if="! repeaters.length">
       <slot name="empty-state">
-        <v-row align="center">
-          <v-col lg="12" class="text-center">
-            <div style="filter: grayscale(0.9);"><man-on-laptop width="200" height="auto"></man-on-laptop></div>
-            <p>Empty State Illustration <br>goes here</p>
-            <v-btn @click.prevent="add" large>
-              <v-icon left>mdi-plus-circle-outline</v-icon>
-              {{ trans('Add Item') }}
-            </v-btn>
-          </v-col>
-        </v-row>
+        <div class="text-center">
+          <v-card-text style="filter: grayscale(0.9);">
+            <empty-icon width="300" height="auto"></empty-icon>
+          </v-card-text>
+
+          <v-card-text>
+            <slot name="text">
+              <p class="muted--text font-weight-bold mb-0" v-text="trans('No resource found')"></p>
+              <p class="muted--text" v-text="trans('This page returned empty results.')"></p>
+            </slot>
+          </v-card-text>
+
+          <v-btn color="secondary" @click.prevent="add" large>
+            <v-icon left>mdi-plus-circle-outline</v-icon>
+            {{ trans('Add Item') }}
+          </v-btn>
+        </div>
       </slot>
     </template>
+
     <v-row align="center" :key="i" v-for="(item, i) in repeaters">
       <v-col cols="auto">
         <v-text-field
@@ -33,6 +41,7 @@
           v-model="item.value"
         ></v-text-field>
       </v-col>
+
       <v-col cols="1" align-center>
         <context-prompt>
           <v-card max-width="280">
@@ -56,7 +65,7 @@
         </slot>
       </v-col>
     </v-row>
-  </v-container>
+  </section>
 </template>
 
 <script>

@@ -1,9 +1,9 @@
 <template>
-  <v-slide-y-transition>
+  <v-fade-transition mode="out-in">
     <v-data-iterator
-      :items="dataset.items"
-      :items-per-page.sync="dataset.itemsPerPage"
       :footer-props="{itemsPerPage: dataset.itemsPerPageOptions}"
+      :items-per-page.sync="dataset.itemsPerPage"
+      :items="dataset.items"
       >
       <template v-slot:default="props">
         <v-row>
@@ -30,21 +30,22 @@
                     >
                   </v-img>
                 </template>
-                <span v-html="trans(item.title)"></span>
+                <span v-text="trans(item.title)"></span>
               </v-tooltip>
 
               <v-card-text>
-                <p class="body-2 secondary--text mb-1" v-html="trans(item.category)"></p>
-                <p class="font-weight-bold" v-html="trans(item.title)"></p>
-                <p class="text--ellipsis" v-html="trans(item.description)"></p>
+                <p class="body-2 secondary--text mb-1" v-text="trans(item.category)"></p>
+                <p class="font-weight-bold" v-text="trans(item.title)"></p>
+                <p class="text--ellipsis" v-text="trans(item.description)"></p>
               </v-card-text>
+
               <slot name="actions"></slot>
             </v-card>
           </v-col>
         </v-row>
       </template>
     </v-data-iterator>
-  </v-slide-y-transition>
+  </v-fade-transition>
 </template>
 
 <script>

@@ -11,7 +11,7 @@
     <v-list>
       <v-list-item>
         <v-list-item-avatar>
-          <img src="/logo.png" width="40px">
+          <img :src="app.logo" :lazy-src="app.logo" width="40px">
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title class="primary--text" v-html="app.title"></v-list-item-title>
@@ -101,6 +101,7 @@
   </v-navigation-drawer>
 </template>
 <script>
+import app from '@/config/app'
 import menus from '@/config/sidebar'
 import { mapGetters, mapActions } from 'vuex'
 
@@ -114,12 +115,7 @@ export default {
     }),
 
     app: function () {
-      return {
-        title: this.$store.getters['app/title'],
-        tagline: this.$store.getters['app/tagline'],
-        author: this.$store.getters['app/author'],
-        year: this.$store.getters['app/year'],
-      }
+      return app
     },
 
     vuetify: function () {
@@ -148,10 +144,9 @@ export default {
     }),
 
     active (path) {
-      const children = path.children.map(function (child) {
+      return window._.includes(path.children.map(function (child) {
         return child.name
-      })
-      return window._.includes(children, this.$route.name)
+      }), this.$route.name)
     }
   },
 }

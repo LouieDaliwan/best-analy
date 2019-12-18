@@ -22,14 +22,10 @@
 
 <script>
 import LoginForm from './cards/LoginForm'
-import LoginIcon from '@/components/Icons/LoginIcon'
-import Brand from '@/components/Brand/Brand'
 
 export default {
   components: {
     LoginForm,
-    LoginIcon,
-    Brand
   },
 }
 </script>

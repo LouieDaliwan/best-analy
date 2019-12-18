@@ -54,6 +54,14 @@ class WidgetServiceProvider extends ServiceProvider
      */
     protected function registerWidgetViewDirectory()
     {
+        try {
+            if (file_exists(theme()->active('views/widgets'))) {
+                $this->loadViewsFrom(theme()->active('views/widgets'), 'widgets');
+            }
+        } catch (\Exception $e) {
+            unset($e);
+        }
+
         $this->loadViewsFrom(resource_path('views/widgets'), 'widgets');
     }
 
@@ -71,6 +79,8 @@ class WidgetServiceProvider extends ServiceProvider
         $this->app->singleton('core.widget', function ($app) {
             return new Factories\WidgetFactory($app, $app[WidgetManifest::class]);
         });
+
+        $this->app->bind('manifest:widget', WidgetManifest::class);
     }
 
     /**

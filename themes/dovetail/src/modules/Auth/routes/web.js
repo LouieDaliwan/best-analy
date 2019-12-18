@@ -22,7 +22,7 @@ export default [
           sort: 0,
           icon: 'mdi-account-key',
         },
-        beforeRouteEnter: (to, from, next) => {
+        beforeEnter: (to, from, next) => {
           const isAuthenticated = store.getters['auth/isAuthenticated']
 
           if (isAuthenticated) {
@@ -35,10 +35,10 @@ export default [
       {
         path: '/logout',
         name: 'logout',
-        beforeRouteEnter: (to, from, next) => {
+        beforeEnter: (to, from, next) => {
           store.dispatch('auth/logout')
             .then(response => {
-              window.location = '/login'
+              window.location.reload()
             })
         },
       },

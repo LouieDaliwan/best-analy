@@ -33,12 +33,21 @@ class InspiringQuote extends AbstractWidget
     protected $intervals = false;
 
     /**
+     * Inject any dependencies.
+     *
+     */
+    public function __construct()
+    {
+        $this->attributes = [Inspiring::quote()];
+    }
+
+    /**
      * Render the widget into the view.
      *
      * @return string|null
      */
     public function handle()
     {
-        return view('widgets::inspire')->withQuote(Inspiring::quote());
+        return view('widgets::inspire')->withQuote($this->attributes()[0]);
     }
 }

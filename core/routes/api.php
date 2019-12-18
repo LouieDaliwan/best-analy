@@ -40,6 +40,7 @@ Route::middleware(['auth:api', 'json.force', 'client.credentials'])->prefix('v1'
  * application settings.
  *
  */
+
 Route::middleware(['auth:api', 'json.force'])->prefix('v1')->group(function () {
     Route::get('settings/app', 'Api\Settings\AppSettings')->name('settings.app');
 });

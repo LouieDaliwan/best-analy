@@ -14,12 +14,12 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
-        return array_merge(parent::toArray($request), [
+        return collect(array_merge(parent::toArray($request), [
             'displayname' => $this->displayname,
             'birthday' => $this->detail('Birthday'),
             'avatar' => $this->avatar,
             'role' => $this->role,
             'permissions' => $this->permissions->pluck('code'),
-        ]);
+        ]))->except(['id'])->toArray();
     }
 }

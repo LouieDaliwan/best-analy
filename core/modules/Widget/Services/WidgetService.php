@@ -66,4 +66,24 @@ class WidgetService extends Service implements WidgetServiceInterface
     {
         return $this->manifest->find($alias);
     }
+
+    /**
+     * Retrieve the all widgets registered in the WidgetManifest.
+     *
+     * @return array
+     */
+    public function widgets()
+    {
+        return $this->manifest->all()->map(function ($w) {
+            $widget = app()->make($w['fullname']);
+            return [
+                'name' => $w['name'],
+                'alias' => $w['alias'],
+                'data' => $widget->attributes(),
+                'description' => $w['description'],
+                'interval' => $widget->getIntervals(),
+                'render' => $widget->render($widget->attributes()),
+            ];
+        });
+    }
 }

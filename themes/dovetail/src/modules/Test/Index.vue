@@ -14,6 +14,11 @@
         <repeater v-model="repeaters"></repeater>
       </v-card-text>
     </v-card>
+
+    <h3 class="mb-2 mt-9">Widgets</h3>
+    <template class="mt-3" v-for="(widget, i) in widgets">
+      <div :key="i" v-html="widget.render"></div>
+    </template>
   </div>
 </template>
 
@@ -23,7 +28,8 @@ export default {
 
   data () {
     return {
-      repeaters: []
+      repeaters: [],
+      widgets: [],
       //   {key: 'app:title', value: 'BEST Analytics'},
       //   {key: 'app:year', value: '2020'},
       //   {key: 'app:theme', value: 'dovetail'},
@@ -38,6 +44,13 @@ export default {
         text: 'This is a sample toast message'
       })
     }
+  },
+
+  mounted () {
+    axios.get('/api/v1/widgets')
+      .then(response => {
+        this.widgets = response.data
+      })
   },
 }
 </script>

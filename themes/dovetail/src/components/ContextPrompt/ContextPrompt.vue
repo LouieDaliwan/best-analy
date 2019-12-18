@@ -1,8 +1,8 @@
 <template>
   <div class="dt-context-prompt">
-    <v-menu bottom left >
+    <v-menu bottom left>
       <template v-slot:activator="{ on }">
-        <slot name="button" :on="on">
+        <slot name="activator" :on="on">
           <v-btn
             icon
             v-on="on"

@@ -16,16 +16,7 @@
 </template>
 
 <script>
-import store from '@/store';
-import { mapGetters } from 'vuex';
-
 export default {
-  store,
-
-  computed: {
-    ...mapGetters({
-      app: 'app/app',
-    }),
-  },
+  name: 'Auth',
 }
 </script>

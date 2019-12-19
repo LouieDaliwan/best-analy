@@ -9,6 +9,8 @@ import './bootstrap'
 import Vue from 'vue'
 import App from './App.vue'
 
+import store from '@/store'
+
 import vuetify from './plugins/vuetify'
 import router from './plugins/router'
 import './plugins/vee-validate'
@@ -28,6 +30,7 @@ import '@/components'
 Vue.config.productionTip = false;
 
 const app = new Vue({
+  store,
   router,
   vuetify,
   render: h => h(App),

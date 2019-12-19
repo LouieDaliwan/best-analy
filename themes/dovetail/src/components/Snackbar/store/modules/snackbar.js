@@ -37,11 +37,19 @@ export const mutations = {
   TOGGLE_TOAST: (state, payload) => {
     state.snackbar = window._.merge({}, state.snackbar, payload)
   },
+
+  SHOW: (state, payload) => {
+    state.snackbar = window._.merge({}, state.snackbar, payload, {show: true})
+  },
 }
 
 export const actions = {
   toggle: (context, payload) => {
     context.commit('TOGGLE_TOAST', payload)
+  },
+
+  show: (context, payload) => {
+    context.commit('SHOW', payload)
   },
 }
 

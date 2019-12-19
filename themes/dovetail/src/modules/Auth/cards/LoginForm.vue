@@ -48,12 +48,10 @@
 </template>
 
 <script>
-import store from '@/store'
 import $api from '@/routes/api'
+import $auth from '@/core/Auth/auth'
 
 export default {
-  store,
-
   name: 'Login',
 
   data () {
@@ -84,6 +82,9 @@ export default {
         .then(() => {
           this.$store.dispatch('sidebar/toggle', {model: true})
           this.$router.push({name: 'dashboard'})
+          this.$store.dispatch('snackbar/show', {
+            text: trans('Welcome back, ') + $auth.getUser().displayname
+          })
         })
         .catch(err => {
           this.loading = false

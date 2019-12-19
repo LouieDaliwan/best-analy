@@ -1,15 +1,17 @@
 // Theme
-$primary:                   #1a68d1;
-$secondary:                 #edf2f9;
-$accent:                    #ffffff;
-$tertiary:                  #f39e2b;
+$primary:                   #0C5689;
+$secondary:                 #e56e37;
+$accent:                    #f39e2b;
 $light:                     #f8f9fa;
+$white:                     #ffffff;
+$link:                      #868e96;
 
 // Contextual
 $success:                   #00d97e;
 $error:                     #e63757;
 $info:                      #39afd1;
 $warning:                   #f6c343;
+$muted:                     #95aac9;
 
 $soft-success:              #ccf7e5;
 $soft-error:                #fad7dd;
@@ -18,12 +20,13 @@ $soft-warning:              #fdf3d9;
 
 // Components
 $sidebar-bg-dark:           #2b343a;
+$sidebar-border:            #e3ebf6;
 $workspace:                 #f9fbfd;
 $workspace-dark:            #212c32;
-$muted:                     #95aac9;
 $toolbar-bg-dark:           #1e262b;
 $card-border-color:         #edf2f9;
 $card-border-color-dark:    #212c32;
+$field-border-color:        #d2ddec;
 
 // Body
 $text:                       #12263f;
@@ -38,7 +41,6 @@ $font-base:                 16px;
 $font-size-base:            15px !default; // Assumes the browser default, typically `16px`
 $font-size-lg:              ($font-size-base * 1.25) !default;
 $font-size-sm:              ($font-size-base * .875) !default;
-$font-size-root:            15px;
 
 // Margins & Paddings
 $padding-base:              20px;

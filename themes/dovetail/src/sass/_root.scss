@@ -19,6 +19,8 @@
   // Color
   --text: #{$text};
   --text-muted: #{$muted};
+  --white: #{$white};
+  --link: #{$link};
 
   // Font
   --font-family-base: #{$font-family-base};
@@ -27,10 +29,13 @@
   --font-family-sans-serif: #{$font-family-sans-serif};
   --font-size-base: #{$font-size-base};
   --font-base: #{$font-base};
-  --font-size-root: #{$font-size-root};
+
+  // Field
+  --field-border-color: #{$field-border-color};
 
   // Sidebar
   --sidebar-bg-dark: #{$sidebar-bg-dark};
+  --sidebar-border: #{$sidebar-border};
 
   // Toolbar
   --toolbar-bg-dark: #{$toolbar-bg-dark};
@@ -39,14 +44,14 @@
   --workspace-bg: #{$workspace};
   --workspace-bg-dark: #{$workspace-dark};
 
-  // Contextual
+  // Contextual Color
   --error: #{$error};
   --success: #{$success};
   --info: #{$info};
   --warning: #{$warning};
   --accent: #{$accent};
 
-  // Contextual
+  // Contextual Background Color
   --soft-error: #{$soft-error};
   --soft-success: #{$soft-success};
   --soft-info: #{$soft-info};

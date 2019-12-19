@@ -1,8 +1,24 @@
-.v-btn {
-  letter-spacing: 0;
-  text-transform: capitalize;
+.dovetail-app {
+  .v-btn {
+    font-size: var(--font-size-base);
+    letter-spacing: 0;
+    text-transform: capitalize;
 
-  &__content {
-    font-size: var(--font-size-root);
+    &__content {
+      font-size: var(--font-size-base);
+    }
+  }
+
+  .dt-link {
+    color: var(--link);
+
+    i {
+      color: var(--link);
+    }
+
+    &:hover,
+    &:hover i {
+      color: var(--primary);
+    }
   }
 }

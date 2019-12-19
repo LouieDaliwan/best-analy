@@ -1,17 +1,15 @@
-.dt-sidebar {
-  .v-list-item {
-    &__title {
-      font-size: 15px;
-    }
-
-    &__icon i {
-      font-size: var(--font-base);
+.dovetail-app {
+  &.theme--light {
+    .v-navigation-drawer--fixed {
+      .v-navigation-drawer__border {
+        background-color: var(--sidebar-border);
+      }
     }
   }
-}
 
-.theme--dark {
-  .v-navigation-drawer {
-    background-color: var(--sidebar-bg-dark);
+  &.theme--dark {
+    .v-navigation-drawer {
+      background-color: var(--sidebar-bg-dark);
+    }
   }
 }

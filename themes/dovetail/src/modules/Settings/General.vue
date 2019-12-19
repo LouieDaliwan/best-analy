@@ -19,13 +19,12 @@
 
             <v-text-field
               :label="trans('Items per Page')"
-              autofocus
               class="mb-3"
               outlined
             ></v-text-field>
 
             <div class="d-flex justify-end">
-              <v-btn color="primary" v-text="trans('Save Settings')"></v-btn>
+              <v-btn large color="primary" v-text="trans('Save Settings')"></v-btn>
             </div>
           </v-card-text>
         </v-card>
@@ -33,11 +32,3 @@
     </v-row>
   </section>
 </template>
-
-<script>
-import store from '@/store'
-
-export default {
-  store,
-}
-</script>

@@ -29,17 +29,18 @@
           v-model="auth.password"
         ></v-text-field>
       </validation-provider>
+
       <v-btn
         type="submit"
         :disabled="loading"
         :loading="loading"
         color="primary"
         x-large block
-        v-text="trans('Sign in')"
         >
+        {{ __('Sign In') }}
         <template v-slot:loader>
           <v-slide-x-transition><v-icon dark class="mdi-spin mr-3">mdi-loading</v-icon></v-slide-x-transition>
-          <span v-text="trans('Signing in...')"></span>
+          <span>{{ 'Signing in...' }}</span>
         </template>
       </v-btn>
     </v-form>

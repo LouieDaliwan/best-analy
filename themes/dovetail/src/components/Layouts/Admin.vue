@@ -1,5 +1,5 @@
 <template>
-  <v-app :dark="true">
+  <v-app class="dovetail-app" :dark="true">
     <sidebar></sidebar>
 
     <snackbar></snackbar>

@@ -4,8 +4,8 @@
       <div>
         <slot name="back" :back="back">
           <div class="mb-2" v-if="back">
-            <router-link tag="a" exact :to="back" class="link--text text--decoration-none body-1">
-              <v-icon small class="mb-1 mdi mdi-chevron-left link--text"></v-icon>
+            <router-link tag="a" exact :to="back" class="text--decoration-none body-1 dt-link">
+              <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
               <span v-text="trans('Back')"></span>
             </router-link>
           </div>

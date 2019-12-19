@@ -1,7 +1,6 @@
 <template>
   <v-fade-transition mode="out-in">
     <v-data-iterator
-      :footer-props="{itemsPerPage: dataset.itemsPerPageOptions}"
       :items-per-page.sync="dataset.itemsPerPage"
       :items="dataset.items"
       >

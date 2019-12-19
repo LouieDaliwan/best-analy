@@ -6,13 +6,12 @@
       </v-col>
     </v-row>
 
-    <toolbar-menu :items="toolbar" class="mb-3"></toolbar-menu>
+    <toolbar-menu class="mb-3"></toolbar-menu>
       <template v-if="toggletoolbar.toggleview">
-        <data-table :items="courses"></data-table>
-      </template>
-
-      <template v-else>
         <data-iterator :items="courses"></data-iterator>
+      </template>
+      <template v-else>
+        Switched to another view <code>data-table</code>
       </template>
 
     <!-- <v-col>
@@ -28,63 +27,52 @@
 </template>
 
 <script>
-import store from '@/store'
 import { mapGetters } from 'vuex'
 
 export default {
-  store,
-
-  data () {
-    return {
-      staffs: [
-        {
-          title: 'Staff',
-          count: '0',
-          icon: 'mdi-account-outline',
-          badge: true,
-          deactivated: '3',
-        },
-        {
-          title: 'Department',
-          count: '0',
-          icon: 'mdi-door-closed'
-        },
-        {
-          title: 'Designation',
-          count: '0',
-          icon: 'mdi-folder-account-outline'
-        },
-        {
-          title: 'User',
-          count: '10',
-          icon: 'mdi-account-multiple-outline'
-        },
-      ],
-      courses: {
-        hover: true,
-        url: 'www.google.com',
-        items: [
-          {
-            thumbnail: '//cdn.dribbble.com/users/2559/screenshots/3145041/illushome_1x.png',
-            title: 'Far far away, behind the word mountains',
-            description: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.',
-            category: 'Taxonomy'
-          },
-        ]
+  data: () => ({
+    staffs: [
+      {
+        title: 'Staff',
+        count: '0',
+        icon: 'mdi-account-outline',
+        badge: true,
+        deactivated: '3',
       },
-    }
-  },
+      {
+        title: 'Department',
+        count: '0',
+        icon: 'mdi-door-closed'
+      },
+      {
+        title: 'Designation',
+        count: '0',
+        icon: 'mdi-folder-account-outline'
+      },
+      {
+        title: 'User',
+        count: '10',
+        icon: 'mdi-account-multiple-outline'
+      },
+    ],
+    courses: {
+      hover: true,
+      url: 'www.google.com',
+      items: [
+        {
+          thumbnail: '//cdn.dribbble.com/users/2559/screenshots/3145041/illushome_1x.png',
+          title: 'Far far away, behind the word mountains',
+          description: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.',
+          category: 'Taxonomy'
+        },
+      ]
+    },
+  }),
 
   computed: {
     ...mapGetters({
-      dialogbox: 'dialogbox/dialogbox',
-      modal: 'modal/modal',
       toggletoolbar: 'toolbar/toolbar',
     }),
-
-    empty: function () {
-      return true // this.dataset.items.length === 0
-    },
   },
 }
 </script>

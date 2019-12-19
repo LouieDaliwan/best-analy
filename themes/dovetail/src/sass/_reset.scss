@@ -1,6 +1,6 @@
 html {
   direction: ltr;
-  font-size: var(--font-size-root);
+  font-size: var(--font-size-base);
   min-height: 100%;
   color: var(--text);
 }
@@ -32,7 +32,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   font-family: var(--font-family-base);
-  font-size: var(--font-size-root);
+  font-size: var(--font-size-base);
 }
 
 ::-webkit-scrollbar {

@@ -1,7 +1,6 @@
 export const state = () => ({
   dataiterator: {
     // Pagination
-    itemsPerPageOptions: [4, 8, 12],
     itemsPerPage: 4,
 
     // Card

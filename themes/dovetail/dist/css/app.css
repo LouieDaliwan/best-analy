@@ -44,11 +44,9 @@ html {
   direction: ltr;
   font-size: var(--font-size-base);
   min-height: 100%;
-  color: var(--text);
 }
 
 body {
-  color: var(--text);
   direction: ltr;
   font-family: var(--font-family-base);
   font-feature-settings: "liga" 0;
@@ -183,8 +181,6 @@ pre {
   cursor: pointer;
 }
 
-.theme--light div[class^=v-],
-.theme--light div[class*=" v-"],
 .theme--light h1,
 .theme--light h2,
 .theme--light h3,
@@ -195,8 +191,6 @@ pre {
   color: var(--text);
 }
 
-.theme--dark div[class^=v-],
-.theme--dark div[class*=" v-"],
 .theme--dark h1,
 .theme--dark h2,
 .theme--dark h3,
@@ -238,12 +232,10 @@ pre {
 
 .theme--light.v-application {
   background-color: var(--workspace-bg);
-  color: var(--text);
 }
 
 .theme--dark.v-application {
   background-color: var(--workspace-bg-dark);
-  color: var(--white);
 }
 
 .v-app-bar.v-app-bar--hide-shadow {

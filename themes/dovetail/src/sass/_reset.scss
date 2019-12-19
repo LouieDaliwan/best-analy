@@ -2,11 +2,9 @@ html {
   direction: ltr;
   font-size: var(--font-size-base);
   min-height: 100%;
-  color: var(--text);
 }
 
 body {
-  color: var(--text);
   direction: ltr;
   font-family: var(--font-family-base);
   -webkit-font-feature-settings: "liga" 0;

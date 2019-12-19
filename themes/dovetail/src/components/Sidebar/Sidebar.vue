@@ -100,6 +100,7 @@
     </template>
   </v-navigation-drawer>
 </template>
+
 <script>
 import app from '@/config/app'
 import menus from '@/config/sidebar'

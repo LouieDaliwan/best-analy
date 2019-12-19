@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="mb-3">
     <v-card-text>
       <div class="d-flex fill-height justify-space-between align-center">
         <div>

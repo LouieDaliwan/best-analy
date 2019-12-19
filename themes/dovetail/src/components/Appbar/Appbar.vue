@@ -58,7 +58,7 @@
 
           <v-divider></v-divider>
 
-          <v-list-item exact :to="{name: 'login'}">
+          <v-list-item exact :to="{name: 'logout'}">
             <v-list-item-action>
               <v-icon small class="text--muted">mdi-power</v-icon>
             </v-list-item-action>

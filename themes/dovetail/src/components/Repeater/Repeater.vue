@@ -16,7 +16,7 @@
 
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-btn v-on="on" v-shortkey="['ctrl', 'd']" @shortkey="add" @click="add" color="secondary" large>
+              <v-btn v-on="on" v-shortkey="['ctrl', 'd']" @shortkey="add" @click="add" large>
                 <v-icon left>mdi-plus-circle-outline</v-icon>
                 {{ trans('Add Item') }}
               </v-btn>

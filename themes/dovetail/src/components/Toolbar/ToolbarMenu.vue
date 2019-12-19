@@ -3,29 +3,43 @@
     flat
     :color="dataset.color"
     v-model="dataset.model"
+    height="80"
     >
 
-    <v-col cols="12" xs="12" sm="12" md="6" lg="4">
-      <v-text-field
-        single-line
-        prepend-inner-icon="mdi mdi-magnify"
-        placeholder="Search (''ctrl + /'' to focus)"
-        filled
-        rounded
-        dense
-        hide-details
-        clearable
-        clear-icon="mdi mdi-close-circle-outline"
-      ></v-text-field>
-    </v-col>
+    <v-row>
+      <v-col cols="12" xs="12" sm="12" md="6">
+        <v-text-field
+          single-line
+          prepend-inner-icon="mdi mdi-magnify"
+          placeholder="Search (''ctrl + /'' to focus)"
+          filled
+          background-color="#f9fbfd"
+          rounded
+          dense
+          hide-details
+          clearable
+          clear-icon="mdi-close-circle-outline"
+        ></v-text-field>
+      </v-col>
+    </v-row>
 
     <v-spacer></v-spacer>
 
-    <v-divider vertical></v-divider>
 
     <!-- Bulk select -->
+    <v-btn class="mr-3">
+      <v-icon small>mdi-checkbox-marked-circle-outline</v-icon>
+    </v-btn>
     <!-- Bulk export -->
+    <v-btn class="mr-3">
+      <v-icon small>mdi-export</v-icon>
+    </v-btn>
     <!-- Bulk trash -->
+    <v-btn class="mr-3">
+      <v-icon small>mdi-delete-outline</v-icon>
+    </v-btn>
+
+    <v-divider vertical></v-divider>
 
     <!-- list and grid view -->
     <template v-if="dataset.listGridView">

@@ -1,5 +1,5 @@
 <template>
-  <v-app v-cloak toolbar footer>
+  <v-app v-cloak toolbar footer class="dovetail-app">
     <v-slide-y-transition mode="out-in">
       <v-container fill-height>
         <v-col cols="12">

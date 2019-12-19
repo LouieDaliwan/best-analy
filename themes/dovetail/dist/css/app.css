@@ -3,6 +3,7 @@
   --body-color: #12263f;
   --breadcrumbs-padding: 0 0;
   --box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --button-border-color: #dee2e6;
   --card-border-radius: 8px;
   --card-border-color: #edf2f9;
   --card-border-color-dark: #212c32;
@@ -24,6 +25,8 @@
   --toolbar-bg-dark: #1e262b;
   --workspace-bg: #f9fbfd;
   --workspace-bg-dark: #212c32;
+  --primary: #0C5689;
+  --secondary: #e56e37;
   --error: #e63757;
   --success: #00d97e;
   --info: #39afd1;
@@ -305,6 +308,12 @@ pre {
   color: var(--primary);
 }
 
+.theme--light .v-btn:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
+  background: var(--workspace-bg);
+  border: 1px solid var(--button-border-color);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
 .dovetail-app .v-card:not(.v-card--flat) {
   box-shadow: var(--box-shadow);
 }
@@ -336,6 +345,10 @@ pre {
   color: var(--text);
 }
 
+.theme--light .v-divider {
+  border-color: var(--sidebar-border);
+}
+
 .theme--dark .v-sheet {
   background: var(--sidebar-bg-dark);
 }
@@ -348,13 +361,50 @@ pre {
   background-color: var(--sidebar-bg-dark);
 }
 
+.theme--light div[class^=v-snack] {
+  color: var(--white);
+}
+
 .v-subheader {
   padding-left: var(--padding-base);
   padding-right: var(--padding-base);
 }
 
+.theme--dark.v-data-table td,
+.theme--dark.v-data-table th,
+.theme--light.v-data-table td,
+.theme--light.v-data-table th {
+  height: 60px;
+}
+
+.theme--dark.v-data-table thead tr th,
+.theme--light.v-data-table thead tr th {
+  text-transform: uppercase;
+}
+
 .theme--dark.v-data-table {
   background-color: var(--sidebar-bg-dark);
+}
+
+.theme--dark.v-data-table thead tr th {
+  background: var(--toolbar-bg-dark);
+}
+
+.theme--light.v-data-table thead tr th {
+  background: var(--workspace-bg);
+  color: var(--text);
+}
+
+.theme--light.v-data-table thead tr:last-child th {
+  border-bottom: 1px solid var(--sidebar-border);
+}
+
+.theme--light.v-data-table tbody tr:not(:last-child) td:not(.v-data-table__mobile-row) {
+  border-bottom: 1px solid var(--sidebar-border);
+}
+
+.theme--light.v-data-table .v-data-footer {
+  border-top: 1px solid var(--sidebar-border);
 }
 
 .theme--dark .v-toolbar {
@@ -363,5 +413,9 @@ pre {
 
 .dovetail-app .v-app-bar--is-scrolled {
   box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.04);
+}
+
+.theme--light div[class^=v-tooltip] {
+  color: var(--white);
 }
 

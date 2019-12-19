@@ -9,53 +9,27 @@ export default [
       icon: 'mdi-book-multiple-variant',
     },
     children: [
-      // Preferences
+      // General
       {
-        path: 'preferences',
+        path: 'general',
         props: true,
-        name: 'settings.preferences',
-        component: () => import('../Preferences.vue'),
+        name: 'settings.general',
+        component: () => import('../General.vue'),
         meta: {
-          title: 'Preferences',
+          title: 'General',
           sort: 6,
           authenticatable: true,
           icon: 'mdi-book-multiple-variant',
         },
       },
-      // General Display
+      // Branding
       {
-        path: 'general/display',
+        path: 'branding',
         props: true,
-        name: 'settings.general.display',
-        component: () => import('../Display.vue'),
-        meta: {
-          title: 'Display',
-          sort: 6,
-          authenticatable: true,
-          icon: 'mdi-book-multiple-variant',
-        },
-      },
-      // Branding General
-      {
-        path: 'branding/general',
-        props: true,
-        name: 'settings.branding.general',
+        name: 'settings.branding',
         component: () => import('../Branding.vue'),
         meta: {
           title: 'Branding',
-          sort: 6,
-          authenticatable: true,
-          icon: 'mdi-book-multiple-variant',
-        },
-      },
-      // Branding Email
-      {
-        path: 'branding/email',
-        props: true,
-        name: 'settings.branding.email',
-        component: () => import('../Email.vue'),
-        meta: {
-          title: 'Email',
           sort: 6,
           authenticatable: true,
           icon: 'mdi-book-multiple-variant',

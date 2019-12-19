@@ -1,36 +1,26 @@
 <template>
-  <v-app v-cloak toolbar footer :dark="app.dark">
-  <!-- :dark="app.dark" -->
-    <!-- Sidebar -->
+  <v-app class="dovetail-app" :dark="true">
     <sidebar></sidebar>
 
-    <!-- Snackbar -->
     <snackbar></snackbar>
-    <!-- Snackbar -->
 
-    <!-- Utilitybar -->
     <v-slide-y-transition>
-      <utilitybar></utilitybar>
+      <appbar></appbar>
     </v-slide-y-transition>
-    <!-- Utilitybar -->
 
-    <!-- Main Content -->
+    <!-- # Main Content -->
     <v-content>
-      <!-- Breadcrumbs -->
-      <!-- <breadcrumbs></breadcrumbs> -->
-      <!-- Breadcrumbs -->
+      <v-container>
+        <breadcrumbs></breadcrumbs>
+      </v-container>
 
-      <!-- Main -->
-      <v-slide-y-reverse-transition mode="out-in">
-        <router-view></router-view>
-      </v-slide-y-reverse-transition>
-      <!-- Main -->
+      <v-container>
+        <v-slide-y-transition mode="out-in">
+          <router-view></router-view>
+        </v-slide-y-transition>
+      </v-container>
     </v-content>
-    <!-- Main Content -->
-
-    <!-- <v-footer app inset absolute>asd</v-footer> -->
-
-    <!-- <progressbar></progressbar> -->
+    <!-- # Main Content -->
   </v-app>
 </template>
 
@@ -46,5 +36,21 @@ export default {
       app: 'app/app',
     }),
   },
+
+  created: function () {
+    window.axios.interceptors.response.use(undefined, function (err) {
+      return new Promise(function (resolve, reject) {
+        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+          store.dispatch['auth/logout']
+        }
+
+        if (err.status === 403 && err.config && !err.config.__isRetryRequest) {
+          this.$router.push({name: '403'})
+        }
+
+        throw err;
+      });
+    });
+  }
 }
 </script>

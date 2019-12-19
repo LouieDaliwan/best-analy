@@ -1,217 +1,56 @@
 <template>
-  <v-slide-y-transition>
-   <!--  <v-text-field
-      append-icon="search"
-      hide-details
-      label="Search"
-      single-line
-      v-model="dataset.search"
-    ></v-text-field> -->
+  <v-fade-transition mode="out-in">
     <v-data-iterator
+      :items-per-page.sync="dataset.itemsPerPage"
       :items="dataset.items"
-      :pagination.sync="dataset.pagination"
-      :rows-per-page-items="dataset.rowsPerPageItems"
-      content-tag="v-layout"
-      row
-      wrap
-      :search="dataset.search"
       >
-      <v-flex
-        :lg2="dataset.lg2"
-        :lg3="dataset.lg3"
-        :md2="dataset.md2"
-        :md3="dataset.md3"
-        :md4="dataset.md4"
-        :sm6="dataset.sm6"
-        :xs12="dataset.xs12"
-        slot-scope="props"
-        slot="item"
-        >
-        <v-card
-          :class="dataset.cardClass"
-          :height="dataset.cardHeight"
-          :hover="dataset.hover"
-          :href="dataset.hover ? dataset.cardLink : ''"
-          >
-          <v-tooltip bottom>
-            <v-img
-              :class="dataset.cardMediaClass"
-              :height="dataset.cardMediaHeight"
-              :src="props.item.thumbnail"
-              slot="activator"
-              >
-              <v-layout
-                fill-height
-                align-end
-                class="ma-2"
-                justify-end
-                row
-                v-if="dataset.chip"
-                >
-                <v-card-text class="text-xs-right">
-                  <v-chip
-                    class="pb-1 elevation-2"
-                    color="secondary"
-                    dark
-                    small
-                    text-color="white"
-                    v-if="props.item.status"
-                    >
-                    {{ props.item.status }}
-                  </v-chip>
-                </v-card-text>
-              </v-layout>
-            </v-img>
-            <span v-html="trans(props.item.title)"></span>
-          </v-tooltip>
-
-          <!-- media-title -->
-          <v-toolbar
-            :class="dataset.toolbarClass"
-            :flat="dataset.toolbarFlat"
-            v-if="dataset.showToolbar"
+      <template v-slot:default="props">
+        <v-row>
+          <v-col
+            :key="dataset.name"
+            cols="12"
+            lg="3"
+            md="4"
+            sm="6"
+            xs="12"
+            v-for="item in props.items"
             >
-            <v-toolbar-title>
-              <v-tooltip
-                bottom
-                >
-                <span
-                  :class="dataset.toolbarTitleClass"
-                  slot="activator"
-                  v-html="trans(props.item.title)"
-                  >
-                </span>
-                <span v-html="trans(props.item.title)"></span>
+            <v-card
+              height="100%"
+              :hover="dataset.hover"
+              :href="dataset.hover ? dataset.url : ''"
+              >
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-img
+                    v-on="on"
+                    :height="dataset.thumbnailHeight"
+                    :src="item.thumbnail"
+                    >
+                  </v-img>
+                </template>
+                <span v-text="trans(item.title)"></span>
               </v-tooltip>
 
-              <div
-                :class="dataset.fileSizeClass"
-                v-html="props.item.size"
-                >
-              </div>
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-tooltip bottom>
-              <v-menu
-                bottom
-                left
-                slot="activator"
-                >
-                <v-btn
-                  slot="activator"
-                  icon
-                  ripple
-                  >
-                  <v-icon>more_vert</v-icon>
-                </v-btn>
-                <v-list dense>
-                  <v-list-tile
-                    ripple
-                    >
-                    <v-list-tile-avatar>
-                      <v-icon color="warning">delete</v-icon>
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                      <v-list-tile-title>{{ trans('Move to Trash') }}</v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile
-                    ripple
-                    >
-                    <v-list-tile-avatar>
-                      <v-icon color="error">delete_forever</v-icon>
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                      <v-list-tile-title>{{ trans('Delete Permanently') }}</v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
-              <span>{{ trans('More Actions') }}</span>
-            </v-tooltip>
-          </v-toolbar>
-          <!-- media-title -->
+              <v-card-text>
+                <p class="body-2 secondary--text mb-1" v-text="trans(item.category)"></p>
+                <p class="font-weight-bold" v-text="trans(item.title)"></p>
+                <p class="text--ellipsis" v-text="trans(item.description)"></p>
+              </v-card-text>
 
-          <!-- card-text -->
-          <v-card-text
-            v-if="dataset.showCardText"
-            >
-            <p
-              class="body-2 mb-2 primary--text">
-              <strong v-html="trans(props.item.category)"></strong>
-            </p>
-            <v-tooltip bottom>
-              <h3
-                slot="activator"
-                class="subheading font-weight-bold mb-3 text-truncate"
-                v-html="trans(props.item.title)"
-                >
-              </h3>
-              <span v-html="trans(props.item.title)"></span>
-            </v-tooltip>
-            <p>
-              <span
-                class="text--ellipsis"
-                v-html="trans(props.item.description)"
-                >
-              </span>
-            </p>
-          </v-card-text>
-          <!-- card-text -->
-
-          <v-card-actions
-            bottom
-            class="grey--text pa-3"
-            v-if="dataset.cardActions"
-            >
-            <span
-              class="body-1"
-              v-html="props.item.timestamp"
-              >
-            </span>
-            <v-spacer></v-spacer>
-            <!-- part -->
-            <span
-              class="body-1"
-              v-if="dataset.showPart"
-              >
-              <span v-html="trans(props.item.part)"></span>
-              <span> Parts</span>
-            </span>
-            <!-- part -->
-
-            <!-- mimetype -->
-            <span
-              class="body-1"
-              v-if="dataset.showMimetype"
-              >
-              <v-tooltip
-                bottom
-                >
-                <span slot="activator">
-                  <v-icon
-                    class="grey--text"
-                    v-html="props.item.icon"
-                    >
-                  </v-icon>
-                </span>
-                <span v-html="trans(props.item.mimetype)"></span>
-              </v-tooltip>
-            </span>
-            <!-- mimetype -->
-          </v-card-actions>
-        </v-card>
-      </v-flex>
+              <slot name="actions"></slot>
+            </v-card>
+          </v-col>
+        </v-row>
+      </template>
     </v-data-iterator>
-  </v-slide-y-transition>
+  </v-fade-transition>
 </template>
 
 <script>
-import store from '@/store'
 import { mapGetters } from 'vuex'
 
 export default {
-  store,
   name: 'DataIterator',
 
   props: {

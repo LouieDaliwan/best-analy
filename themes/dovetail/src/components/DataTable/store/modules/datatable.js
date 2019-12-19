@@ -1,18 +1,6 @@
 export const state = () => ({
   datatable: {
-    searchTable: '',
-    selected: [],
-    headers: [],
-    selectAll: false,
-    avatar: true,
-    category: true,
-    slug: true,
-    created: true,
-    modified: true,
-    part: true,
-    status: true,
-    author: true,
-    singleCheckbox: false,
+    // Code
   },
 })
 

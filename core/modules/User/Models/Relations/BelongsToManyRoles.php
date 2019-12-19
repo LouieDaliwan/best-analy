@@ -30,6 +30,19 @@ trait BelongsToManyRoles
     }
 
     /**
+     * Retrieve the permissions list
+     * for the user.
+     *
+     * @return object
+     */
+    public function getPermissionsAttribute()
+    {
+        return $this->roles->map(function ($role) {
+            return $role->permissions;
+        })->flatten();
+    }
+
+    /**
      * Retrieve the column key for the role `name`.
      *
      * @return string

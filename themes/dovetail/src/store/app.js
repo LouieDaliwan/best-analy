@@ -1,36 +1,26 @@
-import config from '@/config/app'
-import VM from '@/mixins/localstorage'
-
 export const state = () => ({
   app: {
-    meta: config,
-    dark: VM.methods.localstorage('app.dark', 'true') === 'true' || config.dark,
+    dark: localStorage.getItem('theme:dark') === 'true' || false,
   },
 })
 
 export const getters = {
   app: state => state.app,
+  title: state => state.app['app:title'],
+  tagline: state => state.app['app:tagline'],
+  year: state => state.app['app:year'],
+  author: state => state.app['app:author'],
 }
 
 export const mutations = {
-  'TOGGLE_DARK_THEME' (state, payload) {
-    state.app.dark = payload.dark
-  },
-
-  'UPDATE' (state, payload) {
-    state.app = Object.assign({}, state.app, payload)
+  'SET' (state, payload) {
+    state.app = window._.merge({}, state.app, payload)
   },
 }
 
 export const actions = {
-  theme: ({commit}, payload) => {
-    VM.methods.localstorage({'app.dark': payload.dark})
-    commit('TOGGLE_DARK_THEME', payload)
-  },
-
-  update: ({commit}, payload) => {
-    VM.methods.localstorage({'app.dark': payload.dark})
-    commit('UPDATE', payload)
+  set: ({commit}, payload) => {
+    commit('SET', payload)
   },
 }
 

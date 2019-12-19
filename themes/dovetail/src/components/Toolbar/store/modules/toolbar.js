@@ -2,12 +2,9 @@ export const state = () => ({
   toolbar: {
     model: '',
     title: '',
-    search: '',
     tooltipName: '',
-    searchField: false,
     filter: false,
     sort: false,
-    searchButton: true,
     listGridView: true,
     toggleview: true,
     showBulk: false,

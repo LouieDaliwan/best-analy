@@ -61,6 +61,8 @@
   @stack('after:css')
     {!! theme()->styleloader() !!}
   @show
+  <!-- globals/js -->
+  @include('theme::globals.scripts')
 </head>
 <body>
   @stack('noscript')

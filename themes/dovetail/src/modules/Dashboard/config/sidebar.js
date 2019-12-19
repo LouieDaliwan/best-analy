@@ -1,19 +1,21 @@
 export default [
   {
-    name: 'dashboard.index',
+    name: 'dashboard',
     meta: {
       title: 'Dashboard',
       sort: 0,
       authenticatable: true,
       icon: 'mdi-view-dashboard-outline',
+      permission: false,
     },
   },
 
   {
     name: 'divider:dashboard/index',
     meta: {
+      title: 'Content',
       sort: 1,
-      divider: true,
+      subheader: true,
       height: 2,
     },
   },

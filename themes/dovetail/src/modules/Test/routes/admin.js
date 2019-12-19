@@ -4,20 +4,21 @@ export default [
     component: () => import('@/App.vue'),
     meta: {
       title: 'Tests',
-      sort: 17,
+      sort: 6,
       authenticatable: true,
-      icon: 'mdi-book-multiple-variant',
+      icon: 'mdi-flask',
     },
     children: [
       {
         path: '',
+        props: true,
         name: 'tests.index',
         component: () => import('../Index.vue'),
         meta: {
           title: 'All Tests',
-          sort: 17,
+          sort: 6,
           authenticatable: true,
-          icon: 'mdi-book-multiple-variant',
+          icon: 'mdi-flask',
         },
       },
     ],

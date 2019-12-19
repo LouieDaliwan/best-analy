@@ -30,7 +30,16 @@ class InspiringQuote extends AbstractWidget
      *
      * @var integer|float|boolean
      */
-    protected $intervals = 10000;
+    protected $intervals = false;
+
+    /**
+     * Inject any dependencies.
+     *
+     */
+    public function __construct()
+    {
+        $this->attributes = [Inspiring::quote()];
+    }
 
     /**
      * Render the widget into the view.
@@ -39,6 +48,6 @@ class InspiringQuote extends AbstractWidget
      */
     public function handle()
     {
-        return view('widgets::inspire')->withQuote(Inspiring::quote());
+        return view('widgets::inspire')->withQuote($this->attributes()[0]);
     }
 }

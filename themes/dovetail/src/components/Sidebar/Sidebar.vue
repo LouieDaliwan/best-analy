@@ -1,125 +1,128 @@
 <template>
   <v-navigation-drawer
     :clipped="sidebar.clipped"
-    :floating="sidebar.floating"
     :mini-variant.sync="sidebar.mini"
-    :dark="sidebar.light"
     app
     fixed
     v-model="sidebarmodel"
+    class="dt-sidebar"
     >
     <!-- Brand -->
-    <v-toolbar flat color="transparent">
-      <v-list>
-        <v-list-tile avatar>
-          <v-list-tile-avatar tile>
-            <img :src="app.site_logo" width="40px">
-          </v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title><strong v-html="sidebar.title"></strong></v-list-tile-title>
-            <v-list-tile-sub-title class="caption" v-html="sidebar.tagline"></v-list-tile-sub-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
-            <v-btn icon @click="update({dark: !app.dark})">
-              <v-icon>mdi-theme-light-dark</v-icon>
-            </v-btn>
-          </v-list-tile-action>
-        </v-list-tile>
-      </v-list>
-    </v-toolbar>
+    <v-list>
+      <v-list-item>
+        <v-list-item-avatar>
+          <img :src="app.logo" :lazy-src="app.logo" width="40px">
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title class="primary--text" v-html="app.title"></v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
     <!-- Brand -->
-
-    <v-list class="mt-3">
-      <!-- TODO: make this recursive -->
+    <v-list shaped color="transparent">
       <template v-for="(parent, i) in menus">
-
         <!-- Menu with children -->
         <template v-if="parent.meta.divider">
-          <v-divider :key="i" class="transparent my-2"></v-divider>
+          <v-divider :key="i" class="my-2"></v-divider>
         </template>
-
         <template v-else-if="parent.meta.subheader">
-          <v-subheader class="caption" :key="i">{{ (parent.meta.title).toUpperCase() }}</v-subheader>
+          <v-subheader class="text--muted text-capitalize" :key="i" v-text="(parent.meta.title)"></v-subheader>
         </template>
-
         <template v-else-if="parent.children">
-          <v-list-group :key="i" no-action v-model="parent.active">
-            <v-icon slot="appendIcon" small>keyboard_arrow_down</v-icon>
-            <v-list-tile ripple slot="activator" v-model="parent.active">
-              <v-list-tile-action>
-                <v-icon class="subheading">{{ parent.meta.icon }}</v-icon>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title>{{ __(parent.meta.title) }}</v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-            <!-- Submenu children -->
-            <template v-for="(submenu, j) in parent.children">
-              <v-divider :key="j" v-if="submenu.meta.divider"></v-divider>
-              <template v-else>
-                <template v-if="submenu.children">
-
-                </template>
-                <template v-else-if="submenu.meta.divider">
-                  <v-divider :key="j"></v-divider>
-                </template>
-                <v-list-tile
-                  v-else
-                  :key="j"
-                  :to="{ name: submenu.name }"
-                  :target="submenu.meta.external ? '_blank' : null"
-                  exact
-                  ripple
-                  v-model="submenu.active"
-                  >
-                  <v-list-tile-content>
-                    <v-list-tile-title>{{ trans(submenu.meta.title) }}</v-list-tile-title>
-                  </v-list-tile-content>
-                  <v-list-tile-action v-hover v-if="submenu.meta.external">
-                    <v-icon small>mdi-open-in-new</v-icon>
-                  </v-list-tile-action>
-                </v-list-tile>
+          <can :code="parent.meta.permission">
+            <v-list-group
+              :key="i"
+              no-action
+              :prepend-icon="parent.meta.icon"
+              :value="active(parent)"
+              >
+              <template v-slot:activator>
+                <v-list-item-content>
+                  <v-list-item-title v-text="parent.meta.title"></v-list-item-title>
+                </v-list-item-content>
               </template>
-            </template>
-            <!-- Menu children -->
-          </v-list-group>
+              <!-- Submenu children -->
+              <template v-for="(submenu, j) in parent.children">
+                <v-divider v-if="submenu.meta.divider" :key="i"></v-divider>
+                <template v-else>
+                  <template v-if="submenu.children"></template>
+                  <template v-else-if="submenu.meta.divider">
+                    <v-divider :key="i"></v-divider>
+                  </template>
+                  <template v-else>
+                    <can :code="submenu.meta.permission">
+                      <v-list-item
+                        :key="j"
+                        :target="submenu.meta.external ? '_blank' : null"
+                        :to="{ name: submenu.name }"
+                        exact
+                        color="primary"
+                        :value="submenu.active"
+                        >
+                        <v-list-item-icon v-if="submenu.meta.icon">
+                          <v-icon small v-text="submenu.meta.icon"></v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                          <v-list-item-title v-text="trans(submenu.meta.title)"></v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                    </can>
+                  </template>
+                </template>
+              </template>
+            </v-list-group>
+          </can>
         </template>
         <!-- Menu with Children -->
+        <!-- Menu without Children -->
         <template v-else>
-          <v-list-tile :key="i" ripple v-model="parent.active" exact :to="{name: parent.name}">
-            <v-list-tile-action>
-              <v-icon>{{ parent.meta.icon }}</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ trans(parent.meta.title) }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+          <can :code="parent.meta.permission">
+            <v-list-item color="primary" :key="i" link exact :to="{name: parent.name}">
+              <v-list-item-icon>
+                <v-icon small v-text="parent.meta.icon"></v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title v-text="trans(parent.meta.title)"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </can>
         </template>
-
+        <!-- Menu without Children -->
       </template>
     </v-list>
-
+    <template v-slot:append>
+      <div class="px-4 py-2 d-flex justify-space-between align-center">
+        <div><small>{{ __('Pluma v3') }}</small></div>
+        <v-btn icon @click="$store.dispatch('theme/toggle', {vm: vuetify, dark: !dark})">
+          <v-icon>mdi-invert-colors</v-icon>
+        </v-btn>
+      </div>
+    </template>
   </v-navigation-drawer>
 </template>
-
 <script>
-import store from '@/store'
+import app from '@/config/app'
 import menus from '@/config/sidebar'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  store,
-
   name: 'Sidebar',
 
   computed: {
     ...mapGetters({
       sidebar: 'sidebar/sidebar',
-      app: 'app/app',
+      dark: 'theme/dark',
     }),
 
+    app: function () {
+      return app
+    },
+
+    vuetify: function () {
+      return this.$vuetify
+    },
+
     menus: function () {
-      // return this.sidebar.menus
       return menus
     },
 
@@ -137,17 +140,14 @@ export default {
     ...mapActions({
       toggle: 'sidebar/toggle',
       clip: 'sidebar/clip',
-      update: 'app/update',
+      toggleTheme: 'theme/toggle',
     }),
-  },
 
-  mounted () {
-    axios
-      .get('/api/v1/settings/branding')
-      .then((response) => {
-        this.update(response.data)
-        // console.log(this.app)
-      })
-  }
+    active (path) {
+      return window._.includes(path.children.map(function (child) {
+        return child.name
+      }), this.$route.name)
+    }
+  },
 }
 </script>

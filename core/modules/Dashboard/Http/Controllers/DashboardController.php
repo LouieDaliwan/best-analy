@@ -15,7 +15,6 @@ class DashboardController extends AdminController
      */
     public function index(Request $request)
     {
-        //
         return view('dashboard::admin.index');
     }
 }

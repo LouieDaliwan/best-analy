@@ -2,11 +2,24 @@
 
 namespace Core\Http\Controllers\Api;
 
+use Core\Application\Service\WithService;
 use Illuminate\Http\Request;
-use Core\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 
 class ApiController extends Controller
 {
+    use WithService;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('api');
+    }
+
     /**
      * Send the data as JSON.
      *

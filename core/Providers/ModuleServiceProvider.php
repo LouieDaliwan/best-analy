@@ -203,6 +203,10 @@ class ModuleServiceProvider extends BaseServiceProvider
      */
     protected function mapWebRoutes()
     {
+        if (theme()->active()->get('spa')) {
+            return;
+        }
+
         if (file_exists(
             $path = $this->module['path'].DIRECTORY_SEPARATOR.'routes/web.php'
         )) {
@@ -221,6 +225,10 @@ class ModuleServiceProvider extends BaseServiceProvider
      */
     protected function mapAdminRoutes()
     {
+        if (theme()->active()->get('spa')) {
+            return;
+        }
+
         if (file_exists(
             $path = $this->module['path'].DIRECTORY_SEPARATOR.'routes/admin.php'
         )) {

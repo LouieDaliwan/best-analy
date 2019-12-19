@@ -1,7 +1,7 @@
 export default [
   {
     path: '/admin/dashboard',
-    name: 'dashboard.index',
+    name: 'dashboard',
     component: () => import('../Dashboard.vue'),
     meta: {
       title: 'Dashboard',
@@ -12,7 +12,7 @@ export default [
     },
   },
   {
-    path: '/admin/dashboard',
+    path: 'dashboard',
     name: 'divider:dashboard',
     meta: {
       sort: 1,

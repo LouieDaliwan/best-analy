@@ -1,42 +1,44 @@
 <template>
   <div>
     <v-breadcrumbs
-      v-if="breadcrumbs.model"
-      class="px-4 py-2"
+      v-show="breadcrumbs.show"
+      class="pl-0"
+      divider="/"
+      :items="crumbs"
       >
-      <v-breadcrumbs-item
-        :key="i"
-        :to="item.path"
-        exact
-        ripple
-        v-for="(item, i) in $route.matched"
-      >
-        <small v-html="trans(item.meta.title)"></small>
-      </v-breadcrumbs-item>
+      <template v-slot:item="{ item }">
+        <v-breadcrumbs-item
+          exact
+          :to="{name: item.name}"
+          >
+          <small v-text="item.text"></small>
+        </v-breadcrumbs-item>
+      </template>
     </v-breadcrumbs>
   </div>
 </template>
 
 <script>
-import store from '@/store'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
-  store,
-
   name: 'Breadcrumbs',
 
   computed: {
     ...mapGetters({
       breadcrumbs: 'breadcrumbs/breadcrumbs',
-      sidebar: 'sidebar/sidebar',
-    })
-  },
+    }),
 
-  methods: {
-    ...mapActions({
-      set: 'breadcrumbs/set'
-    })
+    crumbs: function () {
+      return this.$route.matched.map(function (route) {
+        return {
+          name: route.name,
+          text: trans(route.meta.title),
+          disabled: false,
+          href: route.path,
+        }
+      })
+    }
   },
 }
 </script>

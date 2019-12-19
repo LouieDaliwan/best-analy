@@ -1,108 +1,97 @@
 <template>
-  <v-container grid-list-lg>
-    <v-layout row wrap justify-center align-center fill-height>
-      <v-flex xs12>
-        <v-form
-          method="POST"
-          action="/login"
-          >
-          <v-card class="text-xs-center">
-            <v-card-text>
-              <v-avatar
-                size="80">
-                <img
-                  :src="app.meta.logo"
-                  >
-              </v-avatar>
-            </v-card-text>
-            <v-card-text>
-              <v-text-field
-                autofocus
-                label="Email Address"
-                box
-                id="email"
-                required
-                type="email"
-                v-model="email"
-                >
-              </v-text-field>
+  <validation-observer ref="signin-form" v-slot="{ passes }">
+    <v-form :disabled="loading" v-on:submit.prevent="submit">
+      <validation-provider name="username" rules="required" v-slot="{ errors }">
+        <v-text-field
+          :error-messages="errors"
+          :label="trans('Username or email')"
+          autofocus
+          class="mb-3"
+          outlined
+          v-model="auth.username"
+          clear-icon="mdi mdi-close-circle-outline"
+          clearable
+        ></v-text-field>
+      </validation-provider>
 
-              <v-text-field
-                :append-icon="showPassword ? 'visibility_off' : 'visibility'"
-                :type="showPassword ? 'text' : 'password'"
-                @click:append="showPassword = !showPassword"
-                autofocus
-                box
-                class="input-group--focused"
-                id="password"
-                label="Password"
-                type="password"
-                v-model="password"
-                >
-              </v-text-field>
+      <validation-provider name="password" rules="required" v-slot="{ errors }">
+        <v-text-field
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          :error-messages="errors"
+          :label="trans('Password')"
+          :type="showPassword ? 'text' : 'password'"
+          @click:append="showPassword = !showPassword"
+          class="mb-3"
+          clear-icon="mdi mdi-close-circle-outline"
+          clearable
+          outlined
+          password
+          v-model="auth.password"
+        ></v-text-field>
+      </validation-provider>
 
-              <v-btn
-                type="submit"
-                color="primary"
-                @click="handleSubmit"
-                >
-                {{ __('Login') }}
-              </v-btn>
-            </v-card-text>
-          </v-card>
-        </v-form>
-      </v-flex>
-    </v-layout>
-  </v-container>
+      <v-btn
+        type="submit"
+        :disabled="loading"
+        :loading="loading"
+        color="primary"
+        x-large block
+        >
+        {{ __('Sign In') }}
+        <template v-slot:loader>
+          <v-slide-x-transition><v-icon dark class="mdi-spin mr-3">mdi-loading</v-icon></v-slide-x-transition>
+          <span>{{ 'Signing in...' }}</span>
+        </template>
+      </v-btn>
+    </v-form>
+  </validation-observer>
 </template>
 
 <script>
 import store from '@/store'
+import $api from '@/routes/api'
 
 export default {
   store,
+
   name: 'Login',
 
-  data() {
+  data () {
     return {
-      showPassword: true,
-      email : "",
-      password : "",
-      rules: {
-    }
+      action: this.action,
+      auth: {
+        username: '',
+        password: '',
+      },
+      loading: false,
+      showPassword: false,
     }
   },
 
-  methods : {
-    handleSubmit(e){
+  computed: {
+    isMobile: function () {
+      return this.$vuetify.breakpoint.smAndDown;
+    }
+  },
+
+  methods: {
+    submit (e) {
+      const { username, password } = this.auth
+
+      this.loading = true
+      this.$store
+        .dispatch('auth/login', { username, password })
+        .then(() => {
+          this.$store.dispatch('sidebar/toggle', {model: true})
+          this.$router.push({name: 'dashboard'})
+        })
+        .catch(err => {
+          this.loading = false
+          this.$refs['signin-form'].setErrors(err.response.data.errors)
+        })
+
       e.preventDefault()
-
-      if (this.password.length > 0) {
-        axios.post('api/v1/login', {
-          username: this.email,
-          password: this.password
-        })
-        .then(response => {
-          localStorage.setItem('user',response.data.user.fullname)
-          localStorage.setItem('jwt',response.data.token)
-
-          if (localStorage.getItem('jwt') != null){
-            this.$router.push({name: 'dashboard.index'})
-          }
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-      }
     }
   },
-
-  beforeRouteEnter (to, from, next) {
-    if (localStorage.getItem('jwt')) {
-      return next('board');
-    }
-
-    next();
-  }
 }
 </script>

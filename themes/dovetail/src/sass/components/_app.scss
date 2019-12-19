@@ -1,0 +1,17 @@
+.v-application {
+  font-family: var(--font-family-base);
+}
+
+.theme--light {
+  &.v-application {
+    background-color: var(--workspace-bg);
+    color: var(--text);
+  }
+}
+
+.theme--dark {
+  &.v-application {
+    background-color: var(--workspace-bg-dark);
+    color: var(--white);
+  }
+}

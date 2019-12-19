@@ -1,8 +1,10 @@
+import store from '@/store'
+
 export default [
   {
     path: '/auth',
     name: 'auth',
-    redirect: { name: 'login.show' },
+    redirect: { name: 'login' },
     component: () => import('@/components/Layouts/Auth.vue'),
     meta: {
       title: 'Login',
@@ -13,7 +15,7 @@ export default [
     children: [
       {
         path: '/login',
-        name: 'login.show',
+        name: 'login',
         component: () => import('../Signin.vue'),
         meta: {
           title: 'Sign In',
@@ -21,63 +23,25 @@ export default [
           icon: 'mdi-account-key',
         },
         beforeEnter: (to, from, next) => {
-          next();
-          // if (user() || false) {
-          //   next({ name: 'admin' })
-          // } else {
-          //   next()
-          // }
+          const isAuthenticated = store.getters['auth/isAuthenticated']
+
+          if (isAuthenticated) {
+            return next({name: 'dashboard'})
+          }
+
+          return next()
         },
       },
       {
         path: '/logout',
-        name: 'login.logout',
-        meta: {
-          title: 'Signout',
-          icon: 'mdi-account-key',
-        },
+        name: 'logout',
         beforeEnter: (to, from, next) => {
-          logout()
-          next({ name: 'login.show' })
+          store.dispatch('auth/logout')
+            .then(response => {
+              window.location.reload()
+            })
         },
       },
-
-      // Register
-      // {
-      //   path: '/register',
-      //   name: 'register.show',
-      //   component: () => import('../Signup.vue'),
-      //   meta: {
-      //     title: 'Sign Up',
-      //     sort: 0,
-      //     icon: 'mdi-account-key',
-      //   },
-      //   beforeEnter: (to, from, next) => {
-      //     if (user()) {
-      //       next({ name: 'admin' })
-      //     } else {
-      //       next()
-      //     }
-      //   },
-      // },
-
-      // // Passwords
-      // {
-      //   path: 'forgot/password',
-      //   name: 'password.forgot',
-      //   component: () => import('../ForgotPassword.vue'),
-      //   meta: {
-      //     title: 'Forgot Password',
-      //     icon: 'mdi-account-key',
-      //   },
-      //   beforeEnter: (to, from, next) => {
-      //     if (user()) {
-      //       next({ name: 'admin' })
-      //     } else {
-      //       next()
-      //     }
-      //   },
-      // },
     ],
   },
 ];

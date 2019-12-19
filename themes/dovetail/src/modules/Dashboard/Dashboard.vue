@@ -8,16 +8,44 @@
 
       <template v-if="toggletoolbar.toggleview">
         <v-card>
+
           <toolbar-menu></toolbar-menu>
+
           <v-divider></v-divider>
           <v-data-table
-            v-model="selected"
             :headers="headers"
             :items="desserts"
-            :single-select="singleSelect"
-            item-key="name"
-            show-select
+            sort-by="calories"
             >
+            <template v-slot:item.action="{ item }">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-btn small icon v-on="on">
+                    <v-icon
+                      small
+                      >
+                      mdi-pencil-outline
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <span>{{ __('Edit') }}</span>
+              </v-tooltip>
+
+              <v-btn small icon>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn small icon v-on="on">
+                      <v-icon
+                        small
+                        >
+                        mdi-delete-outline
+                      </v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ __('Move to Trash') }}</span>
+                </v-tooltip>
+              </v-btn>
+            </template>
           </v-data-table>
         </v-card>
       </template>
@@ -80,8 +108,6 @@ export default {
         },
       ]
     },
-    singleSelect: false,
-    selected: [],
     headers: [
       {
         text: 'Dessert (100g serving)',
@@ -93,7 +119,7 @@ export default {
       { text: 'Fat (g)', value: 'fat' },
       { text: 'Carbs (g)', value: 'carbs' },
       { text: 'Protein (g)', value: 'protein' },
-      { text: 'Iron (%)', value: 'iron' },
+      { text: 'Actions', value: 'action', sortable: false, class: "muted--text" },
     ],
     desserts: [
       {
@@ -102,7 +128,6 @@ export default {
         fat: 6.0,
         carbs: 24,
         protein: 4.0,
-        iron: '1%',
       },
       {
         name: 'Ice cream sandwich',
@@ -110,7 +135,6 @@ export default {
         fat: 9.0,
         carbs: 37,
         protein: 4.3,
-        iron: '1%',
       },
       {
         name: 'Eclair',
@@ -118,7 +142,6 @@ export default {
         fat: 16.0,
         carbs: 23,
         protein: 6.0,
-        iron: '7%',
       },
       {
         name: 'Cupcake',
@@ -126,7 +149,6 @@ export default {
         fat: 3.7,
         carbs: 67,
         protein: 4.3,
-        iron: '8%',
       },
       {
         name: 'Gingerbread',
@@ -134,7 +156,6 @@ export default {
         fat: 16.0,
         carbs: 49,
         protein: 3.9,
-        iron: '16%',
       },
       {
         name: 'Jelly bean',
@@ -142,7 +163,6 @@ export default {
         fat: 0.0,
         carbs: 94,
         protein: 0.0,
-        iron: '0%',
       },
       {
         name: 'Lollipop',
@@ -150,7 +170,6 @@ export default {
         fat: 0.2,
         carbs: 98,
         protein: 0,
-        iron: '2%',
       },
       {
         name: 'Honeycomb',
@@ -158,7 +177,6 @@ export default {
         fat: 3.2,
         carbs: 87,
         protein: 6.5,
-        iron: '45%',
       },
       {
         name: 'Donut',
@@ -166,7 +184,6 @@ export default {
         fat: 25.0,
         carbs: 51,
         protein: 4.9,
-        iron: '22%',
       },
       {
         name: 'KitKat',
@@ -174,7 +191,6 @@ export default {
         fat: 26.0,
         carbs: 65,
         protein: 7,
-        iron: '6%',
       },
     ],
   }),

@@ -72,5 +72,6 @@ mix
       'dist/css/{*,**/*}.css',
       'dist/js/{*,**/*}.js',
       'templates/{*,**/*}.html.twig'
-    ]
+    ],
+    open: false
   })

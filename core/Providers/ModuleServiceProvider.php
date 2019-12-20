@@ -188,6 +188,7 @@ class ModuleServiceProvider extends BaseServiceProvider
             $path = $this->module['path'].DIRECTORY_SEPARATOR.'routes/api.php'
         )) {
             Route::prefix('api')
+                 ->as('api.')
                  ->middleware('auth:api')
                  ->namespace($this->namespace.'\Http\Controllers')
                  ->group($path);

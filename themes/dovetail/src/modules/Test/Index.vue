@@ -14,6 +14,21 @@
       </v-card-text>
     </v-card>
 
+    <h3 class="mb-2 mt-9">Translation</h3>
+    <v-card class="mt-3">
+      <v-card-actions>
+        <v-btn text @click="changeLocale('ja')">Change locale to <code>ja</code></v-btn>
+        <v-btn text @click="changeLocale('fil')">Change locale to <code>fil</code></v-btn>
+        <v-btn text @click="changeLocale('en')">Change locale to <code>en</code></v-btn>
+      </v-card-actions>
+      <v-card-text>
+        <div>hello: <span v-html="$t('hello')"></span></div>
+        <div>Great success: <span v-html="$t('Great success')"></span></div>
+        <div>Remember me: <span v-html="$t('Remember me')"></span></div>
+      </v-card-text>
+    </v-card>
+
+
     <h3 class="mb-2 mt-9">Widgets</h3>
     <template class="mt-3" v-for="(widget, i) in widgets">
       <div :key="i" v-html="widget.render"></div>
@@ -37,6 +52,10 @@ export default {
   },
 
   methods: {
+    changeLocale (locale) {
+      this.$i18n.locale = locale
+    },
+
     runSnackbar () {
       this.$store.dispatch('snackbar/toggle', {
         show: true,

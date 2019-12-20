@@ -1,3 +1,5 @@
+import store from '@/store'
+
 window.auth = require('./core/Auth/auth.js');
 
 window._ = require('lodash');
@@ -35,8 +37,6 @@ if (token) {
  * all outgoing HTTP requests automatically have it attached. This is just
  * a simple convenience so we don't have to attach every token manually.
  */
-import store from '@/store'
-
 let accessToken = localStorage.getItem('token');
 
 /**

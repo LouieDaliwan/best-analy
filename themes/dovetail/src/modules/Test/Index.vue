@@ -22,9 +22,18 @@
         <v-btn text @click="changeLocale('en')">Change locale to <code>en</code></v-btn>
       </v-card-actions>
       <v-card-text>
-        <div>hello: <span v-html="$t('hello')"></span></div>
-        <div>Great success: <span v-html="$t('Great success')"></span></div>
         <div>Remember me: <span v-html="$t('Remember me')"></span></div>
+        <div>{{ $t("Actions") }}</div>
+        <div>{{ $t("Don't have account yet?") }}</div>
+        <div>{{ $t("Remember me") }}</div>
+        <div>{{ $t("Sign in with your %s account") }}</div>
+        <div>{{ $t("Sign in") }}</div>
+        <div>{{ $t("Sign up") }}</div>
+        <div>{{ $t("Name") }}</div>
+        <div>{{ $t("Role") }}</div>
+        <div>{{ $t("Cancel") }}</div>
+        <div>{{ $t("Move to Trash") }}</div>
+        <div>{{ $t("Edit") }}</div>
       </v-card-text>
     </v-card>
 
@@ -65,10 +74,7 @@ export default {
   },
 
   mounted () {
-    axios.get('/api/v1/widgets')
-      .then(response => {
-        this.widgets = response.data
-      })
+    // this.$store.dispatch('app/locale', 'fil');
   },
 }
 </script>

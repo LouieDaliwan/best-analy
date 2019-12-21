@@ -1,6 +1,6 @@
 import a from './routes/admin'
-import p from './routes/public'
 import w from './routes/web'
+import p from './routes/public'
 import e from './routes/error'
 
 const routes = []

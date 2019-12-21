@@ -43,4 +43,5 @@ Route::middleware(['auth:api', 'json.force', 'client.credentials'])->prefix('v1'
 
 Route::middleware(['auth:api', 'json.force'])->prefix('v1')->group(function () {
     Route::get('settings/app', 'Api\Settings\AppSettings')->name('settings.app');
+    Route::post('settings/locale', 'Api\Settings\SetAppLocale')->name('settings.locale');
 });

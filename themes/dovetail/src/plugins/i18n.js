@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import $app from '@/config/app'
-import fil from '@/../lang/fil.json'
+import store from '@/store'
+import en from '@/lang/en.json'
+import fil from '@/lang/fil.json'
 
 Vue.use(VueI18n)
 
 const messages = {
-  en: {hello: 'hello'},
-  fil: fil,
+  en,
+  fil,
   ja: {
     'hello': 'こんにちは、世界',
     'Great success': '大成功',
@@ -15,7 +16,7 @@ const messages = {
 } // TODO: replace this of course.
 
 const i18n = new VueI18n({
-  locale: $app.locale || 'en',
+  locale: localStorage.getItem('app:locale') || 'en',
   fallbackLocale: 'en',
   silentFallbackWarn: true,
   silentTranslationWarn: true,

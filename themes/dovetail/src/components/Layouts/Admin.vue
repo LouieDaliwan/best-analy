@@ -1,5 +1,5 @@
 <template>
-  <v-app class="dovetail-app" v-cloak :dark="true">
+  <v-app class="dovetail-app" v-cloak>
     <sidebar></sidebar>
 
     <snackbar></snackbar>
@@ -25,18 +25,7 @@
 </template>
 
 <script>
-import store from '@/store'
-import { mapGetters } from 'vuex'
-
 export default {
-  store,
-
-  computed: {
-    ...mapGetters({
-      app: 'app/app',
-    }),
-  },
-
   created: function () {
     window.axios.interceptors.response.use(undefined, function (err) {
       return new Promise(function (resolve, reject) {

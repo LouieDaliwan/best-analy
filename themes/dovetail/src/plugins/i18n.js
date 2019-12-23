@@ -9,11 +9,7 @@ Vue.use(VueI18n)
 const messages = {
   en,
   fil,
-  ja: {
-    'hello': 'こんにちは、世界',
-    'Great success': '大成功',
-  }
-} // TODO: replace this of course.
+}
 
 const i18n = new VueI18n({
   locale: localStorage.getItem('app:locale') || 'en',

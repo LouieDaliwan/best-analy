@@ -74,7 +74,7 @@ export default {
   },
 
   mounted () {
-    // this.$store.dispatch('app/locale', 'fil');
+    this.$store.dispatch('app/locale', 'fil');
   },
 }
 </script>

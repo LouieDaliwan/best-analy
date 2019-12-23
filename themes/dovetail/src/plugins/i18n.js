@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import store from '@/store'
 import en from '@/lang/en.json'
 import fil from '@/lang/fil.json'
 
 Vue.use(VueI18n)
 
-const messages = {
+export const messages = {
   en,
   fil,
 }

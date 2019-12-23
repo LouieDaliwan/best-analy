@@ -26,6 +26,11 @@
 
 <script>
 export default {
+  beforeCreate: function () {
+    const { lang = 'en' } = this.$router.currentRoute.params
+    this.$store.dispatch('app/locale', lang)
+  },
+
   created: function () {
     window.axios.interceptors.response.use(undefined, function (err) {
       return new Promise(function (resolve, reject) {

@@ -1,8 +1,8 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import routes from '@/routes';
-import store from '@/store';
-import metatags from '@/routes/helpers/metatags';
+import Vue from 'vue'
+import Router from 'vue-router'
+import routes from '@/routes'
+import i18n from '@/plugins/i18n'
+import metatags from '@/routes/helpers/metatags'
 
 Vue.use(Router);
 
@@ -27,7 +27,12 @@ router.beforeEach((to, from, next) => {
    */
   metatags.set(to, from, next)
 
-  next();
+  if (!to.params.lang) {
+    i18n.locale = 'en'
+  }
+
+  next({params: {lang: i18n.locale}})
+  // next();
 });
 
 export default router;

@@ -1,4 +1,5 @@
 import $api from '@/routes/api'
+import i18n from '@/plugins/i18n'
 
 export const state = ({
   app: {
@@ -39,11 +40,11 @@ export const actions = {
     commit('SET_APP', payload)
   },
 
-  locale: ({ commit }, locale) => {
+  locale: function ({ commit }, locale) {
+    i18n.locale = locale
     return new Promise((resolve, reject) => {
       axios.post($api.settings.locale, { locale })
         .then((response) => {
-          console.log(response)
           commit('SET_LOCALE', locale)
           resolve(response)
         })

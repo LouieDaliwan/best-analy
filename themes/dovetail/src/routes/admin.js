@@ -21,7 +21,7 @@ requireRoute.keys().forEach(route => {
 })
 
 export default {
-  path: '/admin',
+  path: '/:lang?/admin',
   name: 'admin',
   redirect: { name: 'dashboard' },
   component: () => import('@/components/Layouts/Admin.vue'),

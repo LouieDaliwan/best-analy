@@ -19,11 +19,10 @@
       <v-card-actions>
         <v-btn text @click="changeLocale('ja')">Change locale to <code>ja</code></v-btn>
         <v-btn text @click="changeLocale('fil')">Change locale to <code>fil</code></v-btn>
-        <v-btn text @click="changeLocale('en')">Change locale to <code>en</code></v-btn>
+        <v-btn text @click="changeLocale()">Change locale to <code>en</code></v-btn>
       </v-card-actions>
       <v-card-text>
         <div>Remember me: <span v-html="$t('Remember me')"></span></div>
-        <div>{{ $t("Actions") }}</div>
         <div>{{ $t("Don't have account yet?") }}</div>
         <div>{{ $t("Remember me") }}</div>
         <div>{{ $t("Sign in with your %s account") }}</div>
@@ -62,7 +61,11 @@ export default {
 
   methods: {
     changeLocale (locale) {
-      this.$i18n.locale = locale
+      this.$store.dispatch('app/locale', locale)
+
+      if (this.$router.currentRoute.params.lang !== locale) {
+        this.$router.push({ name: this.$router.currentRoute.name, params: { lang: locale } })
+      }
     },
 
     runSnackbar () {
@@ -74,7 +77,7 @@ export default {
   },
 
   mounted () {
-    this.$store.dispatch('app/locale', 'fil');
+    // this.$store.dispatch('app/locale', 'fil');
   },
 }
 </script>

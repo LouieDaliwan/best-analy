@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/admin/users',
+    path: 'users',
     component: () => import('@/App.vue'),
     meta: {
       title: 'Users',

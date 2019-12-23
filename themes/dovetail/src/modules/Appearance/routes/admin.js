@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/admin/appearance',
+    path: 'appearance',
     component: () => import('@/App.vue'),
     meta: {
       title: 'Appearance',

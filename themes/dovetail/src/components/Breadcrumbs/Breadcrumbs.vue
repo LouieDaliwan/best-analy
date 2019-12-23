@@ -9,7 +9,7 @@
       <template v-slot:item="{ item }">
         <v-breadcrumbs-item
           exact
-          :to="{name: item.name}"
+          :to="{name: item.name, params: {lang: $i18n.locale}}"
           >
           <small v-text="item.text"></small>
         </v-breadcrumbs-item>

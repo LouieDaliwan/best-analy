@@ -27,7 +27,7 @@
 <script>
 export default {
   beforeCreate: function () {
-    const { lang = 'en' } = this.$router.currentRoute.params
+    const { lang = null } = this.$router.currentRoute.params
     this.$store.dispatch('app/locale', lang)
   },
 

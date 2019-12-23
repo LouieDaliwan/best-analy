@@ -54,7 +54,7 @@
                       <v-list-item
                         :key="j"
                         :target="submenu.meta.external ? '_blank' : null"
-                        :to="{ name: submenu.name, params: {lang: $i18n.locale} }"
+                        :to="{ name: submenu.name, params: {lang} }"
                         exact
                         color="primary"
                         :value="submenu.active"
@@ -77,7 +77,7 @@
         <!-- Menu without Children -->
         <template v-else>
           <can :code="parent.meta.permission">
-            <v-list-item color="primary" :key="i" link exact :to="{name: parent.name, params: {lang: $i18n.locale}}">
+            <v-list-item color="primary" :key="i" link exact :to="{name: parent.name, params: {lang}}">
               <v-list-item-icon>
                 <v-icon small v-text="parent.meta.icon"></v-icon>
               </v-list-item-icon>
@@ -113,6 +113,7 @@ export default {
     ...mapGetters({
       sidebar: 'sidebar/sidebar',
       dark: 'theme/dark',
+      lang: 'app/locale',
     }),
 
     app: function () {

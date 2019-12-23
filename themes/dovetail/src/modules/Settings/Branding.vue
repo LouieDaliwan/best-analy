@@ -63,3 +63,13 @@
     </v-row>
   </section>
 </template>
+
+<script>
+export default {
+  name: 'Branding',
+
+  mounted() {
+    console.log(this.trans, this.trans('Site Branding'))
+  }
+}
+</script>

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import routes from '@/routes'
-import i18n from '@/plugins/i18n'
+import store from '@/store'
 import metatags from '@/routes/helpers/metatags'
 
 Vue.use(Router);
@@ -27,9 +27,7 @@ router.beforeEach((to, from, next) => {
    */
   metatags.set(to, from, next)
 
-  to.params.lang = i18n.locale !== undefined ? i18n.locale : 'en'
-
-  next({params: {lang: i18n.locale}})
+  next({ params: { lang: store.getters['app/locale'] } })
 });
 
 export default router;

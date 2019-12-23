@@ -27,12 +27,9 @@ router.beforeEach((to, from, next) => {
    */
   metatags.set(to, from, next)
 
-  if (!to.params.lang) {
-    i18n.locale = 'en'
-  }
+  to.params.lang = i18n.locale !== undefined ? i18n.locale : 'en'
 
   next({params: {lang: i18n.locale}})
-  // next();
 });
 
 export default router;

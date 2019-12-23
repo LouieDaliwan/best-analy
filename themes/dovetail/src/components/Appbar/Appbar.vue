@@ -11,30 +11,26 @@
       </v-btn>
 
       <v-spacer></v-spacer>
-
       <v-menu
         class="justify-end d-flex"
         min-width="200px"
-        nudge-bottom="12px"
-        nudge-width="200px"
-        offset-y
         transition="slide-y-transition"
         >
-        <template v-slot:activator="{ on }">
-          <div v-on="on" role="button" @click="show = !show">
-            <div class="d-flex justify-space-between align-center">
-              <v-avatar size="32" class="mr-3"><img :src="user.avatar" width="40px"></v-avatar>
-              <v-tooltip bottom v-model="show">
-                <template v-slot:activator="{ on }">
-                  <div v-on="on">
-                    <p class="body-1 mb-0 text-truncate" v-text="user.displayname"></p>
-                    <div v-text="user.role" class="muted--text overline"></div>
-                  </div>
-                </template>
-                <span v-text="user.displayname"></span>
-              </v-tooltip>
-            </div>
-          </div>
+        <template v-slot:activator="{ on: menu }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on: tooltip }">
+              <div v-on="{ ...tooltip, ...menu }" role="button">
+                <div class="d-flex justify-space-between align-center">
+                  <v-avatar size="32" class="mr-3"><img :src="user.avatar" width="40px"></v-avatar>
+                    <div>
+                      <p class="body-1 mb-0 text--truncate" v-text="user.displayname"></p>
+                      <div v-text="user.role" class="muted--text overline"></div>
+                    </div>
+                </div>
+              </div>
+            </template>
+            <span v-text="user.displayname"></span>
+          </v-tooltip>
         </template>
 
         <v-list>
@@ -80,7 +76,6 @@ export default {
 
   data () {
     return {
-      show: false,
     }
   },
 

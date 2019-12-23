@@ -27,7 +27,12 @@
       "sidebar": "#f7f7f7",
       "workspace": "#f9fbfd",
       "muted": "#95aac9",
-      "link": "#868e96"
+      "link": "#868e96",
+      "soft-success": "#ccf7e5",
+      "soft-error": "#fad7dd",
+      "soft-info": "#d7eff6",
+      "soft-warning": "#fdf3d9"
+
     },
     "dark": {
       "primary": "#3c8dc5",
@@ -44,7 +49,11 @@
       "sidebar": "#f7f7f7",
       "workspace": "#f9fbfd",
       "muted": "#95aac9",
-      "link": "#868e96"
+      "link": "#868e96",
+      "soft-success": "#ccf7e5",
+      "soft-error": "#fad7dd",
+      "soft-info": "#d7eff6",
+      "soft-warning": "#fdf3d9"
     }
   }
 }

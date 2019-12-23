@@ -2,6 +2,7 @@ export const state = () => ({
   dataset: {
     class: 'primary',
     label: 'Test',
+    color: 'primary'
   }
 })
 

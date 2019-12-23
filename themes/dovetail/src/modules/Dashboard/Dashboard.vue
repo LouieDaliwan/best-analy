@@ -1,59 +1,68 @@
 <template>
   <section>
+    <!-- Header -->
+    <page-header></page-header>
+    <!-- Header -->
+
+    <!-- Glance Widget -->
     <v-row>
       <v-col md="3" sm="6" cols="12" v-for="(glance, i) in staffs" :key="i">
         <glance :items="glance"></glance>
       </v-col>
     </v-row>
+    <!-- Glance Widget -->
 
-      <template v-if="toggletoolbar.toggleview">
-        <v-card>
+    <template v-if="toggletoolbar.toggleview">
+      <v-card>
 
-          <toolbar-menu></toolbar-menu>
+        <toolbar-menu></toolbar-menu>
 
-          <v-divider></v-divider>
-          <v-data-table
-            :headers="headers"
-            :items="desserts"
-            sort-by="calories"
-            >
-            <template v-slot:item.action="{ item }">
+        <v-divider></v-divider>
+        <v-data-table
+          :headers="headers"
+          :items="desserts"
+          sort-by="calories"
+          >
+          <template v-slot:item.action="{ item }">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-btn small icon v-on="on">
+                  <v-icon
+                    small
+                    >
+                    mdi-pencil-outline
+                  </v-icon>
+                </v-btn>
+              </template>
+              <span>{{ __('Edit') }}</span>
+            </v-tooltip>
+
+            <v-btn small icon>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <v-btn small icon v-on="on">
                     <v-icon
                       small
                       >
-                      mdi-pencil-outline
+                      mdi-delete-outline
                     </v-icon>
                   </v-btn>
                 </template>
-                <span>{{ __('Edit') }}</span>
+                <span>{{ __('Move to Trash') }}</span>
               </v-tooltip>
+            </v-btn>
+          </template>
+        </v-data-table>
+      </v-card>
+    </template>
 
-              <v-btn small icon>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn small icon v-on="on">
-                      <v-icon
-                        small
-                        >
-                        mdi-delete-outline
-                      </v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ __('Move to Trash') }}</span>
-                </v-tooltip>
-              </v-btn>
-            </template>
-          </v-data-table>
-        </v-card>
-      </template>
-
-      <template v-else>
-        <!-- Switched to another view <code>data-table</code> -->
-        <data-iterator :items="courses"></data-iterator>
-      </template>
+    <template v-else>
+      <!-- Switched to another view <code>data-table</code> -->
+      <v-card>
+        <toolbar-menu></toolbar-menu>
+      </v-card>
+      <data-iterator :items="courses"></data-iterator>
+    </template>
 
     <!-- <v-col>
       <cannot code="unexisting.permission">
@@ -109,88 +118,18 @@ export default {
       ]
     },
     headers: [
-      {
-        text: 'Dessert (100g serving)',
-        align: 'left',
-        sortable: false,
-        value: 'name',
-      },
-      { text: 'Calories', value: 'calories' },
-      { text: 'Fat (g)', value: 'fat' },
-      { text: 'Carbs (g)', value: 'carbs' },
-      { text: 'Protein (g)', value: 'protein' },
+      { text: 'Account Name', align: 'left', value: 'name' },
+      { text: 'Email', value: 'email' },
+      { text: 'Role', value: 'role', sortable: false },
+      { text: 'Date Created', value: 'created' },
       { text: 'Actions', value: 'action', sortable: false, class: "muted--text" },
     ],
     desserts: [
       {
-        name: 'Frozen Yogurt',
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0,
-      },
-      {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3,
-      },
-      {
-        name: 'Eclair',
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0,
-      },
-      {
-        name: 'Cupcake',
-        calories: 305,
-        fat: 3.7,
-        carbs: 67,
-        protein: 4.3,
-      },
-      {
-        name: 'Gingerbread',
-        calories: 356,
-        fat: 16.0,
-        carbs: 49,
-        protein: 3.9,
-      },
-      {
-        name: 'Jelly bean',
-        calories: 375,
-        fat: 0.0,
-        carbs: 94,
-        protein: 0.0,
-      },
-      {
-        name: 'Lollipop',
-        calories: 392,
-        fat: 0.2,
-        carbs: 98,
-        protein: 0,
-      },
-      {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5,
-      },
-      {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9,
-      },
-      {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7,
+        name: 'Princess Ellen Alto',
+        email: 'ellen@ssagroup.com',
+        role: 'Super Administrator',
+        created: '2 months ago',
       },
     ],
   }),

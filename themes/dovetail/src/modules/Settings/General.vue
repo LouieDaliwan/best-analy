@@ -8,8 +8,8 @@
       <v-col cols="12" md="8">
         <v-card>
           <v-card-title v-text="trans('Displaying Data')"></v-card-title>
-          <v-subheader class="muted--text" v-text="trans('Formats')"></v-subheader>
           <v-card-text>
+            <p class="muted--text" v-text="trans('Formats')"></p>
             <v-text-field
               :label="trans('Global Date Format')"
               autofocus

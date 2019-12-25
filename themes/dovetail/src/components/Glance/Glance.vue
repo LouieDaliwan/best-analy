@@ -10,8 +10,10 @@
           </h3>
           <div class="d-flex align-center">
             <h1 class="font-weight-regular" v-text="dataset.count"></h1>
-            <div v-if="dataset.badge" class="dt-badge dt-badge-soft-error mx-2">
-              +<span v-text="dataset.deactivated"></span> <span v-text="trans('Deactivated')"></span>
+            <div v-if="dataset.badge" class="dt-badge soft-error mx-2">
+              <span class="error--text">{{ __('+') }}</span>
+              <span class="error--text" v-text="dataset.deactivated"></span>
+              <span class="error--text" v-text="trans('Deactivated')"></span>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="12" class="mb-5">
+  <v-col cols="12" class="mb-4">
     <v-row justify="space-between" align="center">
       <div>
         <slot name="back" :back="back">

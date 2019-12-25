@@ -2,6 +2,7 @@
   <v-btn
     :type="dataset.type"
     :class="dataset.class"
+    :color="dataset.color"
     >
     <template v-if="dataset.icon">
       <v-icon>mdi mdi-{{ dataset.icon }} &nbsp;</v-icon>

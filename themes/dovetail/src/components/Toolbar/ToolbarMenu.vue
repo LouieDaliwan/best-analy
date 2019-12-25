@@ -1,80 +1,85 @@
 <template :dark="$store.getters['app/app'].dark">
-  <v-toolbar
+  <!-- <v-toolbar
     flat
     :color="dataset.color"
     v-model="dataset.model"
     height="80"
-    >
+    > -->
 
-    <v-row>
-      <v-col cols="12" xs="12" sm="12" md="8">
-        <v-text-field
-          single-line
-          prepend-inner-icon="mdi mdi-magnify"
-          placeholder="Search (''ctrl + /'' to focus)"
-          outlined
-          rounded
-          dense
-          hide-details
-          clearable
-          clear-icon="mdi-close-circle-outline"
-        ></v-text-field>
-      </v-col>
-    </v-row>
+    <div class="pa-4">
+      <v-row align="center" justify="space-between">
+        <v-col cols="12" md="4" lg="4">
+          <v-text-field
+            single-line
+            prepend-inner-icon="mdi mdi-magnify"
+            placeholder="Search (''ctrl + /'' to focus)"
+            outlined
+            rounded
+            dense
+            hide-details
+            clearable
+            clear-icon="mdi-close-circle-outline"
+          ></v-text-field>
+        </v-col>
 
-    <v-spacer></v-spacer>
+        <v-col cols="12" md="6" lg="6">
+          <div class="d-flex justify-space-between justify-md-end">
+            <!-- Bulk select -->
+            <v-btn class="mr-3">
+              <v-icon small>mdi-checkbox-marked-circle-outline</v-icon>
+            </v-btn>
+            <!-- Bulk export -->
+            <v-btn class="mr-3">
+              <v-icon small>mdi-export</v-icon>
+            </v-btn>
+            <!-- Bulk trash -->
+            <v-btn class="mr-3">
+              <v-icon small>mdi-delete-outline</v-icon>
+            </v-btn>
+
+            <v-divider vertical></v-divider>
+
+            <!-- list and grid view -->
+            <template v-if="dataset.listGridView">
+              <!-- grid -->
+              <template v-if="toolbar.toggleview">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn
+                      @click="toggleView"
+                      icon
+                      v-on="on"
+                      >
+                      <v-icon small>mdi-grid-large</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ trans('Switch to Grid View') }}</span>
+                </v-tooltip>
+              </template>
+              <!-- list -->
+              <template v-else>
+                <v-tooltip
+                  bottom
+                  >
+                  <v-btn
+                    icon
+                    slot="activator"
+                    @click="toggleView"
+                    >
+                    <v-icon small>mdi-format-list-checkbox</v-icon>
+                  </v-btn>
+                  <span>{{ trans('Switch to List View') }}</span>
+                </v-tooltip>
+              </template>
+            </template>
+            <!-- list and grid view -->
+          </div>
+        </v-col>
+      </v-row>
+    </div>
 
 
-    <!-- Bulk select -->
-    <v-btn class="mr-3">
-      <v-icon small>mdi-checkbox-marked-circle-outline</v-icon>
-    </v-btn>
-    <!-- Bulk export -->
-    <v-btn class="mr-3">
-      <v-icon small>mdi-export</v-icon>
-    </v-btn>
-    <!-- Bulk trash -->
-    <v-btn class="mr-3">
-      <v-icon small>mdi-delete-outline</v-icon>
-    </v-btn>
-
-    <v-divider vertical></v-divider>
-
-    <!-- list and grid view -->
-    <template v-if="dataset.listGridView">
-      <!-- grid -->
-      <template v-if="toolbar.toggleview">
-        <v-tooltip
-          bottom
-          >
-          <v-btn
-            @click="toggleView"
-            icon
-            slot="activator"
-            >
-            <v-icon small>mdi-grid-large</v-icon>
-          </v-btn>
-          <span>{{ trans('Switch to Grid View') }}</span>
-        </v-tooltip>
-      </template>
-      <!-- list -->
-      <template v-else>
-        <v-tooltip
-          bottom
-          >
-          <v-btn
-            icon
-            slot="activator"
-            @click="toggleView"
-            >
-            <v-icon small>mdi-format-list-checkbox</v-icon>
-          </v-btn>
-          <span>{{ trans('Switch to List View') }}</span>
-        </v-tooltip>
-      </template>
-    </template>
-    <!-- list and grid view -->
-  </v-toolbar>
+  <!-- </v-toolbar> -->
 </template>
 
 <script>

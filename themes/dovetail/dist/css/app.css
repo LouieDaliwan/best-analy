@@ -253,26 +253,6 @@ pre {
   white-space: nowrap;
 }
 
-.dt-badge-soft-success {
-  background-color: var(--soft-success);
-  color: var(--success);
-}
-
-.dt-badge-soft-error {
-  background-color: var(--soft-error);
-  color: var(--error);
-}
-
-.dt-badge-soft-info {
-  background-color: var(--soft-info);
-  color: var(--info);
-}
-
-.dt-badge-soft-warning {
-  background-color: var(--soft-warning);
-  color: var(--warning);
-}
-
 .v-breadcrumbs {
   padding: var(--breadcrumbs-padding);
 }

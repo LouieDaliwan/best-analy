@@ -36,6 +36,9 @@
       </v-card-text>
     </v-card>
 
+    <h3 class="mb-2 mt-9">Language Switcher</h3>
+    TODO
+    <!-- <language-chooser></language-chooser> -->
 
     <h3 class="mb-2 mt-9">Widgets</h3>
     <template class="mt-3" v-for="(widget, i) in widgets">

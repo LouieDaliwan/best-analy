@@ -12,7 +12,7 @@ export const messages = {
 
 const i18n = new VueI18n({
   locale: localStorage.getItem('app:locale') || 'en',
-  fallbackLocale: 'en',
+  fallbackLocale: window.$app.fallback_locale,
   silentFallbackWarn: true,
   silentTranslationWarn: true,
   messages

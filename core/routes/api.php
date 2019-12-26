@@ -31,19 +31,28 @@ Route::middleware(['auth:api', 'json.force', 'client.credentials'])->prefix('v1'
     });
 });
 
-/**
- *------------------------------------------------------------------------------
- * App Settings Route
- *------------------------------------------------------------------------------
- *
- * Here is where you can register API routes for retrieving
- * application settings.
- *
- */
-
 Route::middleware(['auth:api', 'json.force'])->prefix('v1')->group(function () {
+    /**
+     *------------------------------------------------------------------------------
+     * Language Routes
+     *------------------------------------------------------------------------------
+     *
+     * Here is where you can register API routes for retrieving
+     * langauge and locale information.
+     *
+     */
+    Route::get('languages/supported', 'Api\Localization\GetSupportedLanguages')->name('languages.supported');
     Route::apiResource('languages', 'Api\Localization\LanguageController');
 
+    /**
+     *------------------------------------------------------------------------------
+     * App Settings Route
+     *------------------------------------------------------------------------------
+     *
+     * Here is where you can register API routes for retrieving
+     * application settings.
+     *
+     */
     Route::get('settings/app', 'Api\Settings\AppSettings')->name('settings.app');
     Route::post('settings/locale', 'Api\Settings\SetAppLocale')->name('settings.locale');
 });

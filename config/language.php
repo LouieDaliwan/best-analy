@@ -29,11 +29,15 @@ return [
 
     /**
      *--------------------------------------------------------------------------
-     * Supported locale
+     * Supported Locale
      *--------------------------------------------------------------------------
      *
-     * Listed here are the locales supported out-of-the-box.
+     * Listed here are the supported locales out-of-the-box.
      *
      */
-    'supported' => ['en', 'fil'],
+
+    'supported' => [
+        'en' => 'English',
+        'fil' => 'Filipino',
+    ],
 ];

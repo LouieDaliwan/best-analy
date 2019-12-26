@@ -27,14 +27,14 @@ class LanguageServiceProvider extends ServiceProvider
     protected function registerJsonLanguageFile()
     {
         try {
-            $this->app->singleton(LanguageRepository::class, function () {
+            $this->app->singleton('core.repository.language', function () {
                 $locale = $this->app->getLocale();
                 return new LanguageRepository(json_decode(
                     resource_path("lang/$locale.json"), true
-                ));
+                ), config('language.supported', []));
             });
         } catch (\Exception $e) {
-            unset($e);
+            dd($e->getMessage());
         }
     }
 }

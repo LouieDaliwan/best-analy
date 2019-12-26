@@ -26,7 +26,7 @@
           <v-divider :key="i" class="my-2"></v-divider>
         </template>
         <template v-else-if="parent.meta.subheader">
-          <v-subheader class="text--muted text-capitalize" :key="i" v-text="(parent.meta.title)"></v-subheader>
+          <v-subheader class="text--muted text-capitalize" :key="i" v-text="$t(parent.meta.title)"></v-subheader>
         </template>
         <template v-else-if="parent.children">
           <can :code="parent.meta.permission">
@@ -38,7 +38,7 @@
               >
               <template v-slot:activator>
                 <v-list-item-content>
-                  <v-list-item-title v-text="parent.meta.title"></v-list-item-title>
+                  <v-list-item-title v-text="$t(parent.meta.title)"></v-list-item-title>
                 </v-list-item-content>
               </template>
               <!-- Submenu children -->
@@ -63,7 +63,7 @@
                           <v-icon small v-text="submenu.meta.icon"></v-icon>
                         </v-list-item-icon>
                         <v-list-item-content>
-                          <v-list-item-title v-text="trans(submenu.meta.title)"></v-list-item-title>
+                          <v-list-item-title v-text="$t(submenu.meta.title)"></v-list-item-title>
                         </v-list-item-content>
                       </v-list-item>
                     </can>
@@ -82,7 +82,7 @@
                 <v-icon small v-text="parent.meta.icon"></v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title v-text="trans(parent.meta.title)"></v-list-item-title>
+                <v-list-item-title v-text="$t(parent.meta.title)"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </can>

@@ -6,13 +6,13 @@
           <div class="mb-2" v-if="back">
             <router-link tag="a" exact :to="back" class="text--decoration-none body-1 dt-link">
               <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
-              <span v-text="trans('Back')"></span>
+              <span v-text="$t('Back')"></span>
             </router-link>
           </div>
         </slot>
-        <h2 class="mb-3" :title="page.description">
+        <h2 class="mb-3" :title="$t(page.description)">
           <slot name="title">
-            {{ page.title }}
+            {{ $t(page.title) }}
           </slot>
         </h2>
         <slot name="utilities"></slot>

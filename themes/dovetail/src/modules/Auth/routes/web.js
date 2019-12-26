@@ -14,7 +14,7 @@ export default [
     },
     children: [
       {
-        path: '/login',
+        path: '/:lang?/login',
         name: 'login',
         component: () => import('../Signin.vue'),
         meta: {

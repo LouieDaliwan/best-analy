@@ -31,14 +31,14 @@
         <div>{{ $t("Name") }}</div>
         <div>{{ $t("Role") }}</div>
         <div>{{ $t("Cancel") }}</div>
-        <div>{{ $t("Move to Trash") }}</div>
-        <div>{{ $t("Edit") }}</div>
+        <div v-t="'Edit'"></div>
+        <div v-t="text"></div>
       </v-card-text>
     </v-card>
 
     <h3 class="mb-2 mt-9">Language Switcher</h3>
     TODO
-    <!-- <language-chooser></language-chooser> -->
+    <language-switcher></language-switcher>
 
     <h3 class="mb-2 mt-9">Widgets</h3>
     <template class="mt-3" v-for="(widget, i) in widgets">
@@ -53,6 +53,7 @@ export default {
 
   data () {
     return {
+      text: 'Move to Trash',
       repeaters: [],
       widgets: [],
       //   {key: 'app:title', value: 'BEST Analytics'},

@@ -26,6 +26,8 @@
 
 <script>
 export default {
+  name: 'Admin',
+
   beforeCreate: function () {
     const { lang = null } = this.$router.currentRoute.params
     this.$store.dispatch('app/locale', lang)
@@ -45,6 +47,6 @@ export default {
         throw err;
       });
     });
-  }
+  },
 }
 </script>

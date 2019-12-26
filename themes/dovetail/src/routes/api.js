@@ -7,6 +7,11 @@ export default {
     locale: '/api/v1/settings/locale',
   },
 
+  languages: {
+    supported: '/api/v1/languages/supported',
+    index: '/api/v1/languages',
+  },
+
   validate: {
     token: '/api/v1/validate/token',
   },

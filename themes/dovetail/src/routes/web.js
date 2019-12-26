@@ -17,7 +17,7 @@ requireRoute.keys().forEach(route => {
 })
 
 export default {
-  path: '/',
+  path: '/:lang?',
   name: 'web',
   component: () => import('@/components/Layouts/Public.vue'),
   meta: { title: 'Admin', authenticatable: false },

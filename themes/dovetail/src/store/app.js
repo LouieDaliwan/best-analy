@@ -31,7 +31,8 @@ export const mutations = {
 
   'SET_LOCALE' (state, locale) {
     state.app.locale = locale
-    localStorage.setItem('app:locale', locale)
+    i18n.locale = locale
+    // localStorage.setItem('app:locale', locale)
   }
 }
 
@@ -41,15 +42,7 @@ export const actions = {
   },
 
   locale: function ({ commit }, locale) {
-    i18n.locale = locale
-    return new Promise((resolve, reject) => {
-      axios.post($api.settings.locale, { locale })
-        .then((response) => {
-          commit('SET_LOCALE', locale)
-          resolve(response)
-        })
-        .catch(err => { reject(err) })
-    })
+    commit('SET_LOCALE', locale)
   },
 }
 

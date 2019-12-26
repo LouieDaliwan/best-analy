@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
    */
   metatags.set(to, from, next)
 
-  next({ params: { lang: store.getters['app/locale'] } })
+  next({ params: { lang: store.getters['app/locale'], from: window.location.pathname } })
 });
 
 export default router;

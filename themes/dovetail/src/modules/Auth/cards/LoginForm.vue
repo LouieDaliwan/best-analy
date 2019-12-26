@@ -4,7 +4,7 @@
       <validation-provider name="username" rules="required" v-slot="{ errors }">
         <v-text-field
           :error-messages="errors"
-          :label="trans('Username or email')"
+          :label="$t('Username or email')"
           autofocus
           class="mb-3"
           outlined
@@ -18,7 +18,7 @@
         <v-text-field
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           :error-messages="errors"
-          :label="trans('Password')"
+          :label="$t('Password')"
           :type="showPassword ? 'text' : 'password'"
           @click:append="showPassword = !showPassword"
           class="mb-3"
@@ -37,10 +37,10 @@
         color="primary"
         x-large block
         >
-        {{ __('Sign In') }}
+        {{ $t('Sign in') }}
         <template v-slot:loader>
           <v-slide-x-transition><v-icon dark class="mdi-spin mr-3">mdi-loading</v-icon></v-slide-x-transition>
-          <span>{{ 'Signing in...' }}</span>
+          <span>{{ $t('Signing in...') }}</span>
         </template>
       </v-btn>
     </v-form>
@@ -73,22 +73,28 @@ export default {
   },
 
   methods: {
+    load (val = true) {
+      this.loading = val
+    },
+
     submit (e) {
       const { username, password } = this.auth
 
-      this.loading = true
+      this.load()
       this.$store
         .dispatch('auth/login', { username, password })
         .then(() => {
           this.$store.dispatch('sidebar/toggle', {model: true})
           this.$router.push({name: 'dashboard'})
           this.$store.dispatch('snackbar/show', {
-            text: trans('Welcome back, ') + $auth.getUser().firstname
+            text: $trans('Welcome back, ') + $auth.getUser().firstname
           })
         })
         .catch(err => {
-          this.loading = false
           this.$refs['signin-form'].setErrors(err.response.data.errors)
+        })
+        .finally(() => {
+          this.load(false)
         })
 
       e.preventDefault()

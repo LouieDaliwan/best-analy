@@ -38,6 +38,6 @@ return [
 
     'supported' => [
         'en' => 'English',
-        'fil' => 'Filipino',
+        'ar' => 'Arabic',
     ],
 ];

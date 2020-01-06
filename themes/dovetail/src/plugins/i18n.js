@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import en from '@/lang/en.json'
-import fil from '@/lang/fil.json'
+import ar from '@/lang/ar.json'
 
 Vue.use(VueI18n)
 
 export const messages = {
   en,
-  fil,
+  ar,
 }
 
 const i18n = new VueI18n({

@@ -77,3 +77,8 @@ window.axios.interceptors.response.use((response) => response, (error) => {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+window.is_rtl = function (lang) {
+  const rtl = ['ar'];
+  return window._.includes(rtl, lang)
+}

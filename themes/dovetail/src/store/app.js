@@ -32,7 +32,7 @@ export const mutations = {
   'SET_LOCALE' (state, locale) {
     state.app.locale = locale
     i18n.locale = locale
-    // localStorage.setItem('app:locale', locale)
+    localStorage.setItem('app:rtl', is_rtl(locale))
   }
 }
 

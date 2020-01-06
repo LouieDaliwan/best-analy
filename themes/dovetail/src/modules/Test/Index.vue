@@ -18,6 +18,7 @@
     <v-card class="mt-3">
       <v-card-actions>
         <v-btn text @click="changeLocale('ja')">Change locale to <code>ja</code></v-btn>
+        <v-btn text @click="changeLocale('ar')">Change locale to <code>ar</code></v-btn>
         <v-btn text @click="changeLocale('fil')">Change locale to <code>fil</code></v-btn>
         <v-btn text @click="changeLocale()">Change locale to <code>en</code></v-btn>
       </v-card-actions>
@@ -66,6 +67,9 @@ export default {
   methods: {
     changeLocale (locale) {
       this.$store.dispatch('app/locale', locale)
+
+      localStorage.setItem('app:rtl', locale == 'ar')
+      this.$vuetify.rtl = locale == 'ar'
 
       if (this.$router.currentRoute.params.lang !== locale) {
         this.$router.push({ name: this.$router.currentRoute.name, params: { lang: locale } })

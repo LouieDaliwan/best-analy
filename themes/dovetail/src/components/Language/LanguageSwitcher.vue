@@ -30,6 +30,7 @@ export default {
   methods: {
     change: function () {
       this.$store.dispatch('app/locale', this.locale)
+      this.$vuetify.rtl = is_rtl(this.locale)
       this.reload()
     },
 

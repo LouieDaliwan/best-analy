@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/admin/settings',
+    path: 'settings',
     component: () => import('@/App.vue'),
     meta: {
       title: 'Settings',

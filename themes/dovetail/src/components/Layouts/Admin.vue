@@ -1,5 +1,5 @@
 <template>
-  <v-app class="dovetail-app" v-cloak :dark="true">
+  <v-app class="dovetail-app" v-cloak>
     <sidebar></sidebar>
 
     <snackbar></snackbar>
@@ -25,16 +25,12 @@
 </template>
 
 <script>
-import store from '@/store'
-import { mapGetters } from 'vuex'
-
 export default {
-  store,
+  name: 'Admin',
 
-  computed: {
-    ...mapGetters({
-      app: 'app/app',
-    }),
+  beforeCreate: function () {
+    const { lang = null } = this.$router.currentRoute.params
+    this.$store.dispatch('app/locale', lang)
   },
 
   created: function () {
@@ -51,6 +47,6 @@ export default {
         throw err;
       });
     });
-  }
+  },
 }
 </script>

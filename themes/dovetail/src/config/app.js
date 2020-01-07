@@ -6,6 +6,7 @@ const app = {
   year: window.$app.meta['app:year'],
   author: window.$app.meta['app:author'],
   logo: window.$app.logo,
+  locale: window.$app.locale,
 }
 
 export default app

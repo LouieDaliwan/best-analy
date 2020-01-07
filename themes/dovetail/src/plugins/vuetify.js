@@ -5,6 +5,7 @@ import * as theme from '../../theme.json'
 Vue.use(Vuetify)
 
 export default new Vuetify({
+  rtl: localStorage.getItem('app:rtl') == 'true' || false,
   icons: {
     iconfont: 'mdi',
   },

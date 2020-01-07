@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/admin/tests',
+    path: 'tests',
     component: () => import('@/App.vue'),
     meta: {
       title: 'Tests',

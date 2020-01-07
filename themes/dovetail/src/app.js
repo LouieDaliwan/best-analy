@@ -13,6 +13,7 @@ import store from '@/store'
 
 import vuetify from './plugins/vuetify'
 import router from './plugins/router'
+import i18n from './plugins/i18n'
 import './plugins/vee-validate'
 import './plugins/shortkey'
 
@@ -30,6 +31,7 @@ import '@/components'
 Vue.config.productionTip = false;
 
 const app = new Vue({
+  i18n,
   store,
   router,
   vuetify,

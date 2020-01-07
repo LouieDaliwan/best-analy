@@ -1,8 +1,8 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import routes from '../routes';
-import store from '@/store';
-import metatags from '@/routes/helpers/metatags';
+import Vue from 'vue'
+import Router from 'vue-router'
+import routes from '@/routes'
+import store from '@/store'
+import metatags from '@/routes/helpers/metatags'
 
 Vue.use(Router);
 
@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
    */
   metatags.set(to, from, next)
 
-  next();
+  next({ params: { lang: store.getters['app/locale'], from: window.location.pathname } })
 });
 
 export default router;

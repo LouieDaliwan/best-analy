@@ -1,10 +1,8 @@
+import store from '@/store'
+
 window.auth = require('./core/Auth/auth.js');
 
 window._ = require('lodash');
-
-window.trans = function (text) {
-  return text
-}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -35,8 +33,6 @@ if (token) {
  * all outgoing HTTP requests automatically have it attached. This is just
  * a simple convenience so we don't have to attach every token manually.
  */
-import store from '@/store'
-
 let accessToken = localStorage.getItem('token');
 
 /**
@@ -81,3 +77,8 @@ window.axios.interceptors.response.use((response) => response, (error) => {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+window.is_rtl = function (lang) {
+  const rtl = ['ar'];
+  return window._.includes(rtl, lang)
+}

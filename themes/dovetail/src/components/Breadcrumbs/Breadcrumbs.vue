@@ -9,7 +9,7 @@
       <template v-slot:item="{ item }">
         <v-breadcrumbs-item
           exact
-          :to="{name: item.name}"
+          :to="{name: item.name, params: {lang}}"
           >
           <small v-text="item.text"></small>
         </v-breadcrumbs-item>
@@ -27,14 +27,14 @@ export default {
   computed: {
     ...mapGetters({
       breadcrumbs: 'breadcrumbs/breadcrumbs',
+      lang: 'app/locale',
     }),
 
     crumbs: function () {
       return this.$route.matched.map(function (route) {
         return {
           name: route.name,
-          text: trans(route.meta.title),
-          disabled: false,
+          text: $trans(route.meta.title),
           href: route.path,
         }
       })

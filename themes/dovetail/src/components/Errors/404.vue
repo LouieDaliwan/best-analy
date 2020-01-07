@@ -18,7 +18,7 @@
                   {{ __('Looks like you ended up here by accident?') }}
                 </p>
 
-                <v-btn class="mb-5" large color="primary" exact to="dashboard" v-text="trans('Return to your dashboard')"></v-btn>
+                <v-btn class="mb-5" large color="primary" exact :to="{name: 'dashboard'}" v-text="trans('Return to your dashboard')"></v-btn>
 
                 <superadmin-only></superadmin-only>
               </div>

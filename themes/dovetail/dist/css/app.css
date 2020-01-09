@@ -47,6 +47,7 @@ html {
 }
 
 body {
+  margin-bottom: 0 !important;
   direction: ltr;
   font-family: var(--font-family-base);
   font-feature-settings: "liga" 0;
@@ -321,6 +322,10 @@ pre {
   border-color: var(--sidebar-border);
 }
 
+.v-text-field .v-input__slot {
+  border-radius: var(--card-border-radius);
+}
+
 .theme--dark .v-sheet {
   background: var(--sidebar-bg-dark);
 }
@@ -342,40 +347,50 @@ pre {
   padding-right: var(--padding-base);
 }
 
-.theme--dark.v-data-table td,
-.theme--dark.v-data-table th,
-.theme--light.v-data-table td,
-.theme--light.v-data-table th {
+.dovetail-app .theme--dark.v-data-table td,
+.dovetail-app .theme--light.v-data-table td {
+  font-size: var(--font-size-base);
+}
+
+.dovetail-app .theme--dark.v-data-table td,
+.dovetail-app .theme--dark.v-data-table th,
+.dovetail-app .theme--light.v-data-table td,
+.dovetail-app .theme--light.v-data-table th {
   height: 60px;
 }
 
-.theme--dark.v-data-table thead tr th,
-.theme--light.v-data-table thead tr th {
+.dovetail-app .theme--dark.v-data-table thead tr th,
+.dovetail-app .theme--light.v-data-table thead tr th {
   text-transform: uppercase;
 }
 
-.theme--dark.v-data-table {
+.dovetail-app .theme--dark.v-data-table tbody tr:hover,
+.dovetail-app .theme--light.v-data-table tbody tr:hover {
+  background: transparent;
+}
+
+.dovetail-app .theme--dark.v-data-table {
   background-color: var(--sidebar-bg-dark);
 }
 
-.theme--dark.v-data-table thead tr th {
+.dovetail-app .theme--dark.v-data-table thead tr th {
   background: var(--toolbar-bg-dark);
 }
 
-.theme--light.v-data-table thead tr th {
+.dovetail-app .theme--light.v-data-table thead tr th {
   background: var(--workspace-bg);
   color: var(--text);
 }
 
-.theme--light.v-data-table thead tr:last-child th {
+.dovetail-app .theme--light.v-data-table thead tr:last-child th {
   border-bottom: 1px solid var(--sidebar-border);
 }
 
-.theme--light.v-data-table tbody tr:not(:last-child) td:not(.v-data-table__mobile-row) {
-  border-bottom: 1px solid var(--sidebar-border);
+.dovetail-app .theme--light.v-data-table tbody tr:not(:last-child) td:not(.v-data-table__mobile-row) {
+  border-bottom: transparent;
 }
 
-.theme--light.v-data-table .v-data-footer {
+.dovetail-app .theme--light.v-data-table .v-data-footer {
   border-top: 1px solid var(--sidebar-border);
 }
 

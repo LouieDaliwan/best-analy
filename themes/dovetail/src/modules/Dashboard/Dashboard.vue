@@ -4,19 +4,86 @@
     <page-header></page-header>
     <!-- Header -->
 
-    <!-- Glance Widget -->
+    <!-- Export button -->
+    <div class="text-right mb-4">
+      <v-menu open-on-hover offset-y bottom transition="slide-y-transition">
+        <template v-slot:activator="{ on }">
+          <v-btn v-on="on" large color="primary">
+            <v-icon left>mdi-download</v-icon>
+            {{ trans('Export Reports') }}
+          </v-btn>
+        </template>
+        <v-list dense>
+          <v-list-item @click="">
+            <v-list-icon-content>
+              <v-list-item-title>Business Sustainability</v-list-item-title>
+            </v-list-icon-content>
+          </v-list-item>
+          <v-list-item @click="">
+            <v-list-icon-content>
+              <v-list-item-title>Human Resources</v-list-item-title>
+            </v-list-icon-content>
+          </v-list-item>
+          <v-list-item @click="">
+            <v-list-icon-content>
+              <v-list-item-title>Financial Management</v-list-item-title>
+            </v-list-icon-content>
+          </v-list-item>
+          <v-list-item @click="">
+            <v-list-icon-content>
+              <v-list-item-title>Full Report</v-list-item-title>
+            </v-list-icon-content>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </div>
+    <!-- Export button -->
+
+    <!-- Indexes -->
     <v-row>
+      <v-col cols="12" md="6" v-for="(index, i) in indexes" :key="i">
+        <v-card exact to="" v-ripple="{ class: 'primary--text' }" fill-height hover class="text-center">
+          <v-card-text>
+            <!-- <div class="d-flex justify-end">
+              <v-menu open-on-hover left bottom transition="slide-y-transition">
+                <template v-slot:activator="{ on }">
+                  <v-btn v-on="on" absolute icon class="muted--text">
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                </template>
+                <v-list dense>
+                  <v-list-item @click="">
+                    <v-list-item-icon>
+                      <v-icon small>mdi-export</v-icon>
+                    </v-list-item-icon>
+                    <v-list-icon-content>
+                      <v-list-item-title>Export</v-list-item-title>
+                    </v-list-icon-content>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </div> -->
+            <div class="mb-4"><img width="100" :src="index.icon" alt=""></div>
+            <h4 class="mb-1 text-uppercase" v-text="index.title"></h4>
+            <p class="text-uppercase muted--text" v-text="('Performance Indexes')"></p>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+    <!-- Indexes -->
+
+    <!-- Glance Widget -->
+    <!-- <v-row>
       <v-col md="3" sm="6" cols="12" v-for="(glance, i) in staffs" :key="i">
         <glance :items="glance"></glance>
       </v-col>
-    </v-row>
+    </v-row> -->
     <!-- Glance Widget -->
 
-    <template v-if="toggletoolbar.toggleview">
+    <!-- data table -->
+    <!-- <template v-if="toggletoolbar.toggleview">
       <v-card>
-
         <toolbar-menu></toolbar-menu>
-
         <v-divider></v-divider>
         <v-data-table
           :headers="headers"
@@ -54,15 +121,15 @@
           </template>
         </v-data-table>
       </v-card>
-    </template>
+    </template> -->
 
-    <template v-else>
-      <!-- Switched to another view <code>data-table</code> -->
+    <!-- <template v-else>
       <v-card>
         <toolbar-menu></toolbar-menu>
       </v-card>
       <data-iterator :items="courses"></data-iterator>
-    </template>
+    </template> -->
+    <!-- data table -->
 
     <!-- <v-col>
       <cannot code="unexisting.permission">
@@ -78,9 +145,31 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import business from './assets/business.png'
+import hr from './assets/hr.png'
+import financial from './assets/financial.png'
+import productivity from './assets/productivity.png'
 
 export default {
   data: () => ({
+    indexes: [
+      {
+        icon: business,
+        title: 'Business Sustainability'
+      },
+      {
+        icon: hr,
+        title: 'Human Resources'
+      },
+      {
+        icon: financial,
+        title: 'Financial Management'
+      },
+      {
+        icon: productivity,
+        title: 'Productivity Management',
+      },
+    ],
     staffs: [
       {
         title: 'Staff',

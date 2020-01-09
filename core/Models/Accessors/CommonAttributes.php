@@ -21,6 +21,16 @@ trait CommonAttributes
      *
      * @return string
      */
+    public function getModifiedAttribute()
+    {
+        return $this->parseDate($this->attributes['updated_at']);
+    }
+
+    /**
+     * Retrieve the parsed created_at fields.
+     *
+     * @return string
+     */
     public function getJoinedAttribute()
     {
         return $this->created;

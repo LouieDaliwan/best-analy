@@ -1,7 +1,7 @@
 export default {
   name: 'page',
   computed: {
-    page: function () {
+    heading: function () {
       const route = this.$router.currentRoute
 
       return {

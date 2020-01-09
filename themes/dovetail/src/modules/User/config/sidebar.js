@@ -8,6 +8,7 @@ export default [
       authenticatable: true,
       sort: 5,
       permission: 'users.index',
+      children: ['users.index', 'users.create', 'users.show', 'users.trashed'],
     },
     children: [
       // Admin User
@@ -19,6 +20,39 @@ export default [
           authenticatable: true,
           sort: 5,
           permission: 'users.index',
+          children: ['users.index', 'users.show'],
+        },
+      },
+
+      {
+        code: 'users.create',
+        name: 'users.create',
+        meta: {
+          title: 'Add User',
+          authenticatable: true,
+          sort: 6,
+          permission: 'users.create',
+        },
+      },
+
+      {
+        code: 'users.trashed',
+        name: 'users.trashed',
+        meta: {
+          title: 'Deactivated Users',
+          authenticatable: true,
+          sort: 6,
+          permission: 'users.trashed',
+        },
+      },
+      {
+        code: 'users.create',
+        name: 'users.create',
+        meta: {
+          title: 'Add User',
+          authenticatable: true,
+          sort: 6,
+          permission: 'users.create',
         },
       },
     ],

@@ -14,10 +14,12 @@ trait HaveSoftDeletes
         $model = $this->sortAndOrder();
 
         if ($this->isSearching()) {
-            $model = $this->searchTrash();
+            $this->model = $this->searchTrash();
         } else {
-            $model = $this->with($this->appendToList ?? [])->onlyTrashed();
+            $this->model = $this->with($this->appendToList ?? [])->onlyTrashed();
         }
+
+        $model = $this->onlyOwned();
 
         return $model->paginate($this->getPerPage());
     }

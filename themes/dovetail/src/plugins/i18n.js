@@ -18,8 +18,13 @@ const i18n = new VueI18n({
   messages
 })
 
-window.$trans = function (text) {
-  return i18n.tc(text)
+window.$trans = function (text, options = null) {
+  return i18n.tc(text, options)
+}
+
+window.trans = function (text, options = null) {
+  console.log(text, options)
+  return i18n.tc(text, options)
 }
 
 export default i18n

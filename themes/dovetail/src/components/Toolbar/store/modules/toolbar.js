@@ -8,6 +8,7 @@ export const state = () => ({
     listGridView: true,
     toggleview: true,
     showBulk: false,
+    verticaldiv: true,
   },
 })
 

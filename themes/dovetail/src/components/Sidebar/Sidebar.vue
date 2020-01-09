@@ -54,10 +54,9 @@
                       <v-list-item
                         :key="j"
                         :target="submenu.meta.external ? '_blank' : null"
-                        :to="{ name: submenu.name, params: {lang} }"
-                        exact
+                        :to="{ name: submenu.name }"
+                        :exact="inactive(submenu)"
                         color="primary"
-                        :value="submenu.active"
                         >
                         <v-list-item-icon v-if="submenu.meta.icon">
                           <v-icon small v-text="submenu.meta.icon"></v-icon>
@@ -145,10 +144,12 @@ export default {
       toggleTheme: 'theme/toggle',
     }),
 
+    inactive (path) {
+      return !this.active(path)
+    },
+
     active (path) {
-      return window._.includes(path.children.map(function (child) {
-        return child.name
-      }), this.$route.name)
+      return window._.includes(path.meta.children, this.$route.name)
     }
   },
 }

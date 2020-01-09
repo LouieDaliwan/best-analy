@@ -19,6 +19,8 @@
           <router-view></router-view>
         </v-slide-y-transition>
       </v-container>
+
+      <v-card class="transparent" flat height="100"></v-card>
     </v-content>
     <!-- # Main Content -->
   </v-app>
@@ -26,13 +28,6 @@
 
 <script>
 export default {
-  name: 'Admin',
-
-  beforeCreate: function () {
-    const { lang = null } = this.$router.currentRoute.params
-    this.$store.dispatch('app/locale', lang)
-  },
-
   created: function () {
     window.axios.interceptors.response.use(undefined, function (err) {
       return new Promise(function (resolve, reject) {

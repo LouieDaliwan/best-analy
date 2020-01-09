@@ -2,16 +2,32 @@
   <v-fade-transition mode="in-out">
     <v-card>
       <v-data-table
-        v-model="selected"
-        :headers="headers"
-        :items="datasets"
-        :single-select="singleSelect"
-        item-key="name"
-        show-select
+        :headers="dataset.headers"
+        :items="dataset.items"
+        sort-by="name"
         >
-        <template v-slot:top>
-          <v-switch v-model="singleSelect" label="Single select" class="pa-3"></v-switch>
+        <template v-slot:item.action="{ item }">
+          <v-tooltip bottom v-if="dataset.edit">
+            <template v-slot:activator="{ on }">
+              <v-btn small icon v-on="on">
+                <v-icon small>mdi-pencil-outline</v-icon>
+              </v-btn>
+            </template>
+            <span>{{ __('Edit this user') }}</span>
+          </v-tooltip>
+
+          <v-btn small icon v-if="dataset.trash">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-btn small icon v-on="on">
+                  <v-icon small>mdi-delete-outline</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ __('Move this user to trash') }}</span>
+            </v-tooltip>
+          </v-btn>
         </template>
+        <slot></slot>
       </v-data-table>
     </v-card>
   </v-fade-transition>
@@ -56,7 +72,6 @@ export default {
   computed: {
     ...mapGetters({
       datatable: 'datatable/datatable',
-      bulk: 'toolbar/toolbar',
     })
   },
   methods: {}

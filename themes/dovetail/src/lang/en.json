@@ -1,3 +1,5 @@
 {
-  "Actions": "Aksyon"
+  "Actions": "Actions",
+  "Deactivate Selected User": "No User Selected | Deactivate Selected User | Deactivate Selected Users",
+  "Are you sure you want to deactivate the selected user?": "Select users to deactivate from the list | Are you sure you want to deactivate the selected user? | Are you sure you want to deactivate the selected users?"
 }

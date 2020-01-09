@@ -4,6 +4,7 @@ namespace User\Http\Controllers;
 
 use Core\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
+use User\Models\Role;
 use User\Services\RoleServiceInterface;
 
 class RoleController extends AdminController
@@ -44,10 +45,9 @@ class RoleController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
         return redirect()->route('users.index');
     }
@@ -55,12 +55,12 @@ class RoleController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \User\Models\Role $role
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Role $role)
     {
-        //
+        return view('user::roles.show')->withResource($role);
     }
 
     /**
@@ -81,23 +81,21 @@ class RoleController extends AdminController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param  integer                  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  integer $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
     }
 
     /**

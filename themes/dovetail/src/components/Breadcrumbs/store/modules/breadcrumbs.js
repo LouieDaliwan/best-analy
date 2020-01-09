@@ -24,6 +24,10 @@ export const actions = {
     commit('SET', payload)
   },
 
+  text: ({ commit }, payload) => {
+    commit('SET_TEXT', payload)
+  },
+
   toggle: ({ commit }, payload) => {
     commit('TOGGLE', payload)
   },

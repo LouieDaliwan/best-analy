@@ -9,7 +9,7 @@
       <template v-slot:item="{ item }">
         <v-breadcrumbs-item
           exact
-          :to="{name: item.name, params: {lang}}"
+          :to="item.to"
           >
           <small v-text="item.text"></small>
         </v-breadcrumbs-item>
@@ -20,6 +20,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import metatags from '@/routes/helpers/metatags'
 
 export default {
   name: 'Breadcrumbs',
@@ -31,10 +32,12 @@ export default {
     }),
 
     crumbs: function () {
-      return this.$route.matched.map(function (route) {
+      return this.$route.matched.map((route, i) => {
         return {
           name: route.name,
-          text: $trans(route.meta.title),
+          text: trans(metatags.gettext(route, this.$route)),
+          disabled: false,
+          to: {name: route.name, query: this.$route.query},
           href: route.path,
         }
       })

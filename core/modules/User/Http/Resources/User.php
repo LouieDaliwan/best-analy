@@ -3,6 +3,7 @@
 namespace User\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use User\Http\Resources\Detail as DetailResource;
 
 class User extends JsonResource
 {
@@ -14,12 +15,21 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
-        return collect(array_merge(parent::toArray($request), [
-            'displayname' => $this->displayname,
-            'birthday' => $this->detail('Birthday'),
+        $data = collect(array_merge(parent::toArray($request), [
             'avatar' => $this->avatar,
-            'role' => $this->role,
+            'birthday' => $this->detail('Birthday'),
+            'created' => $this->created,
+            'details' => DetailResource::collection($this->details),
+            'displayname' => $this->displayname,
+            'modified' => $this->modified,
             'permissions' => $this->permissions->pluck('code'),
-        ]))->except(['id'])->toArray();
+            'role' => $this->role,
+        ]));
+
+        if ($only = $request->get('only')) {
+            $data = $data->only($only);
+        }
+
+        return $data->toArray();
     }
 }

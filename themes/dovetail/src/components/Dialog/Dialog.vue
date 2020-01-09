@@ -5,7 +5,7 @@
     :max-width="dialog.maxWidth"
     :width="width || dialog.width"
     >
-    <v-card :class="{ 'text-xs-center': dialog.alignment == 'center' }">
+    <v-card :dark="dialog.dark" :color="dialog.color" :class="{ 'text-xs-center': dialog.alignment == 'center' }">
       <slot name="illustration"></slot>
       <v-card-title class="headline">
         <slot name="title">{{ trans(dialog.title) }}</slot>

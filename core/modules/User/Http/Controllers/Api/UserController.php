@@ -4,6 +4,7 @@ namespace User\Http\Controllers\Api;
 
 use Core\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
+use User\Http\Requests\DeleteUserRequest;
 use User\Http\Requests\UserRequest;
 use User\Http\Resources\User as UserResource;
 use User\Services\UserServiceInterface;
@@ -38,7 +39,7 @@ class UserController extends ApiController
      */
     public function store(UserRequest $request)
     {
-        return response()->json($this->service()->store($request->all()));
+        return $this->service()->store($request->all());
     }
 
     /**
@@ -47,8 +48,9 @@ class UserController extends ApiController
      * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
+        return new UserResource($this->service()->find($id));
     }
 
     /**
@@ -60,15 +62,52 @@ class UserController extends ApiController
      */
     public function update(Request $request, $id)
     {
+        return response()->json($this->service()->update($id, $request->all()));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  integer $id
+     * @param  \User\Http\Requests\DeleteUserRequest $request
+     * @param  integer                               $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DeleteUserRequest $request, $id)
     {
+        return $this->service()->destroy($request->has('id') ? $request->input('id') : $id);
+    }
+
+    /**
+     * Display a listing of the soft-deleted resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function trashed()
+    {
+        return UserResource::collection($this->service()->listTrashed());
+    }
+
+    /**
+     * Restore the specified resource.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  integer                  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(Request $request, $id = null)
+    {
+        return $this->service()->restore($request->has('id') ? $request->input('id') : $id);
+    }
+
+    /**
+     * Permanently delete the specified resource.
+     *
+     * @param  \User\Http\Requests\DeleteUserRequest $request
+     * @param  integer|null                          $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(DeleteUserRequest $request, $id = null)
+    {
+        return $this->service()->delete($request->has('id') ? $request->input('id') : $id);
     }
 }

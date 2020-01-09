@@ -1,27 +1,23 @@
-import $api from '@/routes/api'
-import i18n from '@/plugins/i18n'
+import $app from '@/config/app'
 
-export const state = ({
+export const state = () => ({
   app: {
     dark: localStorage.getItem('theme:dark') === 'true' || false,
-    title: window.$app.meta['app:title'],
-    tagline: window.$app.meta['app:tagline'],
-    copyright: window.$app.meta['app:copyright'],
-    email: window.$app.meta['app:email'],
-    year: window.$app.meta['app:year'],
-    author: window.$app.meta['app:author'],
-    logo: window.$app.logo,
-    locale: window.$app.locale,
+    title: $app.title,
+    tagline: $app.tagline,
+    year: $app.year,
+    author: $app.author,
+    locale: $app.locale,
   },
 })
 
 export const getters = {
-  dark: state => state.app.dark,
-  title: state => state.app['app:title'],
-  tagline: state => state.app['app:tagline'],
-  year: state => state.app['app:year'],
-  author: state => state.app['app:author'],
-  locale: state => state.app.locale,
+  app: state => state.app,
+  title: state => state.app['title'],
+  tagline: state => state.app['tagline'],
+  year: state => state.app['year'],
+  author: state => state.app['author'],
+  locale: state => state.app['locale'],
 }
 
 export const mutations = {

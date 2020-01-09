@@ -9,6 +9,9 @@ export const state = () => ({
     persistent: false,
     width: null,
     maxWidth: 800,
+    color: null,
+    light: null,
+    dark: null,
 
     // Text
     title: false,

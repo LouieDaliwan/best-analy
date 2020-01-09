@@ -1,62 +1,76 @@
-.theme--dark,
-.theme--light {
-  &.v-data-table {
-    td,
-    th {
-      height: 60px;
-    }
-
-    thead {
-      tr {
-        th {
-          text-transform: uppercase;
-        }
+.dovetail-app {
+  .theme--dark,
+  .theme--light {
+    &.v-data-table {
+      td {
+        font-size: var(--font-size-base);
       }
-    }
-  }
-}
 
-.theme--dark {
-  &.v-data-table {
-    background-color: var(--sidebar-bg-dark);
-
-    thead {
-      tr {
-        th {
-          background: var(--toolbar-bg-dark);
-        }
+      td,
+      th {
+        height: 60px;
       }
-    }
-  }
-}
 
-.theme--light {
-  &.v-data-table {
-    thead {
-      tr {
-        th {
-          background: var(--workspace-bg);
-          color: var(--text);
-        }
-
-        &:last-child {
+      thead {
+        tr {
           th {
-            border-bottom: 1px solid var(--sidebar-border);
+            text-transform: uppercase;
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          &:hover {
+            background: transparent;
           }
         }
       }
     }
+  }
 
-    tbody {
-      tr:not(:last-child) {
-        td:not(.v-data-table__mobile-row) {
-          border-bottom: 1px solid var(--sidebar-border);
+  .theme--dark {
+    &.v-data-table {
+      background-color: var(--sidebar-bg-dark);
+
+      thead {
+        tr {
+          th {
+            background: var(--toolbar-bg-dark);
+          }
         }
       }
     }
+  }
 
-    .v-data-footer {
-      border-top: 1px solid var(--sidebar-border);
+  .theme--light {
+    &.v-data-table {
+      thead {
+        tr {
+          th {
+            background: var(--workspace-bg);
+            color: var(--text);
+          }
+
+          &:last-child {
+            th {
+              border-bottom: 1px solid var(--sidebar-border);
+            }
+          }
+        }
+      }
+
+      tbody {
+        tr:not(:last-child) {
+          td:not(.v-data-table__mobile-row) {
+            border-bottom: transparent;
+          }
+        }
+      }
+
+      .v-data-footer {
+        border-top: 1px solid var(--sidebar-border);
+      }
     }
   }
 }

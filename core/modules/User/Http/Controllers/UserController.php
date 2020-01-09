@@ -96,10 +96,10 @@ class UserController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  integer $id
+     * @param  mixed $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id)
+    public function destroy($id)
     {
         $this->service()->destroy($id);
 

@@ -103,7 +103,7 @@ return [
         'fuzzy' => [
             'prefix_length' => 2,
             'max_expansions' => 100,
-            'distance' => 5,
+            'distance' => 8,
         ],
         'asYouType' => false,
         'searchBoolean' => env('TNTSEARCH_BOOLEAN', true),

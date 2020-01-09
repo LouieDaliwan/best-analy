@@ -10,9 +10,9 @@
             </router-link>
           </div>
         </slot>
-        <h2 class="mb-3" :title="$t(page.description)">
+        <h2 class="mb-3" :title="heading.description">
           <slot name="title">
-            {{ $t(page.title) }}
+            {{ heading.title }}
           </slot>
         </h2>
         <slot name="utilities"></slot>

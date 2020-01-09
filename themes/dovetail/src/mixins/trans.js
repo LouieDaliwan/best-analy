@@ -4,9 +4,7 @@ export default {
   name: 'trans',
   methods: {
     trans: function (string, defaultString) {
-      let phrases = (window.i18n && window.i18n.phrases) || string
-
-      return _get(phrases, string, defaultString || string)
+      return this.$tc(string, defaultString)
     },
 
     __: function (string, defaultString) {

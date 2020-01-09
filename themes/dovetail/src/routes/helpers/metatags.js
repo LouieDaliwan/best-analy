@@ -10,5 +10,13 @@ export default {
           .setAttribute('content', route.meta.metatags.description)
       }
     }
-  }
+  },
+
+  gettext: function (route, $route) {
+    if (route.meta.title == ':slug') {
+      return window._.startCase($route.params.id)
+    }
+
+    return route.meta.title
+  },
 }

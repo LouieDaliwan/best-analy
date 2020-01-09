@@ -14,7 +14,7 @@
         <breadcrumbs></breadcrumbs>
       </v-container>
 
-      <v-container>
+      <v-container v-shortkey.push="['ctrl']" @shortkey="displayShortcuts">
         <v-slide-y-transition mode="out-in">
           <router-view></router-view>
         </v-slide-y-transition>
@@ -42,6 +42,12 @@ export default {
         throw err;
       });
     });
+  },
+
+  methods: {
+    displayShortcuts () {
+      this.$store.dispatch('app/set', {dark: !this.$store.getters['app/app'].dark})
+    }
   },
 }
 </script>

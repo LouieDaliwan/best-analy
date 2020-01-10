@@ -2,8 +2,8 @@
   <section>
     <template v-if="! repeaters.length">
       <slot name="empty-state">
-        <div>
-          <!-- <v-card-text style="filter: grayscale(0.9);">
+        <div class="text-center">
+          <v-card-text style="filter: grayscale(0.9);">
             <empty-icon width="300" height="auto"></empty-icon>
           </v-card-text>
 
@@ -12,17 +12,26 @@
               <p class="muted--text font-weight-bold mb-0" v-text="trans('No items yet')"></p>
               <p class="muted--text" v-text="trans('Start adding key-value pairs.')"></p>
             </slot>
-          </v-card-text> -->
+          </v-card-text>
 
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-btn class="mt-3" v-on="on" v-shortkey="['ctrl', 'd']" @shortkey="add" @click="add">
-                <v-icon left>mdi-plus-circle-outline</v-icon>
-                {{ trans('Add Item') }}
-              </v-btn>
+          <v-badge
+            color="dark"
+            transition="fade-transition"
+            offset-y="20"
+            offset-x="20"
+            class="dt-badge"
+            bottom
+            tile
+            v-model="$store.getters['shortkey/ctrlIsPressed']"
+            >
+            <template v-slot:badge>
+              <div class="small" style="font-size: 11px">d</div>
             </template>
-            <span v-text="trans('ctrl+d')"></span>
-          </v-tooltip>
+            <v-btn class="mt-3" v-shortkey="['ctrl', 'd']" @shortkey="add" @click="add">
+              <v-icon left>{{ addButtonIcon }}</v-icon>
+              {{ trans(addButtonText) }}
+            </v-btn>
+          </v-badge>
         </div>
       </slot>
     </template>
@@ -67,15 +76,24 @@
     <v-row v-if="repeaters.length" no-gutters>
       <v-col>
         <slot name="action" :on="{on: add}">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-btn class="mt-3" v-on="on" v-shortkey="['ctrl', 'd']" @shortkey="add" @click="add">
-                <v-icon left>mdi-plus-circle-outline</v-icon>
-                {{ trans('Add Item') }}
-              </v-btn>
+          <v-badge
+            color="dark"
+            transition="fade-transition"
+            offset-y="20"
+            offset-x="20"
+            class="dt-badge"
+            bottom
+            tile
+            v-model="$store.getters['shortkey/ctrlIsPressed']"
+            >
+            <template v-slot:badge>
+              <div class="small" style="font-size: 11px">d</div>
             </template>
-            <span v-text="trans('ctrl+d')"></span>
-          </v-tooltip>
+            <v-btn class="mt-3" v-shortkey="['ctrl', 'd']" @shortkey="add" @click="add">
+              <v-icon left>{{ addButtonIcon }}</v-icon>
+              {{ trans(addButtonText) }}
+            </v-btn>
+          </v-badge>
         </slot>
       </v-col>
     </v-row>
@@ -88,7 +106,19 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'Repeater',
 
-  props: ['value'],
+  props: {
+    value: {
+      type: Array,
+    },
+    addButtonText: {
+      type: String,
+      default: 'Add Item',
+    },
+    addButtonIcon: {
+      type: String,
+      default: 'mdi-plus-circle-outline',
+    },
+  },
 
   computed: {
     ...mapGetters({

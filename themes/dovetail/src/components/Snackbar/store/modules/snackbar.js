@@ -53,7 +53,7 @@ export const actions = {
   },
 }
 
-export const snackbar = {
+export default {
   namespaced: true,
   state,
   getters,

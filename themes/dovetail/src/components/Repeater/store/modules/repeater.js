@@ -40,7 +40,7 @@ export const actions = {
   },
 }
 
-export const repeater = {
+export default {
   namespaced: true,
   state,
   getters,

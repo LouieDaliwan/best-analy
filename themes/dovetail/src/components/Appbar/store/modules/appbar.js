@@ -29,7 +29,7 @@ export const actions = {
   },
 }
 
-export const appbar = {
+export default {
   namespaced: true,
   state,
   getters,

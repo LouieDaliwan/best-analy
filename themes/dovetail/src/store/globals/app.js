@@ -42,7 +42,7 @@ export const actions = {
   },
 }
 
-export const app = {
+export default {
   namespaced: true,
   state,
   getters,

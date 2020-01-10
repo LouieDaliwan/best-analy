@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { dialogbox } from './modules/dialogbox'
+import { dialog } from './modules/dialog'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    dialogbox
+    dialog
   },
   strict: process.env.NODE_ENV !== 'production'
 })

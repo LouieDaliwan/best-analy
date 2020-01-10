@@ -56,7 +56,7 @@ export const actions = {
   },
 }
 
-export const modal = {
+export default {
   namespaced: true,
   state,
   getters,

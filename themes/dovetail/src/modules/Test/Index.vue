@@ -2,7 +2,17 @@
   <div>
     <h3 class="mb-2">Toast/Snackbar</h3>
     <p>Click the button to run a sample toast.</p>
-    <v-btn @click="runSnackbar">Run Toast</v-btn>
+    <v-badge
+      color="dark"
+      overlap
+      transition="fade-transition"
+      v-model="$store.getters['app/app'].dark"
+      >
+      <template v-slot:badge>
+        <div class="small" attr="font-size: 10px">ctrl+b</div>
+      </template>
+      <v-btn v-shortkey.once="['ctrl', 'b']" @shortkey="runSnackbar" @click="runSnackbar">Run Toast</v-btn>
+    </v-badge>
     <snackbar></snackbar>
 
     <br><p></p><p></p>

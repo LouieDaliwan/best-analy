@@ -78,7 +78,7 @@ export const actions = {
   },
 }
 
-export const auth = {
+export default {
   namespaced: true,
   state,
   getters,

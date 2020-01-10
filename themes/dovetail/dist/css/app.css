@@ -254,6 +254,10 @@ pre {
   white-space: nowrap;
 }
 
+.dt-badge.v-badge--tile .v-badge__badge {
+  border-radius: 0.275rem;
+}
+
 .v-breadcrumbs {
   padding: var(--breadcrumbs-padding);
 }

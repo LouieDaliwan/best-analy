@@ -24,7 +24,7 @@ export const actions = {
   },
 }
 
-export const theme = {
+export default {
   namespaced: true,
   state,
   getters,

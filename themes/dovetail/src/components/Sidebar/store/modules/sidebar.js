@@ -51,7 +51,7 @@ export const actions = {
   },
 }
 
-export const sidebar = {
+export default {
   namespaced: true,
   state,
   getters,

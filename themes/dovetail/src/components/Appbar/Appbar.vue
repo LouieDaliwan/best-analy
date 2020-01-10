@@ -6,9 +6,23 @@
       :clipped-left="sidebar.clipped"
       v-if="appbar.model"
       >
-      <v-btn class="muted--text" icon @click="toggle({model: !sidebar.model})">
-        <v-icon small>mdi-menu</v-icon>
-      </v-btn>
+      <v-badge
+        color="dark"
+        transition="fade-transition"
+        offset-y="20"
+        offset-x="20"
+        class="dt-badge"
+        bottom
+        tile
+        v-model="$store.getters['shortkey/ctrlIsPressed']"
+        >
+        <template v-slot:badge>
+          <div class="small" style="font-size: 11px">k</div>
+        </template>
+        <v-btn v-shortkey.once="['ctrl', 'k']" @shortkey="toggle({model: !sidebar.model})" class="muted--text" icon @click="toggle({model: !sidebar.model})">
+          <v-icon small>mdi-menu</v-icon>
+        </v-btn>
+      </v-badge>
 
       <v-spacer></v-spacer>
       <v-menu

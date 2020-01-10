@@ -7,4 +7,10 @@
   text-align: center;
   vertical-align: baseline;
   white-space: nowrap;
+
+  &.v-badge--tile {
+    .v-badge__badge {
+      border-radius: 0.275rem;
+    }
+  }
 }

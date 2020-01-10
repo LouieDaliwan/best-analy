@@ -26,7 +26,7 @@ export const mutations = {
   }
 }
 
-export const dataiterator = {
+export default {
   namespaced: true,
   state,
   getters,

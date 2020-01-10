@@ -24,7 +24,7 @@ export const actions = {
   },
 }
 
-export const shortkey = {
+export default {
   namespaced: true,
   state,
   getters,

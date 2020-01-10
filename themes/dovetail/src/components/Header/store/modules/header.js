@@ -14,7 +14,7 @@ export const mutations = {
   }
 }
 
-export const header = {
+export default {
   namespaced: true,
   state,
   getters,

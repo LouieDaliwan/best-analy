@@ -59,7 +59,7 @@ export const actions = {
   },
 }
 
-export const dialog = {
+export default {
   namespaced: true,
   state,
   getters,

@@ -32,7 +32,7 @@ export const actions = {
   },
 }
 
-export const toolbar = {
+export default {
   namespaced: true,
   state,
   getters,

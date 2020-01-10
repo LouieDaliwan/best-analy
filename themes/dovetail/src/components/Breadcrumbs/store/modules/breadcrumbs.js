@@ -6,7 +6,6 @@ export const state = () => ({
 
 export const getters = {
   breadcrumbs: state => state.breadcrumbs,
-  isShowing: state => state.breadcrumbs.show,
 }
 
 export const mutations = {
@@ -33,7 +32,7 @@ export const actions = {
   },
 }
 
-export const breadcrumbs = {
+export default {
   namespaced: true,
   state,
   getters,

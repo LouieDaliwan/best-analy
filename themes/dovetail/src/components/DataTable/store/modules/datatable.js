@@ -19,7 +19,7 @@ export const mutations = {
   }
 }
 
-export const datatable = {
+export default {
   namespaced: true,
   state,
   getters,

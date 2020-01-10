@@ -21,7 +21,7 @@ export const mutations = {
   }
 }
 
-export const submit = {
+export default {
   namespaced: true,
   state,
   getters,

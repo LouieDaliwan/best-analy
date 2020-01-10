@@ -16,7 +16,7 @@ export const mutations = {
   }
 }
 
-export const glance = {
+export default {
   namespaced: true,
   state,
   getters,

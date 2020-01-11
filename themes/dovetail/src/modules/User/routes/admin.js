@@ -39,10 +39,20 @@ export default [
         name: 'users.trashed',
         component: () => import('../Trashed.vue'),
         meta: {
-          title: 'All Deactivated Users',
+          title: 'Deactivated Users',
           sort: 8,
           authenticatable: true,
           icon: 'mdi-book-multiple-variant',
+        },
+      },
+      {
+        path: 'edit/:id',
+        name: 'users.edit',
+        component: () => import('../Edit.vue'),
+        meta: {
+          title: ':slug',
+          sort: 9,
+          authenticatable: true,
         },
       },
       {

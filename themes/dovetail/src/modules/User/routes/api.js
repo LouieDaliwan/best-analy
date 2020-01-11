@@ -12,7 +12,7 @@ export default {
   },
 
   restore: function (id = null) {
-    return `/api/v1/users/${id}`
+    return `/api/v1/users/restore/${id}`
   },
 
   trashed: function () {

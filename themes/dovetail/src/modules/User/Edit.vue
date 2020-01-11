@@ -5,7 +5,7 @@
         {{ trans('Edit User') }}
       </template>
       <template v-slot:action>
-        <v-btn large color="primary" exact :to="{ name: 'users.update' }">
+        <v-btn large color="primary" exact>
           <v-icon left>mdi-content-save-outline</v-icon>
           {{ trans("Update") }}
         </v-btn>

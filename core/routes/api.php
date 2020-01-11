@@ -25,10 +25,6 @@ Route::middleware(['auth:api', 'json.force', 'client.credentials'])->prefix('v1'
 
     Route::get('logout', 'Api\Auth\LoginController@logout')->name('logout');
     Route::post('logout', 'Api\Auth\LoginController@logout')->name('logout');
-
-    Route::get('user', function (Request $request) {
-        return $request->user();
-    });
 });
 
 Route::middleware(['auth:api', 'json.force'])->prefix('v1')->group(function () {

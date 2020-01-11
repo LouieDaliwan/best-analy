@@ -78,7 +78,7 @@ class UsersTest extends TestCase
         $this->withPermissionsPolicy();
 
         // Actions
-        // Passwords by default, will be ommited by the User\Models\User model.
+        // Passwords by default, will be omitted by the User\Models\User model.
         // So we need to merge it back before posting to the route.
         $user = factory(User::class)->make();
         $attributes = array_merge($user->toArray(), [

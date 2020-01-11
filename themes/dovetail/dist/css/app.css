@@ -322,6 +322,16 @@ pre {
   color: var(--text);
 }
 
+.v-dialog > .v-card > .v-card__title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  padding: var(--padding-base);
+}
+
+.v-dialog > .v-card > .v-card__text {
+  padding: var(--padding-base);
+}
+
 .theme--light .v-divider {
   border-color: var(--sidebar-border);
 }
@@ -379,6 +389,10 @@ pre {
 
 .dovetail-app .theme--dark.v-data-table thead tr th {
   background: var(--toolbar-bg-dark);
+}
+
+.dovetail-app .theme--dark.v-data-table tbody tr:not(:last-child) td:not(.v-data-table__mobile-row) {
+  border-bottom: transparent;
 }
 
 .dovetail-app .theme--light.v-data-table thead tr th {

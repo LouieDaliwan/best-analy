@@ -1,133 +1,160 @@
 <template>
   <section>
-    <!-- :back="{name: 'users.index'}" -->
     <metatag :title="trans('All Users')"></metatag>
+
     <page-header>
       <template v-slot:utilities>
-        <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'dashboard'}">
+        <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'users.trashed'}">
           <v-icon small class="mb-1">mdi-delete-empty</v-icon>
-          {{ trans('Deactivated') }}
-        </router-link>
-
-        <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'dashboard'}">
-          <v-icon small class="mb-1">mdi-upload</v-icon>
-          {{ trans('Import') }}
+          {{ trans('Deactivated Users') }}
         </router-link>
       </template>
 
       <template v-slot:action>
         <v-btn large color="primary" exact :to="{ name: 'users.create' }">
           <v-icon left>mdi-account-plus-outline</v-icon>
-          {{ trans("Add User") }}
+          {{ trans('Add User') }}
         </v-btn>
       </template>
     </page-header>
 
     <!-- Data table -->
     <v-card>
-      <div>
-        Selected Items from the table:
-        {{ selected }}
-      </div>
-      <toolbar-menu :items.sync="tabletoolbar">
-        <template v-slot:search>
-          <v-text-field
-            :placeholder="trans('Search ctrl+/')"
-            clear-icon="mdi-close-circle-outline"
-            @keydown.native="search"
-            @shortkey.native="focusSearchBar"
-            clearable
-            dense
-            hide-details
-            outlined
-            prepend-inner-icon="mdi mdi-magnify"
-            ref="tablesearch"
-            rounded
-            single-line
-            v-model="dataset.search"
-            v-shortkey="['ctrl', '/']"
-          ></v-text-field>
-        </template>
+      <toolbar-menu
+        :items.sync="tabletoolbar"
+        bulk
+        downloadable
+        trashable
+        @update:search="search"
+        @update:trash="bulkTrashResource"
+        >
       </toolbar-menu>
       <v-divider></v-divider>
-      <v-data-table
-        :headers="dataset.headers"
-        :items="dataset.data"
-        :loading="dataset.loading"
-        :options.sync="dataset.options"
-        :server-items-length="dataset.meta.total"
-        :show-select="tabletoolbar.toggleBulkEdit"
-        item-key="id"
-        v-model="dataset.selected"
-        @update:options="optionsChanged"
-        >
+      <v-slide-y-reverse-transition mode="out-in">
+        <v-data-table
+          :headers="dataset.headers"
+          :items="dataset.data"
+          :loading="dataset.loading"
+          :options.sync="dataset.options"
+          :server-items-length="dataset.meta.total"
+          :show-select="tabletoolbar.toggleBulkEdit"
+          :mobile-breakpoint="NaN"
+          item-key="id"
+          v-model="dataset.selected"
+          @update:options="optionsChanged"
+          >
 
-        <template v-slot:item.displayname="{ item }">
-          <div class="d-flex">
-            <v-avatar size="32" class="mr-4 pa-2" color="primary"><img :src="item.avatar"></v-avatar>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <router-link tag="a" exact :to="goToShowUserPage(item)" v-on="on" v-text="item.displayname"></router-link>
-              </template>
-              <span>{{ trans('View Details') }}</span>
-            </v-tooltip>
-          </div>
-        </template>
+          <template v-slot:progress><span></span></template>
 
-        <!-- Created & Modified -->
-        <template v-slot:item.created_at="{ item }">
-          <span :title="item.created_at">{{ trans(item.created) }}</span>
-        </template>
-        <template v-slot:item.updated_at="{ item }">
-          <span :title="item.updated_at">{{ trans(item.modified) }}</span>
-        </template>
-        <!-- Created & Modified -->
+          <template v-slot:loading>
+            <v-slide-y-transition mode="out-in">
+              <div>
+                <div class="d-flex" v-for="(j,i) in dataset.options.itemsPerPage" :key="i">
+                  <v-skeleton-loader
+                    class="px-4 py-3 mr-4"
+                    type="avatar"
+                  ></v-skeleton-loader>
+                  <v-skeleton-loader
+                    class="px-4 py-3"
+                    width="100%"
+                    type="table-row"
+                  ></v-skeleton-loader>
+                </div>
+              </div>
+            </v-slide-y-transition>
+          </template>
 
-        <!-- Action buttons -->
-        <template v-slot:item.action="{ item }">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-btn small icon v-on="on">
-                <v-icon small>mdi-pencil-outline</v-icon>
-              </v-btn>
-            </template>
-            <span>{{ __('Edit this user') }}</span>
-          </v-tooltip>
-          <v-btn small icon>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-btn small icon v-on="on">
-                  <v-icon small>mdi-delete-outline</v-icon>
-                </v-btn>
-              </template>
-              <span>{{ __('Move this user to trash') }}</span>
-            </v-tooltip>
-          </v-btn>
-        </template>
-        <!-- Action buttons -->
+          <template v-slot:item.displayname="{ item }">
+            <div class="d-flex align-items-center">
+              <v-tooltip v-if="auth.id == item.id" bottom>
+                <template v-slot:activator="{ on }">
+                  <v-badge
+                    avatar
+                    bordered
+                    color="muted"
+                    offset-x="35"
+                    offset-y="15"
+                    overlap
+                    >
+                    <template v-slot:badge>
+                      <v-avatar>
+                        <i class="small mdi mdi-home-account" style="font-size: 12px"></i>
+                      </v-avatar>
+                    </template>
+                    <v-avatar v-on="on" class="mr-6" size="32" color="muted"><v-img :src="item.avatar"></v-img></v-avatar>
+                  </v-badge>
+                </template>
+                <span>{{ $t('This is your account') }}</span>
+              </v-tooltip>
+              <v-avatar v-else class="mr-6" size="32" color="muted"><v-img :src="item.avatar"></v-img></v-avatar>
 
-        <!-- Account Name and Avatar -->
-        <template v-slot:item.name="{ item }">
-          <td class="pl-0">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-icon small class="muted--text" v-on="on">mdi-home-account</v-icon>
-              </template>
-              <span>{{ trans('This is your account') }}</span>
-            </v-tooltip>
-          </td>
-          <td><v-avatar size="30"><img :src="item.avatar"></v-avatar></td>
-          <td>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <a exact to="" v-on="on" v-text="item.name"></a>
-              </template>
-              <span>{{ trans('View Details') }}</span>
-            </v-tooltip>
-          </td>
-        </template>
-        <!-- Account Name and Avatar -->
-      </v-data-table>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <span v-on="on"><router-link tag="a" exact :to="goToShowUserPage(item)" v-text="item.displayname" class="text-no-wrap"></router-link></span>
+                </template>
+                <span>{{ $t('View Details') }}</span>
+              </v-tooltip>
+            </div>
+          </template>
+
+          <!-- Created & Modified -->
+          <template v-slot:item.updated_at="{ item }">
+            <span class="text-no-wrap" :title="item.updated_at">{{ trans(item.modified) }}</span>
+          </template>
+          <!-- Created & Modified -->
+
+          <!-- Action buttons -->
+          <template v-slot:item.action="{ item }">
+            <div class="text-no-wrap">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-btn :to="{name: 'users.edit', params: {id: item.id}}" icon v-on="on">
+                    <v-icon small>mdi-pencil-outline</v-icon>
+                  </v-btn>
+                </template>
+                <span>{{ $tc('Edit this user', 1) }}</span>
+              </v-tooltip>
+              <v-dialog
+                width="420"
+                v-model="item.active"
+                >
+                <template v-slot:activator="{ on }">
+                  <span v-on="on">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-btn icon v-on="on">
+                          <v-icon small>mdi-delete-outline</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>{{ $tc('Deactivate user', 1) }}</span>
+                    </v-tooltip>
+                  </span>
+                </template>
+                <v-card>
+                  <div class="pt-3 warning--text"><man-throwing-away-paper class="d-block mx-auto" width="200" height="160"></man-throwing-away-paper></div>
+                  <v-card-title class="pb-0">{{ trans('You are about to deactivate the selected user.') }}</v-card-title>
+                  <v-card-text>
+                    <p>{{ $t('The user will be signed out from the app. Some data related to the account like comments and files will still remain.') }}</p>
+                    <p v-html="$t('Are you sure you want to deactivate and move :name to Trash?', {name: item.displayname})"></p>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn autofocus @click="item.active = false" text color="link">{{ $t('Cancel') }}</v-btn>
+                    <v-btn @click="destroyResource(item)" :disabled="item.loading" :loading="item.loading" text color="warning">
+                      {{ $t('Move to Trash') }}
+                      <template v-slot:loader>
+                        <v-slide-x-transition><v-icon dark class="mdi-spin mr-3">mdi-loading</v-icon></v-slide-x-transition>
+                        <span>{{ $tc('Moving to Trash...') }}</span>
+                      </template>
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </div>
+          </template>
+          <!-- Action buttons -->
+        </v-data-table>
+      </v-slide-y-reverse-transition>
     </v-card>
     <!-- Data table -->
 
@@ -141,10 +168,13 @@
 
 <script>
 import $api from './routes/api'
+import $auth from '@/core/Auth/auth'
 
 export default {
   data: () => ({
     api: $api,
+
+    auth: $auth.getUser(),
 
     dataset: {
       loading: true,
@@ -162,23 +192,19 @@ export default {
       selected: [],
       headers: [
         { text: trans('Account Name'), align: 'left', value: 'displayname' },
-        { text: trans('Email'), value: 'email' },
         { text: trans('Role'), value: 'role' },
-        { text: trans('Created'), value: 'created_at' },
-        { text: trans('Modified'), value: 'updated_at' },
+        { text: trans('Last Modified'), value: 'updated_at' },
         { text: trans('Actions'), value: 'action', sortable: false, class: "muted--text" },
       ],
       data: []
     },
 
     tabletoolbar: {
-      toggleTrash: false,
-      trashCallback: () => {
-        this.bulkTrashResource()
-      },
       bulkCount: 0,
-      toggleBulkEdit: false,
+      isSearching: false,
       listGridView: false,
+      toggleBulkEdit: false,
+      toggleTrash: false,
       verticaldiv: false,
     },
   }),
@@ -189,8 +215,6 @@ export default {
         per_page: this.dataset.options.itemsPerPage,
         page: this.dataset.options.page,
         sort: this.dataset.options.sortBy[0] || undefined,
-        // search: this.dataset.search,
-        // order: options.sortDesc,
       }
     },
 
@@ -220,7 +244,6 @@ export default {
         .then(response => {
           this.dataset = Object.assign({}, this.dataset, response.data)
           this.dataset.options = Object.assign(this.dataset.options, response.data.meta, params)
-          // this.dataset.options.itemsPerPage = response.data.meta.per_page
           this.dataset.loading = false
           this.$router.push({query: Object.assign({}, this.$route.query, params)}).catch(err => {})
         })
@@ -233,19 +256,26 @@ export default {
             text: err.response.data.message,
           })
         })
+        .finally(() => {
+          this.dataset.data.map(function (data) {
+            return Object.assign(data, {loading: false})
+          })
+        })
     },
 
     goToShowUserPage (user) {
       return { name: 'users.show', params: { id: user.id, slug: user.username } }
     },
 
-    search: _.debounce(function () {
+    search: _.debounce(function (event) {
+      this.dataset.search = event.srcElement.value || ''
+        this.tabletoolbar.isSearching = false
       if (this.dataset.searching) {
         this.options.search = this.dataset.search
         this.getPaginatedData(this.options)
         this.dataset.searching = false
       }
-    }, 900),
+    }, 920),
 
     focusSearchBar () {
       this.$refs['tablesearch'].focus()
@@ -253,7 +283,53 @@ export default {
 
     bulkTrashResource () {
       let selected = this.selected
-      // axios.delete($api.destroy(null), {id})
+      axios.delete($api.destroy(null), { data: { id: selected } })
+        .then(response => {
+          this.getPaginatedData()
+          this.$store.dispatch('snackbar/show', {
+            show: true,
+            text: this.$tc('User successfully deactivated', this.tabletoolbar.bulkCount)
+          })
+        })
+        .catch(err => {
+          this.$store.dispatch('dialog/prompt', {
+            show: true,
+            width: 400,
+            buttons: { cancel: { show: false } },
+            title: trans('Whoops! An error occured'),
+            text: err.response.data.message,
+          })
+        })
+        .finally(() => {
+          this.tabletoolbar.toggleTrash = false
+          this.tabletoolbar.toggleBulkEdit = false
+        })
+    },
+
+    destroyResource (item) {
+      item.loading = true
+      axios.delete($api.destroy(item.id))
+        .then(response => {
+          item.active = false
+          this.getPaginatedData()
+          this.$store.dispatch('snackbar/show', {
+            show: true,
+            text: this.$tc('User successfully deactivated', 1)
+          })
+        })
+        .catch(err => {
+          this.$store.dispatch('dialog/prompt', {
+            show: true,
+            width: 400,
+            buttons: { cancel: { show: false } },
+            title: this.$t('Whoops! An error occured'),
+            text: err.response.data.message,
+          })
+        })
+        .finally(() => {
+          item.active = false
+          item.loading = false
+        })
     },
   },
 

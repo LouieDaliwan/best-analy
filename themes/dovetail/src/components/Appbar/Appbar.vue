@@ -14,11 +14,9 @@
         class="dt-badge"
         bottom
         tile
+        content="k"
         v-model="$store.getters['shortkey/ctrlIsPressed']"
         >
-        <template v-slot:badge>
-          <div class="small" style="font-size: 11px">k</div>
-        </template>
         <v-btn v-shortkey.once="['ctrl', 'k']" @shortkey="toggle({model: !sidebar.model})" class="muted--text" icon @click="toggle({model: !sidebar.model})">
           <v-icon small>mdi-menu</v-icon>
         </v-btn>

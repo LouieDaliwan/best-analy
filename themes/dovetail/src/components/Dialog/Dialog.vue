@@ -7,7 +7,7 @@
     >
     <v-card :dark="dialog.dark" :color="dialog.color" :class="{ 'text-xs-center': dialog.alignment == 'center' }">
       <slot name="illustration"></slot>
-      <v-card-title class="headline">
+      <v-card-title class="pb-0">
         <slot name="title">{{ trans(dialog.title) }}</slot>
       </v-card-title>
       <v-card-text>

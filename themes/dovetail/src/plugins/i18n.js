@@ -23,7 +23,6 @@ window.$trans = function (text, options = null) {
 }
 
 window.trans = function (text, options = null) {
-  console.log(text, options)
   return i18n.tc(text, options)
 }
 

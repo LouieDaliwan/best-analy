@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <v-form autocomplete="off">
     <page-header>
       <template v-slot:title>
         {{ trans('Add User') }}
@@ -7,7 +7,7 @@
       <template v-slot:action>
         <v-btn large color="primary" exact :to="{ name: 'users.store' }">
           <v-icon left>mdi-content-save-outline</v-icon>
-          {{ trans("Save") }}
+          {{ trans('Save') }}
         </v-btn>
       </template>
     </page-header>
@@ -20,7 +20,6 @@
             <v-row>
               <v-col cols="12" md="4">
                 <v-text-field
-                  autofocus
                   hide-details
                   label="First Name"
                   outlined
@@ -132,6 +131,7 @@
                   label="Username"
                   hide-details
                   outlined
+                  autocomplete="off"
                   >
                   <template v-slot:prepend-inner>
                     <v-icon size="20" class="mr-2">mdi-account-circle-outline</v-icon>
@@ -143,6 +143,7 @@
                   label="Password"
                   hide-details
                   outlined
+                  autocomplete="off"
                   type="password"
                   >
                   <template v-slot:prepend-inner>
@@ -155,6 +156,7 @@
                   label="Retype Password"
                   hide-details
                   outlined
+                  autocomplete="new-password"
                   type="password"
                   >
                   <template v-slot:prepend-inner>
@@ -175,12 +177,18 @@
         </v-card>
       </v-col>
     </v-row>
-  </section>
+  </v-form>
 </template>
 
 <script>
+import man from '@/components/Icons/ManOnLaptop'
+
 export default {
   data: () => ({
   }),
+
+  mounted () {
+    console.log(man)
+  }
 }
 </script>

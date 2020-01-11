@@ -1,0 +1,117 @@
+<template>
+  <section>
+    <v-app-bar
+      app
+      elevate-on-scroll
+      :clipped-left="sidebar.clipped"
+      v-if="appbar.model"
+      >
+      <!-- <v-btn class="muted--text" icon @click="toggle({model: !sidebar.model})">
+        <v-icon small>mdi-menu</v-icon>
+      </v-btn> -->
+
+      <!-- For Demo -->
+      <div class="pr-4"><img width="40" :src="app.logo" alt=""></div>
+      <div><h4>SSA Group</h4></div>
+      <!-- For Demo -->
+
+      <v-spacer></v-spacer>
+      <!-- For Demo -->
+      <div class="px-4">
+        <v-btn large text color="primary" exact :to="{ name: 'users.index' }">
+          {{ __('Customers') }}
+        </v-btn>
+      </div>
+      <!-- For Demo -->
+
+      </v-btn>
+
+      <v-menu
+        class="justify-end d-flex"
+        min-width="200px"
+        transition="slide-y-transition"
+        >
+        <template v-slot:activator="{ on: menu }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on: tooltip }">
+              <div v-on="{ ...tooltip, ...menu }" role="button">
+                <div class="d-flex justify-space-between align-center">
+                  <v-avatar size="32" class="mr-3"><img :src="user.avatar" width="40px"></v-avatar>
+                    <div>
+                      <p class="body-1 mb-0 text--truncate" v-text="user.displayname"></p>
+                      <div v-text="user.role" class="muted--text overline"></div>
+                    </div>
+                </div>
+              </div>
+            </template>
+            <span v-text="user.displayname"></span>
+          </v-tooltip>
+        </template>
+
+        <v-list>
+          <v-list-item>
+            <v-list-item-action>
+              <v-icon small class="text--muted">mdi-account-outline</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="trans('My Profile')"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-action>
+              <v-icon small class="text--muted">mdi-tune</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="trans('Settings')"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider></v-divider>
+
+          <v-list-item exact :to="{name: 'logout'}">
+            <v-list-item-action>
+              <v-icon small class="text--muted">mdi-power</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="trans('Logout')"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-app-bar>
+  </section>
+</template>
+
+<script>
+import app from '@/config/app'
+import { mapGetters, mapActions } from 'vuex'
+
+export default {
+  name: 'Appbar',
+
+  data () {
+    return {
+    }
+  },
+
+  computed: {
+    ...mapGetters({
+      appbar: 'appbar/appbar',
+      sidebar: 'sidebar/sidebar',
+      user: 'auth/user',
+    }),
+
+    app: function () {
+      return app
+    },
+  },
+
+  methods: {
+    ...mapActions({
+      toggle: 'sidebar/toggle',
+      logout: 'auth/logout',
+    }),
+  },
+}
+</script>

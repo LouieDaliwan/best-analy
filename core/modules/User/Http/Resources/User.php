@@ -19,6 +19,7 @@ class User extends JsonResource
             'avatar' => $this->avatar,
             'birthday' => $this->detail('Birthday'),
             'created' => $this->created,
+            'deleted' => $this->deleted,
             'details' => DetailResource::collection($this->details),
             'displayname' => $this->displayname,
             'modified' => $this->modified,

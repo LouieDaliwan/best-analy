@@ -2,8 +2,8 @@
   <section>
     <template v-if="! repeaters.length">
       <slot name="empty-state">
-        <div class="text-center">
-          <v-card-text style="filter: grayscale(0.9);">
+        <div>
+          <!-- <v-card-text style="filter: grayscale(0.9);">
             <empty-icon width="300" height="auto"></empty-icon>
           </v-card-text>
 
@@ -12,7 +12,7 @@
               <p class="muted--text font-weight-bold mb-0" v-text="trans('No items yet')"></p>
               <p class="muted--text" v-text="trans('Start adding key-value pairs.')"></p>
             </slot>
-          </v-card-text>
+          </v-card-text> -->
 
           <v-badge
             color="dark"

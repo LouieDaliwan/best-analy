@@ -76,7 +76,7 @@
         <!-- Menu without Children -->
         <template v-else>
           <can :code="parent.meta.permission">
-            <v-list-item color="primary" :key="i" link exact :to="{name: parent.name}">
+            <v-list-item color="primary" :key="i" link exact :to="{name: parent.name, params: {lang}}">
               <v-list-item-icon>
                 <v-icon small v-text="parent.meta.icon"></v-icon>
               </v-list-item-icon>

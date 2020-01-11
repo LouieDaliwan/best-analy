@@ -336,7 +336,7 @@ pre {
   border-color: var(--sidebar-border);
 }
 
-.v-text-field .v-input__slot {
+.v-text-field:not(.v-text-field--rounded) .v-input__slot {
   border-radius: var(--card-border-radius);
 }
 

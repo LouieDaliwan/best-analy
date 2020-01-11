@@ -1,43 +1,45 @@
 <template>
   <section>
     <!-- Header -->
-    <page-header></page-header>
+    <page-header>
+      <template v-slot:action>
+        <!-- Export button -->
+        <div class="text-right mb-4">
+          <v-menu open-on-hover offset-y bottom transition="slide-y-transition">
+            <template v-slot:activator="{ on }">
+              <v-btn v-on="on" large color="primary">
+                <v-icon left>mdi-download</v-icon>
+                {{ trans('Export Reports') }}
+              </v-btn>
+            </template>
+            <v-list dense>
+              <v-list-item @click="">
+                <v-list-icon-content>
+                  <v-list-item-title>Business Sustainability</v-list-item-title>
+                </v-list-icon-content>
+              </v-list-item>
+              <v-list-item @click="">
+                <v-list-icon-content>
+                  <v-list-item-title>Human Resources</v-list-item-title>
+                </v-list-icon-content>
+              </v-list-item>
+              <v-list-item @click="">
+                <v-list-icon-content>
+                  <v-list-item-title>Financial Management</v-list-item-title>
+                </v-list-icon-content>
+              </v-list-item>
+              <v-list-item @click="">
+                <v-list-icon-content>
+                  <v-list-item-title>Full Report</v-list-item-title>
+                </v-list-icon-content>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
+        <!-- Export button -->
+      </template>
+    </page-header>
     <!-- Header -->
-
-    <!-- Export button -->
-    <div class="text-right mb-4">
-      <v-menu open-on-hover offset-y bottom transition="slide-y-transition">
-        <template v-slot:activator="{ on }">
-          <v-btn v-on="on" large color="primary">
-            <v-icon left>mdi-download</v-icon>
-            {{ trans('Export Reports') }}
-          </v-btn>
-        </template>
-        <v-list dense>
-          <v-list-item @click="">
-            <v-list-icon-content>
-              <v-list-item-title>Business Sustainability</v-list-item-title>
-            </v-list-icon-content>
-          </v-list-item>
-          <v-list-item @click="">
-            <v-list-icon-content>
-              <v-list-item-title>Human Resources</v-list-item-title>
-            </v-list-icon-content>
-          </v-list-item>
-          <v-list-item @click="">
-            <v-list-icon-content>
-              <v-list-item-title>Financial Management</v-list-item-title>
-            </v-list-icon-content>
-          </v-list-item>
-          <v-list-item @click="">
-            <v-list-icon-content>
-              <v-list-item-title>Full Report</v-list-item-title>
-            </v-list-icon-content>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </div>
-    <!-- Export button -->
 
     <!-- Indexes -->
     <v-row>

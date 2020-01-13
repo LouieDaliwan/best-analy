@@ -106,6 +106,7 @@
           <!-- Action buttons -->
           <template v-slot:item.action="{ item }">
             <div class="text-no-wrap">
+              <!-- Edit -->
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <v-btn :to="{name: 'users.edit', params: {id: item.id}}" icon v-on="on">
@@ -114,42 +115,17 @@
                 </template>
                 <span>{{ $tc('Edit this user', 1) }}</span>
               </v-tooltip>
-              <v-dialog
-                width="420"
-                v-model="item.active"
-                >
+              <!-- Edit -->
+              <!-- Move to Trash -->
+              <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <span v-on="on">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on }">
-                        <v-btn icon v-on="on">
-                          <v-icon small>mdi-delete-outline</v-icon>
-                        </v-btn>
-                      </template>
-                      <span>{{ $tc('Deactivate user', 1) }}</span>
-                    </v-tooltip>
-                  </span>
+                  <v-btn @click="askUserToDestroyUser(item)" icon v-on="on">
+                    <v-icon small>mdi-delete-outline</v-icon>
+                  </v-btn>
                 </template>
-                <v-card>
-                  <div class="pt-3 warning--text"><man-throwing-away-paper class="d-block mx-auto" width="200" height="160"></man-throwing-away-paper></div>
-                  <v-card-title class="pb-0">{{ trans('You are about to deactivate the selected user.') }}</v-card-title>
-                  <v-card-text>
-                    <p>{{ $t('The user will be signed out from the app. Some data related to the account like comments and files will still remain.') }}</p>
-                    <p v-html="$t('Are you sure you want to deactivate and move :name to Trash?', {name: item.displayname})"></p>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn autofocus @click="item.active = false" text color="link">{{ $t('Cancel') }}</v-btn>
-                    <v-btn @click="destroyResource(item)" :disabled="item.loading" :loading="item.loading" text color="warning">
-                      {{ $t('Move to Trash') }}
-                      <template v-slot:loader>
-                        <v-slide-x-transition><v-icon dark class="mdi-spin mr-3">mdi-loading</v-icon></v-slide-x-transition>
-                        <span>{{ $tc('Moving to Trash...') }}</span>
-                      </template>
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+                <span>{{ $tc('Deactivate user', 1) }}</span>
+              </v-tooltip>
+              <!-- Move to Trash -->
             </div>
           </template>
           <!-- Action buttons -->
@@ -159,9 +135,9 @@
     <!-- Data table -->
 
     <dialogbox>
-      <template v-slot:illustration>
+      <!-- <template v-slot:illustration> -->
         <error-icon class="mx-auto d-block" :width="200" :height="200"></error-icon>
-      </template>
+      <!-- </template> -->
     </dialogbox>
   </section>
 </template>
@@ -169,6 +145,7 @@
 <script>
 import $api from './routes/api'
 import $auth from '@/core/Auth/auth'
+import man from '@/components/Icons/ManThrowingAwayPaper.vue'
 
 export default {
   data: () => ({
@@ -248,7 +225,7 @@ export default {
           this.$router.push({query: Object.assign({}, this.$route.query, params)}).catch(err => {})
         })
         .catch(err => {
-          this.$store.dispatch('dialog/prompt', {
+          this.$store.dispatch('dialog/error', {
             show: true,
             width: 400,
             buttons: { cancel: { show: false } },
@@ -286,13 +263,15 @@ export default {
       axios.delete($api.destroy(null), { data: { id: selected } })
         .then(response => {
           this.getPaginatedData()
+          this.tabletoolbar.toggleTrash = false
+          this.tabletoolbar.toggleBulkEdit = false
           this.$store.dispatch('snackbar/show', {
             show: true,
             text: this.$tc('User successfully deactivated', this.tabletoolbar.bulkCount)
           })
         })
         .catch(err => {
-          this.$store.dispatch('dialog/prompt', {
+          this.$store.dispatch('dialog/error', {
             show: true,
             width: 400,
             buttons: { cancel: { show: false } },
@@ -300,10 +279,30 @@ export default {
             text: err.response.data.message,
           })
         })
-        .finally(() => {
-          this.tabletoolbar.toggleTrash = false
-          this.tabletoolbar.toggleBulkEdit = false
-        })
+    },
+
+    askUserToDestroyUser (item) {
+      this.$store.dispatch('dialog/prompt', {
+        show: true,
+        color: 'warning',
+        illustration: man,
+        illustrationWidth: 200,
+        illustrationHeight: 160,
+        width: '420',
+        title: 'You are about to deactivate the selected user.',
+        text: ['The user will be signed out from the app. Some data related to the account like comments and files will still remain.', this.$t('Are you sure you want to deactivate and move :name to Trash?', {name: item.displayname})],
+        buttons: {
+          cancel: { show: true, color: 'link' },
+          action: {
+            text: 'Move to Trash',
+            color: 'warning',
+            callback: (dialog) => {
+              dialog.loading = true
+              this.destroyResource(item)
+            }
+          }
+        }
+      })
     },
 
     destroyResource (item) {
@@ -316,9 +315,10 @@ export default {
             show: true,
             text: this.$tc('User successfully deactivated', 1)
           })
+          this.$store.dispatch('dialog/prompt', { show: false })
         })
         .catch(err => {
-          this.$store.dispatch('dialog/prompt', {
+          this.$store.dispatch('dialog/error', {
             show: true,
             width: 400,
             buttons: { cancel: { show: false } },
@@ -329,6 +329,7 @@ export default {
         .finally(() => {
           item.active = false
           item.loading = false
+          // this.$store.dispatch('dialog/prompt', { loading: item.loading })
         })
     },
   },

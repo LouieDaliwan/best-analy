@@ -56,57 +56,14 @@
                   <v-btn v-if="restorable" icon :disabled="!items.toggleBulkEdit">
                     <v-icon small>mdi-restore</v-icon>
                   </v-btn>
-                  <v-dialog
-                    v-model="items.toggleTrash"
-                    width="420"
-                    >
+                  <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <v-tooltip bottom>
-                        <template v-slot:activator="{ on: tooltip }">
-                          <v-btn v-if="trashable" icon v-on="{ ...on, ...tooltip}" :disabled="!items.toggleBulkEdit">
-                            <v-icon small>mdi-delete-outline</v-icon>
-                          </v-btn>
-                        </template>
-                        <span>{{ trans('Move selected users to trash') }}</span>
-                      </v-tooltip>
+                      <v-btn @click="askUserToBulkDestroyResources" v-if="trashable" icon v-on="on" :disabled="!items.toggleBulkEdit">
+                        <v-icon small>mdi-delete-outline</v-icon>
+                      </v-btn>
                     </template>
-                    <v-card>
-                      <div class="warning--text">
-                        <man-throwing-away-paper v-if="items.bulkCount" class="mx-auto d-block pa-5" :width="240" :height="240"></man-throwing-away-paper>
-                        <empty-icon v-else class="mx-auto d-block pa-5" :width="200" :height="200"></empty-icon>
-                      </div>
-                      <v-card-title class="pb-0">{{ $tc('Deactivate Selected User', items.bulkCount) }}</v-card-title>
-                      <v-card-text>{{ $tc('Are you sure you want to deactivate the selected user?', items.bulkCount) }}</v-card-text>
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn @click="items.toggleTrash = false" text color="link">
-                          {{ trans('Cancel') }}
-                        </v-btn>
-                        <v-btn
-                          :disabled="trashButtonIsLoading"
-                          :loading="trashButtonIsLoading"
-                          @click="emitTrashButtonClicked();toggleLoadingStateOnClick()"
-                          color="warning"
-                          text
-                          v-if="items.bulkCount"
-                          >
-                          {{ $tc('Move to Trash') }}
-                          <!-- <template v-slot:loader>
-                            <v-slide-x-transition><v-icon dark class="mdi-spin mr-3">mdi-loading</v-icon></v-slide-x-transition>
-                            <span>{{ $tc('Moving to Trash...') }}</span>
-                          </template> -->
-                        </v-btn>
-                        <v-btn
-                          @click.native="items.toggleTrash = !items.toggleTrash"
-                          color="primary"
-                          text
-                          v-else
-                          >
-                          {{ $tc('Okay') }}
-                        </v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </v-dialog>
+                    <span>{{ trans('Move selected users to trash') }}</span>
+                  </v-tooltip>
                 </span>
               </template>
             </v-slide-x-reverse-transition>
@@ -164,6 +121,8 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import ManIcon from '@/components/Icons/ManThrowingAwayPaper.vue'
+import EmptyIcon from '@/components/Icons/EmptyIcon.vue'
 
 export default {
   name: 'ToolbarMenu',
@@ -207,6 +166,30 @@ export default {
     },
     toggleView () {
       this.update({ toggleview: !this.toolbar.toggleview })
+    },
+    askUserToBulkDestroyResources () {
+      this.$store.dispatch('dialog/prompt', {
+        show: true,
+        width: 420,
+        illustration: this.items.bulkCount ? ManIcon : EmptyIcon,
+        illustrationWidth: 240,
+        illustrationHeight: 240,
+        loading: this.trashButtonIsLoading,
+        color: 'warning',
+        title: this.$tc('Deactivate Selected User', this.items.bulkCount),
+        text: this.$tc('Are you sure you want to deactivate the selected user?', this.items.bulkCount),
+        buttons: {
+          cancel: { show: true, color: 'link' },
+          action: {
+            color: this.items.bulkCount ? 'warning' : null,
+            text: this.items.bulkCount ? 'Move to Trash' : 'Okay',
+            callback: (dialog) => {
+              dialog.loading = true
+              this.emitTrashButtonClicked()
+            }
+          }
+        },
+      })
     },
     emitTrashButtonClicked () {
       this.$emit('update:trash')

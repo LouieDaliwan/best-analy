@@ -65,7 +65,7 @@ jobs:
       - run: php console theme:discover
 
       # run tests with phpunit or codecept
-      - run: ./vendor/bin/phpunit --configuration=./phpunit.xml modules/
+      - run: ./vendor/bin/phpunit --testsuite Module --configuration phpunit.xml
       - run: ~/.composer/vendor/bin/phpcs --standard=./ruleset.xml modules/
 
       # run linters for frontend asset files for theme:dovetail

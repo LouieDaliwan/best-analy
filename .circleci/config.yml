@@ -55,5 +55,5 @@ jobs:
       - run: php console migrate --env=testing --database=testing --force
 
       # run tests with phpunit or codecept
-      - run: ./vendor/bin/phpunit modules/
+      - run: ./vendor/bin/phpunit --configuration=./phpunit.xml modules/
       - run: ~/.composer/vendor/bin/phpcs --standard=./ruleset.xml modules/

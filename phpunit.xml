@@ -7,6 +7,7 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="true"
+         printerClass="Sempro\PHPUnitPrettyPrinter\PrettyPrinter"
          stopOnFailure="false">
   <testsuites>
     <testsuite name="Module">

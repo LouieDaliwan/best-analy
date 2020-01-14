@@ -30,11 +30,12 @@ class AppServiceProvider extends BaseServiceProvider
         BreadcrumbsServiceProvider::class,
         ConsoleServiceProvider::class,
         FactoryServiceProvider::class,
+        ThemeServiceProvider::class,
         ModuleServiceProvider::class,
+        PermissionServiceProvider::class,
         RepositoryServiceProvider::class,
         SettingServiceProvider::class,
         SidebarServiceProvider::class,
-        ThemeServiceProvider::class,
         WidgetServiceProvider::class,
     ];
 

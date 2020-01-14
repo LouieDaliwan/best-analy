@@ -34,7 +34,7 @@ class UserCount extends AbstractWidget
      *
      * @var integer|float|boolean
      */
-    protected $intervals = 3000;
+    protected $intervals = false;
 
     /**
      * Initialize the class and inject any service or class

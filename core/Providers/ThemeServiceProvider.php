@@ -35,13 +35,15 @@ class ThemeServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
+        $this->bindThemeRepository();
+
+        $this->registerActiveThemeViewFiles();
+
         $this->registerCoreViewFiles();
 
         $this->registerViewDirectives();
 
         $this->bindThemeManifestFacade();
-
-        $this->bindThemeRepository();
     }
 
     /**
@@ -84,6 +86,24 @@ class ThemeServiceProvider extends BaseServiceProvider
 
         $this->loadViewsFrom(resource_path('views'), 'default');
         $this->loadViewsFrom(resource_path('views'), 'theme');
+    }
+
+    /**
+     * Load views from active theme folder,
+     * found in themes/<theme>/views.
+     *
+     * Namespace the view files with "theme" and
+     * the specified namespace code in theme.json.
+     *
+     * @var    string $module
+     * @return void
+     */
+    protected function registerActiveThemeViewFiles()
+    {
+        if (is_dir(theme()->active('views'))) {
+            $this->loadViewsFrom(theme()->active('views'), 'theme');
+            $this->loadViewsFrom(theme()->active('views'), theme()->manifest()->get('code'));
+        }
     }
 
     /**

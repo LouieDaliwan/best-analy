@@ -114,7 +114,10 @@ return [
                 'permissions' => ['permissions.index'],
                 'text' => 'Permissions',
                 'description' => 'View the list of all permissions',
-                'routes' => ['permissions.index', 'permissions.create', 'permissions.edit', 'permissions.show', 'permissions.trashed'],
+                'routes' => [
+                    'permissions.index', 'permissions.create',
+                    'permissions.edit', 'permissions.show', 'permissions.trashed'
+                ],
             ],
         ],
     ],

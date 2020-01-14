@@ -2,6 +2,7 @@
 
 namespace User\Services;
 
+use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Http\Request;
@@ -11,7 +12,8 @@ use User\Models\User;
 
 class UserService extends Service implements UserServiceInterface
 {
-    use Concerns\SavesAccountRecord;
+    use Concerns\SavesAccountRecord,
+        HaveAuthorization;
 
     /**
      * The relations to eager load on every query.
@@ -51,9 +53,9 @@ class UserService extends Service implements UserServiceInterface
             'firstname' => 'required|max:255',
             'lastname' => 'required|max:255',
             'email' => ['required', 'email', Rule::unique('users')->ignore($id)],
-            'username' => [ 'required', Rule::unique('users')->ignore($id)],
+            'username' => ['required', Rule::unique('users')->ignore($id)],
             'password' => 'sometimes|required|min:6',
-            'roles' => 'required|array',
+            'roles' => 'required',
         ];
     }
 
@@ -66,5 +68,48 @@ class UserService extends Service implements UserServiceInterface
     public function hash(string $key)
     {
         return Hash::make($key);
+    }
+
+    /**
+     * Create model resource.
+     *
+     * @param  array $attributes
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function store(array $attributes)
+    {
+        $model = $this->model;
+        return $this->save($model, $attributes);
+    }
+
+    /**
+     * Create or Update the passed attributes.
+     *
+     * @param  \User\Models\User $model
+     * @param  array             $attributes
+     * @return \User\Models\User
+     */
+    protected function save($model, $attributes)
+    {
+        $model->prefixname = $attributes['prefixname'] ?? $model->prefixname;
+        $model->firstname = $attributes['firstname'] ?? $model->firstname;
+        $model->middlename = $attributes['middlename'] ?? $model->middlename;
+        $model->lastname = $attributes['lastname'] ?? $model->lastname;
+        $model->suffixname = $attributes['suffixname'] ?? $model->suffixname;
+        $model->username = $attributes['username'] ?? $model->username;
+        $model->email = $attributes['email'] ?? $model->email;
+        $model->password = $attributes['password'] ?? $model->password;
+        $model->photo = $attributes['photo'] ?? $model->photo;
+        $model->type = $attributes['type'] ?? $model->type;
+
+        $model->save();
+
+        // User roles.
+        $model->roles()->sync($attributes['roles'] ?? []);
+
+        // User details.
+        // $model->roles()->sync($attributes['roles'] ?? []);
+
+        return $model;
     }
 }

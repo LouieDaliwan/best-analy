@@ -60,6 +60,16 @@ abstract class AbstractWidget implements Contracts\WidgetInterface
     }
 
     /**
+     * Retrieve the attributes array.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
      * Retrieve the widget reload intervals.
      *
      * @return integer|float

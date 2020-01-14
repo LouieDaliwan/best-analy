@@ -153,13 +153,15 @@ class ThemeManifest
      * Put a theme to the `active` key
      * of the theme manifest file.
      *
-     * @param string $theme
+     * @param  string $theme
      * @return boolean
      */
     public function activate($theme = 'default')
     {
         $this->setActiveTheme($this->find($theme));
         $this->build();
+
+        return true;
     }
 
     /**
@@ -174,6 +176,16 @@ class ThemeManifest
         }
 
         return collect($this->getManifest()['active']);
+    }
+
+    /**
+     * Retrieve the path to the current theme.
+     *
+     * @return string
+     */
+    public function getActiveThemePath(): string
+    {
+        return $this->theme['path'] ?? resource_path();
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Core\Providers;
 use Core\Application\Macros\RouteMacros;
 use Core\Manifests\ModuleManifest;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Finder\Finder;
 
 class ModuleServiceProvider extends BaseServiceProvider
 {
@@ -55,6 +56,8 @@ class ModuleServiceProvider extends BaseServiceProvider
             $this->setCurrentModule($module);
 
             $this->setRootNamespace($module);
+
+            $this->mergeConfigFromModule($module);
 
             $this->mapEloquentFactories();
 
@@ -188,6 +191,7 @@ class ModuleServiceProvider extends BaseServiceProvider
             $path = $this->module['path'].DIRECTORY_SEPARATOR.'routes/api.php'
         )) {
             Route::prefix('api')
+                 ->as('api.')
                  ->middleware('auth:api')
                  ->namespace($this->namespace.'\Http\Controllers')
                  ->group($path);
@@ -203,6 +207,10 @@ class ModuleServiceProvider extends BaseServiceProvider
      */
     protected function mapWebRoutes()
     {
+        if (theme()->active()->get('spa')) {
+            return;
+        }
+
         if (file_exists(
             $path = $this->module['path'].DIRECTORY_SEPARATOR.'routes/web.php'
         )) {
@@ -221,6 +229,10 @@ class ModuleServiceProvider extends BaseServiceProvider
      */
     protected function mapAdminRoutes()
     {
+        if (theme()->active()->get('spa')) {
+            return;
+        }
+
         if (file_exists(
             $path = $this->module['path'].DIRECTORY_SEPARATOR.'routes/admin.php'
         )) {
@@ -252,6 +264,27 @@ class ModuleServiceProvider extends BaseServiceProvider
     protected function setRootNamespace($module)
     {
         $this->namespace = $module['namespace'];
+    }
+
+    /**
+     * Merge the configuration file from the current module
+     * to the global config array.
+     *
+     * @param  array $module
+     * @return void
+     */
+    protected function mergeConfigFromModule($module)
+    {
+        $path = $module['path'].DIRECTORY_SEPARATOR.'config';
+        if (file_exists($path)) {
+            foreach (Finder::create()->in($path)->name('*.php') as $file) {
+                $name = basename($file->getRealPath(), '.php');
+                $this->mergeConfigFrom(
+                    $file->getRealPath(),
+                    "modules.{$module['code']}.$name"
+                );
+            }
+        }
     }
 
     /**

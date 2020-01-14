@@ -42,6 +42,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapStorageRoutes();
 
+        $this->mapThemeRoutes();
+
         $this->mapAdminRoutes();
 
         $this->mapWebRoutes();
@@ -133,5 +135,20 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware(config('middleware.api', 'api'))
              ->namespace($this->namespace)
              ->group(core_path('routes/api.php'));
+    }
+
+    /**
+     * Define the theme routers for the application.
+     *
+     * These routes are only activated when the theme is active.
+     *
+     * @return void
+     */
+    protected function mapThemeRoutes()
+    {
+        if (file_exists(theme()->active('routes/web.php'))) {
+            Route::namespace($this->namespace)
+                 ->group(theme()->active('routes/web.php'));
+        }
     }
 }

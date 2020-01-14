@@ -2,8 +2,6 @@
 
 namespace Core\Application\Repository;
 
-use Core\Application\Repository\Repository;
-
 trait WithRepository
 {
     /**
@@ -16,9 +14,9 @@ trait WithRepository
     /**
      * Retrieve the repository instance.
      *
-     * @return \Core\Application\Repository\Repository
+     * @return mixed
      */
-    public function repository():? Repository
+    public function repository()
     {
         return $this->repository ?? null;
     }

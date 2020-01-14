@@ -3,7 +3,6 @@
 namespace User\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use User\Services\UserService;
 use User\Services\UserServiceInterface;
 
 class UserRequest extends FormRequest

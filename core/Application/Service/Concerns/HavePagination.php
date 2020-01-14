@@ -23,12 +23,16 @@ trait HavePagination
     public function list()
     {
         if ($this->isSearching()) {
-            $this->model = $this->search($this->request()->get('search'));
-            $model = $this->sortAndOrder();
-        } else {
-            $model = $this->sortAndOrder();
-            $model = $model->with($this->appendToList ?? []);
+            $this->model = $this->whereIn(
+                $this->getKeyName(), $this->search(
+                    $this->request()->get('search')
+                )->keys()->toArray()
+            );
         }
+
+        $this->model = $this->sortAndOrder();
+
+        $model = $this->onlyOwned()->with($this->appendToList ?? []);
 
         return $model->paginate($this->getPerPage());
     }
@@ -40,8 +44,10 @@ trait HavePagination
      */
     protected function getPerPage():? int
     {
-        return strtolower($this->request()->get('per_page')) === 'all'
+        $perPage = $this->request()->get('per_page') == '-1' ? 'all' : $this->request()->get('per_page');
+
+        return strtolower($perPage) === 'all'
              ? count($this->model->get())
-             : $this->request()->get('per_page') ?? settings('display:perpage');
+             : (int) $perPage ?? settings('display:perpage', 15);
     }
 }

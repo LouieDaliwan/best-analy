@@ -1,0 +1,13 @@
+{
+  "Actions": "Actions",
+  "Edit this user": "Edit this user | Edit these users",
+  "Deactivate user": "Deactivate user | Deactivate users",
+  "User successfully restored": "User successfully restored | Users successfully restored",
+  "Deactivate Selected User": "No User Selected | Deactivate Selected User | Deactivate Selected Users",
+  "Are you sure you want to deactivate the selected user?": "Select users to deactivate from the list | Are you sure you want to deactivate the selected user? | Are you sure you want to deactivate the selected users?",
+  "Move Item to Trash": "Move Item to Trash | Move Items to Trash",
+  "Item was moved to trash": "Item was moved to trash | Items were moved to trash",
+  "User successfully deactivated": "User successfully deactivated | Users successfully deactivated",
+  "Move :name to Trash?": "Move <strong>{name}</strong> to Trash?",
+  "Are you sure you want to deactivate and move :name to Trash?": "Are you sure you want to deactivate and move <strong>{name}</strong> to Trash?"
+}

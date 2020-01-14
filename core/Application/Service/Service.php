@@ -5,12 +5,15 @@ namespace Core\Application\Service;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 abstract class Service implements ServiceInterface
 {
     use Concerns\HavePagination,
         Concerns\HaveSortOrder,
         Concerns\HaveSoftDeletes,
+        Concerns\HaveOwnership,
         Concerns\SearchCapable;
 
     /**
@@ -96,6 +99,27 @@ abstract class Service implements ServiceInterface
     }
 
     /**
+     * The Authenticated User instance.
+     *
+     * @return \Illuminate\Foundation\Auth\User
+     */
+    public function auth()
+    {
+        return auth();
+    }
+
+    /**
+     * Check if authenticated user is part
+     * of the superadmin group.
+     *
+     * @return boolean
+     */
+    public function userIsSuperAdmin(): bool
+    {
+        return $this->auth()->check() && $this->auth()->user()->isSuperAdmin();
+    }
+
+    /**
      * Retrieve all model resources as array.
      *
      * @return object
@@ -161,7 +185,7 @@ abstract class Service implements ServiceInterface
             ->model()
             ->withTrashed()
             ->whereIn($this->model()->getKeyName(), (array) $id)
-            ->each(function ($resource) {
+            ->get()->each(function ($resource) {
                 $resource->forceDelete();
             });
     }
@@ -177,7 +201,7 @@ abstract class Service implements ServiceInterface
         $this
             ->model()
             ->whereIn($this->model()->getKeyName(), (array) $id)
-            ->each(function ($resource) {
+            ->get()->each(function ($resource) {
                 $resource->delete();
             });
     }
@@ -194,20 +218,33 @@ abstract class Service implements ServiceInterface
             ->model()
             ->withTrashed()
             ->whereIn($this->model()->getKeyName(), (array) $id)
-            ->each(function ($resource) {
-                $resource->restore();
+            ->get()->each(function ($model) {
+                $model->restore();
             });
     }
 
     /**
-     * Intantiate a new Repository class.
+     * Intantiate a new Service class.
      *
-     * @param  string $repository
-     * @return \Core\Application\Repository\Repository
+     * @param  string $service
+     * @return \Core\Application\Service\Service
      */
-    protected function repo(string $repository)
+    public function service(string $service)
     {
-        return app($repository);
+        return App::make($service);
+    }
+
+    /**
+     * Retrieve the storage path for courses.
+     *
+     * @return string
+     */
+    protected function getStoragePath(): string
+    {
+        return storage_path(
+            'modules'.DIRECTORY_SEPARATOR.$this->getTable().
+            DIRECTORY_SEPARATOR.date('Y-m-d')
+        );
     }
 
     /**

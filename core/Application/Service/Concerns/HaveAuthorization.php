@@ -41,7 +41,11 @@ trait HaveAuthorization
         }
 
         if (is_null($model)) {
-            return $this->auth()->user()->can($this->request->route()->getName());
+            return $this->auth()->user()->can(
+                $this->removeApiPrefixFromPermission(
+                    $this->request->route()->getName()
+                )
+            );
         }
 
         return $this->auth()->user()->getKey() === $this->withTrashed()->whereId($model)->firstOr(function () {

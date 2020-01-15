@@ -2,6 +2,7 @@
 
 namespace Core\Application\Service;
 
+use Core\Application\Permissions\RemoveApiPrefixFromPermission;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ abstract class Service implements ServiceInterface
         Concerns\HaveSortOrder,
         Concerns\HaveSoftDeletes,
         Concerns\HaveOwnership,
-        Concerns\SearchCapable;
+        Concerns\SearchCapable
+        RemoveApiPrefixFromPermission;
 
     /**
      * The property on class instances.

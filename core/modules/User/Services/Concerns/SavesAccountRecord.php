@@ -14,7 +14,8 @@ trait SavesAccountRecord
      */
     public function store(array $attributes)
     {
-        $user = parent::store($attributes);
+        $model = $this->model;
+        $user = $this->save($model, $attributes);
         $user->record($attributes);
 
         return $user;
@@ -30,9 +31,9 @@ trait SavesAccountRecord
     public function update(int $id, array $attributes): bool
     {
         $model = $this->model->findOrFail($id);
-        $model->update($attributes);
-        $model->record($attributes);
+        $user = $this->save($model, $attributes);
+        $user->record($attributes);
 
-        return $model->exists();
+        return $user->exists();
     }
 }

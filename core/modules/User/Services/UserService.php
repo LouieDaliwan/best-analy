@@ -71,19 +71,6 @@ class UserService extends Service implements UserServiceInterface
     }
 
     /**
-     * Create model resource.
-     *
-     * @param  array $attributes
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    public function store(array $attributes)
-    {
-        $model = $this->model;
-
-        return $this->save($model, $attributes);
-    }
-
-    /**
      * Create or Update the passed attributes.
      *
      * @param  \User\Models\User $model

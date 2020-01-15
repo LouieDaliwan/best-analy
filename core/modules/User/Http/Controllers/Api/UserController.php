@@ -56,11 +56,11 @@ class UserController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  integer                  $id
+     * @param  \User\Http\Requests\UserRequest $request
+     * @param  integer                         $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         return response()->json($this->service()->update($id, $request->all()));
     }

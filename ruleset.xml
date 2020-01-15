@@ -78,6 +78,7 @@
 
 	<exclude-pattern>*/tests/*</exclude-pattern>
   <exclude-pattern>*/config/*</exclude-pattern>
+  <exclude-pattern>*/views/*</exclude-pattern>
 	<exclude-pattern>*/data/*</exclude-pattern>
 	<exclude-pattern>*/database/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>

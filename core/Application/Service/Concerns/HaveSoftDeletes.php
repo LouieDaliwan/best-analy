@@ -2,17 +2,17 @@
 
 namespace Core\Application\Service\Concerns;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+
 trait HaveSoftDeletes
 {
     /**
      * Include only soft deleted records in the results.
      *
-     * @return $this
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function listTrashed()
     {
-        $model = $this->sortAndOrder();
-
         if ($this->isSearching()) {
             $this->model = $this->searchTrash();
         } else {
@@ -21,7 +21,11 @@ trait HaveSoftDeletes
 
         $model = $this->onlyOwned();
 
-        return $model->paginate($this->getPerPage());
+        $model = $model->paginate($this->getPerPage());
+
+        $sorted = $this->sortAndOrder($model);
+
+        return new LengthAwarePaginator($sorted, $model->total(), $model->perPage());
     }
 
     /**

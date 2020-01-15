@@ -2,6 +2,8 @@
 
 namespace Core\Application\Service\Concerns;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+
 trait HavePagination
 {
     /**
@@ -30,11 +32,13 @@ trait HavePagination
             );
         }
 
-        $this->model = $this->sortAndOrder();
-
         $model = $this->onlyOwned()->with($this->appendToList ?? []);
 
-        return $model->paginate($this->getPerPage());
+        $model = $model->paginate($this->getPerPage());
+
+        $sorted = $this->sortAndOrder($model);
+
+        return new LengthAwarePaginator($sorted, $model->total(), $model->perPage());
     }
 
     /**

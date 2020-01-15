@@ -3,10 +3,13 @@
 namespace Core\Http\Middleware;
 
 use Closure;
+use Core\Application\Permissions\RemoveApiPrefixFromPermission;
 use Illuminate\Http\Response;
 
 class AuthenticatePermissions
 {
+    use RemoveApiPrefixFromPermission;
+
     /**
      * Handle an incoming request.
      *
@@ -16,22 +19,10 @@ class AuthenticatePermissions
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->cannot($this->permission($request->route()->getName()))) {
+        if ($request->user()->cannot($this->removeApiPrefixFromPermission($request->route()->getName()))) {
             return abort(Response::HTTP_FORBIDDEN);
         }
 
         return $next($request);
-    }
-
-    /**
-     * Parse the permission code and remove
-     * api prefixes if any.
-     *
-     * @param  string $route
-     * @return string
-     */
-    protected function permission($route): string
-    {
-        return str_replace('api.', '', $route);
     }
 }

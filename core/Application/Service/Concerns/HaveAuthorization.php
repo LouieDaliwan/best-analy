@@ -3,6 +3,7 @@
 namespace Core\Application\Service\Concerns;
 
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 trait HaveAuthorization
 {
@@ -28,7 +29,15 @@ trait HaveAuthorization
             return $this->auth()->user()->getKey() === $model->user->getKey();
         }
 
-        if ((is_null($model) && $this->request()->has('id')) || $this->request()->has('id')) {
+        if (is_null($model)) {
+            return $this->auth()->user()->can(
+                $this->removeApiPrefixFromPermission(
+                    $this->request->route()->getName()
+                )
+            );
+        }
+
+        if ($this->request()->has('id')) {
             foreach ($this->withTrashed()->whereIn(
                 'id', (array) $this->request()->input('id')
             )->get() as $model) {
@@ -38,14 +47,6 @@ trait HaveAuthorization
             }
 
             return $authorized = true;
-        }
-
-        if (is_null($model)) {
-            return $this->auth()->user()->can(
-                $this->removeApiPrefixFromPermission(
-                    $this->request->route()->getName()
-                )
-            );
         }
 
         return $this->auth()->user()->getKey() === $this->withTrashed()->whereId($model)->firstOr(function () {

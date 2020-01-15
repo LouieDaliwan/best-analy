@@ -2,11 +2,12 @@
 
 namespace Tests\Unit\Sidebar;
 
+use Core\Application\Sidebar\SideMenu;
 use Core\Application\Sidebar\Sidebar;
 use Core\Manifests\SidebarManifest;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
@@ -36,9 +37,9 @@ class SidebarTest extends TestCase
      */
     public function it_initializes_with_sidebar_manifest_and_filesystem()
     {
-        $sidebar = new Sidebar(app('manifest:sidebar'), app('files'));
+        $sidebar = new Sidebar(app('manifest:sidebar'), app('request'));
         $this->assertInstanceOf(SidebarManifest::class, $sidebar->manifest());
-        $this->assertInstanceOf(Filesystem::class, $sidebar->files());
+        $this->assertInstanceOf(Request::class, $sidebar->request());
     }
 
     /**
@@ -49,7 +50,7 @@ class SidebarTest extends TestCase
      */
     public function it_retrieves_the_sidebar_menus()
     {
-        $sidebar = new Sidebar(app('manifest:sidebar'), app('files'));
+        $sidebar = new Sidebar(app('manifest:sidebar'), app('request'));
 
         $this->assertInternalType('array', $sidebar->menus());
     }
@@ -62,9 +63,10 @@ class SidebarTest extends TestCase
      */
     public function it_builds_the_sidebar_menu_as_an_adjacent_list()
     {
-        $sidebar = new Sidebar(app('manifest:sidebar'), app('files'));
+        $sidebar = new Sidebar(app('manifest:sidebar'), app('request'));
         $sidebar->build();
 
-        $this->assertInternalType('array', $sidebar->get());
+        $this->assertInternalType('array', $sidebar->all());
+        $this->assertInstanceOf(SideMenu::class, $sidebar->random());
     }
 }

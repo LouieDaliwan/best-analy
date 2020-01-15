@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Application\Api\Adapters;
 
-use Core\Api\Adapters\ApiClient;
+use Core\Application\Api\Adapters\ApiClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\MockHandler;

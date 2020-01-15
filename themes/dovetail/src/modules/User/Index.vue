@@ -171,7 +171,7 @@ export default {
         { text: trans('Account Name'), align: 'left', value: 'displayname' },
         { text: trans('Role'), value: 'role' },
         { text: trans('Last Modified'), value: 'updated_at' },
-        { text: trans('Actions'), value: 'action', sortable: false, class: "muted--text" },
+        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text' },
       ],
       data: []
     },

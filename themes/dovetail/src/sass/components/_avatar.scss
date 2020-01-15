@@ -1,0 +1,18 @@
+.dt-avatar-preview {
+  border-radius: 100%;
+  display: inline-block;
+  height: 160px;
+  width: 160px;
+}
+
+.theme--dark {
+  .dt-avatar-preview {
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.02), 0 4px 4px rgba(0, 0, 0, 0.19);
+  }
+}
+
+.theme--light {
+  .dt-avatar-preview {
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.02), 0 4px 4px rgba(0, 0, 0, 0.02);
+  }
+}

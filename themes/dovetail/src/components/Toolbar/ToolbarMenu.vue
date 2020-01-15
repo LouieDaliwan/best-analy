@@ -26,13 +26,19 @@
                 @click:clear="search"
                 @keydown.native="search"
                 @shortkey.native="focus"
+                prepend-inner-icon="mdi-magnify"
                 clear-icon="mdi-close-circle-outline"
                 clearable
                 dense
+                solo
+                class="dt-text-field__search"
+                :background-color="$store.getters['theme/dark'] ? 'dark' : 'workspace'"
+                filled
+                flat
                 hide-details
-                outlined
+                data-xoutlined
                 ref="tablesearch"
-                rounded
+                data-xrounded
                 single-line
                 v-shortkey="['ctrl', '/']"
               >
@@ -121,7 +127,7 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import ManIcon from '@/components/Icons/ManThrowingAwayPaper.vue'
+import ManIcon from '@/components/Icons/ManThrowingAwayPaperIcon.vue'
 import EmptyIcon from '@/components/Icons/EmptyIcon.vue'
 
 export default {

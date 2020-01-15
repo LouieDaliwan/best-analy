@@ -1,7 +1,41 @@
+.dt-text-field {
+  &__search {
+    .v-input__slot {
+      box-shadow: inset var(--box-shadow);
+    }
+  }
+}
+
 .v-text-field {
   &:not(.v-text-field--rounded) {
     .v-input__slot {
       border-radius: var(--card-border-radius);
+    }
+  }
+}
+
+.v-input--dense {
+  .v-label {
+    font-size: 14px;
+  }
+
+  .v-text-field__slot {
+    input {
+      font-size: 14px;
+    }
+  }
+
+  .v-select__selection {
+    font-size: 14px;
+  }
+}
+
+.theme--light {
+  &.v-text-field--outlined {
+    &:not(.error--text) {
+      fieldset {
+        border-color: var(--field-light);
+      }
     }
   }
 }

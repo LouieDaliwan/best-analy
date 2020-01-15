@@ -90,7 +90,7 @@
 
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <span v-on="on"><router-link tag="a" exact :to="goToShowUserPage(item)" v-text="item.displayname" class="text-no-wrap"></router-link></span>
+                  <span class="mt-1" v-on="on"><router-link tag="a" exact :to="goToShowUserPage(item)" v-text="item.displayname" class="text-no-wrap"></router-link></span>
                 </template>
                 <span>{{ $t('View Details') }}</span>
               </v-tooltip>
@@ -135,9 +135,7 @@
     <!-- Data table -->
 
     <dialogbox>
-      <!-- <template v-slot:illustration> -->
-        <error-icon class="mx-auto d-block" :width="200" :height="200"></error-icon>
-      <!-- </template> -->
+      <error-icon class="mx-auto d-block" :width="200" :height="200"></error-icon>
     </dialogbox>
   </section>
 </template>
@@ -145,7 +143,7 @@
 <script>
 import $api from './routes/api'
 import $auth from '@/core/Auth/auth'
-import man from '@/components/Icons/ManThrowingAwayPaper.vue'
+import man from '@/components/Icons/ManThrowingAwayPaperIcon.vue'
 
 export default {
   data: () => ({

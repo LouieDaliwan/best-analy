@@ -2,29 +2,79 @@
   <section>
     <metatag :title="resource.data.displayname"></metatag>
 
-    <page-header :back="{name: 'users.index'}"></page-header>
+    <page-header :back="{name: 'users.index'}">
+      <template v-slot:title>
+        {{ resource.data.displayname }}
+      </template>
+      <template v-slot:utilities>
+        <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'users.edit'}">
+          <v-icon small class="mb-1">mdi-pencil-outline</v-icon>
+          {{ trans('Edit') }}
+        </router-link>
+        <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'users.trashed'}">
+          <v-icon small class="mb-1">mdi-delete-outline</v-icon>
+          {{ trans('Deactivate') }}
+        </router-link>
+      </template>
+    </page-header>
 
-    <div>users.show</div>
     <v-card>
       <v-card-text>
-        <div class="pb-4 mb-4">Fields goes here</div>
-
-        <div class="pb-4">
-          <v-avatar size="40" color="primary"><img :src="resource.data.avatar"></v-avatar>
-        </div>
-
-        <form ref="user-editform" @submit.prevent="submit">
-          <v-text-field outlined :label="trans('First name')" name="firstname" v-model="resource.data.firstname"></v-text-field>
-          <div class="pb-4 mb-4"><em>...etc</em></div>
-          <v-btn :disabled="resource.loading" :loading="resource.loading" type="submit">Save</v-btn>
-        </form>
-
-        <div class="pb-4 mb-4"></div>
-        User object retrieved from <code>/api/v1/users/{{ $route.params.id }}</code>:
-
-        <div><code>resource.</code></div>
-        <code style="width:100%">{{ resource }}</code>
+        <v-row justify="center" align="center">
+          <v-col cols="12" md="4">
+            <div class="d-flex justify-center align-center">
+              <div class="dt-avatar-preview">
+                <v-avatar size="160">
+                  <img :src="resource.data.avatar" alt="">
+                </v-avatar>
+              </div>
+            </div>
+          </v-col>
+          <v-col cols="12" md="8">
+            <h2 class="mb-3">{{ resource.data.displayname }}</h2>
+            <div class="muted--text mb-2">
+              <v-icon small class="mr-2 muted--text">mdi-at</v-icon>
+              {{ resource.data.username }}
+            </div>
+            <div class="muted--text mb-2">
+              <v-icon small class="mr-2 muted--text">mdi-email-outline</v-icon>
+              {{ resource.data.email }}
+            </div>
+            <div class="muted--text">
+              <v-icon small class="mr-2 muted--text">mdi-account-outline</v-icon>
+              Super Administrator
+            </div>
+          </v-col>
+        </v-row>
       </v-card-text>
+
+      <v-divider></v-divider>
+
+      <!-- Background Details -->
+      <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th colspan="2" class="text-left">Background Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="font-weight-bold">Gender</td>
+                <td>Male</td>
+              </tr>
+              <tr>
+                <td class="font-weight-bold">Mobile Phone</td>
+                <td>+639 15 223 22 45</td>
+              </tr>
+              <tr>
+                <td class="font-weight-bold">Home Address</td>
+                <td>Manila, Philippines</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+      <!-- Background Details -->
     </v-card>
   </section>
 </template>

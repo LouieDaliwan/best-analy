@@ -29,7 +29,7 @@ trait HaveAuthorization
             return $this->auth()->user()->getKey() === $model->user->getKey();
         }
 
-        if (is_null($model)) {
+        if (is_null($model) && ! $this->request()->has('id')) {
             return $this->auth()->user()->can(
                 $this->removeApiPrefixFromPermission(
                     $this->request->route()->getName()

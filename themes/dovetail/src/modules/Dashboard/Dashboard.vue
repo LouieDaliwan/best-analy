@@ -147,10 +147,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import business from './assets/business.png'
-import hr from './assets/hr.png'
-import financial from './assets/financial.png'
-import productivity from './assets/productivity.png'
+import business from '@/components/Illustration/business.png'
+import hr from '@/components/Illustration/hr.png'
+import financial from '@/components/Illustration/financial.png'
+import productivity from '@/components/Illustration/productivity.png'
 
 export default {
   data: () => ({

@@ -15,6 +15,8 @@
     </v-badge>
     <snackbar></snackbar>
 
+    <export></export>
+
     <br><p></p><p></p>
     <h3 class="mb-2 mt-9">Repeater</h3>
     <v-card class="mt-3">

@@ -47,6 +47,7 @@
           v-shortkey.avoid
           class="dt-repeater--key"
           v-model="item.key"
+          dense
           ></v-text-field>
       </v-col>
       <v-col>
@@ -57,6 +58,7 @@
           autocomplete="off"
           class="dt-repeater--value"
           v-model="item.value"
+          dense
         ></v-text-field>
       </v-col>
       <v-col cols="auto">

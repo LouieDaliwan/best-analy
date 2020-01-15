@@ -24,9 +24,9 @@
                   label="First Name"
                   outlined
                   >
-                  <template v-slot:prepend-inner>
+                  <!-- <template v-slot:prepend-inner>
                     <v-icon size="20" class="mr-2">mdi-account-outline</v-icon>
-                  </template>
+                  </template> -->
                 </v-text-field>
               </v-col>
               <v-col cols="12" md="4">
@@ -59,6 +59,7 @@
                   hide-details
                   label="Gender"
                   outlined
+                  dense
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="8">
@@ -67,7 +68,11 @@
                   hide-details
                   append-icon="mdi-chevron-down"
                   label="Select Gender"
-                  outlined
+                  solo
+                  height="40px"
+                  flat
+                  dense
+                  background-color="selects"
                   >
                 </v-select>
               </v-col>
@@ -80,12 +85,14 @@
                   hide-details
                   label="Mobile Phone"
                   outlined
+                  dense
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="8">
                 <v-text-field
                   hide-details
                   outlined
+                  dense
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -97,12 +104,14 @@
                   hide-details
                   label="Home Address"
                   outlined
+                  dense
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="8">
                 <v-text-field
                   hide-details
                   outlined
+                  dense
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -120,10 +129,8 @@
                   label="Email Address"
                   hide-details
                   outlined
+                  dense
                   >
-                  <template v-slot:prepend-inner>
-                    <v-icon size="20" class="mr-2">mdi-email-outline</v-icon>
-                  </template>
                 </v-text-field>
               </v-col>
               <v-col cols="12">
@@ -132,10 +139,8 @@
                   hide-details
                   outlined
                   autocomplete="off"
+                  dense
                   >
-                  <template v-slot:prepend-inner>
-                    <v-icon size="20" class="mr-2">mdi-account-circle-outline</v-icon>
-                  </template>
                 </v-text-field>
               </v-col>
               <v-col cols="12" md="6">
@@ -145,10 +150,8 @@
                   outlined
                   autocomplete="off"
                   type="password"
+                  dense
                   >
-                  <template v-slot:prepend-inner>
-                    <v-icon size="20" class="mr-2">mdi-lock-outline</v-icon>
-                  </template>
                 </v-text-field>
               </v-col>
               <v-col cols="12" md="6">
@@ -158,10 +161,8 @@
                   outlined
                   autocomplete="new-password"
                   type="password"
+                  dense
                   >
-                  <template v-slot:prepend-inner>
-                    <v-icon size="20" class="mr-2">mdi-lock-outline</v-icon>
-                  </template>
                 </v-text-field>
               </v-col>
             </v-row>
@@ -170,10 +171,22 @@
       </v-col>
       <v-col cols="12" md="3">
         <v-card class="mb-3">
-          <v-card-title>{{ __('Photo') }}</v-card-title>
+          <v-card-title class="pb-0">{{ __('Photo') }}</v-card-title>
+          <v-card-text class="text-center">
+            <div class="dt-avatar-preview">
+              <div class="d-flex justify-end mr-5 mt-4">
+                <v-btn small fab>
+                  <v-icon small color="muted">mdi-upload-outline</v-icon>
+                </v-btn>
+              </div>
+            </div>
+          </v-card-text>
         </v-card>
         <v-card class="mb-3">
           <v-card-title>{{ __('Roles') }}</v-card-title>
+        </v-card>
+        <v-card class="mb-3">
+          <v-card-title>{{ __('Metainfo') }}</v-card-title>
         </v-card>
       </v-col>
     </v-row>
@@ -181,7 +194,7 @@
 </template>
 
 <script>
-import man from '@/components/Icons/ManOnLaptop'
+import man from '@/components/Icons/ManOnLaptopIcon'
 
 export default {
   data: () => ({

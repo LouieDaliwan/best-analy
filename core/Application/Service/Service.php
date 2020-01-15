@@ -15,7 +15,7 @@ abstract class Service implements ServiceInterface
         Concerns\HaveSortOrder,
         Concerns\HaveSoftDeletes,
         Concerns\HaveOwnership,
-        Concerns\SearchCapable
+        Concerns\SearchCapable,
         RemoveApiPrefixFromPermission;
 
     /**

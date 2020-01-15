@@ -79,6 +79,7 @@ class UserService extends Service implements UserServiceInterface
     public function store(array $attributes)
     {
         $model = $this->model;
+
         return $this->save($model, $attributes);
     }
 
@@ -98,7 +99,7 @@ class UserService extends Service implements UserServiceInterface
         $model->suffixname = $attributes['suffixname'] ?? $model->suffixname;
         $model->username = $attributes['username'] ?? $model->username;
         $model->email = $attributes['email'] ?? $model->email;
-        $model->password = $attributes['password'] ?? $model->password;
+        $model->password = $this->hash($attributes['password']) ?? $model->password;
         $model->photo = $attributes['photo'] ?? $model->photo;
         $model->type = $attributes['type'] ?? $model->type;
 
@@ -106,9 +107,6 @@ class UserService extends Service implements UserServiceInterface
 
         // User roles.
         $model->roles()->sync($attributes['roles'] ?? []);
-
-        // User details.
-        // $model->roles()->sync($attributes['roles'] ?? []);
 
         return $model;
     }

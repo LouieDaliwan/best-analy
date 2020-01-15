@@ -54,17 +54,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * User exposed observable events.
-     *
-     * @param  string $value
-     * @return void
-     */
-    public function setPasswordAttribute(string $value)
-    {
-        $this->attributes['password'] = Hash::make($value);
-    }
-
-    /**
      * Get the indexable data array for the model.
      *
      * @return array

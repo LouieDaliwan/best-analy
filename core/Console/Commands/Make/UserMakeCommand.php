@@ -3,6 +3,7 @@
 namespace Core\Console\Commands\Make;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 use User\Models\User;
 use User\Services\RoleServiceInterface;
 use User\Services\UserServiceInterface;
@@ -85,7 +86,7 @@ class UserMakeCommand extends Command
         }
         $user['password'] = $this->ask('Password (visible)');
         $this->password = $user['password'];
-        $user['password'] = $user['password'];
+        $user['password'] = Hash::make($user['password']);
         $roles = collect($this->choice(
             'Specify the role associated with the user',
             $this->roles->pluck('code', 'id')->toArray()

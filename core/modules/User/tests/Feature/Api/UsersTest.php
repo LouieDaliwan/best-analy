@@ -79,11 +79,10 @@ class UsersTest extends TestCase
 
         // Actions
         // Passwords by default, will be omitted by the User\Models\User model.
-        // So we need to merge it back before posting to the route.
-        $user = factory(User::class)->make();
+        // So we need to make it visible.
+        $user = factory(User::class)->make()->makeVisible('password');
         $attributes = array_merge($user->toArray(), [
             'roles' => [Role::pluck('id')->first()],
-            'password' => $this->faker->password
         ]);
         $response = $this->post(route('api.users.store'), $attributes);
 

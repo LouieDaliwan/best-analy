@@ -1,10 +1,4 @@
 <template>
-  <!-- <v-toolbar
-    flat
-    :color="dataset.color"
-    v-model="dataset.model"
-    height="80"
-    > -->
     <div class="pa-4">
       <v-row align="center" justify="space-between">
         <v-col cols="12" sm="4">
@@ -123,7 +117,6 @@
         </v-col>
       </v-row>
     </div>
-  <!-- </v-toolbar> -->
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
@@ -232,7 +225,6 @@ export default {
     'items.toggleBulkEdit': function (val) {
       if (!val) {
         this.trashButtonIsLoading = false
-        // this.toggleLoadingStateOnClick()
       }
     },
   }

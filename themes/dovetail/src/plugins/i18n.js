@@ -19,10 +19,14 @@ const i18n = new VueI18n({
 })
 
 window.$trans = function (text, options = null) {
-  return i18n.tc(text, options)
+  return i18n.t(text, options)
 }
 
 window.trans = function (text, options = null) {
+  return i18n.t(text, options)
+}
+
+window.tchoice = function (text, options = null) {
   return i18n.tc(text, options)
 }
 

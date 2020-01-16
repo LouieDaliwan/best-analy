@@ -8,9 +8,10 @@
   vertical-align: baseline;
   white-space: nowrap;
 
-  &.v-badge--tile, &.v-badge--bordered {
+  &.v-badge--tile,
+  &.v-badge--bordered {
     .v-badge__badge {
-      border-radius: 0.420rem;
+      border-radius: 0.42rem;
     }
   }
 }

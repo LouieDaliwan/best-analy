@@ -4,6 +4,7 @@ namespace Core\Console\Commands\Module;
 
 use Core\Manifests\ModuleManifest;
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 
 class ModuleDiscoverCommand extends Command
 {
@@ -24,17 +25,18 @@ class ModuleDiscoverCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param  \Core\Manifests\ModuleManifest $manifest
      * @return void
      */
-    public function handle(ModuleManifest $manifest)
+    public function handle()
     {
-        if (file_exists($this->laravel->getCachedModulesPath())) {
-            $this->call('module:clear');
-        }
-
-        $manifest->build();
         $this->callSilent('module:clear');
+
+        $manifest = new ModuleManifest(
+            new Filesystem,
+            $this->laravel->modulesPath(),
+            $this->laravel->getCachedModulesPath()
+        );
+
         $manifest->build();
 
         foreach ($manifest->modules()->pluck('name') ?? [] as $module) {

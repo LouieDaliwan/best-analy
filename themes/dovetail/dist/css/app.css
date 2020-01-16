@@ -271,8 +271,9 @@ pre {
   white-space: nowrap;
 }
 
-.dt-badge.v-badge--tile .v-badge__badge {
-  border-radius: 0.275rem;
+.dt-badge.v-badge--tile .v-badge__badge,
+.dt-badge.v-badge--bordered .v-badge__badge {
+  border-radius: 0.42rem;
 }
 
 .v-breadcrumbs {
@@ -357,6 +358,10 @@ pre {
   box-shadow: inset var(--box-shadow);
 }
 
+.dt-text-field.v-input--dense .v-icon {
+  font-size: 16px;
+}
+
 .v-text-field:not(.v-text-field--rounded) .v-input__slot {
   border-radius: var(--card-border-radius);
 }
@@ -371,6 +376,10 @@ pre {
 
 .v-input--dense .v-select__selection {
   font-size: var(--font-size-sm);
+}
+
+.theme--light.v-text-field--outlined:not(.v-input--is-focused):not(.v-input--has-state) fieldset {
+  border-color: var(--field-light);
 }
 
 .theme--dark .v-sheet {

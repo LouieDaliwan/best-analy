@@ -3721,12 +3721,12 @@ html {
   margin-top: 16px;
   padding-top: 4px;
 }
-.v-input--selection-controls > .v-input__append-outer,
-.v-input--selection-controls > .v-input__prepend-outer {
+.v-input--selection-controls .v-input__append-outer,
+.v-input--selection-controls .v-input__prepend-outer {
   margin-top: 0;
   margin-bottom: 0;
 }
-.v-input--selection-controls:not(.v-input--hide-details) > .v-input__slot {
+.v-input--selection-controls:not(.v-input--hide-details) .v-input__slot {
   margin-bottom: 12px;
 }
 .v-input--selection-controls__input {
@@ -3803,7 +3803,7 @@ html {
   -webkit-transition: inherit;
   transition: inherit;
 }
-.v-input--selection-controls__ripple > .v-ripple__container {
+.v-input--selection-controls__ripple .v-ripple__container {
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
 }
@@ -3818,6 +3818,14 @@ html {
 .v-input--selection-controls.v-input {
   -webkit-box-flex: 0;
           flex: 0 1 auto;
+}
+.v-input--selection-controls.v-input .v-label {
+  -webkit-box-align: center;
+          align-items: center;
+  display: -webkit-inline-box;
+  display: inline-flex;
+  top: 0;
+  height: auto;
 }
 .v-input--selection-controls.v-input--is-focused .v-input--selection-controls__ripple:before,
 .v-input--selection-controls .v-radio--is-focused .v-input--selection-controls__ripple:before {
@@ -16904,14 +16912,6 @@ html {
   display: -webkit-box;
   display: flex;
   width: 100%;
-}
-.v-input--radio-group > .v-label {
-  -webkit-box-align: center;
-          align-items: center;
-  display: -webkit-inline-box;
-  display: inline-flex;
-  height: auto;
-  top: 0;
 }
 .v-input--radio-group--column .v-input--radio-group__input > .v-label {
   padding-bottom: 8px;
@@ -36950,12 +36950,12 @@ html {
   margin-top: 16px;
   padding-top: 4px;
 }
-.v-input--selection-controls > .v-input__append-outer,
-.v-input--selection-controls > .v-input__prepend-outer {
+.v-input--selection-controls .v-input__append-outer,
+.v-input--selection-controls .v-input__prepend-outer {
   margin-top: 0;
   margin-bottom: 0;
 }
-.v-input--selection-controls:not(.v-input--hide-details) > .v-input__slot {
+.v-input--selection-controls:not(.v-input--hide-details) .v-input__slot {
   margin-bottom: 12px;
 }
 .v-input--selection-controls__input {
@@ -37032,7 +37032,7 @@ html {
   -webkit-transition: inherit;
   transition: inherit;
 }
-.v-input--selection-controls__ripple > .v-ripple__container {
+.v-input--selection-controls__ripple .v-ripple__container {
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
 }
@@ -37047,6 +37047,14 @@ html {
 .v-input--selection-controls.v-input {
   -webkit-box-flex: 0;
           flex: 0 1 auto;
+}
+.v-input--selection-controls.v-input .v-label {
+  -webkit-box-align: center;
+          align-items: center;
+  display: -webkit-inline-box;
+  display: inline-flex;
+  top: 0;
+  height: auto;
 }
 .v-input--selection-controls.v-input--is-focused .v-input--selection-controls__ripple:before,
 .v-input--selection-controls .v-radio--is-focused .v-input--selection-controls__ripple:before {
@@ -38307,7 +38315,6 @@ html {
   line-height: 1;
   min-width: 20px;
   padding: 4px 6px;
-  pointer-events: auto;
   position: absolute;
   text-align: center;
   text-indent: 0;
@@ -38756,7 +38763,6 @@ html {
   color: rgba(0, 0, 0, 0.38);
 }
 .theme--light.v-input--is-disabled .v-label,
-.theme--light.v-input--is-disabled .v-messages,
 .theme--light.v-input--is-disabled input,
 .theme--light.v-input--is-disabled textarea {
   color: rgba(0, 0, 0, 0.38);
@@ -38783,7 +38789,6 @@ html {
   color: rgba(255, 255, 255, 0.5);
 }
 .theme--dark.v-input--is-disabled .v-label,
-.theme--dark.v-input--is-disabled .v-messages,
 .theme--dark.v-input--is-disabled input,
 .theme--dark.v-input--is-disabled textarea {
   color: rgba(255, 255, 255, 0.5);
@@ -38915,7 +38920,6 @@ html {
   position: relative;
   text-align: center;
   vertical-align: middle;
-  overflow: hidden;
 }
 .v-avatar img,
 .v-avatar svg,
@@ -39292,10 +39296,6 @@ html {
 .v-list-group__items {
   -webkit-box-flex: 1;
           flex: 1 1 auto;
-}
-.v-list-group__items .v-list-item,
-.v-list-group__items .v-list-group__items {
-  overflow: hidden;
 }
 
 .v-list-group--active > .v-list-group__header > .v-list-group__header__append-icon .v-icon {
@@ -39686,25 +39686,25 @@ html {
   display: flex;
   padding: 8px;
 }
-.v-card__actions > .v-btn.v-btn {
+.v-card__actions .v-btn.v-btn {
   padding: 0 8px;
 }
-.v-application--is-ltr .v-card__actions > .v-btn.v-btn + .v-btn {
+.v-application--is-ltr .v-card__actions .v-btn.v-btn + .v-btn {
   margin-left: 8px;
 }
-.v-application--is-ltr .v-card__actions > .v-btn.v-btn .v-icon--left {
+.v-application--is-ltr .v-card__actions .v-btn.v-btn .v-icon--left {
   margin-left: 4px;
 }
-.v-application--is-ltr .v-card__actions > .v-btn.v-btn .v-icon--right {
+.v-application--is-ltr .v-card__actions .v-btn.v-btn .v-icon--right {
   margin-right: 4px;
 }
-.v-application--is-rtl .v-card__actions > .v-btn.v-btn + .v-btn {
+.v-application--is-rtl .v-card__actions .v-btn.v-btn + .v-btn {
   margin-right: 8px;
 }
-.v-application--is-rtl .v-card__actions > .v-btn.v-btn .v-icon--left {
+.v-application--is-rtl .v-card__actions .v-btn.v-btn .v-icon--left {
   margin-right: 4px;
 }
-.v-application--is-rtl .v-card__actions > .v-btn.v-btn .v-icon--right {
+.v-application--is-rtl .v-card__actions .v-btn.v-btn .v-icon--right {
   margin-left: 4px;
 }
 
@@ -40294,13 +40294,10 @@ html {
   background: rgba(0, 0, 0, 0.12);
 }
 .theme--light.v-text-field--outlined fieldset {
-  border-color: rgba(0, 0, 0, 0.38);
+  border-color: rgba(0, 0, 0, 0.24);
 }
 .theme--light.v-text-field--outlined:not(.v-input--is-focused):not(.v-input--has-state) > .v-input__control > .v-input__slot:hover fieldset {
   border-color: rgba(0, 0, 0, 0.86);
-}
-.theme--light.v-text-field--outlined.v-input--is-disabled fieldset {
-  border-color: rgba(0, 0, 0, 0.26);
 }
 
 .theme--dark.v-text-field > .v-input__control > .v-input__slot:before {
@@ -40335,7 +40332,7 @@ html {
   color: rgba(0, 0, 0, 0.87);
 }
 .theme--dark.v-text-field--filled > .v-input__control > .v-input__slot {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.1);
 }
 .theme--dark.v-text-field--filled .v-text-field__prefix,
 .theme--dark.v-text-field--filled .v-text-field__suffix {
@@ -40343,18 +40340,8 @@ html {
   margin-top: 20px;
 }
 .theme--dark.v-text-field--filled:not(.v-input--is-focused) > .v-input__control > .v-input__slot:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.2);
 }
-.theme--dark.v-text-field--outlined fieldset {
-  border-color: rgba(255, 255, 255, 0.24);
-}
-.theme--dark.v-text-field--outlined:not(.v-input--is-focused):not(.v-input--has-state) > .v-input__control > .v-input__slot:hover fieldset {
-  border-color: #FFFFFF;
-}
-.theme--dark.v-text-field--outlined.v-input--is-disabled fieldset {
-  border-color: rgba(255, 255, 255, 0.16);
-}
-
 .v-text-field {
   padding-top: 12px;
   margin-top: 4px;
@@ -40377,7 +40364,7 @@ html {
   padding-top: 0;
 }
 .v-text-field.v-input--dense:not(.v-text-field--outlined):not(.v-text-field--single-line) input {
-  padding: 4px 0 2px;
+  padding: 4px 0 8px;
 }
 .v-text-field.v-input--dense[type=text]::-ms-clear {
   display: none;
@@ -40442,8 +40429,8 @@ html {
 }
 .v-text-field > .v-input__control > .v-input__slot {
   cursor: text;
-  -webkit-transition: background 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
-  transition: background 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  -webkit-transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
 }
 .v-text-field > .v-input__control > .v-input__slot:before, .v-text-field > .v-input__control > .v-input__slot:after {
   bottom: -1px;
@@ -40537,7 +40524,7 @@ html {
   min-height: 56px;
 }
 .v-text-field--filled.v-input--dense > .v-input__control > .v-input__slot, .v-text-field--full-width.v-input--dense > .v-input__control > .v-input__slot, .v-text-field--outlined.v-input--dense > .v-input__control > .v-input__slot {
-  min-height: 52px;
+  min-height: 44px;
 }
 .v-text-field--filled.v-input--dense.v-text-field--single-line > .v-input__control > .v-input__slot, .v-text-field--filled.v-input--dense.v-text-field--outlined > .v-input__control > .v-input__slot, .v-text-field--filled.v-input--dense.v-text-field--outlined.v-text-field--filled > .v-input__control > .v-input__slot, .v-text-field--full-width.v-input--dense.v-text-field--single-line > .v-input__control > .v-input__slot, .v-text-field--full-width.v-input--dense.v-text-field--outlined > .v-input__control > .v-input__slot, .v-text-field--full-width.v-input--dense.v-text-field--outlined.v-text-field--filled > .v-input__control > .v-input__slot, .v-text-field--outlined.v-input--dense.v-text-field--single-line > .v-input__control > .v-input__slot, .v-text-field--outlined.v-input--dense.v-text-field--outlined > .v-input__control > .v-input__slot, .v-text-field--outlined.v-input--dense.v-text-field--outlined.v-text-field--filled > .v-input__control > .v-input__slot {
   min-height: 40px;

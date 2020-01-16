@@ -7,14 +7,14 @@
     > -->
     <div class="pa-4">
       <v-row align="center" justify="space-between">
-        <v-col cols="12" sm>
+        <v-col cols="12" sm="4">
           <slot name="search">
             <v-badge
               color="dark"
               transition="fade-transition"
               offset-y="20"
               offset-x="20"
-              class="dt-badge d-block d-sm-inline-block"
+              class="dt-badge d-block"
               bottom
               tile
               content="/"
@@ -32,7 +32,6 @@
                 class="dt-text-field__search"
                 clear-icon="mdi-close-circle-outline"
                 clearable
-                dense
                 filled
                 flat
                 full-width

@@ -7,17 +7,20 @@ export const state = () => ({
       {
         icon: 'mdi-file-pdf',
         color: 'error',
-        name: 'Portable Documment Format (.pdf)'
+        name: 'Portable Documment Format (.pdf)',
+        value: 'pdf',
       },
       {
         icon: 'mdi-google-spreadsheet',
         color: 'green',
-        name: 'Microsoft Excel (.xlsx)'
+        name: 'Microsoft Excel (.xlsx)',
+        value: 'xlsx',
       },
       {
         icon: 'mdi-file-document',
         color: 'blue',
-        name: 'Open Document Format (.ods)'
+        name: 'Open Document Format (.ods)',
+        value: 'ods',
       }
     ]
   }

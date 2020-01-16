@@ -1,7 +1,7 @@
 <template>
   <section>
     <template v-if="! repeaters.length">
-      <slot name="empty-state">
+      <slot name="empty">
         <div>
           <!-- <v-card-text style="filter: grayscale(0.9);">
             <empty-icon width="300" height="auto"></empty-icon>
@@ -15,13 +15,14 @@
           </v-card-text> -->
 
           <v-badge
-            color="dark"
-            transition="fade-transition"
-            offset-y="20"
-            offset-x="20"
-            class="dt-badge"
+            bordered
             bottom
+            class="dt-badge"
+            color="dark"
+            offset-x="20"
+            offset-y="20"
             tile
+            transition="fade-transition"
             v-model="$store.getters['shortkey/ctrlIsPressed']"
             >
             <template v-slot:badge>
@@ -120,6 +121,10 @@ export default {
       type: String,
       default: 'mdi-plus-circle-outline',
     },
+    fields: {
+      type: [Number, String],
+      default: 0,
+    }
   },
 
   computed: {
@@ -145,6 +150,16 @@ export default {
       this.$store.dispatch('repeater/set', this.repeaters)
       this.$emit('input', this.items)
     },
-  }
+    addUserDefinedDefaults() {
+      let fields = parseInt(this.fields)
+      for (var i = fields - 1; i >= 0; i--) {
+        this.add()
+      }
+    },
+  },
+
+  mounted () {
+    this.addUserDefinedDefaults()
+  },
 }
 </script>

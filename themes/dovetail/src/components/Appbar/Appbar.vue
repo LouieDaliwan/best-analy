@@ -7,14 +7,15 @@
       v-if="appbar.model"
       >
       <v-badge
-        color="dark"
-        transition="fade-transition"
-        offset-y="20"
-        offset-x="20"
-        class="dt-badge"
+        bordered
         bottom
-        tile
+        class="dt-badge"
+        color="dark"
         content="k"
+        offset-x="20"
+        offset-y="20"
+        tile
+        transition="fade-transition"
         v-model="$store.getters['shortkey/ctrlIsPressed']"
         >
         <v-btn v-shortkey.once="['ctrl', 'k']" @shortkey="toggle({model: !sidebar.model})" class="muted--text" icon @click="toggle({model: !sidebar.model})">

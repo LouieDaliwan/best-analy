@@ -18,15 +18,14 @@
             value="filename-export-20-01-15-113820"
           ></v-text-field>
           <v-select
-            :item-text="dataset.name"
-            :item-value="dataset.name"
             :items="dataset.items"
-            background-color="selects"
             append-icon="mdi-chevron-down"
+            background-color="selects"
             dense
             flat
-            label="Select file type"
             height="40px"
+            item-text="name"
+            label="Select file type"
             solo
             >
             <template v-slot:prepend-item>

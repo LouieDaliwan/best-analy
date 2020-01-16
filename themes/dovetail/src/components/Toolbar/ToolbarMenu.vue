@@ -4,14 +4,15 @@
         <v-col cols="12" sm="4">
           <slot name="search">
             <v-badge
-              color="dark"
-              transition="fade-transition"
-              offset-y="20"
-              offset-x="20"
-              class="dt-badge d-block"
+              bordered
               bottom
-              tile
+              class="dt-badge d-block"
+              color="dark"
               content="/"
+              offset-x="28"
+              offset-y="28"
+              tile
+              transition="fade-transition"
               v-model="ctrlIsPressed"
               >
               <v-text-field

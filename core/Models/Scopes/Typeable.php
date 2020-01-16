@@ -17,12 +17,22 @@ trait Typeable
      * Gets all categories via given category type.
      *
      * @param  Illuminate\Database\Eloquent\Builder $builder
-     * @param  string  $type
-     * @param  string $column
+     * @param  string                               $type
+     * @param  string                               $column
      * @return Illuminate\Database\Eloquent\Model
      */
     public function scopeType(Builder $builder, $type, $column = null)
     {
         return $builder->where($column ?? $this->typeKey, $type);
+    }
+
+    /**
+     * Retrieve the type of the property.
+     *
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->attributes['type'] ?? $this->type ?? $this->getTable();
     }
 }

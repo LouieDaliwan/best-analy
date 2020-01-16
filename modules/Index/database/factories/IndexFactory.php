@@ -1,19 +1,19 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use Faker\Generator as Faker;
-use Taxonomy\Models\Taxonomy;
+use Index\Models\Index;
 use User\Models\User;
 
-$factory->define(Taxonomy::class, function (Faker $faker) {
+$factory->define(Index::class, function (Faker $faker) {
     return [
         'name' => $name = $faker->unique()->sentence(),
         'alias' => $faker->words(3, true),
         'code' => str_slug($name),
         'description' => $faker->paragraph(),
         'icon' => 'mdi mdi-pencil-outline',
-        'type' => 'taxonomy',
+        'type' => with(new Index)->getType(),
         'user_id' => factory(User::class)->create()->getKey(),
     ];
 });

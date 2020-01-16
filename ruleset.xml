@@ -42,7 +42,9 @@
 	<rule ref="Squiz.PHP.CommentedOutCode"/>
 	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
   <rule ref="Generic.CodeAnalysis.EmptyStatement"/>
-  <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+  <rule ref="Generic.CodeAnalysis">
+    <exclude name="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+  </rule>
   <rule ref="Generic.Commenting">
     <exclude name="Generic.Commenting.DocComment.SpacingAfter"/>
     <exclude name="Generic.Commenting.DocComment.NonParamGroup"/>

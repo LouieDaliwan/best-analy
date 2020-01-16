@@ -3,7 +3,7 @@ export const state = () => ({
     defaults: [{key: '', value: ''}],
     template: {key: '', value: ''},
     items: [],
-  }
+  },
 })
 
 export const getters = {

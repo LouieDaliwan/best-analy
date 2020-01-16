@@ -28,7 +28,7 @@
             <template v-slot:badge>
               <div class="small" style="font-size: 11px">d</div>
             </template>
-            <v-btn class="mt-3" v-shortkey="['ctrl', 'd']" @shortkey="add" @click="add">
+            <v-btn class="mt-3" v-shortkey="['ctrl', 'd']" @shortkey="add()" @click="add()">
               <v-icon left small>{{ addButtonIcon }}</v-icon>
               {{ trans(addButtonText) }}
             </v-btn>
@@ -40,16 +40,17 @@
     <v-row align="center" :key="i" v-for="(item, i) in repeaters">
       <v-col md="4" sm="6">
         <v-text-field
+          :autofocus="focus"
           :label="trans('Key')"
-          outlined
-          hide-details
           autocomplete="off"
-          autofocus
-          v-shortkey.avoid
           class="dt-repeater--key"
-          v-model="item.key"
           dense
-          ></v-text-field>
+          hide-details
+          outlined
+          v-model="item.key"
+          v-shortkey.avoid
+          >
+        </v-text-field>
       </v-col>
       <v-col>
         <v-text-field
@@ -92,7 +93,7 @@
             <template v-slot:badge>
               <div class="small" style="font-size: 11px">d</div>
             </template>
-            <v-btn class="mt-3" v-shortkey="['ctrl', 'd']" @shortkey="add" @click="add">
+            <v-btn class="mt-3" v-shortkey="['ctrl', 'd']" @shortkey="add()" @click="add()">
               <v-icon left small>{{ addButtonIcon }}</v-icon>
               {{ trans(addButtonText) }}
             </v-btn>
@@ -124,7 +125,10 @@ export default {
     fields: {
       type: [Number, String],
       default: 0,
-    }
+    },
+    autofocus: {
+      type: Boolean,
+    },
   },
 
   computed: {
@@ -139,10 +143,15 @@ export default {
     },
   },
 
+  data: () => ({
+    focus: false,
+  }),
+
   methods: {
-    add: function () {
+    add: function (focus = true) {
       this.repeaters.push(this.template)
       this.$store.dispatch('repeater/set', this.repeaters)
+      this.focusOnAdd(focus)
       this.$emit('input', this.items)
     },
     remove: function (i) {
@@ -150,16 +159,25 @@ export default {
       this.$store.dispatch('repeater/set', this.repeaters)
       this.$emit('input', this.items)
     },
-    addUserDefinedDefaults() {
+    addUserDefinedDefaults: function () {
       let fields = parseInt(this.fields)
       for (var i = fields - 1; i >= 0; i--) {
-        this.add()
+        this.add(false)
       }
+    },
+    focusOnAdd: function (val = true) {
+      this.focus = val
     },
   },
 
   mounted () {
     this.addUserDefinedDefaults()
+  },
+
+  watch: {
+    'autofocus': function (val) {
+      this.focus = parseInt(val)
+    },
   },
 }
 </script>

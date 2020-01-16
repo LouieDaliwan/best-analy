@@ -22,7 +22,7 @@
     <v-card class="mt-3">
       <v-card-title>Metadata</v-card-title>
       <v-card-text>
-        <repeater :fields="2" v-model="repeaters"></repeater>
+        <repeater autofocus :fields="2" v-model="repeaters"></repeater>
       </v-card-text>
     </v-card>
 

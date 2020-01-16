@@ -44,6 +44,7 @@
   <rule ref="Generic.CodeAnalysis.EmptyStatement"/>
   <rule ref="Generic.CodeAnalysis">
     <exclude name="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+    <exclude name="Generic.CodeAnalysis.AssignmentInCondition.Found"/>
   </rule>
   <rule ref="Generic.Commenting">
     <exclude name="Generic.Commenting.DocComment.SpacingAfter"/>

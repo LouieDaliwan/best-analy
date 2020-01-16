@@ -134,9 +134,11 @@
     </v-card>
     <!-- Data table -->
 
+    <!-- Dialog -->
     <dialogbox>
       <error-icon class="mx-auto d-block" :width="200" :height="200"></error-icon>
     </dialogbox>
+    <!-- Dialog -->
   </section>
 </template>
 

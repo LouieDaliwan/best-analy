@@ -1,44 +1,62 @@
+import store from '@/store'
+
 export const state = () => ({
-  export: {
-    show: true,
+  exportfile: {
+    // Toggle
+    show: false,
+    loading: false,
+
     color: 'primary',
-    title: 'Sample',
-    items: [
-      {
-        icon: 'mdi-file-pdf',
-        color: 'error',
-        name: 'Portable Documment Format (.pdf)',
-        value: 'pdf',
+    title: 'Select format to download',
+    text: 'Export data to a specific file type.',
+
+    // Illustration
+    iconwidth: 120,
+    iconheight: 120,
+
+    // Buttons
+    buttons: {
+      action: {
+        show: true,
+        color: 'primary',
+        text: 'Export',
+        callback: () => {
+          store.dispatch('exportfile/close')
+        },
       },
-      {
-        icon: 'mdi-google-spreadsheet',
-        color: 'green',
-        name: 'Microsoft Excel (.xlsx)',
-        value: 'xlsx',
+
+      cancel: {
+        show: true,
+        color: 'dark',
+        text: 'Cancel',
+        callback: () => {
+          store.dispatch('exportfile/close')
+        },
       },
-      {
-        icon: 'mdi-file-document',
-        color: 'blue',
-        name: 'Open Document Format (.ods)',
-        value: 'ods',
-      }
-    ]
+    },
   }
 })
 
 export const getters = {
-  export: state => state.export
+  exportfile: state => state.exportfile
 }
 
 export const mutations = {
-  emptyState () {
-    this.replaceState({ header: null })
-  }
+  PROMPT_EXPORT (state, payload) {
+    state.exportfile = window._.merge({}, state.exportfile, payload, {loading: false})
+  },
+}
+
+export const actions = {
+  prompt: (context, payload) => {
+    context.commit('PROMPT_EXPORT', payload)
+  },
 }
 
 export default {
   namespaced: true,
   state,
   getters,
-  mutations
+  mutations,
+  actions
 }

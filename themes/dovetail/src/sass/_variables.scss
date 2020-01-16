@@ -42,7 +42,7 @@ $font-family-base:          $font-family-sans-serif !default;
 $font-base:                 16px;
 $font-size-base:            15px !default; // Assumes the browser default, typically `16px`
 $font-size-lg:              ($font-size-base * 1.25) !default;
-$font-size-sm:              ($font-size-base * .875) !default;
+$font-size-sm:              14px !default;
 
 // Margins & Paddings
 $padding-base:              20px;

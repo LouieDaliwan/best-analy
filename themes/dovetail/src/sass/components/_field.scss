@@ -16,26 +16,28 @@
 
 .v-input--dense {
   .v-label {
-    font-size: 14px;
+    font-size: var(--font-size-sm);
   }
 
   .v-text-field__slot {
     input {
-      font-size: 14px;
+      font-size: var(--font-size-sm);
     }
   }
 
   .v-select__selection {
-    font-size: 14px;
+    font-size: var(--font-size-sm);
   }
 }
 
-.theme--light {
-  &.v-text-field--outlined {
-    &:not(.error--text) {
-      fieldset {
-        border-color: var(--field-light);
-      }
-    }
-  }
-}
+// .theme--light {
+//   &.v-text-field--outlined {
+//     &:not(.v-input--has-state),
+//     &:not(.v-input--is-focused),
+//     &:not(.error--text) {
+//       fieldset {
+//         border-color: var(--field-light);
+//       }
+//     }
+//   }
+// }

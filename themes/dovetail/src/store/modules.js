@@ -8,7 +8,7 @@ const requireModules = require.context(
   true,
   // The regular expression used to match base module filenames
   // /store\/modules\/[a-z]\.js$/
-  /(modules|components)\/\w+\/store\/modules\/\w+\.js/
+  /(modules|components)\/\w+\/store\/\w+\.js/
 )
 
 requireModules.keys().forEach(filename => {

@@ -30,11 +30,12 @@
         </v-btn>
 
         <v-btn
-          v-if="dialog.buttons.action.show"
           :color="dialog.buttons.action.color"
+          :disabled="dialog.loading"
+          :loading="dialog.loading"
           @click.native="dialog.buttons.action.callback(dialog)"
           text
-          :disabled="dialog.loading" :loading="dialog.loading"
+          v-if="dialog.buttons.action.show"
           >
           {{ trans(dialog.buttons.action.text) }}
         </v-btn>

@@ -7,47 +7,48 @@
     > -->
     <div class="pa-4">
       <v-row align="center" justify="space-between">
-        <v-col cols="12" xs="12" md="4" lg="6">
+        <v-col cols="12" sm>
           <slot name="search">
             <v-badge
               color="dark"
               transition="fade-transition"
               offset-y="20"
               offset-x="20"
-              class="dt-badge"
+              class="dt-badge d-block d-sm-inline-block"
               bottom
               tile
               content="/"
-              v-model="$store.getters['shortkey/ctrlIsPressed']"
+              v-model="ctrlIsPressed"
               >
               <v-text-field
-                :append-inner-icon="items.isSearching ? 'mdi-spin mdi-loading' : 'mdi-magnify'"
+                :background-color="$store.getters['theme/dark'] ? 'dark' : 'workspace'"
                 :placeholder="trans('Search...')"
+                :prepend-inner-icon="items.isSearching ? 'mdi-spin mdi-loading' : 'mdi-magnify'"
                 @click:clear="search"
                 @keydown.native="search"
                 @shortkey.native="focus"
-                prepend-inner-icon="mdi-magnify"
+                autocomplete="off"
+                background-color="workspace"
+                class="dt-text-field__search"
                 clear-icon="mdi-close-circle-outline"
                 clearable
                 dense
-                solo
-                class="dt-text-field__search"
-                :background-color="$store.getters['theme/dark'] ? 'dark' : 'workspace'"
                 filled
                 flat
+                full-width
                 hide-details
-                data-xoutlined
                 ref="tablesearch"
-                data-xrounded
                 single-line
+                solo
                 v-shortkey="['ctrl', '/']"
+                v-model="items.search"
               >
               </v-text-field>
             </v-badge>
           </slot>
         </v-col>
-        <v-col cols="12" md="6" lg="6">
-          <div class="d-flex justify-space-between justify-md-end">
+        <v-col cols="12" sm="auto">
+          <div class="d-flex justify-sm-space-between justify-end">
             <v-slide-x-reverse-transition mode="in-out">
               <template v-if="items.toggleBulkEdit">
                 <span class="mr-3">
@@ -174,28 +175,42 @@ export default {
       this.update({ toggleview: !this.toolbar.toggleview })
     },
     askUserToBulkDestroyResources () {
-      this.$store.dispatch('dialog/prompt', {
-        show: true,
-        width: 420,
-        illustration: this.items.bulkCount ? ManIcon : EmptyIcon,
-        illustrationWidth: 240,
-        illustrationHeight: 240,
-        loading: this.trashButtonIsLoading,
-        color: 'warning',
-        title: this.$tc('Deactivate Selected User', this.items.bulkCount),
-        text: this.$tc('Are you sure you want to deactivate the selected user?', this.items.bulkCount),
-        buttons: {
-          cancel: { show: true, color: 'link' },
-          action: {
-            color: this.items.bulkCount ? 'warning' : null,
-            text: this.items.bulkCount ? 'Move to Trash' : 'Okay',
-            callback: (dialog) => {
-              dialog.loading = true
-              this.emitTrashButtonClicked()
+      if (this.items.bulkCount) {
+        this.$store.dispatch('dialog/prompt', {
+          show: true,
+          width: 420,
+          illustration: this.items.bulkCount ? ManIcon : EmptyIcon,
+          illustrationWidth: 240,
+          illustrationHeight: 240,
+          loading: this.trashButtonIsLoading,
+          color: 'warning',
+          title: this.$tc('Deactivate Selected User', this.items.bulkCount),
+          text: this.$tc('Are you sure you want to deactivate the selected user?', this.items.bulkCount),
+          buttons: {
+            cancel: { show: this.items.bulkCount, color: 'link' },
+            action: {
+              color: this.items.bulkCount ? 'warning' : null,
+              text: this.items.bulkCount ? 'Move to Trash' : 'Okay',
+              callback: () => {
+                this.$store.dispatch('dialog/loading', true)
+                if (!this.items.bulkCount) {
+                  this.$store.dispatch('dialog/loading', false)
+                  this.$store.dispatch('dialog/close')
+                } else {
+                  this.emitTrashButtonClicked()
+                }
+              }
             }
-          }
-        },
-      })
+          },
+        })
+      } else {
+        this.$store.dispatch('snackbar/show', {
+          text: this.$tc('Are you sure you want to deactivate the selected user?', this.items.bulkCount),
+          button: {
+            text: this.$t('Okay'),
+          },
+        })
+      }
     },
     emitTrashButtonClicked () {
       this.$emit('update:trash')
@@ -209,13 +224,13 @@ export default {
   },
   computed: {
     ...mapGetters({
+      ctrlIsPressed: 'shortkey/ctrlIsPressed',
       toolbar: 'toolbar/toolbar',
       app: 'app/app'
     }),
   },
   watch: {
     'items.toggleBulkEdit': function (val) {
-      console.log(val)
       if (!val) {
         this.trashButtonIsLoading = false
         // this.toggleLoadingStateOnClick()

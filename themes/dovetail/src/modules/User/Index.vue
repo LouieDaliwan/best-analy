@@ -64,7 +64,7 @@
             </v-slide-y-transition>
           </template>
 
-          <template v-slot:item.displayname="{ item }">
+          <template v-slot:item.id="{ item }">
             <div class="d-flex align-items-center">
               <v-tooltip v-if="auth.id == item.id" bottom>
                 <template v-slot:activator="{ on }">
@@ -166,7 +166,7 @@ export default {
       },
       selected: [],
       headers: [
-        { text: trans('Account Name'), align: 'left', value: 'displayname' },
+        { text: trans('Account Name'), align: 'left', value: 'id' },
         { text: trans('Role'), value: 'role' },
         { text: trans('Last Modified'), value: 'updated_at' },
         { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text' },
@@ -177,6 +177,7 @@ export default {
     tabletoolbar: {
       bulkCount: 0,
       isSearching: false,
+      search: null,
       listGridView: false,
       toggleBulkEdit: false,
       toggleTrash: false,
@@ -190,6 +191,7 @@ export default {
         per_page: this.dataset.options.itemsPerPage,
         page: this.dataset.options.page,
         sort: this.dataset.options.sortBy[0] || undefined,
+        order: this.dataset.options.sortDesc[0] || false ? 'desc' : 'asc',
       }
     },
 
@@ -206,13 +208,17 @@ export default {
     changeOptionsFromRouterQueries () {
       this.options.per_page = this.$route.query.per_page
       this.options.page = parseInt(this.$route.query.page)
+      this.options.search = this.$route.query.search
+      this.dataset.search = this.options.search
+      this.tabletoolbar.search = this.options.search
     },
 
     optionsChanged (options) {
-      this.getPaginatedData(this.options)
+      this.getPaginatedData(this.options, 'optionsChaned')
     },
 
     getPaginatedData: function (params = null, caller = null) {
+      // console.log(`getPagintedData Called by ${caller}`);
       params = params ? params : this.$route.query
       this.dataset.loading = true
       axios.get(this.api.list(), { params })
@@ -244,13 +250,13 @@ export default {
 
     search: _.debounce(function (event) {
       this.dataset.search = event.srcElement.value || ''
-        this.tabletoolbar.isSearching = false
+      this.tabletoolbar.isSearching = false
       if (this.dataset.searching) {
         this.options.search = this.dataset.search
-        this.getPaginatedData(this.options)
+        this.getPaginatedData(this.options, 'search')
         this.dataset.searching = false
       }
-    }, 920),
+    }, 200),
 
     focusSearchBar () {
       this.$refs['tablesearch'].focus()
@@ -260,9 +266,10 @@ export default {
       let selected = this.selected
       axios.delete($api.destroy(null), { data: { id: selected } })
         .then(response => {
-          this.getPaginatedData()
+          this.getPaginatedData(null, 'bulkTrashResource')
           this.tabletoolbar.toggleTrash = false
           this.tabletoolbar.toggleBulkEdit = false
+          this.$store.dispatch('dialog/close')
           this.$store.dispatch('snackbar/show', {
             show: true,
             text: this.$tc('User successfully deactivated', this.tabletoolbar.bulkCount)
@@ -295,7 +302,7 @@ export default {
             text: 'Move to Trash',
             color: 'warning',
             callback: (dialog) => {
-              dialog.loading = true
+              this.$store.dispatch('dialog/loading', true)
               this.destroyResource(item)
             }
           }
@@ -308,7 +315,7 @@ export default {
       axios.delete($api.destroy(item.id))
         .then(response => {
           item.active = false
-          this.getPaginatedData()
+          this.getPaginatedData(null, 'destroyResource')
           this.$store.dispatch('snackbar/show', {
             show: true,
             text: this.$tc('User successfully deactivated', 1)
@@ -327,7 +334,6 @@ export default {
         .finally(() => {
           item.active = false
           item.loading = false
-          // this.$store.dispatch('dialog/prompt', { loading: item.loading })
         })
     },
   },

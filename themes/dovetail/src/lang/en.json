@@ -4,7 +4,7 @@
   "Deactivate user": "Deactivate user | Deactivate users",
   "User successfully restored": "User successfully restored | Users successfully restored",
   "Deactivate Selected User": "No User Selected | Deactivate Selected User | Deactivate Selected Users",
-  "Are you sure you want to deactivate the selected user?": "Select users to deactivate from the list | Are you sure you want to deactivate the selected user? | Are you sure you want to deactivate the selected users?",
+  "Are you sure you want to deactivate the selected user?": "Please select users to deactivate from the list first | Are you sure you want to deactivate the selected user? | Are you sure you want to deactivate the selected users?",
   "Move Item to Trash": "Move Item to Trash | Move Items to Trash",
   "Item was moved to trash": "Item was moved to trash | Items were moved to trash",
   "User successfully deactivated": "User successfully deactivated | Users successfully deactivated",

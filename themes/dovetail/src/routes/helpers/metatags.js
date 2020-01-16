@@ -12,9 +12,9 @@ export default {
     }
   },
 
-  gettext: function (route, $route) {
+  gettext: function (route, slugString) {
     if (route.meta.title == ':slug') {
-      return window._.startCase($route.params.id)
+      return slugString
     }
 
     return route.meta.title

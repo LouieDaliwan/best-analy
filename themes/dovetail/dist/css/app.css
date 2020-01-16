@@ -19,6 +19,7 @@
   --font-family-primary: "Rubik", Rubik, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   --font-family-sans-serif: Rubik, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   --font-size-base: 15px;
+  --font-size-sm: 14px;
   --font-base: 16px;
   --field-border-color: #d2ddec;
   --sidebar-bg-dark: #2b343a;
@@ -361,19 +362,15 @@ pre {
 }
 
 .v-input--dense .v-label {
-  font-size: 14px;
+  font-size: var(--font-size-sm);
 }
 
 .v-input--dense .v-text-field__slot input {
-  font-size: 14px;
+  font-size: var(--font-size-sm);
 }
 
 .v-input--dense .v-select__selection {
-  font-size: 14px;
-}
-
-.theme--light.v-text-field--outlined:not(.error--text) fieldset {
-  border-color: var(--field-light);
+  font-size: var(--font-size-sm);
 }
 
 .theme--dark .v-sheet {

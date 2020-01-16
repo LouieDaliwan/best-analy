@@ -22,6 +22,7 @@
             :item-value="dataset.name"
             :items="dataset.items"
             background-color="selects"
+            append-icon="mdi-chevron-down"
             dense
             flat
             label="Select file type"

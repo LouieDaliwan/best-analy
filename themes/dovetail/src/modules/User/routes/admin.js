@@ -1,6 +1,7 @@
 export default [
   {
     path: '/admin/users',
+    name: 'admin.users',
     redirect: {name: 'users.index'},
     component: () => import('@/App.vue'),
     meta: {
@@ -12,7 +13,6 @@ export default [
     children: [
       {
         path: '/admin/users',
-        props: true,
         name: 'users.index',
         component: () => import('../Index.vue'),
         meta: {

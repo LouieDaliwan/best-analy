@@ -1,5 +1,5 @@
 <template>
-  <v-slide-y-transition mode="out-in">
+  <component :is="slideTransition" mode="out-in">
     <v-snackbar
       v-model="model"
       :bottom="snackbar.y === 'bottom'"
@@ -26,19 +26,29 @@
         <template v-else>{{ snackbar.button.text }}</template>
       </v-btn>
     </v-snackbar>
-  </v-slide-y-transition>
+  </component>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { VSlideYTransition, VSlideYReverseTransition } from 'vuetify/lib'
 
 export default {
   name: 'Snackbar',
+
+  components: {
+    slideY: VSlideYTransition,
+    slideYReverse: VSlideYReverseTransition
+  },
 
   computed: {
     ...mapGetters({
       snackbar: 'snackbar/snackbar'
     }),
+
+    slideTransition: function () {
+      return this.snackbar.y === 'bottom' ? 'slide-y-reverse' : 'slide-y'
+    },
 
     model: {
       get () {

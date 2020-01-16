@@ -28,7 +28,7 @@
               <div class="small" style="font-size: 11px">d</div>
             </template>
             <v-btn class="mt-3" v-shortkey="['ctrl', 'd']" @shortkey="add" @click="add">
-              <v-icon left>{{ addButtonIcon }}</v-icon>
+              <v-icon left small>{{ addButtonIcon }}</v-icon>
               {{ trans(addButtonText) }}
             </v-btn>
           </v-badge>
@@ -92,7 +92,7 @@
               <div class="small" style="font-size: 11px">d</div>
             </template>
             <v-btn class="mt-3" v-shortkey="['ctrl', 'd']" @shortkey="add" @click="add">
-              <v-icon left>{{ addButtonIcon }}</v-icon>
+              <v-icon left small>{{ addButtonIcon }}</v-icon>
               {{ trans(addButtonText) }}
             </v-btn>
           </v-badge>

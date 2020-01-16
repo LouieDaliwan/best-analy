@@ -29,13 +29,14 @@ export default {
     ...mapGetters({
       breadcrumbs: 'breadcrumbs/breadcrumbs',
       lang: 'app/locale',
+      title: 'metatag/title',
     }),
 
     crumbs: function () {
       return this.$route.matched.map((route, i) => {
         return {
           name: route.name,
-          text: trans(metatags.gettext(route, this.$route)),
+          text: trans(metatags.gettext(route, this.title)),
           disabled: false,
           to: {name: route.name, query: this.$route.query},
           href: route.path,

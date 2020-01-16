@@ -5,7 +5,7 @@
         {{ trans('Add User') }}
       </template>
       <template v-slot:action>
-        <v-btn large color="primary" exact :to="{ name: 'users.store' }">
+        <v-btn large color="primary" exact :to="{ name: 'users.index' }">
           <v-icon left>mdi-content-save-outline</v-icon>
           {{ trans('Save') }}
         </v-btn>
@@ -173,13 +173,7 @@
         <v-card class="mb-3">
           <v-card-title class="pb-0">{{ __('Photo') }}</v-card-title>
           <v-card-text class="text-center">
-            <div class="dt-avatar-preview">
-              <div class="d-flex justify-end mr-5 mt-4">
-                <v-btn small fab>
-                  <v-icon small color="muted">mdi-upload-outline</v-icon>
-                </v-btn>
-              </div>
-            </div>
+            <upload-avatar></upload-avatar>
           </v-card-text>
         </v-card>
         <v-card class="mb-3">
@@ -194,14 +188,8 @@
 </template>
 
 <script>
-import man from '@/components/Icons/ManOnLaptopIcon'
-
 export default {
   data: () => ({
   }),
-
-  mounted () {
-    console.log(man)
-  }
 }
 </script>

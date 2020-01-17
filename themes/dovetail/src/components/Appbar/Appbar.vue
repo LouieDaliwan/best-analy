@@ -18,7 +18,7 @@
         transition="fade-transition"
         v-model="$store.getters['shortkey/ctrlIsPressed']"
         >
-        <v-btn v-shortkey.once="['ctrl', 'k']" @shortkey="toggle({model: !sidebar.model})" class="muted--text" icon @click="toggle({model: !sidebar.model})">
+        <v-btn v-shortkey.once="['ctrl', 'k']" @shortkey="toggle({model: !sidebar.model})" class="ml-2 muted--text" icon @click="toggle({model: !sidebar.model})">
           <v-icon small>mdi-menu</v-icon>
         </v-btn>
       </v-badge>

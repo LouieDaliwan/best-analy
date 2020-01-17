@@ -358,13 +358,13 @@ pre {
   box-shadow: inset var(--box-shadow);
 }
 
+.dt-text-field.v-input--dense .v-icon {
+  font-size: 16px;
+}
+
 .dt-text-field.v-input:not(.v-input--dense) .v-icon {
   font-size: 18px;
   margin-bottom: 4px;
-}
-
-.dt-text-field.v-input--dense .v-icon {
-  font-size: 16px;
 }
 
 .v-text-field:not(.v-text-field--rounded) .v-input__slot {

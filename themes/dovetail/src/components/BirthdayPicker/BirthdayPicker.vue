@@ -54,10 +54,6 @@ export default {
   }),
 
   computed: {
-    computedDateFormatted () {
-      return this.formatDate(this.date)
-    },
-
     isDense: function () {
       return this.$vuetify.breakpoint.xlAndUp
     },
@@ -66,6 +62,10 @@ export default {
   watch: {
     date (val) {
       this.dateFormatted = this.formatDate(this.date)
+    },
+
+    dateFormatted (val) {
+      this.$emit('input', val)
     },
   },
 

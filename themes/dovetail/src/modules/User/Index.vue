@@ -220,8 +220,9 @@ export default {
     },
 
     getPaginatedData: function (params = null, caller = null) {
-      // console.log(`getPagintedData Called by ${caller}`);
-      params = params ? params : this.$route.query
+      // dont put search in options
+      console.log(`getPagintedData Called by ${caller}`);
+      params = Object.assign(params ? params : this.$route.query, { search: this.dataset.search })
       this.dataset.loading = true
       axios.get(this.api.list(), { params })
         .then(response => {
@@ -254,7 +255,6 @@ export default {
       this.dataset.search = event.srcElement.value || ''
       this.tabletoolbar.isSearching = false
       if (this.dataset.searching) {
-        this.options.search = this.dataset.search
         this.getPaginatedData(this.options, 'search')
         this.dataset.searching = false
       }

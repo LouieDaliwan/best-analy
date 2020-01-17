@@ -19,25 +19,6 @@
             <v-card-title>{{ trans('Personal Information') }}</v-card-title>
             <v-card-text>
               <v-row>
-                <v-col cols="4" md="2">
-                  <v-select
-                    :dense="isDense"
-                    :items="[{value: false, text: 'None'}, 'Mr.', 'Ms.', 'Mrs.']"
-                    :label="trans('Prefix')"
-                    append-icon="mdi-chevron-down"
-                    background-color="selects"
-                    bottom
-                    class="dt-text-field"
-                    hide-details
-                    menu-props="offsetY"
-                    outlined
-                    prepend-inner-icon="mdi-account-edit"
-                    v-model="resource.data.prefixname"
-                    >
-                  </v-select>
-                </v-col>
-              </v-row>
-              <v-row>
                 <v-col cols="12" md="4">
                   <validation-provider vid="firstname" :name="trans('First name')" rules="required" v-slot="{ errors }">
                     <v-text-field
@@ -53,7 +34,7 @@
                     </v-text-field>
                   </validation-provider>
                 </v-col>
-                <v-col cols="12" md="3">
+                <v-col cols="12" md="4">
                   <validation-provider vid="middlename" :name="trans('Middle name')" v-slot="{ errors }">
                     <v-text-field
                       :error-messages="errors"
@@ -65,7 +46,7 @@
                     ></v-text-field>
                   </validation-provider>
                 </v-col>
-                <v-col cols="12" md="3">
+                <v-col cols="12" md="4">
                   <validation-provider vid="lastname" :name="trans('Last name')" rules="required" v-slot="{ errors }">
                     <v-text-field
                       :error-messages="errors"
@@ -76,17 +57,6 @@
                       v-model="resource.data.lastname"
                     ></v-text-field>
                   </validation-provider>
-                </v-col>
-                <v-col cols="12" md="2">
-                  <v-text-field
-                    :label="trans('Suffix')"
-                    hide-details
-                    class="dt-text-field"
-                    outlined
-                    :dense="isDense"
-                    v-model="resource.data.suffixname"
-                    >
-                  </v-text-field>
                 </v-col>
               </v-row>
               <v-row>
@@ -117,7 +87,9 @@
                       menu-props="offsetY"
                       outlined
                       return-object
+                      background-color="selects"
                       v-model="resource.data.details['gender']"
+                      append-icon="mdi-chevron-down"
                       >
                       <template v-slot:item="{ item }">
                         <v-list-item-icon>
@@ -140,11 +112,13 @@
                       :items="resource.maritalStatus.items"
                       :label="trans('Marital Status')"
                       :prepend-inner-icon="resource.changeMaritalStatusIcon(resource.data.details['marital-status'])"
+                      background-color="selects"
                       class="dt-text-field"
                       menu-props="offsetY"
                       outlined
                       return-object
                       v-model="resource.data.details['marital-status']"
+                      append-icon="mdi-chevron-down"
                       >
                       <template v-slot:item="{ item }">
                         <v-icon left>{{ item.icon }}</v-icon>
@@ -306,7 +280,8 @@ export default {
     },
 
     isDense: function () {
-      return this.$vuetify.breakpoint.smAndUp
+      return this.$vuetify.breakpoint.xlAndUp
+      // return this.$vuetify.breakpoint.smAndUp
     },
   },
 }

@@ -5,9 +5,18 @@
     }
   }
 
-  &.v-input--dense {
-    .v-icon {
-      font-size: 16px;
+  &.v-input {
+    &:not(.v-input--dense) {
+      .v-icon {
+        font-size: 18px;
+        margin-bottom: 4px;
+      }
+    }
+
+    &--dense {
+      .v-icon {
+        font-size: 16px;
+      }
     }
   }
 }

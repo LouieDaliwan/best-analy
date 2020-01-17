@@ -76,6 +76,6 @@ class Crm implements Contracts\CrmInterface
      */
     public function postUrl(): string
     {
-        return $this->config['update'];
+        return $this->config['post'];
     }
 }

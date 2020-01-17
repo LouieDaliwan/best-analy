@@ -12,7 +12,8 @@ class User {
       password_confirmation: '',
       photo: '',
       details: {
-        gender: {key: 'Gender', value: '', icon: ''},
+        gender: {key: trans('Gender'), value: '', icon: ''},
+        birthday: {key: trans('Birthday'), value: '', icon: 'mdi-cake-variant'},
       },
       roles: [],
     }

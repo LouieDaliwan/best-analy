@@ -220,8 +220,7 @@ export default {
     },
 
     getPaginatedData: function (params = null, caller = null) {
-      // dont put search in options
-      console.log(`getPagintedData Called by ${caller}`);
+      // console.log(`getPagintedData Called by ${caller}`);
       params = Object.assign(params ? params : this.$route.query, { search: this.dataset.search })
       this.dataset.loading = true
       axios.get(this.api.list(), { params })

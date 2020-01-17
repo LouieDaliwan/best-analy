@@ -41,10 +41,11 @@
       <v-col md="4" sm="6">
         <v-text-field
           :autofocus="focus"
+          :dense="dense"
           :label="trans('Key')"
           autocomplete="off"
           class="dt-repeater--key"
-          dense
+          hide-details
           hide-details
           outlined
           v-model="item.key"
@@ -54,13 +55,13 @@
       </v-col>
       <v-col>
         <v-text-field
+          :dense="dense"
           :label="trans('Value')"
-          outlined
-          hide-details
           autocomplete="off"
           class="dt-repeater--value"
+          hide-details
+          outlined
           v-model="item.value"
-          dense
         ></v-text-field>
       </v-col>
       <v-col cols="auto">
@@ -128,6 +129,9 @@ export default {
     },
     autofocus: {
       type: Boolean,
+    },
+    dense: {
+      type: Boolean
     },
   },
 

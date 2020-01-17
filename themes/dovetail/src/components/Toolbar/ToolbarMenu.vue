@@ -1,5 +1,9 @@
 <template>
-  <div class="pa-4">
+  <v-toolbar
+    class="py-2"
+    flat
+    height="auto"
+    >
     <v-row align="center" justify="space-between">
       <v-col cols="12" sm="4">
         <slot name="search">
@@ -23,7 +27,6 @@
               @keydown.native="search"
               @shortkey.native="focus"
               autocomplete="off"
-              background-color="workspace"
               class="dt-text-field__search"
               clear-icon="mdi-close-circle-outline"
               clearable
@@ -34,40 +37,53 @@
               ref="tablesearch"
               single-line
               solo
-              v-shortkey="['ctrl', '/']"
               v-model="items.search"
+              v-shortkey="['ctrl', '/']"
             >
             </v-text-field>
           </v-badge>
         </slot>
       </v-col>
       <v-col cols="12" sm="auto">
-        <div class="d-flex justify-sm-space-between justify-end">
-          <v-slide-x-reverse-transition mode="in-out">
-            <template v-if="items.toggleBulkEdit">
-              <span class="mr-3">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn v-on="on" v-if="downloadable" icon :disabled="!items.toggleBulkEdit">
-                      <v-icon small>mdi-download</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('Export selected users') }}</span>
-                </v-tooltip>
-                <v-btn v-if="restorable" icon :disabled="!items.toggleBulkEdit">
-                  <v-icon small>mdi-restore</v-icon>
-                </v-btn>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn @click="askUserToBulkDestroyResources" v-if="trashable" icon v-on="on" :disabled="!items.toggleBulkEdit">
-                      <v-icon small>mdi-delete-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('Move selected users to trash') }}</span>
-                </v-tooltip>
-              </span>
-            </template>
+        <div class="d-flex justify-sm-space-between justify-end align-center">
+          <v-slide-x-reverse-transition>
+            <div v-if="items.bulkCount" class="px-2">{{ $tc('{number} item selected', items.bulkCount, {number: items.bulkCount}) }}</div>
           </v-slide-x-reverse-transition>
+          <v-slide-x-reverse-transition>
+            <v-divider v-if="items.bulkCount" vertical></v-divider>
+          </v-slide-x-reverse-transition>
+          <v-spacer v-if="items.bulkCount"></v-spacer>
+          <v-scale-transition>
+            <span v-if="items.toggleBulkEdit">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-btn class="mr-2" v-on="on" v-if="downloadable" icon :disabled="!items.toggleBulkEdit">
+                    <v-icon small>mdi-download</v-icon>
+                  </v-btn>
+                </template>
+                <span>{{ trans('Export selected users') }}</span>
+              </v-tooltip>
+            </span>
+          </v-scale-transition>
+          <v-scale-transition>
+            <span v-if="items.toggleBulkEdit">
+              <v-btn class="mr-2" v-if="restorable" icon :disabled="!items.toggleBulkEdit">
+                <v-icon small>mdi-restore</v-icon>
+              </v-btn>
+            </span>
+          </v-scale-transition>
+          <v-scale-transition>
+            <span v-if="items.toggleBulkEdit">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-btn class="mr-2" @click="askUserToBulkDestroyResources" v-if="trashable" icon v-on="on" :disabled="!items.toggleBulkEdit">
+                    <v-icon small>mdi-delete-outline</v-icon>
+                  </v-btn>
+                </template>
+                <span>{{ trans('Move selected users to trash') }}</span>
+              </v-tooltip>
+            </span>
+          </v-scale-transition>
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <v-btn-toggle v-if="bulk" v-model="items.toggleBulkEdit" dense rounded color="primary">
@@ -117,7 +133,7 @@
         </div>
       </v-col>
     </v-row>
-  </div>
+  </v-toolbar>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'

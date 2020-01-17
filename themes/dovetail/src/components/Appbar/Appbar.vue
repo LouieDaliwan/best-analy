@@ -3,6 +3,7 @@
     <v-app-bar
       app
       elevate-on-scroll
+      hide-on-scroll
       :clipped-left="sidebar.clipped"
       v-if="appbar.model"
       >

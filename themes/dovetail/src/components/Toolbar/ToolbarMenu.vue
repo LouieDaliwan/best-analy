@@ -1,6 +1,5 @@
 <template>
   <v-toolbar
-    class="py-2"
     flat
     height="auto"
     >
@@ -50,7 +49,7 @@
             <div v-if="items.bulkCount" class="px-2">{{ $tc('{number} item selected', items.bulkCount, {number: items.bulkCount}) }}</div>
           </v-slide-x-reverse-transition>
           <v-slide-x-reverse-transition>
-            <v-divider v-if="items.bulkCount" vertical></v-divider>
+            <v-divider v-if="items.bulkCount" vertical class="mx-2"></v-divider>
           </v-slide-x-reverse-transition>
           <v-spacer v-if="items.bulkCount"></v-spacer>
           <v-scale-transition>
@@ -84,17 +83,39 @@
               </v-tooltip>
             </span>
           </v-scale-transition>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-btn-toggle v-if="bulk" v-model="items.toggleBulkEdit" dense rounded color="primary">
-                <v-btn icon v-on="on" color="primary" :value="true">
-                  <v-icon v-if="items.toggleBulkEdit" color="primary" small>mdi-close</v-icon>
-                  <v-icon v-else small>mdi-check-box-multiple-outline</v-icon>
-                </v-btn>
-              </v-btn-toggle>
-            </template>
-            <span>{{ trans('Toggle multiple selection') }}</span>
-          </v-tooltip>
+
+          <v-badge
+            bordered
+            bottom
+            class="dt-badge d-block"
+            color="dark"
+            content="shift+a"
+            offset-x="30"
+            offset-y="20"
+            tile
+            transition="fade-transition"
+            v-model="ctrlIsPressed"
+            >
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-btn-toggle v-if="bulk" v-model="items.toggleBulkEdit" dense rounded color="primary">
+                  <v-btn
+                    @shortkey="items.toggleBulkEdit = !items.toggleBulkEdit"
+                    icon
+                    v-on="on"
+                    v-shortkey="['ctrl', 'shift', 'a']"
+                    color="primary"
+                    :value="true"
+                    >
+                    <v-icon v-if="items.toggleBulkEdit" color="primary" small>mdi-close</v-icon>
+                    <v-icon v-else small>mdi-check-box-multiple-outline</v-icon>
+                  </v-btn>
+                </v-btn-toggle>
+              </template>
+              <span>{{ trans('Toggle multiple selection') }}</span>
+            </v-tooltip>
+          </v-badge>
+
           <v-divider vertical v-if="dataset.verticaldiv"></v-divider>
           <!-- list and grid view -->
           <template v-if="dataset.listGridView">

@@ -6,7 +6,8 @@ export const state = () => ({
 })
 
 export const getters = {
-  appbar: state => state.appbar
+  appbar: state => state.appbar,
+  show: state => state.appbar.model,
 }
 
 export const mutations = {
@@ -15,7 +16,7 @@ export const mutations = {
   },
 
   'TOGGLE' (state, payload) {
-    state.appbar.model = payload.model
+    state.appbar.model = payload
   },
 }
 

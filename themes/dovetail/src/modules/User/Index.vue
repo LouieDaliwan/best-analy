@@ -5,7 +5,7 @@
     <page-header>
       <template v-slot:utilities>
         <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'users.trashed'}">
-          <v-icon small class="mb-1">mdi-delete-empty</v-icon>
+          <v-icon small class="mb-1">mdi-account-off-outline</v-icon>
           {{ trans('Deactivated Users') }}
         </router-link>
       </template>
@@ -35,15 +35,15 @@
           :headers="dataset.headers"
           :items="dataset.data"
           :loading="dataset.loading"
+          :mobile-breakpoint="NaN"
           :options.sync="dataset.options"
           :server-items-length="dataset.meta.total"
           :show-select="tabletoolbar.toggleBulkEdit"
-          :mobile-breakpoint="NaN"
+          @update:options="optionsChanged"
+          color="primary"
           item-key="id"
           v-model="dataset.selected"
-          @update:options="optionsChanged"
           >
-
           <template v-slot:progress><span></span></template>
 
           <template v-slot:loading>

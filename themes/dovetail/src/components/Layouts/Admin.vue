@@ -4,15 +4,15 @@
 
     <snackbar></snackbar>
 
-    <v-slide-y-transition>
+    <v-slide-y-transition mode="out-in">
       <appbar></appbar>
     </v-slide-y-transition>
 
     <!-- # Main Content -->
     <v-content>
-      <v-container>
+      <!-- <v-container>
         <breadcrumbs></breadcrumbs>
-      </v-container>
+      </v-container> -->
 
       <v-container>
         <v-slide-y-reverse-transition mode="out-in">

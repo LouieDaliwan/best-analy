@@ -14,15 +14,17 @@ class User {
       details: {
         gender: {key: trans('Gender'), value: '', icon: ''},
         birthday: {key: trans('Birthday'), value: '', icon: 'mdi-cake-variant'},
+        maritalStatus: {key: trans('Marital Status'), value: '', icon: ''},
       },
       roles: [],
     }
 
     this.gender = {
       items: [
-        { color: 'gray', icon: 'mdi-gender-male-female', key: 'None', value: null },
+        { color: 'gray', icon: 'mdi-help', key: 'None', value: null },
         { color: 'blue', icon: 'mdi-gender-male', key: 'Male', value: 'Male' },
         { color: 'pink', icon: 'mdi-gender-female', key: 'Female', value: 'Female' },
+        { color: 'gray', icon: 'mdi-gender-male-female', key: 'Unspecified', value: 'Unspecified' },
       ],
     }
 

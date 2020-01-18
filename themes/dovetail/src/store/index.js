@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import app from '@/store/globals/app'
 import theme from '@/store/globals/theme'
+import settings from '@/store/globals/settings'
 import modules from '@/store/modules'
 
 Vue.use(Vuex)
@@ -16,7 +17,6 @@ const store = new Vuex.Store({
 
 store.registerModule('app', app)
 store.registerModule('theme', theme)
+store.registerModule('settings', settings)
 
 export default store
-
-// store.registerModule

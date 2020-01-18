@@ -1,17 +1,18 @@
 <template>
   <section>
+    <actionbar></actionbar>
     <validation-observer ref="adduser-form" v-slot="{ passes }">
       <v-form autocomplete="false">
-        <page-header>
+        <page-header :back="{ to: { name: 'users.index' }, text: trans('Users') }">
           <template v-slot:title>
             {{ trans('Add User') }}
           </template>
-          <template v-slot:action>
+          <!-- <template v-slot:action>
             <v-btn large color="primary" exact :to="{ name: 'users.index' }">
               <v-icon left>mdi-content-save-outline</v-icon>
               {{ trans('Save') }}
             </v-btn>
-          </template>
+          </template> -->
         </page-header>
 
         <v-row>
@@ -19,6 +20,14 @@
             <v-card class="mb-3">
               <v-card-title>{{ trans('Personal Information') }}</v-card-title>
               <v-card-text>
+                <v-row justify="space-between">
+                  <v-col cols="2">
+                    <v-select hide-details label="Prefix" class="dt-text-field" background-color="selects" outlined dense :items="['Mr', 'Ms', 'Mrs']"></v-select>
+                  </v-col>
+                  <v-col cols="2">
+                    <v-text-field hide-details label="Suffix" class="dt-text-field" outlined dense></v-text-field>
+                  </v-col>
+                </v-row>
                 <v-row>
                   <v-col cols="12" md="4">
                     <validation-provider vid="firstname" :name="trans('First name')" rules="required" v-slot="{ errors }">
@@ -65,57 +74,20 @@
                     <birthday-picker v-model="resource.data.details.birthday.value"></birthday-picker>
                   </v-col>
                   <v-col cols="6">
-                    <validation-provider vid="details['gender']" :name="trans('Gender')" v-slot="{ errors }">
-                      <v-select
-                        :dense="isDense"
-                        :error-messages="errors"
-                        :items="resource.gender.items"
-                        :label="trans('Gender')"
-                        :prepend-inner-icon="resource.changeGenderIcon(resource.data.details['gender'])"
-                        class="dt-text-field"
-                        item-text="key"
-                        menu-props="offsetY"
-                        outlined
-                        return-object
-                        background-color="selects"
-                        v-model="resource.data.details['gender']"
-                        append-icon="mdi-chevron-down"
-                        >
-                        <template v-slot:item="{ item }">
-                          <v-list-item-icon>
-                            <v-icon :color="item.color" small v-text="item.icon"></v-icon>
-                          </v-list-item-icon>
-                          <v-list-item-content>
-                            <v-list-item-title v-html="item.key"></v-list-item-title>
-                          </v-list-item-content>
-                        </template>
-                      </v-select>
-                    </validation-provider>
+                    <gender-picker
+                      :items="resource.gender.items"
+                      v-model="resource.data.details.gender"
+                      >
+                    </gender-picker>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col cols="12">
-                    <validation-provider vid="details['marital-status']" :name="trans('Marital Status')" v-slot="{ errors }">
-                      <v-select
-                        :dense="isDense"
-                        :error-messages="errors"
-                        :items="resource.maritalStatus.items"
-                        :label="trans('Marital Status')"
-                        :prepend-inner-icon="resource.changeMaritalStatusIcon(resource.data.details['marital-status'])"
-                        background-color="selects"
-                        class="dt-text-field"
-                        menu-props="offsetY"
-                        outlined
-                        return-object
-                        v-model="resource.data.details['marital-status']"
-                        append-icon="mdi-chevron-down"
-                        >
-                        <template v-slot:item="{ item }">
-                          <v-icon left>{{ item.icon }}</v-icon>
-                          <span>{{ item.text }}</span>
-                        </template>
-                      </v-select>
-                    </validation-provider>
+                    <marital-status-picker
+                      :items="resource.maritalStatus.items"
+                      v-model="resource.data.details.maritalStatus"
+                      >
+                    </marital-status-picker>
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -264,16 +236,15 @@
 
 <script>
 import User from './Models/User'
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
+    ...mapGetters({
+      isDense: 'settings/fieldIsDense',
+    }),
     resource: function () {
       return User
-    },
-
-    isDense: function () {
-      return this.$vuetify.breakpoint.xlAndUp
-      // return this.$vuetify.breakpoint.smAndUp
     },
   },
 }

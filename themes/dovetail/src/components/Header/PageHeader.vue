@@ -4,9 +4,9 @@
       <div>
         <slot name="back" :back="back">
           <div class="mb-2" v-if="back">
-            <router-link tag="a" exact :to="back" class="text--decoration-none body-1 dt-link">
+            <router-link tag="a" exact :to="back.to" class="text--decoration-none body-1 dt-link">
               <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
-              <span v-text="$t('Back')"></span>
+              <span v-text="back.text"></span>
             </router-link>
           </div>
         </slot>

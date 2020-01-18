@@ -1,6 +1,6 @@
 <template>
   <section>
-    <template v-if="! repeaters.length">
+    <template v-if="!repeaters.length">
       <slot name="empty">
         <div>
           <!-- <v-card-text style="filter: grayscale(0.9);">
@@ -17,7 +17,7 @@
           <v-badge
             bordered
             bottom
-            class="dt-badge"
+            class="dt-badge pa-0"
             color="dark"
             offset-x="20"
             offset-y="20"
@@ -28,7 +28,7 @@
             <template v-slot:badge>
               <div class="small" style="font-size: 11px">d</div>
             </template>
-            <v-btn class="mt-3" v-shortkey="['ctrl', 'd']" @shortkey="add()" @click="add()">
+            <v-btn class="mt-3" v-shortkey="['ctrl', 'd']" @shortkey="add()" :large="isLarge" @click="add()">
               <v-icon left small>{{ addButtonIcon }}</v-icon>
               {{ trans(addButtonText) }}
             </v-btn>
@@ -44,10 +44,10 @@
           :dense="dense"
           :label="trans('Key')"
           autocomplete="off"
-          class="dt-repeater--key"
-          hide-details
+          class="dt-text-field dt-repeater--key"
           hide-details
           outlined
+          prepend-inner-icon="mdi-square-edit-outline"
           v-model="item.key"
           v-shortkey.avoid
           >
@@ -58,7 +58,7 @@
           :dense="dense"
           :label="trans('Value')"
           autocomplete="off"
-          class="dt-repeater--value"
+          class="dt-text-field dt-repeater--value"
           hide-details
           outlined
           v-model="item.value"
@@ -94,7 +94,7 @@
             <template v-slot:badge>
               <div class="small" style="font-size: 11px">d</div>
             </template>
-            <v-btn class="mt-3" v-shortkey="['ctrl', 'd']" @shortkey="add()" @click="add()">
+            <v-btn class="mt-3" v-shortkey="['ctrl', 'd']" @shortkey="add()" :large="isLarge" @click="add()">
               <v-icon left small>{{ addButtonIcon }}</v-icon>
               {{ trans(addButtonText) }}
             </v-btn>
@@ -113,7 +113,7 @@ export default {
 
   props: {
     value: {
-      type: Array,
+      type: [Array, Object],
     },
     addButtonText: {
       type: String,
@@ -137,31 +137,26 @@ export default {
 
   computed: {
     ...mapGetters({
-      defaults: 'repeater/defaults',
-      template: 'repeater/template',
-      items: 'repeater/items',
+      item: 'repeater/template',
     }),
 
-    repeaters: function () {
-      return window._.merge([], this.items, this.value)
+    isLarge () {
+      return !this.dense
     },
   },
 
-  data: () => ({
+  data: (vm) => ({
     focus: false,
+    repeaters: Object.assign([], vm.value),
   }),
 
   methods: {
     add: function (focus = true) {
-      this.repeaters.push(this.template)
-      this.$store.dispatch('repeater/set', this.repeaters)
+      this.repeaters.push(Object.assign({}, this.item))
       this.focusOnAdd(focus)
-      this.$emit('input', this.items)
     },
     remove: function (i) {
       this.repeaters.splice(i, 1)
-      this.$store.dispatch('repeater/set', this.repeaters)
-      this.$emit('input', this.items)
     },
     addUserDefinedDefaults: function () {
       let fields = parseInt(this.fields)
@@ -179,9 +174,15 @@ export default {
   },
 
   watch: {
-    'autofocus': function (val) {
+    autofocus: function (val) {
       this.focus = parseInt(val)
     },
+    repeaters: {
+      handler: function (val) {
+        this.$emit('input', val)
+      },
+      deep: true,
+    }
   },
 }
 </script>

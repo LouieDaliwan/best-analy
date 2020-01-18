@@ -1,6 +1,32 @@
 <template>
-  <section>
-    <actionbar></actionbar>
+  <admin>
+    <template v-slot:appbar>
+      <v-container class="py-0 px-0">
+        <v-row justify="space-between" align="center">
+          <v-col v-if="$vuetify.breakpoint.mdAndUp" class="py-0" cols="auto">
+            <v-toolbar-title class="muted--text">{{ trans('Unsaved user') }}</v-toolbar-title>
+          </v-col>
+
+          <v-spacer></v-spacer>
+          <v-col class="py-0" cols="auto">
+            <div class="d-flex justify-end">
+              <v-spacer></v-spacer>
+              <v-btn text class="ml-3 mr-0" large>Discard</v-btn>
+              <v-btn
+                :disabled="resource.prestine"
+                class="ml-3 mr-0"
+                color="primary"
+                large
+                >
+                <v-icon left>mdi-content-save-outline</v-icon>
+                Save
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+    </template>
+
     <validation-observer ref="adduser-form" v-slot="{ passes }">
       <v-form autocomplete="false">
         <page-header :back="{ to: { name: 'users.index' }, text: trans('Users') }">
@@ -21,10 +47,10 @@
               <v-card-title>{{ trans('Personal Information') }}</v-card-title>
               <v-card-text>
                 <v-row justify="space-between">
-                  <v-col cols="2">
+                  <v-col cols="6" md="2">
                     <v-select hide-details label="Prefix" class="dt-text-field" background-color="selects" outlined dense :items="['Mr', 'Ms', 'Mrs']"></v-select>
                   </v-col>
-                  <v-col cols="2">
+                  <v-col cols="6" md="2">
                     <v-text-field hide-details label="Suffix" class="dt-text-field" outlined dense></v-text-field>
                   </v-col>
                 </v-row>
@@ -70,13 +96,13 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="6">
-                    <birthday-picker v-model="resource.data.details.birthday.value"></birthday-picker>
+                  <v-col cols="12" md="6">
+                    <birthday-picker v-model="resource.data.details['Birthday'].value"></birthday-picker>
                   </v-col>
-                  <v-col cols="6">
+                  <v-col cols="12" md="6">
                     <gender-picker
                       :items="resource.gender.items"
-                      v-model="resource.data.details.gender"
+                      v-model="resource.data.details['Gender']"
                       >
                     </gender-picker>
                   </v-col>
@@ -85,7 +111,7 @@
                   <v-col cols="12">
                     <marital-status-picker
                       :items="resource.maritalStatus.items"
-                      v-model="resource.data.details.maritalStatus"
+                      v-model="resource.data.details['Marital Status']"
                       >
                     </marital-status-picker>
                   </v-col>
@@ -165,24 +191,26 @@
             <v-card>
               <v-card-title class="pb-0">{{ trans('Additional Background Details') }}</v-card-title>
               <v-card-text>
-                <v-row>
+                <v-row align="center">
                   <v-col cols="12" md="4">
                     <v-text-field
                       :dense="isDense"
+                      :prepend-inner-icon="resource.data.details['Mobile Phone']['icon']"
                       class="dt-text-field"
-                      dense
                       disabled
                       hide-details
-                      label="Mobile Phone"
                       outlined
-                    ></v-text-field>
+                      v-model="resource.data.details['Mobile Phone']['key']"
+                      >
+                    </v-text-field>
                   </v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
-                    class="dt-text-field"
-                      outlined
                       :dense="isDense"
-                      dense
+                      class="dt-text-field"
+                      hide-details
+                      outlined
+                      v-model="resource.data.details['Mobile Phone']['value']"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -190,24 +218,27 @@
                 <v-row>
                   <v-col cols="12" md="4">
                     <v-text-field
-                      disabled
-                      label="Home Address"
-                      class="dt-text-field"
-                      outlined
                       :dense="isDense"
-                      dense
-                    ></v-text-field>
+                      :prepend-inner-icon="resource.data.details['Home Address']['icon']"
+                      class="dt-text-field"
+                      disabled
+                      hide-details
+                      outlined
+                      v-model="resource.data.details['Home Address']['key']"
+                      >
+                    </v-text-field>
                   </v-col>
                   <v-col cols="12" md="8">
                     <v-text-field
-                    class="dt-text-field"
-                      outlined
                       :dense="isDense"
-                      dense
+                      class="dt-text-field"
+                      hide-details
+                      outlined
+                      v-model="resource.data.details['Home Address']['value']"
                     ></v-text-field>
                   </v-col>
                 </v-row>
-                <repeater :dense="isDense"></repeater>
+                <repeater :dense="isDense" v-model="resource.data.details.more"></repeater>
               </v-card-text>
             </v-card>
           </v-col>
@@ -219,7 +250,7 @@
               </v-card-text>
             </v-card>
 
-            <role-card dense class="mb-3" v-model="resource.data.roles"></role-card>
+            <role-card :dense="isDense" class="mb-3" v-model="resource.data.roles"></role-card>
 
             <v-card class="mb-3">
               <v-card-title>{{ __('Metainfo') }}</v-card-title>
@@ -231,7 +262,7 @@
         </v-row>
       </v-form>
     </validation-observer>
-  </section>
+  </admin>
 </template>
 
 <script>
@@ -243,8 +274,18 @@ export default {
     ...mapGetters({
       isDense: 'settings/fieldIsDense',
     }),
-    resource: function () {
-      return User
+  },
+
+  data: () => ({
+    resource: User,
+  }),
+
+  watch: {
+    'resource.data': {
+      handler (val) {
+        this.resource.prestine = false
+      },
+      deep: true,
     },
   },
 }

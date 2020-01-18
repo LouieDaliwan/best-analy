@@ -1,7 +1,7 @@
 <template>
-  <v-slide-y-transition mode="out-in">
+  <!-- <v-slide-y-transition mode="out-in"> -->
     <router-view></router-view>
-  </v-slide-y-transition>
+  <!-- </v-slide-y-transition> -->
 </template>
 
 <script>

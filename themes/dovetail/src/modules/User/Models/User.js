@@ -1,6 +1,7 @@
 class User {
   constructor () {
     this.loading = false
+    this.prestine = true
 
     this.data = {
       firstname: '',
@@ -12,9 +13,12 @@ class User {
       password_confirmation: '',
       photo: '',
       details: {
-        gender: {key: trans('Gender'), value: '', icon: ''},
-        birthday: {key: trans('Birthday'), value: '', icon: 'mdi-cake-variant'},
-        maritalStatus: {key: trans('Marital Status'), value: '', icon: ''},
+        Gender: {key: trans('Gender'), value: '', icon: ''},
+        Birthday: {key: trans('Birthday'), value: '', icon: 'mdi-cake-variant'},
+        'Marital Status': {key: trans('Marital Status'), value: '', icon: ''},
+        'Mobile Phone': {key: trans('Mobile Phone'), value: '', icon: 'mdi-cellphone-android'},
+        'Home Address': {key: trans('Home Address'), value: '', icon: 'mdi-map-marker'},
+        more: [],
       },
       roles: [],
     }

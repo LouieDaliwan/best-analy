@@ -24,7 +24,7 @@ export default {
   path: '/:lang?/admin',
   name: 'admin',
   redirect: { name: 'dashboard' },
-  component: () => import('@/components/Layouts/Admin.vue'),
+  component: () => import('@/components/Layouts/Dashboard.vue'),
   meta: { title: 'Admin', authenticatable: true },
   children: routes,
   beforeEnter: (to, from, next) => {

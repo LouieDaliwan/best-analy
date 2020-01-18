@@ -1,18 +1,18 @@
 <template>
-  <section>
+  <admin>
     <metatag :title="trans('All Users')"></metatag>
 
     <page-header>
       <template v-slot:utilities>
         <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'users.trashed'}">
-          <v-icon small class="mb-1">mdi-account-off-outline</v-icon>
+          <v-icon small left>mdi-account-off-outline</v-icon>
           {{ trans('Deactivated Users') }}
         </router-link>
       </template>
 
       <template v-slot:action>
         <v-btn large color="primary" exact :to="{ name: 'users.create' }">
-          <v-icon left>mdi-account-plus-outline</v-icon>
+          <v-icon small left>mdi-account-plus-outline</v-icon>
           {{ trans('Add User') }}
         </v-btn>
       </template>
@@ -139,7 +139,7 @@
       <error-icon class="mx-auto d-block" :width="200" :height="200"></error-icon>
     </dialogbox>
     <!-- Dialog -->
-  </section>
+  </admin>
 </template>
 
 <script>

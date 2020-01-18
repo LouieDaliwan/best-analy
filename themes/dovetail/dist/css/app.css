@@ -245,6 +245,10 @@ pre {
   box-shadow: var(--box-shadow);
 }
 
+.dt-app-bar-nav-icon {
+  position: absolute;
+}
+
 .dt-avatar-preview {
   border-radius: 100%;
   display: inline-block;
@@ -265,7 +269,7 @@ pre {
   display: inline-block;
   font-size: 0.703125rem;
   line-height: 1;
-  padding: 0.25em 0.4em;
+  padding: 0.3125rem 0.375rem;
   text-align: center;
   vertical-align: baseline;
   white-space: nowrap;

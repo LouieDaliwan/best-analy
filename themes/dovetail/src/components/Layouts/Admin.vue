@@ -1,11 +1,9 @@
 <template>
-  <v-app class="dovetail-app" v-cloak>
-    <sidebar></sidebar>
-
-    <snackbar></snackbar>
-
+  <div>
     <v-slide-y-transition mode="out-in">
-      <appbar></appbar>
+      <appbar>
+        <slot name="appbar"></slot>
+      </appbar>
     </v-slide-y-transition>
 
     <!-- # Main Content -->
@@ -15,16 +13,18 @@
       </v-container> -->
 
       <v-container>
-        <v-slide-y-reverse-transition mode="out-in">
-          <router-view></router-view>
-        </v-slide-y-reverse-transition>
+        <slot>
+          <v-slide-y-reverse-transition mode="out-in">
+            <router-view></router-view>
+          </v-slide-y-reverse-transition>
+        </slot>
       </v-container>
 
       <shortkey></shortkey>
       <v-card class="transparent" flat height="100"></v-card>
     </v-content>
     <!-- # Main Content -->
-  </v-app>
+  </div>
 </template>
 
 <script>

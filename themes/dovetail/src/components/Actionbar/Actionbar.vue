@@ -1,6 +1,6 @@
 <template>
   <v-slide-y-transition mode="out-in">
-    <v-app-bar v-if="!$store.getters['appbar/show']" app fixed elevate-on-scroll>
+    <!-- <v-app-bar v-if="!$store.getters['appbar/show']" app fixed elevate-on-scroll> -->
       <v-container>
         <v-row>
           <v-col class="py-0" cols="12">
@@ -15,7 +15,7 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-app-bar>
+    <!-- </v-app-bar> -->
   </v-slide-y-transition>
 </template>
 
@@ -24,11 +24,11 @@ export default {
   name: 'Actionbar',
 
   beforeDestroy () {
-    this.$store.dispatch('appbar/toggle', true)
+    // this.$store.dispatch('appbar/toggle', true)
   },
 
   mounted () {
-    this.$store.dispatch('appbar/toggle', false)
+    // this.$store.dispatch('appbar/toggle', false)
   },
 }
 </script>

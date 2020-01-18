@@ -1,0 +1,55 @@
+<template>
+  <validation-provider vid="details[maritalstatus]" :name="trans('Marital Status')" v-slot="{ errors }">
+    <v-select
+      :dense="isDense"
+      :error-messages="errors"
+      :items="items"
+      :label="trans('Marital Status')"
+      :prepend-inner-icon="changeIcon(selected)"
+      name="details[maritalstatus]"
+      background-color="selects"
+      class="dt-text-field"
+      menu-props="offsetY"
+      outlined
+      return-object
+      v-model="selected"
+      append-icon="mdi-chevron-down"
+      >
+      <template v-slot:item="{ item }">
+        <v-icon left>{{ item.icon }}</v-icon>
+        <span>{{ item.text }}</span>
+      </template>
+    </v-select>
+  </validation-provider>
+</template>
+
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+  name: 'MaritalStatusPicker',
+
+  props: ['value', 'rules', 'items'],
+
+  computed: {
+    ...mapGetters({
+      isDense: 'settings/fieldIsDense',
+    }),
+
+    selected: {
+      get () {
+        return this.value
+      },
+      set (val) {
+        this.$emit('input', val)
+      }
+    },
+  },
+
+  methods: {
+    changeIcon (item) {
+      return item && item.icon || 'mdi-checkbox-blank-circle-outline'
+    },
+  },
+}
+</script>

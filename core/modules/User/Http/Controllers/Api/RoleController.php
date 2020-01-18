@@ -4,19 +4,18 @@ namespace User\Http\Controllers\Api;
 
 use Core\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
-use User\Http\Requests\DeleteUserRequest;
-use User\Http\Requests\UserRequest;
-use User\Http\Resources\User as UserResource;
-use User\Services\UserServiceInterface;
+use User\Http\Requests\RoleRequest;
+use User\Http\Resources\RoleResource;
+use User\Services\RoleServiceInterface;
 
-class UserController extends ApiController
+class RoleController extends ApiController
 {
     /**
      * Create a new controller instance.
      *
-     * @param \User\Services\UserServiceInterface $service
+     * @param \Role\Services\RoleServiceInterface $service
      */
-    public function __construct(UserServiceInterface $service)
+    public function __construct(RoleServiceInterface $service)
     {
         $this->service = $service;
     }
@@ -28,18 +27,18 @@ class UserController extends ApiController
      */
     public function index()
     {
-        return UserResource::collection($this->service()->list());
+        return RoleResource::collection($this->service()->list());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \User\Http\Requests\UserRequest $request
+     * @param  \User\Http\Requests\RoleRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(RoleRequest $request)
     {
-        return $this->service()->store($request->all());
+        return response()->json($this->service()->store($request->all()));
     }
 
     /**
@@ -48,19 +47,19 @@ class UserController extends ApiController
      * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show($id)
     {
-        return new UserResource($this->service()->find($id));
+        return new RoleResource($this->service()->find($id));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \User\Http\Requests\UserRequest $request
+     * @param  \User\Http\Requests\RoleRequest $request
      * @param  integer                         $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(RoleRequest $request, $id)
     {
         return response()->json($this->service()->update($id, $request->all()));
     }
@@ -68,11 +67,11 @@ class UserController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \User\Http\Requests\DeleteUserRequest $request
-     * @param  integer                               $id
+     * @param  Illuminate\Http\Request $request
+     * @param  integer                 $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DeleteUserRequest $request, $id)
+    public function destroy(Request $request, $id)
     {
         return $this->service()->destroy(
             $request->has('id') ? $request->input('id') : $id
@@ -86,7 +85,7 @@ class UserController extends ApiController
      */
     public function trashed()
     {
-        return UserResource::collection($this->service()->listTrashed());
+        return RoleResource::collection($this->service()->listTrashed());
     }
 
     /**
@@ -106,11 +105,11 @@ class UserController extends ApiController
     /**
      * Permanently delete the specified resource.
      *
-     * @param  \User\Http\Requests\DeleteUserRequest $request
-     * @param  integer|null                          $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  integer|null             $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(DeleteUserRequest $request, $id = null)
+    public function delete(Request $request, $id = null)
     {
         return $this->service()->delete(
             $request->has('id') ? $request->input('id') : $id

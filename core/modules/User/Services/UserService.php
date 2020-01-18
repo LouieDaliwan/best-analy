@@ -52,8 +52,8 @@ class UserService extends Service implements UserServiceInterface
         return [
             'firstname' => 'required|max:255',
             'lastname' => 'required|max:255',
-            'email' => ['required', 'email', Rule::unique('users')->ignore($id)],
-            'username' => ['required', Rule::unique('users')->ignore($id)],
+            'email' => ['required', 'email', Rule::unique($this->getTable())->ignore($id)],
+            'username' => ['required', Rule::unique($this->getTable())->ignore($id)],
             'password' => 'sometimes|required|min:6',
             'roles' => 'required',
         ];

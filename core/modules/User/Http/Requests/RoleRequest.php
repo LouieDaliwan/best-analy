@@ -3,19 +3,20 @@
 namespace User\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use User\Services\UserServiceInterface;
+use User\Services\RoleServiceInterface;
 
-class UserRequest extends FormRequest
+class RoleRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized
-     * to make this request.
+     * Determine if the user is authorized to make this request.
      *
      * @return boolean
      */
     public function authorize()
     {
-        return true;
+        return $this->container->make(
+            RoleServiceInterface::class
+        )->authorize();
     }
 
     /**
@@ -26,7 +27,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return $this->container->make(
-            UserServiceInterface::class
-        )->rules($this->route('user'));
+            RoleServiceInterface::class
+        )->rules($this->route('role'));
     }
 }

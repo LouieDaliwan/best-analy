@@ -3,12 +3,14 @@
 namespace User\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 use User\Models\Permission;
 
 class Role extends Model
 {
-    use Searchable;
+    use Searchable,
+        SoftDeletes;
 
     /**
      * The attributes that aren't mass assignable.

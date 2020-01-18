@@ -1,6 +1,6 @@
 <?php
 
-namespace User\Feature\Api;
+namespace User\Tests\Feature\Api;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -13,7 +13,7 @@ use User\Models\User;
 use User\Services\UserServiceInterface;
 
 /**
- * @package User\Feature\Api
+ * @package User\Tests\Feature\Api
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
@@ -134,7 +134,6 @@ class UsersTest extends TestCase
     public function a_user_can_update_a_user()
     {
         // Arrangements
-        $this->withOutExceptionHandling();
         Passport::actingAs($this->asNonSuperAdmin(['users.update']), ['users.update']);
         $this->withPermissionsPolicy();
         $original = factory(User::class, 3)->create()->random();
@@ -149,28 +148,6 @@ class UsersTest extends TestCase
         // Assertions
         $response->assertSuccessful();
         $this->assertDatabaseHas($user->getTable(), $user->makeHidden('password')->toArray());
-    }
-
-    /**
-     * @test
-     * @group  feature
-     * @group  feature:api
-     * @group  feature:api:user
-     * @return void
-     */
-    public function a_user_can_permanently_delete_a_user()
-    {
-        // Arrangements
-        Passport::actingAs($this->asNonSuperAdmin(['users.delete']), ['users.delete']);
-        $this->withPermissionsPolicy();
-        $user = factory(User::class, 2)->create()->random();
-
-        // Actions
-        $response = $this->delete(route('api.users.delete', $user->getKey()));
-
-        // Assertions
-        $response->assertSuccessful();
-        $this->assertDatabaseMissing($user->getTable(), $user->toArray());
     }
 
     /**
@@ -314,19 +291,19 @@ class UsersTest extends TestCase
      * @group  feature:api:user
      * @return void
      */
-    public function a_user_is_forbidden_to_permanently_delete_self()
+    public function a_user_can_permanently_delete_a_user()
     {
         // Arrangements
-        Passport::actingAs($user = $this->asNonSuperAdmin(['users.delete']), ['users.delete']);
+        Passport::actingAs($this->asNonSuperAdmin(['users.delete']), ['users.delete']);
         $this->withPermissionsPolicy();
+        $user = factory(User::class, 2)->create()->random();
 
         // Actions
         $response = $this->delete(route('api.users.delete', $user->getKey()));
-        $user = $this->service->find($user->getKey());
 
         // Assertions
-        $response->assertForbidden();
-        $this->assertDatabaseHas($user->getTable(), $user->toArray());
+        $response->assertSuccessful();
+        $this->assertDatabaseMissing($user->getTable(), $user->toArray());
     }
 
     /**
@@ -352,6 +329,28 @@ class UsersTest extends TestCase
         $users->each(function ($user) {
             $this->assertDatabaseMissing($user->getTable(), $user->toArray());
         });
+    }
+
+    /**
+     * @test
+     * @group  feature
+     * @group  feature:api
+     * @group  feature:api:user
+     * @return void
+     */
+    public function a_user_is_forbidden_to_permanently_delete_self()
+    {
+        // Arrangements
+        Passport::actingAs($user = $this->asNonSuperAdmin(['users.delete']), ['users.delete']);
+        $this->withPermissionsPolicy();
+
+        // Actions
+        $response = $this->delete(route('api.users.delete', $user->getKey()));
+        $user = $this->service->find($user->getKey());
+
+        // Assertions
+        $response->assertForbidden();
+        $this->assertDatabaseHas($user->getTable(), $user->toArray());
     }
 
     /**

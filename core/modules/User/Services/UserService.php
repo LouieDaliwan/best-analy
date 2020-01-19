@@ -82,7 +82,6 @@ class UserService extends Service implements UserServiceInterface
      */
     protected function save($model, $attributes)
     {
-        dd($attributes);
         $model->prefixname = $attributes['prefixname'] ?? $model->prefixname;
         $model->firstname = $attributes['firstname'] ?? $model->firstname;
         $model->middlename = $attributes['middlename'] ?? $model->middlename;

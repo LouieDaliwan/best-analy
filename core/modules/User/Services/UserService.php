@@ -2,17 +2,20 @@
 
 namespace User\Services;
 
+use Core\Application\Service\Concerns\CanUploadFile;
 use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use User\Http\Resources\User as UserResource;
 use User\Models\User;
 
 class UserService extends Service implements UserServiceInterface
 {
     use Concerns\SavesAccountRecord,
+        CanUploadFile,
         HaveAuthorization;
 
     /**
@@ -79,6 +82,7 @@ class UserService extends Service implements UserServiceInterface
      */
     protected function save($model, $attributes)
     {
+        dd($attributes);
         $model->prefixname = $attributes['prefixname'] ?? $model->prefixname;
         $model->firstname = $attributes['firstname'] ?? $model->firstname;
         $model->middlename = $attributes['middlename'] ?? $model->middlename;
@@ -87,7 +91,7 @@ class UserService extends Service implements UserServiceInterface
         $model->username = $attributes['username'] ?? $model->username;
         $model->email = $attributes['email'] ?? $model->email;
         $model->password = $this->hash($attributes['password']) ?? $model->password;
-        $model->photo = $attributes['photo'] ?? $model->photo;
+        $model->photo = $attributes['photo'] ? $this->upload($attributes['photo']) : $model->photo;
         $model->type = $attributes['type'] ?? $model->type;
 
         $model->save();
@@ -95,6 +99,9 @@ class UserService extends Service implements UserServiceInterface
         // User roles.
         $model->roles()->sync($attributes['roles'] ?? []);
 
-        return $model;
+        // User details.
+        $model->details()->createMany($attributes['details'] ?? []);
+
+        return new UserResource($model);
     }
 }

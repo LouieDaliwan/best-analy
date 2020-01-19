@@ -9,6 +9,14 @@
     </v-row>
     <!-- Glance widget -->
 
+    <h3 class="mt-9 mb-3">Icon Picker</h3>
+    <icon-picker></icon-picker>
+    <v-row>
+      <v-col md="3" cols="12">
+        <find-or-new></find-or-new>
+      </v-col>
+    </v-row>
+
     <h3 class="mt-9 mb-3">Toast/Snackbar</h3>
     <p>Click the button to run a sample toast.</p>
     <v-badge

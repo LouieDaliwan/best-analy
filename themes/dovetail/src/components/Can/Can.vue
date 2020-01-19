@@ -1,6 +1,11 @@
 <template>
-  <keep-alive v-if="check(code)">
-    <slot></slot>
+  <keep-alive>
+    <template v-if="check(code)">
+      <slot></slot>
+    </template>
+    <template v-else>
+      <slot name="unpermitted"></slot>
+    </template>
   </keep-alive>
 </template>
 

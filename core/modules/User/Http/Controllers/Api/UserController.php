@@ -39,7 +39,7 @@ class UserController extends ApiController
      */
     public function store(UserRequest $request)
     {
-        return $this->service()->store($request->all());
+        return new UserResource($this->service()->store($request->all()));
     }
 
     /**

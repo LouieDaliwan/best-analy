@@ -4,9 +4,11 @@ class User {
     this.isPrestine = true
 
     this.data = {
+      prefixname: '',
       firstname: '',
       middlename: '',
       lastname: '',
+      suffixname: '',
       username: '',
       email: '',
       password: '',
@@ -34,11 +36,11 @@ class User {
 
     this.maritalStatus = {
       items: [
-        { icon: 'mdi-checkbox-blank-circle-outline', text: 'Unspecified', value: null },
-        { icon: 'mdi-human-handsup', text: 'Single', value: 'Single' },
-        { icon: 'mdi-human-male-female', text: 'Married', value: 'Married' },
-        { icon: 'mdi-ring', text: 'Widowed', value: 'Widowed' },
-        { icon: 'mdi-heart-broken', text: 'Separated', value: 'Separated' },
+        { icon: 'mdi-checkbox-blank-circle-outline', key: 'Marital Status', value: 'Unspecified' },
+        { icon: 'mdi-human-handsup', key: 'Marital Status', value: 'Single' },
+        { icon: 'mdi-human-male-female', key: 'Marital Status', value: 'Married' },
+        { icon: 'mdi-ring', key: 'Marital Status', value: 'Widowed' },
+        { icon: 'mdi-heart-broken', key: 'Marital Status', value: 'Separated' },
       ],
     }
   }

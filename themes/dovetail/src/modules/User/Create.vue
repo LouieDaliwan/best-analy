@@ -22,7 +22,7 @@
                 type="submit"
                 >
                 <v-icon left>mdi-content-save-outline</v-icon>
-                Save
+                {{ trans('Save') }}
               </v-btn>
             </div>
           </v-col>
@@ -31,7 +31,7 @@
     </template>
 
     <validation-observer ref="addform" v-slot="{ handleSubmit, errors, invalid, passes }">
-      <v-form autocomplete="false" v-on:submit.prevent="handleSubmit(submit($event))" enctype="multipart/form-data">
+      <v-form ref="addform-form" autocomplete="false" v-on:submit.prevent="handleSubmit(submit($event))" enctype="multipart/form-data">
         <button ref="submit-button" type="submit" class="d-none"></button>
         <page-header :back="{ to: { name: 'users.index' }, text: trans('Users') }">
           <template v-slot:title>
@@ -50,10 +50,11 @@
               <v-card-text>
                 <v-row justify="space-between">
                   <v-col cols="6" md="2">
-                    <v-select hide-details label="Prefix" class="dt-text-field" background-color="selects" outlined dense :items="['Mr', 'Ms', 'Mrs']"></v-select>
+                    <v-select hide-details :label="trans('Prefix')" class="dt-text-field" background-color="selects" outlined dense :items="['Mr.', 'Ms.', 'Mrs.']" v-model="resource.data.prefixname"></v-select>
+                    <input type="hidden" name="prefixname" v-model="resource.data.prefixname">
                   </v-col>
                   <v-col cols="6" md="2">
-                    <v-text-field hide-details label="Suffix" class="dt-text-field" outlined dense></v-text-field>
+                    <v-text-field hide-details :label="trans('Suffix')" class="dt-text-field" name="suffixname" outlined dense v-model="resource.data.suffixname"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -65,6 +66,7 @@
                         :label="trans('First name')"
                         autofocus
                         class="dt-text-field"
+                        name="firstname"
                         outlined
                         prepend-inner-icon="mdi-account-outline"
                         v-model="resource.data.firstname"
@@ -79,6 +81,7 @@
                         :error-messages="errors"
                         :label="trans('Middle name')"
                         class="dt-text-field"
+                        name="middlename"
                         outlined
                         v-model="resource.data.middlename"
                       ></v-text-field>
@@ -91,6 +94,7 @@
                         :error-messages="errors"
                         :label="trans('Last name')"
                         class="dt-text-field"
+                        name="lastname"
                         outlined
                         v-model="resource.data.lastname"
                       ></v-text-field>
@@ -131,6 +135,7 @@
                         :error-messages="errors"
                         :label="trans('Email address')"
                         class="dt-text-field"
+                        name="email"
                         outlined
                         type="email"
                         v-model="resource.data.email"
@@ -248,17 +253,15 @@
             <v-card class="mb-3">
               <v-card-title class="pb-0">{{ __('Photo') }}</v-card-title>
               <v-card-text class="text-center">
-                <upload-avatar v-model="resource.data.photo"></upload-avatar>
+                <upload-avatar name="photo" v-model="resource.data.photo"></upload-avatar>
               </v-card-text>
             </v-card>
 
-            <role-picker :dense="isDense" class="mb-3" v-model="resource.data.roles"></role-picker>
+            <role-picker lazy-load :dense="isDense" class="mb-3" v-model="resource.data.roles"></role-picker>
 
             <v-card class="mb-3">
               <v-card-title>{{ __('Metainfo') }}</v-card-title>
-              <div style="overflow-x:scroll;width:100%;">
-                <code class="d-block pa-2" v-html="resource.data" style="width:100%;white-space:pre"></code>
-              </div>
+              <v-card-text>{{ trans('No information available') }}</v-card-text>
             </v-card>
           </v-col>
         </v-row>
@@ -298,18 +301,18 @@ export default {
       data.details = Object.assign({}, data.details, data.details.more || {})
       delete data.details.more
 
-      let form = data
-      const formData = new FormData();
-      for (let key in form) {
-        formData.append(key, JSON.stringify(form[key]))
+      let formData = new FormData(this.$refs['addform-form'].$el)
+
+      for (var i in data.details) {
+        let c = data.details[i]
+        formData.append(`details[${c.key}][key]`, c.key)
+        formData.append(`details[${c.key}][value]`, c.value)
+        formData.append(`details[${c.key}][icon]`, c.icon)
       }
 
-      for (var pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-      }
+      data = formData
 
-      // return formData
-      return formData
+      return data
     },
 
     parseErrors (errors) {
@@ -336,11 +339,12 @@ export default {
           text: trans('User created successfully'),
         })
 
+        console.log(response.data.data.id)
         this.$router.push({
           name: 'users.edit',
           params: {
             id: response.data.data.id
-          }
+          },
         })
 
         this.$store.dispatch('alertbox/show', {

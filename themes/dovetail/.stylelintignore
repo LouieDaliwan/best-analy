@@ -4,3 +4,4 @@ src/**/*.ttf
 src/**/_variables.scss
 src/**/_reset.scss
 src/**/_table.scss
+src/**/_breakpoint.scss

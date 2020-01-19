@@ -6,18 +6,20 @@
       :items="items"
       :label="trans('Marital Status')"
       :prepend-inner-icon="changeIcon(selected)"
-      name="details[maritalstatus]"
+      append-icon="mdi-chevron-down"
       background-color="selects"
       class="dt-text-field"
+      item-text="value"
+      item-value="value"
       menu-props="offsetY"
+      name="details[maritalstatus]"
       outlined
       return-object
       v-model="selected"
-      append-icon="mdi-chevron-down"
       >
       <template v-slot:item="{ item }">
         <v-icon left>{{ item.icon }}</v-icon>
-        <span>{{ item.text }}</span>
+        <span>{{ item.value }}</span>
       </template>
     </v-select>
   </validation-provider>

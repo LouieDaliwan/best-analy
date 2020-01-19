@@ -71,7 +71,7 @@
             <v-card-text>{{ trans('Doing so will permanently remove the key-value pair from the list. Are you sure you want to proceed?') }}</v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="error" text @click.prevent="remove(i)">{{ trans('Remove') }}</v-btn>
+              <v-btn large color="error" text @click.prevent="remove(i)">{{ trans('Remove') }}</v-btn>
             </v-card-actions>
           </v-card>
         </context-prompt>

@@ -13,7 +13,7 @@
   },
   "colors": {
     "light": {
-      "primary": "#0C5689",
+      "primary": "#167bc3",
       "secondary": "#e56e37",
       "accent": "#f39e2b",
       "success": "#86d067",
@@ -33,11 +33,12 @@
       "soft-info": "#d7eff6",
       "soft-warning": "#fdf3d9",
       "selects": "#edf2f9",
-      "field": "#d2ddec"
+      "field": "#d2ddec",
+      "sheet": "ffffff"
 
     },
     "dark": {
-      "primary": "#3c8dc5",
+      "primary": "#167bc3",
       "secondary": "#e56e37",
       "accent": "#f39e2b",
       "success": "#86d067",
@@ -56,7 +57,8 @@
       "soft-error": "#fad7dd",
       "soft-info": "#d7eff6",
       "soft-warning": "#fdf3d9",
-      "selects": "#212c32"
+      "selects": "#212c32",
+      "sheet": "2b343a"
     }
   }
 }

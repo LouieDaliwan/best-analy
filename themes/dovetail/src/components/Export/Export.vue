@@ -26,7 +26,7 @@
           label="Select file type"
           outlined
           >
-          <template v-slot:prepend-item>
+          <template v-slot:prepend-item="{ item }">
             <div class="link--text body-2 py-3 px-5">Presentable</div>
           </template>
           <template v-slot:item ="{ item }">

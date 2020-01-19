@@ -20,10 +20,13 @@ class User extends JsonResource
             'birthday' => $this->detail('Birthday'),
             'created' => $this->created,
             'deleted' => $this->deleted,
-            'details' => DetailResource::collection($this->details),
+            'details' => $this->details->mapWithKeys(function ($detail) {
+                return [$detail->key => $detail];
+            }),
             'displayname' => $this->displayname,
             'modified' => $this->modified,
             'permissions' => $this->permissions->pluck('code'),
+            'roles' => $this->roles->pluck('id'),
             'role' => $this->role,
         ]));
 

@@ -6,7 +6,7 @@
 
     &:not(.v-sheet--tile),
     &:not(.v-card--shaped) {
-      border-radius: 8px;
+      border-radius: var(--global-radius);
     }
 
     &__text,

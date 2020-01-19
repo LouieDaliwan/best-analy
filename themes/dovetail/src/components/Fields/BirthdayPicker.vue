@@ -10,7 +10,7 @@
     v-model="menu"
     >
     <template v-slot:activator="{ on }">
-      <validation-provider vid="details[birthday]" :name="trans('Birthday')" v-slot="{ errors }">
+      <validation-provider vid="details[birthday][value]" :name="trans('Birthday')" v-slot="{ errors }">
         <v-text-field
           :dense="isDense"
           :error-messages="errors"
@@ -19,7 +19,7 @@
           autocomplete="off"
           class="dt-text-field"
           clearable
-          name="details[birthday]"
+          name="details[birthday][value]"
           outlined
           prepend-inner-icon="mdi-cake-variant"
           v-mask="mask"
@@ -29,6 +29,8 @@
             <v-icon v-on="on">mdi-calendar</v-icon>
           </template>
         </v-text-field>
+        <input type="hidden" name="details[birthday][key]" value="Birthday">
+        <input type="hidden" name="details[birthday][icon]" value="mdi-cake-variant">
       </validation-provider>
     </template>
     <v-date-picker v-model="date" width="300px" no-title @input="menu = false">

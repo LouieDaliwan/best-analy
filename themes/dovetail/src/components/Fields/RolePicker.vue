@@ -23,6 +23,7 @@
           v-model="role"
           >
         </v-select>
+        <input type="hidden" name="roles" v-model="role">
       </validation-provider>
     </v-card-text>
   </v-card>
@@ -46,6 +47,9 @@ export default {
     },
     errors: {
       type: [Array, Object],
+    },
+    lazyLoad: {
+      type: Boolean,
     },
   },
 
@@ -85,7 +89,9 @@ export default {
   },
 
   mounted () {
-    // this.getRolesData();
+    if (!this.lazyLoad) {
+      this.getRolesData();
+    }
   }
 }
 </script>

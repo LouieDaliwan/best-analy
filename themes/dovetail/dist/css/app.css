@@ -4,6 +4,7 @@
   --breadcrumbs-padding: 0 0;
   --box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --button-border-color: #dee2e6;
+  --global-radius: 8px;
   --card-border-radius: 8px;
   --card-border-color: #edf2f9;
   --card-border-color-dark: #212c32;
@@ -27,7 +28,7 @@
   --toolbar-bg-dark: #1e262b;
   --workspace-bg: #f9fbfd;
   --workspace-bg-dark: #212c32;
-  --primary: #0C5689;
+  --primary: #167bc3;
   --secondary: #e56e37;
   --error: #e63757;
   --success: #00d97e;
@@ -50,13 +51,11 @@ html {
 
 body {
   margin-bottom: 0 !important;
-  direction: ltr;
   font-family: var(--font-family-base);
   font-feature-settings: "liga" 0;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   min-height: 100%;
-  overflow: auto;
   position: relative;
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: none;
@@ -151,37 +150,51 @@ pre {
 @media (min-width: 576px) {
   .container {
     max-width: 540px;
+    padding-left: 36px !important;
+    padding-right: 36px !important;
   }
 }
 
 @media (min-width: 768px) {
   .container {
     max-width: 720px;
+    padding-left: 36px !important;
+    padding-right: 36px !important;
   }
 }
 
 @media (min-width: 992px) {
   .container {
     max-width: 960px;
+    padding-left: 36px !important;
+    padding-right: 36px !important;
   }
 }
 
 @media (min-width: 1200px) {
   .container {
     max-width: 1140px;
+    padding-left: 36px !important;
+    padding-right: 36px !important;
   }
 }
 
 .container {
   margin-left: auto;
   margin-right: auto;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 15px;
   width: 100%;
 }
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .theme--light h1,
@@ -320,7 +333,7 @@ pre {
 
 .dovetail-app .v-card:not(.v-sheet--tile),
 .dovetail-app .v-card:not(.v-card--shaped) {
-  border-radius: 8px;
+  border-radius: var(--global-radius);
 }
 
 .dovetail-app .v-card__text,
@@ -364,7 +377,7 @@ pre {
 }
 
 .dt-text-field.v-input--dense .v-icon {
-  font-size: 16px;
+  font-size: var(--font-base);
 }
 
 .dt-text-field.v-input:not(.v-input--dense) .v-icon {
@@ -392,8 +405,49 @@ pre {
   border-color: var(--field-light);
 }
 
+.v-menu__content {
+  border-radius: var(--global-radius);
+}
+
 .theme--dark .v-sheet {
   background: var(--sidebar-bg-dark);
+}
+
+.dovetail-app .dt-sidebar .v-list-group__items a.v-list-item {
+  padding-left: 56px;
+}
+
+.dovetail-app .dt-sidebar .v-list--nav {
+  padding-left: 13px;
+  padding-right: 13px;
+}
+
+.dovetail-app .dt-sidebar .v-list--nav .v-list-item {
+  border-radius: var(--global-radius);
+  padding-left: 19px;
+  padding-right: 19px;
+}
+
+.dovetail-app .dt-sidebar .v-list--nav .v-list-item__icon:first-child {
+  margin-right: 16px;
+}
+
+.dovetail-app .dt-sidebar .v-list--nav .v-list-item__icon .v-icon {
+  font-size: var(--font-base);
+}
+
+.dovetail-app .dt-sidebar .v-list--nav .v-list-item:not(.v-list-item--active):not(.theme--dark) .v-list-item__title {
+  color: var(--text);
+}
+
+.dovetail-app .dt-sidebar .v-list--nav .v-list-item:not(.v-list-item--active):not(.theme--dark) .v-icon {
+  color: var(--text);
+}
+
+.dovetail-app .dt-sidebar .v-subheader {
+  color: var(--text-muted);
+  padding-left: 19px;
+  padding-right: 19px;
 }
 
 .dovetail-app.theme--light .v-navigation-drawer--fixed .v-navigation-drawer__border {
@@ -458,6 +512,10 @@ pre {
 
 .dovetail-app .theme--light.v-data-table tbody tr:not(:last-child) td:not(.v-data-table__mobile-row) {
   border-bottom: transparent;
+}
+
+.dovetail-app .theme--light.v-data-table td {
+  color: var(--text);
 }
 
 .dovetail-app .theme--light.v-data-table .v-data-footer {

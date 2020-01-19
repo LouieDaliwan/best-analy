@@ -9,7 +9,6 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use User\Http\Resources\User as UserResource;
 use User\Models\User;
 
 class UserService extends Service implements UserServiceInterface
@@ -89,8 +88,8 @@ class UserService extends Service implements UserServiceInterface
         $model->suffixname = $attributes['suffixname'] ?? $model->suffixname;
         $model->username = $attributes['username'] ?? $model->username;
         $model->email = $attributes['email'] ?? $model->email;
-        $model->password = $this->hash($attributes['password']) ?? $model->password;
-        $model->photo = $attributes['photo'] ? $this->upload($attributes['photo']) : $model->photo;
+        $model->password = $attributes['password'] ?? false ? $this->hash($attributes['password']) : $model->password;
+        $model->photo = $attributes['photo'] ?? null ? $this->upload($attributes['photo']) : $model->photo;
         $model->type = $attributes['type'] ?? $model->type;
 
         $model->save();
@@ -101,6 +100,6 @@ class UserService extends Service implements UserServiceInterface
         // User details.
         $model->details()->createMany($attributes['details'] ?? []);
 
-        return new UserResource($model);
+        return $model;
     }
 }

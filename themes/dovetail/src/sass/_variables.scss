@@ -1,5 +1,5 @@
 // Theme
-$primary:                   #0C5689;
+$primary:                   #167bc3;
 $secondary:                 #e56e37;
 $accent:                    #f39e2b;
 $light:                     #f8f9fa;
@@ -43,6 +43,9 @@ $font-base:                 16px;
 $font-size-base:            15px !default; // Assumes the browser default, typically `16px`
 $font-size-lg:              ($font-size-base * 1.25) !default;
 $font-size-sm:              14px !default;
+
+// Border
+$global-radius:             8px;
 
 // Margins & Paddings
 $padding-base:              20px;

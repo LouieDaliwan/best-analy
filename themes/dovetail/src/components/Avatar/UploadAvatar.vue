@@ -9,6 +9,7 @@
       </v-btn>
     </div>
     <input
+      :name="name"
       @change="onFileChange"
       accept="image/x-png,image/gif,image/jpeg"
       class="d-none"
@@ -22,17 +23,20 @@
 export default {
   name: 'UploadAvatar',
 
-  props: ['value'],
+  props: ['value', 'name'],
 
   computed: {
     hasPreview () {
       return !_.isEmpty(this.preview)
-    }
+    },
+
+    preview () {
+      return this.value || null
+    },
   },
 
   data: () => ({
     file: null,
-    preview: null,
   }),
 
   methods: {

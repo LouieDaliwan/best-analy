@@ -126,9 +126,9 @@ class RouteListCommand extends Command
     protected function guessModuleFromActionName($name)
     {
         $names = explode('\\', $name);
-        $module = $this->module->find(str_singular($names[0]));
+        $module = $this->module->find(Str::singular($names[0] ?? null));
 
-        if (is_dir($module['path'])) {
+        if (is_dir($module['path'] ?? false)) {
             return $module['name'];
         }
 

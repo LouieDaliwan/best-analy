@@ -298,6 +298,19 @@ export default {
       data.details = Object.assign({}, data.details, data.details.more || {})
       delete data.details.more
 
+      let form = data
+      const formData = new FormData();
+      for (let key in form) {
+          Array.isArray(form[key])
+            || (typeof form[key] == 'object' || form[key] !== null)
+              ? form[key].forEach(value => formData.append(key + '[]', value))
+              : formData.append(key, form[key]);
+      }
+
+      for (var pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+
       return data
     },
 

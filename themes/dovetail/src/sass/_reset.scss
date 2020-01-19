@@ -6,14 +6,12 @@ html {
 
 body {
   margin-bottom: 0 !important;
-  direction: ltr;
   font-family: var(--font-family-base);
   -webkit-font-feature-settings: "liga" 0;
   font-feature-settings: "liga" 0;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   min-height: 100%;
-  overflow: auto;
   position: relative;
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: none;

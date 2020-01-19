@@ -29,7 +29,6 @@
         @update:trash="bulkTrashResource"
         >
       </toolbar-menu>
-      <v-divider></v-divider>
       <v-slide-y-reverse-transition mode="out-in">
         <v-data-table
           :headers="dataset.headers"
@@ -90,7 +89,7 @@
 
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <span class="mt-1" v-on="on"><router-link tag="a" exact :to="goToShowUserPage(item)" v-text="item.displayname" class="text-no-wrap"></router-link></span>
+                  <span class="mt-1" v-on="on"><router-link tag="a" exact :to="goToShowUserPage(item)" v-text="item.displayname" class="text-no-wrap text--decoration-none"></router-link></span>
                 </template>
                 <span>{{ $t('View Details') }}</span>
               </v-tooltip>

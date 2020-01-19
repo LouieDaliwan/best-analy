@@ -10,7 +10,7 @@
             </router-link>
           </div>
         </slot>
-        <h2 class="mb-3" :title="heading.description">
+        <h2 class="mb-1" :title="heading.description">
           <slot name="title">
             {{ heading.title }}
           </slot>

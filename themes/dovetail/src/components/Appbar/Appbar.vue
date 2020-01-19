@@ -1,8 +1,8 @@
 <template>
   <v-app-bar
     app
-    elevate-on-scroll
     hide-on-scroll
+    flat
     :clipped-left="sidebar.clipped"
     v-if="appbar.model"
     >
@@ -18,9 +18,7 @@
       transition="fade-transition"
       v-model="$store.getters['shortkey/ctrlIsPressed']"
       >
-      <v-btn v-shortkey.once="['ctrl', 'k']" @shortkey="toggle({model: !sidebar.model})" class="muted--text" icon @click="toggle({model: !sidebar.model})">
-        <v-icon small>mdi-menu</v-icon>
-      </v-btn>
+      <v-app-bar-nav-icon color="muted" @click="toggle({model: !sidebar.model})" v-shortkey.once="['ctrl', 'k']" @shortkey="toggle({model: !sidebar.model})"></v-app-bar-nav-icon>
     </v-badge>
 
     <slot>
@@ -36,7 +34,7 @@
               <div v-on="{ ...tooltip, ...menu }" role="button">
                 <div class="d-flex justify-space-between align-center">
                   <v-avatar size="32" class="mr-3"><img :src="user.avatar" width="40px"></v-avatar>
-                    <div>
+                    <div class="d-none d-md-block">
                       <p class="body-1 mb-0 text--truncate" v-text="user.displayname"></p>
                       <div v-text="user.role" class="muted--text overline"></div>
                     </div>

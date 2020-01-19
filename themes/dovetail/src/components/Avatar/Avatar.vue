@@ -1,33 +1,8 @@
 <template>
-  <div class="d-flex justify-center align-center">
-    <div class="dt-avatar-preview">
-      <v-avatar size="160">
-        <img :src="dataset.avatar" alt="">
-      </v-avatar>
-    </div>
-  </div>
+  <v-card class="mb-3">
+    <v-card-title class="pb-0">{{ __('Photo') }}</v-card-title>
+    <v-card-text class="text-center">
+      <upload-avatar></upload-avatar>
+    </v-card-text>
+  </v-card>
 </template>
-
-<script>
-import { mapGetters } from 'vuex'
-
-export default {
-  name: 'Avatar',
-
-  data () {
-    return {
-      dataset: {},
-    }
-  },
-
-  mounted () {
-    this.dataset = Object.assign({}, this.avatar, this.items)
-  },
-
-  computed: {
-    ...mapGetters({
-      avatar: 'avatar/avatar'
-    })
-  }
-}
-</script>

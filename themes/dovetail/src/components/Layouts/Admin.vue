@@ -8,10 +8,6 @@
 
     <!-- # Main Content -->
     <v-content>
-      <!-- <v-container>
-        <breadcrumbs></breadcrumbs>
-      </v-container> -->
-
       <v-container>
         <slot>
           <v-slide-y-reverse-transition mode="out-in">
@@ -22,6 +18,11 @@
 
       <shortkey></shortkey>
       <v-card class="transparent" flat height="100"></v-card>
+      <v-footer absolute color="transparent">
+        <v-container>
+          <breadcrumbs></breadcrumbs>
+        </v-container>
+      </v-footer>
     </v-content>
     <!-- # Main Content -->
   </div>

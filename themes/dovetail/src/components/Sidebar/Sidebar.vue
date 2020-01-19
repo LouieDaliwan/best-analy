@@ -5,10 +5,10 @@
     app
     fixed
     v-model="sidebarmodel"
-    class="dt-sidebar"
+    class="dt-sidebar workspace"
     >
     <!-- Brand -->
-    <v-list>
+    <v-list class="mx-3 workspace">
       <v-list-item>
         <v-list-item-avatar>
           <img :src="app.logo" :lazy-src="app.logo" width="40px">
@@ -19,7 +19,9 @@
       </v-list-item>
     </v-list>
     <!-- Brand -->
-    <v-list shaped color="transparent">
+
+    <!-- Menu Items -->
+    <v-list nav class="workspace">
       <template v-for="(parent, i) in menus">
         <!-- Menu with children -->
         <template v-if="parent.meta.divider">
@@ -89,6 +91,9 @@
         <!-- Menu without Children -->
       </template>
     </v-list>
+    <!-- Menu Items -->
+
+    <!-- Sidebar Footer -->
     <template v-slot:append>
       <div class="px-4 py-2 d-flex justify-space-between align-center">
         <div><small>{{ __('Pluma v3') }}</small></div>
@@ -97,6 +102,7 @@
         </v-btn>
       </div>
     </template>
+    <!-- Sidebar Footer -->
   </v-navigation-drawer>
 </template>
 

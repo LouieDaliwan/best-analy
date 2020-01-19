@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <admin>
     <page-header>
       <template v-slot:title v-text="trans('General Settings')"></template>
     </page-header>
@@ -61,7 +61,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </section>
+  </admin>
 </template>
 
 <script>

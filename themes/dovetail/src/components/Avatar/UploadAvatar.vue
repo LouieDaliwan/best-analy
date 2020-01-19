@@ -1,12 +1,17 @@
 <template>
   <div class="dt-avatar-preview" :style="`background-image:url(${preview})`">
     <div class="d-flex justify-end ml-5 mt-4">
-      <v-btn v-if="hasPreview" small fab @click="clearPreview">
-        <v-icon small color="muted">mdi-close-circle-outline</v-icon>
-      </v-btn>
-      <v-btn small fab @click="openFileBrowser">
-        <v-icon small color="muted">mdi-upload-outline</v-icon>
-      </v-btn>
+      <div class="mt-11" style="margin-right: -58px;">
+        <v-btn v-if="hasPreview" x-small fab @click="clearPreview">
+          <v-icon small color="muted">mdi-close</v-icon>
+        </v-btn>
+      </div>
+      <div>
+        <v-btn small fab @click="openFileBrowser">
+          <v-icon small color="muted">mdi-upload</v-icon>
+        </v-btn>
+
+      </div>
     </div>
     <input
       :name="name"

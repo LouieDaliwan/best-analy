@@ -18,8 +18,12 @@
       v-model="selected"
       >
       <template v-slot:item="{ item }">
-        <v-icon left>{{ item.icon }}</v-icon>
-        <span>{{ item.value }}</span>
+        <v-list-item-icon>
+          <v-icon small>{{ item.icon }}</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>{{ item.value }}</v-list-item-title>
+        </v-list-item-content>
       </template>
     </v-select>
   </validation-provider>

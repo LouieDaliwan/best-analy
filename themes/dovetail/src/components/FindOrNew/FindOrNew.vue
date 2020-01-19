@@ -28,7 +28,7 @@
       <v-spacer></v-spacer>
       <v-dialog v-model="addNew" persistent max-width="420">
         <template v-slot:activator="{ on }">
-          <v-btn text large v-on="on">
+          <v-btn text large v-on="on" color="primary">
             <v-icon small left>mdi-plus</v-icon>
             {{ trans('Add new') }}
           </v-btn>

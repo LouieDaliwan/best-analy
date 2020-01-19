@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <admin>
     <h3 clas="mb-3">Glance widget</h3>
     <!-- Glance Widget -->
     <v-row>
@@ -10,7 +10,11 @@
     <!-- Glance widget -->
 
     <h3 class="mt-9 mb-3">Icon Picker</h3>
-    <icon-picker></icon-picker>
+    <v-row>
+      <v-col md="3" cols="12">
+        <icon-picker></icon-picker>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col md="3" cols="12">
         <find-or-new></find-or-new>
@@ -148,7 +152,7 @@
     <template class="mt-3" v-for="(widget, i) in widgets">
       <div :key="i" v-html="widget.render"></div>
     </template>
-  </div>
+  </admin>
 </template>
 
 <script>

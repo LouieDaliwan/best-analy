@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" md="4">
-      <avatar-preview></avatar-preview>
+      <avatar></avatar>
     </v-col>
 
     <v-col cols="12" md="8">

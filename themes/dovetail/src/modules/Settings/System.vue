@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <admin>
     <v-container grid-list-lg>
       <v-layout row wrap justify-center align-center>
         <v-flex xs12>
@@ -47,7 +47,7 @@
         </v-flex>
       </v-layout>
     </v-container>
-  </section>
+  </admin>
 </template>
 
 <script>

@@ -18,6 +18,7 @@
           @blur="date = parseDate(dateFormatted)"
           autocomplete="off"
           class="dt-text-field"
+          clear-icon="mdi mdi-close-circle-outline"
           clearable
           name="details[birthday][value]"
           outlined

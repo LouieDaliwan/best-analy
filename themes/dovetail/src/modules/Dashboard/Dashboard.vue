@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <admin>
     <page-header>
       <template v-slot:action>
         <!-- Export button -->
@@ -50,7 +50,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </section>
+  </admin>
 </template>
 
 <script>

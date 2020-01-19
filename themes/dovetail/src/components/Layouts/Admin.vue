@@ -26,23 +26,3 @@
     <!-- # Main Content -->
   </div>
 </template>
-
-<script>
-export default {
-  created: function () {
-    window.axios.interceptors.response.use(undefined, function (err) {
-      return new Promise(function (resolve, reject) {
-        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-          store.dispatch['auth/logout']
-        }
-
-        if (err.status === 403 && err.config && !err.config.__isRetryRequest) {
-          this.$router.push({name: '403'})
-        }
-
-        throw err;
-      });
-    });
-  },
-}
-</script>

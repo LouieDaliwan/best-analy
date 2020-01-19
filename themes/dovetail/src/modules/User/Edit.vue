@@ -1,16 +1,21 @@
 <template>
-  <section>
+  <admin>
     <page-header>
       <template v-slot:title>
         {{ trans('Edit User') }}
       </template>
-      <template v-slot:action>
-        <v-btn large color="primary" exact>
-          <v-icon left>mdi-content-save-outline</v-icon>
-          {{ trans("Update") }}
-        </v-btn>
-      </template>
     </page-header>
+
+    <alertbox>
+      <template v-slot:actions="{ type }">
+        <template v-if="type === 'success'">
+          <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'users.trashed'}">
+            <v-icon small left>mdi-account-off-outline</v-icon>
+            {{ trans('Deactivated Users') }}
+          </router-link>
+        </template>
+      </template>
+    </alertbox>
 
     <v-row>
       <v-col cols="12" md="9">
@@ -178,7 +183,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </section>
+  </admin>
 </template>
 
 <script>

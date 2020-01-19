@@ -1,6 +1,9 @@
 {
   "Actions": "Actions",
   "{number} item selected": "No item selected | {number} item selected | {number} items selected",
+  "Select role": "Select role | Select roles",
+  "Created user {name}": "Created user {name}",
+  "There is {number} invalid field in this page": "There is {number} invalid field in this page | There are {number} invalid fields in this page",
   "Edit this user": "Edit this user | Edit these users",
   "Deactivate user": "Deactivate user | Deactivate users",
   "User successfully restored": "User successfully restored | Users successfully restored",

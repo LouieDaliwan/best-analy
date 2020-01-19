@@ -14,7 +14,6 @@
         <v-text-field
           :dense="isDense"
           :error-messages="errors"
-          :hint="trans('mmm dd, yyyy format')"
           :label="trans('Birthday')"
           @blur="date = parseDate(dateFormatted)"
           autocomplete="off"

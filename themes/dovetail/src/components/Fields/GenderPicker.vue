@@ -9,7 +9,8 @@
       append-icon="mdi-chevron-down"
       background-color="selects"
       class="dt-text-field"
-      item-text="key"
+      item-text="value"
+      item-value="value"
       menu-props="offsetY"
       name="details[gender]"
       outlined
@@ -21,7 +22,7 @@
           <v-icon :color="item.color || null" small v-text="item.icon"></v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title v-html="item.key"></v-list-item-title>
+          <v-list-item-title v-html="item.value || trans('None')"></v-list-item-title>
         </v-list-item-content>
       </template>
     </v-select>

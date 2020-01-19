@@ -3,7 +3,7 @@
     <template v-slot:appbar>
       <v-container class="py-0 px-0">
         <v-row justify="space-between" align="center">
-          <v-col v-if="$vuetify.breakpoint.mdAndUp" class="py-0" cols="auto">
+          <v-col v-if="isDesktop" class="py-0" cols="auto">
             <v-toolbar-title class="muted--text">{{ trans('Unsaved user') }}</v-toolbar-title>
           </v-col>
 
@@ -11,12 +11,15 @@
           <v-col class="py-0" cols="auto">
             <div class="d-flex justify-end">
               <v-spacer></v-spacer>
-              <v-btn text class="ml-3 mr-0" large>Discard</v-btn>
+              <v-btn text class="ml-3 mr-0" large>{{ trans('Discard') }}</v-btn>
               <v-btn
-                :disabled="resource.prestine"
+                :disabled="isInvalid"
+                :loading="resource.loading"
+                @click.prevent="submitForm"
                 class="ml-3 mr-0"
                 color="primary"
                 large
+                type="submit"
                 >
                 <v-icon left>mdi-content-save-outline</v-icon>
                 Save
@@ -27,19 +30,18 @@
       </v-container>
     </template>
 
-    <validation-observer ref="adduser-form" v-slot="{ passes }">
-      <v-form autocomplete="false">
+    <validation-observer ref="addform" v-slot="{ handleSubmit, errors, invalid, passes }">
+      <v-form autocomplete="false" v-on:submit.prevent="handleSubmit(submit($event))" enctype="multipart/form-data">
+        <button ref="submit-button" type="submit" class="d-none"></button>
         <page-header :back="{ to: { name: 'users.index' }, text: trans('Users') }">
           <template v-slot:title>
             {{ trans('Add User') }}
           </template>
-          <!-- <template v-slot:action>
-            <v-btn large color="primary" exact :to="{ name: 'users.index' }">
-              <v-icon left>mdi-content-save-outline</v-icon>
-              {{ trans('Save') }}
-            </v-btn>
-          </template> -->
         </page-header>
+
+        <!-- Alertbox -->
+        <alertbox v-if="invalid"></alertbox>
+        <!-- Alertbox -->
 
         <v-row>
           <v-col cols="12" md="9">
@@ -56,7 +58,7 @@
                 </v-row>
                 <v-row>
                   <v-col cols="12" md="4">
-                    <validation-provider vid="firstname" :name="trans('First name')" rules="required" v-slot="{ errors }">
+                    <validation-provider vid="firstname" :name="trans('first name')" rules="required" v-slot="{ errors }">
                       <v-text-field
                         :dense="isDense"
                         :error-messages="errors"
@@ -71,25 +73,25 @@
                     </validation-provider>
                   </v-col>
                   <v-col cols="12" md="4">
-                    <validation-provider vid="middlename" :name="trans('Middle name')" v-slot="{ errors }">
+                    <validation-provider vid="middlename" :name="trans('middle name')" v-slot="{ errors }">
                       <v-text-field
+                        :dense="isDense"
                         :error-messages="errors"
                         :label="trans('Middle name')"
                         class="dt-text-field"
                         outlined
-                        :dense="isDense"
                         v-model="resource.data.middlename"
                       ></v-text-field>
                     </validation-provider>
                   </v-col>
                   <v-col cols="12" md="4">
-                    <validation-provider vid="lastname" :name="trans('Last name')" rules="required" v-slot="{ errors }">
+                    <validation-provider vid="lastname" :name="trans('last name')" rules="required" v-slot="{ errors }">
                       <v-text-field
+                        :dense="isDense"
                         :error-messages="errors"
                         :label="trans('Last name')"
                         class="dt-text-field"
                         outlined
-                        :dense="isDense"
                         v-model="resource.data.lastname"
                       ></v-text-field>
                     </validation-provider>
@@ -123,13 +125,13 @@
               <v-card-text>
                 <v-row>
                   <v-col cols="12">
-                    <validation-provider vid="email" :name="trans('Email address')" rules="required|email" v-slot="{ errors }">
+                    <validation-provider vid="email" :name="trans('email address')" rules="required|email" v-slot="{ errors }">
                       <v-text-field
+                        :dense="isDense"
                         :error-messages="errors"
                         :label="trans('Email address')"
                         class="dt-text-field"
                         outlined
-                        :dense="isDense"
                         type="email"
                         v-model="resource.data.email"
                         >
@@ -137,30 +139,30 @@
                     </validation-provider>
                   </v-col>
                   <v-col cols="12">
-                    <validation-provider vid="username" :name="trans('Username')" rules="required|min:3" v-slot="{ errors }">
+                    <validation-provider vid="username" :name="trans('username')" rules="required|min:3" v-slot="{ errors }">
                       <v-text-field
+                        :dense="isDense"
                         :error-messages="errors"
                         :label="trans('Username')"
                         autocomplete="off"
-                        name="username"
                         class="dt-text-field"
+                        name="username"
                         outlined
-                        :dense="isDense"
                         v-model="resource.data.username"
                         >
                       </v-text-field>
                     </validation-provider>
                   </v-col>
                   <v-col cols="12" md="6">
-                    <validation-provider vid="password" :name="trans('Password')" rules="required|min:6" v-slot="{ errors }">
+                    <validation-provider vid="password" :name="trans('password')" rules="required|min:6" v-slot="{ errors }">
                       <v-text-field
+                        :dense="isDense"
                         :error-messages="errors"
                         :label="trans('Password')"
                         autocomplete="new-password"
-                        name="password"
                         class="dt-text-field"
+                        name="password"
                         outlined
-                        :dense="isDense"
                         ref="password"
                         type="password"
                         v-model="resource.data.password"
@@ -169,15 +171,15 @@
                     </validation-provider>
                   </v-col>
                   <v-col cols="12" md="6">
-                    <validation-provider vid="password_confirmation" :name="trans('Confirm Password')" rules="required|confirmed:password|min:6" v-slot="{ errors }">
+                    <validation-provider vid="password_confirmation" :name="trans('confirm password')" rules="required|confirmed:password|min:6" v-slot="{ errors }">
                       <v-text-field
+                        :dense="isDense"
                         :error-messages="errors"
                         :label="trans('Retype Password')"
                         autocomplete="new-password"
-                        name="password_confirmation"
                         class="dt-text-field"
+                        name="password_confirmation"
                         outlined
-                        :dense="isDense"
                         type="password"
                         v-model="resource.data.password_confirmation"
                         >
@@ -246,11 +248,11 @@
             <v-card class="mb-3">
               <v-card-title class="pb-0">{{ __('Photo') }}</v-card-title>
               <v-card-text class="text-center">
-                <upload-avatar></upload-avatar>
+                <upload-avatar v-model="resource.data.photo"></upload-avatar>
               </v-card-text>
             </v-card>
 
-            <role-card :dense="isDense" class="mb-3" v-model="resource.data.roles"></role-card>
+            <role-picker :dense="isDense" class="mb-3" v-model="resource.data.roles"></role-picker>
 
             <v-card class="mb-3">
               <v-card-title>{{ __('Metainfo') }}</v-card-title>
@@ -267,6 +269,7 @@
 
 <script>
 import User from './Models/User'
+import $api from './routes/api'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -274,19 +277,101 @@ export default {
     ...mapGetters({
       isDense: 'settings/fieldIsDense',
     }),
+    isDesktop () {
+      return this.$vuetify.breakpoint.mdAndUp
+    },
+    isInvalid () {
+      return this.resource.isPrestine || this.resource.loading
+    },
   },
 
   data: () => ({
     resource: User,
   }),
 
+  methods: {
+    load (val = true) {
+      this.resource.loading = val
+    },
+
+    parseResourceData (data) {
+      data.details = Object.assign({}, data.details, data.details.more || {})
+      delete data.details.more
+
+      return data
+    },
+
+    parseErrors (errors) {
+      this.$refs['addform'].setErrors(errors)
+      errors = Object.values(errors).flat()
+      this.resource.hasErrors = errors.length
+      return errors
+    },
+
+    submitForm () {
+      this.$refs['submit-button'].click()
+    },
+
+    submit (e) {
+      this.load()
+      e.preventDefault()
+      this.$store.dispatch('alertbox/hide')
+      axios.post(
+        $api.store(),
+        this.parseResourceData(this.resource.data),
+        { headers: {'Content-Type': 'multipart/form-data'} }
+      ).then(response => {
+        this.$store.dispatch('snackbar/show', {
+          text: trans('User created successfully'),
+        })
+
+        this.$router.push({
+          name: 'users.edit',
+          params: {
+            id: response.data.data.id
+          }
+        })
+
+        this.$store.dispatch('alertbox/show', {
+          type: 'success',
+          text: this.$t('Created user {name}', {name: response.data.data.displayname})
+        })
+      }).catch(err => {
+        if (err.response.status == Response.HTTP_UNPROCESSABLE_ENTITY) {
+          let errorCount = _.size(err.response.data.errors)
+
+          this.$refs['addform'].setErrors(err.response.data.errors)
+          this.$store.dispatch('alertbox/show', {
+            text: this.$tc('There is {number} invalid field in this page', errorCount, {number: errorCount}),
+            type: 'error',
+            list: err.response.data.errors,
+          })
+        }
+      }).finally(() => {
+        this.load(false)
+      })
+    },
+  },
+
   watch: {
     'resource.data': {
       handler (val) {
-        this.resource.prestine = false
+        this.resource.isPrestine = false
       },
       deep: true,
     },
   },
+
+  mounted () {
+    this.resource.data = Object.assign(this.resource.data, {
+      firstname: 'John',
+      lastname: 'Dionsiio',
+      email: Math.random(100)+'jon@sDionsiiococom.com',
+      username: 'Usernamex'+Math.random(100),
+      password: 'poiuytrewq',
+      password_confirmation: 'poiuytrewq',
+      roles: 1,
+    })
+  }
 }
 </script>

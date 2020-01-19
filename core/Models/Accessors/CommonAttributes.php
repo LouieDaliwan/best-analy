@@ -33,6 +33,10 @@ trait CommonAttributes
      */
     public function getDeletedAttribute()
     {
+        if (is_null($this->attributes['deleted_at'] ?? null)) {
+            return '';
+        }
+
         return $this->parseDate($this->attributes['deleted_at']);
     }
 

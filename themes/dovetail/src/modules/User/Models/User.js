@@ -1,7 +1,7 @@
 class User {
   constructor () {
     this.loading = false
-    this.prestine = true
+    this.isPrestine = true
 
     this.data = {
       firstname: '',
@@ -25,10 +25,10 @@ class User {
 
     this.gender = {
       items: [
-        { color: 'gray', icon: 'mdi-help', key: 'None', value: null },
-        { color: 'blue', icon: 'mdi-gender-male', key: 'Male', value: 'Male' },
-        { color: 'pink', icon: 'mdi-gender-female', key: 'Female', value: 'Female' },
-        { color: 'gray', icon: 'mdi-gender-male-female', key: 'Unspecified', value: 'Unspecified' },
+        { color: 'gray', icon: 'mdi-help', key: 'Gender', value: 'None' },
+        { color: 'blue', icon: 'mdi-gender-male', key: 'Gender', value: 'Male' },
+        { color: 'pink', icon: 'mdi-gender-female', key: 'Gender', value: 'Female' },
+        { color: 'gray', icon: 'mdi-gender-male-female', key: 'Gender', value: 'Unspecified' },
       ],
     }
 

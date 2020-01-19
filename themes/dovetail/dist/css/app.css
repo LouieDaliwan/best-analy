@@ -250,6 +250,7 @@ pre {
 }
 
 .dt-avatar-preview {
+  background-size: cover;
   border-radius: 100%;
   display: inline-block;
   height: 160px;

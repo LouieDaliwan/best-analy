@@ -82,3 +82,8 @@ window.is_rtl = function (lang) {
   const rtl = ['ar'];
   return window._.includes(rtl, lang)
 }
+
+window.Response = {
+  HTTP_UNPROCESSABLE_ENTITY: 422,
+  HTTP_INTERNAL_SERVER_ERROR: 500,
+}

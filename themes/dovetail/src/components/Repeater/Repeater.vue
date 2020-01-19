@@ -6,14 +6,12 @@
           <!-- <v-card-text style="filter: grayscale(0.9);">
             <empty-icon width="300" height="auto"></empty-icon>
           </v-card-text>
-
           <v-card-text>
             <slot name="text">
               <p class="muted--text font-weight-bold mb-0" v-text="trans('No items yet')"></p>
               <p class="muted--text" v-text="trans('Start adding key-value pairs.')"></p>
             </slot>
           </v-card-text> -->
-
           <v-badge
             bordered
             bottom
@@ -36,7 +34,6 @@
         </div>
       </slot>
     </template>
-
     <v-row align="center" :key="i" v-for="(item, i) in repeaters">
       <v-col md="4" sm="6">
         <v-text-field
@@ -77,7 +74,6 @@
         </context-prompt>
       </v-col>
     </v-row>
-
     <v-row v-if="repeaters.length" no-gutters>
       <v-col>
         <slot name="action" :on="{on: add}">
@@ -110,7 +106,6 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Repeater',
-
   props: {
     value: {
       type: [Array, Object],
@@ -134,7 +129,6 @@ export default {
       type: Boolean
     },
   },
-
   computed: {
     ...mapGetters({
       item: 'repeater/template',

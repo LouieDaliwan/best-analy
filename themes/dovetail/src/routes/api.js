@@ -7,6 +7,8 @@ export default {
     locale: '/api/v1/settings/locale',
   },
 
+  search: '/api/v1/search',
+
   languages: {
     supported: '/api/v1/languages/supported',
     index: '/api/v1/languages',

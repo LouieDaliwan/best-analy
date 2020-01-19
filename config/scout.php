@@ -109,4 +109,9 @@ return [
         'searchBoolean' => env('TNTSEARCH_BOOLEAN', true),
     ],
 
+    'indices' => [
+        \User\Models\User::class,
+        // \User\Models\Role::class,
+        // \User\Models\Permission::class,
+    ],
 ];

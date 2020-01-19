@@ -52,3 +52,17 @@ Route::middleware(['auth:api', 'json.force'])->prefix('v1')->group(function () {
     Route::get('settings/app', 'Api\Settings\AppSettings')->name('settings.app');
     Route::post('settings/locale', 'Api\Settings\SetAppLocale')->name('settings.locale');
 });
+
+/**
+ *------------------------------------------------------------------------------
+ * Search Route
+ *------------------------------------------------------------------------------
+ *
+ * Here is where you can register API routes for retrieving
+ * global application searches.
+ *
+ */
+
+Route::middleware(['auth:api', 'json.force'])->prefix('v1')->group(function () {
+    Route::post('search', 'Api\Search\ShowSearchResults')->name('settings.app');
+});

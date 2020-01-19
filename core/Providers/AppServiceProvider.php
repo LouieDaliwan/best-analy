@@ -34,6 +34,7 @@ class AppServiceProvider extends BaseServiceProvider
         ModuleServiceProvider::class,
         PermissionServiceProvider::class,
         RepositoryServiceProvider::class,
+        SearchServiceProvider::class,
         SettingServiceProvider::class,
         SidebarServiceProvider::class,
         WidgetServiceProvider::class,

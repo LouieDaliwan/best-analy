@@ -65,4 +65,21 @@ class User extends Authenticatable implements MustVerifyEmail
             'role' => $this->role,
         ]);
     }
+
+    /**
+     * Retrieve the API-friendly search result that
+     * uses text and url.
+     *
+     * @return array
+     */
+    public function toSearchableResultsArray()
+    {
+        return [
+            'text' => $this->displayname,
+            'url' => [
+                'name' => 'users.index',
+                'params' => ['id' => $this->getKey()]
+            ],
+        ];
+    }
 }

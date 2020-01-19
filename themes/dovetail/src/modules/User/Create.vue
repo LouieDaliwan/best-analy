@@ -298,7 +298,18 @@ export default {
       data.details = Object.assign({}, data.details, data.details.more || {})
       delete data.details.more
 
-      return data
+      let form = data
+      const formData = new FormData();
+      for (let key in form) {
+        formData.append(key, JSON.stringify(form[key]))
+      }
+
+      for (var pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+
+      // return formData
+      return formData
     },
 
     parseErrors (errors) {

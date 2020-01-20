@@ -40,8 +40,8 @@
     </page-header>
 
     <v-row>
-      <v-col cols="12" md="6" v-for="(index, i) in indexes" :key="i">
-        <v-card exact to="" v-ripple="{ class: 'primary--text' }" hover class="text-center">
+      <v-col cols="12" sm="6" v-for="(index, i) in indexes" :key="i">
+        <v-card height="100%" exact to="" v-ripple="{ class: 'primary--text' }" hover class="text-center">
           <v-card-text>
             <div class="mb-4"><img height="100" :src="index.icon" alt=""></div>
             <h4 class="mb-1 text-uppercase" v-text="index.title"></h4>

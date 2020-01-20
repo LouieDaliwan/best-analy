@@ -18,7 +18,7 @@
 
       <shortkey></shortkey>
       <v-card class="transparent" flat height="100"></v-card>
-      <v-footer absolute color="transparent">
+      <v-footer absolute color="workspace">
         <v-container>
           <breadcrumbs></breadcrumbs>
         </v-container>

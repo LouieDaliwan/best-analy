@@ -49,7 +49,7 @@
               prepend-inner-icon="mdi-lock"
               ref="password"
               type="password"
-              :value.sync="resource.data.details.password && resource.data.details.password.value || null"
+              v-model="resource.data.password"
               >
             </v-text-field>
           </validation-provider>

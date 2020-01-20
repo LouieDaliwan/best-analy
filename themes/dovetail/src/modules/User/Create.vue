@@ -289,7 +289,7 @@ export default {
   },
 
   data: () => ({
-    resource: User,
+    resource: JSON.parse(JSON.stringify(User)),
   }),
 
   methods: {
@@ -378,15 +378,15 @@ export default {
   },
 
   mounted () {
-    this.resource.data = Object.assign(this.resource.data, {
-      firstname: 'John',
-      lastname: 'Dionsiio',
-      email: Math.random(100)+'jon@sDionsiiococom.com',
-      username: 'Usernamex'+Math.random(100),
-      password: 'poiuytrewq',
-      password_confirmation: 'poiuytrewq',
-      roles: 1,
-    })
+    // this.resource.data = Object.assign(this.resource.data, {
+    //   firstname: 'John',
+    //   lastname: 'Dionsiio',
+    //   email: Math.random(100)+'jon@sDionsiiococom.com',
+    //   username: 'Usernamex'+Math.random(100),
+    //   password: 'poiuytrewq',
+    //   password_confirmation: 'poiuytrewq',
+    //   roles: 1,
+    // })
   }
 }
 </script>

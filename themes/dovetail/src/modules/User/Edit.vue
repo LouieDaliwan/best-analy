@@ -1,6 +1,6 @@
 <template>
   <admin>
-    <metatag :title="resource.data.displayname"></metatag>
+    <metatag :title.sync="resource.data.displayname"></metatag>
     <template v-slot:appbar>
       <v-container class="py-0 px-0">
         <v-row justify="space-between" align="center">
@@ -10,7 +10,7 @@
               <v-spacer></v-spacer>
               <v-btn text class="ml-3 mr-0" large>{{ trans('Discard') }}</v-btn>
               <v-btn
-                :disabled="isInvalid"
+                :disabled="isUpdateDisabled"
                 :loading="resource.loading"
                 @click.prevent="submitForm"
                 class="ml-3 mr-0"
@@ -27,7 +27,7 @@
       </v-container>
     </template>
 
-    <validation-observer ref="updateform" v-slot="{ handleSubmit, errors, invalid, passes }">
+    <validation-observer ref="updateform" v-slot="{ handleSubmit, errors, invalid, passed }">
       <v-form ref="updateform-form" autocomplete="false" v-on:submit.prevent="handleSubmit(submit($event))" enctype="multipart/form-data">
         <button ref="submit-button" type="submit" class="d-none"></button>
         <page-header :back="{ to: { name: 'users.index' }, text: trans('Users') }">
@@ -234,10 +234,14 @@ export default {
     isInvalid () {
       return this.resource.isPrestine || this.resource.loading
     },
+    isUpdateDisabled () {
+      return this.isInvalid || this.resource.isPrestine
+    },
   },
 
   data: () => ({
     resource: User,
+    isValid: true,
   }),
 
   methods: {
@@ -276,6 +280,12 @@ export default {
       this.$refs['updateform'].setErrors(errors)
       errors = Object.values(errors).flat()
       this.resource.hasErrors = errors.length
+      return this.resource.errors
+    },
+
+    getParseErrors (errors) {
+      errors = Object.values(errors).flat()
+      this.resource.hasErrors = errors.length
       return errors
     },
 
@@ -299,12 +309,14 @@ export default {
           text: trans('User updated successfully'),
         })
 
+        this.$store.dispatch('alertbox/hide')
         this.$store.dispatch('alertbox/show', {
           type: 'success',
           text: this.$t('Updated user {name}', {name: this.resource.data.displayname})
         })
+
+        this.$refs['updateform'].reset()
       }).catch(err => {
-        console.log(err.response)
         if (err.response.status == Response.HTTP_UNPROCESSABLE_ENTITY) {
           let errorCount = _.size(err.response.data.errors)
 
@@ -315,17 +327,18 @@ export default {
             list: err.response.data.errors,
           })
         }
-      }).finally(() => {
-        this.load(false)
-      })
+      }).finally(() => { this.load(false) })
     },
 
     getResource: function () {
       axios.get($api.show(this.$route.params.id))
         .then(response => {
-          this.resource.data = response.data.data
+          this.resource.data = Object.assign(response.data.data, { details: Object.assign(this.resource.data.details, response.data.data.details)})
           this.resource.isPrestine = true
-        }).finally(() => { this.resource.loading = false })
+        }).finally(() => {
+          this.load(false)
+          this.resource.isPrestine = true
+        })
     },
   },
 
@@ -337,6 +350,10 @@ export default {
     'resource.data': {
       handler (val) {
         this.resource.isPrestine = false
+        this.resource.hasErrors = this.$refs.updateform.flags.invalid
+        if (!this.resource.hasErrors) {
+          this.$store.dispatch('alertbox/hide')
+        }
       },
       deep: true,
     },

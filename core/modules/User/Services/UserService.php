@@ -98,7 +98,9 @@ class UserService extends Service implements UserServiceInterface
         $model->roles()->sync($attributes['roles'] ?? []);
 
         // User details.
-        $model->details()->createMany($attributes['details'] ?? []);
+        foreach ($attributes['details'] ?? [] as $key => $detail) {
+            $model->details()->updateOrCreate(['key' => $key], $detail);
+        }
 
         return $model;
     }

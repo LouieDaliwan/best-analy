@@ -10,12 +10,12 @@
       :prominent="alertbox.prominent"
       :type="alertbox.type"
       text
-      v-show="alertbox.show"
+      v-model="show"
       >
       <v-row align="center">
         <v-col class="grow">
-          <h3 v-if="alertbox.text" class="font-weight-bold text--text" v-text="alertbox.text"></h3>
-          <slot name="actions" v-bind:type="alertbox.type"></slot>
+          <h3 v-if="alertbox.text" class="font-weight-bold text--text mb-4" v-text="alertbox.text"></h3>
+          <slot name="utilities" v-bind:type="alertbox.type"></slot>
           <slot v-bind:type="alertbox.type">
             <ul v-if="items.length && alertbox.type === 'error'">
               <li v-for="(item, i) in items" :key="i" v-html="item"></li>
@@ -40,6 +40,15 @@ export default {
       alertbox: 'alertbox/alertbox',
     }),
 
+    show: {
+      get () {
+        return this.alertbox.show
+      },
+      set (val) {
+        this.$store.dispatch('alertbox/set', { show: val })
+      },
+    },
+
     items () {
       return Object.values(this.list || this.alertbox.list).flat()
     },
@@ -47,6 +56,10 @@ export default {
     hasList () {
       return _.size(this.list)
     },
+  },
+
+  mounted () {
+    this.$store.dispatch('alertbox/hide')
   },
 }
 </script>

@@ -46,7 +46,7 @@
         <v-row>
           <v-col cols="12" md="9">
             <v-card class="mb-3">
-              <v-card-title>{{ trans('Personal Information') }}</v-card-title>
+              <v-card-title>{{ trans('Account Information') }}</v-card-title>
               <v-card-text>
                 <v-row justify="space-between">
                   <v-col cols="6" md="2">
@@ -289,7 +289,7 @@ export default {
   },
 
   data: () => ({
-    resource: JSON.parse(JSON.stringify(User)),
+    resource: new User,
   }),
 
   methods: {
@@ -339,7 +339,6 @@ export default {
           text: trans('User created successfully'),
         })
 
-        console.log(response.data.data.id)
         this.$router.push({
           name: 'users.edit',
           params: {
@@ -376,17 +375,5 @@ export default {
       deep: true,
     },
   },
-
-  mounted () {
-    // this.resource.data = Object.assign(this.resource.data, {
-    //   firstname: 'John',
-    //   lastname: 'Dionsiio',
-    //   email: Math.random(100)+'jon@sDionsiiococom.com',
-    //   username: 'Usernamex'+Math.random(100),
-    //   password: 'poiuytrewq',
-    //   password_confirmation: 'poiuytrewq',
-    //   roles: 1,
-    // })
-  }
 }
 </script>

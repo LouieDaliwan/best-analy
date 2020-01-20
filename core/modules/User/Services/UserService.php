@@ -5,8 +5,11 @@ namespace User\Services;
 use Core\Application\Service\Concerns\CanUploadFile;
 use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
+use Core\Enumerations\DetailType;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use User\Models\User;
@@ -81,17 +84,21 @@ class UserService extends Service implements UserServiceInterface
      */
     protected function save($model, $attributes)
     {
-        $model->prefixname = $attributes['prefixname'] ?? $model->prefixname;
-        $model->firstname = $attributes['firstname'] ?? $model->firstname;
-        $model->middlename = $attributes['middlename'] ?? $model->middlename;
-        $model->lastname = $attributes['lastname'] ?? $model->lastname;
-        $model->suffixname = $attributes['suffixname'] ?? $model->suffixname;
+        $model->prefixname = $attributes['prefixname'];
+        $model->firstname = $attributes['firstname'];
+        $model->middlename = $attributes['middlename'];
+        $model->lastname = $attributes['lastname'];
+        $model->suffixname = $attributes['suffixname'];
         $model->username = $attributes['username'] ?? $model->username;
         $model->email = $attributes['email'] ?? $model->email;
         $model->password = $attributes['password'] ?? false ? $this->hash($attributes['password']) : $model->password;
-        $model->photo = $attributes['photo'] ?? null ? $this->upload($attributes['photo']) : $model->photo;
         $model->type = $attributes['type'] ?? $model->type;
+        $model->save();
 
+        // Move to observer class.
+        $model->photo = $attributes['photo'] ?? false
+            ? $this->upload($attributes['photo'], $model->getKey())
+            : $attributes['avatar'];
         $model->save();
 
         // User roles.
@@ -99,9 +106,40 @@ class UserService extends Service implements UserServiceInterface
 
         // User details.
         foreach ($attributes['details'] ?? [] as $key => $detail) {
-            $model->details()->updateOrCreate(['key' => $key], $detail);
+            $model->details()->updateOrCreate([
+                'key' => $key,
+                'type' => DetailType::DETAIL,
+            ], $detail);
         }
 
         return $model;
+    }
+
+    /**
+     * Upload the given file.
+     *
+     * @param  \Illuminate\Http\UploadedFile $file
+     * @param  string                        $folder
+     * @return string|null
+     */
+    public function upload(UploadedFile $file, $folder = null)
+    {
+        $folderName = settings(
+            'storage:modules', 'modules/'.$this->getTable()
+        ).DIRECTORY_SEPARATOR.'avatars'.DIRECTORY_SEPARATOR.$folder;
+
+        $uploadPath = storage_path($folderName);
+
+        $storage = new Filesystem;
+        $storage->cleanDirectory($uploadPath);
+
+        $fileName = 'avatar-'.$folder.'.'.$file->getClientOriginalExtension();
+        $fullFilePath = "$uploadPath/$fileName";
+
+        if ($file->move($uploadPath, $fileName)) {
+            return url("storage/$folderName/$fileName");
+        }
+
+        return null;
     }
 }

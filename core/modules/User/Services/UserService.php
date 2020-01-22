@@ -105,12 +105,23 @@ class UserService extends Service implements UserServiceInterface
         $model->roles()->sync($attributes['roles'] ?? []);
 
         // User details.
-        foreach ($attributes['details'] ?? [] as $key => $detail) {
-            $model->details()->updateOrCreate([
-                'key' => $key,
-                'type' => DetailType::DETAIL,
-            ], $detail);
-        }
+        $details = collect($attributes['details'] ?? [])->each(function ($detail) use ($model) {
+            if (! empty($detail['key'])) {
+                return $model->details()->updateOrCreate([
+                    'key' => $detail['key'],
+                    'type' => DetailType::DETAIL,
+                ], [
+                    'icon' => $detail['icon'] ?? null,
+                    'key' => $detail['key'] ?? null,
+                    'value' => $detail['value'] ?? null,
+                ]);
+            }
+        });
+
+        $model->details()
+            ->where('type', DetailType::DETAIL)
+            ->whereNotIn('key', $details->pluck('key'))
+            ->delete();
 
         return $model;
     }

@@ -24,11 +24,9 @@ trait AvatarAttributes
      */
     public function getAvatarAttribute()
     {
-        return cache()->remember('avatar::user#'.$this->id, 120, function () {
-            return $this->photo ?? $this->laravolt()
-                ->create($this->fullname)
-                ->toBase64()
-                ->getEncoded();
-        });
+        return $this->photo ?? $this->laravolt()
+            ->create($this->fullname)
+            ->toBase64()
+            ->getEncoded();
     }
 }

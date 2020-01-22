@@ -1,5 +1,5 @@
 <template>
-  <validation-provider vid="details[gender]" :name="trans('Gender')" :rules="rules" v-slot="{ errors }">
+  <validation-provider vid="details[Gender]" :name="trans('Gender')" :rules="rules" v-slot="{ errors }">
     <v-select
       :dense="isDense"
       :error-messages="errors"
@@ -12,7 +12,7 @@
       item-text="value"
       item-value="value"
       menu-props="offsetY"
-      name="details[gender]"
+      name="details[Gender]"
       outlined
       return-object
       v-model="selected"

@@ -41,6 +41,10 @@ export default {
       });
     });
   },
+
+  mounted () {
+    this.$store.dispatch('alertbox/hide')
+  },
 }
 </script>
 

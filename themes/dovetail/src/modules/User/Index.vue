@@ -63,7 +63,7 @@
             </v-slide-y-transition>
           </template>
 
-          <template v-slot:item.id="{ item }">
+          <template v-slot:item.displayname="{ item }">
             <div class="d-flex align-items-center">
               <v-tooltip v-if="auth.id == item.id" bottom>
                 <template v-slot:activator="{ on }">
@@ -167,7 +167,7 @@ export default {
       },
       selected: [],
       headers: [
-        { text: trans('Account Name'), align: 'left', value: 'id' },
+        { text: trans('Account Name'), align: 'left', value: 'displayname' },
         { text: trans('Role'), value: 'role' },
         { text: trans('Last Modified'), value: 'updated_at' },
         { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text' },

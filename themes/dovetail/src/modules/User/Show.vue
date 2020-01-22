@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <admin>
     <metatag :title="resource.data.displayname"></metatag>
 
     <page-header :back="{name: 'users.index'}">
@@ -44,7 +44,7 @@
         </v-simple-table>
       <!-- Background Details -->
     </v-card>
-  </section>
+  </admin>
 </template>
 
 <script>

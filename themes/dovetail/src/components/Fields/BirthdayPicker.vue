@@ -3,36 +3,37 @@
     :close-on-content-click="false"
     max-width="300px"
     min-width="300px"
-    nude-right="100%"
+    offset-y
     origin="top right"
     ref="birthday-picker-menu"
     transition="scale-transition"
     v-model="menu"
     >
     <template v-slot:activator="{ on }">
-      <validation-provider vid="details[birthday][value]" :name="trans('Birthday')" v-slot="{ errors }">
+      <validation-provider vid="details[Birthday][value]" :name="trans('Birthday')" v-slot="{ errors }">
         <v-text-field
           :dense="isDense"
           :error-messages="errors"
           :label="trans('Birthday')"
-          @blur="date = parseDate(dateFormatted)"
+          @blur="date = parseDate($event.target.value)"
+          @focus="date = parseDate($event.target.value)"
           autocomplete="off"
           class="dt-text-field"
           clear-icon="mdi mdi-close-circle-outline"
           clearable
-          name="details[birthday][value]"
+          name="details[Birthday][value]"
           outlined
           prepend-inner-icon="mdi-cake-variant"
           v-mask="mask"
-          v-model="dateFormatted"
+          :value="formatDate(dateFormatted)"
         >
           <template v-slot:append>
             <v-icon v-on="on">mdi-calendar</v-icon>
           </template>
         </v-text-field>
-        <input type="hidden" name="details[birthday][key]" value="Birthday">
-        <input type="hidden" name="details[birthday][icon]" value="mdi-cake-variant">
       </validation-provider>
+      <input type="hidden" name="details[Birthday][key]" value="Birthday">
+      <input type="hidden" name="details[Birthday][icon]" value="mdi-cake-variant">
     </template>
     <v-date-picker v-model="date" width="300px" no-title @input="menu = false">
       <v-spacer></v-spacer>
@@ -51,6 +52,8 @@ export default {
     mask,
   },
 
+  props: ['value'],
+
   data: vm => ({
     date: '',
     dateFormatted: '',
@@ -65,12 +68,20 @@ export default {
   },
 
   watch: {
+    value (val) {
+      this.dateFormatted = val.value
+    },
+
     date (val) {
       this.dateFormatted = this.formatDate(this.date)
     },
 
     dateFormatted (val) {
-      this.$emit('input', this.parseDate(val))
+      this.$emit('input', {
+        key: this.value.key,
+        icon: this.value.icon,
+        value: this.parseDate(val),
+      })
     },
   },
 

@@ -13,10 +13,13 @@ trait NameAttributes
      */
     public function getDisplaynameAttribute()
     {
-        return strtr(Names::FULLNAME, [
+        return strtr(settings('user:displayname', Names::FULLNAME), [
+            Names::PREFIXNAME => $this->prefixname,
             Names::FIRSTNAME => $this->firstname,
+            Names::MIDDLENAME => $this->middlename,
             Names::MIDDLEINITIAL => str_limit($this->middlename, 1, '.'),
             Names::LASTNAME => $this->lastname,
+            Names::SUFFIXNAME => $this->suffixname,
         ]);
     }
 

@@ -20,9 +20,7 @@ class User extends JsonResource
             'birthday' => $this->detail('Birthday'),
             'created' => $this->created,
             'deleted' => $this->deleted,
-            'details' => $this->details->mapWithKeys(function ($detail) {
-                return [$detail->key => $detail];
-            }),
+            'details' => $this->getDetails(),
             'displayname' => $this->displayname,
             'modified' => $this->modified,
             'permissions' => $this->permissions->pluck('code'),
@@ -35,5 +33,20 @@ class User extends JsonResource
         }
 
         return $data->toArray();
+    }
+
+    /**
+     * Retrieve the common and other user details
+     * combined.
+     *
+     * @return array
+     */
+    protected function getDetails()
+    {
+        return array_merge($this->getCommonDetails()->mapWithKeys(function ($detail) {
+            return [$detail->key => $detail];
+        })->toArray(), ['others' => $this->getOtherDetails()->mapWithKeys(function ($detail) {
+            return [$detail->key => $detail];
+        })->toArray()]);
     }
 }

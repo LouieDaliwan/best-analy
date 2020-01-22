@@ -23,8 +23,8 @@
           v-model="role"
           >
         </v-select>
-        <input type="hidden" name="roles" v-model="role">
       </validation-provider>
+      <input type="hidden" name="roles[]" v-model="role">
     </v-card-text>
   </v-card>
 </template>
@@ -35,6 +35,7 @@ import $api from '@/modules/User/routes/api'
 export default {
   name: 'RolePicker',
 
+  // props: ['value', 'dense', 'multiple', 'errors', 'lazyLoad'],
   props: {
     value: {
       type: [Array, Object, String, Number],
@@ -56,10 +57,10 @@ export default {
   computed: {
     role: {
       get () {
-        return this.value
+        return this.value[0]
       },
       set (value) {
-        this.$emit('input', value)
+        this.$emit('input', [value])
       },
     },
 
@@ -90,7 +91,7 @@ export default {
 
   mounted () {
     if (!this.lazyLoad) {
-      this.getRolesData();
+      this.getRolesData()
     }
   }
 }

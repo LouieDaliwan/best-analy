@@ -1,6 +1,6 @@
 <template>
   <section>
-    <template v-if="!repeaters.length">
+    <template v-if="repeatersIsEmpty">
       <slot name="empty">
         <div>
           <!-- <v-card-text style="filter: grayscale(0.9);">
@@ -74,7 +74,7 @@
         </context-prompt>
       </v-col>
     </v-row>
-    <v-row v-if="repeaters.length" no-gutters>
+    <v-row v-if="repeatersIsNotEmpty" no-gutters>
       <v-col>
         <slot name="action" :on="{on: add}">
           <v-badge
@@ -137,20 +137,34 @@ export default {
     isLarge () {
       return !this.dense
     },
+
+    repeatersIsEmpty () {
+      return window._.isEmpty(this.repeaters)
+    },
+
+    repeatersIsNotEmpty () {
+      return !this.repeatersIsEmpty
+    },
+
+    items () {
+      return this.value || []
+    },
   },
 
   data: (vm) => ({
     focus: false,
-    repeaters: Object.assign([], vm.value),
+    repeaters: [],
   }),
 
   methods: {
     add: function (focus = true) {
       this.repeaters.push(Object.assign({}, this.item))
+      this.repeaters = Object.assign({}, this.repeaters)
       this.focusOnAdd(focus)
     },
     remove: function (i) {
       this.repeaters.splice(i, 1)
+      this.repeaters = Object.assign({}, this.repeaters)
     },
     addUserDefinedDefaults: function () {
       let fields = parseInt(this.fields)
@@ -168,15 +182,27 @@ export default {
   },
 
   watch: {
+    items: function (val) {
+      val = val || []
+      // this.repeaters = Object.assign([], Object.keys(val || []).map(function (key) {
+      //   return { key: val[key].key, value: val[key].value }
+      // }))
+
+      // this.repeaters = Object.keys(val || []).map(function (key) {
+      //   return { key: val[key].key, value: val[key].value }
+      // })
+      // console.log(this.repeaters)
+    },
     autofocus: function (val) {
       this.focus = parseInt(val)
     },
     repeaters: {
       handler: function (val) {
+        console.log(val)
         this.$emit('input', val)
       },
       deep: true,
-    }
+    },
   },
 }
 </script>

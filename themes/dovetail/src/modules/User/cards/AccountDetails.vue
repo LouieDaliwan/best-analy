@@ -36,7 +36,7 @@
             </v-text-field>
           </validation-provider>
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" :md="confirmed ? 6 : 12">
           <validation-provider vid="password" :name="trans('password')" rules="required|min:6" v-slot="{ errors }">
             <v-text-field
               :dense="isDense"
@@ -49,7 +49,7 @@
               prepend-inner-icon="mdi-lock"
               ref="password"
               type="password"
-              :value.sync="resource.data.details.password && resource.data.details.password.value || null"
+              v-model="resource.data.password"
               >
             </v-text-field>
           </validation-provider>

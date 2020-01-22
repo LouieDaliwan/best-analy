@@ -1,5 +1,5 @@
 <template>
-  <v-slide-y-transition mode="out-in">
+  <v-fade-transition mode="out-in">
     <v-alert
       :border="alertbox.border"
       :color="alertbox.color || alertbox.type"
@@ -10,6 +10,7 @@
       :prominent="alertbox.prominent"
       :type="alertbox.type"
       text
+      v-show="show"
       v-model="show"
       >
       <v-row align="center">
@@ -24,7 +25,7 @@
         </v-col>
       </v-row>
     </v-alert>
-  </v-slide-y-transition>
+  </v-fade-transition>
 </template>
 
 <script>

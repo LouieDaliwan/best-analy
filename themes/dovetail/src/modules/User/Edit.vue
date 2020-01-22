@@ -4,23 +4,44 @@
     <template v-slot:appbar>
       <v-container class="py-0 px-0">
         <v-row justify="space-between" align="center">
+          <v-fade-transition>
+            <v-col v-if="!resource.isPrestine" class="py-0" cols="auto">
+              <v-toolbar-title class="muted--text">{{ trans('Unsaved changes') }}</v-toolbar-title>
+            </v-col>
+          </v-fade-transition>
           <v-spacer></v-spacer>
           <v-col class="py-0" cols="auto">
             <div class="d-flex justify-end">
               <v-spacer></v-spacer>
               <v-btn text class="ml-3 mr-0" large>{{ trans('Discard') }}</v-btn>
-              <v-btn
-                :disabled="isUpdateDisabled"
-                :loading="resource.loading"
-                @click.prevent="submitForm"
-                class="ml-3 mr-0"
-                color="primary"
-                large
-                type="submit"
+              <v-badge
+                bordered
+                bottom
+                class="dt-badge"
+                color="dark"
+                content="s"
+                offset-x="20"
+                offset-y="20"
+                tile
+                transition="fade-transition"
+                v-model="$store.getters['shortkey/ctrlIsPressed']"
                 >
-                <v-icon left>mdi-content-save-outline</v-icon>
-                {{ trans('Update') }}
-              </v-btn>
+                <v-btn
+                  :disabled="isUpdateDisabled"
+                  :loading="resource.loading"
+                  @click.prevent="submitForm"
+                  @shortkey="submitForm"
+                  class="ml-3 mr-0"
+                  color="primary"
+                  large
+                  ref="submit-button-main"
+                  type="submit"
+                  v-shortkey.once="['ctrl', 's']"
+                  >
+                  <v-icon left>mdi-content-save-outline</v-icon>
+                  {{ trans('Update') }}
+                </v-btn>
+              </v-badge>
             </div>
           </v-col>
         </v-row>
@@ -187,7 +208,8 @@
             <v-card>
               <v-card-title class="pb-0">{{ trans('Additional Background Details') }}</v-card-title>
               <v-card-text>
-                <repeater :dense="isDense" :disabled="resource.loading" v-model="resource.data.details.more"></repeater>
+                <code><pre><span v-html="resource.data.details.others"></span></pre></code>
+                <repeater :dense="isDense" :disabled="resource.loading" v-model="resource.data.details.others"></repeater>
               </v-card-text>
             </v-card>
           </v-col>
@@ -222,6 +244,17 @@ import User from './Models/User'
 import { mapGetters } from 'vuex'
 
 export default {
+  beforeRouteLeave (to, from, next) {
+    if (this.resource.isPrestine) {
+      next()
+    } else {
+      this.$store.dispatch('snackbar/show', {
+        text: 'Unsaved changes'
+      })
+    }
+
+  },
+
   components: {
     AccountDetails,
   },
@@ -252,8 +285,8 @@ export default {
     },
 
     parseResourceData (data) {
-      data.details = Object.assign({}, data.details, data.details.more || {})
-      delete data.details.more
+      data.details = Object.assign({}, data.details, data.details.others || {})
+      delete data.details.others
 
       let formData = new FormData(this.$refs['updateform-form'].$el)
 
@@ -274,10 +307,6 @@ export default {
 
       data = formData
 
-      // for (var d of formData.entries()) {
-      //  console.log(d[0], d[1])
-      // }
-
       return data
     },
 
@@ -295,7 +324,14 @@ export default {
     },
 
     submitForm () {
-      this.$refs['submit-button'].click()
+      if (!this.isUpdateDisabled) {
+        this.$refs['submit-button'].click()
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth',
+        });
+      }
     },
 
     submit (e) {
@@ -303,7 +339,10 @@ export default {
       e.preventDefault()
       this.$store.dispatch('alertbox/hide')
 
-      // this.parseResourceData(this.resource.data)
+      // var formData = this.parseResourceData(this.resource.data)
+      // for (var d of formData.entries()) {
+      //  console.log(d[0], d[1])
+      // }
       // return;
 
       axios.post(
@@ -314,13 +353,13 @@ export default {
           text: trans('User updated successfully'),
         })
 
-        this.$store.dispatch('alertbox/hide')
         this.$store.dispatch('alertbox/show', {
           type: 'success',
           text: this.$t('Updated user {name}', {name: this.resource.data.displayname})
         })
 
         this.$refs['updateform'].reset()
+        this.resource.isPrestine = true
       }).catch(err => {
         if (err.response.status == Response.HTTP_UNPROCESSABLE_ENTITY) {
           let errorCount = _.size(err.response.data.errors)

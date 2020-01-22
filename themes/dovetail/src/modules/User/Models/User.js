@@ -22,7 +22,7 @@ class User {
         'Marital Status': {key: trans('Marital Status'), value: '', icon: ''},
         'Mobile Phone': {key: trans('Mobile Phone'), value: '', icon: 'mdi-cellphone-android'},
         'Home Address': {key: trans('Home Address'), value: '', icon: 'mdi-map-marker'},
-        more: [],
+        others: [],
       },
       roles: [],
     }

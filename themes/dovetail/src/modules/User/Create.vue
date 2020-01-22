@@ -245,7 +245,7 @@
                     ></v-text-field>
                   </v-col>
                 </v-row>
-                <repeater :dense="isDense" v-model="resource.data.details.more"></repeater>
+                <repeater :dense="isDense" v-model="resource.data.details.others"></repeater>
               </v-card-text>
             </v-card>
           </v-col>
@@ -298,8 +298,8 @@ export default {
     },
 
     parseResourceData (data) {
-      data.details = Object.assign({}, data.details, data.details.more || {})
-      delete data.details.more
+      data.details = Object.assign({}, data.details, data.details.others || {})
+      delete data.details.others
 
       let formData = new FormData(this.$refs['addform-form'].$el)
 

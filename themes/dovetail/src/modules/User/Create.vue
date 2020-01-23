@@ -33,15 +33,11 @@
     <validation-observer ref="addform" v-slot="{ handleSubmit, errors, invalid, passes }">
       <v-form ref="addform-form" autocomplete="false" v-on:submit.prevent="handleSubmit(submit($event))" enctype="multipart/form-data">
         <button ref="submit-button" type="submit" class="d-none"></button>
-        <page-header :back="{ to: { name: 'users.index' }, text: trans('Users') }">
+        <page-header :back="{ to: { name: 'users.index' }, text: trans('All Users') }">
           <template v-slot:title>
             {{ trans('Add User') }}
           </template>
         </page-header>
-
-        <!-- Alertbox -->
-        <alertbox v-if="invalid"></alertbox>
-        <!-- Alertbox -->
 
         <v-row>
           <v-col cols="12" md="9">
@@ -288,6 +284,10 @@ export default {
     },
   },
 
+  created () {
+    this.$store.dispatch('errorbox/hide')
+  },
+
   data: () => ({
     resource: new User,
   }),
@@ -346,21 +346,11 @@ export default {
           },
         })
 
-        this.$store.dispatch('alertbox/show', {
-          type: 'success',
+        this.$store.dispatch('successbox/show', {
           text: this.$t('Created user {name}', {name: response.data.data.displayname})
         })
       }).catch(err => {
-        if (err.response.status == Response.HTTP_UNPROCESSABLE_ENTITY) {
-          let errorCount = _.size(err.response.data.errors)
-
-          this.$refs['addform'].setErrors(err.response.data.errors)
-          this.$store.dispatch('alertbox/show', {
-            text: this.$tc('There is {number} invalid field in this page', errorCount, {number: errorCount}),
-            type: 'error',
-            list: err.response.data.errors,
-          })
-        }
+        this.$refs['addform'].setErrors(err.response.data.errors)
       }).finally(() => {
         this.load(false)
       })

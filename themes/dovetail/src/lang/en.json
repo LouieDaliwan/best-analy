@@ -1,5 +1,6 @@
 {
   "Actions": "Actions",
+  "Admin": "Admin",
   "{number} item selected": "No item selected | {number} item selected | {number} items selected",
   "Select role": "Select role | Select roles",
   "Created user {name}": "Created user {name}",

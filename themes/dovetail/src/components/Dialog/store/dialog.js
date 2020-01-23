@@ -9,7 +9,7 @@ export const state = () => ({
 
     // Settings
     persistent: false,
-    width: null,
+    width: 420,
     maxWidth: 800,
     color: null,
     light: null,
@@ -70,9 +70,9 @@ export const mutations = {
 
   PROMPT_ERROR (state, payload) {
     state.dialog = window._.merge({}, state.dialog, {
-      show: true,
-      loading: false,
       illustration: () => import('@/components/Icons/ErrorIcon.vue'),
+      loading: false,
+      show: true,
       buttons: {
         cancel: { show: false },
         action: {
@@ -94,6 +94,10 @@ export const actions = {
 
   error: (context, payload) => {
     context.commit('PROMPT_ERROR', payload)
+  },
+
+  show: (context, payload) => {
+    context.commit('PROMPT_DIALOG', Object.assign(payload, { show: true }))
   },
 
   close: (context) => {

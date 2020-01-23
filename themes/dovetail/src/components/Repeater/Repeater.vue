@@ -146,14 +146,19 @@ export default {
       return !this.repeatersIsEmpty
     },
 
-    items () {
-      return this.value || []
+    repeaters: {
+      get () {
+        return Object.values(this.value || {})
+      },
+      set (val) {
+        this.$emit('input', val)
+      },
     },
   },
 
   data: (vm) => ({
     focus: false,
-    repeaters: [],
+    // repeaters: [],
   }),
 
   methods: {
@@ -182,21 +187,10 @@ export default {
   },
 
   watch: {
-    items: function (val) {
-      val = val || []
-      // this.repeaters = Object.assign([], Object.keys(val || []).map(function (key) {
-      //   return { key: val[key].key, value: val[key].value }
-      // }))
-
-      // this.repeaters = Object.keys(val || []).map(function (key) {
-      //   return { key: val[key].key, value: val[key].value }
-      // })
-      // console.log(this.repeaters)
-    },
     autofocus: function (val) {
       this.focus = parseInt(val)
     },
-    repeaters: {
+    repeatersX: {
       handler: function (val) {
         console.log(val)
         this.$emit('input', val)

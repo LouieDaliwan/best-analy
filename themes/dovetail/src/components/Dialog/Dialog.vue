@@ -1,20 +1,21 @@
 <template>
   <v-dialog
-    v-model="dialog.show"
-    :persistent="dialog.persistent"
     :max-width="dialog.maxWidth"
+    :persistent="dialog.persistent"
     :width="width || dialog.width"
+    scrollable
+    v-model="dialog.show"
     >
     <v-card :dark="dialog.dark" :class="{ 'text-xs-center': dialog.alignment == 'center' }">
-      <slot name="illustration">
-        <div class="text-center pa-3" :class="`${dialog.color}--text`">
-          <component :width="dialog.illustrationWidth" :height="dialog.illustrationHeight" :is="dialog.illustration"></component>
-        </div>
-      </slot>
-      <v-card-title class="pb-0">
-        <slot name="title">{{ trans(dialog.title) }}</slot>
-      </v-card-title>
       <v-card-text>
+        <slot name="illustration">
+          <div class="text-center pa-3" :class="`${dialog.color}--text`">
+            <component :width="dialog.illustrationWidth" :height="dialog.illustrationHeight" :is="dialog.illustration"></component>
+          </div>
+        </slot>
+        <v-card-title class="pa-0">
+          <slot name="title">{{ trans(dialog.title) }}</slot>
+        </v-card-title>
         <slot name="text"><div v-html="text"></div></slot>
       </v-card-text>
       <v-card-actions>

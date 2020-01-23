@@ -1,11 +1,14 @@
 .dovetail-app {
   .v-card {
-    &:not(.v-card--flat) {
+    &:not(.v-card--flat):not(.v-card--outlined) {
       box-shadow: var(--box-shadow);
     }
 
-    &:not(.v-sheet--tile),
-    &:not(.v-card--shaped) {
+    &--hover:hover {
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.13), 0 10px 10px rgba(0, 0, 0, 0.12);
+    }
+
+    &:not(.v-sheet--tile):not(.v-card--shaped) {
       border-radius: var(--global-radius);
     }
 
@@ -24,7 +27,7 @@
     .v-card {
       color: var(--text);
 
-      &:not(.v-card--flat) {
+      &:not(.v-card--flat):not(.v-card--outlined) {
         border: 1px solid var(--card-border-color);
       }
 

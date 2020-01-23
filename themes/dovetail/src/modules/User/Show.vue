@@ -2,7 +2,7 @@
   <admin>
     <metatag :title="resource.data.displayname"></metatag>
 
-    <page-header :back="{name: 'users.index'}">
+    <page-header :back="{ to: { name: 'users.index' }, text: trans('Users') }">
       <template v-slot:title>
         {{ resource.data.displayname }}
       </template>
@@ -20,7 +20,7 @@
 
     <v-card>
       <v-card-text>
-        <account :items="resource.data"></account>
+        <account v-model="resource.data"></account>
       </v-card-text>
 
       <v-divider></v-divider>

@@ -35,12 +35,12 @@ export default {
         next();
       })
       .catch(error => {
-        next({name: 'login'});
+        next({name: 'login', query: { from: window.location.pathname }})
       });
 
     const isAuthenticated = store.getters['auth/isAuthenticated']
     if (!isAuthenticated) {
-      return next({name: 'login'})
+      return next({name: 'login', query: { from: window.location.pathname }})
     }
     return next()
   }

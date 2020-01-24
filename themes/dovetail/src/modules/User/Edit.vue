@@ -13,7 +13,7 @@
           <v-col class="py-0" cols="auto">
             <div class="d-flex justify-end">
               <v-spacer></v-spacer>
-              <v-btn text class="ml-3 mr-0" large>{{ trans('Discard') }}</v-btn>
+              <v-btn @click="askUserToDiscardUnsavedChanges" text class="ml-3 mr-0" large>{{ trans('Discard') }}</v-btn>
               <v-badge
                 bordered
                 bottom
@@ -208,7 +208,6 @@
             <v-card>
               <v-card-title class="pb-0">{{ trans('Additional Background Details') }}</v-card-title>
               <v-card-text>
-                <code><pre><span v-html="resource.data.details.others"></span></pre></code>
                 <repeater :dense="isDense" :disabled="resource.loading" v-model="resource.data.details.others"></repeater>
               </v-card-text>
             </v-card>
@@ -248,11 +247,8 @@ export default {
     if (this.resource.isPrestine) {
       next()
     } else {
-      this.$store.dispatch('snackbar/show', {
-        text: 'Unsaved changes'
-      })
+      this.askUserBeforeNavigatingAway(next)
     }
-
   },
 
   components: {
@@ -280,11 +276,65 @@ export default {
   }),
 
   methods: {
+    askUserBeforeNavigatingAway (next) {
+      this.$store.dispatch('dialog/show', {
+        illustration: () => import('@/components/Icons/WorkingDeveloperIcon.vue'),
+        title: trans('Unsaved changes will be lost'),
+        text: trans('You have unsaved changes on this page. If you navigate away from this page, data will not be recovered.'),
+        buttons: {
+          cancel: {
+            text: trans('Go Back'),
+            callback: () => {
+              this.$store.dispatch('dialog/close')
+            },
+          },
+          action: {
+            text: trans('Discard'),
+            callback: () => {
+              next()
+              this.$store.dispatch('dialog/close')
+            },
+          },
+        }
+      })
+    },
+
+    askUserToDiscardUnsavedChanges () {
+      this.$store.dispatch('dialog/show', {
+        illustration: () => import('@/components/Icons/WorkingDeveloperIcon.vue'),
+        title: trans('Discard changes?'),
+        text: trans('You have unsaved changes on this page. If you navigate away from this page, data will not be recovered.'),
+        buttons: {
+          cancel: {
+            text: trans('Cancel'),
+            callback: () => {
+              this.$store.dispatch('dialog/close')
+            },
+          },
+          action: {
+            text: trans('Discard'),
+            callback: () => {
+              this.resource.isPrestine = true
+              this.$store.dispatch('dialog/close')
+              this.$router.replace({name: 'users.index'})
+            },
+          },
+        }
+      })
+    },
+
+    beforeUserNavigatesAway (e) {
+      // this.askUserBeforeNavigatingAway()
+      // e.preventDefault()
+      // e.returnValue = ''
+    },
+
     load (val = true) {
       this.resource.loading = val
     },
 
-    parseResourceData (data) {
+    parseResourceData (item) {
+      let data = _.clone(item)
       data.details = Object.assign({}, data.details, data.details.others || {})
       delete data.details.others
 
@@ -378,7 +428,6 @@ export default {
       axios.get($api.show(this.$route.params.id))
         .then(response => {
           this.resource.data = Object.assign(response.data.data, { details: Object.assign(this.resource.data.details, response.data.data.details)})
-          this.resource.isPrestine = true
         }).finally(() => {
           this.load(false)
           this.resource.isPrestine = true

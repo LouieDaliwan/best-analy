@@ -1,5 +1,7 @@
 <template>
   <v-dialog
+    v-model="show"
+    :persistent="persistent"
     :max-width="dialog.maxWidth"
     :persistent="dialog.persistent"
     :width="width || dialog.width"
@@ -24,7 +26,7 @@
         <v-btn
           v-if="dialog.buttons.cancel.show"
           :color="dialog.buttons.cancel.color"
-          @click.native="dialog.buttons.cancel.callback()"
+          @click.native="dialog.buttons.cancel.callback"
           text
           >
           {{ trans(dialog.buttons.cancel.text) }}
@@ -34,7 +36,7 @@
           :color="dialog.buttons.action.color"
           :disabled="dialog.loading"
           :loading="dialog.loading"
-          @click.native="dialog.buttons.action.callback(dialog)"
+          @click.native="dialog.buttons.action.callback"
           text
           v-if="dialog.buttons.action.show"
           >
@@ -58,7 +60,20 @@ export default {
       dialog: 'dialog/dialog'
     }),
 
-    text: function () {
+    show: {
+      get () {
+        return this.dialog.show
+      },
+      set (val) {
+        this.$store.dispatch('dialog/prompt', { show: val })
+      },
+    },
+
+    persistent () {
+      return _.clone(this.dialog.persistent)
+    },
+
+    text () {
       if (this.dialog.text instanceof Array) {
         return this.dialog.text.map((text) => {
           return '<p>'+this.trans(text)+'</p>'
@@ -66,7 +81,7 @@ export default {
       }
 
       return this.dialog.text
-    }
+    },
   },
 }
 </script>

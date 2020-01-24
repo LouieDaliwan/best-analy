@@ -24,7 +24,21 @@ export default {
         }
 
         if (err.response.status === 403 && err.config && !err.config.__isRetryRequest) {
-          this.$router.push({name: '403'})
+          this.$store.dispatch('dialog/error', {
+            show: true,
+            width: 400,
+            color: 'error',
+            buttons: { cancel: { show: false } },
+            title: err.response.statusText,
+            text: err.response.data.message,
+          })
+        }
+
+        if (err.response.status == Response.HTTP_UNPROCESSABLE_ENTITY) {
+          this.$store.dispatch('errorbox/show', {
+            text: this.$t(err.response.data.message),
+            errors: err.response.data.errors,
+          })
         }
 
         if (err.response.status === Response.HTTP_INTERNAL_SERVER_ERROR) {

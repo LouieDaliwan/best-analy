@@ -1,53 +1,56 @@
 import store from '@/store'
+import _ from 'lodash'
 import ErrorIcon from '@/components/Icons/ErrorIcon.vue'
 
-export const state = () => ({
-  dialog: {
-    // Toggle
-    show: false,
-    loading: false,
+export const initials = {
+  // Toggle
+  show: false,
+  loading: false,
 
-    // Settings
-    persistent: false,
-    width: null,
-    maxWidth: 800,
-    color: null,
-    light: null,
-    dark: null,
+  // Settings
+  persistent: false,
+  width: 420,
+  maxWidth: 800,
+  color: null,
+  light: null,
+  dark: null,
 
-    // Illustration
-    illustration: () => import('@/components/Icons/ErrorIcon.vue'),
-    illustrationWidth: 300,
-    illustrationHeight: 300,
+  // Illustration
+  illustration: () => import('@/components/Icons/ErrorIcon.vue'),
+  illustrationWidth: 300,
+  illustrationHeight: 300,
 
-    // Text
-    title: false,
-    text: false,
+  // Text
+  title: false,
+  text: false,
 
-    // Alignment
-    alignment: false, // e.g. 'center'
+  // Alignment
+  alignment: false, // e.g. 'center'
 
-    // Buttons
-    buttons: {
-      action: {
-        show: true,
-        color: 'primary',
-        text: 'Okay',
-        callback: () => {
-          store.dispatch('dialog/close')
-        },
-      },
-
-      cancel: {
-        show: true,
-        color: 'dark',
-        text: 'Cancel',
-        callback: () => {
-          store.dispatch('dialog/close')
-        },
+  // Buttons
+  buttons: {
+    action: {
+      show: true,
+      color: 'primary',
+      text: 'Okay',
+      callback: () => {
+        store.dispatch('dialog/close')
       },
     },
-  }
+
+    cancel: {
+      show: true,
+      color: 'dark',
+      text: 'Cancel',
+      callback: () => {
+        store.dispatch('dialog/close')
+      },
+    },
+  },
+}
+
+export const state = () => ({
+  dialog: _.clone(initials)
 })
 
 export const getters = {
@@ -64,15 +67,19 @@ export const mutations = {
     state.dialog.loading = false
   },
 
+  RESET_INITIAL_STATE (state) {
+    state.dialog = initials
+  },
+
   SET_LOADING (state, loading) {
     state.dialog.loading = loading
   },
 
   PROMPT_ERROR (state, payload) {
     state.dialog = window._.merge({}, state.dialog, {
-      show: true,
-      loading: false,
       illustration: () => import('@/components/Icons/ErrorIcon.vue'),
+      loading: false,
+      show: true,
       buttons: {
         cancel: { show: false },
         action: {
@@ -89,11 +96,18 @@ export const mutations = {
 
 export const actions = {
   prompt: (context, payload) => {
+    context.commit('RESET_INITIAL_STATE')
     context.commit('PROMPT_DIALOG', payload)
   },
 
   error: (context, payload) => {
+    context.commit('RESET_INITIAL_STATE')
     context.commit('PROMPT_ERROR', payload)
+  },
+
+  show: (context, payload) => {
+    context.commit('RESET_INITIAL_STATE')
+    context.commit('PROMPT_DIALOG', Object.assign(payload, { show: true }))
   },
 
   close: (context) => {
@@ -102,6 +116,10 @@ export const actions = {
 
   loading: (context, loading) => {
     context.commit('SET_LOADING', loading)
+  },
+
+  reset: (context) => {
+    context.commit('RESET_INITIAL_STATE')
   },
 }
 

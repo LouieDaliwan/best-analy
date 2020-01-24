@@ -84,7 +84,6 @@ export default {
       this.$store
         .dispatch('auth/login', { username, password })
         .then(() => {
-          this.$store.dispatch('sidebar/toggle', {model: true})
           this.$router.push({name: 'dashboard'})
           this.$store.dispatch('snackbar/show', {
             text: $t('Welcome back, ') + $auth.getUser().firstname

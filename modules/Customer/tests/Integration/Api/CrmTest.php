@@ -81,6 +81,7 @@ class CrmTest extends TestCase
     public function a_user_can_update_customer_data_to_crm()
     {
         // Arrangements
+        $this->withoutExceptionHandling();
         Passport::actingAs($this->asNonSuperAdmin(['crm.save']), ['crm.save']);
         $this->withPermissionsPolicy();
 

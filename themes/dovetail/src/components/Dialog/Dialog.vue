@@ -1,12 +1,10 @@
 <template>
   <v-dialog
-    v-model="show"
-    :persistent="persistent"
     :max-width="dialog.maxWidth"
-    :persistent="dialog.persistent"
+    :persistent="persistent"
     :width="width || dialog.width"
     scrollable
-    v-model="dialog.show"
+    v-model="show"
     >
     <v-card :dark="dialog.dark" :class="{ 'text-xs-center': dialog.alignment == 'center' }">
       <v-card-text>

@@ -20,7 +20,7 @@
               v-model="ctrlIsPressed"
               >
               <v-text-field
-                background-color="selects"
+                background-color="workspace"
                 :placeholder="trans('Search...')"
                 :prepend-inner-icon="items.isSearching ? 'mdi-spin mdi-loading' : 'mdi-magnify'"
                 @click:clear="search"

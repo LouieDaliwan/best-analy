@@ -3,8 +3,8 @@
     <template v-if="repeatersIsEmpty">
       <slot name="empty">
         <div class="text-center">
-          <v-card-text style="filter: grayscale(0.9);">
-            <empty-icon width="300" height="280"></empty-icon>
+          <v-card-text style="filter: grayscale(0.8);">
+            <empty-icon class="primary--text" width="300" height="280"></empty-icon>
           </v-card-text>
           <v-card-text>
             <slot name="text">

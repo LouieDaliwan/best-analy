@@ -26292,6 +26292,11 @@ html {
 100%  {opacity: 1}
 }
 
+.icon--disabled[data-v-36df4296] {
+  -webkit-filter: grayscale(0.8);
+          filter: grayscale(0.8);
+}
+
 svg[data-v-853ced74] {
   max-width: 100%;
 }
@@ -26329,6 +26334,10 @@ svg[data-v-25448b70] {
 }
 
 svg[data-v-0db85c8e] {
+  max-width: 100%;
+}
+
+svg[data-v-3ddb25a6] {
   max-width: 100%;
 }
 

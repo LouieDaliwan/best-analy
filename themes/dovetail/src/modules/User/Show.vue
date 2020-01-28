@@ -38,7 +38,7 @@
               <th colspan="100%" class="text-left" v-text="trans('Background Details')"></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-show="backgroundDetailsIsNotEmpty">
             <tr v-for="(detail, i) in resource.data['details:common']">
               <td class="font-weight-bold">
                 <v-icon v-if="detail.icon == 'null'" small left>mdi-square-edit-outline</v-icon>
@@ -49,6 +49,13 @@
             </tr>
             </tr>
           </tbody>
+          <!-- empty state -->
+          <tbody v-if="backgroundDetailsIsEmpty">
+            <tr>
+              <td class="muted--text font-italic">{{ trans('No resource found') }}</td>
+            </tr>
+          </tbody>
+          <!-- empty state -->
         </template>
       </v-simple-table>
       <!-- Background Details -->
@@ -61,7 +68,8 @@
               <th colspan="100%" class="text-left" v-text="trans('Additional Background Details')"></th>
             </tr>
           </thead>
-          <tbody>
+
+          <tbody v-show="additionalBackgroundDetailsIsNotEmpty">
             <tr v-for="(detail, i) in resource.data['details:others']">
               <td class="font-weight-bold">
                 <v-icon small left>mdi-square-edit-outline</v-icon>
@@ -71,6 +79,14 @@
             </tr>
             </tr>
           </tbody>
+
+          <!-- empty state -->
+          <tbody v-if="additionalBackgroundDetailsIsEmpty">
+            <tr>
+              <td class="muted--text font-italic">{{ trans('No resource found') }}</td>
+            </tr>
+          </tbody>
+          <!-- empty state -->
         </template>
       </v-simple-table>
       <!-- Additional Background Details -->
@@ -96,6 +112,24 @@ export default {
       },
     }
   }),
+
+  computed: {
+    backgroundDetailsIsEmpty () {
+      return window._.isEmpty(this.resource.data['details:common'])
+    },
+
+    backgroundDetailsIsNotEmpty () {
+      return !this.backgroundDetailsIsEmpty
+    },
+
+    additionalBackgroundDetailsIsEmpty () {
+      return window._.isEmpty(this.resource.data['details:others'])
+    },
+
+    additionalBackgroundDetailsIsNotEmpty () {
+      return !this.additionalBackgroundDetailsIsEmpty
+    },
+  },
 
   methods: {
     ...mapActions({

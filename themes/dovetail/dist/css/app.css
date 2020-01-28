@@ -84,7 +84,7 @@ p {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 12px;
   height: 6px;
   -webkit-transition: 0.3s background;
   transition: 0.3s background;
@@ -189,6 +189,10 @@ pre {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.dovetail-app .elevation-1 {
+  box-shadow: var(--box-shadow) !important;
 }
 
 .sticky {

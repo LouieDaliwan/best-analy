@@ -43,7 +43,7 @@
       <v-col cols="12" sm="6" v-for="(index, i) in indexes" :key="i">
         <v-card height="100%" exact to="" v-ripple="{ class: 'primary--text' }" hover class="text-center">
           <v-card-text>
-            <div class="mb-4"><img height="100" :src="index.icon" alt=""></div>
+            <div class="mb-4"><img height="80" :src="index.icon" alt=""></div>
             <h4 class="mb-1 text-uppercase" v-text="index.title"></h4>
             <p class="text-uppercase muted--text" v-text="('Performance Indexes')"></p>
           </v-card-text>
@@ -54,10 +54,10 @@
 </template>
 
 <script>
-import business from '@/components/Illustration/building.svg'
-import hr from '@/components/Illustration/accountant.svg'
-import financial from '@/components/Illustration/saving.svg'
-import productivity from '@/components/Illustration/analyze_on_screen.svg'
+import business from '@/components/Illustration/gradient/1.png'
+import hr from '@/components/Illustration/gradient/2.png'
+import financial from '@/components/Illustration/gradient/3.png'
+import productivity from '@/components/Illustration/gradient/4.png'
 
 export default {
   data: () => ({

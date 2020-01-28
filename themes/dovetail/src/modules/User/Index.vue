@@ -19,119 +19,138 @@
     </page-header>
 
     <!-- Data table -->
-    <v-card>
-      <toolbar-menu
-        :items.sync="tabletoolbar"
-        bulk
-        downloadable
-        trashable
-        @update:search="search"
-        @update:trash="bulkTrashResource"
-        >
-      </toolbar-menu>
-      <v-slide-y-reverse-transition mode="out-in">
-        <v-data-table
-          :headers="dataset.headers"
-          :items="dataset.data"
-          :loading="dataset.loading"
-          :mobile-breakpoint="NaN"
-          :options.sync="dataset.options"
-          :server-items-length="dataset.meta.total"
-          :show-select="tabletoolbar.toggleBulkEdit"
-          @update:options="optionsChanged"
-          color="primary"
-          item-key="id"
-          v-model="dataset.selected"
+    <div v-show="resourcesIsNotEmpty">
+      <v-card>
+        <toolbar-menu
+          :items.sync="tabletoolbar"
+          bulk
+          downloadable
+          trashable
+          @update:search="search"
+          @update:trash="bulkTrashResource"
           >
-          <template v-slot:progress><span></span></template>
+        </toolbar-menu>
+        <v-slide-y-reverse-transition mode="out-in">
+          <v-data-table
+            :headers="resources.headers"
+            :items="resources.data"
+            :loading="resources.loading"
+            :mobile-breakpoint="NaN"
+            :options.sync="resources.options"
+            :server-items-length="resources.meta.total"
+            :show-select="tabletoolbar.toggleBulkEdit"
+            @update:options="optionsChanged"
+            color="primary"
+            item-key="id"
+            v-model="resources.selected"
+            >
+            <template v-slot:progress><span></span></template>
 
-          <template v-slot:loading>
-            <v-slide-y-transition mode="out-in">
-              <div>
-                <div class="d-flex" v-for="(j,i) in dataset.options.itemsPerPage" :key="i">
-                  <v-skeleton-loader
-                    class="px-4 py-3 mr-4"
-                    type="avatar"
-                  ></v-skeleton-loader>
-                  <v-skeleton-loader
-                    class="px-4 py-3"
-                    width="100%"
-                    type="table-row"
-                  ></v-skeleton-loader>
+            <template v-slot:loading>
+              <v-slide-y-transition mode="out-in">
+                <div>
+                  <div class="d-flex" v-for="(j,i) in resources.options.itemsPerPage" :key="i">
+                    <v-skeleton-loader
+                      class="px-4 py-3 mr-4"
+                      type="avatar"
+                    ></v-skeleton-loader>
+                    <v-skeleton-loader
+                      class="px-4 py-3"
+                      width="100%"
+                      type="table-row"
+                    ></v-skeleton-loader>
+                  </div>
                 </div>
+              </v-slide-y-transition>
+            </template>
+
+            <template v-slot:item.displayname="{ item }">
+              <div class="d-flex align-items-center">
+                <v-tooltip v-if="auth.id == item.id" bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-badge
+                      avatar
+                      bordered
+                      color="muted"
+                      offset-x="35"
+                      offset-y="15"
+                      overlap
+                      >
+                      <template v-slot:badge>
+                        <v-avatar>
+                          <i class="small mdi mdi-home-account" style="font-size: 12px"></i>
+                        </v-avatar>
+                      </template>
+                      <v-avatar v-on="on" class="mr-6" size="32" color="muted"><v-img :src="item.avatar"></v-img></v-avatar>
+                    </v-badge>
+                  </template>
+                  <span>{{ trans('This is your account') }}</span>
+                </v-tooltip>
+                <v-avatar v-else class="mr-6" size="32" color="muted"><v-img :src="item.avatar"></v-img></v-avatar>
+
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <span class="mt-1" v-on="on"><router-link tag="a" exact :to="goToShowUserPage(item)" v-text="item.displayname" class="text-no-wrap text--decoration-none"></router-link></span>
+                  </template>
+                  <span>{{ trans('View Details') }}</span>
+                </v-tooltip>
               </div>
-            </v-slide-y-transition>
-          </template>
+            </template>
 
-          <template v-slot:item.displayname="{ item }">
-            <div class="d-flex align-items-center">
-              <v-tooltip v-if="auth.id == item.id" bottom>
-                <template v-slot:activator="{ on }">
-                  <v-badge
-                    avatar
-                    bordered
-                    color="muted"
-                    offset-x="35"
-                    offset-y="15"
-                    overlap
-                    >
-                    <template v-slot:badge>
-                      <v-avatar>
-                        <i class="small mdi mdi-home-account" style="font-size: 12px"></i>
-                      </v-avatar>
-                    </template>
-                    <v-avatar v-on="on" class="mr-6" size="32" color="muted"><v-img :src="item.avatar"></v-img></v-avatar>
-                  </v-badge>
-                </template>
-                <span>{{ trans('This is your account') }}</span>
-              </v-tooltip>
-              <v-avatar v-else class="mr-6" size="32" color="muted"><v-img :src="item.avatar"></v-img></v-avatar>
+            <!-- Created & Modified -->
+            <template v-slot:item.updated_at="{ item }">
+              <span class="text-no-wrap" :title="item.updated_at">{{ trans(item.modified) }}</span>
+            </template>
+            <!-- Created & Modified -->
 
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <span class="mt-1" v-on="on"><router-link tag="a" exact :to="goToShowUserPage(item)" v-text="item.displayname" class="text-no-wrap text--decoration-none"></router-link></span>
-                </template>
-                <span>{{ trans('View Details') }}</span>
-              </v-tooltip>
-            </div>
-          </template>
-
-          <!-- Created & Modified -->
-          <template v-slot:item.updated_at="{ item }">
-            <span class="text-no-wrap" :title="item.updated_at">{{ trans(item.modified) }}</span>
-          </template>
-          <!-- Created & Modified -->
-
-          <!-- Action buttons -->
-          <template v-slot:item.action="{ item }">
-            <div class="text-no-wrap">
-              <!-- Edit -->
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-btn :to="{name: 'users.edit', params: {id: item.id}}" icon v-on="on">
-                    <v-icon small>mdi-pencil-outline</v-icon>
-                  </v-btn>
-                </template>
-                <span>{{ trans('Edit this user') }}</span>
-              </v-tooltip>
-              <!-- Edit -->
-              <!-- Move to Trash -->
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-btn @click="askUserToDestroyUser(item)" icon v-on="on">
-                    <v-icon small>mdi-delete-outline</v-icon>
-                  </v-btn>
-                </template>
-                <span>{{ trans('Deactivate user') }}</span>
-              </v-tooltip>
-              <!-- Move to Trash -->
-            </div>
-          </template>
-          <!-- Action buttons -->
-        </v-data-table>
-      </v-slide-y-reverse-transition>
-    </v-card>
+            <!-- Action buttons -->
+            <template v-slot:item.action="{ item }">
+              <div class="text-no-wrap">
+                <!-- Edit -->
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn :to="{name: 'users.edit', params: {id: item.id}}" icon v-on="on">
+                      <v-icon small>mdi-pencil-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ trans('Edit this user') }}</span>
+                </v-tooltip>
+                <!-- Edit -->
+                <!-- Move to Trash -->
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn @click="askUserToDestroyUser(item)" icon v-on="on">
+                      <v-icon small>mdi-delete-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ trans('Deactivate user') }}</span>
+                </v-tooltip>
+                <!-- Move to Trash -->
+              </div>
+            </template>
+            <!-- Action buttons -->
+          </v-data-table>
+        </v-slide-y-reverse-transition>
+      </v-card>
+    </div>
     <!-- Data table -->
+
+    <!-- Empty state -->
+    <div v-if="resourcesIsEmpty">
+      <empty-state>
+        <template v-slot:actions>
+          <v-btn
+            large
+            color="primary"
+            exact
+            :to="{name: 'users.create'}">
+            <v-icon small left>mdi-account-plus-outline</v-icon>
+            {{ trans('Add user') }}
+          </v-btn>
+        </template>
+      </empty-state>
+    </div>
+    <!-- Empty state -->
   </admin>
 </template>
 
@@ -147,13 +166,15 @@ export default {
 
     auth: $auth.getUser(),
 
-    dataset: {
+    resources: {
       loading: true,
       search: null,
       options: {
         page: 1,
         pageCount: 0,
         itemsPerPage: 10,
+        sortDesc: [],
+        sortBy: [],
         // rowsPerPage: [5, 10, 15, 20, 50, 100],
       },
       meta: {},
@@ -182,17 +203,25 @@ export default {
   }),
 
   computed: {
+    resourcesIsEmpty () {
+      return window._.isEmpty(this.resources.data)
+    },
+
+    resourcesIsNotEmpty () {
+      return !this.resourcesIsEmpty
+    },
+
     options: function () {
       return {
-        per_page: this.dataset.options.itemsPerPage,
-        page: this.dataset.options.page,
-        sort: this.dataset.options.sortBy[0] || undefined,
-        order: this.dataset.options.sortDesc[0] || false ? 'desc' : 'asc',
+        per_page: this.resources.options.itemsPerPage,
+        page: this.resources.options.page,
+        sort: this.resources.options.sortBy[0] || undefined,
+        order: this.resources.options.sortDesc[0] || false ? 'desc' : 'asc',
       }
     },
 
     selected: function () {
-      return this.dataset.selected.map((item) => (item.id) )
+      return this.resources.selected.map((item) => (item.id) )
     },
   },
 
@@ -213,7 +242,7 @@ export default {
       this.options.per_page = this.$route.query.per_page
       this.options.page = parseInt(this.$route.query.page)
       this.options.search = this.$route.query.search
-      this.dataset.search = this.options.search
+      this.resources.search = this.options.search
       this.tabletoolbar.search = this.options.search
     },
 
@@ -223,13 +252,13 @@ export default {
 
     getPaginatedData: function (params = null, caller = null) {
       // console.log(`getPagintedData Called by ${caller}`);
-      params = Object.assign(params ? params : this.$route.query, { search: this.dataset.search })
-      this.dataset.loading = true
+      params = Object.assign(params ? params : this.$route.query, { search: this.resources.search })
+      this.resources.loading = true
       axios.get(this.api.list(), { params })
         .then(response => {
-          this.dataset = Object.assign({}, this.dataset, response.data)
-          this.dataset.options = Object.assign(this.dataset.options, response.data.meta, params)
-          this.dataset.loading = false
+          this.resources = Object.assign({}, this.resources, response.data)
+          this.resources.options = Object.assign(this.resources.options, response.data.meta, params)
+          this.resources.loading = false
           this.$router.push({query: Object.assign({}, this.$route.query, params)}).catch(err => {})
         })
         .catch(err => {
@@ -241,7 +270,7 @@ export default {
           })
         })
         .finally(() => {
-          this.dataset.data.map(function (data) {
+          this.resources.data.map(function (data) {
             return Object.assign(data, {loading: false})
           })
         })
@@ -252,11 +281,11 @@ export default {
     },
 
     search: _.debounce(function (event) {
-      this.dataset.search = event.srcElement.value || ''
+      this.resources.search = event.srcElement.value || ''
       this.tabletoolbar.isSearching = false
-      if (this.dataset.searching) {
+      if (this.resources.searching) {
         this.getPaginatedData(this.options, 'search')
-        this.dataset.searching = false
+        this.resources.searching = false
       }
     }, 200),
 
@@ -336,17 +365,17 @@ export default {
   },
 
   watch: {
-    'dataset.search': function (val) {
-      this.dataset.searching = true
+    'resources.search': function (val) {
+      this.resources.searching = true
     },
 
-    'dataset.selected': function (val) {
+    'resources.selected': function (val) {
       this.tabletoolbar.bulkCount = val.length
     },
 
     'tabletoolbar.toggleBulkEdit': function (val) {
       if (!val) {
-        this.dataset.selected = []
+        this.resources.selected = []
       }
     }
   },

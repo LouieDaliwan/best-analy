@@ -5,103 +5,121 @@
     <page-header :back="{ to: { name: 'users.index' }, text: trans('Users') }"></page-header>
 
     <!-- Data table -->
-    <v-card>
-      <toolbar-menu
-        :items.sync="tabletoolbar"
-        bulk
-        restorable
-        deletable
-        @update:restore="bulkRestoreResources"
-        @update:search="search"
-        @update:delete="bulkDeleteResources"
-        >
-      </toolbar-menu>
-      <v-slide-y-reverse-transition mode="out-in">
-        <v-data-table
-          :headers="dataset.headers"
-          :items="dataset.data"
-          :loading="dataset.loading"
-          :mobile-breakpoint="NaN"
-          :options.sync="dataset.options"
-          :server-items-length="dataset.meta.total"
-          :show-select="tabletoolbar.toggleBulkEdit"
-          @update:options="optionsChanged"
-          color="primary"
-          item-key="id"
-          v-model="dataset.selected"
-          >
-          <template v-slot:progress><span></span></template>
+      <div v-show="resourcesIsNotEmpty">
+        <v-card>
+          <toolbar-menu
+            :items.sync="tabletoolbar"
+            bulk
+            restorable
+            deletable
+            @update:restore="bulkRestoreResources"
+            @update:search="search"
+            @update:delete="bulkDeleteResources"
+            >
+          </toolbar-menu>
+          <v-slide-y-reverse-transition mode="out-in">
+            <v-data-table
+              :headers="resources.headers"
+              :items="resources.data"
+              :loading="resources.loading"
+              :mobile-breakpoint="NaN"
+              :options.sync="resources.options"
+              :server-items-length="resources.meta.total"
+              :show-select="tabletoolbar.toggleBulkEdit"
+              @update:options="optionsChanged"
+              color="primary"
+              item-key="id"
+              v-model="resources.selected"
+              >
+              <template v-slot:progress><span></span></template>
 
-          <template v-slot:loading>
-            <v-slide-y-transition mode="out-in">
-              <div>
-                <div class="d-flex" v-for="(j,i) in dataset.options.itemsPerPage" :key="i">
-                  <v-skeleton-loader
-                    class="px-4 py-3 mr-4"
-                    type="avatar"
-                  ></v-skeleton-loader>
-                  <v-skeleton-loader
-                    class="px-4 py-3"
-                    width="100%"
-                    type="table-row"
-                  ></v-skeleton-loader>
+              <template v-slot:loading>
+                <v-slide-y-transition mode="out-in">
+                  <div>
+                    <div class="d-flex" v-for="(j,i) in resources.options.itemsPerPage" :key="i">
+                      <v-skeleton-loader
+                        class="px-4 py-3 mr-4"
+                        type="avatar"
+                      ></v-skeleton-loader>
+                      <v-skeleton-loader
+                        class="px-4 py-3"
+                        width="100%"
+                        type="table-row"
+                      ></v-skeleton-loader>
+                    </div>
+                  </div>
+                </v-slide-y-transition>
+              </template>
+
+              <!-- Avatar and Name -->
+              <template v-slot:item.displayname="{ item }">
+                <div class="d-flex align-items-center">
+                  <v-avatar style="filter: grayscale(0.9);" color="workspace" class="mr-6" size="32"><v-img :src="item.avatar"></v-img></v-avatar>
+                  <span class="mt-1 muted--text" v-text="item.displayname"></span>
                 </div>
-              </div>
-            </v-slide-y-transition>
-          </template>
+              </template>
+              <!-- Avatar and Name -->
 
-          <!-- Avatar and Name -->
-          <template v-slot:item.displayname="{ item }">
-            <div class="d-flex align-items-center">
-              <v-avatar style="filter: grayscale(0.9);" color="workspace" class="mr-6" size="32"><v-img :src="item.avatar"></v-img></v-avatar>
-              <span class="mt-1 muted--text" v-text="item.displayname"></span>
-            </div>
-          </template>
-          <!-- Avatar and Name -->
+              <!-- Role -->
+              <template v-slot:item.role="{ item }">
+                <span class="mt-1 muted--text" v-text="item.role"></span>
+              </template>
+              <!-- Role -->
 
-          <!-- Role -->
-          <template v-slot:item.role="{ item }">
-            <span class="mt-1 muted--text" v-text="item.role"></span>
-          </template>
-          <!-- Role -->
+              <!-- Deleted -->
+              <template v-slot:item.deleted_at="{ item }">
+                <span class="text-no-wrap muted--text" :title="item.deleted_at">{{ trans(item.deleted) }}</span>
+              </template>
+              <!-- Created -->
 
-          <!-- Deleted -->
-          <template v-slot:item.deleted_at="{ item }">
-            <span class="text-no-wrap muted--text" :title="item.deleted_at">{{ trans(item.deleted) }}</span>
-          </template>
-          <!-- Created -->
-
-          <!-- Action buttons -->
-          <template v-slot:item.action="{ item }">
-            <div class="text-no-wrap">
-              <!-- Restore -->
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-btn @click="restoreResource(item)" icon v-on="on">
-                    <v-icon class="mdi-spin" small v-if="item.loading">mdi-loading</v-icon>
-                    <v-icon small v-else>mdi-restore</v-icon>
-                  </v-btn>
-                </template>
-                <span>{{ trans_choice('Restore this user', 1) }}</span>
-              </v-tooltip>
-              <!-- Restore -->
-              <!-- Permanently Delete -->
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-btn @click="askUserToPermanentlyDeleteResource(item)" icon v-on="on">
-                    <v-icon small>mdi-delete-forever-outline</v-icon>
-                  </v-btn>
-                </template>
-                <span>{{ trans_choice('Permanently delete this user', 1) }}</span>
-              </v-tooltip>
-              <!-- Permanently Delete -->
-            </div>
-          </template>
-          <!-- Action buttons -->
-        </v-data-table>
-      </v-slide-y-reverse-transition>
-    </v-card>
+              <!-- Action buttons -->
+              <template v-slot:item.action="{ item }">
+                <div class="text-no-wrap">
+                  <!-- Restore -->
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn @click="restoreResource(item)" icon v-on="on">
+                        <v-icon class="mdi-spin" small v-if="item.loading">mdi-loading</v-icon>
+                        <v-icon small v-else>mdi-restore</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans_choice('Restore this user', 1) }}</span>
+                  </v-tooltip>
+                  <!-- Restore -->
+                  <!-- Permanently Delete -->
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn @click="askUserToPermanentlyDeleteResource(item)" icon v-on="on">
+                        <v-icon small>mdi-delete-forever-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans_choice('Permanently delete this user', 1) }}</span>
+                  </v-tooltip>
+                  <!-- Permanently Delete -->
+                </div>
+              </template>
+              <!-- Action buttons -->
+            </v-data-table>
+          </v-slide-y-reverse-transition>
+        </v-card>
+      </div>
     <!-- Data table -->
+
+    <!-- Empty state -->
+    <div v-if="resourcesIsEmpty">
+      <empty-state>
+        <template v-slot:actions>
+          <v-btn
+            large
+            color="primary"
+            exact
+            :to="{name: 'users.index'}">
+            {{ trans('Go back to all users') }}
+          </v-btn>
+        </template>
+      </empty-state>
+    </div>
+    <!-- Empty state -->
   </admin>
 </template>
 
@@ -117,13 +135,15 @@ export default {
 
     auth: $auth.getUser(),
 
-    dataset: {
+    resources: {
       loading: true,
       search: null,
       options: {
         page: 1,
         pageCount: 0,
         itemsPerPage: 10,
+        sortDesc: [],
+        sortBy: [],
         // rowsPerPage: [5, 10, 15, 20, 50, 100],
       },
       meta: {},
@@ -152,17 +172,25 @@ export default {
   }),
 
   computed: {
+    resourcesIsEmpty () {
+      return window._.isEmpty(this.resources.data)
+    },
+
+    resourcesIsNotEmpty () {
+      return !this.resourcesIsEmpty
+    },
+
     options: function () {
       return {
-        per_page: this.dataset.options.itemsPerPage,
-        page: this.dataset.options.page,
-        sort: this.dataset.options.sortBy[0] || undefined,
-        order: this.dataset.options.sortDesc[0] || false ? 'desc' : 'asc',
+        per_page: this.resources.options.itemsPerPage,
+        page: this.resources.options.page,
+        sort: this.resources.options.sortBy[0] || undefined,
+        order: this.resources.options.sortDesc[0] || false ? 'desc' : 'asc',
       }
     },
 
     selected: function () {
-      return this.dataset.selected.map((item) => (item.id) )
+      return this.resources.selected.map((item) => (item.id) )
     },
   },
 
@@ -183,7 +211,7 @@ export default {
       this.options.per_page = this.$route.query.per_page
       this.options.page = parseInt(this.$route.query.page)
       this.options.search = this.$route.query.search
-      this.dataset.search = this.options.search
+      this.resources.search = this.options.search
       this.tabletoolbar.search = this.options.search
     },
 
@@ -192,15 +220,15 @@ export default {
     },
 
     getPaginatedData: function (params = null) {
-      params = Object.assign(params ? params : this.$route.query, { search: this.dataset.search })
-      this.dataset.loading = true
+      params = Object.assign(params ? params : this.$route.query, { search: this.resources.search })
+      this.resources.loading = true
       axios.get(
         this.api.trashed(), {
           params
       }).then(response => {
-        this.dataset = Object.assign({}, this.dataset, response.data)
-        this.dataset.options = Object.assign(this.dataset.options, response.data.meta, params)
-        this.dataset.loading = false
+        this.resources = Object.assign({}, this.resources, response.data)
+        this.resources.options = Object.assign(this.resources.options, response.data.meta, params)
+        this.resources.loading = false
         this.$router.push({query: Object.assign({}, this.$route.query, params)}).catch(err => {})
       }).catch(err => {
         this.errorDialog({
@@ -210,18 +238,18 @@ export default {
           text: err.response.data.message,
         })
       }).finally(() => {
-        this.dataset.data.map(function (data) {
+        this.resources.data.map(function (data) {
           return Object.assign(data, {loading: false})
         })
       })
     },
 
     search: _.debounce(function (event) {
-      this.dataset.search = event.srcElement.value || ''
+      this.resources.search = event.srcElement.value || ''
       this.tabletoolbar.isSearching = false
-      if (this.dataset.searching) {
+      if (this.resources.searching) {
         this.getPaginatedData(this.options)
-        this.dataset.searching = false
+        this.resources.searching = false
       }
     }, 200),
 
@@ -337,17 +365,17 @@ export default {
   },
 
   watch: {
-    'dataset.search': function (val) {
-      this.dataset.searching = true
+    'resources.search': function (val) {
+      this.resources.searching = true
     },
 
-    'dataset.selected': function (val) {
+    'resources.selected': function (val) {
       this.tabletoolbar.bulkCount = val.length
     },
 
     'tabletoolbar.toggleBulkEdit': function (val) {
       if (!val) {
-        this.dataset.selected = []
+        this.resources.selected = []
       }
     }
   },

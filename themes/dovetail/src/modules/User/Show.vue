@@ -3,46 +3,77 @@
     <metatag :title="resource.data.displayname"></metatag>
 
     <page-header :back="{ to: { name: 'users.index' }, text: trans('Users') }">
-      <template v-slot:title>
-        {{ resource.data.displayname }}
-      </template>
+      <template v-slot:title>{{ resource.data.displayname }}</template>
       <template v-slot:utilities>
-        <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'users.edit'}">
-          <v-icon small class="mb-1">mdi-pencil-outline</v-icon>
-          {{ trans('Edit') }}
-        </router-link>
-        <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'users.trashed'}">
-          <v-icon small class="mb-1">mdi-delete-outline</v-icon>
-          {{ trans('Deactivate') }}
-        </router-link>
+        <can code="users.show">
+          <router-link tag="a" class="dt-link text--decoration-none mr-6" exact :to="{name: 'users.edit'}">
+            <v-icon small class="mb-1">mdi-pencil-outline</v-icon>
+            {{ trans('Edit') }}
+          </router-link>
+        </can>
+        <can code="users.destroy">
+          <a href="#" @click.prevent="askUserToDestroyResource(resource)" class="dt-link text--decoration-none mr-6">
+            <v-icon small class="mb-1">mdi-delete-outline</v-icon>
+            {{ trans('Deactivate') }}
+          </a>
+        </can>
       </template>
     </page-header>
 
     <v-card>
       <v-card-text>
-        <account v-model="resource.data"></account>
+        <user-account-detail-card
+          v-model="resource.data"
+          >
+        </user-account-detail-card>
       </v-card-text>
 
       <v-divider></v-divider>
 
       <!-- Background Details -->
       <v-simple-table>
-          <template v-slot:default>
-            <thead>
-              <tr>
-                <th colspan="100%" class="text-left">Background Details</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="font-weight-bold">Gender</td>
-                <td>Male</td>
-              </tr>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th colspan="100%" class="text-left" v-text="trans('Background Details')"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(detail, i) in resource.data['details:common']">
+              <td class="font-weight-bold">
+                <v-icon v-if="detail.icon == 'null'" small left>mdi-square-edit-outline</v-icon>
+                <v-icon v-else small left v-text="detail.icon"></v-icon>
+                <span v-text="trans(detail.key)"></span>
+              </td>
+              <td v-text="trans(detail.text)"></td>
+            </tr>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
       <!-- Background Details -->
+
+      <!-- Additional Background Details -->
+      <v-simple-table>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th colspan="100%" class="text-left" v-text="trans('Additional Background Details')"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(detail, i) in resource.data['details:others']">
+              <td class="font-weight-bold">
+                <v-icon small left>mdi-square-edit-outline</v-icon>
+                <span v-text="trans(detail.key)"></span>
+              </td>
+              <td v-text="trans(detail.text)"></td>
+            </tr>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+      <!-- Additional Background Details -->
     </v-card>
   </admin>
 </template>
@@ -50,6 +81,7 @@
 <script>
 import $api from './routes/api'
 import $auth from '@/core/Auth/auth'
+import { mapActions } from 'vuex'
 
 export default {
   data: () => ({
@@ -65,16 +97,15 @@ export default {
     }
   }),
 
-  beforeRouteLeave: function (to, from, next) {
-    // if resource.data was not save
-    // then prompt user
-    // something like:
-    // this.$store.dispatch('snackbar/show', {show: true, text: 'Triggered on beforeRouteLeave'})
-
-    next()
-  },
-
   methods: {
+    ...mapActions({
+      showDialog: 'dialog/show',
+      hideDialog: 'dialog/hide',
+      errorDialog: 'dialog/error',
+      showSnackbar: 'snackbar/show',
+      loadDialog: 'dialog/loading',
+    }),
+
     getResource: function () {
       axios.get($api.show(this.$route.params.id))
         .then(response => {
@@ -82,18 +113,48 @@ export default {
         }).finally(() => { this.resource.loading = false })
     },
 
-    submit (e) {
-      e.preventDefault()
+    askUserToDestroyResource (resource) {
+      this.showDialog({
+        color: 'warning',
+        illustration: () => import('@/components/Icons/ManThrowingAwayPaperIcon.vue'),
+        illustrationWidth: 200,
+        illustrationHeight: 160,
+        width: '420',
+        title: trans('You are about to deactivate the selected user.'),
+        text: [trans('The user will be signed out from the app. Some data related to the account like comments and files will still remain.'), trans('Are you sure you want to deactivate and move :name to Trash?', {name: resource.data.displayname})],
+        buttons: {
+          cancel: { show: true, color: 'link' },
+          action: {
+            text: trans('Move to Trash'),
+            color: 'warning',
+            callback: (dialog) => {
+              this.loadDialog(true)
+              this.destroyResource(resource)
+            }
+          }
+        }
+      })
+    },
 
-      axios.put($api.update(this.$route.params.id), this.resource.data)
-        .then(response => {
-          console.log(response)
-          // Toasty!
+    destroyResource (item) {
+      item.loading = true
+      axios.delete(
+        $api.destroy(item.data.id)
+      ).then(response => {
+        this.hideDialog()
+        this.showSnackbar({
+          show: true,
+          text: trans_choice('User successfully deactivated', 1)
         })
-        .catch(err => {
-          this.resource.loading = false
-          this.$refs['user-editform'].setErrors(err.response.data.errors)
+        this.$router.push({ name: 'users.index' })
+      }).catch(err => {
+        this.errorDialog({
+          width: 400,
+          buttons: { cancel: { show: false } },
+          title: trans('Whoops! An error occured'),
+          text: err.response.data.message,
         })
+      }).finally(() => { item.loading = false })
     },
   },
 

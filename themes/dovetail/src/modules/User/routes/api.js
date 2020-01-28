@@ -8,7 +8,7 @@ export default {
   },
 
   delete: function (id = null) {
-    return `/api/v1/users/${id}`
+    return `/api/v1/users/delete/${id}`
   },
 
   restore: function (id = null) {

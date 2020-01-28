@@ -1,7 +1,7 @@
 <template>
   <v-row class="mb-4">
     <v-col cols="12">
-      <div class="d-flex ustify-space-between align-center">
+      <div class="d-flex justify-space-between align-center">
         <div>
           <slot name="back" :back="back">
             <div class="mb-2" v-if="back">
@@ -21,10 +21,6 @@
 
         <div><slot name="action"></slot></div>
       </div>
-    </v-col>
-    <v-col class="py-0">
-      <error-box></error-box>
-      <success-box></success-box>
     </v-col>
   </v-row>
 </template>

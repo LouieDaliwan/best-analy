@@ -83,7 +83,7 @@
                     <v-avatar v-on="on" class="mr-6" size="32" color="muted"><v-img :src="item.avatar"></v-img></v-avatar>
                   </v-badge>
                 </template>
-                <span>{{ $t('This is your account') }}</span>
+                <span>{{ trans('This is your account') }}</span>
               </v-tooltip>
               <v-avatar v-else class="mr-6" size="32" color="muted"><v-img :src="item.avatar"></v-img></v-avatar>
 
@@ -91,7 +91,7 @@
                 <template v-slot:activator="{ on }">
                   <span class="mt-1" v-on="on"><router-link tag="a" exact :to="goToShowUserPage(item)" v-text="item.displayname" class="text-no-wrap text--decoration-none"></router-link></span>
                 </template>
-                <span>{{ $t('View Details') }}</span>
+                <span>{{ trans('View Details') }}</span>
               </v-tooltip>
             </div>
           </template>
@@ -112,7 +112,7 @@
                     <v-icon small>mdi-pencil-outline</v-icon>
                   </v-btn>
                 </template>
-                <span>{{ $tc('Edit this user', 1) }}</span>
+                <span>{{ trans('Edit this user') }}</span>
               </v-tooltip>
               <!-- Edit -->
               <!-- Move to Trash -->
@@ -122,7 +122,7 @@
                     <v-icon small>mdi-delete-outline</v-icon>
                   </v-btn>
                 </template>
-                <span>{{ $tc('Deactivate user', 1) }}</span>
+                <span>{{ trans('Deactivate user') }}</span>
               </v-tooltip>
               <!-- Move to Trash -->
             </div>
@@ -132,12 +132,6 @@
       </v-slide-y-reverse-transition>
     </v-card>
     <!-- Data table -->
-
-    <!-- Dialog -->
-    <dialogbox>
-      <error-icon class="mx-auto d-block" :width="200" :height="200"></error-icon>
-    </dialogbox>
-    <!-- Dialog -->
   </admin>
 </template>
 
@@ -145,6 +139,7 @@
 import $api from './routes/api'
 import $auth from '@/core/Auth/auth'
 import man from '@/components/Icons/ManThrowingAwayPaperIcon.vue'
+import { mapActions } from 'vuex'
 
 export default {
   data: () => ({
@@ -206,6 +201,14 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      errorDialog: 'dialog/error',
+      loadDialog: 'dialog/loading',
+      showDialog: 'dialog/show',
+      hideDialog: 'dialog/hide',
+      showSnackbar: 'snackbar/show',
+    }),
+
     changeOptionsFromRouterQueries () {
       this.options.per_page = this.$route.query.per_page
       this.options.page = parseInt(this.$route.query.page)
@@ -215,7 +218,7 @@ export default {
     },
 
     optionsChanged (options) {
-      this.getPaginatedData(this.options, 'optionsChaned')
+      this.getPaginatedData(this.options)
     },
 
     getPaginatedData: function (params = null, caller = null) {
@@ -230,8 +233,7 @@ export default {
           this.$router.push({query: Object.assign({}, this.$route.query, params)}).catch(err => {})
         })
         .catch(err => {
-          this.$store.dispatch('dialog/error', {
-            show: true,
+          this.errorDialog({
             width: 400,
             buttons: { cancel: { show: false } },
             title: trans('Whoops! An error occured'),
@@ -269,15 +271,13 @@ export default {
           this.getPaginatedData(null, 'bulkTrashResource')
           this.tabletoolbar.toggleTrash = false
           this.tabletoolbar.toggleBulkEdit = false
-          this.$store.dispatch('dialog/close')
-          this.$store.dispatch('snackbar/show', {
-            show: true,
-            text: this.$tc('User successfully deactivated', this.tabletoolbar.bulkCount)
+          this.hideDialog()
+          this.showSnackbar({
+            text: trans_choice('User successfully deactivated', this.tabletoolbar.bulkCount)
           })
         })
         .catch(err => {
-          this.$store.dispatch('dialog/error', {
-            show: true,
+          this.errorDialog({
             width: 400,
             buttons: { cancel: { show: false } },
             title: trans('Whoops! An error occured'),
@@ -287,22 +287,21 @@ export default {
     },
 
     askUserToDestroyUser (item) {
-      this.$store.dispatch('dialog/prompt', {
-        show: true,
+      this.showDialog({
         color: 'warning',
         illustration: man,
         illustrationWidth: 200,
         illustrationHeight: 160,
         width: '420',
-        title: 'You are about to deactivate the selected user.',
-        text: ['The user will be signed out from the app. Some data related to the account like comments and files will still remain.', this.$t('Are you sure you want to deactivate and move :name to Trash?', {name: item.displayname})],
+        title: 'You are about to move to trash the selected user.',
+        text: ['The user will be signed out from the app. Some data related to the account like comments and files will still remain.', trans('Are you sure you want to move :name to Trash?', {name: item.displayname})],
         buttons: {
           cancel: { show: true, color: 'link' },
           action: {
             text: 'Move to Trash',
             color: 'warning',
             callback: (dialog) => {
-              this.$store.dispatch('dialog/loading', true)
+              this.loadDialog(true)
               this.destroyResource(item)
             }
           }
@@ -316,18 +315,16 @@ export default {
         .then(response => {
           item.active = false
           this.getPaginatedData(null, 'destroyResource')
-          this.$store.dispatch('snackbar/show', {
-            show: true,
-            text: this.$tc('User successfully deactivated', 1)
+          this.showSnackbar({
+            text: trans_choice('User successfully deactivated', 1)
           })
-          this.$store.dispatch('dialog/prompt', { show: false })
+          this.hideDialog()
         })
         .catch(err => {
-          this.$store.dispatch('dialog/error', {
-            show: true,
+          this.errorDialog({
             width: 400,
             buttons: { cancel: { show: false } },
-            title: this.$t('Whoops! An error occured'),
+            title: trans('Whoops! An error occured'),
             text: err.response.data.message,
           })
         })

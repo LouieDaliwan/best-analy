@@ -111,7 +111,7 @@ class UserService extends Service implements UserServiceInterface
                     'key' => $detail['key'],
                     'type' => DetailType::DETAIL,
                 ], [
-                    'icon' => $detail['icon'] ?? null,
+                    'icon' => $detail['icon'] ?? DetailType::DEFAULT_ICON,
                     'key' => $detail['key'] ?? null,
                     'value' => $detail['value'] ?? null,
                 ]);

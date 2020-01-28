@@ -19,7 +19,6 @@ import './plugins/shortkey'
 
 import '@/mixins'
 
-import '@/utils'
 import '@/components'
 
 /**

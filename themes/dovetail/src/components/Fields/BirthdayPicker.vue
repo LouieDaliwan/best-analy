@@ -69,11 +69,12 @@ export default {
 
   watch: {
     value (val) {
-      this.dateFormatted = val.value
+      let dateValue = val.value == 'null' ? '' : val.value
+      this.dateFormatted = this.formatDate(dateValue)
     },
 
     date (val) {
-      this.dateFormatted = this.formatDate(this.date)
+      this.dateFormatted = this.formatDate(val)
     },
 
     dateFormatted (val) {
@@ -87,11 +88,19 @@ export default {
 
   methods: {
     formatDate (date) {
-      return date ? moment(new Date(date)).format('MMM DD, YYYY') : null
+      if (_.isEmpty(date)) {
+        return ''
+      }
+
+      return date ? moment(new Date(date)).format('MMM DD, YYYY') : ''
     },
 
     parseDate (date) {
-      return date ? moment(new Date(date), 'MMM DD, YYYY').format('YYYY-MM-DD') : null
+      if (_.isEmpty(date)) {
+        return ''
+      }
+
+      return date ? moment(new Date(date), 'MMM DD, YYYY').format('YYYY-MM-DD') : ''
     },
   },
 }

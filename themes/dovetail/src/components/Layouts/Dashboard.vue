@@ -34,6 +34,10 @@ export default {
           })
         }
 
+        if (err.response.status === 404) {
+          this.$router.push({ name: 'error.404' })
+        }
+
         if (err.response.status == Response.HTTP_UNPROCESSABLE_ENTITY) {
           this.$store.dispatch('errorbox/show', {
             text: this.$t(err.response.data.message),

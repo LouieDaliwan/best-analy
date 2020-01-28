@@ -5,7 +5,7 @@
       <v-container class="py-0 px-0">
         <v-row justify="space-between" align="center">
           <v-fade-transition>
-            <v-col v-if="!resource.isPrestine" class="py-0" cols="auto">
+            <v-col v-if="isNotFormPrestine" class="py-0" cols="auto">
               <v-toolbar-title class="muted--text">{{ trans('Unsaved changes') }}</v-toolbar-title>
             </v-col>
           </v-fade-transition>
@@ -24,11 +24,11 @@
                 offset-y="20"
                 tile
                 transition="fade-transition"
-                v-model="$store.getters['shortkey/ctrlIsPressed']"
+                v-model="shortkeyCtrlIsPressed"
                 >
                 <v-btn
-                  :disabled="isUpdateDisabled"
-                  :loading="resource.loading"
+                  :disabled="isFormDisabled"
+                  :loading="isLoading"
                   @click.prevent="submitForm"
                   @shortkey="submitForm"
                   class="ml-3 mr-0"
@@ -49,7 +49,7 @@
     </template>
 
     <validation-observer ref="updateform" v-slot="{ handleSubmit, errors, invalid, passed }">
-      <v-form :disabled="resource.loading" ref="updateform-form" autocomplete="false" v-on:submit.prevent="handleSubmit(submit($event))" enctype="multipart/form-data">
+      <v-form :disabled="isLoading" ref="updateform-form" autocomplete="false" v-on:submit.prevent="handleSubmit(submit($event))" enctype="multipart/form-data">
         <button ref="submit-button" type="submit" class="d-none"></button>
         <page-header :back="{ to: { name: 'users.index' }, text: trans('Users') }">
           <template v-slot:title>
@@ -58,24 +58,7 @@
         </page-header>
 
         <!-- Alertbox -->
-        <alertbox>
-          <template v-slot:utilities="{ type }">
-            <template v-if="type === 'success'">
-              <can code="users.show">
-                <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'users.show', params: { id: $route.params.id }}">
-                  <v-icon small left>mdi-account-search-outline</v-icon>
-                  {{ trans('View user detail page') }}
-                </router-link>
-              </can>
-              <can code="users.create">
-                <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'users.create'}">
-                  <v-icon small left>mdi-account-plus-outline</v-icon>
-                  {{ trans('Create another user') }}
-                </router-link>
-              </can>
-            </template>
-          </template>
-        </alertbox>
+        <alertbox></alertbox>
         <!-- Alertbox -->
 
         <v-row>
@@ -85,11 +68,11 @@
               <v-card-text>
                 <v-row justify="space-between">
                   <v-col cols="6" md="2">
-                    <v-select :disabled="resource.loading" hide-details :label="trans('Prefix')" class="dt-text-field" background-color="selects" outlined dense :items="['Mr.', 'Ms.', 'Mrs.']" v-model="resource.data.prefixname"></v-select>
+                    <v-select :disabled="isLoading" hide-details :label="trans('Prefix')" class="dt-text-field" background-color="selects" outlined dense :items="['Mr.', 'Ms.', 'Mrs.']" v-model="resource.data.prefixname"></v-select>
                     <input type="hidden" name="prefixname" v-model="resource.data.prefixname">
                   </v-col>
                   <v-col cols="6" md="2">
-                    <v-text-field :disabled="resource.loading" hide-details :label="trans('Suffix')" class="dt-text-field" name="suffixname" outlined dense v-model="resource.data.suffixname"></v-text-field>
+                    <v-text-field :disabled="isLoading" hide-details :label="trans('Suffix')" class="dt-text-field" name="suffixname" outlined dense v-model="resource.data.suffixname"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -97,7 +80,7 @@
                     <validation-provider vid="firstname" :name="trans('first name')" rules="required" v-slot="{ errors }">
                       <v-text-field
                         :dense="isDense"
-                        :disabled="resource.loading"
+                        :disabled="isLoading"
                         :error-messages="errors"
                         :label="trans('First name')"
                         autofocus
@@ -114,7 +97,7 @@
                     <validation-provider vid="middlename" :name="trans('middle name')" v-slot="{ errors }">
                       <v-text-field
                         :dense="isDense"
-                        :disabled="resource.loading"
+                        :disabled="isLoading"
                         :error-messages="errors"
                         :label="trans('Middle name')"
                         class="dt-text-field"
@@ -128,7 +111,7 @@
                     <validation-provider vid="lastname" :name="trans('last name')" rules="required" v-slot="{ errors }">
                       <v-text-field
                         :dense="isDense"
-                        :disabled="resource.loading"
+                        :disabled="isLoading"
                         :error-messages="errors"
                         :label="trans('Last name')"
                         class="dt-text-field"
@@ -156,7 +139,7 @@
                     <validation-provider vid="details[Mobile Phone]" :name="trans('Mobile phone')" v-slot="{ errors }">
                       <v-text-field
                         :dense="isDense"
-                        :disabled="resource.loading"
+                        :disabled="isLoading"
                         :error-messages="errors"
                         :label="trans('Mobile phone')"
                         class="dt-text-field"
@@ -183,7 +166,7 @@
                     <validation-provider vid="details[Home Address]" :name="trans('Home address')" v-slot="{ errors }">
                       <v-text-field
                         :dense="isDense"
-                        :disabled="resource.loading"
+                        :disabled="isLoading"
                         :error-messages="errors"
                         :label="trans('Home address')"
                         class="dt-text-field"
@@ -208,7 +191,7 @@
             <v-card>
               <v-card-title class="pb-0">{{ trans('Additional Background Details') }}</v-card-title>
               <v-card-text>
-                <repeater :dense="isDense" :disabled="resource.loading" v-model="resource.data.details.others"></repeater>
+                <repeater :dense="isDense" :disabled="isLoading" v-model="resource.data.details.others"></repeater>
               </v-card-text>
             </v-card>
           </v-col>
@@ -220,15 +203,9 @@
               </v-card-text>
             </v-card>
 
-            <role-picker :dense="isDense" :disabled="resource.loading" class="mb-3" v-model="resource.data.roles"></role-picker>
+            <role-picker :dense="isDense" :disabled="isLoading" class="mb-3" v-model="resource.data.roles"></role-picker>
 
-            <v-card class="mb-3">
-              <v-card-title>{{ __('Metainfo') }}</v-card-title>
-              <v-card-text>
-                <p class="muted--text" v-html="`Created ${resource.data.created}`"></p>
-                <p class="muted--text" v-html="`Last modified ${resource.data.modified}`"></p>
-              </v-card-text>
-            </v-card>
+            <metainfo-card :list="metaInfoCardList"></metainfo-card>
           </v-col>
         </v-row>
       </v-form>
@@ -240,7 +217,7 @@
 import $api from './routes/api'
 import AccountDetails from './cards/AccountDetails'
 import User from './Models/User'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   beforeRouteLeave (to, from, next) {
@@ -258,6 +235,7 @@ export default {
   computed: {
     ...mapGetters({
       isDense: 'settings/fieldIsDense',
+      shortkeyCtrlIsPressed: 'shortkey/ctrlIsPressed',
     }),
     isDesktop () {
       return this.$vuetify.breakpoint.mdAndUp
@@ -265,8 +243,23 @@ export default {
     isInvalid () {
       return this.resource.isPrestine || this.resource.loading
     },
-    isUpdateDisabled () {
+    isLoading () {
+      return this.resource.loading
+    },
+    isFormDisabled () {
       return this.isInvalid || this.resource.isPrestine
+    },
+    isFormPrestine () {
+      return this.resource.isPrestine
+    },
+    isNotFormPrestine () {
+      return !this.isFormPrestine
+    },
+    metaInfoCardList () {
+      return [
+        { icon: 'mdi-calendar', text: trans('Created :date', { date: this.resource.data.created }) },
+        { icon: 'mdi-calendar-edit', text: trans('Modified :date', { date: this.resource.data.modified }) },
+      ]
     },
   },
 
@@ -276,8 +269,21 @@ export default {
   }),
 
   methods: {
+    ...mapActions({
+      hideAlertbox: 'alertbox/hide',
+      hideDialog: 'dialog/hide',
+      hideErrorbox: 'errorbox/hide',
+      hideSnackbar: 'snackbar/hide',
+      hideSuccessbox: 'successbox/hide',
+      showAlertbox: 'alertbox/show',
+      showDialog: 'dialog/show',
+      showErrorbox: 'errorbox/show',
+      showSnackbar: 'snackbar/show',
+      showSuccessbox: 'successbox/show',
+    }),
+
     askUserBeforeNavigatingAway (next) {
-      this.$store.dispatch('dialog/show', {
+      this.showDialog({
         illustration: () => import('@/components/Icons/WorkingDeveloperIcon.vue'),
         title: trans('Unsaved changes will be lost'),
         text: trans('You have unsaved changes on this page. If you navigate away from this page, data will not be recovered.'),
@@ -285,14 +291,14 @@ export default {
           cancel: {
             text: trans('Go Back'),
             callback: () => {
-              this.$store.dispatch('dialog/close')
+              this.hideDialog()
             },
           },
           action: {
             text: trans('Discard'),
             callback: () => {
               next()
-              this.$store.dispatch('dialog/close')
+              this.hideDialog()
             },
           },
         }
@@ -300,7 +306,7 @@ export default {
     },
 
     askUserToDiscardUnsavedChanges () {
-      this.$store.dispatch('dialog/show', {
+      this.showDialog({
         illustration: () => import('@/components/Icons/WorkingDeveloperIcon.vue'),
         title: trans('Discard changes?'),
         text: trans('You have unsaved changes on this page. If you navigate away from this page, data will not be recovered.'),
@@ -308,25 +314,19 @@ export default {
           cancel: {
             text: trans('Cancel'),
             callback: () => {
-              this.$store.dispatch('dialog/close')
+              this.hideDialog()
             },
           },
           action: {
             text: trans('Discard'),
             callback: () => {
               this.resource.isPrestine = true
-              this.$store.dispatch('dialog/close')
+              this.hideDialog()
               this.$router.replace({name: 'users.index'})
             },
           },
         }
       })
-    },
-
-    beforeUserNavigatesAway (e) {
-      // this.askUserBeforeNavigatingAway()
-      // e.preventDefault()
-      // e.returnValue = ''
     },
 
     load (val = true) {
@@ -344,10 +344,10 @@ export default {
       formData.append('email', data.email)
 
       for (var i in data.details) {
-        let c = data.details[i]
-        let key = c.key
-        let icon = c.icon
-        let value = c.value == 'null' ? null : c.value
+        let c = data.details[i], key = c.key, icon = c.icon,
+        value = c.value == undefined || c.value == 'undefined' ||
+        c.value == 'null' || c.value == null ? '' : c.value
+
         formData.append(`details[${c.key}][key]`, key)
         formData.append(`details[${c.key}][icon]`, icon)
         formData.append(`details[${c.key}][value]`, value)
@@ -374,38 +374,44 @@ export default {
     },
 
     submitForm () {
-      if (!this.isUpdateDisabled) {
+      if (!this.isFormDisabled) {
         this.$refs['submit-button'].click()
         window.scrollTo({
           top: 0,
           left: 0,
           behavior: 'smooth',
-        });
+        })
       }
     },
 
     submit (e) {
       this.load()
       e.preventDefault()
-      this.$store.dispatch('alertbox/hide')
-
-      // var formData = this.parseResourceData(this.resource.data)
-      // for (var d of formData.entries()) {
-      //  console.log(d[0], d[1])
-      // }
-      // return;
 
       axios.post(
         $api.update(this.resource.data.id),
         this.parseResourceData(this.resource.data),
       ).then(response => {
-        this.$store.dispatch('snackbar/show', {
+        this.showSnackbar({
           text: trans('User updated successfully'),
         })
 
-        this.$store.dispatch('alertbox/show', {
-          type: 'success',
-          text: this.$t('Updated user {name}', {name: this.resource.data.displayname})
+        this.showSuccessbox({
+          text: trans('Updated user {name}', { name: this.resource.data.displayname }),
+          buttons: {
+            show: {
+              code: 'users.show',
+              to: { name: 'users.show', params: { id: this.resource.data.id } },
+              icon: 'mdi-account-search-outline',
+              text: trans('View Details'),
+            },
+            create: {
+              code: 'users.create',
+              to: { name: 'users.create' },
+              icon: 'mdi-account-plus-outline',
+              text: trans('Create New User'),
+            },
+          },
         })
 
         this.$refs['updateform'].reset()
@@ -415,10 +421,9 @@ export default {
           let errorCount = _.size(err.response.data.errors)
 
           this.$refs['updateform'].setErrors(err.response.data.errors)
-          this.$store.dispatch('alertbox/show', {
-            text: this.$tc('There is {number} invalid field in this page', errorCount, {number: errorCount}),
-            type: 'error',
-            list: err.response.data.errors,
+          this.showErrorbox({
+            text: trans(err.response.data.message),
+            errors: err.response.data.errors,
           })
         }
       }).finally(() => { this.load(false) })
@@ -445,7 +450,7 @@ export default {
         this.resource.isPrestine = false
         this.resource.hasErrors = this.$refs.updateform.flags.invalid
         if (!this.resource.hasErrors) {
-          this.$store.dispatch('alertbox/hide')
+          this.hideAlertbox()
         }
       },
       deep: true,

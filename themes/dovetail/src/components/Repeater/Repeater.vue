@@ -2,16 +2,16 @@
   <section>
     <template v-if="repeatersIsEmpty">
       <slot name="empty">
-        <div>
-          <!-- <v-card-text style="filter: grayscale(0.9);">
-            <empty-icon width="300" height="auto"></empty-icon>
+        <div class="text-center">
+          <v-card-text style="filter: grayscale(0.9);">
+            <empty-icon width="300" height="280"></empty-icon>
           </v-card-text>
           <v-card-text>
             <slot name="text">
               <p class="muted--text font-weight-bold mb-0" v-text="trans('No items yet')"></p>
               <p class="muted--text" v-text="trans('Start adding key-value pairs.')"></p>
             </slot>
-          </v-card-text> -->
+          </v-card-text>
           <v-badge
             bordered
             bottom
@@ -158,7 +158,6 @@ export default {
 
   data: (vm) => ({
     focus: false,
-    // repeaters: [],
   }),
 
   methods: {
@@ -192,7 +191,6 @@ export default {
     },
     repeatersX: {
       handler: function (val) {
-        console.log(val)
         this.$emit('input', val)
       },
       deep: true,

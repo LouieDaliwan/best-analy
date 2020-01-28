@@ -1,3 +1,5 @@
+import store from '@/store'
+
 export const state = () => ({
   alertbox: {
     border: 'left',
@@ -43,6 +45,8 @@ export const actions = {
   },
 
   hide: ({ commit }, payload) => {
+    store.dispatch('errorbox/hide')
+    store.dispatch('successbox/hide')
     commit('HIDE', payload)
   },
 }

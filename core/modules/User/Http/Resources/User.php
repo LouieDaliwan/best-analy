@@ -21,6 +21,8 @@ class User extends JsonResource
             'created' => $this->created,
             'deleted' => $this->deleted,
             'details' => $this->getDetails(),
+            'details:common' => $this->getCommonDetails(),
+            'details:others' => $this->getOtherDetails(),
             'displayname' => $this->displayname,
             'modified' => $this->modified,
             'permissions' => $this->permissions->pluck('code'),

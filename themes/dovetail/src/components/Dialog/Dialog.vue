@@ -14,7 +14,7 @@
           </div>
         </slot>
         <v-card-title class="pa-0">
-          <slot name="title">{{ trans(dialog.title) }}</slot>
+          <slot name="title">{{ dialog.title }}</slot>
         </v-card-title>
         <slot name="text"><div v-html="text"></div></slot>
       </v-card-text>

@@ -11,7 +11,7 @@ export const messages = {
 }
 
 const i18n = new VueI18n({
-  locale: localStorage.getItem('app:locale') || 'en',
+  locale: localStorage.getItem('app:locale') || null,
   fallbackLocale: window.$app.fallback_locale,
   silentFallbackWarn: true,
   silentTranslationWarn: true,
@@ -26,8 +26,8 @@ window.trans = function (text, options = null) {
   return i18n.t(text, options)
 }
 
-window.tchoice = function (text, options = null) {
-  return i18n.tc(text, options)
+window.trans_choice = function (text, count = 1, options = null) {
+  return i18n.tc(text, count, options)
 }
 
 export default i18n

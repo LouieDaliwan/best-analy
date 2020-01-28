@@ -105,9 +105,18 @@ export const actions = {
     context.commit('PROMPT_ERROR', payload)
   },
 
+  open: (context, payload) => {
+    context.commit('RESET_INITIAL_STATE')
+    context.commit('PROMPT_DIALOG', Object.assign(payload, { show: true }))
+  },
+
   show: (context, payload) => {
     context.commit('RESET_INITIAL_STATE')
     context.commit('PROMPT_DIALOG', Object.assign(payload, { show: true }))
+  },
+
+  hide: (context) => {
+    context.commit('CLOSE_DIALOG')
   },
 
   close: (context) => {

@@ -1,14 +1,16 @@
-import _get from 'lodash/get'
-
 export default {
   name: 'trans',
   methods: {
     trans: function (string, defaultString) {
-      return this.$tc(string, defaultString)
+      return this.$i18n.t(string, defaultString)
     },
 
     __: function (string, defaultString) {
       return this.trans(string, defaultString)
+    },
+
+    trans_choice: function (string, choice, stringVariable) {
+      return this.$i18n.tc(string, choice, stringVariable)
     },
   }
 }

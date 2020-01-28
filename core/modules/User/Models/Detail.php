@@ -3,12 +3,22 @@
 namespace User\Models;
 
 use Core\Enumerations\DetailType;
+use Core\Models\Accessors\CommonAttributes;
 use Illuminate\Database\Eloquent\Model;
 use User\Enumerations\CredentialColumns;
 use User\Models\User;
 
 class Detail extends Model
 {
+    use CommonAttributes;
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['text'];
+
     /**
      * The attributes that are not mass assignable.
      *
@@ -46,5 +56,27 @@ class Detail extends Model
     public function getPasswordAttribute(): string
     {
         return str_repeat("*", strlen($this->attributes['value']));
+    }
+
+    /**
+     * Retrieve the parsed value string.
+     *
+     * @return string
+     */
+    public function getTextAttribute():? string
+    {
+        switch (strtolower($this->key)) {
+            case DetailType::BIRTHDAY:
+                if (! is_null($this->value)) {
+                    return date(settings('format:date:birthday', 'd-M, Y'), strtotime($this->value));
+                }
+                break;
+
+            default:
+                return $this->value;
+                break;
+        }
+
+        return $this->value;
     }
 }

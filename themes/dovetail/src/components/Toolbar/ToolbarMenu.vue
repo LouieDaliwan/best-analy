@@ -53,6 +53,8 @@
               <v-divider v-if="items.bulkCount" vertical class="mx-2"></v-divider>
             </v-slide-x-reverse-transition>
             <v-spacer v-if="items.bulkCount"></v-spacer>
+
+            <!-- Action buttons -->
             <v-scale-transition>
               <span v-if="items.toggleBulkEdit">
                 <v-tooltip bottom>
@@ -61,15 +63,20 @@
                       <v-icon small>mdi-download</v-icon>
                     </v-btn>
                   </template>
-                  <span>{{ trans('Export selected users') }}</span>
+                  <span>{{ trans('Export selected items') }}</span>
                 </v-tooltip>
               </span>
             </v-scale-transition>
             <v-scale-transition>
               <span v-if="items.toggleBulkEdit">
-                <v-btn class="mr-2" v-if="restorable" icon :disabled="!items.toggleBulkEdit">
-                  <v-icon small>mdi-restore</v-icon>
-                </v-btn>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn v-on="on" @click="askUserToBulkRestoreResources" class="mr-2" v-if="restorable" icon :disabled="!items.toggleBulkEdit">
+                      <v-icon small>mdi-restore</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ trans('Restore selected items') }}</span>
+                </v-tooltip>
               </span>
             </v-scale-transition>
             <v-scale-transition>
@@ -80,10 +87,23 @@
                       <v-icon small>mdi-delete-outline</v-icon>
                     </v-btn>
                   </template>
-                  <span>{{ trans('Move selected users to trash') }}</span>
+                  <span>{{ trans('Move selected items to trash') }}</span>
                 </v-tooltip>
               </span>
             </v-scale-transition>
+            <v-scale-transition>
+              <span v-if="items.toggleBulkEdit">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn class="mr-2" @click="askUserToBulkPermanentlyDeleteResources" v-if="deletable" icon v-on="on" :disabled="!items.toggleBulkEdit">
+                      <v-icon small>mdi-delete-forever-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ trans_choice('Permanently delete the selected item') }}</span>
+                </v-tooltip>
+              </span>
+            </v-scale-transition>
+            <!-- Action buttons -->
 
             <v-badge
               bordered
@@ -118,6 +138,7 @@
             </v-badge>
 
             <v-divider vertical v-if="dataset.verticaldiv"></v-divider>
+
             <!-- list and grid view -->
             <template v-if="dataset.listGridView">
               <!-- grid -->
@@ -148,6 +169,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import ManIcon from '@/components/Icons/ManThrowingAwayPaperIcon.vue'
 import EmptyIcon from '@/components/Icons/EmptyIcon.vue'
+import ProjectManager from '@/components/Icons/ProjectManager.vue'
 
 export default {
   name: 'ToolbarMenu',
@@ -169,12 +191,16 @@ export default {
     },
     restorable: {
       type: [Boolean],
-    }
+    },
+    deletable: {
+      type: [Boolean],
+    },
   },
 
   data: () => ({
     dataset: {},
     trashButtonIsLoading: false,
+    deleteButtonIsLoading: false,
     isSearching: false,
   }),
 
@@ -192,6 +218,44 @@ export default {
     toggleView () {
       this.update({ toggleview: !this.toolbar.toggleview })
     },
+    askUserToBulkRestoreResources () {
+      if (this.items.bulkCount) {
+        this.$store.dispatch('dialog/prompt', {
+          show: true,
+          width: 420,
+          illustration: this.items.bulkCount ? ProjectManager : EmptyIcon,
+          illustrationWidth: 240,
+          illustrationHeight: 240,
+          loading: this.restoreButtonIsLoading,
+          color: 'primary',
+          title: trans_choice('Restore Selected Item', this.items.bulkCount),
+          text: trans_choice('Are you sure you want to restore the selected item?', this.items.bulkCount),
+          buttons: {
+            cancel: { show: this.items.bulkCount, color: 'link' },
+            action: {
+              color: this.items.bulkCount ? 'primary' : null,
+              text: this.items.bulkCount ? 'Restore' : 'Okay',
+              callback: () => {
+                this.$store.dispatch('dialog/loading', true)
+                if (!this.items.bulkCount) {
+                  this.$store.dispatch('dialog/loading', false)
+                  this.$store.dispatch('dialog/close')
+                } else {
+                  this.emitRestoreButtonClicked()
+                }
+              }
+            }
+          },
+        })
+      } else {
+        this.$store.dispatch('snackbar/show', {
+          text: trans('Select an item from the list first'),
+          button: {
+            text: trans('Okay'),
+          },
+        })
+      }
+    },
     askUserToBulkDestroyResources () {
       if (this.items.bulkCount) {
         this.$store.dispatch('dialog/prompt', {
@@ -202,8 +266,8 @@ export default {
           illustrationHeight: 240,
           loading: this.trashButtonIsLoading,
           color: 'warning',
-          title: this.$tc('Deactivate Selected User', this.items.bulkCount),
-          text: this.$tc('Are you sure you want to deactivate the selected user?', this.items.bulkCount),
+          title: trans_choice('Move the selected item to trash', this.items.bulkCount),
+          text: trans_choice('Are you sure you want to move the selected item to trash?', this.items.bulkCount),
           buttons: {
             cancel: { show: this.items.bulkCount, color: 'link' },
             action: {
@@ -223,15 +287,59 @@ export default {
         })
       } else {
         this.$store.dispatch('snackbar/show', {
-          text: this.$tc('Are you sure you want to deactivate the selected user?', this.items.bulkCount),
+          text: trans_choice('Select an item from the list first', this.items.bulkCount),
           button: {
-            text: this.$t('Okay'),
+            text: trans('Okay'),
           },
         })
       }
     },
+    askUserToBulkPermanentlyDeleteResources () {
+      if (this.items.bulkCount) {
+        this.$store.dispatch('dialog/prompt', {
+          show: true,
+          width: 420,
+          illustration: this.items.bulkCount ? ManIcon : EmptyIcon,
+          illustrationWidth: 240,
+          illustrationHeight: 240,
+          loading: this.deleteButtonIsLoading,
+          color: 'error',
+          title: trans_choice('Permanently delete the selected item', this.items.bulkCount),
+          text: trans_choice('Are you sure you want to permanently delete the selected item?', this.items.bulkCount),
+          buttons: {
+            cancel: { show: this.items.bulkCount, color: 'link' },
+            action: {
+              color: this.items.bulkCount ? 'error' : null,
+              text: this.items.bulkCount ? 'Permanently delete' : 'Okay',
+              callback: () => {
+                this.$store.dispatch('dialog/loading', true)
+                if (!this.items.bulkCount) {
+                  this.$store.dispatch('dialog/loading', false)
+                  this.$store.dispatch('dialog/close')
+                } else {
+                  this.emitDeleteButtonClicked()
+                }
+              }
+            }
+          },
+        })
+      } else {
+        this.$store.dispatch('snackbar/show', {
+          text: trans_choice('Select an item from the list first', this.items.bulkCount),
+          button: {
+            text: trans('Okay'),
+          },
+        })
+      }
+    },
+    emitRestoreButtonClicked () {
+      this.$emit('update:restore')
+    },
     emitTrashButtonClicked () {
       this.$emit('update:trash')
+    },
+    emitDeleteButtonClicked () {
+      this.$emit('update:delete')
     },
     toggleLoadingStateOnClick () {
       this.trashButtonIsLoading = !this.trashButtonIsLoading;

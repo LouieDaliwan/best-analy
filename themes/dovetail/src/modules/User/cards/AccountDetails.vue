@@ -36,7 +36,7 @@
             </v-text-field>
           </validation-provider>
         </v-col>
-        <v-col cols="12" :md="confirmed ? 6 : 12">
+        <v-col v-if="hasPassword" cols="12" :md="confirmed ? 6 : 12">
           <validation-provider vid="password" :name="trans('password')" rules="required|min:6" v-slot="{ errors }">
             <v-text-field
               :dense="isDense"
@@ -54,7 +54,7 @@
             </v-text-field>
           </validation-provider>
         </v-col>
-        <v-col v-if="confirmed" cols="12" md="6">
+        <v-col v-if="hasPassword && confirmed" cols="12" md="6">
           <validation-provider vid="password_confirmation" :name="trans('confirm password')" rules="required|confirmed:password|min:6" v-slot="{ errors }">
             <v-text-field
               :dense="isDense"
@@ -80,7 +80,19 @@
 import User from '../Models/User'
 
 export default {
-  props: ['value', 'confirmed'],
+  name: 'AccountDetails',
+
+  props: {
+    value: {
+      type: [Array, Object],
+    },
+    confirmed: {
+      type: [Boolean],
+    },
+    password: {
+      type: [Boolean],
+    },
+  },
 
   computed: {
     resource: {
@@ -90,6 +102,10 @@ export default {
       set (val) {
         this.$emit('input', val)
       },
+    },
+
+    hasPassword () {
+      return this.password
     },
 
     isDense: function () {

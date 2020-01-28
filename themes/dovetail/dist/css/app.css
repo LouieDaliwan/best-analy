@@ -268,9 +268,9 @@ pre {
   border-radius: 100%;
   display: inline-block;
   height: 160px;
-  width: 160px;
   min-height: 100px;
   min-width: 100px;
+  width: 160px;
 }
 
 .theme--dark .dt-avatar-preview {
@@ -286,7 +286,6 @@ pre {
   display: inline-block;
   font-size: 0.703125rem;
   line-height: 1;
-  padding: 0.3125rem 0.375rem;
   text-align: center;
   vertical-align: baseline;
   white-space: nowrap;
@@ -346,6 +345,7 @@ pre {
 .dovetail-app .v-card__title {
   font-size: var(--font-size-base);
   padding: var(--padding-base);
+  word-break: break-word;
 }
 
 .dovetail-app .v-card__title {

@@ -17,6 +17,10 @@ trait HaveAuthorization
      */
     public function authorize($model = null, $group = null): bool
     {
+        if (! $this->auth()->check()) {
+            return $notLoggedIn = false;
+        }
+
         if ($isAuthorized = $this->auth()->user()->isSuperAdmin()) {
             return $isAuthorized;
         }
@@ -37,8 +41,10 @@ trait HaveAuthorization
             );
         }
 
+        $model = $this->canSoftDelete() ? $this->withTrashed() : $this;
+
         if ($this->request()->has('id')) {
-            foreach ($this->withTrashed()->whereIn(
+            foreach ($model->whereIn(
                 'id', (array) $this->request()->input('id')
             )->get() as $model) {
                 if ($this->auth()->user()->getKey() !== $model->user->getKey()) {
@@ -49,8 +55,18 @@ trait HaveAuthorization
             return $authorized = true;
         }
 
-        return $this->auth()->user()->getKey() === $this->withTrashed()->whereId($model)->firstOr(function () {
+        return $this->auth()->user()->getKey() === $model->whereId($model)->firstOr(function () {
             return abort(Response::HTTP_FORBIDDEN);
         })->user->getKey();
+    }
+
+    /**
+     * Check if the model can perform soft deletes.
+     *
+     * @return boolean
+     */
+    protected function canSoftDelete(): boolean
+    {
+        return method_exists($this, 'getQualifiedDeletedAtColumn');
     }
 }

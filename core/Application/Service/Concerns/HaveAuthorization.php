@@ -41,10 +41,10 @@ trait HaveAuthorization
             );
         }
 
-        $model = $this->canSoftDelete() ? $this->withTrashed() : $this;
+        $resource = $this->canSoftDelete() ? $this->withTrashed() : $this;
 
         if ($this->request()->has('id')) {
-            foreach ($model->whereIn(
+            foreach ($resource->whereIn(
                 'id', (array) $this->request()->input('id')
             )->get() as $model) {
                 if ($this->auth()->user()->getKey() !== $model->user->getKey()) {
@@ -55,7 +55,7 @@ trait HaveAuthorization
             return $authorized = true;
         }
 
-        return $this->auth()->user()->getKey() === $model->whereId($model)->firstOr(function () {
+        return $this->auth()->user()->getKey() === $resource->whereId($model)->firstOr(function () {
             return abort(Response::HTTP_FORBIDDEN);
         })->user->getKey();
     }
@@ -65,8 +65,8 @@ trait HaveAuthorization
      *
      * @return boolean
      */
-    protected function canSoftDelete(): boolean
+    protected function canSoftDelete(): bool
     {
-        return method_exists($this, 'getQualifiedDeletedAtColumn');
+        return method_exists($this->model(), 'getQualifiedDeletedAtColumn');
     }
 }

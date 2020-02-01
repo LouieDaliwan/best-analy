@@ -11,6 +11,7 @@ $factory->define(User::class, function (Faker $faker) {
         'prefixname' => $faker->title(),
         'firstname' => $faker->firstName(),
         'middlename' => $faker->lastName(),
+        'suffixname' => $faker->suffix(),
         'lastname' => $faker->lastName(),
         'email' => $email = $faker->unique()->email(),
         'username' => Str::slug($email),

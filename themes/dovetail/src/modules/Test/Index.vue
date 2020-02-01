@@ -153,6 +153,14 @@
     <template class="mt-3" v-for="(widget, i) in widgets">
       <div :key="i" v-html="widget.render"></div>
     </template>
+
+    <h3 class="mb-3 mt-9">Permissions</h3>
+    <div v-for="(p, i) in permissions" :key="i">
+      <div class="font-weight-bold" v-text="i"></div>
+      <ul class="ml-6">
+        <li v-for="(permission, j) in p" :key="j" v-html="`${permission.name}: <em>${permission.description}</em>`"></li>
+      </ul>
+    </div>
   </admin>
 </template>
 
@@ -170,6 +178,7 @@ export default {
 
   data () {
     return {
+      permissions: [],
       text: 'Move to Trash',
       repeaters: [],
       widgets: [],
@@ -267,10 +276,18 @@ export default {
         show: true,
         text: 'This is a sample toast message'
       })
-    }
+    },
+
+    getPermissions () {
+      axios.get('/api/v1/users/permissions')
+        .then(response => {
+          this.permissions = response.data
+        })
+    },
   },
 
   mounted () {
+    this.getPermissions()
     // this.$store.dispatch('app/locale', 'fil');
   },
 }

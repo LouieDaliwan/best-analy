@@ -98,7 +98,7 @@ class UserService extends Service implements UserServiceInterface
         // Move to observer class.
         $model->photo = $attributes['photo'] ?? false
             ? $this->upload($attributes['photo'], $model->getKey())
-            : $attributes['avatar'];
+            : $attributes['avatar'] ?? null;
         $model->save();
 
         // User roles.

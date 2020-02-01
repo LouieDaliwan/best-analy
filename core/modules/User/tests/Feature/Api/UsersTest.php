@@ -74,6 +74,7 @@ class UsersTest extends TestCase
     public function a_user_can_store_a_user_to_database()
     {
         // Arrangements
+        $this->withoutExceptionHandling();
         Passport::actingAs($this->asNonSuperAdmin(['users.store']), ['users.store']);
         $this->withPermissionsPolicy();
 

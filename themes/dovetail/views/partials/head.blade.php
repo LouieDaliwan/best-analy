@@ -52,8 +52,8 @@
   <!-- css -->
   @stack('css')
     {{-- <noscript><link rel="stylesheet" href="{{ theme('dist/css/vendor.css') }}?v={{ theme()->version() }}"></noscript> --}}
-    <noscript><link rel="stylesheet" href="{{ theme('dist/css/fonts.css') }}?v={{ theme()->version() }}"></noscript>
-    <noscript><link rel="stylesheet" href="{{ theme('dist/css/app.css') }}?v={{ theme()->version() }}"></noscript>
+    <link rel="stylesheet" href="{{ theme('dist/css/fonts.css') }}?v={{ theme()->version() }}">
+    <link rel="stylesheet" href="{{ theme('dist/css/app.css') }}?v={{ theme()->version() }}">
   @show
   <!-- css -->
   @stack('after:css')

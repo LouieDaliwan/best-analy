@@ -8,7 +8,7 @@ export default [
       authenticatable: true,
       sort: 5,
       permission: 'users.index',
-      children: ['users.index', 'users.create', 'users.edit', 'users.show', 'users.trashed'],
+      children: ['users.index', 'users.create', 'users.edit', 'users.show', 'users.trashed', 'permissions.index'],
     },
     children: [
       {
@@ -42,6 +42,19 @@ export default [
           permission: 'users.trashed',
           children: ['users.trashed'],
         },
+      },
+      // Permissions
+      {
+        code: 'permissions.index',
+        name: 'permissions.index',
+        meta: {
+          title: 'Permissions',
+          authenticatable: true,
+          icon: 'mdi-shield-lock',
+          sort: 6,
+          permission: 'users.index',
+          children: ['permissions.index'],
+        }
       },
     ],
   }

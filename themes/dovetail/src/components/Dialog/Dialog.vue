@@ -13,10 +13,10 @@
             <component :width="dialog.illustrationWidth" :height="dialog.illustrationHeight" :is="dialog.illustration"></component>
           </div>
         </slot>
-        <v-card-title class="pa-0">
+        <v-card-title class="px-0">
           <slot name="title">{{ dialog.title }}</slot>
         </v-card-title>
-        <slot name="text"><div v-html="text"></div></slot>
+        <slot name="text"><p v-html="text"></p></slot>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>

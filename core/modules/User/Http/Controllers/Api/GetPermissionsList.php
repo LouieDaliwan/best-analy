@@ -18,6 +18,6 @@ class GetPermissionsList extends ApiController
      */
     public function __invoke(Request $request, PermissionServiceInterface $service)
     {
-        return PermissionResource::collection($service->get())->groupBy($request->get('group', 'group'));
+        return response()->json($service->grouped()->values());
     }
 }

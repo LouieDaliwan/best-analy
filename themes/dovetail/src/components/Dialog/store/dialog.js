@@ -16,7 +16,8 @@ export const initials = {
   dark: null,
 
   // Illustration
-  illustration: () => import('@/components/Icons/ErrorIcon.vue'),
+  illustration: null,
+  // illustration: () => import('@/components/Icons/ErrorIcon.vue'),
   illustrationWidth: 300,
   illustrationHeight: 300,
 

@@ -47,12 +47,12 @@ class PermissionsTest extends TestCase
         $response
             ->assertSuccessful()
             ->assertJsonStructure([
-                '*' => [[
+                '*' => [
                     'name',
-                    'code',
-                    'description',
-                    'group',
-                ]],
+                    'children' => [[
+                        'name', 'code', 'description',
+                    ]],
+                ]
             ]);
     }
 }

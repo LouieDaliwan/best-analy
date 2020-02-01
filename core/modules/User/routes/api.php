@@ -4,6 +4,7 @@ Route::prefix('v1/users')->middleware(['auth:api', 'auth.permissions'])->group(f
     Route::softDeletes('roles', 'Api\RoleController');
     Route::apiResource('roles', 'Api\RoleController');
 
+    Route::resetResource('permissions', 'Api\ResetPermissionsList');
     Route::get('permissions', 'Api\GetPermissionsList')->name('permissions.index');
 });
 

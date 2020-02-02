@@ -28,7 +28,7 @@ trait BelongsToUser
      *
      * @return string
      */
-    public function getUserKeyName(): string
+    public function getUserKeyName()
     {
         return $this->userId;
     }

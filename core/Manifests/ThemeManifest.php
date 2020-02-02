@@ -51,9 +51,9 @@ class ThemeManifest
     /**
      * Create a new theme manifest instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @param  string  $themesPath
-     * @param  string  $manifestPath
+     * @param  \Illuminate\Filesystem\Filesystem $files
+     * @param  string                            $themesPath
+     * @param  string                            $manifestPath
      * @return void
      */
     public function __construct(Filesystem $files, $themesPath, $manifestPath)
@@ -100,7 +100,7 @@ class ThemeManifest
     /**
      * Retrieve a theme from a given theme name.
      *
-     * @param string $theme
+     * @param  string $theme
      * @return mixed
      */
     public function find($theme)
@@ -113,7 +113,7 @@ class ThemeManifest
     /**
      * Alias for the method find.
      *
-     * @param string $theme
+     * @param  string $theme
      * @return mixed
      */
     public function theme($theme)
@@ -124,7 +124,7 @@ class ThemeManifest
     /**
      * Add to ignored themes the specified theme.
      *
-     * @param string $theme
+     * @param  string $theme
      * @return void
      */
     public function remove($theme)
@@ -153,13 +153,15 @@ class ThemeManifest
      * Put a theme to the `active` key
      * of the theme manifest file.
      *
-     * @param string $theme
+     * @param  string $theme
      * @return boolean
      */
     public function activate($theme = 'default')
     {
         $this->setActiveTheme($this->find($theme));
         $this->build();
+
+        return true;
     }
 
     /**
@@ -174,6 +176,16 @@ class ThemeManifest
         }
 
         return collect($this->getManifest()['active']);
+    }
+
+    /**
+     * Retrieve the path to the current theme.
+     *
+     * @return string
+     */
+    public function getActiveThemePath(): string
+    {
+        return $this->theme['path'] ?? resource_path();
     }
 
     /**
@@ -234,7 +246,7 @@ class ThemeManifest
     /**
      * Retrieve the manifest files from given path.
      *
-     * @param string $path
+     * @param  string $path
      * @return array
      */
     protected function getManifestFiles($path = '')
@@ -265,7 +277,7 @@ class ThemeManifest
     /**
      * Format the given theme name.
      *
-     * @param  string  $theme
+     * @param  string $theme
      * @return string
      */
     protected function format($theme)
@@ -289,7 +301,7 @@ class ThemeManifest
     /**
      * Write the given manifest array to disk.
      *
-     * @param  array  $manifest
+     * @param  array $manifest
      * @return void
      *
      * @throws \Exception

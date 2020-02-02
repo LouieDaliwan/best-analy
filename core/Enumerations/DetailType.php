@@ -7,6 +7,9 @@ abstract class DetailType
     const ACCOUNT = 'account';
     const BIODATA = 'biodata';
     const FAVORITE = 'favorite';
+    const DETAIL = 'detail';
+    const BIRTHDAY = 'birthday';
+    const DEFAULT_ICON = 'mdi-square-edit-outline';
 
     /**
      * Retrieve all sensitive detail types.

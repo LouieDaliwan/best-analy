@@ -25,8 +25,8 @@ class StorageController extends Controller
     /**
      * Retrieve the file from storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  string                   $file
+     * @param \Illuminate\Http\Request $request
+     * @param string $file
      * @return \Illuminate\Http\Response
      */
     public function fetch(Request $request, $file = '')
@@ -37,8 +37,8 @@ class StorageController extends Controller
     /**
      * Retrieve the file from storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  string                   $file
+     * @param \Illuminate\Http\Request $request
+     * @param string $file
      * @return \Illuminate\Http\Response
      */
     public function vendor(Request $request, $file = '')

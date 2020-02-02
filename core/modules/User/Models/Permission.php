@@ -2,12 +2,14 @@
 
 namespace User\Models;
 
+use Core\Models\Accessors\CommonAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
 class Permission extends Model
 {
-    use Searchable;
+    use CommonAttributes,
+        Searchable;
 
     /**
      * The attributes that are not mass assignable.

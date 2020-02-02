@@ -19,3 +19,7 @@ Route::get('vendor/{file?}', 'StorageController@vendor')
 Route::get('theme/{file?}', 'ThemeController@fetch')
      ->where('file', '.*')
      ->name('theme:fetch');
+
+ Route::get('assets/{file?}', 'AssetController@fetch')
+     ->where('file', '.*')
+     ->name('assets:fetch');

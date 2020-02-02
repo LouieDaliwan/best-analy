@@ -221,10 +221,15 @@ if (! function_exists('widgets')) {
     /**
      * The Core widget instance.
      *
+     * @param  string $alias
      * @return \Core\Application\Widget\Factories\WidgetFactory
      */
-    function widgets()
+    function widgets($alias = null)
     {
-        return app('core.widgets');
+        if (is_null($alias)) {
+            return app('manifest:widget');
+        }
+
+        return app('core.widget')->make($alias);
     }
 }

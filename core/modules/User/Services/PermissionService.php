@@ -80,4 +80,28 @@ class PermissionService extends Service implements PermissionServiceInterface
 
         $this->refresh();
     }
+
+    /**
+     * Retrieved the mapped permissions list.
+     *
+     * @return array
+     */
+    public function grouped()
+    {
+        return $this->get()->groupBy('group')->map(function ($permissions, $key) {
+            return [
+                'id' => $id = $key.time(),
+                'key' => $key,
+                'name' => ucfirst($key),
+                'order' => $id,
+                'children' => $permissions->map(function ($permission, $i) {
+                    return array_merge($permission->toArray(), [
+                        'name' => $permission->code,
+                        'key' => $permission->code,
+                        'order' => $i,
+                    ]);
+                })->toArray(),
+            ];
+        });
+    }
 }

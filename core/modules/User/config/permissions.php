@@ -85,6 +85,12 @@ return [
         'description' => 'Ability to view the user profile',
         'group' => 'user',
     ],
+    'change-password' => [
+        'name' =>  'change-password',
+        'code' => 'password.change',
+        'description' => 'Ability to change the user password without using the old password',
+        'group' => 'user',
+    ],
 
     /**
      *--------------------------------------------------------------------------

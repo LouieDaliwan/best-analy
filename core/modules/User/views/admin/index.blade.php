@@ -1,7 +1,6 @@
 @extends('layouts::admin')
 
-@section('head:title') @lang('All Users') @endsection
-@section('page:title') @lang('All Users') @endsection
+@section('page:title')@lang('All Users')@endsection
 
 @section('page:button')
   @can('users.create')
@@ -12,7 +11,7 @@
 @section('page:buttons')
   <div class="btn-toolbar mb-3" role="toolbar" aria-label="@lang('Button toolbar')">
     @a('Import', ['url' => "route('users.import')", 'class' => 'btn btn-link small mr-3', 'icon' => 'mdi mdi-upload'])
-    @a('Export All', ['class' => 'btn btn-link small mr-3', 'icon' => 'mdi mdi-download'])
+    @button('Export All', ['class' => 'btn btn-link small mr-3', 'icon' => 'mdi mdi-download'])
     @a('View Deactivate Users', ['url' => route('users.trashed'), 'class' => 'btn btn-link small mr-3', 'icon' => 'mdi mdi-delete-outline'])
     @can('roles.index')
       @a('Roles', ['url' => route('roles.index'), 'class' => 'btn btn-link small mr-3', 'icon' => 'mdi mdi-shield-account-outline'])
@@ -57,10 +56,10 @@
                 @endcan
 
                 @can('users.destroy')
-                  @a('Deactivate', [
-                    'attr' => 'data-toggle=modal data-target=#modal-destroy-'.$resource->id,
+                  @button('Deactivate', [
                     'icon' => 'mdi mdi-delete-outline',
                     'url' => null,
+                    'attr' => 'data-toggle=modal data-target=#modal-destroy-'.$resource->id
                   ])
                 @endcan
               </div>
@@ -81,7 +80,7 @@
                     @lang('Deactivate Account')
                   @endslot
                   @slot('button')
-                    @a('Deactivate', [
+                    @button('Deactivate', [
                       'icon' => 'mdi mdi-delete-outline',
                       'url' => null,
                       'class' => 'btn btn-link mx-3',

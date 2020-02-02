@@ -64,6 +64,35 @@ trait HasManyDetails
     }
 
     /**
+     * Retrieve the common collection of details
+     * from the config file.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getCommonDetails():? Collection
+    {
+        return $this->details->reject(function ($detail) {
+            return in_array($detail->{$this->getDetailTypeName()}, DetailType::SENSITIVE());
+        })->filter(function ($detail) {
+            return in_array($detail->{$this->getDetailKeyName()}, config('modules.user.details.commons', []));
+        })->sortBy($this->getDetailKeyName());
+    }
+
+    /**
+     * Retrieve the uncommon collection of details.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getOtherDetails():? Collection
+    {
+        return $this->details->reject(function ($detail) {
+            return in_array($detail->{$this->getDetailTypeName()}, DetailType::SENSITIVE());
+        })->reject(function ($detail) {
+            return in_array($detail->{$this->getDetailKeyName()}, config('modules.user.details.commons', []));
+        });
+    }
+
+    /**
      * Retrieve the detail via `type` column.
      * Push each detail keys to the detailsKey array.
      *

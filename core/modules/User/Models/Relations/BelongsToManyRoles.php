@@ -30,6 +30,19 @@ trait BelongsToManyRoles
     }
 
     /**
+     * Retrieve the permissions list
+     * for the user.
+     *
+     * @return object
+     */
+    public function getPermissionsAttribute()
+    {
+        return $this->roles->map(function ($role) {
+            return $role->permissions;
+        })->flatten();
+    }
+
+    /**
      * Retrieve the column key for the role `name`.
      *
      * @return string
@@ -108,8 +121,8 @@ trait BelongsToManyRoles
      */
     public function isPermittedTo(string $code)
     {
-        return in_array($code, $this->roles->map(function ($role) {
-            return $role->permissions->pluck($this->getCodeKey());
+        return in_array($code, $this->permissions->map(function ($permission) {
+            return $permission->pluck($this->getCodeKey());
         })->flatten()->toArray());
     }
 }

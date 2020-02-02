@@ -2,6 +2,7 @@
 
 namespace Core\Providers;
 
+use Carbon\Carbon;
 use Core\Http\Guards\AdminGuard;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // Add policy entries.
+        //
     ];
 
     /**
@@ -54,6 +55,19 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected function registerPassportRoutes()
     {
-        Passport::routes();
+        try {
+            if (theme()->active()->has('spa') && theme()->active()->get('spa')) {
+                Passport::routes(function ($router) {
+                    $router->forAccessTokens();
+                    $router->forPersonalAccessTokens();
+                    $router->forTransientTokens();
+                });
+
+                Passport::tokensExpireIn(Carbon::now()->addMinutes(settings('token:expiration:minutes', 10)));
+                Passport::refreshTokensExpireIn(Carbon::now()->addDays(settings('token:refresh:days', 10)));
+            }
+        } catch (\Exception $e) {
+            unset($e);
+        }
     }
 }

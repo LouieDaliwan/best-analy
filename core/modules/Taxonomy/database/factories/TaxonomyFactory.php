@@ -4,6 +4,7 @@
 
 use Faker\Generator as Faker;
 use Taxonomy\Models\Taxonomy;
+use User\Models\User;
 
 $factory->define(Taxonomy::class, function (Faker $faker) {
     return [
@@ -13,5 +14,6 @@ $factory->define(Taxonomy::class, function (Faker $faker) {
         'description' => $faker->paragraph(),
         'icon' => 'mdi mdi-pencil-outline',
         'type' => 'taxonomy',
+        'user_id' => factory(User::class)->create()->getKey(),
     ];
 });

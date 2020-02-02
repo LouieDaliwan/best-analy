@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Favorite extends Model
 {
     /**
-     * Fillable fields for a favorite.
+     * Fillable fieldsfor a favorite.
      *
      * @var array
      */

@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # Specify the version you desire here
-      - image: circleci/php:7.2-node-browsers
+      - image: circleci/php:7.3-node-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -24,6 +24,9 @@ jobs:
       - run: sudo apt update && sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo apt install sqlite3
       - run: sudo docker-php-ext-install zip
+      - run: sudo apt install -y libpng-dev libfreetype6-dev libjpeg62-turbo-dev
+      - run: sudo docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+      - run: sudo docker-php-ext-install -j$(nproc) gd
 
       # Download and cache dependencies
       - restore_cache:
@@ -35,6 +38,7 @@ jobs:
 
       - run: composer global require "squizlabs/php_codesniffer=*"
       - run: composer install -n --prefer-dist
+      - run: composer run post-root-package-install
 
       - save_cache:
           key: v1-dependencies-{{ checksum "composer.json" }}
@@ -52,13 +56,18 @@ jobs:
 
       # prepare the database
       - run: touch database/database.sqlite
+      - run: php console key:generate
       - run: php console migrate --env=testing --database=testing --force
 
-      # run tests with phpunit inside core/ folder
-      - run: ./vendor/bin/phpunit core/modules/
-      - run: ~/.composer/vendor/bin/phpcs --standard=./ruleset.xml core/modules/
-      # - run: ./vendor/bin/phpunit tests/
+      # prepare the application
+      - run: php console optimize:clear
+      - run: php console module:discover
+      - run: php console theme:discover
 
       # run tests with phpunit or codecept
-      - run: ./vendor/bin/phpunit modules/
+      - run: ./vendor/bin/phpunit --testsuite Module --configuration phpunit.xml
       - run: ~/.composer/vendor/bin/phpcs --standard=./ruleset.xml modules/
+
+      # run linters for frontend asset files for theme:dovetail
+      # - run: npm install
+      # - run: npm run lint:styles

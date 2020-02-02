@@ -54,13 +54,32 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * User exposed observable events.
+     * Get the indexable data array for the model.
      *
-     * @param  string $value
-     * @return void
+     * @return array
      */
-    public function setPasswordAttribute(string $value)
+    public function toSearchableArray()
     {
-        $this->attributes['password'] = Hash::make($value);
+        return array_merge($this->toArray(), [
+            'displayname' => $this->displayname,
+            'role' => $this->role,
+        ]);
+    }
+
+    /**
+     * Retrieve the API-friendly search result that
+     * uses text and url.
+     *
+     * @return array
+     */
+    public function toSearchableResultsArray()
+    {
+        return [
+            'text' => $this->displayname,
+            'url' => [
+                'name' => 'users.index',
+                'params' => ['id' => $this->getKey()]
+            ],
+        ];
     }
 }

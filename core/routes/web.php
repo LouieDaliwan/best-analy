@@ -16,6 +16,5 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.logout');
 Auth::routes(['verify' => true]);
 
 Route::get('home', 'RedirectController@home');
-Route::get('/', 'HomeController@index')->name('home');
 
 Route::post('app::core/widgets', 'Widgets\ShowWidget')->name('core.widgets.show');

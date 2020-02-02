@@ -83,13 +83,6 @@ return [
                 'description' => 'View list of all users moved to trash',
             ],
 
-            'divider:user' => [
-                'name' => 'divider:user',
-                'is:divider' => true,
-                'always:viewable' => true,
-                'order' => 4,
-            ],
-
             /**
              *------------------------------------------------------------------
              * Role Module
@@ -121,7 +114,10 @@ return [
                 'permissions' => ['permissions.index'],
                 'text' => 'Permissions',
                 'description' => 'View the list of all permissions',
-                'routes' => ['permissions.index', 'permissions.create', 'permissions.edit', 'permissions.show', 'permissions.trashed'],
+                'routes' => [
+                    'permissions.index', 'permissions.create',
+                    'permissions.edit', 'permissions.show', 'permissions.trashed'
+                ],
             ],
         ],
     ],

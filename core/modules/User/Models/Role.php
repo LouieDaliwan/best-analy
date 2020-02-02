@@ -2,13 +2,17 @@
 
 namespace User\Models;
 
+use Core\Models\Accessors\CommonAttributes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 use User\Models\Permission;
 
 class Role extends Model
 {
-    use Searchable;
+    use CommonAttributes,
+        Searchable,
+        SoftDeletes;
 
     /**
      * The attributes that aren't mass assignable.
@@ -34,6 +38,9 @@ class Role extends Model
      */
     public function getStatusAttribute()
     {
-        return sprintf(trans('%s permissions'), $this->permissions->count());
+        return sprintf(
+            trans('%s of %s permissions'),
+            $this->permissions->count(), Permission::count()
+        );
     }
 }

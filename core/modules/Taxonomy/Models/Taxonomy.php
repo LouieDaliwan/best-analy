@@ -2,14 +2,30 @@
 
 namespace Taxonomy\Models;
 
+use Core\Models\Relations\BelongsToUser;
 use Core\Models\Scopes\Typeable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Taxonomy extends Model
 {
-    use SoftDeletes,
+    use BelongsToUser,
+        SoftDeletes,
         Typeable;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'taxonomies';
+
+    /**
+     * The Taxonomy type.
+     *
+     * @var string
+     */
+    protected $type = 'taxonomy';
 
     /**
      * The attributes that are not mass assignable.

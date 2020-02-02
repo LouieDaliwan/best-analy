@@ -3,7 +3,6 @@
 namespace User\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use User\Services\UserService;
 use User\Services\UserServiceInterface;
 
 class UserRequest extends FormRequest
@@ -26,8 +25,8 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return $this->container
-            ->make(UserServiceInterface::class)
-            ->rules($this->route('user'));
+        return $this->container->make(
+            UserServiceInterface::class
+        )->rules($this->route('user'));
     }
 }

@@ -30,12 +30,13 @@ class AppServiceProvider extends BaseServiceProvider
         BreadcrumbsServiceProvider::class,
         ConsoleServiceProvider::class,
         FactoryServiceProvider::class,
+        ThemeServiceProvider::class,
         ModuleServiceProvider::class,
         PermissionServiceProvider::class,
         RepositoryServiceProvider::class,
+        SearchServiceProvider::class,
         SettingServiceProvider::class,
         SidebarServiceProvider::class,
-        ThemeServiceProvider::class,
         WidgetServiceProvider::class,
     ];
 
@@ -47,11 +48,10 @@ class AppServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $this->aliasBladeComponents();
-        $this->aliasBladeFieldDirective();
+
         $this->aliasBladeIncludes();
-        $this->loadBladeAnimationDirectives();
+
         $this->loadBladeDirectives();
-        $this->loadBladeIllustrationDirective();
     }
 
     /**
@@ -121,43 +121,6 @@ class AppServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Register all view fields
-     * from resources/views/fields folder.
-     *
-     * @return void
-     */
-    public function aliasBladeFieldDirective()
-    {
-        Blade::directive('field', function ($expression) {
-            list($file, $args) = explode(',', $expression, 2);
-            $file = str_replace("'", '', $file);
-
-            return "<?php echo view('theme::fields.{$file}', $args)->render(); ?>";
-        });
-    }
-
-    /**
-     * Register all view illustrations
-     * from resources/views/illustrations folder.
-     *
-     * @return void
-     */
-    public function loadBladeIllustrationDirective()
-    {
-        Blade::directive('illustration', function ($expression) {
-            $attributes = explode(',', $expression, 2);
-            $file = str_replace("'", '', $attributes[0]);
-            $params = ! empty($attributes[0]) ? "['param' => $attributes[0]]" : '[]';
-
-            if (isset($attributes[1])) {
-                return "<?php echo view('theme::illustrations.{$file}', $attributes[1])->render(); ?>";
-            }
-
-            return "<?php echo view('theme::illustrations.{$file}')->render(); ?>";
-        });
-    }
-
-    /**
      * Register additional blade directives from
      * the resources/views/directives folder.
      *
@@ -182,27 +145,5 @@ class AppServiceProvider extends BaseServiceProvider
                 return "<?php echo view('directives.{$component}', $params)->render(); ?>";
             });
         }
-    }
-
-    /**
-     * Register a directive to display animation asset files from resources/assets/animations folder.
-     *
-     * @return void
-     */
-    public function loadBladeAnimationDirectives()
-    {
-        Blade::directive('animation', function ($expression) {
-            $attributes = explode(',', $expression, 2);
-            $file = str_replace("'", '', $attributes[0] ?? null);
-            $params = ! empty($attributes[0]) ? "['param' => $attributes[0]]" : '[]';
-
-            if (isset($attributes[1])) {
-                $params = json_decode(json_encode($attributes[1]), true);
-
-                return "<img height=\"<?php echo {$params}['height'] ?? '200px'; ?>\" width=\"<?php echo {$params}['width'] ?? '200px'; ?>\" src=\"{{ url('assets/animations/{$file}') }}\">";
-            }
-
-            return "<img src=\"{{ url('assets/animations/{$file}') }}\">";
-        });
     }
 }

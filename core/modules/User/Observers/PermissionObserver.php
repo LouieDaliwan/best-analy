@@ -10,7 +10,7 @@ class PermissionObserver
     /**
      * Listen to the Permission refreshed event.
      *
-     * @param  \User\Models\Permission $permission
+     * @param \User\Models\Permission $permission
      * @return void
      */
     public function refreshed(Permission $permission)

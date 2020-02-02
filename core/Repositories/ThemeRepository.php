@@ -38,8 +38,8 @@ class ThemeRepository extends Repository implements Contracts\ThemeRepositoryInt
     /**
      * Retrieve a metadata of theme from it's manifest.
      *
-     * @param string $key
-     * @param string $default
+     * @param  string $key
+     * @param  string $default
      * @return string
      */
     public function detail($key, $default = null)
@@ -68,8 +68,9 @@ class ThemeRepository extends Repository implements Contracts\ThemeRepositoryInt
      * Retrieve the file from theme and
      * return the url string.
      *
-     * @param string $file
+     * @param  string $file
      * @return string
+     * @throws \Core\Exceptions\RestrictedResourceException The requested resource is restricted.
      */
     public function fetch($file = null)
     {
@@ -89,7 +90,7 @@ class ThemeRepository extends Repository implements Contracts\ThemeRepositoryInt
         if (file_exists($path)) {
             $contentType = config('downloads.mimetypes.'.$extension, 'txt');
 
-            return response()->file($path, array('Content-Type' => $contentType));
+            return response()->file($path, ['Content-Type' => $contentType]);
         }
 
         return abort(404);
@@ -140,6 +141,16 @@ class ThemeRepository extends Repository implements Contracts\ThemeRepositoryInt
     }
 
     /**
+     * Retrieve the manifest file of the active theme.
+     *
+     * @return \Core\Manifests\ThemeManifest
+     */
+    public function manifest()
+    {
+        return $this->theme;
+    }
+
+    /**
      * Retrieve the theme path.
      *
      * @param  string $path
@@ -147,6 +158,32 @@ class ThemeRepository extends Repository implements Contracts\ThemeRepositoryInt
      */
     protected function theme($path = '')
     {
-        return $this->theme['path'].DIRECTORY_SEPARATOR.urldecode($path);
+        return $this->path(urldecode($path));
+    }
+
+    /**
+     * Retrieve the currently active theme object.
+     *
+     * @param  string $path
+     * @return \Core\Manifests\ThemeManifest
+     */
+    public function active($path = null)
+    {
+        if (! is_null($path)) {
+            return $this->path($path);
+        }
+
+        return $this->theme;
+    }
+
+    /**
+     * Retrieve the realpath of the active theme.
+     *
+     * @param  string $path
+     * @return string
+     */
+    public function path($path = null): string
+    {
+        return ($this->theme['path'] ?? resource_path()).DIRECTORY_SEPARATOR.$path;
     }
 }

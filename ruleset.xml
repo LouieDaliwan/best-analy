@@ -42,9 +42,11 @@
   <rule ref="Squiz.PHP.CommentedOutCode"/>
   <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
   <rule ref="Generic.CodeAnalysis.EmptyStatement"/>
-  <rule ref="Generic.CodeAnalysis">
-    <exclude name="Generic.CodeAnalysis.UnusedFunctionParameter"/>
-    <exclude name="Generic.CodeAnalysis.AssignmentInCondition.Found"/>
+  <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+  <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
+    <exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassBeforeLastUsed"/>
+    <exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClassAfterLastUsed"/>
+    <exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass"/>
   </rule>
   <rule ref="Generic.Commenting">
     <exclude name="Generic.Commenting.DocComment.SpacingAfter"/>
@@ -79,6 +81,7 @@
 
   <file>./</file>
 
+  <exclude-pattern>*/assets/*</exclude-pattern>
   <exclude-pattern>*/config/*</exclude-pattern>
   <exclude-pattern>*/data/*</exclude-pattern>
   <exclude-pattern>*/database/*</exclude-pattern>

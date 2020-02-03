@@ -1,9 +1,9 @@
-<button
-  class="btn btn-{{ $class ?? 'primary' }}"
-  title="@lang($title ?? $text ?? null)"
+<v-btn
   type="submit"
+  class="{{ $class ?? 'btn' }}"
+  {{ $attr ?? null }}
   >
   @isset($prepend) {{ $prepend }} @endisset
   @lang($param ?? 'Submit')
   @isset($append) {{ $append }} @endisset
-</button>
+</v-btn>

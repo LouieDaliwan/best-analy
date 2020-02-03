@@ -1,5 +1,6 @@
 'use strict';
 
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -8,21 +9,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const Visualizer = require('webpack-visualizer-plugin');
-const WebappWebpackPlugin = require('webapp-webpack-plugin');
 const webpack = require('webpack');
 const theme = require('../theme.json');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = [
   /**
    *--------------------------------------------------------------------------
-   * jQuery
+   * Vue Loader
    *--------------------------------------------------------------------------
    *
    */
-  new webpack.ProvidePlugin({
-    $: 'jquery',
-    jQuery: 'jquery',
-  }),
+  new VueLoaderPlugin(),
 
   /**
    *--------------------------------------------------------------------------
@@ -38,21 +36,6 @@ module.exports = [
   }),
 
   new ExtractTextPlugin({filename: 'css/[name].css'}),
-
-  /**
-   *--------------------------------------------------------------------------
-   * Favicon Generator
-   *--------------------------------------------------------------------------
-   *
-   */
-  // new WebappWebpackPlugin({
-  //   logo: path.resolve(__dirname, '../src/assets/img/logo.png'),
-  //   prefix: 'favicons/',
-  //   favicons: {
-  //     appName: theme.name,
-  //     appDescription: theme.description,
-  //   },
-  // }),
 
   /**
    *--------------------------------------------------------------------------
@@ -88,7 +71,22 @@ module.exports = [
   new BrowserSyncPlugin({
     host: 'localhost',
     port: 3000,
+    open: false,
     proxy: 'http://localhost:8000/',
+  }),
+
+  /**
+   *--------------------------------------------------------------------------
+   * Style Lint Plugin
+   *--------------------------------------------------------------------------
+   *
+   * Stats for nerds.
+   * @see  dist/stats.html
+   *
+   */
+  new StyleLintPlugin({
+    files: ['**/*.{vue,html,css,scss,sass,styl}'],
+    fix: true,
   }),
 
   /**

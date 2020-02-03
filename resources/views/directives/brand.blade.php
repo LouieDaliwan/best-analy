@@ -1,1 +1,1 @@
-<img class="brand" src="{{ theme()->logo() }}">
+<img src="{{ theme()->logo() }}">

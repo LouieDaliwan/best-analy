@@ -1,5 +1,5 @@
-<form action="{{ $action ?? null }}" class="form" method="POST">
+<v-form action="{{ $action ?? null }}" method="POST">
   @csrf
   @isset($method) @method($method) @endisset
   {{ $slot }}
-</form>
+</v-form>

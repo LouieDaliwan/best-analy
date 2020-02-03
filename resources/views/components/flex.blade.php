@@ -1,3 +1,3 @@
-<div class="col-xs-12 {{ $attr ?? null }}">
+<v-flex class="{{ $attr ?? null }}" {{ $attr ?? null }}>
   {{ $slot }}
-</div>
+</v-flex>

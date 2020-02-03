@@ -90,11 +90,10 @@
 /*!*********************************!*\
   !*** ./resources/src/vendor.js ***!
   \*********************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n!(function webpackMissingModule() { var e = new Error(\"Cannot find module 'tether'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }());\n!(function webpackMissingModule() { var e = new Error(\"Cannot find module 'bootstrap'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }());\n\n // import '@/plugins';\n\nwindow.$ = Promise.resolve().then(function webpackMissingModule() { var e = new Error(\"Cannot find module 'jquery'\"); e.code = 'MODULE_NOT_FOUND'; throw e; });\nwindow.jQuery = Promise.resolve().then(function webpackMissingModule() { var e = new Error(\"Cannot find module 'jquery'\"); e.code = 'MODULE_NOT_FOUND'; throw e; });\n\n//# sourceURL=webpack:///./resources/src/vendor.js?");
+eval("\n\n//# sourceURL=webpack:///./resources/src/vendor.js?");
 
 /***/ })
 

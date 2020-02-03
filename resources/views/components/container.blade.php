@@ -1,3 +1,3 @@
-<div class="container {{ $attr ?? null }}" {{ $attr ?? null }}>
+<v-container class="{{ $attr ?? null }}" {{ $attr ?? null }}>
   {{ $slot }}
-</div>
+</v-container>

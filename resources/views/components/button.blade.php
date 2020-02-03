@@ -1,9 +1,11 @@
-<button
-  class="btn btn-{{ $class ?? 'primary' }}"
+<v-btn
+  class="{{ $class ?? 'primary' }}"
+  href="{{ $href ?? null }}"
   title="@lang($title ?? $text ?? null)"
   type="{{ $type ?? 'button' }}"
+  {{ $attr ?? null }}
   >
   @isset($prepend) {{ $prepend }} @endisset
   {{ $slot }}
   @isset($append) {{ $append }} @endisset
-</button>
+</v-btn>

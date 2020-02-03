@@ -1,14 +1,14 @@
 @extends('layouts::auth')
 
 @section('page:content')
-  @container
-    @layout
-      @flex(['attr' => 'col-md-6'])
+  @container(['attr' => 'fill-height'])
+    @layout(['attr' => 'justify-center align-center'])
+      @flex(['attr' => 'md6 xs12'])
         @brand
         @form(['action' => url('login')])
-          @card
+          @card(['attr' => 'flat', 'class' => 'transparent'])
             @slot('title')
-              {{ sprintf(trans('Sign in with your %s account'), settings('app:title')) }}
+              {{ sprintf(__('Sign in with your %s account'), settings('app:title')) }}
             @endslot
             @slot('body')
               @field('text', [
@@ -19,7 +19,7 @@
                 'label' => 'Password',
                 'name' => 'password',
                 'type' => 'password',
-                'min' => 6,
+                'min' => '6',
               ])
               @field('checkbox', [
                 'label' => 'Remember',
@@ -31,7 +31,7 @@
         @endform
       @endflex
 
-      @flex(['attr' => 'col-md-6'])
+      @flex(['attr' => 'md5 xs12  offset-md1'])
         @illustration('login', ['width' => '100%', 'height' => '100%'])
         {{-- @animation('treeswing.gif', [
           'width'=> '500px',

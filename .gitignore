@@ -10,6 +10,7 @@
 /storage/logs/*.log
 /storage/debugbar
 /storage/httpcache
+/storage/modules
 /vendor
 Homestead.json
 Homestead.yaml

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Index\Models\Index;
 use Index\Services\IndexServiceInterface;
 use Laravel\Passport\Passport;
+use Taxonomy\Models\Taxonomy;
 use Tests\ActingAsUser;
 use Tests\TestCase;
 use Tests\WithPermissionsPolicy;
@@ -42,6 +43,7 @@ class IndicesTest extends TestCase
         $this->withPermissionsPolicy();
 
         $indices = factory(Index::class, 5)->create(['user_id' => $user->getKey()]);
+        $taxonomy = factory(Taxonomy::class)->create(['type' => 'wrong-type', 'user_id' => $user->getKey()]);
 
         // Actions
         $response = $this->get(route('api.indices.index'));
@@ -50,6 +52,7 @@ class IndicesTest extends TestCase
         $response
             ->assertSuccessful()
             ->assertJson(['data' => [['type' => $indices->random()->getType()]]])
+            ->assertDontSee($taxonomy->type)
             ->assertJsonStructure([
                 'data' => [[
                     'name',
@@ -439,7 +442,6 @@ class IndicesTest extends TestCase
     public function a_user_can_only_restore_multiple_owned_destroyed_indices()
     {
         // Arrangements
-        $this->withoutExceptionHandling();
         Passport::actingAs($user = $this->asNonSuperAdmin(['indices.restore']), ['indices.restore']);
         $this->withPermissionsPolicy();
         $indices = factory(Index::class, 3)->create(['user_id' => $user->getKey()]);

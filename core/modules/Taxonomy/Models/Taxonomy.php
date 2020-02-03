@@ -4,6 +4,7 @@ namespace Taxonomy\Models;
 
 use Core\Models\Relations\BelongsToUser;
 use Core\Models\Scopes\Typeable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -33,4 +34,18 @@ class Taxonomy extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('type', function (Builder $builder) {
+            $builder->where((new static)->typeKey, (new static)->getType());
+        });
+    }
 }

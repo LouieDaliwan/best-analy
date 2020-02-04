@@ -2,6 +2,7 @@
 
 namespace Taxonomy\Models;
 
+use Core\Models\Accessors\CommonAttributes;
 use Core\Models\Relations\BelongsToUser;
 use Core\Models\Scopes\Typeable;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Taxonomy extends Model
 {
     use BelongsToUser,
+        CommonAttributes,
         SoftDeletes,
         Typeable;
 

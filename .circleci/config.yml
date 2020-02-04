@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # Specify the version you desire here
-      - image: circleci/php:7.3-node-browsers
+      - image: circleci/php:7.3-apache-stretch-node-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -62,6 +62,7 @@ jobs:
       # prepare the application
       - run: php console optimize:clear
       - run: php console module:discover
+
       - run: php console theme:discover
 
       # run tests with phpunit or codecept

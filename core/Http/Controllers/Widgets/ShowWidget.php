@@ -11,7 +11,8 @@ class ShowWidget extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request                         $request
+     * @param  \Core\Application\Widget\Factories\WidgetFactory $factory
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request, WidgetFactory $factory)

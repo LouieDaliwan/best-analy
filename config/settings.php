@@ -36,4 +36,5 @@ return [
 
     'display:perpage' => 15,
 
+    'storage:modules' => 'modules',
 ];

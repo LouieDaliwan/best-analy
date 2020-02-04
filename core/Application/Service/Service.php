@@ -153,6 +153,17 @@ abstract class Service implements ServiceInterface
     }
 
     /**
+     * Retrieve model resource details via slug.
+     *
+     * @param  string $slug
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function findSlug(string $slug):? Model
+    {
+        return $this->model()->whereSlug($slug)->firstOrFail();
+    }
+
+    /**
      * Create model resource.
      *
      * @param  array $attributes

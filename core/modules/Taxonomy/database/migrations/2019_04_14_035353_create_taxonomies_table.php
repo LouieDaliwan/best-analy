@@ -21,13 +21,13 @@ class CreateTaxonomiesTable extends Migration
             $table->text('description')->nullable();
             $table->string('icon')->nullable();
             $table->string('type')->index()->default('taxonomy')->nullable();
-            $table->unsignedBigInteger('user_id')->index()->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')
                   ->references('id')->on('users')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+                  ->onUpdate('CASCADE')
+                  ->onDelete('CASCADE');
             $table->unique(['code', 'type']);
         });
     }

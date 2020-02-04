@@ -2,11 +2,14 @@
 
 namespace Core\Http\Controllers;
 
+use Core\Application\Repository\WithRepository;
 use Core\Repositories\Contracts\StorageRepositoryInterface;
 use Illuminate\Http\Request;
 
 class StorageController extends Controller
 {
+    use WithRepository;
+
     /**
      * Initialize the repository instance.
      *

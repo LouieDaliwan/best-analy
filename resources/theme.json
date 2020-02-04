@@ -1,7 +1,7 @@
 {
   "name": "Default",
   "code": "default",
-  "description": "The default theme for Crowfeather.",
+  "description": "The default theme for Yggdrasil.",
   "preview": {
     "hintpath": "Default::themes.thumbnail",
     "img": "preview.png",
@@ -9,11 +9,11 @@
     "url": "https://unsplash.com/@amarnathtade"
   },
   "author": {
-    "name": "Crowfeather",
-    "email": "team@codrasil.io"
+    "name": "Princess Ellen Alto",
+    "email": "altoprincessellen@gmail.com"
   },
   "colors": {
-    "primary": "#0c5689",
+    "primary": "#2c7be5",
     "secondary": "#f9fafb",
     "accent": "#ffffff",
     "success": "#86d067",
@@ -25,6 +25,7 @@
     "text": "#333333",
     "card": "#ffffff",
     "sidebar": "#f7f7f7",
+    "muted": "#95aac9",
     "workspace": "#f7f7f7"
   }
 }

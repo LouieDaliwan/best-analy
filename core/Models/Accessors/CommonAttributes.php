@@ -3,9 +3,20 @@
 namespace Core\Models\Accessors;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 trait CommonAttributes
 {
+    /**
+     * Retrieve the owner of the resource.
+     *
+     * @return string
+     */
+    public function getAuthorAttribute()
+    {
+        return $this->user->displayname;
+    }
+
     /**
      * Retrieve the parsed created_at fields.
      *
@@ -48,6 +59,52 @@ trait CommonAttributes
     public function getJoinedAttribute()
     {
         return $this->created;
+    }
+
+    /**
+     * Retrieve the featured image for the resource.
+     *
+     * @return string
+     */
+    public function getFeaturedAttribute()
+    {
+        return $this->photo ?? $this->image ?? null;
+    }
+
+    /**
+     * Retrieve the short version text of
+     * the resource's description field.
+     *
+     * @return string
+     */
+    public function getExcerptAttribute()
+    {
+        return Str::words(
+            $this->attributes['description'] ?? $this->attributes['body'] ?? null,
+            settings('display:excerpt', 15),
+            '...'
+        );
+    }
+
+    /**
+     * Retrieve the illustration for the resource.
+     *
+     * @return string
+     */
+    public function getIllustrationAttribute()
+    {
+        try {
+            $svg = file_get_contents(storage_path($this->svg ?? $this->image));
+        } catch (\Exception $e) {
+            return Avatar::create($this->title ?? $this->name ?? $this->displayname)
+                ->setShape('circle')
+                ->setBackground('transparent')
+                ->setForeground('black')
+                ->setDimension(80)
+                ->toSvg();
+        }
+
+        return $svg;
     }
 
     /**

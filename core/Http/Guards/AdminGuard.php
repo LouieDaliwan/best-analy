@@ -23,7 +23,7 @@ class AdminGuard implements Guard
     /**
      * Create a new authentication guard.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request                     $request
      * @param  \Illuminate\Contracts\Auth\UserProvider|null $provider
      * @return void
      */
@@ -85,6 +85,6 @@ class AdminGuard implements Guard
     public function authenticate()
     {
         dd('asd');
-        // throw new AuthenticationException;
+        throw new AuthenticationException;
     }
 }

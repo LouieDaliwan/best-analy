@@ -32,4 +32,14 @@ trait BelongsToUser
     {
         return $this->userId;
     }
+
+    /**
+     * Retrieve the key of the user this resource belongs to.
+     *
+     * @return integer
+     */
+    public function getUserKey(): int
+    {
+        return $this->{$this->getUserKeyName()};
+    }
 }

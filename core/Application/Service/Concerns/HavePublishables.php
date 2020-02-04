@@ -3,6 +3,7 @@
 namespace Core\Application\Service\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 trait HavePublishables
 {
@@ -24,9 +25,11 @@ trait HavePublishables
             );
         }
 
-        $model = $this->sortAndOrder();
+        $model = $this->model->paginate($this->getPerPage());
 
-        return $model->paginate($this->getPerPage());
+        $sorted = $this->sortAndOrder($model);
+
+        return new LengthAwarePaginator($sorted, $model->total(), $model->perPage());
     }
 
     /**

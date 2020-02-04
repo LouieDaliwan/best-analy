@@ -4,6 +4,7 @@ namespace Core\Providers;
 
 use Core\Application\Macros\RouteMacros;
 use Core\Manifests\ModuleManifest;
+use Favorite\Http\Routing\FavoriteRouteMacro;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Finder\Finder;
 
@@ -79,7 +80,7 @@ class ModuleServiceProvider extends BaseServiceProvider
         $providers = glob(
             $this->module['path'].
             DIRECTORY_SEPARATOR.'Providers'.
-            DIRECTORY_SEPARATOR.'*'.'ServiceProvider.php'
+            DIRECTORY_SEPARATOR.'*ServiceProvider.php'
         );
 
         foreach ($providers as $path) {
@@ -295,5 +296,6 @@ class ModuleServiceProvider extends BaseServiceProvider
     protected function registerRouteMacros()
     {
         RouteMacros::register();
+        FavoriteRouteMacro::register();
     }
 }

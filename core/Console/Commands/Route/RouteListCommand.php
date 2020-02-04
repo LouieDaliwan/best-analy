@@ -128,7 +128,11 @@ class RouteListCommand extends Command
         $names = explode('\\', $name);
         $module = $this->module->find(Str::singular($names[0] ?? null));
 
-        if (is_dir($module['path'] ?? false)) {
+        if (is_null($module)) {
+            return null;
+        }
+
+        if (is_dir($module['path'])) {
             return $module['name'];
         }
 

@@ -70,7 +70,8 @@ trait BelongsToManyRoles
      */
     public function isSuperAdmin(): bool
     {
-        return $this->roles->whereIn(
+        return in_array($this->type, RoleCode::superadmins())
+        || $this->roles->whereIn(
             $this->getCodeKey(),
             RoleCode::superadmins()
         )->isNotEmpty();
@@ -96,10 +97,19 @@ trait BelongsToManyRoles
      */
     public function isUnrestricted(string $key): bool
     {
-        return $this->roles->whereIn(
-            $this->getCodeKey(),
-            ["$key.unrestricted"]
-        )->isNotEmpty();
+        return $this->isPermittedTo("$key.unrestricted");
+    }
+
+    /**
+     * Check if the unrestricted
+     * permission does not exists.
+     *
+     * @param  string $key
+     * @return boolean
+     */
+    public function isRestricted(string $key): bool
+    {
+        return ! $this->isUnrestricted($key);
     }
 
     /**
@@ -111,8 +121,8 @@ trait BelongsToManyRoles
      */
     public function isPermittedTo(string $code)
     {
-        return in_array($code, $this->roles->map(function ($role) {
-            return $role->permissions->pluck($this->getCodeKey());
+        return in_array($code, $this->permissions->map(function ($permission) {
+            return $permission->pluck($this->getCodeKey());
         })->flatten()->toArray());
     }
 }

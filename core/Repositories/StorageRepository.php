@@ -30,7 +30,7 @@ class StorageRepository extends Repository implements Contracts\StorageRepositor
     /**
      * Retrieve the storage path.
      *
-     * @param string $path
+     * @param  string $path
      * @return string
      */
     protected function storage($path = '')
@@ -42,7 +42,7 @@ class StorageRepository extends Repository implements Contracts\StorageRepositor
      * Retrieve the file from storage and
      * return the url string.
      *
-     * @param string $file
+     * @param  string $file
      * @return string
      */
     public function fetch($file = null)
@@ -63,7 +63,7 @@ class StorageRepository extends Repository implements Contracts\StorageRepositor
         if (file_exists($path)) {
             $contentType = config('downloads.mimetypes.'.$extension, 'txt');
 
-            return response()->file($path, array('Content-Type' => $contentType));
+            return response()->file($path, ['Content-Type' => $contentType]);
         }
 
         return abort(404);

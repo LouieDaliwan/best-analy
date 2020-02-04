@@ -1,1 +1,7 @@
-<a href="{{ $param ?? url()->previous() }}" class="btn btn-link mb-3 small"><i class="mdi mdi-keyboard-backspace">&nbsp;</i>@lang('Back')</a>
+<a
+  href="{{ $param ?? url()->previous() }}"
+  class="muted--text t-d-n"
+  >
+  @icon('chevron-left', ['class' => 'muted--text t-d-n', 'attr' => 'small'])
+  @lang('Back')
+</a>

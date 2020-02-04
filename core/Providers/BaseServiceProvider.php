@@ -65,6 +65,8 @@ class BaseServiceProvider extends ServiceProvider
     {
         $this->registerEloquentFactories();
 
+        $this->registerServiceBindings();
+
         $this->registerProviders();
 
         $this->registerPolicies();
@@ -142,6 +144,16 @@ class BaseServiceProvider extends ServiceProvider
         foreach ($this->factories() as $factoryPath) {
             $this->registerEloquentFactoriesFrom($factoryPath);
         }
+    }
+
+    /**
+     * Register any service class with its interface.
+     *
+     * @return void
+     */
+    protected function registerServiceBindings()
+    {
+        // Register service class with its interface.
     }
 
     /**

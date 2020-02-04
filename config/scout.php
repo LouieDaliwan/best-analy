@@ -111,7 +111,7 @@ return [
 
     'indices' => [
         \User\Models\User::class,
-        // \User\Models\Role::class,
-        // \User\Models\Permission::class,
+        \User\Models\Role::class,
+        \User\Models\Permission::class,
     ],
 ];

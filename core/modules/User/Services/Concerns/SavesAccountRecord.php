@@ -31,9 +31,9 @@ trait SavesAccountRecord
     public function update(int $id, array $attributes): bool
     {
         $model = $this->model->findOrFail($id);
-        $user = $this->save($model, $attributes);
-        $user->record($attributes);
+        $model = $this->save($model, $attributes);
+        $model->record($attributes);
 
-        return $user->exists();
+        return $model->exists();
     }
 }

@@ -1,6 +1,9 @@
-<button type="submit" class="{{ $class ?? 'btn' }} btn-{{ $context ?? 'primary' }}">
-  @isset ($icon)
-    @icon($icon)
-  @endisset
+<v-btn
+  type="submit"
+  class="{{ $class ?? 'btn' }}"
+  {{ $attr ?? null }}
+  >
+  @isset($prepend) {{ $prepend }} @endisset
   @lang($param ?? 'Submit')
-</button>
+  @isset($append) {{ $append }} @endisset
+</v-btn>

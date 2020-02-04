@@ -12,6 +12,8 @@ class RolesTableSeeder extends Seeder
      */
     public function run(RoleServiceInterface $roles)
     {
+        $this->call(PermissionsTableSeeder::class);
+
         $roles->import($allDefaults = true);
     }
 }

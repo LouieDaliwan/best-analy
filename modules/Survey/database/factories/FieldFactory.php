@@ -11,6 +11,8 @@ $factory->define(Field::class, function (Faker $faker) {
         'code' => Str::slug($title),
         'type' => 'text',
         'metadata' => json_encode($faker->words($nb = 10)),
-        'form_id' => factory(Survey::class)->create()->getKey(),
+        'form_id' => function () {
+            return factory(Survey::class)->create()->getKey();
+        },
     ];
 });

@@ -15,9 +15,11 @@ class SurveyResource extends JsonResource
     public function toArray($request)
     {
         return array_merge(parent::toArray($request), [
+            'author' => $this->author,
             'created' => $this->created,
-            'modified' => $this->modified,
             'deleted' => $this->deleted,
+            'fields' => $this->fields->toArray(),
+            'modified' => $this->modified,
         ]);
     }
 }

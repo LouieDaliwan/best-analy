@@ -109,4 +109,11 @@ return [
         'description' => 'Ability to manage only owned survey.',
         'group' => 'survey',
     ],
+
+    'submit-surveys' => [
+        'name' => 'submit-surveys',
+        'code' => 'surveys.submit',
+        'description' => 'Ability to manage only submit survey.',
+        'group' => 'survey',
+    ],
 ];

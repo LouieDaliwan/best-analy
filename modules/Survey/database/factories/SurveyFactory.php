@@ -12,6 +12,8 @@ $factory->define(Survey::class, function (Faker $faker) {
         'body' => $faker->sentence($nbWords = 6, $variableNbWords = true),
         'metadata' => json_encode($faker->words($nb = 10)),
         'type' => 'survey',
-        'user_id' => factory(User::class)->create()->getKey(),
+        'user_id' => function () {
+            return factory(User::class)->create()->getKey();
+        },
     ];
 });

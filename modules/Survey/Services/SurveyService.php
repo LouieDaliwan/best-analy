@@ -124,4 +124,18 @@ class SurveyService extends Service implements SurveyServiceInterface
 
         return $model;
     }
+
+    /**
+     * Save the survey answers to submission storage.
+     *
+     * @param  \Survey\Models\Survey $survey
+     * @return void
+     */
+    public function submit(Survey $survey)
+    {
+        foreach ($this->request->input('fields') as $field) {
+            $model = $survey->fields()->findOrFail($field['id']);
+            $model->submissions()->create($field['submission']);
+        }
+    }
 }

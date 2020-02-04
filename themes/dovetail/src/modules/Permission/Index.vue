@@ -7,11 +7,12 @@
     <v-row>
       <v-col cols="12" md="5">
         <!-- Treeview -->
-        <v-card flat class="mb-4" color="transparent">
+        <v-card class="mb-4">
           <v-card-text>
             <v-text-field
               :placeholder="trans('Search...')"
               autofocus
+              background-color="workspace"
               class="dt-text-field__search"
               clear-icon="mdi-close-circle-outline"
               clearable
@@ -19,6 +20,7 @@
               flat
               full-width
               hide-details
+              prepend-inner-icon="mdi-magnify"
               single-line
               solo
               v-model="search"
@@ -26,7 +28,6 @@
             <v-treeview
               :filter="filter"
               :items="resources.data"
-              :open.sync="resources.open"
               :search="search"
               color="primary"
               hoverable
@@ -58,7 +59,7 @@
         <!-- Treeview -->
       </v-col>
 
-      <v-col cols="12" md="7">
+      <v-col cols="12" class="offset-md-1" md="6">
         <v-card flat color="transparent">
           <h3 class="mb-4">{{ trans('Refresh List') }}</h3>
           <p class="text--text">{{ trans('Refreshing will add and/or update all new permissions specified by the modules you\'ve installed. Outdated permissions or permissions from uninstalled modules will be removed.') }}</p>
@@ -122,7 +123,7 @@
 
 <script>
 import $api from './routes/api'
-import man from '@/components/Icons/ManThrowingAwayPaperIcon.vue'
+import DataProcessIcon from '@/components/Icons/DataProcessIcon.vue'
 import { mapActions } from 'vuex'
 
 export default {
@@ -130,7 +131,6 @@ export default {
     api: $api,
 
     resources: {
-      open: [1],
       loading: {
         reset: false,
         refresh: false,
@@ -176,7 +176,7 @@ export default {
     askUserToResetPermission () {
       this.showDialog({
         color: 'error',
-        illustration: man,
+        illustration: DataProcessIcon,
         illustrationWidth: 200,
         illustrationHeight: 160,
         width: '420',

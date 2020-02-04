@@ -1,6 +1,6 @@
 <template>
   <admin>
-    <metatag :title="resource.data.displayname"></metatag>
+    <metatag :title="trans('Add User')"></metatag>
     <template v-slot:appbar>
       <v-container class="py-0 px-0">
         <v-row justify="space-between" align="center">
@@ -387,6 +387,9 @@ export default {
           name: 'users.edit',
           params: {
             id: response.data.data.id
+          },
+          query: {
+            success: true,
           },
         })
 

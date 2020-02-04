@@ -2,12 +2,14 @@
 
 namespace Index\Models;
 
+use Core\Models\Accessors\CommonAttributes;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Taxonomy\Models\Taxonomy;
 
 class Index extends Taxonomy
 {
-    use SoftDeletes;
+    use CommonAttributes,
+        SoftDeletes;
 
     /**
      * The Taxonomy type.

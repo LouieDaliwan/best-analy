@@ -96,7 +96,6 @@ class PermissionService extends Service implements PermissionServiceInterface
                 'order' => $id,
                 'children' => $permissions->map(function ($permission, $i) {
                     return array_merge($permission->toArray(), [
-                        'id' => $permission->code,
                         'name' => $permission->code,
                         'key' => $permission->code,
                         'order' => $i,

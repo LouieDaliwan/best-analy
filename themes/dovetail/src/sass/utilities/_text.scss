@@ -53,4 +53,18 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &--ellipsis-1 {
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: center;
+    display: -webkit-box;
+    flex-direction: column;
+    justify-content: space-around;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    line-height: 1.4;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

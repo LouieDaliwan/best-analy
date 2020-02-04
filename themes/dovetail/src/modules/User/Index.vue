@@ -49,21 +49,14 @@
             <template v-slot:loading>
               <v-slide-y-transition mode="out-in">
                 <div>
-                  <div class="d-flex" v-for="(j,i) in resources.options.itemsPerPage" :key="i">
-                    <v-skeleton-loader
-                      class="px-4 py-3 mr-4"
-                      type="avatar"
-                    ></v-skeleton-loader>
-                    <v-skeleton-loader
-                      class="px-4 py-3"
-                      width="100%"
-                      type="table-row"
-                    ></v-skeleton-loader>
+                  <div v-for="(j,i) in resources.options.itemsPerPage" :key="i">
+                    <skeleton-avatar-table></skeleton-avatar-table>
                   </div>
                 </div>
               </v-slide-y-transition>
             </template>
 
+            <!-- Avatar and Displayname -->
             <template v-slot:item.displayname="{ item }">
               <div class="d-flex align-items-center">
                 <v-tooltip v-if="auth.id == item.id" bottom>
@@ -96,6 +89,7 @@
                 </v-tooltip>
               </div>
             </template>
+            <!-- Avatar and Displayname -->
 
             <!-- Created & Modified -->
             <template v-slot:item.updated_at="{ item }">
@@ -204,7 +198,7 @@ export default {
 
   computed: {
     resourcesIsEmpty () {
-      return window._.isEmpty(this.resources.data)
+      return window._.isEmpty(this.resources.data) && !this.resources.loading
     },
 
     resourcesIsNotEmpty () {

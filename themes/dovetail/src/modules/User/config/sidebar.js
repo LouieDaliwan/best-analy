@@ -8,7 +8,7 @@ export default [
       authenticatable: true,
       sort: 5,
       permission: 'users.index',
-      children: ['users.index', 'users.create', 'users.edit', 'users.show', 'users.trashed', 'permissions.index'],
+      children: ['users.index', 'users.create', 'users.edit', 'users.show', 'users.trashed', 'permissions.index', 'roles.index', 'roles.create', 'roles.edit', 'roles.show', 'roles.trashed'],
     },
     children: [
       {
@@ -42,6 +42,19 @@ export default [
           permission: 'users.trashed',
           children: ['users.trashed'],
         },
+      },
+      // Role
+      {
+        code: 'roles.index',
+        name: 'roles.index',
+        meta: {
+          title: 'Roles',
+          authenticatable: true,
+          icon: 'mdi-shield-account-outline',
+          sort: 6,
+          permission: 'users.index',
+          children: ['roles.index', 'roles.create', 'roles.edit', 'roles.show', 'roles.trashed'],
+        }
       },
       // Permissions
       {

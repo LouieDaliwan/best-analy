@@ -140,7 +140,7 @@ export default {
       loadDialog: 'dialog/loading',
     }),
 
-    getResource: function () {
+    getResource () {
       axios.get($api.show(this.$route.params.id))
         .then(response => {
           this.resource.data = response.data.data

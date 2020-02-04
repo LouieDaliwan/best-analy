@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import $api from '@/modules/User/routes/api'
+import $api from '@/modules/Role/routes/api'
 
 export default {
   name: 'RolePicker',
@@ -81,7 +81,7 @@ export default {
   methods: {
     getRolesData () {
       if (window._.isEmpty(this.items)) {
-        axios.get($api.roles.list(), { params: { per_page: '-1' } })
+        axios.get($api.list(), { params: { per_page: '-1' } })
           .then(response => {
             this.items = response.data.data
           })

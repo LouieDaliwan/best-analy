@@ -36,16 +36,8 @@
               <template v-slot:loading>
                 <v-slide-y-transition mode="out-in">
                   <div>
-                    <div class="d-flex" v-for="(j,i) in resources.options.itemsPerPage" :key="i">
-                      <v-skeleton-loader
-                        class="px-4 py-3 mr-4"
-                        type="avatar"
-                      ></v-skeleton-loader>
-                      <v-skeleton-loader
-                        class="px-4 py-3"
-                        width="100%"
-                        type="table-row"
-                      ></v-skeleton-loader>
+                    <div v-for="(j,i) in resources.options.itemsPerPage" :key="i">
+                      <skeleton-avatar-table></skeleton-avatar-table>
                     </div>
                   </div>
                 </v-slide-y-transition>
@@ -173,7 +165,7 @@ export default {
 
   computed: {
     resourcesIsEmpty () {
-      return window._.isEmpty(this.resources.data)
+      return window._.isEmpty(this.resources.data) && !this.resources.loading
     },
 
     resourcesIsNotEmpty () {

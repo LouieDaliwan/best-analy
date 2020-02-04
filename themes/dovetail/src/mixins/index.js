@@ -1,6 +1,7 @@
 import localstorage from './localstorage.js'
 import page from './page.js'
 import trans from './trans.js'
+import slugify from './slugify.js'
 import Vue from 'vue'
 
 const mixins = {
@@ -8,6 +9,7 @@ const mixins = {
     Vue.mixin(localstorage)
     Vue.mixin(page)
     Vue.mixin(trans)
+    Vue.mixin(slugify)
   }
 }
 

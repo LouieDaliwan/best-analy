@@ -11,14 +11,25 @@ import { mapActions } from 'vuex'
 export default {
   name: 'Alertbox',
 
+  computed: {
+    actionWasSuccessful () {
+      return this.$route.query.success
+    }
+  },
+
   methods: {
     ...mapActions({
       hideErrorbox: 'errorbox/hide',
+      hideSuccessbox: 'successbox/hide',
     }),
   },
 
   mounted () {
     this.hideErrorbox()
+
+    if (!this.actionWasSuccessful) {
+      this.hideSuccessbox()
+    }
   },
 }
 </script>

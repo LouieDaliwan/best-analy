@@ -30,10 +30,4 @@ export default {
   destroy: function (id = null) {
     return `/api/v1/users/${id}`
   },
-
-  roles: {
-    list: function () {
-      return '/api/v1/users/roles'
-    }
-  }
 }

@@ -16,6 +16,7 @@ import router from './plugins/router'
 import i18n from './plugins/i18n'
 import './plugins/vee-validate'
 import './plugins/shortkey'
+import './plugins/slugify'
 
 import '@/mixins'
 

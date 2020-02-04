@@ -15,7 +15,7 @@ use User\Services\PermissionServiceInterface;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class PermissionsTest extends TestCase
+class PermissionsResetTest extends TestCase
 {
     use RefreshDatabase, WithFaker, ActingAsUser, WithPermissionsPolicy;
 

@@ -73,11 +73,11 @@
             </template>
             <!-- Permissions -->
 
-            <!-- Created -->
+            <!-- Modified -->
             <template v-slot:item.updated_at="{ item }">
               <span class="text-no-wrap" :title="item.updated_at">{{ trans(item.modified) }}</span>
             </template>
-            <!-- Created -->
+            <!-- Modified -->
 
             <!-- Action buttons -->
             <template v-slot:item.action="{ item }">
@@ -116,11 +116,12 @@
       <empty-state>
         <template v-slot:actions>
           <v-btn
-            :to="{name: 'roles.create'}">
-            <v-icon small left>mdi-account-plus-outline</v-icon>
+            :to="{name: 'roles.create'}"
             color="primary"
             exact
             large
+            >
+            <v-icon small left>mdi-account-plus-outline</v-icon>
             {{ trans('Add role') }}
           </v-btn>
         </template>
@@ -198,6 +199,33 @@ export default {
     },
   }),
 
+  computed: {
+    resourcesIsNotEmpty () {
+      return !this.resourcesIsEmpty
+    },
+
+    resourcesIsEmpty () {
+      return window._.isEmpty(this.resources.data) && !this.resources.loading
+    },
+
+    options: function () {
+      return {
+        per_page: this.resources.options.itemsPerPage,
+        page: this.resources.options.page,
+        sort: this.resources.options.sortBy[0] || undefined,
+        order: this.resources.options.sortDesc[0] || false ? 'desc' : 'asc',
+      }
+    },
+
+    selected: function () {
+      return this.resources.selected.map((item) => (item.id) )
+    },
+  },
+
+  mounted: function () {
+    this.changeOptionsFromRouterQueries()
+  },
+
   methods: {
     ...mapActions({
       errorDialog: 'dialog/error',
@@ -270,7 +298,7 @@ export default {
         this.tabletoolbar.toggleBulkEdit = false
         this.hideDialog()
         this.showSnackbar({
-          text: trans_choice('Role successfully deactivated', this.tabletoolbar.bulkCount)
+          text: trans_choice('Role successfully moved to trash', this.tabletoolbar.bulkCount)
         })
       }).catch(err => {
         this.errorDialog({
@@ -290,7 +318,7 @@ export default {
         illustrationHeight: 160,
         width: '420',
         title: 'You are about to move to trash the selected role.',
-        text: ['The user will be signed out from the app. Some data related to the account like comments and files will still remain.', trans('Are you sure you want to move :name to Trash?', {name: item.displayname})],
+        text: ['The user will be signed out from the app. Some data related to the account like comments and files will still remain.', trans('Are you sure you want to move :name to Trash?', {name: item.name})],
         buttons: {
           cancel: { show: true, color: 'link' },
           action: {
@@ -313,7 +341,7 @@ export default {
         item.active = false
         this.getPaginatedData(null, 'destroyResource')
         this.showSnackbar({
-          text: trans_choice('Role successfully deactivated', 1)
+          text: trans_choice('Role successfully moved to trash', 1)
         })
         this.hideDialog()
       }).catch(err => {

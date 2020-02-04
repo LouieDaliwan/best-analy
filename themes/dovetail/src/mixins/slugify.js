@@ -4,7 +4,10 @@ export default {
   name: 'slugify',
   methods: {
     slugify: function (string, separator = '-') {
-      return slugify(string, separator)
+      return slugify(string, {
+        replacement: separator,
+        lower: true
+      })
     },
   }
 }

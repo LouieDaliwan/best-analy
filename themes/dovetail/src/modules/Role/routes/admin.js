@@ -39,7 +39,7 @@ export default [
         name: 'roles.trashed',
         component: () => import('../Trashed.vue'),
         meta: {
-          title: 'Deactivated Roles',
+          title: 'Trashed Roles',
           sort: 8,
           authenticatable: true,
           icon: 'mdi-book-multiple-variant',

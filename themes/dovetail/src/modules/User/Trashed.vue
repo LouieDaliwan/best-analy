@@ -62,7 +62,7 @@
               <template v-slot:item.deleted_at="{ item }">
                 <span class="text-no-wrap muted--text" :title="item.deleted_at">{{ trans(item.deleted) }}</span>
               </template>
-              <!-- Created -->
+              <!-- Deleted -->
 
               <!-- Action buttons -->
               <template v-slot:item.action="{ item }">

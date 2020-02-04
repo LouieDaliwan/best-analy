@@ -351,7 +351,7 @@ export default {
         })
 
         this.showSuccessbox({
-          text: trans('Created role {name}', { name: response.data.name }),
+          text: trans('Created Role {name}', { name: response.data.name }),
           buttons: {
             show: {
               code: 'roles.show',

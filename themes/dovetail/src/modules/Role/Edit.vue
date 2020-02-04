@@ -171,6 +171,10 @@
               </v-card-text>
             </v-card>
           </v-col>
+
+          <v-col cols="23" md="3">
+            <metainfo-card :list="metaInfoCardList"></metainfo-card>
+          </v-col>
         </v-row>
       </v-form>
     </validation-observer>
@@ -342,11 +346,11 @@ export default {
         this.parseResourceData(this.resource.data),
       ).then(response => {
         this.showSnackbar({
-          text: trans('User updated successfully'),
+          text: trans('Role updated successfully'),
         })
 
         this.showSuccessbox({
-          text: trans('Updated role {name}', { name: this.resource.data.code }),
+          text: trans('Updated Role {name}', { name: this.resource.data.name }),
           buttons: {
             show: {
               code: 'roles.show',
@@ -358,7 +362,7 @@ export default {
               code: 'roles.create',
               to: { name: 'roles.create' },
               icon: 'mdi-account-plus-outline',
-              text: trans('Create New User'),
+              text: trans('Add New Role'),
             },
           },
         })

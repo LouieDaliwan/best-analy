@@ -15,9 +15,10 @@ class IndexResource extends JsonResource
     public function toArray($request)
     {
         return array_merge(parent::toArray($request), [
+            'author' => $this->author,
             'created' => $this->created,
-            'modified' => $this->modified,
             'deleted' => $this->deleted,
+            'modified' => $this->modified,
         ]);
     }
 }

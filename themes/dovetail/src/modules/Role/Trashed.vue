@@ -65,7 +65,7 @@
               <template v-slot:item.deleted_at="{ item }">
                 <span class="text-no-wrap muted--text" :title="item.deleted_at">{{ trans(item.deleted) }}</span>
               </template>
-              <!-- Created -->
+              <!-- Deleted -->
 
               <!-- Action buttons -->
               <template v-slot:item.action="{ item }">
@@ -187,6 +187,33 @@ export default {
       verticaldiv: false,
     },
   }),
+
+  computed: {
+    resourcesIsEmpty () {
+      return window._.isEmpty(this.resources.data) && !this.resources.loading
+    },
+
+    resourcesIsNotEmpty () {
+      return !this.resourcesIsEmpty
+    },
+
+    options: function () {
+      return {
+        per_page: this.resources.options.itemsPerPage,
+        page: this.resources.options.page,
+        sort: this.resources.options.sortBy[0] || undefined,
+        order: this.resources.options.sortDesc[0] || false ? 'desc' : 'asc',
+      }
+    },
+
+    selected: function () {
+      return this.resources.selected.map((item) => (item.id) )
+    },
+  },
+
+  mounted: function () {
+    this.changeOptionsFromRouterQueries()
+  },
 
   methods: {
     ...mapActions({
@@ -314,7 +341,7 @@ export default {
         illustrationHeight: 160,
         width: '420',
         title: 'You are about to permanently delete the selected role.',
-        text: ['The role will be signed out from the app. Some data related to the account like comments and files will still remain.', trans('Are you sure you want to permanently delete?', {name: item.displayname})],
+        text: ['The role will be signed out from the app. Some data related to the account like comments and files will still remain.', trans('Are you sure you want to permanently delete?', {name: item.name})],
         buttons: {
           cancel: { show: true, color: 'link' },
           action: {

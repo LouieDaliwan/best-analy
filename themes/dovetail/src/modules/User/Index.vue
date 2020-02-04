@@ -91,11 +91,11 @@
             </template>
             <!-- Avatar and Displayname -->
 
-            <!-- Created & Modified -->
+            <!-- Modified -->
             <template v-slot:item.updated_at="{ item }">
               <span class="text-no-wrap" :title="item.updated_at">{{ trans(item.modified) }}</span>
             </template>
-            <!-- Created & Modified -->
+            <!-- Modified -->
 
             <!-- Action buttons -->
             <template v-slot:item.action="{ item }">

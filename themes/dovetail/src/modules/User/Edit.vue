@@ -397,7 +397,7 @@ export default {
         })
 
         this.showSuccessbox({
-          text: trans('Updated user {name}', { name: this.resource.data.displayname }),
+          text: trans('Updated User {name}', { name: this.resource.data.displayname }),
           buttons: {
             show: {
               code: 'users.show',
@@ -409,7 +409,7 @@ export default {
               code: 'users.create',
               to: { name: 'users.create' },
               icon: 'mdi-account-plus-outline',
-              text: trans('Create New User'),
+              text: trans('Add New User'),
             },
           },
         })

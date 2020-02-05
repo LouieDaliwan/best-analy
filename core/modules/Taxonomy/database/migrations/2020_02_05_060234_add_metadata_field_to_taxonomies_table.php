@@ -14,7 +14,7 @@ class AddMetadataFieldToTaxonomiesTable extends Migration
     public function up()
     {
         Schema::table('taxonomies', function (Blueprint $table) {
-            $this->longtext('metadata')->nullable()->after('type');
+            $table->longtext('metadata')->nullable()->after('type');
         });
     }
 

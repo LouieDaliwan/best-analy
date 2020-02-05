@@ -74,12 +74,12 @@
                           <i class="small mdi mdi-home-account" style="font-size: 12px"></i>
                         </v-avatar>
                       </template>
-                      <v-avatar v-on="on" class="mr-6" size="32" color="muted"><v-img :src="item.avatar"></v-img></v-avatar>
+                      <v-avatar v-on="on" class="mr-6" size="32" color="workspace"><v-img :src="item.avatar"></v-img></v-avatar>
                     </v-badge>
                   </template>
                   <span>{{ trans('This is your account') }}</span>
                 </v-tooltip>
-                <v-avatar v-else class="mr-6" size="32" color="muted"><v-img :src="item.avatar"></v-img></v-avatar>
+                <v-avatar v-else class="mr-6" size="32" color="workspace"><v-img :src="item.avatar"></v-img></v-avatar>
 
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">

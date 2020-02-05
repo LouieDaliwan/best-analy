@@ -93,6 +93,7 @@ class IndexService extends TaxonomyService implements IndexServiceInterface
         $model->icon = $attributes['photo'] ?? false
             ? $this->upload($attributes['photo'], $model->getTable())
             : $attributes['icon'] ?? null;
+        $model->metadata = $attributes['metadata'] ?? null;
         $model->save();
 
         return $model;

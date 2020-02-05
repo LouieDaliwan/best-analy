@@ -56,6 +56,15 @@
               </v-slide-y-transition>
             </template>
 
+            <!-- Icon and Name -->
+            <template v-slot:item.name="{ item }">
+              <div class="d-flex align-center">
+                <v-avatar class="mr-6" size="32" color="workspace"><v-img :src="item.icon"></v-img></v-avatar>
+                <span>{{ trans(item.name) }}</span>
+              </div>
+            </template>
+            <!-- Icon and Name -->
+
             <!-- Description -->
             <template v-slot:item.description="{ item }">
               <v-tooltip bottom transition="scroll-y-transition" max-width="300">
@@ -175,6 +184,7 @@ export default {
       headers: [
         { text: trans('Name'), align: 'left', value: 'name' },
         { text: trans('Code'), align: 'left', value: 'code' },
+        { text: trans('Weightage'), align: 'left', value: 'metadata[weightage]' },
         { text: trans('Description'), align: 'left', value: 'description' },
         { text: trans('Last Modified'), value: 'updated_at' },
         { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text' },

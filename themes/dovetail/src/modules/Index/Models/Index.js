@@ -12,6 +12,7 @@ class Index {
       description: '',
       type: '',
       icon: '',
+      metadata: '',
       created: '',
     }
   }

@@ -111,6 +111,19 @@
                     </validation-provider>
                   </v-col>
                   <v-col cols="12">
+                    <v-text-field
+                      :dense="isDense"
+                      :disabled="isLoading"
+                      :label="trans('Weightage')"
+                      class="dt-text-field"
+                      name="metadata[weightage]"
+                      outlined
+                      type="number"
+                      v-model="resource.data.metadata['weightage']"
+                      >
+                    </v-text-field>
+                  </v-col>
+                  <v-col cols="12">
                     <v-textarea
                       :label="trans('Description')"
                       auto-grow
@@ -131,7 +144,7 @@
             <v-card class="mb-3">
               <v-card-title class="pb-0">{{ __('Photo') }}</v-card-title>
               <v-card-text class="text-center">
-                <upload-avatar name="photo" v-model="resource.data.avatar"></upload-avatar>
+                <upload-avatar name="photo" v-model="resource.data.icon"></upload-avatar>
               </v-card-text>
             </v-card>
           </v-col>
@@ -288,7 +301,9 @@ export default {
       this.hideAlertbox()
 
       axios.post(
-        $api.store(), this.parseResourceData(this.resource.data)).then(response => {
+        $api.store(), this.parseResourceData(this.resource.data), {
+          headers: {'Content-Type': 'multipart/form-data'}
+        }).then(response => {
         this.resource.isPrestine = true
 
         this.showSnackbar({

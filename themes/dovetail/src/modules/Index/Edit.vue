@@ -111,6 +111,19 @@
                     </validation-provider>
                   </v-col>
                   <v-col cols="12">
+                    <v-text-field
+                      :dense="isDense"
+                      :disabled="isLoading"
+                      :label="trans('Weightage')"
+                      class="dt-text-field"
+                      name="metadata[weightage]"
+                      outlined
+                      type="number"
+                      v-model="resource.data.metadata['weightage']"
+                      >
+                    </v-text-field>
+                  </v-col>
+                  <v-col cols="12">
                     <v-textarea
                       :label="trans('Description')"
                       auto-grow
@@ -121,17 +134,19 @@
                       v-model="resource.data.description"
                     ></v-textarea>
                   </v-col>
-                  <input type="hidden" name="type" :value="resource.data.type">
                 </v-row>
+                <input type="hidden" name="type" :value="resource.data.type">
+                <input type="hidden" name="user_id" :value="auth.id">
               </v-card-text>
             </v-card>
           </v-col>
 
           <v-col cols="12" md="3">
             <v-card class="mb-3">
-              <v-card-title class="pb-0">{{ __('Photo') }}</v-card-title>
+              <v-card-title class="pb-0">{{ __('Icon') }}</v-card-title>
               <v-card-text class="text-center">
-                <upload-avatar name="photo" v-model="resource.data.avatar"></upload-avatar>
+                <input type="hidden" name="icon" :value="resource.data.icon">
+                <upload-avatar name="photo" v-model="resource.data.icon"></upload-avatar>
               </v-card-text>
             </v-card>
 
@@ -144,6 +159,7 @@
 </template>
 
 <script>
+import $auth from '@/core/Auth/auth'
 import $api from './routes/api'
 import Index from './Models/Index'
 import { mapActions, mapGetters } from 'vuex'
@@ -189,6 +205,7 @@ export default {
   },
 
   data: () => ({
+    auth: $auth.getUser(),
     resource: new Index,
     isValid: true,
   }),

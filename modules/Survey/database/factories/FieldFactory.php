@@ -14,5 +14,6 @@ $factory->define(Field::class, function (Faker $faker) {
         'form_id' => function () {
             return factory(Survey::class)->create()->getKey();
         },
+        'group' => $faker->word(),
     ];
 });

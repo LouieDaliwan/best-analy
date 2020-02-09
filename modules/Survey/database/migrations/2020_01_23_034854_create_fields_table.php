@@ -20,6 +20,7 @@ class CreateFieldsTable extends Migration
             $table->string('type')->default('text');
             $table->longtext('metadata')->nullable();
             $table->unsignedBigInteger('form_id')->index();
+            $table->string('group')->nullable()->index();
             $table->timestamps();
             $table->foreign('form_id')
                   ->references('id')->on('forms')

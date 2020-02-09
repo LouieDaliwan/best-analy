@@ -69,23 +69,29 @@ class IconCanBeUploadedIndicesTest extends TestCase
     public function a_user_can_update_an_icon_as_file_to_database()
     {
         // Arrangements
-        $this->withoutExceptionHandling();
         Passport::actingAs($user = $this->asNonSuperAdmin(['indices.update']), ['indices.update']);
-        $this->WithPermissionsPolicy();
-        Storage::fake('modules');
+        $this->withPermissionsPolicy();
+
         $index = factory(Index::class)->create(['user_id' => $user->getKey()]);
         $attributes = array_merge($index->toArray(), [
-            'photo' => $attribute = UploadedFile::fake()->image($filename = $this->faker->file($sourceDir = '/tmp', $targetDir = '/tmp', $fullPath = false)),
+            'photo' => UploadedFile::fake()->image(
+                $filename = sprintf(
+                    '%s.%s', $this->faker->unixTime(),
+                    $this->faker->fileExtension()
+                )
+            ),
         ]);
 
         // Actions
         $response = $this->put(route('api.indices.update', $index->getKey()), $attributes);
-        $index = $this->service->first();
+        $index = $this->service->find($index->getKey());
 
         // Assertions
         $response->assertSuccessful();
         $this->assertStringContainsString($filename, $index->icon);
-        $this->assertFileExists(storage_path(sprintf('modules/%s/%s/%s', date('Y-m-d'), $this->service->getTable(), basename($index->icon)
+        $this->assertFileExists(storage_path(sprintf(
+            'modules/%s/%s/%s', date('Y-m-d'),
+            $this->service->getTable(), basename($index->icon)
         )));
     }
 }

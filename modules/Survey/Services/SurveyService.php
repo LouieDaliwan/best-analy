@@ -115,6 +115,7 @@ class SurveyService extends Service implements SurveyServiceInterface
                 'code' => $field['code'] ?? null,
                 'type' => $field['type'] ?? null,
                 'metadata' => $field['metadata'] ?? null,
+                'group' => $field['group'] ?? null,
             ]);
         });
 

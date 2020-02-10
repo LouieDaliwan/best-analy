@@ -9,9 +9,7 @@
     </v-row>
     <!-- Glance widget -->
 
-    <can code="surveys.submit">
-      <v-btn @click="getSubmissions">test</v-btn>
-    </can>
+    <v-btn @click="getSubmissions">Console Log Submissions List</v-btn>
 
     <h3 class="mt-9 mb-3">Icon Picker</h3>
     <v-row>
@@ -289,31 +287,7 @@ export default {
     },
 
     getSubmissions() {
-      let attributes = [
-        {
-          id: 1,
-          submission: {
-            "customer_id": 1,
-            "results": 5,
-            "remarks": "eos perspiciatis omnis",
-            "submissible_id": 1,
-            "submissible_type": "Survey\\Models\\Field",
-            "user_id": 1,
-          },
-        },
-        {
-          id: 2,
-          submission: {
-            "customer_id": 1,
-            "results": 4,
-            "remarks": "eos perspiciatis omnis",
-            "submissible_id": 2,
-            "submissible_type": "Survey\\Models\\Field",
-            "user_id": 1,
-          }
-        }
-      ];
-      axios.post('/api/v1/surveys/1/submit', {fields: attributes})
+      axios.get('/api/v1/submissions', {params: {group: 'customer_id'}})
         .then(response => {
           console.log(response)
         })

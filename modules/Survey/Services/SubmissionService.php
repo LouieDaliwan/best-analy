@@ -4,6 +4,7 @@ namespace Survey\Services;
 
 use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
+use Customer\Models\Customer;
 use Illuminate\Http\Request;
 use Survey\Models\Submission;
 use User\Models\User;
@@ -77,6 +78,7 @@ class SubmissionService extends Service implements SubmissionServiceInterface
         $model->submissible_id = $attributes['submissible_id'];
         $model->submissible_type = $attributes['submissible_type'] ?? $model->submissible_type;
         $model->user()->associate(User::find($attributes['user_id']));
+        $model->customer()->associate(Customer::find($attributes['customer_id']));
         $model->save();
 
         return $model;

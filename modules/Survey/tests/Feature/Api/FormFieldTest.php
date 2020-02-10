@@ -38,21 +38,25 @@ class FormFieldTest extends TestCase
      */
     public function a_user_can_store_a_form_field_to_database()
     {
-        // Arrangemets
+        // Arrangements
+        $this->withoutExceptionHandling();
         Passport::actingAs($user = $this->asNonSuperAdmin(['surveys.store']), ['surveys.store']);
         $this->withPermissionsPolicy();
 
         // Actions
         $survey = factory(Survey::class)->make(['user_id' => $user->getKey()]);
         $survey = array_merge($survey->toArray(), [
-            'fields' => $attributes = factory(Field::class, 1)->make(['form_id' => null])->toArray(),
+            'fields' => $attributes = factory(Field::class, 1)->make([
+                'form_id' => null,
+                'metadata' => null,
+            ])->toArray(),
         ]);
         $response = $this->post(route('api.surveys.store'), $survey);
 
         // Assertions
         $response->assertSuccessful();
         collect($attributes)->each(function ($attribute) {
-            $this->assertDatabaseHas($this->service->getTable(), collect($attribute)->except('form_id')->toArray());
+            $this->assertDatabaseHas($this->service->getTable(), collect($attribute)->except(['form_id', 'metadata'])->toArray());
         });
     }
 
@@ -98,7 +102,10 @@ class FormFieldTest extends TestCase
 
         $survey = factory(Survey::class)->make(['user_id' => $user->getKey()]);
         $survey = array_merge($survey->toArray(), [
-            'fields' => $attributes = factory(Field::class, 1)->make(['form_id' => null])->toArray(),
+            'fields' => $attributes = factory(Field::class, 1)->make([
+                'form_id' => null,
+                'metadata' => null,
+            ])->toArray(),
         ]);
 
         // Actions
@@ -127,7 +134,10 @@ class FormFieldTest extends TestCase
         $surveys = factory(Survey::class)->make(['user_id' => $user->getKey()]);
         $fields = [];
         $surveys->each(function ($survey) use ($fields) {
-            $fields[] = factory(Field::class, 10)->create(['form_id' => $survey->getKey()]);
+            $fields[] = factory(Field::class, 10)->create([
+                'form_id' => $survey->getKey(),
+                'metadata' => null,
+            ]);
         });
 
         // Actions
@@ -235,7 +245,10 @@ class FormFieldTest extends TestCase
 
         $survey = factory(Survey::class, 2)->create()->random();
         $survey = array_merge($survey->toArray(), [
-            'fields' => $attributes = factory(Field::class, 1)->make(['form_id' => null])->toArray(),
+            'fields' => $attributes = factory(Field::class, 1)->make([
+                'form_id' => null,
+                'metadata' => null,
+            ])->toArray(),
         ]);
 
         // Actions

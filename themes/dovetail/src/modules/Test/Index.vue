@@ -9,6 +9,9 @@
     </v-row>
     <!-- Glance widget -->
 
+    <can code="surveys.submit">
+      <v-btn @click="getSubmissions">test</v-btn>
+    </can>
 
     <h3 class="mt-9 mb-3">Icon Picker</h3>
     <v-row>
@@ -282,6 +285,37 @@ export default {
       axios.get('/api/v1/users/permissions')
         .then(response => {
           this.permissions = response.data
+        })
+    },
+
+    getSubmissions() {
+      let attributes = [
+        {
+          id: 1,
+          submission: {
+            "customer_id": 1,
+            "results": 5,
+            "remarks": "eos perspiciatis omnis",
+            "submissible_id": 1,
+            "submissible_type": "Survey\\Models\\Field",
+            "user_id": 1,
+          },
+        },
+        {
+          id: 2,
+          submission: {
+            "customer_id": 1,
+            "results": 4,
+            "remarks": "eos perspiciatis omnis",
+            "submissible_id": 2,
+            "submissible_type": "Survey\\Models\\Field",
+            "user_id": 1,
+          }
+        }
+      ];
+      axios.post('/api/v1/surveys/1/submit', {fields: attributes})
+        .then(response => {
+          console.log(response)
         })
     },
   },

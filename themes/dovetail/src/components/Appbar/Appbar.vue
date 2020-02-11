@@ -22,7 +22,7 @@
     </v-badge>
 
     <slot>
-      <search-form></search-form>
+      <!-- <search-form></search-form> -->
       <v-spacer></v-spacer>
       <v-menu
         class="justify-end d-flex"

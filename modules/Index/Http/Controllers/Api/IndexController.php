@@ -10,7 +10,6 @@ use Index\Http\Requests\OwnedIndexRequest;
 use Index\Http\Requests\RestoreIndexRequest;
 use Index\Http\Resources\IndexResource;
 use Index\Services\IndexServiceInterface;
-use Taxonomy\Http\Resources\TaxonomyResource;
 
 class IndexController extends ApiController
 {
@@ -31,7 +30,7 @@ class IndexController extends ApiController
      */
     public function index()
     {
-        return TaxonomyResource::collection($this->service()->list());
+        return IndexResource::collection($this->service()->list());
     }
 
     /**
@@ -54,7 +53,7 @@ class IndexController extends ApiController
      */
     public function show(OwnedIndexRequest $request, int $id)
     {
-        return new TaxonomyResource($this->service()->find($id));
+        return new IndexResource($this->service()->find($id));
     }
 
     /**
@@ -88,7 +87,7 @@ class IndexController extends ApiController
      */
     public function trashed()
     {
-        return TaxonomyResource::collection($this->service()->listTrashed());
+        return IndexResource::collection($this->service()->listTrashed());
     }
 
     /**

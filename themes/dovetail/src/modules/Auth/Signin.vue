@@ -3,7 +3,7 @@
     <v-col cols="12">
       <v-row justify="center" align="center">
         <v-col cols="12" md="6" offset-md="1" class="d-none d-md-flex order-md-2">
-          <login-icon class="primary--text" width="100%" height="100%"></login-icon>
+          <analysis-icon class="primary--text" width="100%" height="100%"></analysis-icon>
         </v-col>
 
         <v-col cols="12" md="5" class="order-md-1">

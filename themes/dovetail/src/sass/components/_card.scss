@@ -4,7 +4,8 @@
       box-shadow: var(--box-shadow);
     }
 
-    &--hover:hover {
+    &--hover:hover,
+    &.v-card--hover:hover {
       box-shadow: 0 14px 28px rgba(0, 0, 0, 0.13), 0 10px 10px rgba(0, 0, 0, 0.12);
     }
 

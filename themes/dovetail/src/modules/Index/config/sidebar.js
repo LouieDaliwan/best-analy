@@ -40,7 +40,6 @@ export default [
           authenticatable: true,
           sort: 5,
           permission: 'indices.trashed',
-          children: ['indices.trashed'],
         },
       },
     ],

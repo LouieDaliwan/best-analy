@@ -118,8 +118,9 @@
                       class="dt-text-field"
                       name="metadata[weightage]"
                       outlined
+                      min="0.0"
                       type="number"
-                      v-model="resource.data.metadata['weightage']"
+                      v-model="resource.data.metadata.weightage"
                       >
                     </v-text-field>
                   </v-col>
@@ -144,7 +145,7 @@
             <v-card class="mb-3">
               <v-card-title class="pb-0">{{ __('Photo') }}</v-card-title>
               <v-card-text class="text-center">
-                <upload-avatar name="photo" v-model="resource.data.icon"></upload-avatar>
+                <upload-avatar name="photo" avatar="icon" v-model="resource.data.icon"></upload-avatar>
               </v-card-text>
             </v-card>
           </v-col>

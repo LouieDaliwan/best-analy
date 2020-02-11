@@ -1,6 +1,6 @@
 <template>
   <admin>
-    <metatag title="Edit Index"></metatag>
+    <metatag :title="resource.data.name"></metatag>
 
     <template v-slot:appbar>
       <v-container class="py-0 px-0">
@@ -53,7 +53,9 @@
       <v-form :disabled="isLoading" ref="updateform-form" autocomplete="false" v-on:submit.prevent="handleSubmit(submit($event))" enctype="multipart/form-data">
         <button ref="submit-button" type="submit" class="d-none"></button>
         <page-header :back="{ to: { name: 'indices.index' }, text: trans('Indexes') }">
-          <template v-slot:title>{{ trans('Update Index') }}</template>
+          <template v-slot:title>
+            {{ trans('Edit Index') }}
+          </template>
         </page-header>
 
         <!-- Alertbox -->
@@ -145,8 +147,7 @@
             <v-card class="mb-3">
               <v-card-title class="pb-0">{{ __('Icon') }}</v-card-title>
               <v-card-text class="text-center">
-                <input type="hidden" name="icon" :value="resource.data.icon">
-                <upload-avatar name="photo" v-model="resource.data.icon"></upload-avatar>
+                <upload-avatar name="photo" avatar="icon" v-model="resource.data.icon"></upload-avatar>
               </v-card-text>
             </v-card>
 
@@ -361,6 +362,7 @@ export default {
         $api.show(this.$route.params.id)
       ).then(response => {
         this.resource.data = Object.assign(response.data.data)
+        this.resource.data.metadata = Object.assign([], this.resource.data.metadata)
       }).finally(() => {
         this.load(false)
         this.resource.isPrestine = true

@@ -19,6 +19,7 @@ class SurveyResource extends JsonResource
             'created' => $this->created,
             'deleted' => $this->deleted,
             'fields' => $this->fields->toArray(),
+            'fields:grouped' => $this->fields->groupBy('group')->toArray(),
             'modified' => $this->modified,
         ]);
     }

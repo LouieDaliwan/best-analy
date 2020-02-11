@@ -1,59 +1,141 @@
 <template>
-  <v-container>
-    <v-row justify="center">
-      <v-col cols="10">
-      <page-header :back="{name: 'customers.search'}">
-        <template v-slot:title>
-          <div class="mb-3">{{ trans("Let's Start!") }}</div>
-          <p class="font-weight-regular">Please select the type of evaluation that you would like to do for the <strong>Barakah Services LLC</strong>.</p>
-        </template v-slot:title>
-      </page-header>
+  <admin>
+    <metatag :title="resource.data.name"></metatag>
+
+    <page-header :back="{ to: { name: 'customers.index' }, text: trans('Customers') }">
+      <template v-slot:title>
+        <h2 class="mb-3">{{ trans("Let's Start!") }}</h2>
+        <p class="font-weight-regular">
+          {{ trans('Please select the type of survey evaluation that you would like to do for customer') }}
+          <strong>{{ resource.data.name }}</strong>.
+        </p>
+      </template>
+
+      <template v-slot:action>
+        <!-- Export button -->
+        <div class="text-right mb-4">
+          <generate-report-button></generate-report-button>
+        </div>
+        <!-- Export button -->
+      </template>
+    </page-header>
+
+
+    <template v-if="resource.loading">
+      <v-row>
+        <v-col cols="12" sm="6"><skeleton type="card"></skeleton></v-col>
+        <v-col cols="12" sm="6"><skeleton type="card"></skeleton></v-col>
+        <v-col cols="12" sm="6"><skeleton type="card"></skeleton></v-col>
+        <v-col cols="12" sm="6"><skeleton type="card"></skeleton></v-col>
+      </v-row>
+    </template>
+
+    <template v-else>
+      <div v-show="resourcesIsNotEmpty">
         <v-row>
-            <v-col cols="12" md="6" v-for="(index, i) in indexes" :key="i">
-              <v-card exact :to="{ name: 'surveys.index'}" v-ripple="{ class: 'primary--text' }" fill-height hover class="text-center">
-                <v-card-text>
-                   <div class="mb-4"><img width="100" :src="index.icon" alt=""></div>
-                  <h4 class="mb-1 text-uppercase" v-text="index.title"></h4>
-                  <p class="text-uppercase muted--text" v-text="('Performance Indexes')"></p>
-                </v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+          <v-col cols="12" sm="6" v-for="(resource, i) in resources.data" :key="i">
+            <v-card
+              :to="goToCustomerSurveyPage(resource)"
+              class="text-center card-carded"
+              exact
+              height="100%"
+              hover
+              v-ripple="{ class: 'primary--text' }"
+              >
+              <v-card-text>
+                <div class="mb-4"><img height="80" :src="resource.icon" alt=""></div>
+                <h4 class="mb-1 text-uppercase" v-text="resource.name"></h4>
+                <p class="text-uppercase muted--text" v-text="('Performance Indexes')"></p>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
+
+      <!-- Empty state -->
+      <div v-if="resourcesIsEmpty">
+        <empty-state>
+          <template v-slot:actions>
+            <v-btn
+              large
+              color="primary"
+              exact
+              :to="{name: 'indices.create'}">
+              <v-icon small left>mdi-account-plus-outline</v-icon>
+              {{ trans('Add Index') }}
+            </v-btn>
+          </template>
+        </empty-state>
+      </div>
+      <!-- Empty state -->
+    </template>
+  </admin>
 </template>
 
 <script>
-// import business from '@/modules/Dashboard/assets/business.png'
-// import hr from '@/modules/Dashboard/assets/hr.png'
-// import financial from '@/modules/Dashboard/assets/financial.png'
-// import productivity from '@/modules/Dashboard/assets/productivity.png'
+import $api from './routes/api'
+import Survey from '@/modules/Survey/Models/Survey'
+import GenerateReportButton from './cards/GenerateReportButton'
 
 export default {
+  components: {
+    GenerateReportButton
+  },
+
+  computed: {
+    resourcesIsNotEmpty () {
+      return !this.resourcesIsEmpty
+    },
+
+    resourcesIsEmpty () {
+      return window._.isEmpty(this.resource.data) && !this.resource.loading
+    },
+  },
+
   data: () => ({
-    indexes: [
-      {
-        icon: business,
-        title: 'Business Sustainability'
-      },
-      {
-        icon: hr,
-        title: 'Human Resources'
-      },
-      {
-        icon: financial,
-        title: 'Financial Management'
-      },
-      {
-        icon: productivity,
-        title: 'Productivity Management',
-      },
-    ]
+    api: $api,
+
+    resource: new Survey,
+
+    resources: {
+      data: []
+    }
   }),
 
+  methods: {
+    getResource () {
+      this.resource.loading = true
+      axios.get(
+        $api.show(this.$route.params.id)
+      ).then(response => {
+        this.resource.data = response.data.data
+      }).finally(() => { this.resource.loading = false })
+    },
+
+    displayIndexes () {
+      this.resource.loading = true
+      axios.get(
+        $api.indices.list()
+      ).then(response => {
+        this.resources.data = Object.assign([], this.resources.data, response.data.data)
+      }).finally(() => { this.resource.loading = false })
+    },
+
+    goToCustomerSurveyPage (index) {
+      const customer = this.$route.params.id
+      return {
+        name: 'customers.survey', params: {
+          id: customer,
+          taxonomy: index.code,
+          survey: index.survey && index.survey.id  || null,
+        }
+      }
+    },
+  },
+
   mounted () {
-    this.$store.dispatch('breadcrumbs/toggle', {show: false})
-  }
+    this.getResource()
+    this.displayIndexes()
+  },
 }
 </script>

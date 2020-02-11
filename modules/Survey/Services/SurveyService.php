@@ -119,7 +119,7 @@ class SurveyService extends Service implements SurveyServiceInterface
                 'code' => $field['code'] ?? null,
                 'type' => $field['type'] ?? null,
                 'metadata' => array_merge([
-                    'sort' => $i,
+                    'sort' => $i + 1,
                 ], $field['metadata'] ?? []),
                 'group' => $field['group'] ?? null,
             ]);

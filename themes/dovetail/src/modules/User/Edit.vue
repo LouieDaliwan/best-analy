@@ -68,7 +68,18 @@
               <v-card-text>
                 <v-row justify="space-between">
                   <v-col cols="6" md="2">
-                    <v-select :disabled="isLoading" hide-details :label="trans('Prefix')" class="dt-text-field" background-color="selects" outlined dense :items="['Mr.', 'Ms.', 'Mrs.']" v-model="resource.data.prefixname"></v-select>
+                    <v-select
+                      :disabled="isLoading"
+                      :items="['Mr.', 'Ms.', 'Mrs.']"
+                      :label="trans('Prefix')"
+                      append-icon="mdi-chevron-down"
+                      background-color="selects"
+                      class="dt-text-field"
+                      dense
+                      hide-details
+                      outlined
+                      v-model="resource.data.prefixname"
+                    ></v-select>
                     <input type="hidden" name="prefixname" v-model="resource.data.prefixname">
                   </v-col>
                   <v-col cols="6" md="2">

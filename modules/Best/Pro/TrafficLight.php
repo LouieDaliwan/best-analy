@@ -60,7 +60,6 @@ abstract class TrafficLight
     public static function closest($score)
     {
         $closest = null;
-
         if ($score > self::amber()) {
             if ($score > self::green()) {
                 $closest = self::GREEN_LIGHT;
@@ -70,7 +69,6 @@ abstract class TrafficLight
         } else {
             $closest = self::RED_LIGHT;
         }
-
         return $closest;
     }
 }

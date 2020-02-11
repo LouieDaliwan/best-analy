@@ -16,6 +16,8 @@
           :label="$tc('Select role', multiple ? 2 : 1)"
           :multiple="multiple"
           @focus="getRolesData"
+          background-color="selects"
+          class="dt-text-field"
           menu-props="offsetY"
           name="roles"
           outlined

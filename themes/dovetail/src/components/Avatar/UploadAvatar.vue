@@ -20,7 +20,7 @@
       ref="fileupload"
       type="file"
       >
-    <input type="hidden" name="avatar" v-model="preview">
+    <input type="hidden" :name="parsedAvatar" v-model="preview">
   </div>
 </template>
 
@@ -28,12 +28,16 @@
 export default {
   name: 'UploadAvatar',
 
-  props: ['value', 'name', 'thumbnail'],
+  props: ['value', 'name', 'thumbnail', 'avatar'],
 
   computed: {
     hasPreview () {
       return !_.isEmpty(this.preview)
     },
+
+    parsedAvatar () {
+      return this.avatar ? this.avatar : 'avatar'
+    }
   },
 
   data: (vm) => ({

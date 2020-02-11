@@ -114,54 +114,14 @@
               </div>
               <v-card-text>
                 <h4 class="mb-5">{{ trans('Permissions') }}</h4>
-                <v-text-field
-                  :placeholder="trans('Search...')"
-                  background-color="workspace"
-                  class="dt-text-field__search mb-3"
-                  clear-icon="mdi-close-circle-outline"
-                  clearable
-                  filled
-                  flat
-                  full-width
-                  hide-details
-                  prepend-inner-icon="mdi-magnify"
-                  single-line
-                  solo
-                  v-model="search"
-                ></v-text-field>
-                <v-treeview
-                  :filter="filter"
+                <treeview-field v-model="search"></treeview-field>
+                <treeview
                   :items="resource.permissions"
                   :search="search"
-                  color="primary"
-                  expand-icon="mdi-chevron-down"
-                  hoverable
-                  open-all
-                  open-on-click
-                  ripple
-                  selectable
-                  transition
+                  :selectable="true"
                   v-model="resource.selected"
-                  >
-                  <template v-slot:prepend="{ item }">
-                    <v-icon small right v-if="item.children">
-                      mdi-shield-lock
-                    </v-icon>
-                  </template>
-                  <template v-slot:label="{ item }">
-                    <div class="pa-3">
-                      <div v-if="item.children" :class="item.children ? '' : 'muted--text'">
-                        {{ item.name }}
-                      </div>
-                      <div v-else>
-                        <div class="mb-2">{{ item.code }}</div>
-                        <div class="text-wrap muted--text body-2">
-                          {{ item.description }}
-                        </div>
-                      </div>
-                    </div>
-                  </template>
-                </v-treeview>
+                ></treeview>
+
                 <input type="hidden" v-for="item in resource.selected" name="permissions[]" :value="item">
                 <validation-provider vid="permissions" name="permissions" rules="required" v-slot="{ errors }">
                   <v-card-text :key="item" class="error--text" v-html="item" v-for="item in errors"></v-card-text>
@@ -217,10 +177,6 @@ export default {
     },
     form () {
       return this.$refs['addform']
-    },
-    filter () {
-      return undefined
-      // return (item, search, textKey) => item[textKey].indexOf(search) > -1
     },
   },
 

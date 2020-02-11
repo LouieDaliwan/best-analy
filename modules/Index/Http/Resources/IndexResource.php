@@ -19,6 +19,7 @@ class IndexResource extends JsonResource
             'created' => $this->created,
             'deleted' => $this->deleted,
             'modified' => $this->modified,
+            'survey' => $this->survey,
         ]);
     }
 }

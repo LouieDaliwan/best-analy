@@ -12,7 +12,9 @@ class Index {
       description: '',
       type: '',
       icon: '',
-      metadata: '',
+      metadata: {
+        weightage: ''
+      },
       created: '',
     }
   }

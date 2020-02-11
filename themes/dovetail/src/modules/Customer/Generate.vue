@@ -10,9 +10,8 @@
               <h1 class="primary--text mb-1">{{ trans('Find Customer') }}</h1>
               <p class="muted--text">{{ __('Try finding a customer by its file number. It is usually 4-digits long.') }}</p>
             </div>
-            <v-card class="my-4">
+            <v-card class="my-10">
               <v-text-field
-              background-color=""
                 :loading="searching"
                 @keydown.native="search"
                 autofocus

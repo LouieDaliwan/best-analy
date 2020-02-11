@@ -3,6 +3,8 @@
 namespace Survey\Providers;
 
 use Core\Providers\BaseServiceProvider;
+use Survey\Models\Field;
+use Survey\Observers\FieldObserver;
 use Survey\Services\FieldService;
 use Survey\Services\FieldServiceInterface;
 use Survey\Services\SubmissionService;
@@ -13,11 +15,13 @@ use Survey\Services\SurveyServiceInterface;
 class SurveyServiceProvider extends BaseServiceProvider
 {
     /**
-     * Array of providers to register.
+     * Array of observable models.
      *
      * @var array
      */
-    protected $providers = [];
+    protected $observables = [
+        [Field::class => FieldObserver::class],
+    ];
 
     /**
      * Register any service class with its interface.

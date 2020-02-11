@@ -35,17 +35,7 @@ export default [
         },
       },
       {
-        path: 'edit/:id',
-        name: 'indices.edit',
-        component: () => import('../Edit.vue'),
-        meta: {
-          title: ':slug',
-          sort: 9,
-          authenticatable: true,
-        },
-      },
-      {
-        path: '/admin/trashed',
+        path: 'trashed',
         name: 'indices.trashed',
         component: () => import('../Trashed.vue'),
         meta: {
@@ -53,6 +43,16 @@ export default [
           sort: 6,
           authenticatable: true,
           icon: 'mdi-book-multiple-variant',
+        },
+      },
+      {
+        path: 'edit/:id',
+        name: 'indices.edit',
+        component: () => import('../Edit.vue'),
+        meta: {
+          title: ':slug',
+          sort: 9,
+          authenticatable: true,
         },
       },
     ],

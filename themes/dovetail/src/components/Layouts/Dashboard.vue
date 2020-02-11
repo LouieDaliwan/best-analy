@@ -20,7 +20,7 @@ export default {
     window.axios.interceptors.response.use(undefined, (err) => {
       return new Promise((resolve, reject) => {
         if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
-          this.$store.dispatch['auth/logout']
+          this.$store.dispatch('auth/logout')
         }
 
         if (err.response.status === 403 && err.config && !err.config.__isRetryRequest) {

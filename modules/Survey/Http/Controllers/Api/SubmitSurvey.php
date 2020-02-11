@@ -19,6 +19,6 @@ class SubmitSurvey extends ApiController
      */
     public function __invoke(SubmissionRequest $request, Survey $survey, SurveyServiceInterface $service)
     {
-        return response()->json($service->submit($survey));
+        return response()->json($service->submit($survey, $request->all()));
     }
 }

@@ -9,6 +9,7 @@
     </v-row>
     <!-- Glance widget -->
 
+    <v-btn @click="getSubmissions">Console Log Submissions List</v-btn>
 
     <h3 class="mt-9 mb-3">Icon Picker</h3>
     <v-row>
@@ -282,6 +283,13 @@ export default {
       axios.get('/api/v1/users/permissions')
         .then(response => {
           this.permissions = response.data
+        })
+    },
+
+    getSubmissions() {
+      axios.get('/api/v1/submissions', {params: {group: 'customer_id'}})
+        .then(response => {
+          console.log(response)
         })
     },
   },

@@ -5,6 +5,8 @@ namespace Index\Services;
 use Core\Application\Service\Concerns\CanUploadFile;
 use Core\Application\Service\Concerns\HaveAuthorization;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 use Index\Models\Index;
 use Taxonomy\Services\TaxonomyService;
 use User\Models\User;
@@ -97,5 +99,29 @@ class IndexService extends TaxonomyService implements IndexServiceInterface
         $model->save();
 
         return $model;
+    }
+
+    /**
+     * Upload the given file.
+     *
+     * @param  \Illuminate\Http\UploadedFile $file
+     * @param  string                        $folder
+     * @return string|null
+     */
+    public function upload(UploadedFile $file, $folder = null)
+    {
+        $folderName = settings(
+            'storage:modules', 'modules'
+        ).DIRECTORY_SEPARATOR.date('Y-m-d')
+        .DIRECTORY_SEPARATOR.$folder;
+        $uploadPath = storage_path($folderName);
+        $name = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+        $fileName = $name.'.'.$file->getClientOriginalExtension();
+
+        if ($file->move($uploadPath, $fileName)) {
+            return url("storage/$folderName/$fileName");
+        }
+
+        return null;
     }
 }

@@ -11,6 +11,8 @@
 "Updated Role {name}": "Updated Role {name}",
 "Created Index {name}": "Created Index {name}",
 "Updated Index {name}": "Updated Index {name}",
+"Created Survey {name}": "Created Survey {name}",
+"Updated Survey {name}": "Updated Survey {name}",
 "There is {number} invalid field in this page": "There is {number} invalid field in this page | There are {number} invalid fields in this page",
 "Edit this user": "Edit this user | Edit these users",
 "Deactivate user": "Deactivate user | Deactivate users",

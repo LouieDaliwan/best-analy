@@ -20,72 +20,29 @@
       </template>
     </page-header>
 
-    <v-col cols="12" md="7">
-      <v-card>
-        <v-card-text>
-          <h2>{{ resource.data.name }}</h2>
-          <p>{{ resource.data.code }}</p>
-          <p>{{ resource.data.description }}</p>
-        </v-card-text>
+    <v-row>
+      <v-col cols="12" md="7">
+        <v-card>
+          <v-card-text>
+            <h2>{{ resource.data.name }}</h2>
+            <p>{{ resource.data.code }}</p>
+            <p>{{ resource.data.description }}</p>
+          </v-card-text>
 
-        <div class="d-flex">
-          <v-divider></v-divider>
-          <v-icon small color="muted" class="mx-3 mt-n2">mdi-shield-lock</v-icon>
-          <v-divider></v-divider>
-        </div>
+          <div class="d-flex">
+            <v-divider></v-divider>
+            <v-icon small color="muted" class="mx-3 mt-n2">mdi-shield-lock</v-icon>
+            <v-divider></v-divider>
+          </div>
 
-        <v-card-text>
-          <h4 class="mb-5">{{ trans('Permissions') }}</h4>
-          <v-text-field
-            :placeholder="trans('Search...')"
-            autofocus
-            background-color="workspace"
-            class="dt-text-field__search mb-3"
-            clear-icon="mdi-close-circle-outline"
-            clearable
-            filled
-            flat
-            full-width
-            hide-details
-            single-line
-            solo
-            v-model="search"
-          ></v-text-field>
-          <v-treeview
-            :filter="filter"
-            :items="resource.data.permissions"
-            :search="search"
-            color="primary"
-            expand-icon="mdi-chevron-down"
-            hoverable
-            open-on-click
-            ripple
-            transition
-            v-model="resource.selected"
-            >
-            <template v-slot:prepend="{ item }">
-              <v-icon small right v-if="item.children">
-                mdi-shield-lock
-              </v-icon>
-              <v-icon v-else small left class="ml-n4">mdi-circle-outline</v-icon>
-            </template>
-            <template v-slot:label="{ item }">
-              <div class="pa-3">
-                <div v-if="item.children" :class="item.children ? '' : 'muted--text'">
-                  {{ item.name }}
-                </div>
-                <div v-else>
-                  <div class="mb-2">{{ item.code }}</div>
-                  <div class="text-wrap muted--text body-2">
-                    {{ item.description }}
-                  </div>
-                </div>
-              </div>
-            </template>
-          </v-treeview>
-        </v-card-text>
-      </v-card>
-    </v-col>
+          <v-card-text>
+            <h4 class="mb-5">{{ trans('Permissions') }}</h4>
+            <treeview-field v-model="search"></treeview-field>
+            <treeview :items="resource.data.permissions" :search="search"></treeview>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
   </admin>
 </template>
 

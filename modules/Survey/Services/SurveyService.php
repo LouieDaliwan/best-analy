@@ -4,6 +4,7 @@ namespace Survey\Services;
 
 use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
+use Customer\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Survey\Models\Survey;
@@ -104,17 +105,23 @@ class SurveyService extends Service implements SurveyServiceInterface
         $model->type = $attributes['type'] ?? $model->type;
         $model->metadata = $attributes['metadata'] ?? null;
         $model->user()->associate(User::find($attributes['user_id']));
+        $model->formable()->associate($this->getModelResourceFromString(
+            $attributes['formable_type'], $attributes['formable_id']
+        ));
         $model->save();
 
         // Create or update survey fields.
-        $fields = collect($attributes['fields'] ?? [])->each(function ($field) use ($model) {
+        $fields = collect($attributes['fields'] ?? [])->values()->each(function ($field, $i) use ($model) {
             $model->fields()->updateOrCreate([
                 'id' => $field['id'] ?? null,
             ], [
                 'title' => $field['title'] ?? null,
                 'code' => $field['code'] ?? null,
                 'type' => $field['type'] ?? null,
-                'metadata' => $field['metadata'] ?? null,
+                'metadata' => array_merge([
+                    'sort' => $i + 1,
+                ], $field['metadata'] ?? []),
+                'group' => $field['group'] ?? null,
             ]);
         });
 
@@ -129,13 +136,26 @@ class SurveyService extends Service implements SurveyServiceInterface
      * Save the survey answers to submission storage.
      *
      * @param  \Survey\Models\Survey $survey
+     * @param  array                 $attributes
      * @return void
      */
-    public function submit(Survey $survey)
+    public function submit(Survey $survey, $attributes)
     {
-        foreach ($this->request->input('fields') as $field) {
-            $model = $survey->fields()->findOrFail($field['id']);
-            $model->submissions()->create($field['submission']);
+        foreach ($attributes['fields'] as $attribute) {
+            $field = $survey->fields()->findOrFail($attribute['id']);
+            $field->submit($attribute['submission']);
         }
+    }
+
+    /**
+     * Retrieve the model from string given an id.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @param  integer                             $id
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function getModelResourceFromString($model, $id)
+    {
+        return with(new $model)->find($id);
     }
 }

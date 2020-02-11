@@ -10,9 +10,10 @@ $factory->define(Field::class, function (Faker $faker) {
         'title' => $title = Str::title($faker->unique()->words($nb = 3, $asText = true)),
         'code' => Str::slug($title),
         'type' => 'text',
-        'metadata' => json_encode($faker->words($nb = 10)),
+        'metadata' => $faker->words($nb = 10),
         'form_id' => function () {
             return factory(Survey::class)->create()->getKey();
         },
+        'group' => $faker->word(),
     ];
 });

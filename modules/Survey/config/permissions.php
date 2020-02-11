@@ -116,4 +116,11 @@ return [
         'description' => 'Ability to manage only submit survey.',
         'group' => 'survey',
     ],
+
+    'report-surveys' => [
+        'name' => 'report-surveys',
+        'code' => 'surveys.report',
+        'description' => 'Ability to generate reports for survey.',
+        'group' => 'survey',
+    ],
 ];

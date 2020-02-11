@@ -11,7 +11,17 @@ class Field extends Model
 {
     use BelongsToSurvey,
         CommonAttributes,
+        Concerns\HaveEventsWithParams,
         MorphManySubmissions;
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'metadata' => 'json',
+    ];
 
     /**
      * The attributes that are not mass assignable.
@@ -19,4 +29,15 @@ class Field extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * User exposed observable events.
+     *
+     * These are extra user-defined events observers may subscribe to.
+     *
+     * @var array
+     */
+    protected $observables = [
+        'submitted',
+    ];
 }

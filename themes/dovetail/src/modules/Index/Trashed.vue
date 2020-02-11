@@ -49,12 +49,6 @@
               </template>
               <!-- Name -->
 
-              <!-- Code -->
-              <template v-slot:item.code="{ item }">
-                <span class="muted--text" :title="item.code">{{ trans(item.code) }}</span>
-              </template>
-              <!-- Code -->
-
               <!-- Description -->
               <template v-slot:item.description="{ item }">
                 <v-tooltip bottom transition="scroll-y-transition" max-width="300">
@@ -150,7 +144,6 @@ export default {
       selected: [],
       headers: [
         { text: trans('Name'), align: 'left', value: 'name' },
-        { text: trans('Code'), align: 'left', value: 'code' },
         { text: trans('Description'), align: 'left', value: 'description' },
         { text: trans('Date Deleted'), value: 'deleted_at' },
         { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text' },

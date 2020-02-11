@@ -55,6 +55,7 @@ class FieldSubmissionsTest extends TestCase
                     'user_id' => $user->getKey(),
                     'submissible_id' => null,
                     'submissible_type' => null,
+                    'metadata' => null,
                 ])->toArray(),
             ];
         })->toArray()];

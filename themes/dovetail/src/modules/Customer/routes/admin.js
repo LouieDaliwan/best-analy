@@ -23,6 +23,17 @@ export default [
         },
       },
       {
+        path: 'trashed',
+        name: 'customers.trashed',
+        component: () => import('../Trashed.vue'),
+        meta: {
+          title: 'Trashed Customers',
+          sort: 6,
+          authenticatable: true,
+          icon: 'mdi-book-multiple-variant',
+        },
+      },
+      {
         path: 'my',
         name: 'customers.owned',
         component: () => import('../Owned.vue'),
@@ -34,10 +45,10 @@ export default [
         },
       },
       {
-        path: 'search',
+        path: 'generate',
         props: true,
-        name: 'customers.search',
-        component: () => import('../Search.vue'),
+        name: 'customers.generate',
+        component: () => import('../Generate.vue'),
         meta: {
           title: 'Generate Report',
           sort: 6,
@@ -49,6 +60,17 @@ export default [
         path: ':id',
         name: 'customers.show',
         component: () => import('../Show.vue'),
+        meta: {
+          title: 'Indexes',
+          sort: 9,
+          authenticatable: true,
+          icon: 'mdi-book-multiple-variant',
+        },
+      },
+      {
+        path: ':id/:taxonomy/:survey',
+        name: 'customers.survey',
+        component: () => import('../Survey.vue'),
         meta: {
           title: ':slug',
           sort: 9,

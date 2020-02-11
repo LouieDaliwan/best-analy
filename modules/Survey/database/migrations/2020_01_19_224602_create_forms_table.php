@@ -21,6 +21,7 @@ class CreateFormsTable extends Migration
             $table->longtext('metadata')->nullable();
             $table->string('type')->default('survey');
             $table->unsignedBigInteger('user_id')->index();
+            $table->morphs('formable');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')

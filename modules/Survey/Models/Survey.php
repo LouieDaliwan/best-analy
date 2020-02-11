@@ -2,6 +2,7 @@
 
 namespace Survey\Models;
 
+use Best\Models\Report;
 use Core\Models\Accessors\CommonAttributes;
 use Core\Models\Relations\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
@@ -28,4 +29,24 @@ class Survey extends Model
      * @var string
      */
     protected $table = 'forms';
+
+    /**
+     * Get the owning formable model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function formable()
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * Get the reports for the form.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'form_id');
+    }
 }

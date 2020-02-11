@@ -183,8 +183,7 @@ export default {
       selected: [],
       headers: [
         { text: trans('Name'), align: 'left', value: 'name' },
-        { text: trans('Code'), align: 'left', value: 'code' },
-        { text: trans('Weightage'), align: 'left', value: 'metadata[weightage]' },
+        { text: trans('Weightage'), align: 'center', value: 'metadata[weightage]' },
         { text: trans('Description'), align: 'left', value: 'description' },
         { text: trans('Last Modified'), value: 'updated_at' },
         { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text' },

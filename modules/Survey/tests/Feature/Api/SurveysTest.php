@@ -100,6 +100,7 @@ class SurveysTest extends TestCase
     public function a_user_can_store_an_survey_to_database()
     {
         // Arrangements
+        $this->withoutExceptionHandling();
         Passport::actingAs($user = $this->asNonSuperAdmin(['surveys.store']), ['surveys.store']);
         $this->withPermissionsPolicy();
 

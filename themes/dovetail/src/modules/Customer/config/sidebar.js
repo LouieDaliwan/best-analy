@@ -8,7 +8,7 @@ export default [
       authenticatable: true,
       sort: 5,
       permission: 'customers.index',
-      children: ['customers.index', 'customers.show', 'customers.search'],
+      children: ['customers.index', 'customers.show', 'customers.owned', 'customers.generate', 'customers.survey', 'customers.trashed'],
     },
     children: [
       {
@@ -19,7 +19,7 @@ export default [
           authenticatable: true,
           sort: 5,
           permission: 'customers.index',
-          children: ['customers.index', 'customers.show'],
+          children: ['customers.index', 'customers.show', 'customers.survey'],
         },
       },
       {
@@ -30,17 +30,28 @@ export default [
           authenticatable: true,
           sort: 5,
           permission: 'customers.owned',
-          children: ['customers.show'],
+          children: ['customers.owned'],
         },
       },
       {
-        code: 'customers.search',
-        name: 'customers.search',
+        code: 'customers.generate',
+        name: 'customers.generate',
         meta: {
           title: 'Generate Report',
           authenticatable: true,
           sort: 6,
           permission: 'customers.index',
+        },
+      },
+      {
+        code: 'customers.trashed',
+        name: 'customers.trashed',
+        meta: {
+          title: 'Trashed Customers',
+          authenticatable: true,
+          sort: 5,
+          permission: 'customers.trashed',
+          children: ['customers.trashed'],
         },
       },
     ],

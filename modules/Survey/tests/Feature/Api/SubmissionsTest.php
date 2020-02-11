@@ -2,6 +2,7 @@
 
 namespace Survey\Feature\Api;
 
+use Customer\Models\Customer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
@@ -17,7 +18,7 @@ use Tests\WithPermissionsPolicy;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class FieldSubmissionTest extends TestCase
+class SubmissionsTest extends TestCase
 {
     use RefreshDatabase, WithFaker, ActingAsUser, WithPermissionsPolicy;
 
@@ -43,11 +44,13 @@ class FieldSubmissionTest extends TestCase
         $this->withPermissionsPolicy();
 
         // Actions
+        $customer = factory(Customer::class)->create();
         foreach (factory(Field::class,2)->create() as $field) {
             $submissions[$field->getKey()] = factory(Submission::class)->make([
                 'user_id' => $user->getKey(),
                 'submissible_id' => $field->getKey(),
                 'submissible_type' => get_class($field),
+                'customer_id' => $customer->getKey(),
             ]);
         }
 
@@ -62,7 +65,7 @@ class FieldSubmissionTest extends TestCase
                 'metadata',
                 'submissible_id',
                 'submissible_type',
-                'user_id'
+                'user_id',
             )->toArray());
         });
     }
@@ -197,9 +200,13 @@ class FieldSubmissionTest extends TestCase
     public function a_user_can_only_destroy_a_submission()
     {
         // Arrangements
+        $this->withoutExceptionHandling();
         Passport::actingAs($user = $this->asNonSuperAdmin(['submissions.destroy']), ['submissions.destroy']);
         $this->withPermissionsPolicy();
-        $submission = factory(Submission::class, 2)->create(['user_id' => $user->getKey()])->random();
+        $submission = factory(Submission::class, 2)->create([
+            'user_id' => $user->getKey(),
+            'metadata' => null,
+        ])->random();
 
         // Actions
         $response = $this->delete(route('api.submissions.destroy', $submission->getKey()));
@@ -221,7 +228,10 @@ class FieldSubmissionTest extends TestCase
         // Arrangements
         Passport::actingAs($user = $this->asNonSuperAdmin(['submissions.destroy']), ['submissions.destroy']);
         $this->withPermissionsPolicy();
-        $submissions = factory(Submission::class, 3)->create(['user_id' => $user->getKey()]);
+        $submissions = factory(Submission::class, 3)->create([
+            'user_id' => $user->getKey(),
+            'metadata' => null,
+        ]);
 
         // Actions
         $attributes = ['id' => $submissions->pluck('id')->toArray()];

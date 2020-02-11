@@ -43,4 +43,33 @@ class Role extends Model
             $this->permissions->count(), Permission::count()
         );
     }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return array_merge($this->toArray(), [
+            'name' => $this->name,
+            'code' => $this->code,
+        ]);
+    }
+
+    /**
+     * Retrieve the API-friendly search result that
+     * uses text and url.
+     *
+     * @return array
+     */
+    public function toSearchableResultsArray()
+    {
+        return [
+            'text' => $this->name,
+            'url' => [
+                'name' => 'roles.index',
+            ],
+        ];
+    }
 }

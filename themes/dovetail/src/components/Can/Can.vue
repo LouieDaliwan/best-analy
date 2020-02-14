@@ -25,6 +25,12 @@ export default {
 
   methods: {
     check (permission) {
+      if (_.isObject(permission)) {
+        return !_.isEmpty(permission.filter((p) => {
+          return window._.includes(this.permissions || [], p)
+        }))
+      }
+
       return permission === false || window._.includes(this.permissions || [], permission)
     }
   }

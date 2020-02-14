@@ -7,7 +7,7 @@ export default [
       icon: 'mdi-account-multiple-outline',
       authenticatable: true,
       sort: 5,
-      permission: 'customers.index',
+      permission: ['customers.index', 'customers.owned'],
       children: ['customers.index', 'customers.show', 'customers.owned', 'customers.generate', 'customers.survey', 'customers.trashed'],
     },
     children: [

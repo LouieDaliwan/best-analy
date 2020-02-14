@@ -97,14 +97,16 @@ class ThemeRepository extends Repository implements Contracts\ThemeRepositoryInt
     }
 
     /**
-     * Retrieve and print the critical.css file
+     * Retrieve and print the either the
+     * given path or the critical.css file
      * for faster page loads.
      *
+     * @param  string $path
      * @return string
      */
-    public function inlined()
+    public function inlined(string $path = null)
     {
-        $path = $this->theme('dist/css/critical.css');
+        $path = $path ?: $this->theme('dist/css/critical.css');
 
         if (file_exists($path)) {
             return file_get_contents($path);

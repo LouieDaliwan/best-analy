@@ -24,6 +24,18 @@ class BestServiceProvider extends BaseServiceProvider
     ];
 
     /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        parent::boot();
+
+        $this->loadTranslationFiles();
+    }
+
+    /**
      * Register any service class with its interface.
      *
      * @return void
@@ -31,5 +43,27 @@ class BestServiceProvider extends BaseServiceProvider
     protected function registerServiceBindings()
     {
         $this->app->bind(ReportServiceInterface::class, ReportService::class);
+    }
+
+    /**
+     * Register translation files.
+     *
+     * @return void
+     */
+    public function loadTranslationFiles()
+    {
+        $this->loadJsonTranslationsFrom($this->directory('resources/lang'));
+        $this->loadTranslationsFrom($this->directory('resources/lang'), 'best');
+    }
+
+    /**
+     * Get the base directory.
+     *
+     * @param  string $path
+     * @return string
+     */
+    protected function directory(string $path = '')
+    {
+        return dirname(__DIR__).DIRECTORY_SEPARATOR.$path;
     }
 }

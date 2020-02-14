@@ -9,7 +9,8 @@
     </v-row>
     <!-- Glance widget -->
 
-    <v-btn @click="getSubmissions">Console Log Submissions List</v-btn>
+    <v-btn @click="getSubmissions">Submit Sample Submission</v-btn>
+    <v-btn @click="getReport">Generate Sample's Report</v-btn>
 
     <h3 class="mt-9 mb-3">Icon Picker</h3>
     <v-row>
@@ -286,8 +287,127 @@ export default {
         })
     },
 
-    getSubmissions() {
-      axios.get('/api/v1/submissions', {params: {group: 'customer_id'}})
+    getReport () {
+      let data = {
+        customer_id: 1,
+        taxonomy_id: 1,
+      }
+      axios.post('/api/v1/reports/1/generate', data, {responseType: 'arraybuffer'})
+        .then(response => {
+          console.log(response)
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'file.pdf');
+          document.body.appendChild(link);
+          link.click();
+        })
+    },
+
+    getSubmissions () {
+      let data = [
+        {
+          id: 1,
+          submission: {
+            user_id: 41,
+            results: 4,
+            customer_id: 1,
+            submissible_id: null,
+            submissible_type: null,
+          }
+        },
+        {
+          id: 2,
+          submission: {
+            user_id: 41,
+            results: 3,
+            customer_id: 1,
+            submissible_id: null,
+            submissible_type: null,
+          }
+        },
+        {
+          id: 3,
+          submission: {
+            user_id: 41,
+            results: 1,
+            customer_id: 1,
+            submissible_id: null,
+            submissible_type: null,
+          }
+        },
+        {
+          id: 4,
+          submission: {
+            user_id: 41,
+            results: 5,
+            customer_id: 1,
+            submissible_id: null,
+            submissible_type: null,
+          }
+        },
+        {
+          id: 5,
+          submission: {
+            user_id: 41,
+            results: 3,
+            customer_id: 1,
+            submissible_id: null,
+            submissible_type: null,
+          }
+        },
+        {
+          id: 6,
+          submission: {
+            user_id: 41,
+            results: 2,
+            customer_id: 1,
+            submissible_id: null,
+            submissible_type: null,
+          }
+        },
+        {
+          id: 7,
+          submission: {
+            user_id: 41,
+            results: 4,
+            customer_id: 1,
+            submissible_id: null,
+            submissible_type: null,
+          }
+        },
+        {
+          id: 8,
+          submission: {
+            user_id: 41,
+            results: 4,
+            customer_id: 1,
+            submissible_id: null,
+            submissible_type: null,
+          }
+        },
+        {
+          id: 9,
+          submission: {
+            user_id: 41,
+            results: 6,
+            customer_id: 1,
+            submissible_id: null,
+            submissible_type: null,
+          }
+        },
+        {
+          id: 10,
+          submission: {
+            user_id: 41,
+            results: 6,
+            customer_id: 1,
+            submissible_id: null,
+            submissible_type: null,
+          }
+        },
+      ]
+      axios.post('/api/v1/surveys/1/submit', {fields: data})
         .then(response => {
           console.log(response)
         })

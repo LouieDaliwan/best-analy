@@ -71,4 +71,29 @@ abstract class TrafficLight
         }
         return $closest;
     }
+
+    /**
+     * Retrieve the equivalent traffic light comment.
+     *
+     * @param  integer $total
+     * @param  string  $code
+     * @param  string  $name
+     * @return string
+     */
+    public static function getTrafficLightComment($total, $code, $name): string
+    {
+        $comment = '';
+
+        if ($total > config('best.scores.red')) {
+            if ($total > config('best.scores.amber')) {
+                $comment = trans("best::comments.{$code}.above90", ['name' => $name]);
+            } else {
+                $comment = trans("best::comments.{$code}.mid50to89", ['name' => $name]);
+            }
+        } else {
+            $comment = trans("best::comments.{$code}.below50", ['name' => $name]);
+        }
+
+        return $comment;
+    }
 }

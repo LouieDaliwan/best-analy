@@ -40,7 +40,6 @@ class PerformanceIndexReportsTest extends TestCase
     public function a_user_can_generate_a_report_from_performance_index_of_customer()
     {
         // Arrangements
-        $this->withoutExceptionHandling();
         Passport::actingAs($user = $this->asNonSuperAdmin(['surveys.report']), ['surveys.report']);
         $this->withPermissionsPolicy();
 

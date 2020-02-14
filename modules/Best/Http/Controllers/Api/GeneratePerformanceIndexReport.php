@@ -19,6 +19,6 @@ class GeneratePerformanceIndexReport extends ApiController
      */
     public function __invoke(Request $request, ReportServiceInterface $service, Survey $survey)
     {
-        return response()->json($service->generate($survey, $request->all()));
+        return $service->generate($survey, $request->all());
     }
 }

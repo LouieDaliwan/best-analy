@@ -1,30 +1,32 @@
 <template>
   <admin>
-    <metatag :title="trans('All Customers')"></metatag>
+    <metatag :title="trans('Find Customer')"></metatag>
 
     <v-row>
       <v-col cols="12">
         <v-row justify="center">
           <v-col cols="10">
             <div class="text-center mb-4">
-              <h1 class="primary--text mb-1">{{ trans('Find Customer') }}</h1>
-              <p class="muted--text">{{ __('Try finding a customer by its file number. It is usually 4-digits long.') }}</p>
+              <v-scale-transition>
+                <h1 v-if="customerFound" class="primary--text mb-1">{{ trans('Customer Found!') }}</h1>
+                <h1 v-else class="primary--text mb-1">{{ trans('Find Customer') }}</h1>
+              </v-scale-transition>
+              <p class="muted--text">{{ trans('Try finding a customer by its file number. It is usually 5-digits long.') }}</p>
             </div>
             <v-card class="my-10">
               <v-text-field
+                :label="trans('Search file number')"
                 :loading="searching"
                 @keydown.native="search"
                 autofocus
                 class="dt-text-field__search"
                 clear-icon="mdi-close-circle-outline"
                 clearable
-                height="68"
-                hide-details
-                label="Search file number"
-                prepend-inner-icon="mdi-magnify"
                 flat
                 full-width
+                height="68"
                 hide-details
+                prepend-inner-icon="mdi-magnify"
                 solo
               ></v-text-field>
             </v-card>
@@ -51,19 +53,13 @@
           v-if="results"
           :headers="headers"
           :items="customers"
-          @click:row="gotoIndexes"
           class="mt-9"
           >
-          <!-- Account Name -->
-          <template v-slot:item.name="{ item }">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <a exact to="" v-on="on" v-text="item.name"></a>
-              </template>
-              <span>{{ trans('View Details') }}</span>
-            </v-tooltip>
+          <!-- Actions -->
+          <template v-slot:item.actions="{ item }">
+            <v-btn @click.prevent="goToNextStep" color="primary">{{ trans('Start') }}</v-btn>
           </template>
-          <!-- Account Name -->
+          <!-- Actions -->
         </v-data-table>
       </v-col>
     </v-row>
@@ -71,61 +67,117 @@
 </template>
 
 <script>
+import $api from './routes/api'
+import $auth from '@/core/Auth/auth'
 import store from '@/store'
-import man from '@/components/Icons/ManOnLaptopIcon.vue'
+import { CRM_CODE_FILE_NUMBER_DOES_NOT_EXIST } from './config/crm'
+import { mapActions } from 'vuex'
 
 export default {
   store,
 
-  computed: {
-    man: function () {
-      console.log(man.data().svg)
-      // return
-    },
-  },
-
   data: () => ({
     results: false,
     searching: false,
+    customerFound: false,
+    query: '',
+    errors: [],
     headers: [
-      { text: 'Company Name', align: 'left', value: 'name' },
-      { text: 'File Number', align: 'left', value: 'filenum' },
-      { text: 'Business Counselor Name', align: 'left', value: 'business' },
-      { text: 'Date Created', align: 'left', value: 'created' },
+      { text: 'Company Name', align: 'left', value: 'CompanyName' },
+      { text: 'Funding Request No.', align: 'left', value: 'FundingRequestNo' },
+      { text: 'Business Counselor Name', align: 'left', value: 'BusinessCounselorName' },
+      { text: 'Status', align: 'left', value: 'Status' },
+      { text: '', align: 'left', value: 'actions' },
     ],
-    customers: [
-      {
-        name: 'Barakah Services LLC',
-        filenum: '9871',
-        business: 'Mohamed Albinali',
-        created: '2 hours ago',
-      },
-      {
-        name: 'Company 2',
-        filenum: '5690',
-        business: 'John Doe',
-        created: '1 day ago',
-      },
-    ],
+    customers: [],
   }),
 
   methods: {
-    search: _.debounce(function (event) {
-      this.searching = true
-      setTimeout(() => {
-        this.results = true
-        this.searching = false
-      }, 1000)
+    ...mapActions({
+      loadDialog: 'dialog/loading',
+      showDialog: 'dialog/show',
+      hideDialog: 'dialog/hide',
+      showSnackbar: 'snackbar/show',
+      hideSnackbar: 'snackbar/hide',
+      toggleBreadcrumbs: 'breadcrumbs/toggle',
+    }),
 
+    search: _.debounce(function (event) {
+      this.query = event.srcElement.value || ''
+      this.searching = true
+      this.customerFound = false
+
+      if (!_.isEmpty(this.query)) {
+        this.searchForCustomerInCrm(this.query)
+      }
     }, 920),
 
-    gotoIndexes (any) {
-      this.$router.push({name: 'customers.show', params: {id: any.filenum, customer: any}})
+    searchForCustomerInCrm (query) {
+      axios.get(
+        $api.crm.search(query)
+      ).then(response => {
+        let { Code, Message, Content } = response.data
+
+        // if (Code == CRM_CODE_FILE_NUMBER_DOES_NOT_EXIST) {
+        //   this.errors.push(Message)
+        //   return this.showSnackbar({
+        //     text: this.trans(Message)
+        //   })
+        // }
+        Content = {
+          "Id": "c63e0f9b-2b9b-e911-80db-00155d6597fc",
+          "FundingRequestNo": "FR_00000191",
+          "BusinessCounselorName": "Mohamed Albinali",
+          "CompanyName": "Barakah Capital Planners",
+          "Status": "Visit Approved",
+        }
+
+        // if (Code == CRM_CODE_FILE_NUMBER_FOUND) {
+          this.customerFound = true
+          this.results = true
+          this.customers.push(Content)
+        // }
+
+      }).finally(() => {
+        this.searching = false
+      })
+    },
+
+    goToNextStep () {
+      this.saveFoundCustomer(this.customers[0])
+    },
+
+    saveFoundCustomer (data) {
+      let attributes = {
+        name: data.CompanyName,
+        code: this.slugify(data.CompanyName),
+        refnum: data.Id,
+        status: data.Status,
+        token: data.Id,
+        user_id: $auth.getId(),
+        metadata: {
+          FundingRequestNo: data.FundingRequestNo,
+          BusinessCounselorName: data.BusinessCounselorName,
+        },
+      }
+
+      axios.post(
+        $api.crm.update(), attributes
+      ).then(response => {
+        this.showSnackbar({
+          text: trans('Customer successfully saved'),
+        })
+        this.goToCustomerShowPage(response.data.id)
+      })
+    },
+
+    goToCustomerShowPage (id) {
+      this.$router.push({name: 'customers.show', params: {id: id}})
     }
   },
 
   mounted () {
-    this.$store.dispatch('breadcrumbs/toggle', {show: false})
+    this.toggleBreadcrumbs({show: false})
   }
 }
 </script>

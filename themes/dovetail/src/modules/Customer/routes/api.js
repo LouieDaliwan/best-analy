@@ -46,4 +46,13 @@ export default {
       return `/api/v1/surveys/${id}`
     },
   },
+
+  crm: {
+    search: function (id) {
+      return `/api/v1/crm/customers/search/${id}`
+    },
+    update: function () {
+      return `/api/v1/crm/customers/update`
+    },
+  },
 }

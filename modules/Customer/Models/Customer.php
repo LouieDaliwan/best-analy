@@ -16,6 +16,15 @@ class Customer extends Model
         SoftDeletes;
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'metadata' => 'json',
+    ];
+
+    /**
      * The attributes that are not mass assignable.
      *
      * @var array

@@ -6,8 +6,7 @@
       <template v-slot:title>
         <h2 class="mb-3">{{ trans("Let's Start!") }}</h2>
         <p class="font-weight-regular">
-          {{ trans('Please select the type of survey evaluation that you would like to do for customer') }}
-          <strong>{{ resource.data.name }}</strong>.
+          {{ trans('Please select the type of survey evaluation that you would like to do for customer :name', {name: resource.data.name}) }}
         </p>
       </template>
 

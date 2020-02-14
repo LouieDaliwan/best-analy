@@ -67,4 +67,17 @@ class CustomerService extends Service implements CustomerServiceInterface
             'user_id' => 'required|numeric',
         ];
     }
+
+    /**
+     * Update or Create attributes from CRM.
+     *
+     * @param  array $attributes
+     * @return \Customer\Models\Customer
+     */
+    public function saveFromCrm($attributes)
+    {
+        return $this->model()->updateOrCreate([
+            'refnum' => $attributes['refnum'] ?? null,
+        ], $attributes);
+    }
 }

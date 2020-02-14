@@ -84,6 +84,8 @@ window.is_rtl = function (lang) {
 }
 
 window.Response = {
+  HTTP_OK: 200,
+  HTTP_CREATED: 201,
   HTTP_UNPROCESSABLE_ENTITY: 422,
   HTTP_INTERNAL_SERVER_ERROR: 500,
 }

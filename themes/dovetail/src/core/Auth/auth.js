@@ -17,6 +17,10 @@ class Auth {
     return JSON.parse(window.localStorage.getItem('user') || '{}')
   }
 
+  getId () {
+    return this.getUser().id
+  }
+
   check () {
     return !! this.token;
   }

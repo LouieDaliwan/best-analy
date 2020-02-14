@@ -1,0 +1,26 @@
+@page {
+  margin: 10px 10px;
+  size: 'Legal';
+  word-break: break-word;
+}
+
+.page-break {
+  page-break-after: always;
+}
+
+@media print {
+  html, body {
+    overflow: visible;
+    width: initial;
+  }
+
+  div {
+    display: block !important;
+  }
+}
+
+.section__title--lead {
+  padding: 12px;
+  background-color: #f9fbfd;
+  font-size: 17px;
+}

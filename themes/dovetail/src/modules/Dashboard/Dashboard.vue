@@ -66,7 +66,8 @@ export default {
   data: () => ({
     api: $api,
     resources: {
-      data: []
+      data: [],
+      loading: true
     }
   }),
 }

@@ -8,11 +8,13 @@ use Core\Models\Scopes\Typeable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Taxonomy extends Model
 {
     use BelongsToUser,
         CommonAttributes,
+        Searchable,
         SoftDeletes,
         Typeable;
 

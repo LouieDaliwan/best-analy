@@ -14,6 +14,8 @@ $factory->define(Taxonomy::class, function (Faker $faker) {
         'description' => $faker->paragraph(),
         'icon' => 'mdi mdi-pencil-outline',
         'type' => 'taxonomy',
-        'user_id' => factory(User::class)->create()->getKey(),
+        'user_id' => function () {
+            return factory(User::class)->create()->getKey();
+        },
     ];
 });

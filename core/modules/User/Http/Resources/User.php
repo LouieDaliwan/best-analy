@@ -24,10 +24,11 @@ class User extends JsonResource
             'details:common' => $this->getCommonDetails(),
             'details:others' => $this->getOtherDetails(),
             'displayname' => $this->displayname,
+            'is:superadmin' => $this->isSuperAdmin(),
             'modified' => $this->modified,
             'permissions' => $this->permissions->pluck('code'),
-            'roles' => $this->roles->pluck('id'),
             'role' => $this->role,
+            'roles' => $this->roles->pluck('id'),
         ]));
 
         if ($only = $request->get('only')) {

@@ -15,7 +15,7 @@ import $auth from '@/core/Auth/auth'
 export default {
   name: 'Can',
 
-  props: ['code'],
+  props: ['code', 'viewable'],
 
   data: () => {
     return {
@@ -25,6 +25,10 @@ export default {
 
   methods: {
     check (permission) {
+      if (this.viewable != undefined && !this.viewable) {
+        return $auth.isNotSuperAdmin()
+      }
+
       if (_.isObject(permission)) {
         return !_.isEmpty(permission.filter((p) => {
           return window._.includes(this.permissions || [], p)

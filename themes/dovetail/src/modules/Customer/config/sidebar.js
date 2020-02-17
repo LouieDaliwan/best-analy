@@ -29,6 +29,7 @@ export default [
           title: 'My Customers',
           authenticatable: true,
           sort: 5,
+          'viewable:superadmins': false,
           permission: 'customers.owned',
           children: ['customers.owned'],
         },

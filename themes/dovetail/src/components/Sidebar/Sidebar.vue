@@ -31,7 +31,7 @@
           <v-subheader class="text--muted text-capitalize" :key="i" v-text="$t(parent.meta.title)"></v-subheader>
         </template>
         <template v-else-if="parent.children">
-          <can :code="parent.meta.permission">
+          <can :code="parent.meta.permission" :viewable="parent.meta['viewable:superadmins']">
             <v-list-group
               :key="i"
               no-action
@@ -52,7 +52,7 @@
                     <v-divider :key="i"></v-divider>
                   </template>
                   <template v-else>
-                    <can :code="submenu.meta.permission">
+                    <can :code="submenu.meta.permission" :viewable="submenu.meta['viewable:superadmins']">
                       <v-list-item
                         :key="j"
                         :target="submenu.meta.external ? '_blank' : null"
@@ -77,7 +77,7 @@
         <!-- Menu with Children -->
         <!-- Menu without Children -->
         <template v-else>
-          <can :code="parent.meta.permission">
+          <can :code="parent.meta.permission" :viewable="parent.meta['viewable:superadmins']">
             <v-list-item color="primary" :key="i" link exact :to="{name: parent.name}">
               <v-list-item-icon>
                 <v-icon small v-text="parent.meta.icon"></v-icon>

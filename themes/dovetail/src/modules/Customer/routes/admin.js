@@ -34,11 +34,12 @@ export default [
         },
       },
       {
-        path: 'my',
+        path: 'owned',
         name: 'customers.owned',
         component: () => import('../Owned.vue'),
         meta: {
           title: 'My Customers',
+          description: 'Manage owned customers Performance Indices',
           sort: 6,
           authenticatable: true,
           icon: 'mdi-book-multiple-variant',

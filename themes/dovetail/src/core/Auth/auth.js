@@ -2,6 +2,7 @@ class Auth {
   constructor () {
     this.token = null;
     this.user = null;
+    this.id = null;
   }
 
   authorize (token, user) {
@@ -11,6 +12,7 @@ class Auth {
 
     this.token = token;
     this.user = user;
+    this.id = user.id;
   }
 
   getUser () {
@@ -23,6 +25,18 @@ class Auth {
 
   check () {
     return !! this.token;
+  }
+
+  hasPermission (permission) {
+    return permission === false || window._.includes(this.getUser().permissions || [], permission)
+  }
+
+  isSuperAdmin () {
+    return this.getUser()['is:superadmin'] || false
+  }
+
+  isNotSuperAdmin () {
+    return !this.isSuperAdmin()
   }
 }
 

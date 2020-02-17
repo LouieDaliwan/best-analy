@@ -9,7 +9,7 @@
               <h2 class="mb-3">{{ __('Oops.. page is restricted.') }}</h2>
               <p classs="muted--text mb-5">{{ __('We are sorry but you do not have permission to access this page') }}</p>
 
-              <v-btn large color="primary" exact to="dashboard" v-text="trans('Return to your dashboard')"></v-btn>
+              <v-btn large color="primary" exact :to="{name: 'dashboard'}" v-text="trans('Return to your dashboard')"></v-btn>
             </v-col>
           </v-row>
         </v-col>

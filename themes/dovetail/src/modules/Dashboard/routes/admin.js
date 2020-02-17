@@ -8,6 +8,7 @@ export default [
       description: 'Overview of the app.',
       sort: 0,
       authenticatable: true,
+      permission: false,
       icon: 'dashboard',
     },
   },

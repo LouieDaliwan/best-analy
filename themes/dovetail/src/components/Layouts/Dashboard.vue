@@ -13,28 +13,25 @@
 </template>
 
 <script>
+import multiguard from 'vue-router-multiguard';
+import permissions from '@/routes/middleware/permissions'
+import { mapActions } from 'vuex'
+
 export default {
   name: 'Blank',
 
   created: function () {
     window.axios.interceptors.response.use(undefined, (err) => {
       return new Promise((resolve, reject) => {
-        if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
+        if (err.response.status === Response.HTTP_UNAUTHORIZED && err.config && !err.config.__isRetryRequest) {
           this.$store.dispatch('auth/logout')
         }
 
-        if (err.response.status === 403 && err.config && !err.config.__isRetryRequest) {
-          this.$store.dispatch('dialog/error', {
-            show: true,
-            width: 400,
-            color: 'error',
-            buttons: { cancel: { show: false } },
-            title: err.response.statusText,
-            text: err.response.data.message,
-          })
+        if (err.response.status === Response.HTTP_FORBIDDEN && err.config && !err.config.__isRetryRequest) {
+          this.$router.push({ name: 'error.403' })
         }
 
-        if (err.response.status === 404) {
+        if (err.response.status === Response.HTTP_NOT_FOUND) {
           this.$router.push({ name: 'error.404' })
         }
 
@@ -60,8 +57,14 @@ export default {
     });
   },
 
+  methods: {
+    ...mapActions({
+      hideAlertbox: 'alertbox/hide',
+    }),
+  },
+
   mounted () {
-    this.$store.dispatch('alertbox/hide')
+    this.hideAlertbox()
   },
 }
 </script>

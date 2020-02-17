@@ -64,5 +64,5 @@ Route::middleware(['auth:api', 'json.force'])->prefix('v1')->group(function () {
  */
 
 Route::middleware(['auth:api', 'json.force'])->prefix('v1')->group(function () {
-    Route::post('search', 'Api\Search\ShowSearchResults')->name('settings.app');
+    Route::post('search', 'Api\Search\ShowSearchResults')->name('searches.show');
 });

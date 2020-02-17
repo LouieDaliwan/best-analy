@@ -103,7 +103,7 @@
             large
             color="primary"
             exact
-            :to="{name: 'customers.create'}">
+            :to="{name: 'customers.generate'}">
             <v-icon small left>mdi-file-document-box-search-outline</v-icon>
             {{ trans('Generate Report') }}
           </v-btn>

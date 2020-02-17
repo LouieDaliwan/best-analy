@@ -1,6 +1,10 @@
-import store from '@/store'
 import $api from '@/routes/api'
-import metatags from '@/routes/helpers/metatags';
+import isAuthenticated from '@/routes/middleware/isAuthenticated'
+import metatags from '@/routes/middleware/metatags'
+import multiguard from 'vue-router-multiguard';
+import permissions from '@/routes/middleware/permissions'
+import store from '@/store'
+import tokenVerifier from '@/routes/middleware/tokenVerifier'
 
 const routes = []
 const requireRoute = require.context(
@@ -27,21 +31,5 @@ export default {
   component: () => import('@/components/Layouts/Dashboard.vue'),
   meta: { title: 'Admin', authenticatable: true },
   children: routes,
-  beforeEnter: (to, from, next) => {
-    metatags.set(to, from, next)
-
-    window.axios.post($api.validate.token)
-      .then(response => {
-        next();
-      })
-      .catch(error => {
-        next({name: 'login', query: { from: window.location.pathname }})
-      });
-
-    const isAuthenticated = store.getters['auth/isAuthenticated']
-    if (!isAuthenticated) {
-      return next({name: 'login', query: { from: window.location.pathname }})
-    }
-    return next()
-  }
+  beforeEnter: multiguard([metatags, tokenVerifier, isAuthenticated, permissions]),
 }

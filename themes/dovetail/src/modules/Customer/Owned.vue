@@ -7,7 +7,7 @@
         <div class="mt-1">{{ __('My Customers') }}</div>
       </template>
       <template v-slot:action>
-        <v-btn large color="primary" exact :to="{ name: 'customers.search' }">
+        <v-btn large color="primary" exact :to="{ name: 'customers.generate' }">
           <v-icon small left>mdi-file-document-box-search-outline</v-icon>
           {{ trans('Generate Report') }}
         </v-btn>

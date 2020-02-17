@@ -5,7 +5,14 @@
 </template>
 
 <script>
+import multiguard from 'vue-router-multiguard';
+import permissions from '@/routes/middleware/permissions'
+
 export default {
   name: 'App',
+
+  beforeEnter: function () {
+    alert('asd')
+  },
 }
 </script>

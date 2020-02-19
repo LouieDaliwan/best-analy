@@ -5,6 +5,10 @@ export default function permissions(to, from, next) {
     return next()
   }
 
+  if ($auth.isSuperAdmin()) {
+    return next();
+  }
+
   if (to.name && $auth.hasPermission(to.name)) {
     return next();
   }

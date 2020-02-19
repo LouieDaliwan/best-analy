@@ -2,7 +2,12 @@
   <admin>
     <metatag :title="trans('Trashed Customers')"></metatag>
 
-    <page-header :back="{ to: { name: 'customers.index' }, text: trans('Customers') }"></page-header>
+    <can code="customers.index">
+      <page-header :back="{ to: { name: 'customers.index' }, text: trans('Customers') }"></page-header>
+      <template v-slot:unpermitted>
+        <page-header :back="{ to: { name: 'customers.owned' }, text: trans('Customers') }"></page-header>
+      </template>
+    </can>
 
     <!-- Data table -->
       <div v-show="resourcesIsNotEmpty">

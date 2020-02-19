@@ -11,8 +11,8 @@ import permissions from '@/routes/middleware/permissions'
 export default {
   name: 'App',
 
-  beforeEnter: function () {
-    alert('asd')
-  },
+  // beforeRouteEnter: function () {
+  //   alert('asd')
+  // },
 }
 </script>

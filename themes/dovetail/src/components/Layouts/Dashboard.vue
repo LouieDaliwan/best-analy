@@ -20,6 +20,8 @@ import { mapActions } from 'vuex'
 export default {
   name: 'Blank',
 
+  beforeRouteUpdate: multiguard([permissions]),
+
   created: function () {
     window.axios.interceptors.response.use(undefined, (err) => {
       return new Promise((resolve, reject) => {

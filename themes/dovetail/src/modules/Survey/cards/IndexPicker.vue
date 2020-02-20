@@ -1,6 +1,6 @@
 <template>
   <v-card class="mb-3">
-    <v-card-title>{{ trans('Indexes') }}</v-card-title>
+    <v-card-title>{{ trans('Performance Index') }}</v-card-title>
       <div class="primary--text text-center">
         <checklist-icon width="100" height="100"></checklist-icon>
       </div>
@@ -21,6 +21,10 @@
           ref="indices"
           v-model="index"
           >
+          <template v-slot:item="{ item }">
+            <img :src="item.icon" width="20" class="mr-3">
+            <span v-text="item.text"></span>
+          </template>
         </v-select>
       </validation-provider>
       <input type="hidden" name="indices[]" v-model="index">
@@ -64,6 +68,7 @@ export default {
         return {
           value: index.id,
           text: index.name,
+          icon: index.icon,
         }
       })
     }

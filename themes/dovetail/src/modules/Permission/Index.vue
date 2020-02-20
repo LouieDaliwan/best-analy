@@ -156,7 +156,6 @@ export default {
       axios.get(this.api.list())
       .then(response => {
         this.resources.data = Object.assign([], this.resources.data, response.data)
-        console.log(this.resources.data)
       })
     },
 

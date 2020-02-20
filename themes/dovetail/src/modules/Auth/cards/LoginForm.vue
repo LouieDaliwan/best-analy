@@ -54,17 +54,14 @@ import $auth from '@/core/Auth/auth'
 export default {
   name: 'Login',
 
-  data () {
-    return {
-      action: this.action,
-      auth: {
-        username: '',
-        password: '',
-      },
-      loading: false,
-      showPassword: false,
-    }
-  },
+  data: () => ({
+    auth: {
+      username: '',
+      password: '',
+    },
+    loading: false,
+    showPassword: false,
+  }),
 
   computed: {
     isMobile: function () {
@@ -90,7 +87,9 @@ export default {
           })
         })
         .catch(err => {
-          this.$refs['signin-form'].setErrors(err.response.data.errors)
+          if (err.response) {
+            this.$refs['signin-form'].setErrors(err.response.data.errors)
+          }
         })
         .finally(() => {
           this.load(false)

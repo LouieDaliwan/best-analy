@@ -18,8 +18,11 @@ class RoleResource extends JsonResource
             'created' => $this->created,
             'deleted' => $this->deleted,
             'modified' => $this->modified,
-            'permissions' => PermissionResource::collection($this->permissions),
             'status' => $this->status,
+            'permissions' => PermissionResource::collection($this->permissions),
+            'permissions:selected' => PermissionResource::collection(
+                $this->permissions
+            )->pluck('id')->toArray(),
         ]));
 
         if ($only = $request->get('only')) {

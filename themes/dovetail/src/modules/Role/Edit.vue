@@ -62,7 +62,10 @@
 
         <v-row>
           <v-col cols="12" md="9">
-            <v-card class="mb-3">
+            <template v-if="isFetchingResource">
+              <skeleton type="list-item@2,list-item-three-line,list-item-avatar@10"></skeleton>
+            </template>
+            <v-card v-show="isFinishedFetchingResource" class="mb-3">
               <v-card-text>
                 <v-row>
                   <v-col cols="12">
@@ -115,10 +118,9 @@
               </div>
               <v-card-text>
                 <h4 class="mb-5">{{ trans('Permissions') }}</h4>
-                <span v-html="resource.selected"></span>
                 <treeview-field v-model="search"></treeview-field>
                 <treeview
-                  :items="resource.permissions"
+                  :items.sync="resource.permissions"
                   :search="search"
                   :selectable="true"
                   v-model="resource.selected"
@@ -133,7 +135,10 @@
           </v-col>
 
           <v-col cols="23" md="3">
-            <metainfo-card :list="metaInfoCardList"></metainfo-card>
+            <template v-if="isFetchingResource">
+              <skeleton type="card-heading,list-item-avatar@2"></skeleton>
+            </template>
+            <metainfo-card v-show="isFinishedFetchingResource" :list="metaInfoCardList"></metainfo-card>
           </v-col>
         </v-row>
       </v-form>
@@ -169,6 +174,12 @@ export default {
     isLoading () {
       return this.resource.loading
     },
+    isFetchingResource () {
+      return this.loading
+    },
+    isFinishedFetchingResource () {
+      return !this.loading
+    },
     isFormDisabled () {
       return this.isInvalid || this.resource.isPrestine
     },
@@ -188,6 +199,7 @@ export default {
 
   data: () => ({
     resource: new Role,
+    loading: true,
     isValid: true,
     search: null
   }),
@@ -255,6 +267,7 @@ export default {
 
     load (val = true) {
       this.resource.loading = val
+      this.loading = val
     },
 
     parseResourceData (item) {
@@ -342,8 +355,8 @@ export default {
       axios.get(
         $api.show(this.$route.params.id)
       ).then(response => {
-        this.resource.data = Object.assign(response.data.data)
-        this.resource.selected = this.resource.data.permissions.map((i) => (i.id))
+        this.resource.data = _.clone(response.data.data)
+        this.resource.selected = _.clone(this.resource.data['permissions:selected'])
       }).finally(() => {
         this.load(false)
         this.resource.isPrestine = true
@@ -354,13 +367,14 @@ export default {
       axios.get(
         $api.permissions.list()
       ).then(response => {
-        this.resource.permissions = Object.assign([], this.resource.permissions, response.data)
+        this.resource.permissions = response.data
+      }).finally(() => {
+        this.getResource()
       })
     },
   },
 
   mounted () {
-    this.getResource(),
     this.displayPermissionsList()
   },
 
@@ -386,7 +400,7 @@ export default {
           this.hideAlertbox()
         }
       },
-      deep: true,
+      deep: false,
     },
   },
 }

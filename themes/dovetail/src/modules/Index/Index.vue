@@ -60,7 +60,7 @@
             <template v-slot:item.name="{ item }">
               <div class="d-flex align-center">
                 <v-avatar class="mr-6" size="32" color="workspace"><v-img :src="item.icon"></v-img></v-avatar>
-                <span>{{ trans(item.name) }}</span>
+                <span class="text-no-wrap">{{ trans(item.name) }}</span>
               </div>
             </template>
             <!-- Icon and Name -->

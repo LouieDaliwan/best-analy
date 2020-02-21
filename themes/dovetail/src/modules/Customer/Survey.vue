@@ -6,6 +6,8 @@
       <template v-slot:title>{{ resource.data.title }}</template>
     </page-header>
 
+    <criteria></criteria>
+
     <template v-if="resource.loading">
       <v-row>
         <v-col cols="12"><skeleton type="article"></skeleton></v-col>
@@ -40,10 +42,10 @@
                   </v-row>
 
                   <!-- choices -->
-                  <v-item-group active-class="primary" class="mb-4">
+                  <v-item-group v-model="field.selected" active-class="primary" class="mb-4">
                     <v-container>
                       <v-row justify="space-around" no-gutters>
-                        <v-col :id="`scrollto-${field.id+'-'+i}`" v-for="(rate, c) in rates" :key="c">
+                        <v-col :id="`scrollto-${field.id+'-'+(i+1)}`" v-for="(rate, c) in rates" :key="c">
                           <v-item v-slot:default="{ active, toggle }">
                             <div
                               :color="active ? 'primary' : null"
@@ -105,9 +107,14 @@
 import $auth from '@/core/Auth/auth'
 import $api from './routes/api'
 import Survey from '@/modules/Survey/Models/Survey'
+import Criteria from '@/modules/Survey/cards/Criteria'
 import { mapActions } from 'vuex'
 
 export default {
+  components: {
+    Criteria,
+  },
+
   computed: {
     _: function () {
       return window._
@@ -116,10 +123,15 @@ export default {
       return this.$route.params.id
     },
     progress () {
-      let c = (this.answers.filter(function (i) {
-        return !_.isEmpty(i)
-      }).length * 100) / this.resource.data['fields'].length
-      return parseFloat(c).toFixed(0)
+      let c = Object.values(this.resource.data['fields:grouped'] || {}).map(function (group) {
+        return group
+      }).flat().filter(function (field) {
+        return field.selected !== undefined
+      }).map(function (field) {
+        return field.selected
+      })
+
+      return parseFloat((c.length * 100) / this.resource.data['fields'].length).toFixed(0)
     },
   },
 

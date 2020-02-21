@@ -12,3 +12,7 @@ Route::prefix('v1')->middleware(['auth:api', 'auth.permissions'])->group(functio
     Route::softDeletes('users', 'Api\UserController');
     Route::apiResource('users', 'Api\UserController');
 });
+
+Route::prefix('v1')->middleware(['auth:api'])->group(function () {
+    Route::post('permissions/check/{user}', 'Api\CheckUserPermission')->name('permissions.check');
+});

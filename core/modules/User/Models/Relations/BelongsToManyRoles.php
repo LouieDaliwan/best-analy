@@ -121,8 +121,6 @@ trait BelongsToManyRoles
      */
     public function isPermittedTo(string $code)
     {
-        return in_array($code, $this->permissions->map(function ($permission) {
-            return $permission->pluck($this->getCodeKey());
-        })->flatten()->toArray());
+        return in_array($code, $this->permissions->pluck($this->getCodeKey())->toArray());
     }
 }

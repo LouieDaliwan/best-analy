@@ -40,7 +40,7 @@
                   v-shortkey.once="['ctrl', 's']"
                   >
                   <v-icon left>mdi-content-save-outline</v-icon>
-                  {{ trans('Save') }}
+                  {{ trans('Update') }}
                 </v-btn>
               </v-badge>
             </div>
@@ -63,8 +63,9 @@
         <v-row>
           <v-col cols="12" md="9">
             <template v-if="isFetchingResource">
-              <skeleton type="list-item@2,list-item-three-line,list-item-avatar@10"></skeleton>
+              <skeleton-edit></skeleton-edit>
             </template>
+
             <v-card v-show="isFinishedFetchingResource" class="mb-3">
               <v-card-text>
                 <v-row>
@@ -136,7 +137,7 @@
 
           <v-col cols="23" md="3">
             <template v-if="isFetchingResource">
-              <skeleton type="card-heading,list-item-avatar@2"></skeleton>
+              <skeleton-metainfo-card></skeleton-metainfo-card>
             </template>
             <metainfo-card v-show="isFinishedFetchingResource" :list="metaInfoCardList"></metainfo-card>
           </v-col>
@@ -149,6 +150,7 @@
 <script>
 import $api from './routes/api'
 import Role from './Models/Role'
+import SkeletonEdit from './cards/SkeletonEdit'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -158,6 +160,10 @@ export default {
     } else {
       this.askUserBeforeNavigatingAway(next)
     }
+  },
+
+  components: {
+    SkeletonEdit
   },
 
   computed: {

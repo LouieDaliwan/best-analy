@@ -3,6 +3,8 @@
 namespace Customer\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Index\Http\Resources\IndexResource;
+use Index\Models\Index;
 
 class CustomerResource extends JsonResource
 {
@@ -20,9 +22,16 @@ class CustomerResource extends JsonResource
             'code' => $this->code,
             'status' => $this->status,
             'user_id' => $this->user_id,
+            'author' => $this->author,
+            'counselor' => $this->counselor,
             'created' => $this->created,
             'deleted' => $this->deleted,
             'modified' => $this->modified,
+            'indices' => Index::all()->map(function ($index) use ($request) {
+                return array_merge(with(new IndexResource($index))->toArray($request), [
+                    'is:finished' => $index->survey && $index->survey->isFinishedWithCustomer($this),
+                ]);
+            })->toArray(),
         ]));
 
         if ($only = $request->get('only')) {

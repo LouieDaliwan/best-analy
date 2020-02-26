@@ -11,7 +11,7 @@
       </template>
 
       <template v-slot:action>
-        <v-btn large color="primary" exact :to="{ name: 'roles.create' }">
+        <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'roles.create' }">
           <v-icon small left>mdi-shield-plus-outline</v-icon>
           {{ trans('Add Role') }}
         </v-btn>
@@ -179,11 +179,11 @@ export default {
       },
       selected: [],
       headers: [
-        { text: trans('Role Name'), align: 'left', value: 'name' },
-        { text: trans('Code'), align: 'left', value: 'code' },
-        { text: trans('Permissions'), align: 'left', value: 'status' },
-        { text: trans('Last Modified'), value: 'updated_at' },
-        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text' },
+        { text: trans('Role Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
+        { text: trans('Code'), align: 'left', value: 'code', class: 'text-no-wrap' },
+        { text: trans('Permissions'), align: 'left', value: 'status', class: 'text-no-wrap' },
+        { text: trans('Last Modified'), value: 'updated_at', class: 'text-no-wrap' },
+        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
       ],
       data: []
     },

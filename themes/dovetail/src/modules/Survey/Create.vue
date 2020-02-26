@@ -132,6 +132,7 @@
                     <input type="hidden" :name="`fields[${group.group+g+f}][code]`" :value="slugify(field.title)">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][total]`" :value="field.total">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][wts]`" :value="field.wts">
+                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][categories]`" :value="field.categories">
                   </template>
                 </template>
               </v-card-text>
@@ -300,6 +301,7 @@ export default {
       this.hideAlertbox()
 
       axios.post(
+        // console.log(this.resource.data),
         $api.store(), this.parseResourceData(this.resource.data)).then(response => {
         this.resource.isPrestine = true
 

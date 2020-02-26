@@ -1,13 +1,13 @@
 <template>
   <admin>
-    <metatag :title="trans('My Customers')"></metatag>
+    <metatag :title="trans('My Companies')"></metatag>
 
     <page-header>
       <template v-slot:title>
-        <div class="mt-1">{{ __('My Customers') }}</div>
+        <div class="mt-1">{{ __('My Companies') }}</div>
       </template>
       <template v-slot:action>
-        <v-btn large color="primary" exact :to="{ name: 'customers.generate' }">
+        <v-btn large color="primary" exact :to="{ name: 'companies.generate' }">
           <v-icon small left>mdi-file-document-box-search-outline</v-icon>
           {{ trans('Generate Report') }}
         </v-btn>
@@ -57,7 +57,7 @@
             <div class="d-flex align-items-center">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <span class="mt-1" v-on="on"><router-link tag="a" exact :to="goToShowCustomerPage(item)" v-text="item.name" class="text-no-wrap text--decoration-none"></router-link></span>
+                  <span class="mt-1" v-on="on"><router-link tag="a" exact :to="goToShowCompanyPage(item)" v-text="item.name" class="text-no-wrap text--decoration-none"></router-link></span>
                 </template>
                 <span>{{ $t('View Details') }}</span>
               </v-tooltip>
@@ -94,10 +94,10 @@ export default {
       },
       meta: {},
       headers: [
-        { text: trans('Name'), align: 'left', value: 'name' },
-        { text: trans('Reference Number'), value: 'refnum' },
-        { text: trans('Status'), value: 'status' },
-        { text: trans('Last Modified'), align: 'center', value: 'updated_at' },
+        { text: trans('Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
+        { text: trans('Reference Number'), value: 'refnum', class: 'text-no-wrap' },
+        { text: trans('Status'), value: 'status', class: 'text-no-wrap' },
+        { text: trans('Last Modified'), align: 'center', value: 'updated_at', class: 'text-no-wrap' },
       ],
       data: []
     },
@@ -169,8 +169,8 @@ export default {
         })
     },
 
-    goToShowCustomerPage (customer) {
-      return { name: 'customers.show', params: { id: customer.id, slug: customer.customername } }
+    goToShowCompanyPage (company) {
+      return { name: 'companies.show', params: { id: company.id, slug: company.companyname } }
     },
 
     search: _.debounce(function (event) {

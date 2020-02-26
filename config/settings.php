@@ -27,7 +27,7 @@ return [
      * - :human:     - will parse the value to Carbon::diffForHumans.
      *
      */
-    'format:date' => ':human:',
+    'format:human' => ':human:',
     'format:time' => 'h:i a',
     'format:datetime' => 'd-M, Y h:i a',
     'formal:date' => 'd-M Y',

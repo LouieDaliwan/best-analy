@@ -339,7 +339,6 @@ export default {
           },
         })
       }).catch(err => {
-        console.log(err)
         this.form.setErrors(err.response.data.errors)
       }).finally(() => {
         this.load(false)

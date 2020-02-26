@@ -18,6 +18,7 @@
     "codrasil/tree": "^1.0",
     "doctrine/dbal": "^2.9",
     "fideloper/proxy": "^4.1",
+    "jpgraph/jpgraph": "^4.0",
     "laravel/framework": "5.8.*",
     "laravel/nexmo-notification-channel": "^2.0",
     "laravel/passport": "^7.5.1",
@@ -25,6 +26,7 @@
     "laravel/slack-notification-channel": "^2.0",
     "laravel/tinker": "^1.0",
     "laravolt/avatar": "^2.2",
+    "maatwebsite/excel": "^3.1",
     "sempro/phpunit-pretty-print": "^1.2",
     "teamtnt/laravel-scout-tntsearch-driver": "^7.0",
     "wikimedia/composer-merge-plugin": "^1.4"

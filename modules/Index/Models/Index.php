@@ -41,7 +41,7 @@ class Index extends Taxonomy
      */
     public function getCustomerViaSurvey(Survey $survey)
     {
-        return $this->customers()->where('form_id', $survey->getKey())->first();
+        return $this->customers()->where('form_id', $survey->getKey())->latest()->first();
     }
 
     /**
@@ -61,7 +61,7 @@ class Index extends Taxonomy
      */
     public function getSurveyAttribute()
     {
-        return $this->surveys->first();
+        return $this->surveys->last();
     }
 
     /**

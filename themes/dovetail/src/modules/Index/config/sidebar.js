@@ -15,7 +15,7 @@ export default [
         code: 'indices.index',
         name: 'indices.index',
         meta: {
-          title: 'All Indexes',
+          title: 'All Indices',
           authenticatable: true,
           sort: 5,
           permission: 'indices.index',
@@ -36,7 +36,7 @@ export default [
         code: 'indices.trashed',
         name: 'indices.trashed',
         meta: {
-          title: 'Trashed Indexes',
+          title: 'Trashed Indices',
           authenticatable: true,
           sort: 5,
           permission: 'indices.trashed',

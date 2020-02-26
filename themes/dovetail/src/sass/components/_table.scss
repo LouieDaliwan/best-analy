@@ -86,3 +86,18 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .v-data-footer {
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+
+    .v-data-footer__select {
+      margin-right: 0;
+
+      .v-input {
+        margin-left: 10px;
+      }
+    }
+  }
+}

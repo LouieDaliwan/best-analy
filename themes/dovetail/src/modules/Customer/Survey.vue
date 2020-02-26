@@ -2,12 +2,9 @@
   <admin>
     <metatag :title="resource.data.title"></metatag>
 
-    <page-header :back="{ to: { name: 'customers.show' }, text: trans('Indexes') }">
+    <page-header :back="{ to: { name: 'companies.show' }, text: trans('Indexes') }">
       <template v-slot:title>{{ resource.data.title }}</template>
     </page-header>
-
-    <criteria></criteria>
-
     <template v-if="resource.loading">
       <v-row>
         <v-col cols="12"><skeleton type="article"></skeleton></v-col>
@@ -19,12 +16,13 @@
     <template v-else>
       <form ref="survey-submission-form" @submit.prevent="submit">
         <v-card>
+          <criteria></criteria>
           <template v-for="(fields, f) in resource.data['fields:grouped']">
             <v-card-text class="text-center" :key="f">
               <v-row justify="center">
                 <!-- group -->
                 <v-col cols="12" md="10">
-                  <p class="headline py-4 mb-0 font-weight-bold">
+                  <p :class="$vuetify.breakpoint.smAndUp ? 'headline py-4' : 'subtitle-2'" class="mb-0 font-weight-bold">
                     {{ trans(f) }}
                   </p>
                 </v-col>
@@ -33,32 +31,42 @@
                 <!-- fields -->
                 <v-col cols="12" md="10" v-for="(field, i) in fields" :key="i">
                   <v-row>
-                    <v-col cols="12" md="auto">
-                      <span class="text--text muted--text display-1 font-weight-bold" v-html="field.metadata['sort']"></span>
+                    <v-col cols="12" md="auto" :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
+                      <span
+                        :class="$vuetify.breakpoint.smAndUp ? 'display-1' : 'title'"
+                        class="text--text muted--text font-weight-bold"
+                        v-html="field.metadata['sort']"
+                      ></span>
                     </v-col>
-                    <v-col>
-                      <p class="title">{{ trans(field.title) }}</p>
+                    <v-col :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
+                      <p :class="$vuetify.breakpoint.smAndUp ? 'title' : null">{{ trans(field.title) }}</p>
                     </v-col>
                   </v-row>
 
                   <!-- choices -->
                   <v-item-group v-model="field.selected" active-class="primary" class="mb-4">
-                    <v-container>
+                    <v-container :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
                       <v-row justify="space-around" no-gutters>
                         <v-col :id="`scrollto-${field.id+'-'+(i+1)}`" v-for="(rate, c) in rates" :key="c">
-                          <v-item v-slot:default="{ active, toggle }">
-                            <div
-                              :color="active ? 'primary' : null"
-                              @click="choose(field, rate);toggle()"
-                              class="dt-chip"
-                              v-ripple
-                              v-scroll-to="{ el: `#scrollto-${field.id+'-'+(parseInt(i)+1)}`, duration: 700 }"
-                              >
-                              <span :class="active ? 'white--text' : 'muted--text'">
-                                {{ rate }}
-                              </span>
-                            </div>
-                          </v-item>
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on }">
+                              <v-item v-slot:default="{ active, toggle }">
+                                <div
+                                  :color="active ? 'primary' : null"
+                                  @click="choose(field, rate);toggle()"
+                                  class="dt-chip"
+                                  v-on="$vuetify.breakpoint.smAndUp ? on : null"
+                                  v-ripple
+                                  v-scroll-to="{ el: `#scrollto-${field.id+'-'+(parseInt(i)+1)}`, duration: 700 }"
+                                  >
+                                  <span :class="active ? 'white--text' : 'muted--text'">
+                                    {{ rate.number }}
+                                  </span>
+                                </div>
+                              </v-item>
+                            </template>
+                            <span>{{ rate.text }}</span>
+                          </v-tooltip>
                         </v-col>
                       </v-row>
                     </v-container>
@@ -73,17 +81,17 @@
 
           <template v-for="(answer, a) in answers">
             <input type="hidden" :name="`fields[${a}][id]`" :value="answer.item.id" >
-            <input type="hidden" :name="`fields[${a}][submission][results]`" :value="answer.answer">
+            <input type="hidden" :name="`fields[${a}][submission][results]`" :value="answer.answer.number">
             <input type="hidden" :name="`fields[${a}][submission][submissible_id]`" :value="answer.item.id">
             <input type="hidden" :name="`fields[${a}][submission][submissible_type]`" value="Survey\Models\Field">
             <input type="hidden" :name="`fields[${a}][submission][user_id]`" :value="auth.id">
-            <input type="hidden" :name="`fields[${a}][submission][customer_id]`" :value="customerId">
+            <input type="hidden" :name="`fields[${a}][submission][customer_id]`" :value="companyId">
           </template>
 
           <!-- Submit -->
           <v-card-text class="text-center">
             <v-btn
-              :disabled="progress < 1 || submitting"
+              :disabled="progress < 100 || submitting"
               @click="submit();submitting = true"
               color="primary"
               x-large
@@ -119,7 +127,7 @@ export default {
     _: function () {
       return window._
     },
-    customerId () {
+    companyId () {
       return this.$route.params.id
     },
     progress () {
@@ -137,7 +145,14 @@ export default {
 
   data: () => ({
     api: $api,
-    rates: ['1', '2', '3', '4', '5', '6'],
+    rates: [
+      { number: '1', text: 'No existing processes & practices' },
+      { number: '2', text: 'Processes present but not practised' },
+      { number: '3', text: 'Processes are poorly practiced' },
+      { number: '4', text: 'Processes practised effectively by some' },
+      { number: '5', text: 'Processes practised effectively by most' },
+      { number: '6', text: 'N/A' },
+    ],
     answers: [],
     resource: new Survey,
     auth: $auth.getUser(),
@@ -156,20 +171,20 @@ export default {
     submit: _.debounce(function (event) {
       let data = new FormData(this.$refs['survey-submission-form'])
       axios.post(
-        $api.surveys.submit(this.$route.params.survey), data)
-        .then(response => {
-        }
-      ).finally(() => {
+        $api.surveys.submit(this.$route.params.survey), data
+      ).then(response => {
+        this.showSnackbar({
+          text: trans('Survey successfully submitted'),
+        })
+
+        this.$router.push({
+          name: 'companies.show',
+          params: { id: this.$route.params.id },
+        })
+      }).finally(() => {
         this.submitting = false
       })
 
-      this.showSnackbar({
-        text: trans('Survey successfully submitted'),
-      })
-
-      this.$router.push({
-        name: 'customers.show',
-      })
     }, 2000),
 
     choose (item, answer) {

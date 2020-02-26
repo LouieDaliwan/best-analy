@@ -11,7 +11,7 @@
       </template>
 
       <template v-slot:action>
-        <v-btn large color="primary" exact :to="{ name: 'surveys.create' }">
+        <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'surveys.create' }">
           <v-icon small left>mdi-table-plus</v-icon>
           {{ trans('Add Survey') }}
         </v-btn>
@@ -186,10 +186,10 @@ export default {
       },
       selected: [],
       headers: [
-        { text: trans('Title'), align: 'left', value: 'title' },
-        { text: trans('Body'), align: 'left', value: 'body' },
-        { text: trans('Last Modified'), value: 'updated_at' },
-        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text' },
+        { text: trans('Title'), align: 'left', value: 'title', class: 'text-no-wrap' },
+        { text: trans('Body'), align: 'left', value: 'body', class: 'text-no-wrap' },
+        { text: trans('Last Modified'), value: 'updated_at', class: 'text-no-wrap' },
+        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
       ],
       data: []
     },

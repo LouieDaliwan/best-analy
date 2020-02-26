@@ -11,6 +11,7 @@
 
     <v-btn @click="getSubmissions">Submit Sample Submission</v-btn>
     <v-btn @click="getReport">Generate Sample's Report</v-btn>
+    <v-btn @click="submitToCRM">Submit To CRM API</v-btn>
 
     <h3 class="mt-9 mb-3">Icon Picker</h3>
     <v-row>
@@ -287,6 +288,36 @@ export default {
         })
     },
 
+    submitToCRM () {
+      let data = {
+        'OverallScore': '80.0',
+        'FileNo': '19136',
+        'Id': 'c63e0f9b-2b9b-e911-80db-00155d6597fc',
+        'FileContentBase64': 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+        'Comments': 'This is a test comment.',
+      }
+      axios.post(
+        '/api/v1/crm/customers/save', data
+      ).then(response => {
+        this.$store.dispatch('snackbar/show', {
+          text: trans('Successfully saved to remote CRM'),
+        })
+      }).catch(err => {
+        if (err.response.status == Response.HTTP_INTERNAL_SERVER_ERROR) {
+          this.$store.dispatch('dialog/show', {
+            illustration: () => import('@/components/Icons/ErrorIcon.vue'),
+            color: 'error',
+            title: trans('Save to Remote CRM Failed'),
+            text: [
+              trans('An error occured while trying to save the report to the CRM app.'),
+              trans('Please make sure you are connected to the designated VPN in order to access the remote CRM.'),
+              trans('Contact your administrator for help. After resolving the issue, try again.'),
+            ],
+          })
+        }
+      })
+    },
+
     getReport () {
       let data = {
         customer_id: 1,
@@ -295,12 +326,12 @@ export default {
       axios.post('/api/v1/reports/1/generate', data, {responseType: 'arraybuffer'})
         .then(response => {
           console.log(response)
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'file.pdf');
-          document.body.appendChild(link);
-          link.click();
+          // const url = window.URL.createObjectURL(new Blob([response.data]));
+          // const link = document.createElement('a');
+          // link.href = url;
+          // link.setAttribute('download', 'file.pdf');
+          // document.body.appendChild(link);
+          // link.click();
         })
     },
 

@@ -35,5 +35,5 @@ return [
      * Listed here are the locales supported out-of-the-box.
      *
      */
-    'supported' => ['en', 'fil'],
+    'supported' => ['en' => 'English', 'ar' => 'Arabic'],
 ];

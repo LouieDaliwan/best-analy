@@ -1,47 +1,33 @@
 <template>
-  <v-card color="transparent" flat>
-    <div class="d-flex justify-space-between">
-      <div class="text-center">
-        <v-avatar color="muted" size="32" class="mt-n4 mx-4">
-          <span class="white--text">0</span>
-        </v-avatar>
-        <p class="mt-3 body-1 muted--text">N/A</p>
-      </div>
-
-      <div class="text-center">
-        <v-avatar color="muted" size="32" class="mt-n4 mx-4">
-          <span class="white--text">1</span>
-        </v-avatar>
-        <p class="mt-3 body-1 muted--text">Strongly Disagree</p>
-      </div>
-
-      <div class="text-center">
-        <v-avatar color="muted" size="32" class="mt-n4 mx-4">
-          <span class="white--text">2</span>
-        </v-avatar>
-        <p class="mt-3 body-1 muted--text">Disagree</p>
-      </div>
-
-      <div class="text-center">
-        <v-avatar color="muted" size="32" class="mt-n4 mx-4">
-          <span class="white--text">3</span>
-        </v-avatar>
-        <p class="mt-3 body-1 muted--text">Somewhat Agree</p>
-      </div>
-
-      <div class="text-center">
-        <v-avatar color="muted" size="32" class="mt-n4 mx-4">
-          <span class="white--text">4</span>
-        </v-avatar>
-        <p class="mt-3 body-1 muted--text">Agree</p>
-      </div>
-
-      <div class="text-center">
-        <v-avatar color="muted" size="32" class="mt-n4 mx-4">
-          <span class="white--text">5</span>
-        </v-avatar>
-        <p class="mt-3 body-1 muted--text">Strongly Agree</p>
-      </div>
-    </div>
-  </v-card>
+  <v-sheet class="sticky dt-sheet criteria">
+    <v-slide-group single show-arrows>
+      <v-slide-item>
+        <v-banner class="dt-banner" elevation="1">
+          <v-row justify="center" align="start">
+          <v-col class="text-center" v-for="(rate, r) in rates" :key="r">
+            <v-avatar color="primary" size="20" class="mb-2">
+              <small class="white--text">{{ rate.number }}</small>
+            </v-avatar>
+            <div class="overline" v-html="rate.text"></div>
+          </v-col>
+          </v-row>
+        </v-banner>
+      </v-slide-item>
+    </v-slide-group>
+  </v-sheet>
 </template>
+
+<script>
+  export default {
+    data: () => ({
+      rates: [
+        { number: '1', text: 'No existing <br/> processes & practices' },
+        { number: '2', text: 'Processes present <br/> but not practised' },
+        { number: '3', text: 'Processes are <br/> poorly practiced' },
+        { number: '4', text: 'Processes practised <br/> effectively by some' },
+        { number: '5', text: 'Processes practised <br/> effectively by most' },
+        { number: '6', text: 'N/A' },
+      ],
+    })
+  }
+</script>

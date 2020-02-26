@@ -11,7 +11,7 @@
       </template>
 
       <template v-slot:action>
-        <v-btn large color="primary" exact :to="{ name: 'users.create' }">
+        <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'users.create' }">
           <v-icon small left>mdi-account-plus-outline</v-icon>
           {{ trans('Add User') }}
         </v-btn>
@@ -177,10 +177,10 @@ export default {
       },
       selected: [],
       headers: [
-        { text: trans('Account Name'), align: 'left', value: 'displayname' },
-        { text: trans('Role'), value: 'role' },
-        { text: trans('Last Modified'), value: 'updated_at' },
-        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text' },
+        { text: trans('Account Name'), align: 'left', value: 'displayname', class: 'text-no-wrap' },
+        { text: trans('Role'), value: 'role', class: 'text-no-wrap' },
+        { text: trans('Last Modified'), value: 'updated_at', class: 'text-no-wrap' },
+        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
       ],
       data: []
     },

@@ -143,10 +143,10 @@ export default {
       },
       selected: [],
       headers: [
-        { text: trans('Title'), align: 'left', value: 'title' },
-        { text: trans('Body'), align: 'left', value: 'body' },
-        { text: trans('Date Deleted'), value: 'deleted_at' },
-        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text' },
+        { text: trans('Title'), align: 'left', value: 'title', class: 'text-no-wrap' },
+        { text: trans('Body'), align: 'left', value: 'body', class: 'text-no-wrap' },
+        { text: trans('Date Deleted'), value: 'deleted_at', class: 'text-no-wrap' },
+        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
       ],
       data: []
     },

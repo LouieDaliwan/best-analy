@@ -116,6 +116,13 @@ return [
      * -------------------------------------------------------------------------
      *
      */
+    'generate-customers' => [
+        'name' => 'generate-customers',
+        'code' => 'customers.generate',
+        'description' => 'Ability to retrieve customers from the 3rd Pary CRM.',
+        'group' => 'crm',
+    ],
+
     'search-crm' => [
         'name' => 'search-crm',
         'code' => 'crm.search',

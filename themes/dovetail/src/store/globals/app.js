@@ -1,4 +1,5 @@
 import $app from '@/config/app'
+import i18n from '@/plugins/i18n'
 
 export const state = () => ({
   app: {

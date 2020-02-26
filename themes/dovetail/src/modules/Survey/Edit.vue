@@ -64,7 +64,11 @@
 
         <v-row>
           <v-col cols="12" md="9">
-            <v-card>
+            <template v-if="isFetchingResource">
+              <skeleton-edit></skeleton-edit>
+            </template>
+
+            <v-card v-show="isFinishedFetchingResource">
               <v-card-text>
                 <v-row>
                   <v-col cols="12">
@@ -143,8 +147,15 @@
             </v-card>
           </v-col>
           <v-col cols="12" md="3">
-            <index-picker :dense="isDense" :disabled="isLoading" name="formable_id" v-model="resource.data.indices"></index-picker>
-            <metainfo-card :list="metaInfoCardList"></metainfo-card>
+            <template v-if="isFetchingResource">
+              <skeleton-index-picker></skeleton-index-picker>
+            </template>
+            <index-picker v-show="isFinishedFetchingResource" :dense="isDense" :disabled="isLoading" name="formable_id" v-model="resource.data.indices"></index-picker>
+
+            <template v-if="isFetchingResource">
+              <skeleton-metainfo-card></skeleton-metainfo-card>
+            </template>
+            <metainfo-card v-show="isFinishedFetchingResource" :list="metaInfoCardList"></metainfo-card>
           </v-col>
         </v-row>
       </v-form>
@@ -156,6 +167,8 @@
 import $auth from '@/core/Auth/auth'
 import $api from './routes/api'
 import Survey from './Models/Survey'
+import SkeletonEdit from './cards/SkeletonEdit'
+import SkeletonIndexPicker from './cards/SkeletonIndexPicker'
 import IndexPicker from './cards/IndexPicker'
 import { mapActions, mapGetters } from 'vuex'
 
@@ -169,7 +182,9 @@ export default {
   },
 
   components: {
-    IndexPicker
+    IndexPicker,
+    SkeletonEdit,
+    SkeletonIndexPicker
   },
 
   computed: {
@@ -185,6 +200,12 @@ export default {
     },
     isLoading () {
       return this.resource.loading
+    },
+    isFetchingResource () {
+      return this.loading
+    },
+    isFinishedFetchingResource () {
+      return !this.loading
     },
     isFormDisabled () {
       return this.isInvalid || this.resource.isPrestine
@@ -205,6 +226,7 @@ export default {
 
   data: () => ({
     auth: $auth.getUser(),
+    loading: true,
     resource: new Survey,
     isValid: true,
   }),
@@ -272,6 +294,7 @@ export default {
 
     load (val = true) {
       this.resource.loading = val
+      this.loading = val
     },
 
     parseResourceData (item) {

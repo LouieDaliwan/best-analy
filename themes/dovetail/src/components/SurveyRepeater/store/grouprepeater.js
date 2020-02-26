@@ -8,6 +8,7 @@ export const state = () => ({
         code: '',
         total: '',
         wts: '',
+        categories: [],
       }],
     },
     items: [],

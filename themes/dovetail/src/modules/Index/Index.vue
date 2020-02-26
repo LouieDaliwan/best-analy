@@ -11,7 +11,7 @@
       </template>
 
       <template v-slot:action>
-        <v-btn large color="primary" exact :to="{ name: 'indices.create' }">
+        <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'indices.create' }">
           <v-icon small left>mdi-credit-card-plus-outline</v-icon>
           {{ trans('Add Index') }}
         </v-btn>
@@ -182,11 +182,11 @@ export default {
       },
       selected: [],
       headers: [
-        { text: trans('Name'), align: 'left', value: 'name' },
-        { text: trans('Weightage'), align: 'center', value: 'metadata[weightage]' },
-        { text: trans('Description'), align: 'left', value: 'description' },
-        { text: trans('Last Modified'), value: 'updated_at' },
-        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text' },
+        { text: trans('Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
+        { text: trans('Weightage'), align: 'center', value: 'metadata[weightage]', class: 'text-no-wrap' },
+        { text: trans('Description'), align: 'left', value: 'description', class: 'text-no-wrap' },
+        { text: trans('Last Modified'), value: 'updated_at', class: 'text-no-wrap' },
+        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
       ],
       data: []
     },

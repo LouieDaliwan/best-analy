@@ -168,11 +168,11 @@ export default {
       },
       selected: [],
       headers: [
-        { text: trans('Role Name'), align: 'left', value: 'name' },
-        { text: trans('Code'), align: 'left', value: 'code' },
-        { text: trans('Permissions'), value: 'status' },
-        { text: trans('Date Deleted'), value: 'deleted_at' },
-        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text' },
+        { text: trans('Role Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
+        { text: trans('Code'), align: 'left', value: 'code', class: 'text-no-wrap' },
+        { text: trans('Permissions'), value: 'status', class: 'text-no-wrap' },
+        { text: trans('Date Deleted'), value: 'deleted_at', class: 'text-no-wrap' },
+        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
       ],
       data: []
     },

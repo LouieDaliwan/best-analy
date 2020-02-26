@@ -63,7 +63,12 @@
 
         <v-row>
           <v-col cols="12" md="9">
-            <v-card class="mb-3">
+
+            <template v-if="isFetchingResource">
+              <skeleton-edit></skeleton-edit>
+            </template>
+
+            <v-card v-show="isFinishedFetchingResource" class="mb-3">
               <v-card-title>{{ trans('Account Information') }}</v-card-title>
               <v-card-text>
                 <v-row justify="space-between">
@@ -207,16 +212,25 @@
             </v-card>
           </v-col>
           <v-col cols="12" md="3">
-            <v-card class="mb-3">
+            <template v-if="isFetchingResource">
+              <skeleton-avatar></skeleton-avatar>
+            </template>
+            <v-card v-show="isFinishedFetchingResource" class="mb-3">
               <v-card-title class="pb-0">{{ __('Photo') }}</v-card-title>
               <v-card-text class="text-center">
                 <upload-avatar name="photo" v-model="resource.data.avatar"></upload-avatar>
               </v-card-text>
             </v-card>
 
-            <role-picker :dense="isDense" :disabled="isLoading" class="mb-3" v-model="resource.data.roles"></role-picker>
+            <template v-if="isFetchingResource">
+              <skeleton-role-picker></skeleton-role-picker>
+            </template>
+            <role-picker v-show="isFinishedFetchingResource" :dense="isDense" :disabled="isLoading" class="mb-3" v-model="resource.data.roles"></role-picker>
 
-            <metainfo-card :list="metaInfoCardList"></metainfo-card>
+            <template v-if="isFetchingResource">
+              <skeleton-metainfo-card></skeleton-metainfo-card>
+            </template>
+            <metainfo-card v-show="isFinishedFetchingResource" :list="metaInfoCardList"></metainfo-card>
           </v-col>
         </v-row>
       </v-form>
@@ -227,6 +241,8 @@
 <script>
 import $api from './routes/api'
 import AccountDetails from './cards/AccountDetails'
+import SkeletonEdit from './cards/SkeletonEdit'
+import SkeletonRolePicker from './cards/SkeletonRolePicker'
 import User from './Models/User'
 import { mapActions, mapGetters } from 'vuex'
 
@@ -241,6 +257,8 @@ export default {
 
   components: {
     AccountDetails,
+    SkeletonEdit,
+    SkeletonRolePicker,
   },
 
   computed: {
@@ -256,6 +274,12 @@ export default {
     },
     isLoading () {
       return this.resource.loading
+    },
+    isFetchingResource () {
+      return this.loading
+    },
+    isFinishedFetchingResource () {
+      return !this.loading
     },
     isFormDisabled () {
       return this.isInvalid || this.resource.isPrestine
@@ -277,6 +301,7 @@ export default {
   data: () => ({
     resource: new User,
     isValid: true,
+    loading: true,
   }),
 
   methods: {
@@ -342,6 +367,7 @@ export default {
 
     load (val = true) {
       this.resource.loading = val
+      this.loading = val
     },
 
     parseResourceData (item) {

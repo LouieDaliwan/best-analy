@@ -1,7 +1,7 @@
 <template>
   <v-row class="mb-4">
     <v-col cols="12">
-      <div class="d-flex justify-space-between align-center">
+      <div class="d-block d-sm-flex justify-space-between align-center">
         <div>
           <slot name="back" :back="back">
             <div class="mb-2" v-if="back">
@@ -11,7 +11,7 @@
               </router-link>
             </div>
           </slot>
-          <h2 class="mb-1" :title="heading.description">
+          <h2 :class="$vuetify.breakpoint.smAndUp ? '' : 'title font-weight-bold'" class="mb-1" :title="heading.description">
             <slot name="title">
               {{ heading.title }}
             </slot>
@@ -19,7 +19,7 @@
           <slot name="utilities"></slot>
         </div>
 
-        <div><slot name="action"></slot></div>
+        <div class="mt-sm-0 mt-3"><slot name="action"></slot></div>
       </div>
     </v-col>
   </v-row>

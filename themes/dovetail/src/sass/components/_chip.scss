@@ -2,7 +2,7 @@
   .theme--light {
     .v-chip {
       &:not(.v-chip--active) {
-        background: var(--workspace);
+        background: var(--workspace-bg) !important;
       }
     }
   }

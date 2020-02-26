@@ -28,7 +28,7 @@ class RegisterController extends ApiController
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/admin';
 
     /**
      * Get a validator for an incoming registration request.

@@ -87,6 +87,24 @@
                       </v-text-field>
                     </validation-provider>
                   </v-col>
+                  <v-col cols="12">
+                    <div class="my-3">
+                      <h4 class="mb-3 muted--text">{{ trans('Choose Category') }}:</h4>
+                      <validation-provider vid="categories" :name="trans('categories')" v-slot="{ errors }">
+                        <v-chip-group
+                          active-class="primary--text"
+                          color="blue"
+                          large
+                          multiple
+                          v-model="item.categories"
+                          >
+                          <v-chip :value="category" v-for="category in categories" :key="category">
+                            {{ category }}
+                          </v-chip>
+                        </v-chip-group>
+                      </validation-provider>
+                    </div>
+                  </v-col>
                 </v-row>
               </v-col>
             </v-row>
@@ -148,6 +166,7 @@ export default {
         code: '',
         total: '',
         wts: '',
+        categories: [],
       }
     },
 
@@ -175,6 +194,12 @@ export default {
 
   data: (vm) => ({
     focus: false,
+    categories: [
+      'Workflow Progress',
+      'Talent',
+      'Documentation',
+      'Technology',
+    ],
   }),
 
   methods: {

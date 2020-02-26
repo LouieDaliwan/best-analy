@@ -23,8 +23,10 @@
               outlined
             ></v-text-field>
 
+            <language-switcher class="mb-6"></language-switcher>
+
             <div class="d-flex justify-end">
-              <v-btn large color="primary" v-text="trans('Save Settings')"></v-btn>
+              <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" v-text="trans('Save Settings')"></v-btn>
             </div>
           </v-card-text>
         </v-card>

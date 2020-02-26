@@ -1,11 +1,11 @@
 <template>
   <admin>
-    <metatag :title="trans('Trashed Customers')"></metatag>
+    <metatag :title="trans('Trashed Companies')"></metatag>
 
-    <can code="customers.index">
-      <page-header :back="{ to: { name: 'customers.index' }, text: trans('Customers') }"></page-header>
+    <can code="companies.index">
+      <page-header :back="{ to: { name: 'companies.index' }, text: trans('Companies') }"></page-header>
       <template v-slot:unpermitted>
-        <page-header :back="{ to: { name: 'customers.owned' }, text: trans('Customers') }"></page-header>
+        <page-header :back="{ to: { name: 'companies.owned' }, text: trans('Companies') }"></page-header>
       </template>
     </can>
 
@@ -82,7 +82,7 @@
                         <v-icon small v-else>mdi-restore</v-icon>
                       </v-btn>
                     </template>
-                    <span>{{ trans_choice('Restore this customer', 1) }}</span>
+                    <span>{{ trans_choice('Restore this company', 1) }}</span>
                   </v-tooltip>
                   <!-- Restore -->
                   <!-- Permanently Delete -->
@@ -92,7 +92,7 @@
                         <v-icon small>mdi-delete-forever-outline</v-icon>
                       </v-btn>
                     </template>
-                    <span>{{ trans_choice('Permanently delete this customer', 1) }}</span>
+                    <span>{{ trans_choice('Permanently delete this company', 1) }}</span>
                   </v-tooltip>
                   <!-- Permanently Delete -->
                 </div>
@@ -112,8 +112,8 @@
             large
             color="primary"
             exact
-            :to="{name: 'customers.index'}">
-            {{ trans('Go back to all Customer') }}
+            :to="{name: 'companies.index'}">
+            {{ trans('Go back to all Companies') }}
           </v-btn>
         </template>
       </empty-state>
@@ -148,10 +148,10 @@ export default {
       },
       selected: [],
       headers: [
-        { text: trans('Company Name'), align: 'left', value: 'name' },
-        { text: trans('Refnum'), align: 'left', value: 'refnum' },
-        { text: trans('Date Deleted'), value: 'deleted_at' },
-        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text' },
+        { text: trans('Company Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
+        { text: trans('Refnum'), align: 'left', value: 'refnum', class: 'text-no-wrap' },
+        { text: trans('Date Deleted'), value: 'deleted_at', class: 'text-no-wrap' },
+        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
       ],
       data: []
     },
@@ -261,7 +261,7 @@ export default {
         this.tabletoolbar.toggleBulkEdit = false
         this.hideDialog()
         this.showSnackbar({
-          text: trans_choice('Customer successfully restored', this.tabletoolbar.bulkCount)
+          text: trans_choice('Company successfully restored', this.tabletoolbar.bulkCount)
         })
       }).catch(err => {
         this.errorDialog({
@@ -303,7 +303,7 @@ export default {
       ).then(response => {
         this.getPaginatedData(null)
         this.showSnackbar({
-          text: trans_choice('Customer successfully restored', 1)
+          text: trans_choice('Company successfully restored', 1)
         })
       })
     },
@@ -315,7 +315,7 @@ export default {
         illustrationWidth: 200,
         illustrationHeight: 160,
         width: '420',
-        title: 'You are about to permanently delete the selected customer.',
+        title: 'You are about to permanently delete the selected company.',
         text: ['Some data related to the account will still remain.', trans('Are you sure you want to permanently delete?', {name: item.name})],
         buttons: {
           cancel: { show: true, color: 'link' },
@@ -340,7 +340,7 @@ export default {
         this.getPaginatedData(null)
         this.hideDialog()
         this.showSnackbar({
-          text: trans_choice('Customer successfully deleted', 1)
+          text: trans_choice('Company successfully deleted', 1)
         })
       }).catch(err => {
         this.errorDialog({

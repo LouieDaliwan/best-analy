@@ -29,6 +29,14 @@ export const mutations = {
     state.sidebar.clipped = payload.clipped
   },
 
+  'SHOW' (state) {
+    state.sidebar.model = true
+  },
+
+  'HIDE' (state) {
+    state.sidebar.model = false
+  },
+
   'UPDATE' (state, payload) {
     state.sidebar = Object.assign({}, state.sidebar, payload)
   },
@@ -38,6 +46,16 @@ export const actions = {
   toggle: ({commit}, payload) => {
     VM.methods.localstorage({'sidebar.model': payload.model})
     commit('TOGGLE', payload)
+  },
+
+  show: ({commit}) => {
+    VM.methods.localstorage({'sidebar.model': true})
+    commit('SHOW')
+  },
+
+  hide: ({commit}) => {
+    VM.methods.localstorage({'sidebar.model': false})
+    commit('HIDE')
   },
 
   clip: ({commit}, payload) => {

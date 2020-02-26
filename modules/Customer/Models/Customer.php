@@ -50,4 +50,14 @@ class Customer extends Model
     {
         return $this->morphMany(Report::class, 'reportable');
     }
+
+    /**
+     * Retrieve the business councelor name from CRM.
+     *
+     * @return string
+     */
+    public function getCouncelorAttribute()
+    {
+        return $this->metadata['BusinessCounselorName'] ?? null;
+    }
 }

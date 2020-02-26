@@ -65,6 +65,7 @@
           <p class="text--text">{{ trans('Refreshing will add and/or update all new permissions specified by the modules you\'ve installed. Outdated permissions or permissions from uninstalled modules will be removed.') }}</p>
 
           <v-btn
+            :block="$vuetify.breakpoint.smAndDown"
             :disabled="resources.loading.refresh"
             :loading="resources.loading.refresh"
             @click="refreshPermissionsList()"
@@ -103,6 +104,7 @@
           </v-alert>
 
           <v-btn
+            :block="$vuetify.breakpoint.smAndDown"
             :disabled="resources.loading.reset"
             :loading="resources.loading.reset"
             @click="askUserToResetPermission()"

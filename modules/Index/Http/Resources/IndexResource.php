@@ -20,6 +20,7 @@ class IndexResource extends JsonResource
             'deleted' => $this->deleted,
             'modified' => $this->modified,
             'survey' => $this->survey,
+            'is:finished' => $this->survey && $this->survey->isFinished(),
         ]);
     }
 }

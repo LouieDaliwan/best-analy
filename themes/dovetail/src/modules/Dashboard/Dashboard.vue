@@ -1,37 +1,67 @@
 <template>
   <admin>
     <page-header></page-header>
-
-    <div v-show="resourcesIsNotEmpty">
+    <template v-if="resources.loading">
       <v-row>
-        <v-col cols="12" sm="6" v-for="(resource, i) in resources.data" :key="i">
-          <v-card height="100%" exact :to="{ name: 'customers.generate' }" v-ripple="{ class: 'primary--text' }" hover class="text-center">
-            <v-card-text>
-              <div class="mb-4"><img height="80" :src="resource.icon" alt=""></div>
-              <h4 class="mb-1 text-uppercase" v-text="resource.name"></h4>
-              <p class="text-uppercase muted--text" v-text="('Performance Indexes')"></p>
-            </v-card-text>
-          </v-card>
+        <v-col cols="12" sm="6">
+          <v-skeleton-loader type="image" height="200"></v-skeleton-loader>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <v-skeleton-loader type="image" height="200"></v-skeleton-loader>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <v-skeleton-loader type="image" height="200"></v-skeleton-loader>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <v-skeleton-loader type="image" height="200"></v-skeleton-loader>
         </v-col>
       </v-row>
-    </div>
+    </template>
 
-    <!-- Empty state -->
-    <div v-if="resourcesIsEmpty">
-      <empty-state>
-        <template v-slot:actions>
-          <v-btn
-            large
-            color="primary"
-            exact
-            :to="{name: 'indices.create'}">
-            <v-icon small left>mdi-account-plus-outline</v-icon>
-            {{ trans('Add Index') }}
-          </v-btn>
-        </template>
-      </empty-state>
-    </div>
-    <!-- Empty state -->
+    <template v-else>
+      <div v-show="resourcesIsNotEmpty">
+        <v-row>
+          <v-col cols="12" sm="6" v-for="(resource, i) in resources.data" :key="i">
+            <v-card
+              :hover="$vuetify.breakpoint.smAndUp"
+              :to="$vuetify.breakpoint.smAndUp ? { name: 'companies.find' } : null"
+              class="text-center"
+              exact
+              height="100%"
+              v-ripple="$vuetify.breakpoint.smAndUp ? { class: 'primary--text' } : null"
+              >
+              <v-card-text>
+                <div class="mb-4"><img height="80" :src="resource.icon" alt=""></div>
+                <h4 class="mb-1 text-uppercase" v-text="resource.name"></h4>
+                <p class="text-uppercase muted--text" v-text="('Performance Indexes')"></p>
+              </v-card-text>
+              <v-card-actions v-if="$vuetify.breakpoint.xsOnly">
+                <v-spacer></v-spacer>
+                <v-btn block large text color="primary" :to="{ name: 'companies.find' }" exact>{{ __('Start Survey') }}</v-btn>
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
+
+      <!-- Empty state -->
+      <div v-if="resourcesIsEmpty">
+        <empty-state>
+          <template v-slot:actions>
+            <v-btn
+              large
+              color="primary"
+              exact
+              :to="{name: 'indices.create'}">
+              <v-icon small left>mdi-account-plus-outline</v-icon>
+              {{ trans('Add Index') }}
+            </v-btn>
+          </template>
+        </empty-state>
+      </div>
+      <!-- Empty state -->
+    </template>
   </admin>
 </template>
 
@@ -55,11 +85,12 @@ export default {
 
   methods: {
     displayIndexes () {
+      this.resources.loading = true
       axios.get(
         $api.list()
       ).then(response => {
         this.resources.data = Object.assign([], this.resources.data, response.data.data)
-      })
+      }).finally(() => { this.resources.loading = false })
     },
   },
 

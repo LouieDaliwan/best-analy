@@ -10,7 +10,7 @@
     <!-- Brand -->
     <v-list class="mx-3 workspace">
       <v-list-item>
-        <v-list-item-avatar>
+        <v-list-item-avatar tile>
           <img :src="app.logo" :lazy-src="app.logo" width="40px">
         </v-list-item-avatar>
         <v-list-item-content>

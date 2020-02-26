@@ -20,7 +20,11 @@
       </template>
     </page-header>
 
-    <v-row>
+    <template v-if="isFetchingResource">
+      <skeleton-edit></skeleton-edit>
+    </template>
+
+    <v-row v-show="isFinishedFetchingResource">
       <v-col cols="12" md="7">
         <v-card>
           <v-card-text>
@@ -57,6 +61,12 @@ export default {
       return undefined
       // return (item, search, textKey) => item[textKey].indexOf(search) > -1
     },
+    isFetchingResource () {
+      return this.resource.loading
+    },
+    isFinishedFetchingResource () {
+      return !this.resource.loading
+    },
   },
 
   data: () => ({
@@ -76,6 +86,7 @@ export default {
     }),
 
     getResource () {
+      this.resource.loading = true
       axios.get($api.show(this.$route.params.id))
         .then(response => {
           this.resource.data = response.data.data

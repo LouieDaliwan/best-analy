@@ -13,6 +13,12 @@ export default function permissions(to, from, next) {
     return next();
   }
 
+  if (to.meta.hasOwnProperty('permission') && to.meta.permission != false) {
+    if ($auth.hasPermission(to.meta.permission)) {
+      return next()
+    }
+  }
+
   if (to.meta.hasOwnProperty('permission') && !to.meta.permission) {
     return next()
   }

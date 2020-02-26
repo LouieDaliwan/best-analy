@@ -8,6 +8,7 @@ export default {
 
   data: () => ({
     items: Object.entries($app.language.supported).map(([value, text]) => {
+      console.log(value, text)
       return { value, text }
     }),
   }),

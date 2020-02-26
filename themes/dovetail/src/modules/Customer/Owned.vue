@@ -145,7 +145,7 @@ export default {
       // console.log(`getPagintedData Called by ${caller}`);
       params = Object.assign(params ? params : this.$route.query, { search: this.dataset.search })
       this.dataset.loading = true
-      axios.get(this.api.list(), { params })
+      axios.get(this.api.owned(), { params })
         .then(response => {
           this.dataset = Object.assign({}, this.dataset, response.data)
           this.dataset.options = Object.assign(this.dataset.options, response.data.meta, params)

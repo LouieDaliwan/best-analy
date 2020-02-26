@@ -11,7 +11,7 @@
  *
  */
 
-Route::prefix('v1')->middleware('auth:api', 'auth.permissions')->group(function () {
+Route::prefix('v1')->middleware('auth:api')->group(function () {
     Route::softDeletes('indices', 'Api\IndexController');
     Route::apiResource('indices', 'Api\IndexController');
 });

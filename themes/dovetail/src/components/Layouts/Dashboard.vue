@@ -29,9 +29,9 @@ export default {
           this.$store.dispatch('auth/logout')
         }
 
-        if (err.response.status === Response.HTTP_FORBIDDEN && err.config && !err.config.__isRetryRequest) {
-          this.$router.push({ name: 'error.403' })
-        }
+        // if (err.response.status === Response.HTTP_FORBIDDEN && err.config && !err.config.__isRetryRequest) {
+        //   this.$router.push({ name: 'error.403' })
+        // }
 
         if (err.response.status === Response.HTTP_NOT_FOUND) {
           this.$router.push({ name: 'error.404' })

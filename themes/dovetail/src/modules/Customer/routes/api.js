@@ -3,6 +3,10 @@ export default {
     return '/api/v1/customers'
   },
 
+  owned: function () {
+    return '/api/v1/customers/owned'
+  },
+
   store: function () {
     return '/api/v1/customers'
   },

@@ -110,4 +110,14 @@ class CustomerController extends ApiController
     {
         return $this->service()->delete($request->has('id') ? $request->input('id') : $id);
     }
+
+    /**
+     * Display a listing of the owned resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function owned()
+    {
+        return CustomerResource::collection($this->service()->list());
+    }
 }

@@ -2,6 +2,7 @@
 
 Route::prefix('v1')->middleware(['auth:api', 'json.force', 'auth.permissions'])->group(function () {
     Route::softDeletes('customers', 'Api\CustomerController');
+    Route::ownedResource('customers', 'Api\CustomerController@owned');
     Route::apiResource('customers', 'Api\CustomerController');
 });
 

@@ -3,7 +3,7 @@
 return [
     [
         'name' => 'Manager',
-        'code' => 'advisor',
+        'code' => 'manager',
         'alias' => 'Manager (Sector)',
         'description' => 'Monitors performance',
         'permissions' => [

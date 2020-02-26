@@ -294,29 +294,29 @@ class ReportService extends Service implements ReportServiceInterface
         $documentation = $reports->map(function ($report) {
             return $report->reportable;
         })->filter(function ($submission) {
-            return ($submission->submissible->metadata['Documentation'] ?? false)
-                && $submission->submissible->metadata['Documentation'] == 'Y';
+            return ($submission->submissible->metadata['category']['Documentation'] ?? false)
+                && $submission->submissible->metadata['category']['Documentation'] == 'Y';
         });
 
         $talent = $reports->map(function ($report) {
             return $report->reportable;
         })->filter(function ($submission) {
-            return ($submission->submissible->metadata['Talent'] ?? false)
-                && $submission->submissible->metadata['Talent'] == 'Y';
+            return ($submission->submissible->metadata['category']['Talent'] ?? false)
+                && $submission->submissible->metadata['category']['Talent'] == 'Y';
         });
 
         $technology = $reports->map(function ($report) {
             return $report->reportable;
         })->filter(function ($submission) {
-            return ($submission->submissible->metadata['Technology'] ?? false)
-                && $submission->submissible->metadata['Technology'] == 'Y';
+            return ($submission->submissible->metadata['category']['Technology'] ?? false)
+                && $submission->submissible->metadata['category']['Technology'] == 'Y';
         });
 
         $workflow = $reports->map(function ($report) {
             return $report->reportable;
         })->filter(function ($submission) {
-            return ($submission->submissible->metadata['Workflow Processes'] ?? false)
-                && $submission->submissible->metadata['Workflow Processes'] == 'Y';
+            return ($submission->submissible->metadata['category']['Workflow Processes'] ?? false)
+                && $submission->submissible->metadata['category']['Workflow Processes'] == 'Y';
         });
 
         $documentationValue = round((($documentation->sum('results') ?: 0) / ($documentation->count() ?: 1) / 5) * 100);

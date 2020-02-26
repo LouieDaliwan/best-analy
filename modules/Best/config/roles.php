@@ -24,6 +24,8 @@ return [
             'surveys.report',
             'surveys.show',
             'surveys.submit',
+            'settings.general',
+            'settings.store',
         ],
     ],
     [

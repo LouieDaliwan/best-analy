@@ -46,7 +46,7 @@ trait MenuBuilder
      * @param  object $menu
      * @return \Core\Application\Sidebar\SideMenu
      */
-    protected function sidemenu(object $menu)
+    protected function sidemenu($menu)
     {
         return new SideMenu($menu, $this->request());
     }

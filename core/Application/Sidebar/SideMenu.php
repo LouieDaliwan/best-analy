@@ -26,7 +26,7 @@ class SideMenu
      * @param object                   $menu
      * @param \Illuminate\Http\Request $request
      */
-    public function __construct(object $menu, Request $request)
+    public function __construct($menu, Request $request)
     {
         $this->menu = $menu;
         $this->request = $request;

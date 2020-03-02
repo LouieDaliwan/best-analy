@@ -2,6 +2,7 @@
 
 namespace Core\Application\Sidebar\Traits;
 
+use Codrasil\Tree\Branch;
 use Codrasil\Tree\Tree;
 use Core\Application\Sidebar\SideMenu;
 
@@ -43,10 +44,10 @@ trait MenuBuilder
     /**
      * Convert the given menu to SideMenu.
      *
-     * @param  object $menu
+     * @param  \Codrasil\Tree\Branch $menu
      * @return \Core\Application\Sidebar\SideMenu
      */
-    protected function sidemenu($menu)
+    protected function sidemenu(Branch $menu)
     {
         return new SideMenu($menu, $this->request());
     }

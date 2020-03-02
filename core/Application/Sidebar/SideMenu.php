@@ -2,6 +2,7 @@
 
 namespace Core\Application\Sidebar;
 
+use Codrasil\Tree\Branch;
 use Illuminate\Http\Request;
 
 class SideMenu
@@ -23,10 +24,10 @@ class SideMenu
     /**
      * Add helper methods to the menu variable.
      *
-     * @param object                   $menu
+     * @param \Codrasil\Tree\Branch    $menu
      * @param \Illuminate\Http\Request $request
      */
-    public function __construct(object $menu, Request $request)
+    public function __construct(Branch $menu, Request $request)
     {
         $this->menu = $menu;
         $this->request = $request;

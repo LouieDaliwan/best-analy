@@ -1,37 +1,28 @@
-<section class="section">
-  <h1 class="section__title text-center section__subtitle--lead">
-    @lang('Overall Findings')
-  </h1>
+{{-- <div class="dt-divider" style="height: 50px;"></div> --}}
+<section>
+  <div class="row">
+    <div class="col-md-12">
+      <div>
+        <h1 class="mb-5 dt-secondary">@lang('Overall Findings')</h1>
+      </div>
+    </div>
+  </div>
 
-  <table cellpadding="0" cellspacing="0" width="100%">
-    <tr>
-      <td width="220" valign="center">
-        <table cellpadding="0" cellspacing="0" width="100%">
-          <tr>
-            <td>
-              <canvas width="220" height="100" id="overall-findings"></canvas>
-            </td>
-          </tr>
-        </table>
-      </td>
-      <td style="font-size: 0; line-height: 0;" width="20">
-        &nbsp;
-      </td>
-      <td valign="center">
-        <table cellpadding="0" cellspacing="0" width="100%">
-          <tr>
-            <td>
-              <div class="card">
-                <div class="card-body">
-                  <p>@lang($data['overall:comment'])</p>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+  <div class="row align-items-center justify-content-center">
+    <div class="col-md-3 col-sm-12">
+      <div class="mb-3">
+        <canvas id="overall-findings"></canvas>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <p>@lang($data['overall:comment'])</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
@@ -45,8 +36,7 @@
       {
         data: [value, 100-value],
         backgroundColor: [
-          "rgba(22, 123, 195, 1)",
-          "#c4d1de"
+          "#ed8a3b",
         ],
       }]
   };
@@ -61,7 +51,7 @@
       legend: {
         display: false
       },
-      cutoutPercentage: 80,
+      cutoutPercentage: 60,
     }
   });
   textCenter(value);
@@ -72,7 +62,7 @@
             height = chart.chart.height,
             ctx = chart.chart.ctx;
         ctx.restore();
-        var fontSize = (height / 60).toFixed(2);
+        var fontSize = (height / 100).toFixed(2);
         ctx.font = fontSize + "em sans-serif";
         ctx.textBaseline = "middle";
         var text = val+"%",

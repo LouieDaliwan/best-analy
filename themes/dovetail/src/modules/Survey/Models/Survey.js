@@ -21,7 +21,7 @@ class Survey {
           type: '',
           children: [],
         }
-      ]
+      ],
     }
   }
 }

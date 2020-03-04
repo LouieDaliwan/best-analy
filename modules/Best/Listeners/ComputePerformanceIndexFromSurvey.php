@@ -2,7 +2,8 @@
 
 namespace Best\Listeners;
 
-use Best\Services\ReportServiceInterface;
+use Best\Events\ReportGenerated;
+use Best\Services\FormulaServiceInterface;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -18,10 +19,10 @@ class ComputePerformanceIndexFromSurvey implements ShouldQueue
     /**
      * Create the event listener.
      *
-     * @param  \Best\Services\ReportServiceInterface $service
+     * @param  \Best\Services\FormulaServiceInterface $service
      * @return void
      */
-    public function __construct(ReportServiceInterface $service)
+    public function __construct(FormulaServiceInterface $service)
     {
         $this->service = $service;
     }
@@ -42,7 +43,7 @@ class ComputePerformanceIndexFromSurvey implements ShouldQueue
         $percentage = $submission->metadata['average'] ?? 0;
 
         $attributes = [
-            'key' => $customer->code,
+            'key' => $code = sprintf('%s-%s', date('m-Y'), $customer->code),
             'value' => $percentage,
             'group' => $field->group ?? $field->type,
             'type' => 'performance:indicator',
@@ -52,8 +53,31 @@ class ComputePerformanceIndexFromSurvey implements ShouldQueue
             'taxonomy_id' => $taxonomy->getKey(),
             'form_id' => $form->getKey(),
             'user_id' => user()->getKey(),
+            'month' => date('m-Y'),
         ];
 
         $this->service->store($attributes);
+
+        $isLastField = $this->service->where(
+            'key', $code
+        )->where(
+            'customer_id', $customer->getKey()
+        )->where(
+            'taxonomy_id', $taxonomy->getKey()
+        )->where(
+            'form_id', $form->getKey()
+        )->where(
+            'user_id', user()->getKey()
+        )->where(
+            'month', date('m-Y')
+        )->count();
+
+        if ($isLastField === $form->fields->count()) {
+            $data = $this->service->generate($form, [
+                'customer_id' => $customer->getKey(),
+                'taxonomy_id' => $taxonomy->getKey(),
+            ]);
+            event(new ReportGenerated($data));
+        }
     }
 }

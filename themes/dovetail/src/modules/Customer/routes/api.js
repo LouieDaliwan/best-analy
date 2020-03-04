@@ -58,5 +58,20 @@ export default {
     update: function () {
       return `/api/v1/crm/customers/update`
     },
+    save: function () {
+      return `/api/v1/crm/customers/save`
+    },
+  },
+
+  reports: {
+    list: function (id) {
+      return `/api/v1/customers/${id}/reports`
+    },
+    generate: function (id) {
+      return `/api/v1/reports/${id}/generate`
+    },
+    download: function (id) {
+      return `/api/v1/reports/${id}/download`
+    },
   },
 }

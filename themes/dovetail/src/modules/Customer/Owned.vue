@@ -1,103 +1,199 @@
 <template>
   <admin>
-    <metatag :title="trans('My Companies')"></metatag>
+    <metatag :title="trans('All Company')"></metatag>
 
     <page-header>
-      <template v-slot:title>
-        <div class="mt-1">{{ __('My Companies') }}</div>
+      <template v-slot:utilities>
+        <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'companies.trashed'}">
+          <v-icon small left>mdi-delete-outline</v-icon>
+          {{ trans('Trashed Company') }}
+        </router-link>
       </template>
+
       <template v-slot:action>
-        <v-btn large color="primary" exact :to="{ name: 'companies.generate' }">
+        <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'companies.find' }">
           <v-icon small left>mdi-file-document-box-search-outline</v-icon>
-          {{ trans('Generate Report') }}
+          {{ trans('Find Company') }}
         </v-btn>
       </template>
     </page-header>
 
     <!-- Data table -->
-    <v-card>
-      <toolbar-menu
-        :items.sync="tabletoolbar"
-        downloadable
-        trashable
-        @update:search="search"
-        >
-      </toolbar-menu>
-      <v-slide-y-reverse-transition mode="out-in">
-        <v-data-table
-          :headers="dataset.headers"
-          :items="dataset.data"
-          :loading="dataset.loading"
-          :mobile-breakpoint="NaN"
-          :options.sync="dataset.options"
-          :server-items-length="dataset.meta.total"
-          :show-select="tabletoolbar.toggleBulkEdit"
-          @update:options="optionsChanged"
-          color="primary"
-          item-key="id"
-          v-model="dataset.selected"
+    <div v-show="resourcesIsNotEmpty">
+      <v-card>
+        <toolbar-menu
+          :items.sync="tabletoolbar"
+          bulk
+          downloadable
+          trashable
+          @update:search="search"
+          @update:trash="bulkTrashResource"
           >
-          <template v-slot:progress><span></span></template>
+        </toolbar-menu>
+        <v-slide-y-reverse-transition mode="out-in">
+          <v-data-table
+            :headers="resources.headers"
+            :items="resources.data"
+            :loading="resources.loading"
+            :mobile-breakpoint="NaN"
+            :options.sync="resources.options"
+            :server-items-length="resources.meta.total"
+            :show-select="tabletoolbar.toggleBulkEdit"
+            @update:options="optionsChanged"
+            color="primary"
+            item-key="id"
+            v-model="resources.selected"
+            >
+            <template v-slot:progress><span></span></template>
 
-          <template v-slot:loading>
-            <v-slide-y-transition mode="out-in">
-              <div>
-                <div class="d-flex" v-for="(j,i) in dataset.options.itemsPerPage" :key="i">
-                  <v-skeleton-loader
-                    class="px-4 py-3"
-                    width="100%"
-                    type="table-row"
-                  ></v-skeleton-loader>
+            <template v-slot:loading>
+              <v-slide-y-transition mode="out-in">
+                <div>
+                  <div v-for="(j,i) in resources.options.itemsPerPage" :key="i">
+                    <skeleton-table></skeleton-table>
+                  </div>
                 </div>
+              </v-slide-y-transition>
+            </template>
+
+            <!-- Name -->
+              <template v-slot:item.name="{ item }">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <span class="mt-1" v-on="on"><router-link tag="a" exact :to="goToShowIndexPage(item)" v-text="item.name" class="text-no-wrap text--decoration-none"></router-link></span>
+                  </template>
+                  <span>{{ trans('View Details') }}</span>
+                </v-tooltip>
+              </template>
+              <!-- Name -->
+
+              <!-- File No. -->
+              <template v-slot:item.refnum="{ item }">
+                <span class="text-no-wrap" v-text="item.refnum"></span>
+              </template>
+              <!-- File No. -->
+
+            <!-- Modified -->
+            <template v-slot:item.updated_at="{ item }">
+              <span class="text-no-wrap" :title="item.updated_at">{{ trans(item.modified) }}</span>
+            </template>
+            <!-- Modified -->
+
+            <!-- Action buttons -->
+            <template v-slot:item.action="{ item }">
+              <div class="text-no-wrap">
+                <!-- Show Reports -->
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn :to="{name: 'companies.reports', params: { id: item.id }}" icon v-on="on">
+                      <v-icon small>mdi-paperclip</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ trans('View Monthly Reports') }}</span>
+                </v-tooltip>
+                <!-- Show Reports -->
+                <!-- Edit Inputs -->
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn :to="{name: 'companies.edit', params: { id: item.id }}" icon v-on="on">
+                      <v-icon small>mdi-pencil-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ trans('Edit Financial Performance inputs') }}</span>
+                </v-tooltip>
+                <!-- Edit Inputs -->
+                <!-- Move to Trash -->
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn @click="askUserToDestroyCompany(item)" icon v-on="on">
+                      <v-icon small>mdi-delete-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ trans('Move to trash') }}</span>
+                </v-tooltip>
+                <!-- Move to Trash -->
               </div>
-            </v-slide-y-transition>
-          </template>
-
-          <template v-slot:item.name="{ item }">
-            <div class="d-flex align-items-center">
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <span class="mt-1" v-on="on"><router-link tag="a" exact :to="goToShowCompanyPage(item)" v-text="item.name" class="text-no-wrap text--decoration-none"></router-link></span>
-                </template>
-                <span>{{ $t('View Details') }}</span>
-              </v-tooltip>
-            </div>
-          </template>
-
-          <!-- Created & Modified -->
-          <template v-slot:item.updated_at="{ item }">
-            <span class="text-no-wrap" :title="item.updated_at">{{ trans(item.modified) }}</span>
-          </template>
-          <!-- Created & Modified -->
-        </v-data-table>
-      </v-slide-y-reverse-transition>
-    </v-card>
+            </template>
+            <!-- Action buttons -->
+          </v-data-table>
+        </v-slide-y-reverse-transition>
+      </v-card>
+    </div>
     <!-- Data table -->
+
+    <!-- Empty state -->
+    <div v-if="resourcesIsEmpty">
+      <empty-state>
+        <template v-slot:actions>
+          <v-btn
+            large
+            color="primary"
+            exact
+            :to="{name: 'companies.generate'}">
+            <v-icon small left>mdi-file-document-box-search-outline</v-icon>
+            {{ trans('Generate Report') }}
+          </v-btn>
+        </template>
+      </empty-state>
+    </div>
+    <!-- Empty state -->
   </admin>
 </template>
 
 <script>
 import $api from './routes/api'
 import man from '@/components/Icons/ManThrowingAwayPaperIcon.vue'
+import { mapActions } from 'vuex'
 
 export default {
+  computed: {
+    resourcesIsNotEmpty () {
+      return !this.resourcesIsEmpty
+    },
+
+    resourcesIsEmpty () {
+      return window._.isEmpty(this.resources.data) && !this.resources.loading
+    },
+
+    options: function () {
+      return {
+        per_page: this.resources.options.itemsPerPage,
+        page: this.resources.options.page,
+        sort: this.resources.options.sortBy[0] || undefined,
+        order: this.resources.options.sortDesc[0] || false ? 'desc' : 'asc',
+      }
+    },
+
+    selected: function () {
+      return this.resources.selected.map((item) => (item.id) )
+    },
+  },
+
   data: () => ({
     api: $api,
 
-    dataset: {
+    resources: {
       loading: true,
       search: null,
       options: {
         page: 1,
         pageCount: 0,
         itemsPerPage: 10,
+        sortDesc: [],
+        sortBy: [],
       },
       meta: {},
+      modes: {
+        bulkedit: false,
+      },
+      selected: [],
       headers: [
-        { text: trans('Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
-        { text: trans('Reference Number'), value: 'refnum', class: 'text-no-wrap' },
-        { text: trans('Status'), value: 'status', class: 'text-no-wrap' },
-        { text: trans('Last Modified'), align: 'center', value: 'updated_at', class: 'text-no-wrap' },
+        { text: trans('Company Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
+        { text: trans('File No.'), align: 'left', value: 'refnum', class: 'text-no-wrap' },
+        { text: trans('Business Counselor'), align: 'left', value: 'counselor', class: 'text-no-wrap' },
+        { text: trans('Report Generated By'), align: 'left', value: 'author', class: 'text-no-wrap' },
+        { text: trans('Last Modified'), value: 'updated_at', class: 'text-no-wrap' },
+        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
       ],
       data: []
     },
@@ -113,14 +209,137 @@ export default {
     },
   }),
 
-  computed: {
-    options: function () {
-      return {
-        per_page: this.dataset.options.itemsPerPage,
-        page: this.dataset.options.page,
-        sort: this.dataset.options.sortBy[0] || undefined,
-        order: this.dataset.options.sortDesc[0] || false ? 'desc' : 'asc',
+  methods: {
+    ...mapActions({
+      errorDialog: 'dialog/error',
+      loadDialog: 'dialog/loading',
+      showDialog: 'dialog/show',
+      hideDialog: 'dialog/hide',
+      showSnackbar: 'snackbar/show',
+    }),
+
+    changeOptionsFromRouterQueries () {
+      this.options.per_page = this.$route.query.per_page
+      this.options.page = parseInt(this.$route.query.page)
+      this.options.search = this.$route.query.search
+      this.resources.search = this.options.search
+      this.tabletoolbar.search = this.options.search
+    },
+
+    optionsChanged (options) {
+      this.getPaginatedData(this.options)
+    },
+
+    getPaginatedData: function (params = null, caller = null) {
+      params = Object.assign(params ? params : this.$route.query, { search: this.resources.search })
+      this.resources.loading = true
+      axios.get(this.api.owned(), { params })
+        .then(response => {
+          this.resources = Object.assign({}, this.resources, response.data)
+          this.resources.options = Object.assign(this.resources.options, response.data.meta, params)
+          this.resources.loading = false
+          this.$router.push({query: Object.assign({}, this.$route.query, params)}).catch(err => {})
+        })
+        .catch(err => {
+          this.errorDialog({
+            width: 400,
+            buttons: { cancel: { show: false } },
+            title: trans('Whoops! An error occured'),
+            text: err.response.data.message,
+          })
+        })
+        .finally(() => {
+          this.resources.data.map(function (data) {
+            return Object.assign(data, {loading: false})
+          })
+        })
+    },
+
+    search: _.debounce(function (event) {
+      this.resources.search = event.srcElement.value || ''
+      this.tabletoolbar.isSearching = false
+      if (this.resources.searching) {
+        this.getPaginatedData(this.options, 'search')
+        this.resources.searching = false
       }
+    }, 200),
+
+    goToShowIndexPage (company) {
+      return { name: 'companies.show', params: { id: company.id } }
+    },
+
+    focusSearchBar () {
+      this.$refs['tablesearch'].focus()
+    },
+
+    bulkTrashResource () {
+      let selected = this.selected
+      axios.delete($api.destroy(null), { data: { id: selected } })
+        .then(response => {
+          this.getPaginatedData(null, 'bulkTrashResource')
+          this.tabletoolbar.toggleTrash = false
+          this.tabletoolbar.toggleBulkEdit = false
+          this.hideDialog()
+          this.showSnackbar({
+            text: trans_choice('Company successfully moved to trash', this.tabletoolbar.bulkCount)
+          })
+        })
+        .catch(err => {
+          this.errorDialog({
+            width: 400,
+            buttons: { cancel: { show: false } },
+            title: trans('Whoops! An error occured'),
+            text: err.response.data.message,
+          })
+        })
+    },
+
+    askUserToDestroyCompany (item) {
+      this.showDialog({
+        color: 'warning',
+        illustration: man,
+        illustrationWidth: 200,
+        illustrationHeight: 160,
+        width: '420',
+        title: 'You are about to move to trash the selected company.',
+        text: ['Some data related to company will still remain.', trans('Are you sure you want to move :name to Trash?', {name: item.name})],
+        buttons: {
+          cancel: { show: true, color: 'link' },
+          action: {
+            text: 'Move to Trash',
+            color: 'warning',
+            callback: (dialog) => {
+              this.loadDialog(true)
+              this.destroyResource(item)
+            }
+          }
+        }
+      })
+    },
+
+    destroyResource (item) {
+      item.loading = true
+      axios.delete($api.destroy(item.id))
+        .then(response => {
+          item.active = false
+          this.getPaginatedData(null, 'destroyResource')
+          this.showSnackbar({
+            text: trans_choice('Company successfully moved to trash', 1)
+          })
+          this.hideDialog()
+        })
+        .catch(err => {
+          this.errorDialog({
+            width: 400,
+            buttons: { cancel: { show: false } },
+            title: trans('Whoops! An error occured'),
+            text: err.response.data.message,
+          })
+        })
+        .finally(() => {
+          item.active = false
+          item.loading = false
+        })
     },
   },
 
@@ -128,69 +347,20 @@ export default {
     this.changeOptionsFromRouterQueries()
   },
 
-  methods: {
-    changeOptionsFromRouterQueries () {
-      this.options.per_page = this.$route.query.per_page
-      this.options.page = parseInt(this.$route.query.page)
-      this.options.search = this.$route.query.search
-      this.dataset.search = this.options.search
-      this.tabletoolbar.search = this.options.search
-    },
-
-    optionsChanged (options) {
-      this.getPaginatedData(this.options, 'optionsChaned')
-    },
-
-    getPaginatedData: function (params = null, caller = null) {
-      // console.log(`getPagintedData Called by ${caller}`);
-      params = Object.assign(params ? params : this.$route.query, { search: this.dataset.search })
-      this.dataset.loading = true
-      axios.get(this.api.owned(), { params })
-        .then(response => {
-          this.dataset = Object.assign({}, this.dataset, response.data)
-          this.dataset.options = Object.assign(this.dataset.options, response.data.meta, params)
-          this.dataset.loading = false
-          this.$router.push({query: Object.assign({}, this.$route.query, params)}).catch(err => {})
-        })
-        .catch(err => {
-          this.$store.dispatch('dialog/error', {
-            show: true,
-            width: 400,
-            color: 'error',
-            buttons: { cancel: { show: false } },
-            title: trans('Whoops! An error occured'),
-            text: err.response.data.message,
-          })
-        })
-        .finally(() => {
-          this.dataset.data.map(function (data) {
-            return Object.assign(data, {loading: false})
-          })
-        })
-    },
-
-    goToShowCompanyPage (company) {
-      return { name: 'companies.show', params: { id: company.id, slug: company.companyname } }
-    },
-
-    search: _.debounce(function (event) {
-      this.dataset.search = event.srcElement.value || ''
-      this.tabletoolbar.isSearching = false
-      if (this.dataset.searching) {
-        this.getPaginatedData(this.options, 'search')
-        this.dataset.searching = false
-      }
-    }, 200),
-
-    focusSearchBar () {
-      this.$refs['tablesearch'].focus()
-    },
-  },
-
   watch: {
-    'dataset.search': function (val) {
-      this.dataset.searching = true
+    'resources.search': function (val) {
+      this.resources.searching = true
     },
+
+    'resources.selected': function (val) {
+      this.tabletoolbar.bulkCount = val.length
+    },
+
+    'tabletoolbar.toggleBulkEdit': function (val) {
+      if (!val) {
+        this.resources.selected = []
+      }
+    }
   },
 }
 </script>

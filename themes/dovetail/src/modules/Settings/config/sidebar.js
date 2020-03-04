@@ -22,16 +22,16 @@ export default [
         },
       },
       // Branding
-      {
-        code: 'settings.branding',
-        name: 'settings.branding',
-        meta: {
-          title: 'Branding',
-          authenticatable: true,
-          sort: 501,
-          permission: 'settings.branding',
-        },
-      },
+      // {
+      //   code: 'settings.branding',
+      //   name: 'settings.branding',
+      //   meta: {
+      //     title: 'Branding',
+      //     authenticatable: true,
+      //     sort: 501,
+      //     permission: 'settings.branding',
+      //   },
+      // },
       // System
       {
         code: 'settings.system',

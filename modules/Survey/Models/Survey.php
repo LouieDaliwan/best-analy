@@ -2,6 +2,7 @@
 
 namespace Survey\Models;
 
+use Best\Models\Formula;
 use Best\Models\Report;
 use Core\Models\Accessors\CommonAttributes;
 use Core\Models\Relations\BelongsToUser;
@@ -50,6 +51,16 @@ class Survey extends Model
     public function reports()
     {
         return $this->hasMany(Report::class, 'form_id');
+    }
+
+    /**
+     * Get the reports for the form.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function formulas()
+    {
+        return $this->hasMany(Formula::class, 'form_id');
     }
 
     /**

@@ -1,0 +1,115 @@
+.global .dt-divider {
+  height: 20px !important;
+}
+.global .dt-divider.block {
+  display: block;
+}
+.global .disclaimer {
+  line-height: 10px;
+}
+.global .disclaimer span {
+  font-size: 13px !important;
+}
+.global .strategic h4 {
+  margin-bottom: 4px !important;
+}
+.global h1,
+.global h2,
+.global h3,
+.global h4,
+.global h5,
+.global h6,
+.cover h1,
+.cover h2,
+.cover h3,
+.cover h4,
+.cover h5,
+.cover h6 {
+  margin-bottom: 4px;
+  font-weight: 700 !important;
+}
+.global .dt-divider.header-report {
+  display: none;
+}
+.global p {
+  line-height: 18px;
+}
+.global .pindex h1 {
+  margin-top: 10px;
+  margin-bottom: 10px !important;
+}
+
+/*page2*/
+.page2 .dt-divider {
+  display: none;
+}
+.page2 h1 {
+  margin-bottom: 4px !important;
+}
+.page2 .card {
+  margin-bottom: 0 !important;
+}
+.page2 .key-enablers .card {
+  margin-bottom: 10px !important;
+}
+.page2 .imgTechnology .card-body,
+.page2 .imgWorkflow .card-body,
+.page2 .imgTalent .card-body,
+.page2 .imgDocumentation .card-body {
+  padding: 0.75rem !important;
+}
+.page2 .imgTechnology img,
+.page2 .imgWorkflow img,
+.page2 .imgTalent img,
+.page2 .imgDocumentation img {
+  height: 32px !important;
+}
+.page2 .four-tec {
+  margin-bottom: 10px;
+}
+/*page3*/
+.page3 .dt-divider {
+  display: none;
+}
+.page3 canvas {
+  height: 150px !important;
+}
+.page3 .row .chart-analysis {
+  max-width: 50% !important;
+  flex: 0 0 50% !important;
+}
+.page3 .row .comment-analysis {
+  max-width: 50% !important;
+  flex: 0 0 50% !important;
+}
+.page3 .analysis-title {
+  background-color: #3777a2;
+}
+.page3 h1 {
+  margin-bottom: 4px !important;
+  font-size: 13px;
+  color: #ffffff;
+}
+.page3 .comment-analysis p {
+  font-size: 9pt;
+  margin-bottom: 3pt;
+}
+.page3 .card {
+  margin-bottom: 7pt !important;
+}
+
+/*page4*/
+.page4 .table-ratio table td,
+.page4 .table-ratio table th {
+  padding: 0 !important;
+  font-size: 13px;
+}
+.page4 h1 {
+  font-size: 15px;
+}
+.page4 .table-ratio table {
+  margin-bottom: 0 !important;
+}
+.page4 .dt-divider {
+  display: none;
+}

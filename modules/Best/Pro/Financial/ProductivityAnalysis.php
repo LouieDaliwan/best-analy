@@ -2,16 +2,19 @@
 
 namespace Best\Pro\Financial;
 
+use Customer\Models\Customer;
+
 abstract class ProductivityAnalysis extends AbstractAnalysis
 {
     /**
      * Retrieve the report.
      *
+     * @param  \Customer\Models\Customer $customer
      * @return array
      */
-    public static function getReport()
+    public static function getReport(Customer $customer)
     {
-        $spreadsheet = self::getSpreadsheet();
+        $spreadsheet = self::getSpreadsheet($customer);
 
         return [
             'charts' => [
@@ -22,6 +25,7 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
                 })->values()->toArray(),
 
                 'dataset' => [
+                    // Year 1.
                     [
                         'label' => $spreadsheet->getSheetByName('FinancialAnalysisReport')
                             ->getCell('AE69')->getCalculatedValue(),
@@ -29,9 +33,12 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
                             $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI69:AI69')
                         )->flatten()->reject(function ($cell) {
                             return is_null($cell);
+                        })->map(function ($cell) {
+                            return str_replace('%', '', $cell);
                         })->values()->toArray(),
-                        'backgroundColor' => 'rgba(22, 123, 195, 1)',
+                        'backgroundColor' => ['#2AF598', '#08AEEA'],
                     ],
+                    // Year 2.
                     [
                         'label' => $spreadsheet->getSheetByName('FinancialAnalysisReport')
                             ->getCell('AE70')->getCalculatedValue(),
@@ -39,9 +46,12 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
                             $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI70:AI70')
                         )->flatten()->reject(function ($cell) {
                             return is_null($cell);
+                        })->map(function ($cell) {
+                            return str_replace('%', '', $cell);
                         })->values()->toArray(),
-                        'backgroundColor' => 'rgba(22, 123, 195, 0.8)',
+                        'backgroundColor' => ['#00c6fb', '#005bea'],
                     ],
+                    // Year 3.
                     [
                         'label' => $spreadsheet->getSheetByName('FinancialAnalysisReport')
                             ->getCell('AE71')->getCalculatedValue(),
@@ -49,8 +59,10 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
                             $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI71:AI71')
                         )->flatten()->reject(function ($cell) {
                             return is_null($cell);
+                        })->map(function ($cell) {
+                            return str_replace('%', '', $cell);
                         })->values()->toArray(),
-                        'backgroundColor' => 'rgba(22, 123, 195, 0.5)',
+                        'backgroundColor' => ['#21D4FD', '#B721FF'],
                     ],
                 ],
             ],

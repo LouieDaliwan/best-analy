@@ -2,16 +2,19 @@
 
 namespace Best\Pro\Financial;
 
+use Customer\Models\Customer;
+
 abstract class LiquidityAnalysis extends AbstractAnalysis
 {
     /**
      * Retrieve the report.
      *
+     * @param  \Customer\Models\Customer $customer
      * @return array
      */
-    public static function getReport()
+    public static function getReport(Customer $customer)
     {
-        $spreadsheet = self::getSpreadsheet();
+        $spreadsheet = self::getSpreadsheet($customer);
 
         return [
             'chart' => [
@@ -22,6 +25,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
                 })->values()->toArray(),
 
                 'dataset' => [
+                    // Year 1.
                     [
                         'label' => $spreadsheet->getSheetByName('FinancialAnalysisReport')
                             ->getCell('AE19')->getCalculatedValue(),
@@ -29,10 +33,12 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
                             $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI19:AU19')
                         )->flatten()->reject(function ($cell) {
                             return is_null($cell);
+                        })->map(function ($cell) {
+                            return str_replace('%', '', $cell);
                         })->values()->toArray(),
-                        'backgroundColor' => 'rgba(22, 123, 195, 1)',
+                        'backgroundColor' => ['#2AF598', '#08AEEA'],
                     ],
-
+                    // Year 2.
                     [
                         'label' => $spreadsheet->getSheetByName('FinancialAnalysisReport')
                             ->getCell('AE20')->getCalculatedValue(),
@@ -40,10 +46,12 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
                             $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI20:AU20')
                         )->flatten()->reject(function ($cell) {
                             return is_null($cell);
+                        })->map(function ($cell) {
+                            return str_replace('%', '', $cell);
                         })->values()->toArray(),
-                        'backgroundColor' => 'rgba(22, 123, 195, 0.8)',
+                        'backgroundColor' => ['#00c6fb', '#005bea'],
                     ],
-
+                    // Year 3.
                     [
                         'label' => $spreadsheet->getSheetByName('FinancialAnalysisReport')
                             ->getCell('AE21')->getCalculatedValue(),
@@ -51,8 +59,10 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
                             $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI21:AU21')
                         )->flatten()->reject(function ($cell) {
                             return is_null($cell);
+                        })->map(function ($cell) {
+                            return str_replace('%', '', $cell);
                         })->values()->toArray(),
-                        'backgroundColor' => 'rgba(22, 123, 195, 0.5)',
+                        'backgroundColor' => ['#21D4FD', '#B721FF'],
                     ],
                 ],
             ],

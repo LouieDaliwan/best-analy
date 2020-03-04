@@ -1,8 +1,25 @@
 <template>
   <admin>
     <metatag :title="resource.data.title"></metatag>
+    <back-to-top></back-to-top>
 
-    <page-header :back="{ to: { name: 'companies.show' }, text: trans('Indexes') }">
+    <page-header>
+      <template v-slot:back>
+        <div class="mb-2">
+          <can code="customers.show">
+            <router-link tag="a" exact :to="{ name: 'companies.show', params: {id: $route.params.id} }" class="text--decoration-none body-1 dt-link">
+              <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
+              <span v-text="trans('Back')"></span>
+            </router-link>
+            <template v-slot:unpermitted>
+              <router-link tag="a" exact :to="{ name: 'companies.owned' }" class="text--decoration-none body-1 dt-link">
+                <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
+                <span v-text="trans('Back')"></span>
+              </router-link>
+            </template>
+          </can>
+        </div>
+      </template>
       <template v-slot:title>{{ resource.data.title }}</template>
     </page-header>
     <template v-if="resource.loading">

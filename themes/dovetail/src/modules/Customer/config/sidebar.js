@@ -8,7 +8,7 @@ export default [
       authenticatable: true,
       sort: 5,
       permission: ['customers.index', 'customers.owned'],
-      children: ['companies.index', 'companies.show', 'companies.owned', 'companies.find', 'companies.survey', 'companies.trashed'],
+      children: ['companies.index', 'companies.show', 'companies.owned', 'companies.find', 'companies.preview', 'companies.survey', 'companies.trashed'],
     },
     children: [
       {
@@ -19,7 +19,7 @@ export default [
           authenticatable: true,
           sort: 5,
           permission: 'customers.index',
-          children: ['companies.index', 'companies.show', 'companies.survey'],
+          children: ['companies.index', 'companies.show', 'companies.reports', 'companies.survey'],
         },
       },
       {

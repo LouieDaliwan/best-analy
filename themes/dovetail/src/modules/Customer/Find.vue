@@ -141,6 +141,7 @@ export default {
         this.showDialog({
           illustration: () => import('@/components/Icons/ErrorIcon.vue'),
           title: trans('Internal Error'),
+          width: 200,
           text: trans('Incorrect file number input. Please try again.'),
           buttons: {
             cancel: false

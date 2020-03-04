@@ -5,6 +5,7 @@
     flat
     :clipped-left="sidebar.clipped"
     v-if="appbar.model"
+    :height="$vuetify.breakpoint.mdAndUp ? 69 : null"
     >
     <v-badge
       bordered

@@ -2,16 +2,19 @@
 
 namespace Best\Pro\Financial;
 
+use Customer\Models\Customer;
+
 abstract class ProductivityIndicators extends AbstractAnalysis
 {
     /**
      * Retrieve the report.
      *
+     * @param  \Customer\Models\Customer $customer
      * @return array
      */
-    public static function getReport()
+    public static function getReport(Customer $customer)
     {
-        return self::getSpreadsheet();
+        return self::getSpreadsheet($customer);
     }
 
     /**
@@ -22,7 +25,7 @@ abstract class ProductivityIndicators extends AbstractAnalysis
      */
     public static function getReportWithCustomer($customer)
     {
-        $spreadsheet = self::getReport();
+        $spreadsheet = self::getReport($customer);
 
         // Set Customer Data.
         $spreadsheet->getSheetByName('Customer')->setCellValue('B2', $customer->name);

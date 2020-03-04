@@ -5,339 +5,548 @@ class Company {
     this.isValid = true
     this.errors = []
 
+    this.metadata = {
+      'fps-qa1': {
+        'Sales': {
+          'Year1': '100000',
+          'Year2': '125000',
+          'Year3': '200000',
+        },
+        '<strong>Change in Inventory Levels</strong>': [],
+        'Opening Stocks': {
+          'Year1': '8000',
+          'Year2': '9500',
+          'Year3': '6500',
+        },
+        'Closing Stocks': {
+          'Year1': '9500',
+          'Year2': '6500',
+          'Year3': '3200',
+        },
+        '': [],
+        '<h4><strong>Purchase of Goods and Services</strong></h4>': [],
+        '<strong>Materials Consumed</strong>': [],
+        'Raw Materials (direct & indirect)': {
+          'Year1': '36000',
+          'Year2': '45000',
+          'Year3': '55000',
+        },
+        'Stock Expiring': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Other Materials Used': {
+          'Year1': '1500',
+          'Year2': '1000',
+          'Year3': '1000',
+        },
+        '': [],
+        '<strong>Production Costs</strong>': [],
+        'Cargo and Handling': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Part-time/Temporary Labour': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Insurance (not including employee\'s insurance)': {
+          'Year1': '1000',
+          'Year2': '1000',
+          'Year3': '1000',
+        },
+        'Transportation': {
+          'Year1': '10000',
+          'Year2': '11000',
+          'Year3': '11000',
+        },
+        'Utilities': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Maintenance (Building, Plant, and Machinery)': {
+          'Year1': '2400',
+          'Year2': '2500',
+          'Year3': '2300',
+        },
+        'Lease of Plant and Machinery': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Other Production Costs': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        '': [],
+        '<strong>General Management Costs</strong>': [],
+        'Stationery Supplies and Printing': {
+          'Year1': '450',
+          'Year2': '450',
+          'Year3': '450',
+        },
+        'Rental': {
+          'Year1': '10000',
+          'Year2': '10000',
+          'Year3': '11000',
+        },
+        "Insurance (not including employee's insurance)": {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Transportation': {
+          'Year1': '1200',
+          'Year2': '1200',
+          'Year3': '1300',
+        },
+        'Company Car/Bus etc.': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Advertising': {
+          'Year1': '12000',
+          'Year2': '13000',
+          'Year3': '13000',
+        },
+        'Entertainment': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Food and Drinks': {
+          'Year1': '2000',
+          'Year2': '1800',
+          'Year3': '2100',
+        },
+        'Telephone and Fax': {
+          'Year1': '600',
+          'Year2': '700',
+          'Year3': '800',
+        },
+        'Mail and Courier': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Maintenance (Office Equipment)': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Travel': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Audit, Secretarial, and Professional Costs': {
+          'Year1': '1800',
+          'Year2': '2000',
+          'Year3': '2000',
+        },
+        'Newspapers and Magazines': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Stamp Duty, Filing and Legal': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Bank charges': {
+          'Year1': '720',
+          'Year2': '720',
+          'Year3': '720',
+        },
+        'Other Administrative Costs': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        '<strong>Labour Expenses</strong>': [],
+        'Employee Compensation': {
+          'Year1': '193257',
+          'Year2': '193257',
+          'Year3': '193257',
+        },
+        'Bonuses': {
+          'Year1': '245165',
+          'Year2': '245165',
+          'Year3': '245165',
+        },
+        'Provident Fund': {
+          'Year1': '13113',
+          'Year2': '13113',
+          'Year3': '13113',
+        },
+        'Employee Welfare': {
+          'Year1': '75092',
+          'Year2': '75092',
+          'Year3': '75092',
+        },
+        'Medical Costs': {
+          'Year1': '3395',
+          'Year2': '3395',
+          'Year3': '3395',
+        },
+        'Employee Training': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        "Director's Salary": {
+          'Year1': '409846',
+          'Year2': '409846',
+          'Year3': '409846',
+        },
+        'Employee Insurance': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Other Labour Expenses': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+
+        '<strong>Depreciation</string>': [],
+        'Buildings': {
+          'Year1': '179869',
+          'Year2': '179869',
+          'Year3': '179869',
+        },
+        'Plant, Machinery & Equipment': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Others (Depreciation)': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+
+        '<h4><strong>Non-operating Expenses</strong></h4>': [],
+        '<strong>Non-Operating Income</strong>': [],
+        'Profit from Fixed Assets Sale': {
+          'Year1': '29744',
+          'Year2': '10386',
+          'Year3': '27577',
+        },
+        'Profit from Foreign Exchange': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Other Income': {
+          'Year1': '26792',
+          'Year2': '24113',
+          'Year3': '16075',
+        },
+
+        '<strong>Non-Operating Costs</strong>': [],
+        'Bad Debts': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Donations': {
+          'Year1': '15135',
+          'Year2': '15135',
+          'Year3': '15135',
+        },
+        'Foreign Exchange Loss': {
+          'Year1': '24302',
+          'Year2': '24302',
+          'Year3': '24302',
+        },
+        'Loss on Fixed Assets Sale': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Others (Non-Operating Costs)': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+
+        '<strong>Taxation</strong>': [],
+        'Tax on Property': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Duties (Customs & Excise)': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Levy on Foreign Workers': {
+          'Year1': '6275',
+          'Year2': '6275',
+          'Year3': '6275',
+        },
+        'Others (excluding Income Tax)': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+
+        '<strongInterest On Loans/Hires</strong>': [],
+        'Interest & Charges by Bank': {
+          'Year1': '493458',
+          'Year2': '493458',
+          'Year3': '493458',
+        },
+        'Interest on Loan': {
+          'Year1': '300390',
+          'Year2': '300390',
+          'Year3': '300390',
+        },
+        'Interest on Hire Purchase': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Others (Interest on Loan/Hires)': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+
+        '<strong>Company Tax</strong>': [],
+        'Tax on Company': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+      },
+      'balance-sheet': {
+        '<h4><strong>Balance</strong></h4>': [],
+        'Cash': {
+          'Year1': '8700',
+          'Year2': '8550',
+          'Year3': '8900',
+        },
+        'Trade Receivables': {
+          'Year1': '1200',
+          'Year2': '1500',
+          'Year3': '1000',
+        },
+        'Inventories': {
+          'Year1': '800',
+          'Year2': '650',
+          'Year3': '700',
+        },
+        'Other CA': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Fixed Assets': {
+          'Year1': '1000',
+          'Year2': '1000',
+          'Year3': '1000',
+        },
+        'Trade Payables': {
+          'Year1': '1200',
+          'Year2': '1100',
+          'Year3': '1150',
+        },
+        'Other CL': {
+          'Year1': '500',
+          'Year2': '600',
+          'Year3': '450',
+        },
+        "Stockholders' Equity": {
+          'Year1': '10000',
+          'Year2': '10000',
+          'Year3': '10000',
+        },
+        'Other NCL': {
+          'Year1': '500',
+          'Year2': '600',
+          'Year3': '450',
+        },
+        'Common Shares Outstanding': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+      },
+      'fps-qa2': {
+        '<h4><strong>Operating Profit/(Loss)</strong></h4>': [],
+        'Profit or (Loss) Before Income Tax': {
+          'Year1': '83184',
+          'Year2': '308354',
+          'Year3': '242318',
+        },
+        '<strong>Non-Operating Income</strong>': [],
+        'Profit from Fixed Assets Sale': {
+          'Year1': '132407',
+          'Year2': '135755',
+          'Year3': '492314',
+        },
+        'Profit from Foreign Exchange': {
+          'Year1': '',
+          'Year2': '2030',
+          'Year3': '',
+        },
+        'Other Income': {
+          'Year1': '32150',
+          'Year2': '143569',
+          'Year3': '1841875',
+        },
+        '<strong>Non-Operating Costs</strong>': [],
+        'Bad Debts': {
+          'Year1': '8,570',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Donations': {
+          'Year1': '19199',
+          'Year2': '26062',
+          'Year3': '15135',
+        },
+        'Foreign Exchange Loss': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '24302',
+        },
+        'Loss on Fixed Assets Sale': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Others (Non-Operating Costs)': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        '<h4><strong>Labour Expenses</strong></h4>': [],
+        'Employee Compensation': {
+          'Year1': '394097',
+          'Year2': '283821',
+          'Year3': '209362',
+        },
+        'Bonuses': {
+          'Year1': '65725',
+          'Year2': '6495',
+          'Year3': '265595',
+        },
+        'Provident Fund': {
+          'Year1': '15930',
+          'Year2': '11221',
+          'Year3': '14206',
+        },
+        'Employee Welfare': {
+          'Year1': '20547',
+          'Year2': '52460',
+          'Year3': '81350',
+        },
+        'Medical Costs': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Employee Training': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Director\'s Salary': {
+          'Year1': '534000',
+          'Year2': '422000',
+          'Year3': '444000',
+        },
+        'Employee Insurance': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Others (Labour Expenses)': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+
+        '<h4><strong>Interests on Loans/Hires</strong></h4>': [],
+        'Interest & Charges by Bank': {
+          'Year1': '534580',
+          'Year2': '334666',
+          'Year3': '578254',
+        },
+        'Interest on Loan': {
+          'Year1': '300390',
+          'Year2': '621676',
+          'Year3': '587215',
+        },
+        'Interest on Hire Purchase': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Others (interest on loan/hires)': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        '<h4><strong>Depreciation</strong></h4>': [],
+        'Buildings': {
+          'Year1': '167126',
+          'Year2': '179869',
+          'Year3': '253729',
+        },
+        'Plant, Machinery & Equipment': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Others': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        '<h4><strong>Taxation</strong></h4>': [],
+        'Tax on Property': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Duties (Customs & Excise)': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+        'Levy on Foreign Workers': {
+          'Year1': '6275',
+          'Year2': '35595',
+          'Year3': '33832',
+        },
+        'Others (excluding Income Tax & GST/VAT)': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
+      }
+    }
+
     this.data = {
       name: '',
       code: '',
       refnum: '',
       description: '',
       metadata: {},
-    }
-
-    this.metadata = {
-      'fps-qa1': {
-        'Sales': {
-          'salesYear1': '100,000',
-          'salesYear2': '125,000',
-          'salesYear3': '200,000',
-        },
-        '<strong>Change in Inventory Levels</strong>': [],
-        'Opening Stocks': {
-          'openingStocksYear1': '8,000',
-          'openingStocksYear2': '9,500',
-          'openingStocksYear3': '6,500',
-        },
-        'Closing Stocks': {
-          'closingStocksYear1': '9,500',
-          'closingStocksYear2': '6,500',
-          'closingStocksYear3': '3,200',
-        },
-        '': [],
-        '<h4><strong>Purchase of Goods and Services</strong></h4>': [],
-        '<strong>Materials Consumed</strong>': [],
-        'Raw Materials (direct & indirect)': {
-          'rawMaterialsYear1': '36,000',
-          'rawMaterialsYear2': '45,000',
-          'rawMaterialsYear3': '55,000',
-        },
-        'Stock Expiring': {
-          'stockExpiringYear1': '',
-          'stockExpiringYear2': '',
-          'stockExpiringYear3': '',
-        },
-        'Other Materials Used': {
-          'otherMaterialsUsedYear1': '1,500',
-          'otherMaterialsUsedYear2': '1,000',
-          'otherMaterialsUsedYear3': '1,000',
-        },
-        '': [],
-        '<strong>Production Costs</strong>': [],
-        'Cargo and Handling': {
-          'cargoAndHandlingYear1': '',
-          'cargoAndHandlingYear2': '',
-          'cargoAndHandlingYear3': '',
-        },
-        'Part-time/Temporary Labour': {
-          'partTimeAndTemporaryLabourYear1': '',
-          'partTimeAndTemporaryLabourYear2': '',
-          'partTimeAndTemporaryLabourYear3': '',
-        },
-        'Insurance (not including employee\'s insurance)': {
-          'insuranceYear1': '1,000',
-          'insuranceYear2': '1,000',
-          'insuranceYear3': '1,000',
-        },
-        'Transportation': {
-          'transportationYear1': '10,000',
-          'transportationYear2': '11,000',
-          'transportationYear3': '11,000',
-        },
-        'Utilities': {
-          'utilitiesYear1': '',
-          'utilitiesYear2': '',
-          'utilitiesYear3': '',
-        },
-        'Maintenance (Building, Plant, and Machinery)': {
-          'maintenanceYear1': '2,400',
-          'maintenanceYear2': '2,500',
-          'maintenanceYear3': '2,300',
-        },
-        'Lease of Plant and Machinery': {
-          'leaseYear1': '',
-          'leaseYear2': '',
-          'leaseYear3': '',
-        },
-        'Other Production Costs': {
-          'otherProductionCostsYear1': '',
-          'otherProductionCostsYear2': '',
-          'otherProductionCostsYear3': '',
-        },
-        '': [],
-        '<strong>General Management Costs</strong>': [],
-        'Stationery Supplies and Printing': {
-          'stationeryYear1': '450',
-          'stationeryYear2': '450',
-          'stationeryYear3': '450',
-        },
-        'Rental': {
-          'rentalYear1': '10,000',
-          'rentalYear2': '10,000',
-          'rentalYear3': '11,000',
-        },
-        "Insurance (not including employee's insurance)": {
-          'insuranceYear1': '',
-          'insuranceYear2': '',
-          'insuranceYear3': '',
-        },
-        'Transportation': {
-          'transportationYear1': '1,200',
-          'transportationYear2': '1,200',
-          'transportationYear3': '1,300',
-        },
-        'Company Car/Bus etc.': {
-          'companyCardYear1': '',
-          'companyCardYear2': '',
-          'companyCardYear3': '',
-        },
-        'Advertising': {
-          'advertisingYear1': '12,000',
-          'advertisingYear2': '13,000',
-          'advertisingYear3': '13,000',
-        },
-        'Entertainment': {
-          'entertainmentYear1': '',
-          'entertainmentYear2': '',
-          'entertainmentYear3': '',
-        },
-        'Food and Drinks': {
-          'foodAndDrinksYear1': '2,000',
-          'foodAndDrinksYear2': '1,800',
-          'foodAndDrinksYear3': '2,100',
-        },
-        'Telephone and Fax': {
-          'telephoneAndFaxYear1': '600',
-          'telephoneAndFaxYear2': '700',
-          'telephoneAndFaxYear3': '800',
-        },
-        'Mail and Courier': {
-          'mailAndCourierYear1': '',
-          'mailAndCourierYear2': '',
-          'mailAndCourierYear3': '',
-        },
-        'Maintenance (Office Equipment)': {
-          'maintenanceOfficeEquipmentYear1': '',
-          'maintenanceOfficeEquipmentYear2': '',
-          'maintenanceOfficeEquipmentYear3': '',
-        },
-        'Travel': {
-          'travelYear1': '',
-          'travelYear2': '',
-          'travelYear3': '',
-        },
-        'Audit, Secretarial, and Professional Costs': {
-          'auditYear1': '1,800',
-          'auditYear2': '2,000',
-          'auditYear3': '2,000',
-        },
-        'Newspapers and Magazines': {
-          'newspapersAndMagazinesYear1': '',
-          'newspapersAndMagazinesYear2': '',
-          'newspapersAndMagazinesYear3': '',
-        },
-        'Stamp Duty, Filing and Legal': {
-          'stampYear1': '',
-          'stampYear2': '',
-          'stampYear3': '',
-        },
-        'Bank charges': {
-          'bankChargesYear1': '720',
-          'bankChargesYear2': '720',
-          'bankChargesYear3': '720',
-        },
-        'Other Administrative Costs': {
-          'otherAdministrativeCostsYear1': '',
-          'otherAdministrativeCostsYear2': '',
-          'otherAdministrativeCostsYear3': '',
-        },
-        '<strong>Labour Expenses</strong>': [],
-        'Employee Compensation': {
-          'employeeCompensationYear1': '193,257',
-          'employeeCompensationYear2': '193,257',
-          'employeeCompensationYear3': '193,257',
-        },
-        'Bonuses': {
-          'bonusesYear1': '245,165',
-          'bonusesYear2': '245,165',
-          'bonusesYear3': '245,165',
-        },
-        'Provident Fund': {
-          'providentFundYear1': '13,113',
-          'providentFundYear2': '13,113',
-          'providentFundYear3': '13,113',
-        },
-        'Employee Welfare': {
-          'employeeWelfareYear1': '75,092',
-          'employeeWelfareYear2': '75,092',
-          'employeeWelfareYear3': '75,092',
-        },
-        'Medical Costs': {
-          'medicalCostsYear1': '3,395',
-          'medicalCostsYear2': '3,395',
-          'medicalCostsYear3': '3,395',
-        },
-        'Employee Training': {
-          'employeeTrainingYear1': '',
-          'employeeTrainingYear2': '',
-          'employeeTrainingYear3': '',
-        },
-        "Director's Salary": {
-          'directorsSalaryYear1': '409,846',
-          'directorsSalaryYear2': '409,846',
-          'directorsSalaryYear3': '409,846',
-        },
-        'Employee Insurance': {
-          'employeeInsuranceYear1': '',
-          'employeeInsuranceYear2': '',
-          'employeeInsuranceYear3': '',
-        },
-        'Other Labour Expenses': {
-          'otherLabourExpensesYear1': '',
-          'otherLabourExpensesYear2': '',
-          'otherLabourExpensesYear3': '',
-        },
-
-        '<strong>Depreciation</string>': [],
-        'Buildings': {
-          'buildingsYear1': '179,869',
-          'buildingsYear2': '179,869',
-          'buildingsYear3': '179,869',
-        },
-        'Plant, Machinery & Equipment': {
-          'plantYear1': '',
-          'plantYear2': '',
-          'plantYear3': '',
-        },
-        'Others (Depreciation)': {
-          'otherDepreciationsYear1': '',
-          'otherDepreciationsYear2': '',
-          'otherDepreciationsYear3': '',
-        },
-
-        '<h4><strong>Non-operating Expenses</strong></h4>': [],
-        '<strong>Non-Operating Income</strong>': [],
-        'Profit from Fixed Assets Sale': {
-          'profitFixedYear1': '29,744',
-          'profitFixedYear2': '10,386',
-          'profitFixedYear3': '27,577',
-        },
-        'Profit from Foreign Exchange': {
-          'profitForeignYear1': '',
-          'profitForeignYear2': '',
-          'profitForeignYear3': '',
-        },
-        'Other Income': {
-          'otherIncomeYear1': '26,792',
-          'otherIncomeYear2': '24,113',
-          'otherIncomeYear3': '16,075',
-        },
-
-        '<strong>Non-Operating Costs</strong>': [],
-        'Bad Debts': {
-          'badDebtsYear1': '',
-          'badDebtsYear2': '',
-          'badDebtsYear3': '',
-        },
-        'Donations': {
-          'donationsYear1': '15,135',
-          'donationsYear2': '15,135',
-          'donationsYear3': '15,135',
-        },
-        'Foreign Exchange Loss': {
-          'foreignExhangeLossYear1': '24,302',
-          'foreignExhangeLossYear2': '24,302',
-          'foreignExhangeLossYear3': '24,302',
-        },
-        'Loss on Fixed Assets Sale': {
-          'lossOnFixedAssetsSaleYear1': '',
-          'lossOnFixedAssetsSaleYear2': '',
-          'lossOnFixedAssetsSaleYear3': '',
-        },
-        'Others (Non-Operating Costs)': {
-          'otherYear1': '',
-          'otherYear2': '',
-          'otherYear3': '',
-        },
-
-        '<strong>Taxation</strong>': [],
-        'Tax on Property': {
-          'taxYear1': '',
-          'taxYear2': '',
-          'taxYear3': '',
-        },
-        'Duties (Customs & Excise)': {
-          'dutiesYear1': '',
-          'dutiesYear2': '',
-          'dutiesYear3': '',
-        },
-        'Levy on Foreign Workers': {
-          'levyYear1': '6,275',
-          'levyYear2': '6,275',
-          'levyYear3': '6,275',
-        },
-        'Others (excluding Income Tax)': {
-          'othersYear1': '',
-          'othersYear2': '',
-          'othersYear3': '',
-        },
-
-        '<strongInterest On Loans/Hires</strong>': [],
-        'Interest & Charges by Bank': {
-          'interestChargesYear1': '493,458',
-          'interestChargesYear2': '493,458',
-          'interestChargesYear3': '493,458',
-        },
-        'Interest on Loan': {
-          'interestLoanYear1': '300,390',
-          'interestLoanYear2': '300,390',
-          'interestLoanYear3': '300,390',
-        },
-        'Interest on Hire Purchase': {
-          'interestHireYear1': '',
-          'interestHireYear2': '',
-          'interestHireYear3': '',
-        },
-        'Others (Interest on Loan/Hires)': {
-          'othersYear1': '',
-          'othersYear2': '',
-          'othersYear3': '',
-        },
-
-        '<strong>Company Tax</strong>': [],
-        'Tax on Company': {
-          'taxOnCompanyYear1': '',
-          'taxOnCompanyYear2': '',
-          'taxOnCompanyYear3': '',
-        },
-      },
+      financials: this.metadata,
     }
   }
 }

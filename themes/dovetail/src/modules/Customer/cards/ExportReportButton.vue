@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on }">
       <v-btn :block="$vuetify.breakpoint.smAndDown" v-on="on" large color="primary">
         <v-icon small left>mdi-download</v-icon>
-        {{ trans('Export Reports') }}
+        {{ trans('Preview latest Report') }}
       </v-btn>
     </template>
     <v-list dense>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import $api from '@/modules/Customer/routes/api'
 import { mapActions } from 'vuex'
 
 export default {
@@ -81,7 +82,7 @@ export default {
     },
 
     exportReport (index) {
-      this.showDialog(this.getDialogOptions({data: index}))
+      // this.showDialog(this.getDialogOptions({data: index}))
 
       let data = {
         customer_id: this.$route.params.id,
@@ -89,14 +90,16 @@ export default {
       }
 
       axios.post(
-        `/api/v1/reports/${index.survey.id}/generate`, data
+        $api.reports.generate(index.survey.id), data
       ).then(response => {
-        this.showDialog(this.getDialogOptions({
-          data: index,
-          text: ['<i class="mdi mdi-spin mdi-loading mr-3"></i> Crunching survey data...'],
-        }))
+        // this.showDialog(this.getDialogOptions({
+        //   data: index,
+        //   text: ['<i class="mdi mdi-spin mdi-loading mr-3"></i> Crunching survey data...'],
+        // }))
 
-        this.serveFileToBrowser(response.data, index)
+        console.log(response)
+
+        // this.serveFileToBrowser(response.data, index)
       })
     },
 
@@ -126,6 +129,8 @@ export default {
           responseType: 'arraybuffer',
         }
       ).then(response => {
+        console.log(response)
+        return
         let blob = new Blob([response.data], { type: 'application/pdf' })
         let link = document.createElement('a')
         link.href = window.URL.createObjectURL(blob)

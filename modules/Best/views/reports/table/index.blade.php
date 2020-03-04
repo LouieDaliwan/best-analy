@@ -1,10 +1,10 @@
-<table class="table" cellpadding="0" cellspacing="0" width="100%">
-  <tr>
-    <td valign="top" class="half-width-table">
+<section class="table-ratio">
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
       @include('best::reports.table.sheet.ratios', ['data' => $data['ratios:financial']])
-    </td>
-    <td valign="top" class="half-width-table">
+    </div>
+    <div class="col-md-6 col-sm-12">
       @include('best::reports.table.sheet.indicators', ['data' => $data['indicators:productivity']])
-    </td>
-  </tr>
-</table>
+    </div>
+  </div>
+</section>

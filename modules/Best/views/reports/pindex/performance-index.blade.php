@@ -1,7 +1,10 @@
-<section class="section">
-  <h1 class="section__title section__title--lead">
-    {{ __($data['pindex:code']) }} :: {{ __($data['pindex']) }}
-  </h1>
+<div class="dt-divider" style="height: 50px;"></div>
+<section class="pindex">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="dt-primary">{{ __($data['pindex:code']) }} :: {{ __($data['pindex']) }}</h1>
+    </div>
+  </div>
 
   @include('best::reports.pindex.overall-findings')
   @include('best::reports.pindex.elements-score')

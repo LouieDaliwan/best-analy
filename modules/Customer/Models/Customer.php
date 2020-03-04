@@ -8,11 +8,13 @@ use Core\Models\Relations\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Index\Models\Index;
+use Laravel\Scout\Searchable;
 
 class Customer extends Model
 {
     use BelongsToUser,
         CommonAttributes,
+        Searchable,
         SoftDeletes;
 
     /**
@@ -48,7 +50,7 @@ class Customer extends Model
      */
     public function reports()
     {
-        return $this->morphMany(Report::class, 'reportable');
+        return $this->hasMany(Report::class);
     }
 
     /**
@@ -59,5 +61,17 @@ class Customer extends Model
     public function getCouncelorAttribute()
     {
         return $this->metadata['BusinessCounselorName'] ?? null;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return array_merge($this->toArray(), [
+            'metadata' => json_encode($this->metadata),
+        ]);
     }
 }

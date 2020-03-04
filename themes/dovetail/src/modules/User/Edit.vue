@@ -138,7 +138,7 @@
                     </validation-provider>
                   </v-col>
                 </v-row>
-                <v-row>
+                <!-- <v-row>
                   <v-col cols="12" md="6">
                     <birthday-picker v-model="resource.data.details['Birthday']"></birthday-picker>
                   </v-col>
@@ -149,9 +149,9 @@
                       >
                     </gender-picker>
                   </v-col>
-                </v-row>
+                </v-row> -->
                 <v-row align="center">
-                  <v-col cols="12" md="6">
+                  <v-col cols="12">
                     <validation-provider vid="details[Mobile Phone]" :name="trans('Mobile phone')" v-slot="{ errors }">
                       <v-text-field
                         :dense="isDense"
@@ -169,13 +169,13 @@
                     <input type="hidden" name="details[Mobile Phone][key]" :value="trans(resource.data.details['Mobile Phone'].key)">
                     <input type="hidden" name="details[Mobile Phone][icon]" :value="resource.data.details['Mobile Phone'].icon">
                   </v-col>
-                  <v-col cols="12" md="6">
+                  <!-- <v-col cols="12" md="6">
                     <marital-status-picker
                       :items="resource.maritalStatus.items"
                       v-model="resource.data.details['Marital Status']"
                       >
                     </marital-status-picker>
-                  </v-col>
+                  </v-col> -->
                 </v-row>
                 <v-row>
                   <v-col cols="12">

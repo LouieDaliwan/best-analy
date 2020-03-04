@@ -37,7 +37,9 @@ trait MorphManySubmissions
      */
     public function submit(array $attributes)
     {
-        $submission = $this->submissions()->create($attributes);
+        $submission = $this->submissions()->create(array_merge(
+            ['remarks' => date('m-Y')], $attributes
+        ));
         $this->fireModelEvent('submitted', false, $submission);
 
         return $this;

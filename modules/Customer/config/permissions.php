@@ -116,10 +116,16 @@ return [
      * -------------------------------------------------------------------------
      *
      */
+    'reports-customers' => [
+        'name' => 'reports-customers',
+        'code' => 'customers.reports',
+        'description' => 'Ability to retrieve customers reports.',
+        'group' => 'crm',
+    ],
     'generate-customers' => [
         'name' => 'generate-customers',
         'code' => 'customers.generate',
-        'description' => 'Ability to retrieve customers from the 3rd Pary CRM.',
+        'description' => 'Ability to generate customers reports.',
         'group' => 'crm',
     ],
 

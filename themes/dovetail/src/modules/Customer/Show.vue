@@ -7,36 +7,67 @@
     </template>
 
     <template v-else>
-      <page-header :back="{ to: { name: 'companies.index' }, text: trans('Companies') }">
+      <page-header>
+        <template v-slot:back>
+          <div class="mb-2">
+            <can code="customers.index">
+              <router-link tag="a" exact :to="{ name: 'companies.index' }" class="text--decoration-none body-1 dt-link">
+                <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
+                <span v-text="trans('Companies')"></span>
+              </router-link>
+              <template v-slot:unpermitted>
+                <router-link tag="a" exact :to="{ name: 'companies.owned' }" class="text--decoration-none body-1 dt-link">
+                  <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
+                  <span v-text="trans('Companies')"></span>
+                </router-link>
+              </template>
+            </can>
+          </div>
+        </template>
         <template v-slot:title>
           <span :class="$vuetify.breakpoint.smAndUp ? '' : 'title font-weight-bold'" class="mb-3">{{ resource.data.name }}</span>
-          <v-row>
-            <v-col class="py-0"><p class="mb-0">{{ trans('Staff Strength') }}:</p></v-col>
-            <v-col class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata['staffstrength'] || null }}</p></v-col>
-          </v-row>
-          <v-row>
-            <v-col class="py-0"><p class="mb-0">{{ trans('Industry') }}:</p></v-col>
-            <v-col class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata['industry'] || null }}</p></v-col>
-          </v-row>
         </template>
 
         <template v-slot:action>
           <!-- Export button -->
-          <export-report-button :items="resource.data.indices"></export-report-button>
+          <!-- <export-report-button :items="resource.data.indices"></export-report-button> -->
           <!-- Export button -->
+
+          <!-- List of All Reports button -->
+          <v-btn
+            :block="$vuetify.breakpoint.smAndDown"
+            :to="{name: 'companies.reports', params: { id: $route.params.id }}"
+            color="primary"
+            exact
+            large
+            >
+            <v-icon small left>mdi-paperclip</v-icon>
+            {{ __('View Reports') }}
+          </v-btn>
+          <!-- List of All Reports button -->
         </template>
       </page-header>
 
       <div v-show="resourcesIsNotEmpty">
+        <div class="mb-6">
+          <v-row>
+            <v-col cols="2" class="py-0"><p class="mb-0">{{ trans('Staff Strength') }}:</p></v-col>
+            <v-col class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata['staffstrength'] || null }}</p></v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="2" class="py-0"><p class="mb-0">{{ trans('Industry') }}:</p></v-col>
+            <v-col class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata['industry'] || null }}</p></v-col>
+          </v-row>
+        </div>
         <p class="muted--text font-weight-regular">
           {{ trans('Please select the type of survey evaluation that you would like to do for :name', {name: resource.data.name}) }}
         </p>
         <v-row>
-          <v-col cols="12" sm="6" v-for="(resource, i) in resource.data.indices || []" :key="i">
+          <v-col cols="12" md="6" v-for="(resource, i) in resource.data.indices || []" :key="i">
             <v-card
               :hover="$vuetify.breakpoint.smAndUp"
               :to="$vuetify.breakpoint.smAndUp ? goToCompanySurveyPage(resource) : null"
-              class="text-center card-carded"
+              class="card-carded"
               exact
               height="100%"
               v-ripple="$vuetify.breakpoint.smAndUp ? { class: 'primary--text' } : null"
@@ -53,9 +84,15 @@
                 </v-tooltip>
                 <!-- if report is generated -->
 
-                <div class="mb-4"><img height="80" :src="resource.icon" alt=""></div>
-                <h4 class="mb-1 text-uppercase" v-text="resource.name"></h4>
-                <p class="text-uppercase muted--text" v-text="('Performance Indexes')"></p>
+                <v-row justify="space-between" align="center">
+                  <v-col cols="auto">
+                    <h3 class="font-weight-bold text-uppercase mb-2 mt-2" v-text="resource.name"></h3>
+                    <h4 class="text-uppercase muted--text mb-0" v-text="('Performance Index')"></h4>
+                  </v-col>
+                  <v-col class="text-right">
+                    <img height="80" :src="resource.icon" :alt="resource.name">
+                  </v-col>
+                </v-row>
               </v-card-text>
               <v-card-actions v-if="$vuetify.breakpoint.xsOnly">
                 <v-spacer></v-spacer>
@@ -115,7 +152,13 @@ export default {
     resource: new Survey,
 
     resources: {
-      data: []
+      data: [],
+      gradients: [
+        'linear-gradient(to top, #cc208e 0%, #6713d2 100%)',
+        'linear-gradient(to top, #ff0844 0%, #ffb199 100%)',
+        'linear-gradient(0deg, #53b8dc 0%, #7aefb9 100%)',
+        'linear-gradient(to top, #00c6fb 0%, #005bea 100%)'
+      ]
     }
   }),
 

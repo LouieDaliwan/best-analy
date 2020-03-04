@@ -24,6 +24,7 @@
         </v-container>
       </v-footer>
     </v-content>
+
     <!-- # Main Content -->
   </div>
 </template>

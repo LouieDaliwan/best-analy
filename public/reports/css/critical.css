@@ -1,26 +1,8 @@
-@page {
-  margin: 10px 10px;
-  size: 'Legal';
-  word-break: break-word;
+.card {
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 0 2px rgba(0,0,0,0.2);
+  border-radius: 5px;
 }
-
-.page-break {
-  page-break-after: always;
-}
-
-@media print {
-  html, body {
-    overflow: visible;
-    width: initial;
-  }
-
-  div {
-    display: block !important;
-  }
-}
-
-.section__title--lead {
-  padding: 12px;
-  background-color: #f9fbfd;
-  font-size: 17px;
+.card-body {
+  padding: 1rem;
 }

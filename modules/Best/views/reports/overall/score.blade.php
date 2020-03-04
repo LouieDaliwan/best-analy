@@ -1,33 +1,32 @@
-<section class="section">
-  <h1 class="section__title section__title--lead">
-    @lang('Best Score')
-  </h1>
+<div class="dt-divider" style="height: 50px;"></div>
+<section>
+  <div class="row">
+    <div class="col-md-12">
+      <div>
+        <h1 class="mb-5 dt-primary text-uppercase">@lang('BEST SCORE')</h1>
+      </div>
+    </div>
+  </div>
 
-  <table cellpadding="0" cellspacing="0" width="100%">
-    <tr>
-      <td width="50" valign="center">
-        <table cellpadding="0" cellspacing="0" width="100%">
-          <tr>
-            <td>
-              <span class="badge badge-soft-{{ $data['overall:result'] }} mx-2 font-weight-bold" style="color: {{ $data['overall:result'] }}; font-size: 20px;">
-                {{ $data['overall:score'] }}
-              </span>
-            </td>
-          </tr>
-        </table>
-      </td>
-      <td width="50">
-        <div class="traffic-light__light traffic-light__light--{{ $data['overall:result'] }} mx-4"></div>
-      </td>
-      <td valign="center">
-        <table cellpadding="0" cellspacing="0" width="100%">
-          <tr>
-            <td>
-              <p>@lang($data['overall:comment'])</p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+  <div class="row align-items-center justify-content-center">
+    <div class="col-md-2">
+      <div class="mb-3">
+        <div class="d-flex align-items-center">
+          <span class="badge badge-soft-{{ $data['overall:result'] }} mx-2 font-weight-bold" style="color: {{ $data['overall:result'] }}; font-size: 20px;">
+            {{ $data['overall:score'] }}
+          </span>
+          <div class="overall-label mx-4">
+            <span class="" style="width: 32px; height: 32px; background: red; color: red; display: inline-block; border-radius: 100%;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      {{-- <div class="card"> --}}
+        {{-- <div class="card-body"> --}}
+          <p>@lang($data['overall:comment'])</p>
+        {{-- </div> --}}
+      {{-- </div> --}}
+    </div>
+  </div>
 </section>

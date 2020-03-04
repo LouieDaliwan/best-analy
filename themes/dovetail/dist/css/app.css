@@ -666,6 +666,11 @@ pre {
   }
 }
 
+.dt-tabs > .v-window.v-item-group.theme--light.v-tabs-items,
+.dt-tabs > .v-window.v-item-group.theme--dark.v-tabs-items {
+  background-color: transparent;
+}
+
 .theme--dark .v-toolbar {
   background: var(--toolbar-bg-dark);
 }

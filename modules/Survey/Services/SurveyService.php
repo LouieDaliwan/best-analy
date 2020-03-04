@@ -158,4 +158,21 @@ class SurveyService extends Service implements SurveyServiceInterface
     {
         return with(new $model)->find($id);
     }
+
+    /**
+     * Retrieve the submission for the survey.
+     *
+     * @param  \Survey\Models\Survey $survey
+     * @param  array                 $attributes
+     * @return mixed
+     */
+    public function findSubmission(Survey $survey, $attributes)
+    {
+        return $survey->fields->map(function ($field) use ($attributes) {
+            return $field->submissions()
+                ->whereUserId(user()->getKey())
+                ->whereCustomerId($attributes['customer_id'])
+                ->where('remarks', $attributes['month'])->first()->toArray();
+        });
+    }
 }

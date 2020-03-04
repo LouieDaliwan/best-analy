@@ -1,32 +1,76 @@
 <template>
-  <v-container fill-height>
-    <v-col cols="12">
-      <v-row justify="center" align="center">
-        <v-col cols="12" md="6" offset-md="1" class="d-none d-md-flex order-md-2">
-          <analysis-icon class="primary--text" width="100%" height="100%"></analysis-icon>
-        </v-col>
+  <section>
+    <v-row justify="center" align="center">
+      <v-col
+        class="d-none d-md-flex pa-0"
+        cols="12"
+        md="6"
+        >
+        <v-img
+          :src="require('@/components/Illustration/exce.jpg')"
+          :lazy-src="require('@/components/Illustration/exce.jpg')"
+          gradient="to top right, rgba(4, 75, 127, 0.3), rgba(16, 125, 125, 0.3)"
+          height="100vh">
+        </v-img>
+      </v-col>
 
-        <v-col cols="12" md="5" class="order-md-1">
-          <div class="text-center">
-            <brand></brand>
-          </div>
+      <v-col
+        cols="12"
+        md="6"
+        :pa-5="$vuetify.breakpoint.smAndDown"
+        >
+        <!-- <bubble-1 style="transform: rotate(180deg) translateY(25%)"></bubble-1> -->
+        <!-- <div>
+          <img
+            :src="require('@/components/Illustration/bubbles1.png')"
+            style="position: absolute; top: 0; right: 0; width: 300px;"
+            >
+        </div> -->
 
-          <v-fade-transition mode="out-in">
-            <login-form></login-form>
-          </v-fade-transition>
-        </v-col>
-      </v-row>
-    </v-col>
-  </v-container>
+        <v-row
+          align="center"
+          justify="center"
+          >
+          <v-col
+            cols="12"
+            md="7"
+            >
+            <v-card-text>
+              <div class="text-center">
+                <brand></brand>
+              </div>
+
+              <v-fade-transition mode="out-in">
+                <login-form></login-form>
+              </v-fade-transition>
+            </v-card-text>
+          </v-col>
+        </v-row>
+
+        <!-- <bubble-2 style="transform: rotate(180deg) translate(-200px, -15%)"></bubble-2> -->
+        <div>
+          <img
+            :src="require('@/components/Illustration/bubbles2.png')"
+            style="position: absolute; right: 0; bottom: 0; width: 300px;"
+            >
+        </div>
+      </v-col>
+    </v-row>
+  </section>
 </template>
 
 <script>
 import LoginForm from './cards/LoginForm'
+import illustration from '@/components/Illustration/stage2.png'
 
 export default {
   components: {
     LoginForm,
   },
+
+  data: () => ({
+    illustration: illustration,
+  })
 }
 </script>
 

@@ -5,23 +5,25 @@
     app
     fixed
     v-model="sidebarmodel"
-    class="dt-sidebar workspace"
+    class="dt-sidebar secondary workspace-x"
     >
     <!-- Brand -->
-    <v-list class="mx-3 workspace">
+    <v-list class="px-3 py-0 workspace" style="border-radius: 0;">
       <v-list-item>
-        <v-list-item-avatar tile>
-          <img :src="app.logo" :lazy-src="app.logo" width="40px">
+        <v-list-item-avatar tile size="60" class="my-0">
+          <img :src="app.logo" :lazy-src="app.logo">
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title class="primary--text" v-html="app.title"></v-list-item-title>
+          <v-list-item-title class="text--text font-weight-bold title">
+            <span class="mb-2">{{ __('BEST') }}</span> <br> {{ __('Analytics') }}
+          </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
     <!-- Brand -->
 
     <!-- Menu Items -->
-    <v-list nav class="workspace">
+    <v-list nav dark class="secondary workspace-x py-6">
       <template v-for="(parent, i) in menus">
         <!-- Menu with children -->
         <template v-if="parent.meta.divider">
@@ -37,10 +39,11 @@
               no-action
               :prepend-icon="parent.meta.icon"
               :value="active(parent)"
+              color="white"
               >
               <template v-slot:activator>
                 <v-list-item-content>
-                  <v-list-item-title v-text="$t(parent.meta.title)"></v-list-item-title>
+                  <v-list-item-title v-text="$t(parent.meta.title)" class="font-weight-bold"></v-list-item-title>
                 </v-list-item-content>
               </template>
               <!-- Submenu children -->
@@ -58,13 +61,13 @@
                         :target="submenu.meta.external ? '_blank' : null"
                         :to="{ name: submenu.name }"
                         :exact="inactive(submenu)"
-                        color="primary"
+                        color="white"
                         >
                         <v-list-item-icon v-if="submenu.meta.icon">
                           <v-icon small v-text="submenu.meta.icon"></v-icon>
                         </v-list-item-icon>
                         <v-list-item-content>
-                          <v-list-item-title v-text="$t(submenu.meta.title)"></v-list-item-title>
+                          <v-list-item-title v-text="$t(submenu.meta.title)" class="font-weight-bold white--text"></v-list-item-title>
                         </v-list-item-content>
                       </v-list-item>
                     </can>
@@ -78,12 +81,12 @@
         <!-- Menu without Children -->
         <template v-else>
           <can :code="parent.meta.permission" :viewable="parent.meta['viewable:superadmins']">
-            <v-list-item color="primary" :key="i" link exact :to="{name: parent.name}">
+            <v-list-item color="white" :key="i" link exact :to="{name: parent.name}">
               <v-list-item-icon>
                 <v-icon small v-text="parent.meta.icon"></v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title v-text="$t(parent.meta.title)"></v-list-item-title>
+                <v-list-item-title v-text="$t(parent.meta.title)" class="font-weight-bold"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </can>
@@ -96,9 +99,10 @@
     <!-- Sidebar Footer -->
     <template v-slot:append>
       <div class="px-4 py-2 d-flex justify-space-between align-center">
-        <div><small>{{ __('Pluma v3') }}</small></div>
+        <div class="white--text"><small>{{ __('powered by SSA Consulting') }}</small></div>
+        <!-- <v-btn icon @click="$store.dispatch('theme/toggle', {vm: vuetify, dark: !dark})"> -->
         <v-btn icon @click="$store.dispatch('theme/toggle', {vm: vuetify, dark: !dark})">
-          <v-icon>mdi-invert-colors</v-icon>
+          <v-icon color="white">mdi-invert-colors</v-icon>
         </v-btn>
       </div>
     </template>

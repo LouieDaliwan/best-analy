@@ -3,6 +3,7 @@ import store from '@/store'
 window.auth = require('./core/Auth/auth.js');
 
 window._ = require('lodash');
+window.$ = require('jquery');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

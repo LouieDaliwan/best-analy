@@ -1,6 +1,7 @@
 <template>
   <admin>
     <metatag :title="resource.data.name"></metatag>
+    <back-to-top></back-to-top>
 
     <template v-slot:appbar>
       <v-container class="py-0 px-0">
@@ -28,6 +29,7 @@
                 v-model="shortkeyCtrlIsPressed"
                 >
                 <v-btn
+                  :disabled="isFormDisabled"
                   :loading="isLoading"
                   @click.prevent="submitForm"
                   @shortkey="submitForm"
@@ -48,90 +50,208 @@
       </v-container>
     </template>
 
-    <v-form :disabled="isLoading" ref="updateform-form" autocomplete="false" v-on:submit.prevent="submit($event)">
-      <button ref="submit-button" type="submit" class="d-none"></button>
-      <page-header :back="{ to: { name: 'companies.index' }, text: trans('Companies') }">
-        <template v-slot:title>
-          {{ trans('Edit :name', {'name': `${resource.data.name}'s Input Data`}) }}
-        </template>
-      </page-header>
+    <validation-observer ref="updateform" v-slot="{ handleSubmit, errors, invalid, passed }">
+      <v-form :disabled="isLoading" ref="updateform-form" autocomplete="false" @change="formIsChanged" v-on:submit.prevent="handleSubmit(submit($event))">
+        <button :disabled="isFormDisabled" ref="submit-button" type="submit" class="d-none"></button>
+        <page-header :back="{ to: { name: 'companies.index' }, text: trans('Companies') }">
+          <template v-slot:title>
+            {{ trans('Edit :name', {'name': `${resource.data.name}'s Input Data`}) }}
+          </template>
+        </page-header>
 
-      <!-- Alertbox -->
-      <alertbox></alertbox>
-      <!-- Alertbox -->
+        <!-- Alertbox -->
+        <alertbox></alertbox>
+        <!-- Alertbox -->
 
-      <input type="hidden" name="name" :value="resource.data.name">
-      <input type="hidden" name="code" :value="resource.data.code">
-      <input type="hidden" name="refnum" :value="resource.data.refnum">
-      <input type="hidden" name="user_id" :value="resource.data.user_id">
+        <input type="hidden" name="name" :value="resource.data.name">
+        <input type="hidden" name="code" :value="resource.data.code">
+        <input type="hidden" name="refnum" :value="resource.data.refnum">
+        <input type="hidden" name="user_id" :value="resource.data.user_id">
 
-      <v-row>
-        <v-col cols="12" md="5">
-          <h2 class="title mb-3">{{ trans('Company Information') }}</h2>
-          <v-text-field
-            :dense="isDense"
-            :disabled="isLoading"
-            :label="trans('Staff Strength')"
-            autofocus
-            class="dt-text-field"
-            name="metadata[staffstrength]"
-            outlined
-            type="number"
-            v-model="resource.data.metadata['staffstrength']"
-            >
-          </v-text-field>
-          <v-text-field
-            :dense="isDense"
-            :disabled="isLoading"
-            :label="trans('Industry')"
-            class="dt-text-field"
-            name="metadata[industry]"
-            outlined
-            v-model="resource.data.metadata['industry']"
-            >
-          </v-text-field>
-        </v-col>
-      </v-row>
+        <v-row>
+          <v-col cols="12" md="12">
+            <v-card flat color="transparent">
+              <v-tabs :vertical="isDesktop" class="dt-tabs" background-color="transparent">
+                <v-tab key="tab-0">{{ trans('Company Information') }}</v-tab>
+                <v-tab key="tab-1">{{ trans('Financial Statements') }}</v-tab>
+                <v-tab-item key="tab-0">
+                  <v-card>
+                    <v-card-text>
+                      <validation-provider vid="metadata[email]" :name="trans('Email')" rules="email" v-slot="{ errors }">
+                        <v-text-field
+                          :dense="isDense"
+                          :disabled="isLoading"
+                          :error-messages="errors"
+                          :label="trans('Company Email')"
+                          autofocus
+                          class="dt-text-field"
+                          name="metadata[email]"
+                          outlined
+                          prepend-inner-icon="mdi-email-outline"
+                          v-model="resource.data.metadata['email']"
+                          >
+                        </v-text-field>
+                      </validation-provider>
 
-      <!-- <v-row>
-        <v-col cols="12" md="12">
-          <h2 class="title">{{ trans('Financial Statement Input') }}</h2>
-          <h4 class="subtitle mb-3">{{ trans('Quantitative Assessment 1') }}</h4>
+                      <validation-provider vid="metadata[address]" :name="trans('Company Address')" v-slot="{ errors }">
+                        <v-text-field
+                          :dense="isDense"
+                          :disabled="isLoading"
+                          :error-messages="errors"
+                          :label="trans('Company Address')"
+                          autofocus
+                          class="dt-text-field"
+                          name="metadata[address]"
+                          outlined
+                          prepend-inner-icon="mdi-map-marker"
+                          v-model="resource.data.metadata['address']"
+                          >
+                        </v-text-field>
+                      </validation-provider>
 
-          <v-simple-table class="transparent mb-3">
-            <tbody>
-              <tr>
-                <td colspan="100%"></td>
-                <td><strong>{{ trans('Year 1') }}</strong></td>
-                <td><strong>{{ trans('Year 2') }}</strong></td>
-                <td><strong>{{ trans('Year 3') }}</strong></td>
-              </tr>
-              <tr :key="i" v-for="(data, i) in resource.metadata['fps-qa1']">
-                <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
-                <td :key="k" v-for="(d, k) in data">
-                  <v-text-field
-                    :disabled="isLoading"
-                    :name="`metadata[fps-qa1][${i}][${k}]`"
-                    :value.sync="resource.metadata['fps-qa1'][i][k]"
-                    class="dt-text-field"
-                    dense
-                    hide-details
-                    outlined
-                    >
-                  </v-text-field>
-                </td>
-              </tr>
-            </tbody>
-          </v-simple-table>
-        </v-col>
-        <v-col cols="12" md="6">
-          <h2 class="title">{{ trans('Financial Statement Input') }}</h2>
-          <h4 class="subtitle mb-3">{{ trans('Quantitative Assessment 2') }}</h4>
-        </v-col>
-      </v-row> -->
+                      <validation-provider vid="metadata[website]" :name="trans('Website')" v-slot="{ errors }">
+                        <v-text-field
+                          :dense="isDense"
+                          :disabled="isLoading"
+                          :error-messages="errors"
+                          :label="trans('Website')"
+                          autofocus
+                          class="dt-text-field"
+                          name="metadata[website]"
+                          outlined
+                          prepend-inner-icon="mdi-earth"
+                          v-model="resource.data.metadata['website']"
+                          >
+                        </v-text-field>
+                      </validation-provider>
 
-    </v-form>
+                      <validation-provider vid="metadata[staffstrength]" :name="trans('Staff Strength')" v-slot="{ errors }">
+                        <v-text-field
+                          :dense="isDense"
+                          :disabled="isLoading"
+                          :error-messages="errors"
+                          :label="trans('Staff Strength')"
+                          autofocus
+                          class="dt-text-field"
+                          name="metadata[staffstrength]"
+                          outlined
+                          type="number"
+                          v-model="resource.data.metadata['staffstrength']"
+                          >
+                        </v-text-field>
+                      </validation-provider>
 
+                      <validation-provider vid="metadata[industry]" :name="trans('Industry')" v-slot="{ errors }">
+                        <v-text-field
+                          :dense="isDense"
+                          :disabled="isLoading"
+                          :error-messages="errors"
+                          :label="trans('Industry')"
+                          class="dt-text-field"
+                          name="metadata[industry]"
+                          outlined
+                          v-model="resource.data.metadata['industry']"
+                          >
+                        </v-text-field>
+                      </validation-provider>
+                    </v-card-text>
+                  </v-card>
+                </v-tab-item>
+                <v-tab-item key="tab-1">
+                  <v-card class="mb-3">
+                    <v-card-title>{{ trans('Quantitative Assessment 1') }}</v-card-title>
+                    <v-card-text style="overflow-x: auto;">
+                      <v-simple-table style="min-width: 800px" class="transparent mb-3">
+                        <tbody>
+                          <tr>
+                            <td colspan="100%"></td>
+                            <td><strong>{{ trans('Year 1') }}</strong></td>
+                            <td><strong>{{ trans('Year 2') }}</strong></td>
+                            <td><strong>{{ trans('Year 3') }}</strong></td>
+                          </tr>
+                          <tr :key="i" v-for="(data, i) in resource.metadata['fps-qa1']">
+                            <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
+                            <td :key="k" v-for="(d, k) in data">
+                              <v-text-field
+                                :disabled="isLoading"
+                                :name="`metadata[fps-qa1][${i}][${k}]`"
+                                class="dt-text-field"
+                                dense
+                                hide-details
+                                outlined
+                                v-model="resource.data.financials['fps-qa1'][i][k]"
+                                >
+                              </v-text-field>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </v-simple-table>
+                    </v-card-text>
+                    <v-card-text style="overflow-x: auto;">
+                      <v-simple-table style="min-width: 800px" class="transparent mb-3">
+                        <tbody>
+                          <tr>
+                            <td colspan="100%"></td>
+                            <td><strong>{{ trans('Year 1') }}</strong></td>
+                            <td><strong>{{ trans('Year 2') }}</strong></td>
+                            <td><strong>{{ trans('Year 3') }}</strong></td>
+                          </tr>
+                          <tr :key="i" v-for="(data, i) in resource.metadata['balance-sheet']">
+                            <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
+                            <td :key="k" v-for="(d, k) in data">
+                              <v-text-field
+                                :disabled="isLoading"
+                                :name="`metadata[balance-sheet][${i}][${k}]`"
+                                class="dt-text-field"
+                                dense
+                                hide-details
+                                outlined
+                                v-model="resource.data.financials['balance-sheet'][i][k]"
+                                >
+                              </v-text-field>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </v-simple-table>
+                    </v-card-text>
+                  </v-card>
+                  <v-card class="mb-3">
+                    <v-card-title>{{ trans('Quantitative Assessment 2') }}</v-card-title>
+                    <v-card-text style="overflow-x: auto;">
+                      <v-simple-table style="min-width: 800px" class="transparent mb-3">
+                        <tbody>
+                          <tr>
+                            <td colspan="100%"></td>
+                            <td><strong>{{ trans('Year 1') }}</strong></td>
+                            <td><strong>{{ trans('Year 2') }}</strong></td>
+                            <td><strong>{{ trans('Year 3') }}</strong></td>
+                          </tr>
+                          <tr :key="i" v-for="(data, i) in resource.metadata['fps-qa2']">
+                            <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
+                            <td :key="k" v-for="(d, k) in data">
+                              <v-text-field
+                                :disabled="isLoading"
+                                :name="`metadata[fps-qa2][${i}][${k}]`"
+                                class="dt-text-field"
+                                dense
+                                hide-details
+                                outlined
+                                v-model="resource.data.financials['fps-qa2'][i][k]"
+                                >
+                              </v-text-field>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </v-simple-table>
+                    </v-card-text>
+                  </v-card>
+                </v-tab-item>
+              </v-tabs>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-form>
+    </validation-observer>
   </admin>
 </template>
 
@@ -243,6 +363,10 @@ export default {
       this.resource.loading = val
     },
 
+    formIsChanged () {
+      this.resource.isPrestine = false
+    },
+
     parseResourceData (item) {
       let data = _.clone(item)
       let formData = new FormData(this.$refs['updateform-form'].$el)
@@ -286,12 +410,23 @@ export default {
         $api.update(this.resource.data.id),
         this.parseResourceData(this.resource.data),
       ).then(response => {
-        this.showSnackbar({
-          text: trans('Company updated successfully'),
-        })
-
+        this.resource.isPrestine = true
         this.showSuccessbox({
           text: trans('Company updated successfully'),
+          buttons: {
+            show: {
+              code: 'customers.show',
+              to: { name: 'companies.show', params: { id: this.resource.data.id } },
+              icon: 'mdi-briefcase-search-outline',
+              text: trans('View Details'),
+            },
+            create: {
+              code: 'crm.search',
+              to: { name: 'companies.find' },
+              icon: 'mdi-briefcase-plus-outline',
+              text: trans('Find Another Company'),
+            },
+          },
         })
       }).catch(err => {
         if (err.response && err.response.status == Response.HTTP_UNPROCESSABLE_ENTITY) {
@@ -313,15 +448,44 @@ export default {
         $api.show(this.$route.params.id)
       ).then(response => {
         this.resource.data = response.data.data
+        this.resource.metadata = _.merge({}, this.resource.metadata)
         this.resource.metadata = _.merge({}, this.resource.metadata, this.resource.data.metadata)
-        // console.log(this.resource.metadata)
-      }).finally(() => { this.load(false) })
+        this.resource.data.financials = this.resource.metadata
+      }).finally(() => {
+        this.load(false)
+        this.resource.isPrestine = true
+      })
+    },
+
+    parseDataVar (item1) {
+      let t = null
+
+      // try {
+      //   t = item1
+      // } catch {
+      //   t = ''
+      // }
+
+      return t
     },
   },
 
   mounted () {
     this.hideSidebar()
     this.getResource()
+  },
+
+  watch: {
+    'resource.data': {
+      handler (val) {
+        this.resource.isPrestine = false
+        this.resource.hasErrors = this.$refs.updateform.flags.invalid
+        if (!this.resource.hasErrors) {
+          this.hideAlertbox()
+        }
+      },
+      deep: true,
+    },
   },
 }
 </script>

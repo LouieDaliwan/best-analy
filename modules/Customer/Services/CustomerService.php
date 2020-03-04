@@ -6,6 +6,7 @@ use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
 use Customer\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Validation\Rule;
 
 class CustomerService extends Service implements CustomerServiceInterface
@@ -79,5 +80,31 @@ class CustomerService extends Service implements CustomerServiceInterface
         return $this->model()->updateOrCreate([
             'refnum' => $attributes['refnum'] ?? null,
         ], $attributes);
+    }
+
+    /**
+     * Retrieve all customer reports and
+     * return a paginated list.
+     *
+     * @param  \Customer\Models\Customer $customer
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function listReports(Customer $customer)
+    {
+        $this->model = $customer->reports();
+
+        if ($this->isSearching()) {
+            $this->model = $this->whereIn(
+                $this->getKeyName(), $this->search(
+                    $this->request()->get('search')
+                )->keys()->toArray()
+            );
+        }
+
+        $model = $this->model->paginate($this->getPerPage());
+
+        $sorted = $this->sortAndOrder($model);
+
+        return new LengthAwarePaginator($sorted, $model->total(), $model->perPage());
     }
 }

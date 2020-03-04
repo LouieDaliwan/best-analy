@@ -23,18 +23,18 @@ export default [
         },
       },
       // Branding
-      {
-        path: 'branding',
-        props: true,
-        name: 'settings.branding',
-        component: () => import('../Branding.vue'),
-        meta: {
-          title: 'Branding',
-          sort: 6,
-          authenticatable: true,
-          icon: 'mdi-book-multiple-variant',
-        },
-      },
+      // {
+      //   path: 'branding',
+      //   props: true,
+      //   name: 'settings.branding',
+      //   component: () => import('../Branding.vue'),
+      //   meta: {
+      //     title: 'Branding',
+      //     sort: 6,
+      //     authenticatable: true,
+      //     icon: 'mdi-book-multiple-variant',
+      //   },
+      // },
       // System
       {
         path: 'system',

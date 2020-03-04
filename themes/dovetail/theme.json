@@ -13,9 +13,9 @@
   },
   "colors": {
     "light": {
-      "primary": "#167bc3",
-      "secondary": "#e56e37",
-      "accent": "#f39e2b",
+      "primary": "#107e7d",
+      "secondary": "#044b7f",
+      "accent": "#610345",
       "success": "#009688",
       "info": "#00b8d6",
       "warning": "#F6C343",
@@ -38,9 +38,9 @@
 
     },
     "dark": {
-      "primary": "#167bc3",
-      "secondary": "#e56e37",
-      "accent": "#f39e2b",
+      "primary": "#107e7d",
+      "secondary": "#044b7f",
+      "accent": "#610345",
       "success": "#009688",
       "info": "#00b8d6",
       "warning": "#ffda3e",

@@ -16,7 +16,7 @@
           background-color="selects"
           class="dt-text-field"
           menu-props="offsetY"
-          name="indices"
+          name="formable_id"
           outlined
           ref="indices"
           v-model="index"
@@ -27,7 +27,7 @@
           </template>
         </v-select>
       </validation-provider>
-      <input type="hidden" name="indices[]" v-model="index">
+      <input type="hidden" name="formable_id" v-model="index">
     </v-card-text>
   </v-card>
 </template>

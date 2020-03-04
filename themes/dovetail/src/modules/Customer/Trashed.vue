@@ -2,12 +2,24 @@
   <admin>
     <metatag :title="trans('Trashed Companies')"></metatag>
 
-    <can code="companies.index">
-      <page-header :back="{ to: { name: 'companies.index' }, text: trans('Companies') }"></page-header>
-      <template v-slot:unpermitted>
-        <page-header :back="{ to: { name: 'companies.owned' }, text: trans('Companies') }"></page-header>
+    <page-header>
+      <template v-slot:back>
+        <div class="mb-2">
+          <can code="customers.index">
+            <router-link tag="a" exact :to="{ name: 'companies.index' }" class="text--decoration-none body-1 dt-link">
+              <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
+              <span v-text="trans('Companies')"></span>
+            </router-link>
+            <template v-slot:unpermitted>
+              <router-link tag="a" exact :to="{ name: 'companies.owned' }" class="text--decoration-none body-1 dt-link">
+                <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
+                <span v-text="trans('Companies')"></span>
+              </router-link>
+            </template>
+          </can>
+        </div>
       </template>
-    </can>
+    </page-header>
 
     <!-- Data table -->
       <div v-show="resourcesIsNotEmpty">

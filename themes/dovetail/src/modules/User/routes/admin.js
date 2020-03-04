@@ -46,7 +46,7 @@ export default [
         },
       },
       {
-        path: 'edit/:id',
+        path: ':id/edit',
         name: 'users.edit',
         component: () => import('../Edit.vue'),
         meta: {

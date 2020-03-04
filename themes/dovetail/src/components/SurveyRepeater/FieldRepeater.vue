@@ -195,10 +195,10 @@ export default {
   data: (vm) => ({
     focus: false,
     categories: [
-      'Workflow Progress',
-      'Talent',
       'Documentation',
+      'Talent',
       'Technology',
+      'Workflow Processes',
     ],
   }),
 

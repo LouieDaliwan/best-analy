@@ -1,5 +1,8 @@
 <template>
-  <v-select prepend-icon="mdi mdi-translate" filled hide-details outlined v-model="lang" :items="items" @change="change"></v-select>
+  <section>
+    <h4 class="mb-3">{{ __('Select Language') }}</h4>
+    <v-select prepend-icon="mdi mdi-translate" filled hide-details outlined v-model="lang" :items="items" @change="change"></v-select>
+  </section>
 </template>
 
 <script>

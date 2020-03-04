@@ -2,16 +2,19 @@
 
 namespace Best\Pro\Financial;
 
+use Customer\Models\Customer;
+
 abstract class FinancialRatios extends AbstractAnalysis
 {
     /**
      * Retrieve the report.
      *
+     * @param  \Customer\Models\Customer $customer
      * @return array
      */
-    public static function getReport()
+    public static function getReport(Customer $customer)
     {
-        $spreadsheet = self::getSpreadsheet()->getSheetByName('Ratios');
+        $spreadsheet = self::getSpreadsheet($customer)->getSheetByName('Ratios');
 
         $profitabilityTitle = $spreadsheet->getCell('A2')->getFormattedValue();
         $liquidityTitle = $spreadsheet->getCell('A39')->getFormattedValue();

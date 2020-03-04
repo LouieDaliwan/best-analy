@@ -2,6 +2,8 @@
 
 namespace Survey\Providers;
 
+use Best\Services\FormulaService;
+use Best\Services\FormulaServiceInterface;
 use Best\Services\ReportService;
 use Best\Services\ReportServiceInterface;
 use Core\Providers\BaseServiceProvider;
@@ -42,6 +44,7 @@ class BestServiceProvider extends BaseServiceProvider
      */
     protected function registerServiceBindings()
     {
+        $this->app->bind(FormulaServiceInterface::class, FormulaService::class);
         $this->app->bind(ReportServiceInterface::class, ReportService::class);
     }
 

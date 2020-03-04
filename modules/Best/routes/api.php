@@ -11,6 +11,11 @@
  *
  */
 
+Route::prefix('v1')->group(function () {
+    Route::get('reports/{report}/download', 'Api\DownloadPerformanceIndexReport')->name('reports.show');
+    Route::get('reports/{report}', 'Api\GetReport');
+});
+
 Route::prefix('v1')->middleware('auth:api')->group(function () {
     Route::post('reports/{survey}/generate', 'Api\GeneratePerformanceIndexReport')->name('surveys.report');
 });

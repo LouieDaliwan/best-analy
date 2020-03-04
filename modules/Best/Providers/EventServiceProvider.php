@@ -2,8 +2,10 @@
 
 namespace Survey\Providers;
 
+use Best\Events\ReportGenerated;
 use Best\Listeners\CalculateFieldSubmissionSubScore;
 use Best\Listeners\ComputePerformanceIndexFromSurvey;
+use Best\Listeners\SaveGeneratedReport;
 use Core\Providers\EventServiceProvider as BaseEventServiceProvider;
 use Survey\Events\SurveySubmittedByUser;
 
@@ -18,6 +20,9 @@ class EventServiceProvider extends BaseEventServiceProvider
         SurveySubmittedByUser::class => [
             CalculateFieldSubmissionSubScore::class,
             ComputePerformanceIndexFromSurvey::class,
+        ],
+        ReportGenerated::class => [
+            SaveGeneratedReport::class,
         ],
     ];
 }

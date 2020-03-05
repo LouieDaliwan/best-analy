@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'description' => 'The Productivity Management practices and processes were further analysed based on how well the documentation procedures, personnel, ICT and work processes were being managed.',
+
 	'documentation' => [
 		'50to90' => ':name has a very good documentation policies & practices in place. Advisable to look into how well :item1 can be better executed.',
         '30to50' => ':name has a fair documentation procedures and practices in place. Advisable to look into how well :item1 and :item2 can be better executed.',
@@ -18,7 +20,7 @@ return [
 	],
 	'workflow' => [
 		'50to90' => 'Very good productivity processes in place. Immediate efforts should be channeled towards :item1 & :item2.',
-		'30to50' => 'FFair implementation of process within :name. More could still be done to ensure that its desired outcome is achieved relating to :item1, :item2 & :item3.',
+		'30to50' => 'Fair implementation of process within :name. More could still be done to ensure that its desired outcome is achieved relating to :item1, :item2 & :item3.',
 		'less30' => "Poor workflow processes recorded. Clearer processes with timely communication processes are critical within the immediate period.",
 	],
 ];

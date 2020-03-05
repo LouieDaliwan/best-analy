@@ -3,14 +3,15 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <h1 class="mb-5 dt-secondary">@lang('Financial Management Element\'s Score')</h1>
+        <h1 class="mb-5 dt-secondary text-capitalize">@lang('Overall Organisations Enablers Metrics')</h1>
       </div>
     </div>
   </div>
 
   <div class="row">
     <div class="col-md-6 col-sm-12">
-      <p>@lang('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam est ratione id veniam necessitatibus tempora at delectus temporibus, aut ea tempore iure quasi, nulla esse pariatur provident in mollitia accusamus.')</p>
+      <p>@lang($data['overall:enablers']['comment:first'])</p>
+      <p>@lang($data['overall:enablers']['comment:second'])</p>
 
       <div class="card">
         <div class="card-body">
@@ -20,8 +21,7 @@
     </div>
 
     <div class="col-md-6 col-sm-12">
-      <div>
-        <h4 class="mb-4">@lang('Workflow Process')</h4>
+      <div class="mb-3">
         <div class="row four-tec">
           <div class="col-auto">
             <div class="imgWorkflow card">
@@ -31,52 +31,56 @@
             </div>
           </div>
           <div class="col">
-            <p class="mb-0">@lang('Lorem ipsum dolor sit amet, consectetur.')</p>
+            <h4>@lang('Workflow Processess')</h4>
+            <p class="mb-0">@lang($data['overall:enablers']['enablers']['Workflow Processess'])</p>
           </div>
         </div>
       </div>
-      <div>
-        <h4 class="mb-4">@lang('Workflow Process')</h4>
+
+      <div class="mb-3">
         <div class="row four-tec">
           <div class="col-auto">
-            <div class="imgWorkflow card">
+            <div class="imgTalent card">
               <div class="card-body p-3">
-                <img height="32" src="{{ asset('reports/assets/icons/workflow-processes.svg') }}">
+                <img height="32" src="{{ asset('reports/assets/icons/talent.svg') }}">
               </div>
             </div>
           </div>
           <div class="col">
-            <p class="mb-0">@lang('Lorem ipsum dolor sit amet, consectetur.')</p>
+            <h4>@lang('Talent')</h4>
+            <p class="mb-0">@lang($data['overall:enablers']['enablers']['Talent'])</p>
           </div>
         </div>
       </div>
-      <div>
-        <h4 class="mb-4">@lang('Workflow Process')</h4>
+
+      <div class="mb-3">
         <div class="row four-tec">
           <div class="col-auto">
-            <div class="imgWorkflow card">
+            <div class="imgDocumentation card">
               <div class="card-body p-3">
-                <img height="32" src="{{ asset('reports/assets/icons/workflow-processes.svg') }}">
+                <img height="32" src="{{ asset('reports/assets/icons/documentation.svg') }}">
               </div>
             </div>
           </div>
           <div class="col">
-            <p class="mb-0">@lang('Lorem ipsum dolor sit amet, consectetur.')</p>
+            <h4>@lang('Documentation')</h4>
+            <p class="mb-0">@lang($data['overall:enablers']['enablers']['Documentation'])</p>
           </div>
         </div>
       </div>
-      <div>
-        <h4 class="mb-4">@lang('Workflow Process')</h4>
+
+      <div class="mb-3">
         <div class="row four-tec">
           <div class="col-auto">
-            <div class="imgWorkflow card">
+            <div class="imgTechnology card">
               <div class="card-body p-3">
-                <img height="32" src="{{ asset('reports/assets/icons/workflow-processes.svg') }}">
+                <img height="32" src="{{ asset('reports/assets/icons/technology.svg') }}">
               </div>
             </div>
           </div>
           <div class="col">
-            <p class="mb-0">@lang('Lorem ipsum dolor sit amet, consectetur.')</p>
+            <h4>@lang('Technology')</h4>
+            <p class="mb-0">@lang($data['overall:enablers']['enablers']['Technology'])</p>
           </div>
         </div>
       </div>
@@ -102,7 +106,7 @@
     var barChart = new Chart(ctx, {
       type: 'radar',
       data: {
-        labels: ["Document", "Workflow Process", "Talent", "Technology"],
+        labels: {!! json_encode(collect($data['overall:enablers']['chart']['label'])->values()->toArray()) !!},
         datasets: [
           {
             backgroundColor: "rgba(16, 126, 125, 0.3)",
@@ -111,7 +115,7 @@
             borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: "miter",
-            data: [30, 5, 30, 20, 30, 25, 50],
+            data: {!! json_encode(collect($data['overall:enablers']['chart']['data'])->values()->toArray()) !!},
             fill: true,
             lineTension: 0,
             pointBorderColor: "rgba(16, 126, 125, 1)",
@@ -130,7 +134,7 @@
       options: {
         legend: {
           display: false,
-        }
+        },
       }
     });
   });

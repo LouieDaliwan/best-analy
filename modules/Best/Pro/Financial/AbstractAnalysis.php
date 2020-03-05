@@ -79,6 +79,13 @@ abstract class AbstractAnalysis implements Contracts\FinancialAnalysisReportInte
      */
     public static function loadCustomerDataToFile(Spreadsheet $spreadsheet, Customer $customer)
     {
+        // Years labels.
+        $sheet = $spreadsheet->getSheetByName('FS_inputs');
+        $fsinputs = $customer->metadata['years'] ?? [];
+        $sheet->getCell('AC8')->setValue($fsinputs['Years']['Year1'] ?? 'Year 1');
+        $sheet->getCell('AI8')->setValue($fsinputs['Years']['Year2'] ?? 'Year 2');
+        $sheet->getCell('AO8')->setValue($fsinputs['Years']['Year3'] ?? 'Year 3');
+
         // Load Financial Statement Quantitative Assessment 1.
         $sheet = $spreadsheet->getSheetByName('FS_inputs');
         $fsinputs = $customer->metadata['fps-qa1'] ?? [];

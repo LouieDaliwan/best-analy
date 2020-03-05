@@ -5,7 +5,7 @@
       :small="$vuetify.breakpoint.xsOnly"
       @click="toTop"
       bottom
-      color="primary"
+      color="secondary"
       dark
       fab
       fixed

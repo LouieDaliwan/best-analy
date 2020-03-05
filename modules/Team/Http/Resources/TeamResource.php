@@ -3,6 +3,7 @@
 namespace Team\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use User\Http\Controllers\Api\UserResource;
 
 class TeamResource extends JsonResource
 {
@@ -19,6 +20,10 @@ class TeamResource extends JsonResource
             'members' => $this->members,
             'created' => $this->created,
             'modified' => $this->modified,
+            // 'users' => UserResource::collection($this->users),
+            // 'users:selected' => UserResource::collection(
+            //     $this->users
+            // )->pluck('id')->toArray(),
         ]);
     }
 }

@@ -131,7 +131,7 @@
             exact
             :to="{name: 'companies.generate'}">
             <v-icon small left>mdi-file-document-box-search-outline</v-icon>
-            {{ trans('Generate Report') }}
+            {{ trans('Find Company') }}
           </v-btn>
         </template>
       </empty-state>

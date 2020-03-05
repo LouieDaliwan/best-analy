@@ -5,6 +5,7 @@
       <h1 class="dt-primary">@lang('Report Objectives')</h1>
       @foreach (trans('best::reports.objectives') as $key => $objective)
         <p class="mb-0">
+          {{-- SVG arrow --}}
           <span style="font-size: 12px;">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512; margin-bottom: 6px;" xml:space="preserve" width="12px" height="12px"><g><g>
               <g>
@@ -12,6 +13,7 @@
               </g>
             </g></g> </svg>
           </span>
+          {{-- SVG arrow --}}
           &nbsp;
           @lang("best::reports.objectives.$key", ['appcode' => settings('app:code')])
         </p>

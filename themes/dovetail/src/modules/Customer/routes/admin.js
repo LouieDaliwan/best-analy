@@ -108,6 +108,18 @@ export default [
         },
       },
       {
+        path: ':id/reports/overall',
+        name: 'reports.overall',
+        component: () => import('../Overall.vue'),
+        meta: {
+          title: 'Report Overall',
+          sort: 9,
+          authenticatable: true,
+          permission: 'companies.show',
+          icon: 'mdi-book-multiple-variant',
+        },
+      },
+      {
         path: ':id',
         name: 'companies.show',
         component: () => import('../Show.vue'),

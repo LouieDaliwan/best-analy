@@ -13,20 +13,16 @@
       <div class="mb-3">
         <div class="d-flex align-items-center">
           <span class="badge badge-soft-{{ $data['overall:result'] }} mx-2 font-weight-bold" style="color: {{ $data['overall:result'] }}; font-size: 20px;">
-            {{ $data['overall:score'] }}
+            {{ $data['overall:percentage'] }}
           </span>
           <div class="overall-label mx-4">
-            <span class="" style="width: 32px; height: 32px; background: red; color: red; display: inline-block; border-radius: 100%;"></span>
+            <span class="badge-bg-{{ $data['overall:result'] }}" style="width: 32px; height: 32px; display: inline-block; border-radius: 100%;"></span>
           </div>
         </div>
       </div>
     </div>
     <div class="col">
-      {{-- <div class="card"> --}}
-        {{-- <div class="card-body"> --}}
-          <p>@lang($data['overall:comment'])</p>
-        {{-- </div> --}}
-      {{-- </div> --}}
+      <p>@lang($data['overall:comment'])</p>
     </div>
   </div>
 </section>

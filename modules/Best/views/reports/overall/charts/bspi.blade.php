@@ -1,9 +1,9 @@
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-between align-items-center">
-      <h2 class="dt-secondary mb-0">@lang($data['indices']['BSPI']['pindex']) {{ __('Perfomarnce Index') }}</h2>
+      <h2 class="dt-secondary mb-0">@lang($data['indices']['BSPI']['pindex']) {{ __('Performance Index') }}</h2>
       <div>
-        <span class="badge badge-soft-{{ $data['overall:result'] }} mx-2 font-weight-bold" style="color: {{ $data['overall:result'] }}; font-size: 17px;">
+        <span class="dt-button-primary-soft mx-2 font-weight-bold" style="font-size: 17px;">
           {{ $data['indices']['BSPI']['overall:total'] }}%
         </span>
       </div>
@@ -13,7 +13,7 @@
   <div class="card-body">
     <div class="row align-items-center">
       <div class="col-md-4">
-        <p>@lang($data['indices']['BSPI']['overall:comment'])</p>
+        <p>@lang($data['indices']['BSPI']['overall:comment:overall'])</p>
       </div>
       <div class="col-md-8 col-sm-12">
         <canvas height="100" id="overall-bspi"></canvas>
@@ -22,8 +22,6 @@
   </div>
 </div>
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
 <script>
   $(document).ready(function() {
     var ctx = document.getElementById("overall-bspi").getContext('2d');
@@ -48,7 +46,7 @@
         ],
         datasets: [
           {
-            data: [20, 24, 21, 27],
+            data: {!! json_encode(collect($data['indices']['BSPI']['elements:charts']['data'])->values()->toArray()) !!},
             backgroundColor: gradient,
             hoverBackgroundColor: chartColors.primary,
           }

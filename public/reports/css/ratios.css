@@ -1,3 +1,11 @@
+.table-ratio table tr td {
+  font-size: 12px;
+}
+
+.table-ratio table tr th {
+  font-size: 12px;
+}
+
 .title:not(:nth-child(1)) {
   background: #95aac9;
   font-weight: 500;

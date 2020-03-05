@@ -8,6 +8,7 @@ use Customer\Models\Customer;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 use Survey\Models\Relations\BelongsToSurvey;
+use Survey\Models\Survey;
 
 class Report extends Model
 {
@@ -32,7 +33,7 @@ class Report extends Model
      */
     protected $guarded = [];
 
-     /**
+    /**
      * Retrieve the customer that this resource belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -40,6 +41,16 @@ class Report extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    /**
+     * Retrieve the survey that this resource belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function survey()
+    {
+        return $this->belongsTo(Survey::class, 'form_id');
     }
 
     /**

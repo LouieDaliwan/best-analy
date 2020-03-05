@@ -20,6 +20,7 @@
       @foreach ($data['analysis:financial']['liquidity']['comment'] as $comments)
         <div class="row">
           <div class="col-auto mt-1">
+            {{-- SVG arrow --}}
             <span style="font-size: 17px;">
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512; margin-bottom: 6px;" xml:space="preserve" width="17px" height="17px"><g><g>
                 <g>
@@ -27,6 +28,7 @@
                 </g>
               </g></g> </svg>
             </span>
+            {{-- SVG arrow --}}
              &nbsp;
           </div>
           <div class="col">
@@ -38,8 +40,6 @@
   </div>
 </section>
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
 <script>
 $(document).ready(function() {
   var ctx = document.getElementById("liquidity").getContext('2d');

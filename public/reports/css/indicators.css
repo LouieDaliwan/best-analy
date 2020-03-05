@@ -1,3 +1,11 @@
+.title.table-indicator, .ratiosummary-1, .ratiosummary-2 {
+  display: none;
+}
+
+.ratiosummary-3 .summary-3:nth-child(1) {
+  border-top: 1px solid #868e96;
+}
+
 .title:not(:nth-child(1)) {
   background: #95aac9;
   font-weight: 500;

@@ -42,17 +42,17 @@ abstract class KeyStrategicRecommendationComments
     public static function fmpiRecommendations()
     {
         return [
-            ['Documentation' => 'Review relevant financial indicators'],
-            ['Process' => 'Review financial operational processes to maintain relevance'],
+            ['Personnel' => 'Develop competency capabilities within finance team'],
             ['Personnel' => 'Equip HODs with relevant financial management literacy'],
-            ['Personnel' => 'Segregate key financial roles to relevant representatives in the organisation'],
-            ['Documentation' => 'Review templates & forms for financial projections'],
-            ['Documentation' => 'Review scope of financial management report'],
-            ['Process' => 'Review effectiveness of inventory management practices'],
-            ['Personnel' => 'Empower and equip appropriate staff to oversee financial management'],
-            ['Empty' => 'Continue to maintain consistency and adherence to financial management practices'],
+            ['Documentation' => 'Review relevant financial indicators'],
+            ['Process' => 'Systemise financial analysis report for management'],
             ['Process' => 'Conduct periodic risk assessments'],
-            ['Empty' => 'Conduct comprehensive 3rd party due diligence'],
+            ['Documentation' => 'Review templates & forms for financial projections'],
+            ['Personnel' => 'Empower and equip appropriate staff to oversee financial management'],
+            ['Personnel' => 'Segregate key financial roles to relevant representatives in the organisation'],
+            ['Personnel' => 'Conduct inventory management training'],
+            ['Process' => 'Conduct comprehensive 3rd party due diligence'],
+            ['Empty' => 'Review scope of financial management report'],
         ];
     }
 
@@ -64,16 +64,16 @@ abstract class KeyStrategicRecommendationComments
     public static function hrpiRecommendations()
     {
         return [
-            'Documentation' => 'Review manpower regulations & policies',
-            'Process' => 'Evaluate & Refine Employee Engagement & Communication Strategies',
-            'Documentation' => 'Develop JD Framework',
-            'Personnel' => 'Create learning & development culture',
-            'Personnel' => 'Succession Management',
-            'Process' => 'Review performance communication strategies',
-            'Documentation' => 'Regular Manual Updates',
-            'Process' => 'Implement Leadership Development Programme for High Performers',
-            'Empty' => 'Ease access to Compensation & Benefits information',
-            'Empty' => 'Align company goals with performance objectives',
+            ['Documentation' => 'Develop JD Framework'],
+            ['Personnel' => 'Create learning & development culture'],
+            ['Documentation' => 'Review manpower regulations & policies'],
+            ['Process' => 'Evaluate & Refine Employee Engagement & Communication Strategies'],
+            ['Technology' => 'Ease access to Compensation & Benefits information'],
+            ['Documentation' => 'Regular Manual Updates'],
+            ['Process' => 'Implement Leadership Development Programme for High Performers'],
+            ['Process' => 'Review performance communication strategies'],
+            ['Empty' => 'Align company goals with performance objectives'],
+            ['Empty' => 'Succession Management'],
         ];
     }
 
@@ -85,19 +85,18 @@ abstract class KeyStrategicRecommendationComments
     public static function bspiRecommendations()
     {
         return [
-            'Personnel' => 'Conduct skills upgrading to familiarise with adopted technology',
-            'Documentation' => 'Set-up Strategic Management framework',
-            'Documentation' => 'Review work improvement schemes',
-            'Process' => 'Review technology procurement process',
-            'Process' => 'Review Strategic Management framework',
-            'Process' => 'Review integration of communication tools across work functions',
-            'ICT' => "Review & align effectiveness of collaborative tools' purposes",
-            'Technology' => "Review & align effectiveness of collaborative tools' purposes",
-            'Process' => 'Introduce appropriate periodic management communication sessions',
-            'Process' => 'Implement employee engagement strategies relating to organisation strategies & direction',
-            'Empty' => 'Implement collaborative tools for employee engagements',
-            'Empty' => 'Conduct gap review of existing risk management strategies',
-            'Empty' => 'Attend Business Continuity Management training',
+            ['Personnel' => 'Attend Business Continuity Management training'],
+            ['Personnel' => 'Conduct skills upgrading to familiarise with adopted technology'],
+            ['Process' => 'Conduct gap review of existing risk management strategies'],
+            ['Documentation' => 'Set-up Strategic Management framework'],
+            ['Process' => 'Review integration of communication tools across work functions'],
+            ['Technology' => "Review & align effectiveness of collaborative tools' purposes"],
+            ['Technology' => 'Implement collaborative tools for employee engagements'],
+            ['Process' => 'Review technology procurement process'],
+            ['Process' => 'Review Strategic Management framework'],
+            ['Process' => 'Introduce appropriate periodic management communication sessions'],
+            ['Empty' => 'Implement employee engagement strategies relating to organisation strategies & direction'],
+            ['Empty' => 'Review employee engagement strategies'],
         ];
     }
 
@@ -109,12 +108,13 @@ abstract class KeyStrategicRecommendationComments
     public static function pmpiRecommendations()
     {
         return [
-            'Process' => 'Appoint or Conduct Market Research periodically',
-            'Process' => 'Review IMPACT Framework',
-            'Personnel' => 'Conduct a training Needs Analysis',
-            'Process' => 'Introduce Plan, Do, Check, Act (PDCA) Process',
-            'Process' => 'Ensure more stakeholder involvement during appropriate service development stages',
-            'Documentation' => 'Adopt Fishbone Diagram tool in problem solving',
+            ['Process' => 'Appoint or Conduct Market Research periodically'],
+            ['Personnel' => 'Conduct a training Needs Analysis'],
+            ['Process' => 'Review IMPACT Framework'],
+            ['Process' => 'Ensure more stakeholder involvement during appropriate service development stages'],
+            ['Process' => 'Introduce Plan, Do, Check, Act (PDCA) Process'],
+            ['Technology' => 'Improve on the Employee Scheduling'],
+            ['Documentation' => 'Adopt Fishbone Diagram tool in problem solving'],
         ];
     }
 

@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between align-items-center">
       <h2 class="dt-secondary mb-0">@lang($data['indices']['FMPI']['pindex']) {{ __('Perfomarnce Index') }}</h2>
       <div>
-        <span class="badge badge-soft-{{ $data['overall:result'] }} mx-2 font-weight-bold" style="color: {{ $data['overall:result'] }}; font-size: 17px;">
+        <span class="dt-button-primary-soft mx-2 font-weight-bold" style="font-size: 17px;">
           {{ $data['indices']['FMPI']['overall:total'] }}%
         </span>
       </div>
@@ -16,14 +16,12 @@
         <canvas height="100" id="overall-fmpi"></canvas>
       </div>
       <div class="col-md-4">
-        <p>@lang($data['indices']['FMPI']['overall:comment'])</p>
+        <p>@lang($data['indices']['FMPI']['overall:comment:overall'])</p>
       </div>
     </div>
   </div>
 </div>
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
 <script>
   $(document).ready(function() {
     var ctx = document.getElementById("overall-fmpi").getContext('2d');
@@ -40,7 +38,6 @@
     var barChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        {{-- labels: {!! json_encode(collect($data['indices']['FMPI']['elements:charts']['labels'])->values()->toArray()) !!}, --}}
         labels: [
           ["Cost", "Management"],
           ["Financial", "Analysis"],

@@ -5,7 +5,7 @@
     <page-header :back="{ to: {name: 'companies.reports'}, text: trans('Back to Reports') }">
       <template v-slot:title>{{ trans('Report Preview') }}</template>
       <template v-slot:utilities>
-        <a href="#" @click.prevent="downloadReport" class="dt-link text--decoration-none mr-4">{{ trans('Download Report') }}</a>
+        <!-- <a href="#" @click.prevent="downloadReport" class="dt-link text--decoration-none mr-4">{{ trans('Download Report') }}</a> -->
         <a href="#" @click.prevent="goToSurveyPage(resource.data)" class="dt-link text--decoration-none mr-4"><v-icon left>mdi-search</v-icon>{{ trans('View Survey') }}</a>
       </template>
     </page-header>
@@ -24,17 +24,12 @@
 
 <script>
   export default {
-    computed: {
-      url () {
-        return `/best/reports/${this.$route.params.report}`
-      },
-    },
-
     data: () => ({
       resource: {
         loading: false,
         data: {},
-      }
+      },
+      url: null,
     }),
 
     methods: {
@@ -43,7 +38,9 @@
           `/api/v1/reports/${this.$route.params.report}`
         ).then(response => {
           this.resource.data = response.data.data
-          console.log(this.resource.data)
+          let id = this.resource.data.value['current:index']['taxonomy']['id'] || null
+          let type = this.$route.query.type || 'index'
+          this.url = `/best/preview/reports/${this.$route.params.report}?type=${type}&taxonomy_id=${id}`
         })
       },
 

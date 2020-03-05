@@ -4,7 +4,7 @@
     <div class="col-md-12">
       <div>
         <h1 class="mb-5 dt-secondary">@lang('Key Enablers')</h1>
-        <p>@lang("The Financial management practices and procedures were further analysed based on how well the documentation procedures, personnel, ICT and work processes were being managed.")</p>
+        <p>@lang($data['key:enablers:description'] ?? null)</p>
       </div>
     </div>
   </div>
@@ -13,7 +13,7 @@
     <div class="col-md-12 col-sm-12">
       <div class="card">
         <div class="card-body">
-          <canvas height="80" class="my-3" id="key-enablers"></canvas>
+          <canvas height="80" class="my-3" id="key-enablers-{{ $data['pindex:code'] }}"></canvas>
         </div>
       </div>
     </div>
@@ -33,13 +33,9 @@
 
 <script>
 $(document).ready(function() {
-  var ctx = document.getElementById("key-enablers").getContext('2d');
+  var ctx = document.getElementById("key-enablers-{{ $data['pindex:code'] }}").getContext('2d');
   var chartColors = {
-    primary:           'rgba(224, 81, 143, 1)',
-    primaryLighten1:   'rgba(224, 81, 143, 0.8)',
-    primaryLighten2:   'rgba(224, 81, 143, 0.5)',
-    primaryLighten3:   'rgba(224, 81, 143, 0.3)',
-    muted:             'rgb(239, 244, 250)'
+    muted:      'rgb(239, 244, 250)'
   };
   var gradient = ctx.createLinearGradient(0, 0, 0, 200);
       gradient.addColorStop(0, 'rgba(255, 8, 68, 0.8)');
@@ -51,16 +47,27 @@ $(document).ready(function() {
       datasets: [
         {
           data: {!! json_encode(collect($data['key:enablers']['chart']['dataset'])->values()->toArray()) !!},
-          backgroundColor: gradient,
-          borderColor: 'rgb(255, 8, 68, 0.8)',
+          backgroundColor: '#f43b47',
+          label: "{{ $data['pindex:code'] }}",
+          borderColor: '#f43b47',
+          fill: false,
           borderWidth: 3,
           pointBorderWidth: 10,
-        }
+        },
+        {
+          data: {!! json_encode(collect($orig['data'])->values()->toArray()) !!},
+          backgroundColor: '#453a94',
+          label: "ORIG. AVG",
+          borderColor: '#453a94',
+          fill: false,
+          borderWidth: 3,
+          pointBorderWidth: 10,
+        },
       ],
     },
     options: {
       legend: {
-        display: false,
+        display: true,
         position: 'bottom',
         labels: {
           fontColor: '#044b7f',

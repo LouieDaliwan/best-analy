@@ -56,6 +56,18 @@ table {
   border-radius: 6px;
   font-size: 7px;
 }
+.badge-bg-amber {
+  color: #de9f00 !important;
+  background-color: #de9f00;
+}
+.badge-bg-success {
+  color: #00d97e;
+  background-color: #00d97e;
+}
+.badge-bg-red {
+  color: #e63757;
+  background-color: #e63757;
+}
 .badge-soft-amber {
   color: #de9f00 !important;
   background-color: #fdf3d9;
@@ -88,4 +100,10 @@ table {
 }
 .imgWorkflow {
   background: #3777a3 !important;
+}
+.dt-button-primary-soft {
+  background: rgba(55, 119, 163, 0.40);
+  color: #3777a3;
+  padding: 6px;
+  border-radius: 6px;
 }

@@ -7,10 +7,10 @@
         @lang('best::reports.description', [
           'apptitle' => settings('app:fulltitle'),
           'appcode' => settings('app:code'),
-          'bspi' => 'xc',
-          'pmpi' => 'xc',
-          'fmpi' => 'xc',
-          'hrpi' => 'xc',
+          'bspi' => 'Business Sustainability',
+          'pmpi' => 'Productivity Management',
+          'fmpi' => 'Financial Management',
+          'hrpi' => 'Human Resource',
         ])
       </p>
     </div>

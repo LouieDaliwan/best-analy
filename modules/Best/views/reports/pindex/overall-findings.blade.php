@@ -11,7 +11,7 @@
   <div class="row align-items-center justify-content-center">
     <div class="col-md-3 col-sm-12">
       <div class="mb-3">
-        <canvas id="overall-findings"></canvas>
+        <canvas id="overall-{{ $data['taxonomy']['id'] }}"></canvas>
       </div>
     </div>
 
@@ -25,28 +25,22 @@
   </div>
 </section>
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
-
 <script>
-  var value = {!! json_encode(collect($data['overall:total'])->values()->toArray()) !!};
-  var data = {
-    labels: ["Test"],
-    datasets: [
-      {
-        data: [value, 100-value],
-        backgroundColor: [
-          "#ed8a3b",
-        ],
-      }]
-  };
-  var myChart = new Chart(document.getElementById('overall-findings'), {
+  var overallFindings = parseInt('{!! $data['overall:total'] !!}').toFixed(0);
+  var myChart = new Chart(document.getElementById('overall-{{ $data['taxonomy']['id'] }}'), {
     type: 'doughnut',
-    data: data,
+    data: {
+      labels: ["Overall Findings"],
+      datasets: [
+        {
+          data: [overallFindings, 100-overallFindings],
+          backgroundColor: [
+            "#ed8a3b",
+          ],
+        }
+      ],
+    },
     options: {
-      animation: {
-        duration: 0.1
-      },
       responsive: true,
       legend: {
         display: false
@@ -54,10 +48,10 @@
       cutoutPercentage: 60,
     }
   });
-  textCenter(value);
-  function textCenter(val) {
+  textCenter(overallFindings, myChart);
+  function textCenter(val, chart) {
     Chart.pluginService.register({
-      beforeDraw: function(chart) {
+      beforeDraw: function(chartx) {
         var width = chart.chart.width,
             height = chart.chart.height,
             ctx = chart.chart.ctx;

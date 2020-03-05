@@ -163,11 +163,35 @@
                     <v-card-text style="overflow-x: auto;">
                       <v-simple-table style="min-width: 800px" class="transparent mb-3">
                         <tbody>
-                          <tr>
+                          <!-- <tr>
                             <td colspan="100%"></td>
-                            <td><strong>{{ trans('Year 1') }}</strong></td>
+                            <td><v-text-field
+                                :disabled="isLoading"
+                                :name="`metadata[years][Year1]`"
+                                class="dt-text-field"
+                                dense
+                                hide-details
+                                outlined
+                                v-model="resource.data.financials['years']['Year1']"
+                                >
+                              </v-text-field></td>
                             <td><strong>{{ trans('Year 2') }}</strong></td>
                             <td><strong>{{ trans('Year 3') }}</strong></td>
+                          </tr> -->
+                          <tr :key="i" v-for="(data, i) in resource.metadata['years']">
+                            <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
+                            <td :key="k" v-for="(d, k) in data">
+                              <v-text-field
+                                :disabled="isLoading"
+                                :name="`metadata[years][${i}][${k}]`"
+                                class="dt-text-field"
+                                dense
+                                hide-details
+                                outlined
+                                v-model="resource.data.financials['years'][i][k]"
+                                >
+                              </v-text-field>
+                            </td>
                           </tr>
                           <tr :key="i" v-for="(data, i) in resource.metadata['fps-qa1']">
                             <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
@@ -448,7 +472,6 @@ export default {
         $api.show(this.$route.params.id)
       ).then(response => {
         this.resource.data = response.data.data
-        this.resource.metadata = _.merge({}, this.resource.metadata)
         this.resource.metadata = _.merge({}, this.resource.metadata, this.resource.data.metadata)
         this.resource.data.financials = this.resource.metadata
       }).finally(() => {

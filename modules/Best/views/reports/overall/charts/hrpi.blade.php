@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between align-items-center">
       <h2 class="dt-secondary mb-0">@lang($data['indices']['HRPI']['pindex']) {{ __('Perfomarnce Index') }}</h2>
       <div>
-        <span class="badge badge-soft-{{ $data['overall:result'] }} mx-2 font-weight-bold" style="color: {{ $data['overall:result'] }}; font-size: 17px;">
+        <span class="dt-button-primary-soft mx-2 font-weight-bold" style="font-size: 17px;">
           {{ $data['indices']['HRPI']['overall:total'] }}%
         </span>
       </div>
@@ -13,7 +13,7 @@
   <div class="card-body">
     <div class="row align-items-center">
       <div class="col-md-4">
-        <p>@lang($data['indices']['HRPI']['overall:comment'])</p>
+        <p>@lang($data['indices']['HRPI']['overall:comment:overall'])</p>
       </div>
       <div class="col-md-8 col-sm-12">
         <canvas height="100" id="overall-hrpi"></canvas>
@@ -22,8 +22,6 @@
   </div>
 </div>
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
 <script>
   $(document).ready(function() {
     var ctx = document.getElementById("overall-hrpi").getContext('2d');
@@ -41,14 +39,17 @@
       type: 'bar',
       data: {
         labels: [
-          "Leadership",
-          ["Risk", "Management"],
-          ["Organisational", "Management"],
-          ["Organisational", "Culture"],
+          ["Manpower", "Planning"],
+          ["Recruitment &", "Selection"],
+          ["Compensation &", "Benefits"],
+          ["Performance", "Management"],
+          ["Learning &", "Development"],
+          ["Career & Talent", "Management"],
+          ["Employee Engagement &", "Communication"],
         ],
         datasets: [
           {
-            data: [20, 24, 21, 27],
+            data: {!! json_encode(collect($data['indices']['HRPI']['elements:charts']['data'])->values()->toArray()) !!},
             backgroundColor: gradient,
             hoverBackgroundColor: chartColors.primary,
           }
@@ -76,7 +77,7 @@
             ticks: {
               fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',
-              fontSize: 13,
+              fontSize: 11,
             },
           }],
           maxBarThickness: 3,

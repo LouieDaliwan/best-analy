@@ -3,7 +3,7 @@
 namespace Best\Services;
 
 use Best\Models\Formula;
-use Best\Pro\Enablers\OrganisationEnablerMetrics;
+use Best\Pro\Enablers\OverallOrganisationEnablerMetrics;
 use Best\Pro\Financial\EfficiencyAnalysis;
 use Best\Pro\Financial\FinancialRatios;
 use Best\Pro\Financial\LiquidityAnalysis;
@@ -16,10 +16,12 @@ use Best\Pro\TrafficLight;
 use Core\Application\Service\Service;
 use Customer\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Index\Models\Index;
 use Spatie\Browsershot\Browsershot;
 use Survey\Models\Survey;
+use User\Models\User;
 
 class FormulaService extends Service implements FormulaServiceInterface
 {
@@ -103,11 +105,13 @@ class FormulaService extends Service implements FormulaServiceInterface
     {
         $customer = Customer::find($attributes['customer_id']);
         $taxonomies = Index::all();
+        $user = User::find($attributes['user_id']);
+        Auth::login($user);
 
         // Retrieve the Customer array.
         $this->data['organisation:profile'] = $customer->toArray();
         $this->data['survey:id'] = $survey->getKey();
-        $this->data['user:id'] = $this->auth()->user()->getKey();
+        $this->data['user:id'] = $user->getKey();
 
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {
@@ -124,7 +128,7 @@ class FormulaService extends Service implements FormulaServiceInterface
             )->whereFormId(
                 $survey->getKey()
             )->whereUserId(
-                $this->auth()->user()->getKey()
+                $user->getKey()
             )->get();
 
             $this->data['indices'][$taxonomy->alias] = [
@@ -147,11 +151,15 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'subscore:total' => $totalSubscoreTotal = $this->getTotalIndexSubscoreTotal($survey),
                 'overall:total' => $total = $this->getOverallTotalAverage($totalSubscoreScore, $totalSubscoreTotal),
                 'overall:comment' => $this->getOverallFindingsComment($taxonomy->alias, $customer->name, $total),
+                'overall:comment:overall' => $this->getOverallFindingsCommentOverall(
+                    $taxonomy->alias, $customer->name, $total
+                ),
                 'box:comments' => [
                     $this->getFirstBoxComment($total, $group, $taxonomy->alias),
                     $this->getSecondBoxComment($total, $group, $taxonomy->alias),
                 ],
                 'key:enablers' => $enablers = $this->getKeyEnablers($this->reports, $customer->name, $taxonomy->alias),
+                'key:enablers:description' => $this->getKeyEnablersDescription($taxonomy->alias),
                 'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias),
             ];
         }//end foreach
@@ -164,6 +172,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['overall:enablers'] = $this->getOverallOrganisationEnablersMetricsComment(
             $this->data['indices'], $customer->name
         );
+        $this->data['overall:enablers:orig'] = $this->getOriginalAverage($this->data['indices']);
 
         // Retrieve the metadata for the report cover.
         $this->data['cover:date'] = date(settings('formal:date', 'Y-m-d'));
@@ -175,9 +184,10 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['ratios:financial'] = $this->getFinancialRatios($customer);
         $this->data['indicators:productivity'] = $this->getProductivityIndicators($customer);
 
-        $index = Index::find($attributes['taxonomy_id']);
+        $index = Index::find($attributes['taxonomy_id'] ?? false);
         if ($index) {
             $this->data['current:index'] = $this->data['indices'][$index->alias];
+            $this->data['current:pindex'] = $this->data['indices'][$index->alias];
         }
 
         return $this->data;
@@ -251,12 +261,64 @@ class FormulaService extends Service implements FormulaServiceInterface
         })->avg();
 
         $d = [
-            'comment:first' => OrganisationEnablerMetrics::getFirstComment(
+            'comment:first' => OverallOrganisationEnablerMetrics::getFirstComment(
                 $technologyAvg, $workflowAvg, $name
             ),
+            'comment:second' => OverallOrganisationEnablerMetrics::getSecondComment(
+                $documentationAvg, $talentAvg, $workflowAvg, $name
+            ),
+            'enablers' => [
+                'Workflow Processess' => OverallOrganisationEnablerMetrics::getWorkflowProcessComment(
+                    $workflowAvg, $name
+                ),
+                'Talent' => OverallOrganisationEnablerMetrics::getTalentComment($talentAvg),
+                'Documentation' => OverallOrganisationEnablerMetrics::getDocumentationComment($documentationAvg),
+                'Technology' => OverallOrganisationEnablerMetrics::getTechnologyComment(
+                    $technologyAvg, $name
+                ),
+            ],
+
+            'chart' => [
+                'label' => ['Workflow Processess', 'Talent', 'Documentation', 'Technology'],
+                'data' => [$workflowAvg*100, $talentAvg*100, $documentationAvg*100, $technologyAvg*100],
+            ],
         ];
 
         return $d;
+    }
+
+    /**
+     * Retrieve the orig ave.
+     *
+     * @param  array $indices
+     * @return array
+     */
+    public function getOriginalAverage($indices)
+    {
+        $indices = collect($indices)->map(function ($i) {
+            return $i['key:enablers']['data'];
+        });
+
+        $documentationAvg = $indices->map(function ($i) {
+            return $i['Documentation']['value']/100;
+        })->avg();
+
+        $talentAvg = $indices->map(function ($i) {
+            return $i['Talent']['value']/100;
+        })->avg();
+
+        $technologyAvg = $indices->map(function ($i) {
+            return $i['Technology']['value']/100;
+        })->avg();
+
+        $workflowAvg = $indices->map(function ($i) {
+            return $i['Workflow Processes']['value']/100;
+        })->avg();
+
+        return [
+            'label' => ['Documentation', 'Talent', 'Technology', 'Workflow Processes'],
+            'data' => [$documentationAvg*100, $talentAvg*100, $technologyAvg*100, $workflowAvg*100],
+        ];
     }
 
     /**
@@ -366,16 +428,21 @@ class FormulaService extends Service implements FormulaServiceInterface
         $workflowValue = round((($workflow->sum('results') ?: 0) / ($workflow->count() ?: 1) / 10) * 100);
 
         $documentationComment = '';
-        $documentationSubscore = $documentation->sortBy('metadata.subscore')->take(2)->values();
+        $documentationSubscore = $documentation->sortBy('metadata.subscore')->take(3)->values();
         if (($documentationValue/100) > config('modules.best.scores.grades.red')) {
             if (($documentationValue/100) > config('modules.best.scores.grades.amber')) {
                 $documentationComment = trans("best::enablers/$code.documentation.50to90", [
+                    'name' => $customer ?? null,
                     'item1' => $documentationSubscore->get(0)->submissible->metadata['comment'] ?? null,
+                    'item2' => $documentationSubscore->get(1)->submissible->metadata['comment'] ?? null,
+                    'item3' => $documentationSubscore->get(2)->submissible->metadata['comment'] ?? null,
                 ]);
             } else {
                 $documentationComment = trans("best::enablers/$code.documentation.30to50", [
+                    'name' => $customer ?? null,
                     'item1' => $documentationSubscore->get(0)->submissible->metadata['comment'] ?? null,
                     'item2' => $documentationSubscore->get(1)->submissible->metadata['comment'] ?? null,
+                    'item3' => $documentationSubscore->get(2)->submissible->metadata['comment'] ?? null,
                 ]);
             }
         } else {
@@ -383,21 +450,25 @@ class FormulaService extends Service implements FormulaServiceInterface
                 $documentationComment = trans("best::enablers/$code.documentation.less30");
             } else {
                 $documentationComment = trans("best::enablers/$code.documentation.30to50", [
+                    'name' => $customer ?? null,
                     'item1' => $documentationSubscore->get(0)->submissible->metadata['comment'] ?? null,
                     'item2' => $documentationSubscore->get(1)->submissible->metadata['comment'] ?? null,
+                    'item3' => $documentationSubscore->get(2)->submissible->metadata['comment'] ?? null,
                 ]);
             }
         }//end if
 
         $talentComment = '';
-        $talentSubscore = $talent->sortBy('metadata.subscore')->take(2)->values();
+        $talentSubscore = $talent->sortBy('metadata.subscore')->take(3)->values();
         if (($talentValue/100) > config('modules.best.scores.grades.red')) {
             if (($talentValue/100) > config('modules.best.scores.grades.amber')) {
                 $talentComment = trans("best::enablers/$code.talent.50to90", ['name' => $customer]);
             } else {
                 $talentComment = trans("best::enablers/$code.talent.30to50", [
+                    'name' => $customer ?? null,
                     'item1' => $talentSubscore->get(0)->submissible->metadata['comment'] ?? null,
                     'item2' => $talentSubscore->get(1)->submissible->metadata['comment'] ?? null,
+                    'item3' => $talentSubscore->get(2)->submissible->metadata['comment'] ?? null,
                 ]);
             }
         } else {
@@ -405,8 +476,10 @@ class FormulaService extends Service implements FormulaServiceInterface
                 $talentComment = trans("best::enablers/$code.talent.less30");
             } else {
                 $talentComment = trans("best::enablers/$code.talent.30to50", [
+                    'name' => $customer ?? null,
                     'item1' => $talentSubscore->get(0)->submissible->metadata['comment'] ?? null,
                     'item2' => $talentSubscore->get(1)->submissible->metadata['comment'] ?? null,
+                    'item3' => $talentSubscore->get(2)->submissible->metadata['comment'] ?? null,
                 ]);
             }
         }//end if
@@ -418,9 +491,10 @@ class FormulaService extends Service implements FormulaServiceInterface
                 $technologyComment = trans("best::enablers/$code.technology.50to90");
             } else {
                 $technologyComment = trans("best::enablers/$code.technology.30to50", [
-                    'name' => $customer,
+                    'name' => $customer ?? null,
                     'item1' => $technologySubscore->get(0)->submissible->metadata['comment'] ?? null,
                     'item2' => $technologySubscore->get(1)->submissible->metadata['comment'] ?? null,
+                    'item3' => $technologySubscore->get(2)->submissible->metadata['comment'] ?? null,
                 ]);
             }
         } else {
@@ -428,7 +502,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 $technologyComment = trans("best::enablers/$code.technology.less30");
             } else {
                 $technologyComment = trans("best::enablers/$code.technology.30to50", [
-                    'name' => $customer,
+                    'name' => $customer ?? null,
                     'item1' => $technologySubscore->get(0)->submissible->metadata['comment'] ?? null,
                     'item2' => $technologySubscore->get(1)->submissible->metadata['comment'] ?? null,
                     'item3' => $technologySubscore->get(2)->submissible->metadata['comment'] ?? null,
@@ -437,15 +511,16 @@ class FormulaService extends Service implements FormulaServiceInterface
         }//end if
 
         $workflowComment = '';
-        $workflowSubscore = $workflow->sortBy('metadata.subscore')->take(2)->values();
+        $workflowSubscore = $workflow->sortBy('metadata.subscore')->take(3)->values();
         if (($workflowValue/100) > config('modules.best.scores.grades.red')) {
             if (($workflowValue/100) > config('modules.best.scores.grades.amber')) {
                 $workflowComment = trans("best::enablers/$code.workflow.50to90");
             } else {
                 $workflowComment = trans("best::enablers/$code.workflow.30to50", [
-                    'name' => $customer,
+                    'name' => $customer ?? null,
                     'item1' => $workflowSubscore->get(0)->submissible->metadata['comment'] ?? null,
                     'item2' => $workflowSubscore->get(1)->submissible->metadata['comment'] ?? null,
+                    'item3' => $workflowSubscore->get(2)->submissible->metadata['comment'] ?? null,
                 ]);
             }
         } else {
@@ -453,9 +528,10 @@ class FormulaService extends Service implements FormulaServiceInterface
                 $workflowComment = trans("best::enablers/$code.workflow.less30");
             } else {
                 $workflowComment = trans("best::enablers/$code.workflow.30to50", [
-                    'name' => $customer,
-                    'item1' => $technologySubscore->get(0)->submissible->metadata['comment'] ?? null,
-                    'item2' => $technologySubscore->get(1)->submissible->metadata['comment'] ?? null,
+                    'name' => $customer ?? null,
+                    'item1' => $workflowSubscore->get(0)->submissible->metadata['comment'] ?? null,
+                    'item2' => $workflowSubscore->get(1)->submissible->metadata['comment'] ?? null,
+                    'item3' => $workflowSubscore->get(2)->submissible->metadata['comment'] ?? null,
                 ]);
             }
         }//end if
@@ -484,6 +560,38 @@ class FormulaService extends Service implements FormulaServiceInterface
                 ],
             ],
         ];
+    }
+
+    /**
+     * Retrieve the key enablers description.
+     *
+     * @param  string $code
+     * @return string
+     */
+    public function getKeyEnablersDescription($code)
+    {
+        $code = strtolower($code);
+        $comment = '';
+
+        switch ($code) {
+            case 'fmpi':
+                $comment = trans("best::enablers/fmpi.description");
+                break;
+
+            case 'bspi':
+                $comment = trans("best::enablers/bspi.description");
+                break;
+
+            case 'hrpi':
+                $comment = trans("best::enablers/hrpi.description");
+                break;
+
+            case 'pmpi':
+                $comment = trans("best::enablers/pmpi.description");
+                break;
+        }
+
+        return $comment;
     }
 
     /**
@@ -570,7 +678,9 @@ class FormulaService extends Service implements FormulaServiceInterface
     {
         return [
             'labels' => $group->keys(),
-            'data' => $group->values(),
+            'data' => $group->values()->map(function ($i) {
+                return $i*100;
+            }),
         ];
     }
 
@@ -609,7 +719,34 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function getOverallTotalAverage($score, $total)
     {
-        return round(($score/$total)*100);
+        return round(($score/$total)*100, 2);
+    }
+
+    /**
+     * Retrieve the overall comment.
+     *
+     * @param  string $code
+     * @param  string $customer
+     * @param  float  $total
+     * @return mixed
+     */
+    public function getOverallFindingsCommentOverall($code, $customer, $total)
+    {
+        $total = $total/100;
+        $comment = null;
+        $code = strtolower($code);
+
+        if ($total > config('modules.best.scores.grades.red')) {
+            if ($total > config('modules.best.scores.grades.amber')) {
+                $comment = trans("best::overall.{$code}.above90", ['name' => $customer]);
+            } else {
+                $comment = trans("best::overall.{$code}.mid50to89", ['name' => $customer]);
+            }
+        } else {
+            $comment = trans("best::overall.{$code}.below50", ['name' => $customer]);
+        }
+
+        return $comment;
     }
 
     /**
@@ -622,6 +759,18 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     protected function getOverallFindingsComment($code, $customer, $total)
     {
+        switch ($code) {
+            case 'BSPI':
+            case 'HRPI':
+            case 'PMPI':
+                $total = ($total - 0.5) * 2.3;
+                break;
+
+            default:
+                $total = $total;
+                break;
+        }
+
         $total = $total/100;
         $comment = null;
         $code = strtolower($code);

@@ -1,6 +1,8 @@
-<?php  
+<?php
 
 return [
+    'description' => 'The Business Sustainability practices and procedures were further analysed based on how well the documentation procedures, personnel, ICT and work processes were being managed.',
+
 	'documentation' => [
 		'50to90' => ':name has a very good documentation policies & practices in place. Advisable to look into how :item1 can be better executed.',
         '30to50' => ':name has fair documentation procedures and practices in place. Advisable to look into how well :item1 and :item2 can be better implemented.',

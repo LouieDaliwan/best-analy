@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'description' => 'The Financial Management practices and procedures were further analysed based on how well the documentation procedures, personnel, ICT and work processes were being managed.',
+
     'documentation' => [
         '50to90' => 'The analysis suggests that very good documentation templates & procedures are in place. Employees find that they are able to easily seek & retrieve finance-related documents.',
         '30to50' => 'The analysis suggests that finance-related documentation are somewhat accessible by the employees. However, it is still advisable to look into how well these can be better carried out, in particular, :item1 & :item2.',

@@ -3,6 +3,7 @@
 use Best\Models\Report;
 use Best\Services\FormulaServiceInterface;
 use Best\Services\ReportServiceInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Browsershot\Browsershot;
 use Survey\Models\Survey;
@@ -14,6 +15,32 @@ Route::post('reports/download', 'Api\DownloadPerformanceIndexReport')->name('rep
 // Using this on frontend.
 Route::get('best/reports/{report}/pdf', 'Api\GetPerformanceIndexPdfReport')->name('reports.show');
 Route::get('best/reports/{report}', 'Api\GetPerformanceIndexReport')->name('reports.show');
+
+Route::get('best/preview/reports/overall', function (Request $request, FormulaServiceInterface $service) {
+    $file = $request->get('month') ?: date('m-Y');
+    $user = User::find($request->get('user_id'));
+    Auth::login($user);
+
+    $attributes = ['customer_id' => $request->get('customer_id')];
+    $data = $service->generate(\Survey\Models\Survey::find(1), $attributes);
+
+    return view("best::reports.overall")->withData($data);
+});
+
+Route::get(
+    'best/preview/reports/{report}',
+    function (Request $request, Report $report, FormulaServiceInterface $service) {
+        $file = $request->get('type') ?: 'index';
+        $taxonomy_id = $request->get('taxonomy_id');
+
+        Auth::login($report->user);
+
+        $attributes = ['customer_id' => $report->customer->getKey(), 'taxonomy_id' => $taxonomy_id];
+        $data = $service->generate($report->survey, $attributes);
+
+        return view("best::reports.$file")->withData($data);
+    }
+);
 
 // Route get best/reports/overall, 'Api\GetOverallReport name reports.overall.
 Route::get('best/test/browsershot/{report}', function (Report $report) {
@@ -64,17 +91,6 @@ Route::get('best/preview', function () {
     \Illuminate\Support\Facades\Auth::login(\User\Models\User::find(41));
     $data = $report->generate(\Survey\Models\Survey::find(1), ['taxonomy_id' => 1, 'customer_id' => 1]);
     return view('best::reports.pdf')
-        ->withData(array_merge(
-            $data,
-            ['current:pindex' => $data['indices']['FMPI']]
-        ));
-});
-
-Route::get('best/test', function () {
-    $report = app(\Best\Services\FormulaServiceInterface::class);
-    \Illuminate\Support\Facades\Auth::login(\User\Models\User::find(41));
-    $data = $report->generate(\Survey\Models\Survey::find(1), ['taxonomy_id' => 1, 'customer_id' => 1]);
-    return view('best::reports.index')
         ->withData(array_merge(
             $data,
             ['current:pindex' => $data['indices']['FMPI']]

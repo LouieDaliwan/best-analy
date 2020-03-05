@@ -25,9 +25,19 @@
       </template>
 
       <template v-slot:action>
-        <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'companies.find' }">
+        <!-- <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'companies.find' }">
           <v-icon small left>mdi-file-document-box-search-outline</v-icon>
           {{ trans('Find Company') }}
+        </v-btn> -->
+        <v-btn
+          :block="$vuetify.breakpoint.smAndDown"
+          @click="previewOverallReport"
+          color="primary"
+          exact
+          large
+          >
+          <v-icon small left>mdi-paperclip</v-icon>
+          {{ __('Overall Report') }}
         </v-btn>
       </template>
     </page-header>
@@ -219,6 +229,12 @@ export default {
       ).then(response => {
         console.log(response)
       })
+    },
+
+    previewOverallReport () {
+      this.$router.push({ name: 'reports.overall', query: {
+        type: 'overall'
+      }, params: { id: this.$route.params.id } })
     },
 
     changeOptionsFromRouterQueries () {

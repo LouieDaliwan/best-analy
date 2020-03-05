@@ -11,7 +11,7 @@
               <div class="d-flex align-items-center justify-content-center">
                 <div class="mr-3"><img height="60" src="{{ asset('logo.svg') }}"></div>
                 <div>
-                  <h1 class="mb-2 text-uppercase">{{ __('Organisational Health') }}</h1>
+                  <h1 class="mb-2 text-uppercase">Business Excellence Survey Test (BEST) Report</h1>
                   <div>@lang('Empowered by') {{ settings('app:author') }}</div>
                 </div>
               </div>
@@ -56,7 +56,7 @@
               <p class="mb-0">{{ $data['cover:date'] }}</p>
               <div class="mt-5">
                 <cite>
-                  <small class="text-muted">{{ __('Empowered by SSA Consulting Pte Ltd') }}</small>
+                  <small class="text-muted">{{ __('Empowered by') }} {{ settings('app:author') }}</small>
                 </cite>
               </div>
             </div>

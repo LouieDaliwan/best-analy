@@ -6,6 +6,13 @@ class Company {
     this.errors = []
 
     this.metadata = {
+      'years': {
+        'Years': {
+          'Year1': 'Year 1',
+          'Year2': 'Year 2',
+          'Year3': 'Year 3',
+        },
+      },
       'fps-qa1': {
         'Sales': {
           'Year1': '100000',

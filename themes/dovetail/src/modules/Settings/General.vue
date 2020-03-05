@@ -15,18 +15,20 @@
               autofocus
               class="mb-3"
               outlined
+              v-model="settings['formal:date']['value']"
             ></v-text-field>
 
             <v-text-field
               :label="trans('Items per Page')"
               class="mb-3"
               outlined
+              v-model="settings['display:perpage']['value']"
             ></v-text-field>
 
             <language-switcher class="mb-6"></language-switcher>
 
             <div class="d-flex justify-end">
-              <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" v-text="trans('Save Settings')"></v-btn>
+              <v-btn @click="saveSettings" :block="$vuetify.breakpoint.smAndDown" large color="primary" v-text="trans('Save Settings')"></v-btn>
             </div>
           </v-card-text>
         </v-card>
@@ -34,3 +36,35 @@
     </v-row>
   </admin>
 </template>
+
+<script>
+export default {
+  data: () => ({
+    settings: {
+      'formal:date': {
+        key: 'formal:date',
+        value: '',
+      },
+      'display:perpage': {
+        key: 'display:perpage',
+        value: 15,
+      },
+    },
+  }),
+
+  methods: {
+    loadSettings () {
+      // axios.get()
+    },
+
+    saveSettings () {
+      let data = this.settings
+      axios.post(
+        `/api/v1/settings`, data
+      ).then(response => {
+        console.log(response)
+      })
+    },
+  },
+}
+</script>

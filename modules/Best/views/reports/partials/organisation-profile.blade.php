@@ -13,7 +13,7 @@
 
       <div class="row">
         <div class="col-md-5 col-sm-12">
-          <p><strong>@lang('File No.') :</strong></p>
+          <p><strong>@lang('File Number') :</strong></p>
         </div>
         <div class="col">
           <p>{{ __($data['organisation:profile']['refnum']) }}</p>

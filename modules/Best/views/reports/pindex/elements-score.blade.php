@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <h1 class="mb-5 dt-secondary">@lang('Financial Management Element\'s Score')</h1>
+        <h1 class="mb-5 dt-secondary">@lang($data['pindex']) @lang('Element\'s Score')</h1>
       </div>
     </div>
   </div>
@@ -13,6 +13,7 @@
       @foreach ($data['box:comments'] as $comment)
         <div class="row">
           <div class="col-auto mt-2">
+            {{-- SVG arrow --}}
             <span style="font-size: 15px;">
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512; margin-bottom: 6px;" xml:space="preserve" width="15px" height="15px"><g><g>
                 <g>
@@ -20,6 +21,7 @@
                 </g>
               </g></g> </svg>
             </span>
+            {{-- SVG arrow --}}
           </div>
           <div class="col">
             <p>@lang($comment)</p>
@@ -28,10 +30,10 @@
       @endforeach
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-7">
       <div class="card">
         <div class="card-body">
-          <canvas id="elements-score"></canvas>
+          <canvas id="elements-score-{{ $data['pindex:code'] }}"></canvas>
         </div>
       </div>
     </div>
@@ -40,7 +42,7 @@
 
 <script>
 $(document).ready(function() {
-  var ctx = document.getElementById("elements-score").getContext('2d');
+  var ctx = document.getElementById("elements-score-{{ $data['pindex:code'] }}").getContext('2d');
   var chartColors = {
     primary:           'rgba(22, 123, 195, 1)',
     primaryLighten1:   'rgba(22, 123, 195, 0.8)',
@@ -77,7 +79,7 @@ $(document).ready(function() {
         labels: {
           fontColor: '#044b7f',
           fontFamily: 'Rubik, sans-serif',
-          fontSize: 15,
+          fontSize: 12,
         }
       },
       scales: {
@@ -90,8 +92,6 @@ $(document).ready(function() {
             fontColor: '#044b7f',
             fontFamily: 'Rubik, sans-serif',
             fontSize: 12,
-            // min: -100,
-            // max: 100,
             callback: function(value){return value+ "%"}
           },
         }],
@@ -104,20 +104,9 @@ $(document).ready(function() {
           ticks: {
             fontColor: '#044b7f',
             fontFamily: 'Rubik, sans-serif',
-            fontSize: 15,
+            fontSize: 12,
           }
         }]
-        // yAxes: [{
-        //   gridLines: {
-        //     display: true,
-        //     borderDash: [8, 4],
-        //     color: chartColors.muted,
-        //   },
-        //   ticks: {
-        //     beginAtZero: true,
-        //     fontColor: ch044b7f.font,
-        //   }
-        // }]
       }
     },
   });

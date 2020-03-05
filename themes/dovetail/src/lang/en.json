@@ -15,6 +15,11 @@
   "Updated Index {name}": "Updated Index {name}",
   "Created Survey {name}": "Created Survey {name}",
   "Updated Survey {name}": "Updated Survey {name}",
+  "Created Company {name}": "Created Company {name}",
+  "Updated Company {name}": "Updated Company {name}",
+  "Created Team {name}": "Created Team {name}",
+  "Updated Team {name}": "Updated Team {name}",
+
   "There is {number} invalid field in this page": "There is {number} invalid field in this page | There are {number} invalid fields in this page",
   "Edit this user": "Edit this user | Edit these users",
   "Deactivate user": "Deactivate user | Deactivate users",

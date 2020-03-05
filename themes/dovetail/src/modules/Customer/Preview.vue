@@ -1,6 +1,7 @@
 <template>
   <admin>
     <metatag title="asd"></metatag>
+    <back-to-top></back-to-top>
 
     <template v-if="resource.loading">
       <skeleton-show></skeleton-show>

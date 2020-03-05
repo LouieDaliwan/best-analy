@@ -5,5 +5,5 @@ Route::prefix('v1/settings')->middleware(['auth:api', 'auth.permissions'])->grou
 });
 
 Route::prefix('v1')->middleware(['auth:api', 'auth.permissions'])->group(function () {
-    Route::post('settings', 'Api\SaveSettings');
+    Route::post('settings', 'Api\SaveSettings')->name('settings.store');
 });

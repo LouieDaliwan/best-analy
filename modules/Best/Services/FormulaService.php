@@ -105,8 +105,7 @@ class FormulaService extends Service implements FormulaServiceInterface
     {
         $customer = Customer::find($attributes['customer_id']);
         $taxonomies = Index::all();
-        $user = User::find($attributes['user_id']);
-        Auth::login($user);
+        $user = $this->auth()->user();
 
         // Retrieve the Customer array.
         $this->data['organisation:profile'] = $customer->toArray();

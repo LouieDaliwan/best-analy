@@ -75,6 +75,15 @@ $(document).ready(function() {
       datasets: dataset,
     },
     options: {
+      tooltips: {
+        enabled: true,
+        mode: 'single',
+        callbacks: {
+          label: function(tooltipItems, data) {
+            return tooltipItems.yLabel+'%';
+          }
+        }
+      },
       legend: {
         position: 'bottom',
         display: true,

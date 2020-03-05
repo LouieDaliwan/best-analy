@@ -68,6 +68,15 @@ $(document).ready(function() {
     },
     options: {
       responsive: true,
+      tooltips: {
+        enabled: true,
+        mode: 'single',
+        callbacks: {
+          label: function(tooltipItems, data) {
+            return tooltipItems.xLabel+'%';
+          }
+        }
+      },
       layout: {
         padding: {
           right: 20

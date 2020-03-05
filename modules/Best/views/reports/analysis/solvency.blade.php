@@ -108,7 +108,7 @@ $(document).ready(function() {
             fontSize: 12,
             // min: -100,
             // max: 100,
-            callback: function(value){return value+ "%"}
+            callback: function(value){return value}
           }
         }]
       }

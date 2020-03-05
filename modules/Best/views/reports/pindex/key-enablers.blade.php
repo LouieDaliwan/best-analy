@@ -66,6 +66,15 @@ $(document).ready(function() {
       ],
     },
     options: {
+      tooltips: {
+        enabled: true,
+        mode: 'single',
+        callbacks: {
+          label: function(tooltipItems, data) {
+            return parseInt(tooltipItems.yLabel).toFixed(2)+'%';
+          }
+        }
+      },
       legend: {
         display: true,
         position: 'bottom',

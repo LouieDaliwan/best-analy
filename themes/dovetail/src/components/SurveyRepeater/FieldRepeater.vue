@@ -87,6 +87,20 @@
                       </v-text-field>
                     </validation-provider>
                   </v-col>
+                  <v-col cols="12" >
+                    <validation-provider vid="comment" :name="trans('comment')" rules="required" v-slot="{ errors }">
+                      <v-textarea
+                        :error-messages="errors"
+                        :label="trans('Comment')"
+                        class="dt-text-field"
+                        outlined
+                        auto-grow
+                        :hide-details="$vuetify.breakpoint.mdAndUp"
+                        v-model="item.comment"
+                        >
+                      </v-textarea>
+                    </validation-provider>
+                  </v-col>
                   <v-col cols="12">
                     <div class="my-3">
                       <h4 class="mb-3 muted--text">{{ trans('Choose Category') }}:</h4>
@@ -166,6 +180,7 @@ export default {
         code: '',
         total: '',
         wts: '',
+        comment: '',
         categories: [],
       }
     },

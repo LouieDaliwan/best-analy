@@ -62,6 +62,7 @@
                       <span class="link--text mr-6">{{ __('Total Number') }}: &nbsp; {{ trans(field.metadata.total) }}</span>
                       <span class="link--text mr-6">{{ __('WTS') }}: &nbsp; {{ trans(field.metadata.wts) }}</span>
                     </p>
+                    <p><span class="link--text mr-6">{{ __('Comment') }}: &nbsp; {{ trans(field.metadata.comment) }}</span></p>
                     <!-- Category -->
                     <p>
                       <span class="muted--text mr-6">{{ trans('Category') }}:</span>

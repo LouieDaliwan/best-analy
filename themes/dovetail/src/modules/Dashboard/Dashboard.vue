@@ -1,6 +1,6 @@
 <template>
   <admin>
-    <metatag :title="trans('All Company')"></metatag>
+    <metatag :title="trans('Dashboard')"></metatag>
 
     <page-header>
       <template v-slot:action>
@@ -55,7 +55,7 @@
                   <template v-slot:activator="{ on }">
                     <span class="mt-1" v-on="on"><router-link tag="a" exact :to="goToShowIndexPage(item)" v-text="item.name" class="text-no-wrap text--decoration-none"></router-link></span>
                   </template>
-                  <span>{{ trans('View Details') }}</span>
+                  <span>{{ trans('Answer Survey Evaluation') }}</span>
                 </v-tooltip>
               </template>
               <!-- Name -->
@@ -79,7 +79,7 @@
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <v-btn :to="{name: 'companies.reports', params: { id: item.id }}" icon v-on="on">
-                      <v-icon small>mdi-paperclip</v-icon>
+                      <v-icon small>mdi-file-chart-outline</v-icon>
                     </v-btn>
                   </template>
                   <span>{{ trans('View Reports') }}</span>
@@ -124,7 +124,7 @@
             exact
             :to="{name: 'companies.generate'}">
             <v-icon small left>mdi-file-document-box-search-outline</v-icon>
-            {{ trans('Generate Report') }}
+            {{ trans('Find Company') }}
           </v-btn>
         </template>
       </empty-state>

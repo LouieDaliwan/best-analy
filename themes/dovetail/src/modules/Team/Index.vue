@@ -5,7 +5,7 @@
     <page-header>
       <template v-slot:action>
         <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'teams.create' }">
-          <v-icon small left>mdi-credit-card-plus-outline</v-icon>
+          <v-icon small left>mdi-account-multiple-plus-outline</v-icon>
           {{ trans('Add Team') }}
         </v-btn>
       </template>
@@ -115,7 +115,7 @@
             color="primary"
             exact
             :to="{name: 'teams.create'}">
-            <v-icon small left>mdi-account-plus-outline</v-icon>
+            <v-icon small left>mdi-account-multiple-plus-outline</v-icon>
             {{ trans('Add Team') }}
           </v-btn>
         </template>

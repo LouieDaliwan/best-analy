@@ -41,7 +41,7 @@
             exact
             large
             >
-            <v-icon small left>mdi-paperclip</v-icon>
+            <v-icon small left>mdi-file-chart-outline</v-icon>
             {{ __('View Reports') }}
           </v-btn>
           <!-- List of All Reports button -->
@@ -51,16 +51,16 @@
       <div v-show="resourcesIsNotEmpty">
         <div class="mb-6">
           <v-row>
-            <v-col cols="2" class="py-0"><p class="mb-0">{{ trans('Staff Strength') }}:</p></v-col>
+            <v-col cols="2" class="py-0"><p class="mb-0 font-weight-bold">{{ trans('Staff Strength') }}:</p></v-col>
             <v-col class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata['staffstrength'] || null }}</p></v-col>
           </v-row>
           <v-row>
-            <v-col cols="2" class="py-0"><p class="mb-0">{{ trans('Industry') }}:</p></v-col>
+            <v-col cols="2" class="py-0"><p class="mb-0 font-weight-bold">{{ trans('Industry') }}:</p></v-col>
             <v-col class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata['industry'] || null }}</p></v-col>
           </v-row>
         </div>
-        <p class="muted--text font-weight-regular">
-          {{ trans('Please select the type of survey evaluation that you would like to do for :name', {name: resource.data.name}) }}
+        <p class="font-weight-regular">
+          {{ trans('Please select the type of survey evaluation that you would like to do for :name', {name: resource.data.name}) }}:
         </p>
         <v-row>
           <v-col cols="12" md="6" v-for="(resource, i) in resource.data.indices || []" :key="i">

@@ -132,6 +132,7 @@
                     <input type="hidden" :name="`fields[${group.group+g+f}][code]`" :value="slugify(field.title)">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][total]`" :value="field.total">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][wts]`" :value="field.wts">
+                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][comment]`" :value="field.comment">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][categories]`" :value="field.categories">
                   </template>
                 </template>

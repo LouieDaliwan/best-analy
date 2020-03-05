@@ -4,7 +4,7 @@ export default [
     name: 'teams',
     meta: {
       title: 'Team',
-      icon: 'mdi-account-child-outline',
+      icon: 'mdi-account-multiple-outline',
       authenticatable: true,
       sort: 5,
       permission: 'teams.index',

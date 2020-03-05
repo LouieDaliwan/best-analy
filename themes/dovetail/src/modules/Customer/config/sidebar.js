@@ -4,7 +4,7 @@ export default [
     name: 'companies',
     meta: {
       title: 'Company',
-      icon: 'mdi-account-multiple-outline',
+      icon: 'mdi-briefcase',
       authenticatable: true,
       sort: 5,
       permission: ['customers.index', 'customers.owned'],

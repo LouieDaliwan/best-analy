@@ -436,8 +436,7 @@ export default {
         $api.show(this.$route.params.id)
       ).then(response => {
         this.resource.data = response.data.data
-        // this.resource.metadata = _.merge({}, this.resource.metadata, this.resource.data.metadata)
-        this.resource.metadata = _.merge({}, this.resource.metadata)
+        this.resource.metadata = _.merge({}, this.resource.metadata, this.resource.data.metadata)
         this.resource.data.financials = this.resource.metadata
       }).finally(() => {
         this.load(false)

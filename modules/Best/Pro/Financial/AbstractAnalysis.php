@@ -82,9 +82,9 @@ abstract class AbstractAnalysis implements Contracts\FinancialAnalysisReportInte
         // Years labels.
         $sheet = $spreadsheet->getSheetByName('FS_inputs');
         $fsinputs = $customer->metadata['years'] ?? [];
-        $sheet->getCell('AC8')->setValue($fsinputs['Years']['Year1'] ?? 'Year 1');
-        $sheet->getCell('AI8')->setValue($fsinputs['Years']['Year2'] ?? 'Year 2');
-        $sheet->getCell('AO8')->setValue($fsinputs['Years']['Year3'] ?? 'Year 3');
+        $sheet->getCell('AC8')->setValue($fsinputs['<div class="d-none">Years</div>']['Year1'] ?? 'Year 1');
+        $sheet->getCell('AI8')->setValue($fsinputs['<div class="d-none">Years</div>']['Year2'] ?? 'Year 2');
+        $sheet->getCell('AO8')->setValue($fsinputs['<div class="d-none">Years</div>']['Year3'] ?? 'Year 3');
 
         // Load Financial Statement Quantitative Assessment 1.
         $sheet = $spreadsheet->getSheetByName('FS_inputs');

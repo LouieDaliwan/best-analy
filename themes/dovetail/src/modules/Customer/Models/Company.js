@@ -7,7 +7,7 @@ class Company {
 
     this.metadata = {
       'years': {
-        'Years': {
+        '<div class="d-none">Years</div>': {
           'Year1': 'Year 1',
           'Year2': 'Year 2',
           'Year3': 'Year 3',
@@ -338,7 +338,6 @@ class Company {
         },
       },
       'balance-sheet': {
-        '<h4><strong>Balance</strong></h4>': [],
         'Cash': {
           'Year1': '8700',
           'Year2': '8550',

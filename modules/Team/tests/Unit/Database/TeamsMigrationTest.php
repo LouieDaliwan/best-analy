@@ -115,6 +115,26 @@ class TeamsMigrationTest extends TestCase
      * @group  unit:migration
      * @return void
      */
+    public function it_should_have_a_manager_id_column()
+    {
+        $this->assertArrayHasKey('manager_id', $this->columns);
+        $this->assertTrue($this->columns['manager_id']->getNotNull());
+        $this->assertFalse($this->columns['manager_id']->getUnsigned());
+        $this->assertEquals(
+            'integer', $this->db->getColumnType($this->tableName, 'manager_id')
+        );
+        $this->assertArrayHasKey(
+            sprintf('%s_manager_id_index', $this->tableName),
+            $this->schema->listTableIndexes($this->tableName)
+        );
+    }
+
+    /**
+     * @test
+     * @group  unit
+     * @group  unit:migration
+     * @return void
+     */
     public function it_should_have_a_user_id_column()
     {
         $this->assertArrayHasKey('user_id', $this->columns);

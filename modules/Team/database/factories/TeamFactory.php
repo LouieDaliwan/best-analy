@@ -13,8 +13,7 @@ $factory->define(Team::class, function (Faker $faker) {
         'code' => Str::slug($name),
         'description' => $faker->text(),
         'icon' => 'mdi mdi-pencil',
-        'user_id' => function () {
-            return factory(User::class)->create()->getKey();
-        },
+        'manager_id' => function () { return factory(User::class)->create()->getKey(); },
+        'user_id' => function () { return factory(User::class)->create()->getKey(); },
     ];
 });

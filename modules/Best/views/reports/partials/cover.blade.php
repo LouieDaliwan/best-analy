@@ -5,15 +5,15 @@
       <div class="row">
         <div class="col-md-12">
 
-        {{-- header --}}
-          <div class="row">
-            <div class="col-md-12">
-              <div class="d-flex align-items-center justify-content-center">
-                <div class="mr-3"><img height="60" src="{{ asset('logo.svg') }}"></div>
-                <div>
-                  <h1 class="mb-2 text-uppercase">Business Excellence Survey Test (BEST) Report</h1>
-                  <div>@lang('Empowered by') {{ settings('app:author') }}</div>
-                </div>
+          {{-- header --}}
+          <div class="d-flex justify-content-center align-items-center">
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-auto col-sm-12">
+                <div class="mb-md-0 mb-3 mr-3"><img height="60" src="{{ asset('logo.svg') }}"></div>
+              </div>
+              <div class="col">
+                <h1 class="mb-2 text-uppercase">Business Excellence Survey Test (BEST) Report</h1>
+                <div>@lang('Empowered by') {{ settings('app:author') }}</div>
               </div>
             </div>
           </div>

@@ -16,7 +16,7 @@ class TeamRequest extends FormRequest
     {
         return $this->container->make(
             TeamServiceInterface::class
-        )->authorize($this->index);
+        )->authorize($this->team);
     }
 
     /**

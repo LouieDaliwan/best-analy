@@ -31,7 +31,6 @@
   </section>
 </template>
 
-
 <script>
 export default {
   props: ['search', 'items', 'resource', 'value', 'selectable'],

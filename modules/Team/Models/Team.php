@@ -5,12 +5,16 @@ namespace Team\Models;
 use Core\Models\Accessors\CommonAttributes;
 use Core\Models\Relations\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 use User\Models\User;
 
 class Team extends Model
 {
     use BelongsToUser,
-        CommonAttributes;
+        CommonAttributes,
+        Searchable,
+        SoftDeletes;
 
     /**
      * The attributes that are not mass assignable.
@@ -27,5 +31,27 @@ class Team extends Model
     public function members()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    /**
+     * Retrieve the manager for this team.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function manager()
+    {
+        return $this->belongsTo(User::class, 'manager_id');
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return array_merge($this->toArray(), [
+            'author' => $this->author,
+        ]);
     }
 }

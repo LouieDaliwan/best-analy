@@ -11,6 +11,7 @@ use Team\Services\TeamServiceInterface;
 use Tests\ActingAsUser;
 use Tests\TestCase;
 use Tests\WithPermissionsPolicy;
+use User\Models\User;
 
 /**
  * @package Team\Unit\Services
@@ -59,9 +60,10 @@ class TeamServiceTest extends TestCase
     {
         // Arrangements
         $attributes = factory(Team::class)->make()->toArray();
+        $members = factory(User::class, 3)->create()->pluck('id')->toArray();
 
         // Actions
-        $this->service->store($attributes);
+        $this->service->store(array_merge($attributes, ['users' => $members]));
 
         // Assertions
         $this->assertDatabaseHas($this->service->getTable(), $attributes);
@@ -97,13 +99,16 @@ class TeamServiceTest extends TestCase
     {
         // Arrangements
         $team = factory(Team::class)->create();
+        $members = factory(User::class, 3)->create()->pluck('id')->toArray();
 
         // Actions
-        $attributes = [
+        $attributes = factory(Team::class)->make([
             'name' => $this->faker->unique()->words($nb = 10, $asText = true),
             'icon' => $this->faker->words($nb = 3, $asText = true)
-        ];
-        $actual = $this->service->update($team->getKey(), $attributes);
+        ])->toArray();
+        $actual = $this->service->update($team->getKey(), array_merge(
+            $attributes, ['users' => $members]
+        ));
 
         // Assertions
         $this->assertDatabaseHas($this->service->getTable(), $attributes);
@@ -117,7 +122,7 @@ class TeamServiceTest extends TestCase
      * @group  unit:service:team
      * @return void
      */
-    public function it_can_destroy_a_team()
+    public function it_can_soft_delete_a_team()
     {
         // Arrangements
         $team = factory(Team::class, 3)->create()->random();
@@ -126,7 +131,7 @@ class TeamServiceTest extends TestCase
         $this->service->destroy($team->getKey());
 
         // Assertions
-        $this->assertDatabaseMissing($this->service->getTable(), $team->toArray());
+        $this->assertSoftDeleted($this->service->getTable(), $team->toArray());
     }
 
     /**
@@ -136,7 +141,7 @@ class TeamServiceTest extends TestCase
      * @group  unit:service:team
      * @return void
      */
-    public function it_can_destroy_multiple_teams()
+    public function it_can_soft_delete_multiple_teams()
     {
         // Arrangements
         $teams = factory(Team::class, 3)->create();
@@ -146,7 +151,116 @@ class TeamServiceTest extends TestCase
 
         // Assertions
         $teams->each(function ($team) {
-            $this->assertDatabaseMissing($this->service->getTable(), $team->toArray());
+            $this->assertSoftDeleted($this->service->getTable(), $team->toArray());
+        });
+    }
+
+    /**
+     * @test
+     * @group  unit
+     * @group  unit:service
+     * @group  unit:service:team
+     * @return void
+     */
+    public function it_can_retrieve_the_paginated_list_of_all_trashed_team()
+    {
+        // Arrangements
+        $teams = factory(Team::class, 2)->create();
+        $trashed = factory(Team::class, 2)->create();
+        $trashed->each->delete();
+
+        // Actions
+        $actual = $this->service->listTrashed();
+
+        // Assertions
+        $this->assertInstanceOf(LengthAwarePaginator::class, $actual);
+        $teams->each(function ($team) use ($actual) {
+            $this->assertFalse($team->trashed());
+            $this->assertFalse($actual->contains($team->getKeyName(), $team->getKey()));
+        });
+    }
+
+    /**
+     * @test
+     * @group  unit
+     * @group  unit:service
+     * @group  unit:service:team
+     * @return void
+     */
+    public function it_can_restore_destroyed_team()
+    {
+        // Arrangements
+        $team = factory(Team::class, 3)->create()->random();
+        $team->delete();
+
+        // Actions
+        $this->service->restore($team->getKey());
+        $actual = $this->service->withTrashed()->find($team->getKey());
+
+        // Assertions
+        $this->assertFalse($actual->trashed());
+    }
+
+    /**
+     * @test
+     * @group  unit
+     * @group  unit:service
+     * @group  unit:service:team
+     * @return void
+     */
+    public function it_can_restore_multiple_destroyed_teams()
+    {
+        // Arrangements
+        $teams = factory(Team::class, 3)->create();
+        $teams->each->delete();
+
+        // Actions
+        $this->service->restore($ids = $teams->pluck('id')->toArray());
+        $actual = $this->service->withTrashed()->whereIn('id', $ids)->get();
+
+        // Assertions
+        $actual->each(function ($team) {
+            $this->assertFalse($team->trashed());
+        });
+    }
+
+    /**
+     * @test
+     * @group  unit
+     * @group  unit:service
+     * @group  unit:service:team
+     * @return void
+     */
+    public function it_can_permanently_delete_a_team()
+    {
+        // Arrangements
+        $team = factory(Team::class, 3)->create()->random();
+
+        // Actions
+        $this->service->delete($team->getKey());
+
+        // Assertions
+        $this->assertDatabaseMissing($team->getTable(), $team->toArray());
+    }
+
+    /**
+     * @test
+     * @group  unit
+     * @group  unit:service
+     * @group  unit:service:team
+     * @return void
+     */
+    public function it_can_permanently_delete_multiple_teams()
+    {
+        // Arrangements
+        $teams = factory(Team::class, 3)->create();
+
+        // Actions
+        $this->service->delete($teams->pluck('id')->toArray());
+
+        // Assertions
+        $teams->each(function ($team) {
+            $this->assertDatabaseMissing($team->getTable(), $team->toArray());
         });
     }
 }

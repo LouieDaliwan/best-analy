@@ -1,7 +1,6 @@
 <template>
   <v-text-field
     :placeholder="trans('Search...')"
-    autofocus
     background-color="workspace"
     class="dt-text-field__search mb-3"
     clear-icon="mdi-close-circle-outline"

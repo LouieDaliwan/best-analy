@@ -2,16 +2,34 @@
   <admin>
     <metatag :title="resource.data.name"></metatag>
 
-    <page-header :back="{ to: { name: 'roles.index' }, text: trans('Roles') }">
+    <page-header>
+      <template v-slot:back>
+        <div class="mb-2">
+          <can code="teams.index">
+            <router-link tag="a" exact :to="{ name: 'teams.index' }" class="text--decoration-none body-1 dt-link">
+              <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
+              <span v-text="trans('All Teams')"></span>
+            </router-link>
+            <template v-slot:unpermitted>
+              <can code="teams.owned">
+                <router-link tag="a" exact :to="{ name: 'teams.owned' }" class="text--decoration-none body-1 dt-link">
+                  <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
+                  <span v-text="trans('My Team')"></span>
+                </router-link>
+              </can>
+            </template>
+          </can>
+        </div>
+      </template>
       <template v-slot:title>{{ resource.data.name }}</template>
       <template v-slot:utilities>
-        <can code="roles.show">
-          <router-link tag="a" class="dt-link text--decoration-none mr-6" exact :to="{name: 'roles.edit'}">
+        <can code="teams.show">
+          <router-link tag="a" class="dt-link text--decoration-none mr-6" exact :to="{name: 'teams.edit'}">
             <v-icon small class="mb-1">mdi-pencil-outline</v-icon>
             {{ trans('Edit') }}
           </router-link>
         </can>
-        <can code="roles.destroy">
+        <can code="teams.destroy">
           <a href="#" @click.prevent="askUserToDestroyResource(resource)" class="dt-link text--decoration-none mr-6">
             <v-icon small class="mb-1">mdi-delete-outline</v-icon>
             {{ trans('Move to Trash') }}
@@ -20,77 +38,53 @@
       </template>
     </page-header>
 
-    <v-col cols="12" md="7">
-      <v-card>
-        <v-card-text>
-          <h2>{{ resource.data.name }}</h2>
-          <p>{{ resource.data.code }}</p>
-          <p>{{ resource.data.description }}</p>
-        </v-card-text>
+    <v-row>
+      <v-col cols="12" md="12">
+        <v-card>
+          <template v-if="resource.data.description">
+            <v-card-title v-text="trans('Team Detail')"></v-card-title>
+            <v-card-text>
+              <p>{{ resource.data.description }}</p>
+            </v-card-text>
+          </template>
 
-        <div class="d-flex">
-          <v-divider></v-divider>
-          <v-icon small color="muted" class="mx-3 mt-n2">mdi-shield-lock</v-icon>
-          <v-divider></v-divider>
-        </div>
+          <v-card-title v-text="trans('Team Manager')"></v-card-title>
+          <v-card-text>
+            <user-account-detail-card v-model="resource.data.lead"></user-account-detail-card>
+          </v-card-text>
 
-        <v-card-text>
-          <h4 class="mb-5">{{ trans('Permissions') }}</h4>
-          <v-text-field
-            :placeholder="trans('Search...')"
-            autofocus
-            class="dt-text-field__search mb-3"
-            clear-icon="mdi-close-circle-outline"
-            clearable
-            filled
-            flat
-            full-width
-            hide-details
-            single-line
-            solo
-            v-model="search"
-          ></v-text-field>
-          <v-treeview
-            :filter="filter"
-            :items="resource.data.permissions"
-            :search="search"
-            color="primary"
-            expand-icon="mdi-chevron-down"
-            hoverable
-            open-on-click
-            ripple
-            transition
-            v-model="resource.selected"
-            >
-            <template v-slot:prepend="{ item }">
-              <v-icon small right v-if="item.children">
-                mdi-shield-lock
-              </v-icon>
-              <v-icon v-else small left class="ml-n4">mdi-circle-outline</v-icon>
-            </template>
-            <template v-slot:label="{ item }">
-              <div class="pa-3">
-                <div v-if="item.children" :class="item.children ? '' : 'muted--text'">
-                  {{ item.name }}
-                </div>
-                <div v-else>
-                  <div class="mb-2">{{ item.code }}</div>
-                  <div class="text-wrap muted--text body-2">
-                    {{ item.description }}
-                  </div>
-                </div>
-              </div>
-            </template>
-          </v-treeview>
-        </v-card-text>
-      </v-card>
-    </v-col>
+          <div class="d-flex">
+            <v-divider></v-divider>
+            <v-icon small color="muted" class="mx-3 mt-n2">mdi-account-settings</v-icon>
+            <v-divider></v-divider>
+          </div>
+
+          <v-row>
+            <v-col>
+              <v-card-text>
+                <h4 class="mb-5">{{ trans('Team Members') }}</h4>
+                <treeview-field v-model="search"></treeview-field>
+                <treeview-pagination
+                  :items="resource.data.users"
+                  :search="search"
+                ></treeview-pagination>
+              </v-card-text>
+            </v-col>
+
+            <v-divider vertical></v-divider>
+            <v-col cols="12" md="6">
+
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
   </admin>
 </template>
 
 <script>
 import $api from './routes/api'
-import Role from './Models/Team'
+import Team from './Models/Team'
 import { mapActions } from 'vuex'
 
 export default {
@@ -104,7 +98,7 @@ export default {
   data: () => ({
     api: $api,
 
-    resource: new Role,
+    resource: new Team,
     search: null,
   }),
 
@@ -118,20 +112,12 @@ export default {
     }),
 
     getResource () {
-      axios.get($api.show(this.$route.params.id))
-        .then(response => {
-          this.resource.data = response.data.data
-          this.resource.data.permissions = _(response.data.data.permissions)
-          .groupBy('group')
-          .map((items, key) => ({
-            name: _(key).startCase(),
-            id: key,
-            children: items.map((item) => {
-              return _.merge(item, {id: item.code})
-            }),
-          }))
-          .value()
-        }).finally(() => { this.resource.loading = false })
+      axios.get(
+        $api.show(this.$route.params.id)
+      ).then(response => {
+        this.resource.data = response.data.data
+        this.resource.data.users = this.resource.data.members
+      }).finally(() => { this.resource.loading = false })
     },
 
     askUserToDestroyResource (resource) {
@@ -141,7 +127,7 @@ export default {
         illustrationWidth: 200,
         illustrationHeight: 160,
         width: '420',
-        title: trans('You are about to move to trash the selected role.'),
+        title: trans('You are about to move to trash the selected team.'),
         text: [trans('The user will be signed out from the app. Some data related to the account like comments and files will still remain.'), trans('Are you sure you want to deactivate and move :name to Trash?', {name: resource.data.name})],
         buttons: {
           cancel: { show: true, color: 'link' },
@@ -165,9 +151,9 @@ export default {
         this.hideDialog()
         this.showSnackbar({
           show: true,
-          text: trans_choice('Role successfully moved to trash', 1)
+          text: trans_choice('Team successfully moved to trash', 1)
         })
-        this.$router.push({ name: 'roles.index' })
+        this.$router.push({ name: 'teams.index' })
       }).catch(err => {
         this.errorDialog({
           width: 400,

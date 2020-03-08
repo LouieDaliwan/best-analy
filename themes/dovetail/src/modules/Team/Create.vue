@@ -1,6 +1,7 @@
 <template>
   <admin>
     <metatag :title="trans('Add Team')"></metatag>
+    <back-to-top></back-to-top>
 
     <template v-slot:appbar>
       <v-container class="py-0 px-0">
@@ -50,7 +51,7 @@
     </template>
 
     <validation-observer ref="addform" v-slot="{ handleSubmit, errors, invalid, passed }">
-      <v-form :disabled="isLoading" ref="addform-form" autocomplete="false" v-on:submit.prevent="handleSubmit(submit($event))" enctype="multipart/form-data">
+      <v-form :disabled="isLoading" ref="addform-form" autocomplete="false" v-on:submit.prevent="handleSubmit(submit($event))">
         <button ref="submit-button" type="submit" class="d-none"></button>
         <page-header :back="{ to: { name: 'teams.index' }, text: trans('Teams') }">
           <template v-slot:title>{{ trans('Add Team') }}</template>
@@ -61,7 +62,7 @@
         <!-- Alertbox -->
 
         <v-row>
-          <v-col cols="12" md="9">
+          <v-col cols="12">
             <v-card class="mb-3">
               <v-card-text>
                 <v-row>
@@ -96,6 +97,16 @@
                     </validation-provider>
                   </v-col>
                   <v-col cols="12">
+                    <validation-provider vid="manager_id" rules="required" :name="trans('manager_id')" v-slot="{ errors }">
+                      <manager-picker
+                        :dense="isDense"
+                        :disabled="isLoading"
+                        name="manager_id"
+                        v-model="resource.managers"
+                      ></manager-picker>
+                    </validation-provider>
+                  </v-col>
+                  <v-col cols="12">
                     <v-textarea
                       :label="trans('Description')"
                       auto-grow
@@ -109,41 +120,64 @@
                 </v-row>
               </v-card-text>
 
-              <div class="d-flex">
+              <div class="d-flex mb-4">
                 <v-divider></v-divider>
                 <v-icon small color="muted" class="mx-3 mt-n2">mdi-account-settings</v-icon>
                 <v-divider></v-divider>
               </div>
 
-              <v-card-text>
-                <h4 class="mb-5">{{ trans('Members') }}</h4>
-                <treeview-field v-model="search"></treeview-field>
-                <v-treeview
-                  :filter="filter"
-                  :items="resource.users"
-                  :search="search"
-                  color="primary"
-                  expand-icon="mdi-chevron-down"
-                  hoverable
-                  open-all
-                  open-on-click
-                  ripple
-                  selectable
-                  transition
-                  v-model="resource.selected"
-                  >
-                  <template v-slot:label="{ item }">
-                    <div class="pa-3">
-                      <div>{{ item.displayname }}</div>
-                    </div>
-                  </template>
-                </v-treeview>
+              <v-row>
+                <v-col>
+                  <v-card-title v-text="trans('Select Members')"></v-card-title>
+                  <v-card-text>
+                    <treeview-field v-model="search"></treeview-field>
+                    <validation-provider vid="users" name="users[]" rules="required" v-slot="{ errors }">
+                      <v-card-text :key="item" class="error--text" v-html="item" v-for="item in errors"></v-card-text>
+                    </validation-provider>
+                    <treeview-pagination
+                      :items="resource.users"
+                      :search="search"
+                      :selectable="true"
+                      v-model="resource.selected"
+                    ></treeview-pagination>
 
-                <input type="hidden" v-for="item in resource.selected" name="users[]" :value="item">
-                <validation-provider vid="users" name="users" rules="required" v-slot="{ errors }">
-                  <v-card-text :key="item" class="error--text" v-html="item" v-for="item in errors"></v-card-text>
-                </validation-provider>
-              </v-card-text>
+                    <input type="hidden" v-for="item in resource.selected" name="users[]" :value="item.id">
+                  </v-card-text>
+                </v-col>
+
+                <v-divider vertical></v-divider>
+
+                <v-col cols="12" md="6">
+                  <v-card-title v-text="trans('Selected Members')"></v-card-title>
+
+                  <v-card-text v-if="resource.selected.length">
+                    <v-scroll-x-transition mode="in-out">
+                      <div>
+                        <v-scroll-x-transition group mode="in-out">
+                          <div v-for="(member, i) in resource.selected" :key="i">
+                            <div :class="{'d-none': member.active}" class="py-3 px-4">
+                              <v-avatar class="mr-6" size="32" color="workspace">
+                                <v-img :src="member.avatar"></v-img>
+                              </v-avatar>
+                              <span v-text="member.displayname"></span>
+                            </div>
+                          </div>
+                        </v-scroll-x-transition>
+                      </div>
+                    </v-scroll-x-transition>
+                  </v-card-text>
+                  <v-card-text class="text-center" v-else>
+                    <v-scroll-x-transition mode="out-in">
+                      <div>
+                        <checklist-icon height="100" class="primary--text" style="filter: grayscale(0.8) brightness(150%);"></checklist-icon>
+                        <p class="muted--text pa-3">
+                          {{ trans('Select members from the list to view details') }}
+                        </p>
+                      </div>
+                    </v-scroll-x-transition>
+                  </v-card-text>
+                </v-col>
+              </v-row>
             </v-card>
           </v-col>
         </v-row>
@@ -156,6 +190,7 @@
 import $auth from '@/core/Auth/auth'
 import $api from './routes/api'
 import Team from './Models/Team'
+import ManagerPicker from './cards/ManagerPicker'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -165,6 +200,10 @@ export default {
     } else {
       this.askUserBeforeNavigatingAway(next)
     }
+  },
+
+  components: {
+    ManagerPicker
   },
 
   computed: {
@@ -204,7 +243,8 @@ export default {
   data: () => ({
     auth: $auth.getUser(),
     resource: new Team,
-    search: null,
+    search: '',
+    searchSelectedMember: '',
   }),
 
   methods: {
@@ -298,11 +338,18 @@ export default {
     },
 
     displayUsersList () {
-      console.log(this.resource)
       axios.get(
         $api.users.list()
       ).then(response => {
         this.resource.users = Object.assign([], this.resource.users, response.data.data)
+        this.resource.usersTotal = response.data.meta.last_page
+        this.resource.users = this.resource.users.map(function (item, i) {
+          return Object.assign(item, {
+            key: item.id,
+            name: item.displayname+' '+item.username+' '+item.email,
+            order: i,
+          })
+        })
       })
     },
 
@@ -312,9 +359,8 @@ export default {
       this.hideAlertbox()
 
       axios.post(
-        $api.store(), this.parseResourceData(this.resource.data), {
-          headers: {'Content-Type': 'multipart/form-data'}
-        }).then(response => {
+        $api.store(), this.parseResourceData(this.resource.data)
+      ).then(response => {
         this.resource.isPrestine = true
 
         this.showSnackbar({

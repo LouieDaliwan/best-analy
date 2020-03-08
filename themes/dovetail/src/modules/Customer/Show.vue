@@ -51,12 +51,12 @@
       <div v-show="resourcesIsNotEmpty">
         <div class="mb-6">
           <v-row>
-            <v-col cols="2" class="py-0"><p class="mb-0 font-weight-bold">{{ trans('Staff Strength') }}:</p></v-col>
-            <v-col class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata['staffstrength'] || null }}</p></v-col>
+            <v-col cols="4" md="2" class="py-0"><p class="mb-0 font-weight-bold">{{ trans('Staff Strength') }}:</p></v-col>
+            <v-col cols="auto" class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata['staffstrength'] || null }}</p></v-col>
           </v-row>
           <v-row>
-            <v-col cols="2" class="py-0"><p class="mb-0 font-weight-bold">{{ trans('Industry') }}:</p></v-col>
-            <v-col class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata['industry'] || null }}</p></v-col>
+            <v-col cols="4" md="2" class="py-0"><p class="mb-0 font-weight-bold">{{ trans('Industry') }}:</p></v-col>
+            <v-col cols="auto" class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata['industry'] || null }}</p></v-col>
           </v-row>
         </div>
         <p class="font-weight-regular">
@@ -85,11 +85,11 @@
                 <!-- if report is generated -->
 
                 <v-row justify="space-between" align="center">
-                  <v-col cols="auto">
-                    <h3 class="font-weight-bold text-uppercase mb-2 mt-2" v-text="resource.name"></h3>
-                    <h4 class="text-uppercase muted--text mb-0" v-text="('Performance Index')"></h4>
+                  <v-col>
+                    <h3 class="mt-5 font-weight-bold text-uppercase mb-2 mt-2 text-md-left text-center" v-text="resource.name"></h3>
+                    <h4 class="text-uppercase muted--text mb-0 text-md-left text-center" v-text="('Performance Index')"></h4>
                   </v-col>
-                  <v-col class="text-right">
+                  <v-col class="text-md-right text-center">
                     <img height="80" :src="resource.icon" :alt="resource.name">
                   </v-col>
                 </v-row>

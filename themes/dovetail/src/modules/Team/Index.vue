@@ -48,13 +48,16 @@
               </v-slide-y-transition>
             </template>
 
-            <!-- Icon and Name -->
+            <!-- Name -->
             <template v-slot:item.name="{ item }">
-              <div class="d-flex align-center">
-                <span class="text-no-wrap">{{ trans(item.name) }}</span>
-              </div>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <span class="mt-1" v-on="on"><router-link tag="a" exact :to="goToShowTeamPage(item)" v-text="item.name" class="text-no-wrap text--decoration-none"></router-link></span>
+                </template>
+                <span>{{ trans('View Details') }}</span>
+              </v-tooltip>
             </template>
-            <!-- Icon and Name -->
+            <!-- Name -->
 
             <!-- Description -->
             <template v-slot:item.description="{ item }">
@@ -66,6 +69,17 @@
               </v-tooltip>
             </template>
             <!-- Description -->
+
+            <!-- Manager -->
+            <template v-slot:item.author="{ item }">
+              <v-tooltip bottom transition="scroll-y-transition" max-width="300">
+                <template v-slot:activator="{ on }">
+                  <span v-on="on" class="text-no-wrap">{{ trans(item.author) }}</span>
+                </template>
+                <span>{{ trans(item.author) }}</span>
+              </v-tooltip>
+            </template>
+            <!-- Manager -->
 
             <!-- Modified -->
             <template v-slot:item.updated_at="{ item }">
@@ -127,6 +141,7 @@
 
 <script>
 import $api from './routes/api'
+import $auth from '@/core/Auth/auth'
 import man from '@/components/Icons/ManThrowingAwayPaperIcon.vue'
 import { mapActions } from 'vuex'
 
@@ -156,6 +171,7 @@ export default {
 
   data: () => ({
     api: $api,
+    auth: $auth.getUser(),
 
     resources: {
       loading: true,
@@ -175,6 +191,7 @@ export default {
       headers: [
         { text: trans('Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
         { text: trans('Description'), align: 'left', value: 'description', class: 'text-no-wrap' },
+        { text: trans('Manager'), align: 'left', value: 'author', class: 'text-no-wrap' },
         { text: trans('Last Modified'), value: 'updated_at', class: 'text-no-wrap' },
         { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
       ],
@@ -240,6 +257,10 @@ export default {
             return Object.assign(data, {loading: false})
           })
         })
+    },
+
+    goToShowTeamPage (team) {
+      return { name: 'teams.show', params: { id: team.id, slug: team.name } }
     },
 
     search: _.debounce(function (event) {

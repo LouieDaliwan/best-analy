@@ -36,7 +36,7 @@
           exact
           large
           >
-          <v-icon small left>mdi-paperclip</v-icon>
+          <v-icon small left>mdi-file-chart-outline</v-icon>
           {{ __('Overall Report') }}
         </v-btn>
       </template>
@@ -116,7 +116,7 @@
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <v-btn :to="goToSurveyPage(item)" icon v-on="on">
-                      <v-icon small>mdi-table-eye</v-icon>
+                      <v-icon small>mdi-file-table</v-icon>
                     </v-btn>
                   </template>
                   <span>{{ trans('View Survey') }}</span>

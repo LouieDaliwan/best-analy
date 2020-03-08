@@ -19,8 +19,13 @@ class CreateTeamsTable extends Migration
             $table->string('code')->unique()->index();
             $table->text('description')->nullable();
             $table->string('icon')->nullable();
+            $table->unsignedBigInteger('manager_id')->index();
             $table->unsignedBigInteger('user_id')->index();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('manager_id')
+                  ->references('id')->on('users')
+                  ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')
                   ->references('id')->on('users')
                   ->onUpdate('cascade')->onDelete('cascade');

@@ -5,16 +5,20 @@ class Team {
     this.isValid = true
     this.errors = []
     this.users = []
+    this.managers = []
     this.selected = []
 
     this.data = {
-      name: '',
       code: '',
+      created: '',
       description: '',
       icon: '',
-      created: '',
-      users: [],
+      name: '',
       selected: [],
+      users: [],
+      manager_id: '',
+      lead: {},
+      members: [],
     }
   }
 }

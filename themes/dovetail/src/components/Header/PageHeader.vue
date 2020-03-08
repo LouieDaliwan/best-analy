@@ -4,12 +4,22 @@
       <div class="d-block d-sm-flex justify-space-between align-center">
         <div>
           <slot name="back" :back="back">
-            <div class="mb-2" v-if="back">
-              <router-link tag="a" exact :to="back.to" class="text--decoration-none body-1 dt-link">
-                <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
-                <span v-text="back.text"></span>
-              </router-link>
-            </div>
+            <template v-if="$route.query.from">
+              <div class="mb-2">
+                <router-link tag="a" exact :to="$route.query.from" class="text--decoration-none body-1 dt-link">
+                  <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
+                  <span v-text="trans('Back')"></span>
+                </router-link>
+              </div>
+            </template>
+            <template v-else>
+              <div class="mb-2" v-if="back">
+                <router-link tag="a" exact :to="back.to" class="text--decoration-none body-1 dt-link">
+                  <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
+                  <span v-text="back.text"></span>
+                </router-link>
+              </div>
+            </template>
           </slot>
           <h2 :class="$vuetify.breakpoint.smAndUp ? '' : 'title font-weight-bold'" class="mb-1" :title="heading.description">
             <slot name="title">

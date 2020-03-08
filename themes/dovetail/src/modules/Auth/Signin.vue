@@ -48,11 +48,11 @@
         </v-row>
 
         <!-- <bubble-2 style="transform: rotate(180deg) translate(-200px, -15%)"></bubble-2> -->
-        <div>
+        <div class="d-none d-md-block">
           <img
             :src="require('@/components/Illustration/bubbles2.png')"
             style="position: absolute; right: 0; bottom: 0; width: 300px;"
-            >
+          >
         </div>
       </v-col>
     </v-row>
@@ -61,16 +61,11 @@
 
 <script>
 import LoginForm from './cards/LoginForm'
-import illustration from '@/components/Illustration/stage2.png'
 
 export default {
   components: {
     LoginForm,
   },
-
-  data: () => ({
-    illustration: illustration,
-  })
 }
 </script>
 

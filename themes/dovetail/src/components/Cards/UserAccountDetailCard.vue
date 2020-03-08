@@ -3,13 +3,18 @@
     <v-col cols="12" md="3">
       <div class="dt-avatar-preview d-block mx-auto">
         <v-avatar size="160">
-          <img :src="dataset.avatar" height="auto" :alt="dataset.displayname" style="height: auto">
+          <img :src="dataset.avatar" :alt="dataset.displayname">
         </v-avatar>
       </div>
     </v-col>
 
     <v-col cols="12" md="9">
-      <h2 class="mb-3">{{ dataset.displayname }}</h2>
+      <h2 class="mb-3">
+        <can code="users.show">
+          <router-link tag="a" :to="{ name: 'users.show', params: { id: dataset.id }, query: { from: $route.path } }" v-text="dataset.displayname"></router-link>
+          <template v-unpermitted>{{ dataset.displayname }}</template>
+        </can>
+      </h2>
       <div class="mb-2">
         <v-icon small class="mr-2 muted--text">mdi-at</v-icon>
         <span class="muted--text">{{ dataset.username }}</span>

@@ -137,6 +137,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'pindex:description' => $taxonomy->description,
                 'pindex:weightage' => $taxonomy->metadata['weightage'] ?? 0,
                 'pindex:icon' => $taxonomy->icon ?? '',
+                'pindex:color' => $taxonomy->metadata['color'] ?? null,
                 'survey:code' => $survey->code,
                 'elements' => $group = $this->getGroupedAverage(),
                 'elements:charts' => $this->getChartedGroupedAverage($group),

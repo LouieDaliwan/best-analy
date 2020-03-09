@@ -110,7 +110,7 @@
                       </v-text-field>
                     </validation-provider>
                   </v-col>
-                  <v-col cols="12">
+                  <v-col cols="12" md="6">
                     <v-text-field
                       :dense="isDense"
                       :disabled="isLoading"
@@ -121,6 +121,19 @@
                       min="0.0"
                       type="number"
                       v-model="resource.data.metadata.weightage"
+                      >
+                    </v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      :dense="isDense"
+                      :disabled="isLoading"
+                      :label="trans('Color')"
+                      :placeholder="trans('E.g. #FFFFFF')"
+                      class="dt-text-field"
+                      name="metadata[color]"
+                      outlined
+                      v-model="resource.data.metadata['color']"
                       >
                     </v-text-field>
                   </v-col>

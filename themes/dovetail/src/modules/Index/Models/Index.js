@@ -13,7 +13,8 @@ class Index {
       type: '',
       icon: '',
       metadata: {
-        weightage: ''
+        weightage: '',
+        color: '',
       },
       created: '',
     }

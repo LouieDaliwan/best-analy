@@ -20,7 +20,7 @@
 
                 <v-btn class="mb-5" large color="primary" exact :to="{name: 'dashboard'}" v-text="trans('Return to your dashboard')"></v-btn>
 
-                <superadmin-only></superadmin-only>
+                <!-- <superadmin-only></superadmin-only> -->
               </div>
             </v-col>
           </v-row>

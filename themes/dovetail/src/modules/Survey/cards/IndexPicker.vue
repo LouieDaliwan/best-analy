@@ -1,9 +1,9 @@
 <template>
   <v-card class="mb-3">
     <v-card-title>{{ trans('Performance Index') }}</v-card-title>
-      <div class="primary--text text-center">
-        <checklist-icon width="100" height="100"></checklist-icon>
-      </div>
+    <div class="primary--text text-center" v-if="illustration">
+      <checklist-icon width="100" height="100"></checklist-icon>
+    </div>
     <v-card-text>
       <validation-provider vid="indices" :name="trans('indices')" rules="required" v-slot="{ errors }">
         <v-select
@@ -50,6 +50,10 @@ export default {
     },
     lazyLoad: {
       type: Boolean,
+    },
+    illustration: {
+      type: Boolean,
+      default: true,
     },
   },
 

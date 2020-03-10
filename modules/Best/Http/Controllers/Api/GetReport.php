@@ -20,6 +20,8 @@ class GetReport extends ApiController
      */
     public function __invoke(Request $request, Report $report)
     {
+        app()->setLocale($request->get('lang') ?: 'en');
+
         return new ReportResource($report);
     }
 }

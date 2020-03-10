@@ -8,8 +8,11 @@
       expand-icon="mdi-chevron-down"
       hoverable
       open-all
+      :active.sync="active"
       open-on-click
+      :activatable="activatable"
       :selectable="selectable"
+      transition
       transition
       v-model="selected"
       return-object
@@ -48,7 +51,8 @@ export default {
     'selectable',
     'pageLength',
     'pageUrl',
-    'items'
+    'items',
+    'activatable',
   ],
 
   computed: {
@@ -68,6 +72,13 @@ export default {
 
   data: () => ({
     pagination: 1,
+    active: [],
   }),
+
+  watch: {
+    active: function (val) {
+      this.$emit('active', val)
+    }
+  },
 }
 </script>

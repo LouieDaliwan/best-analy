@@ -35,6 +35,17 @@ export default [
         },
       },
       {
+        path: 'trashed',
+        name: 'teams.trashed',
+        component: () => import('../Trashed.vue'),
+        meta: {
+          title: 'Trashed Index',
+          sort: 6,
+          authenticatable: true,
+          icon: 'mdi-book-multiple-variant',
+        },
+      },
+      {
         path: 'edit/:id',
         name: 'teams.edit',
         component: () => import('../Edit.vue'),

@@ -68,9 +68,30 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
             ],
 
             'comment' => [
-                $spreadsheet->getSheetByName('FinancialAnalysisReport')->getCell('BF12')->getCalculatedValue(),
-                $spreadsheet->getSheetByName('FinancialAnalysisReport')->getCell('BF13')->getCalculatedValue(),
-                $spreadsheet->getSheetByName('FinancialAnalysisReport')->getCell('BF14')->getCalculatedValue(),
+                str_replace(
+                    'CustomerName',
+                    $customer->name,
+                    $spreadsheet
+                        ->getSheetByName('FinancialAnalysisReport')
+                        ->getCell('BF12')
+                        ->getCalculatedValue()
+                ),
+                str_replace(
+                    'CustomerName',
+                    $customer->name,
+                    $spreadsheet
+                        ->getSheetByName('FinancialAnalysisReport')
+                        ->getCell('BF13')
+                        ->getCalculatedValue()
+                ),
+                str_replace(
+                    'CustomerName',
+                    $customer->name,
+                    $spreadsheet
+                        ->getSheetByName('FinancialAnalysisReport')
+                        ->getCell('BF14')
+                        ->getCalculatedValue()
+                ),
             ],
         ];
     }

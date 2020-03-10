@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <h1 class="mb-5 dt-secondary">@lang('Efficiency Analysis')</h1>
+        <h1 class="mb-3 dt-secondary">@lang('Efficiency Analysis')</h1>
       </div>
     </div>
   </div>
@@ -77,11 +77,14 @@ $(document).ready(function() {
       datasets: dataset,
     },
     options: {
+      cornerRadius: 20,
       legend: {
         position: 'bottom',
         display: true,
         labels: {
-        padding: 50,
+          padding: 50,
+          usePointStyle: true,
+          boxWidth: 5,
           fontColor: '#044b7f',
           fontFamily: 'Rubik, sans-serif',
           fontSize: 15,
@@ -89,7 +92,7 @@ $(document).ready(function() {
       },
       scales: {
         xAxes: [{
-          barPercentage: 0.4,
+          barPercentage: 0.3,
           gridLines: {
             zeroLineColor: chartColors.primaryLighten2,
             display: false,

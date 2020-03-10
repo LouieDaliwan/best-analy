@@ -1,8 +1,8 @@
 <template>
   <admin>
-    <metatag :title="trans('Trashed Indexes')"></metatag>
+    <metatag :title="trans('Trashed Teams')"></metatag>
 
-    <page-header :back="{ to: { name: 'indices.index' }, text: trans('Indexes') }"></page-header>
+    <page-header :back="{ to: { name: 'teams.index' }, text: trans('Teams') }"></page-header>
 
     <!-- Data table -->
       <div v-show="resourcesIsNotEmpty">
@@ -45,20 +45,15 @@
 
               <!-- Name -->
               <template v-slot:item.name="{ item }">
-                <span class="muted--text" :title="item.name">{{ trans(item.name) }}</span>
+                <span class="text-no-wrap muted--text" :title="item.name">{{ trans(item.name) }}</span>
               </template>
               <!-- Name -->
 
-              <!-- Description -->
-              <template v-slot:item.description="{ item }">
-                <v-tooltip bottom transition="scroll-y-transition" max-width="300">
-                  <template v-slot:activator="{ on }">
-                    <span v-on="on" class="text--ellipsis-1 muted--text">{{ trans(item.description) }}</span>
-                  </template>
-                  <span>{{ trans(item.description) }}</span>
-                </v-tooltip>
+              <!-- Manager -->
+              <template v-slot:item.manager_id="{ item }">
+                <span class="text-no-wrap muted--text">{{ trans(item.author) }}</span>
               </template>
-              <!-- Description -->
+              <!-- Manager -->
 
               <!-- Deleted -->
               <template v-slot:item.deleted_at="{ item }">
@@ -77,7 +72,7 @@
                         <v-icon small v-else>mdi-restore</v-icon>
                       </v-btn>
                     </template>
-                    <span>{{ trans_choice('Restore this index', 1) }}</span>
+                    <span>{{ trans_choice('Restore this team', 1) }}</span>
                   </v-tooltip>
                   <!-- Restore -->
                   <!-- Permanently Delete -->
@@ -87,7 +82,7 @@
                         <v-icon small>mdi-delete-forever-outline</v-icon>
                       </v-btn>
                     </template>
-                    <span>{{ trans_choice('Permanently delete this index', 1) }}</span>
+                    <span>{{ trans_choice('Permanently delete this team', 1) }}</span>
                   </v-tooltip>
                   <!-- Permanently Delete -->
                 </div>
@@ -107,8 +102,8 @@
             large
             color="primary"
             exact
-            :to="{name: 'indices.index'}">
-            {{ trans('Go back to all Index') }}
+            :to="{name: 'teams.index'}">
+            {{ trans('Go back to all Team') }}
           </v-btn>
         </template>
       </empty-state>
@@ -144,7 +139,7 @@ export default {
       selected: [],
       headers: [
         { text: trans('Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
-        { text: trans('Description'), align: 'left', value: 'description', class: 'text-no-wrap' },
+        { text: trans('Manager'), align: 'left', value: 'manager_id', class: 'text-no-wrap' },
         { text: trans('Date Deleted'), value: 'deleted_at', class: 'text-no-wrap' },
         { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
       ],
@@ -256,7 +251,7 @@ export default {
         this.tabletoolbar.toggleBulkEdit = false
         this.hideDialog()
         this.showSnackbar({
-          text: trans_choice('Index successfully restored', this.tabletoolbar.bulkCount)
+          text: trans_choice('Team successfully restored', this.tabletoolbar.bulkCount)
         })
       }).catch(err => {
         this.errorDialog({
@@ -298,7 +293,7 @@ export default {
       ).then(response => {
         this.getPaginatedData(null)
         this.showSnackbar({
-          text: trans_choice('Index successfully restored', 1)
+          text: trans_choice('Team successfully restored', 1)
         })
       })
     },
@@ -310,7 +305,7 @@ export default {
         illustrationWidth: 200,
         illustrationHeight: 160,
         width: '420',
-        title: 'You are about to permanently delete the selected index.',
+        title: 'You are about to permanently delete the selected team.',
         text: ['Some data related to the account will still remain.', trans('Are you sure you want to permanently delete?', {name: item.name})],
         buttons: {
           cancel: { show: true, color: 'link' },
@@ -335,7 +330,7 @@ export default {
         this.getPaginatedData(null)
         this.hideDialog()
         this.showSnackbar({
-          text: trans_choice('Index successfully deleted', 1)
+          text: trans_choice('Team successfully deleted', 1)
         })
       }).catch(err => {
         this.errorDialog({

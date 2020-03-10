@@ -127,9 +127,9 @@
               </div>
 
               <v-row>
-                <v-col>
-                  <v-card-title v-text="trans('Select Members')"></v-card-title>
-                  <v-card-text>
+                <v-col class="pt-0">
+                  <v-card-text class="pt-0">
+                    <h4 class="mb-5" v-text="trans('Select Members')"></h4>
                     <treeview-field v-model="search"></treeview-field>
                     <validation-provider vid="users" name="users[]" rules="required" v-slot="{ errors }">
                       <v-card-text :key="item" class="error--text" v-html="item" v-for="item in errors"></v-card-text>
@@ -145,12 +145,11 @@
                   </v-card-text>
                 </v-col>
 
-                <v-divider vertical></v-divider>
+                <v-divider vertical class="d-none d-md-block"></v-divider>
 
-                <v-col cols="12" md="6">
-                  <v-card-title v-text="trans('Selected Members')"></v-card-title>
-
-                  <v-card-text v-if="resource.selected.length">
+                <v-col cols="12" md="6" class="pt-0">
+                  <v-card-text v-if="resource.selected.length" class="pt-0">
+                    <h4 class="mb-5" v-text="trans('Selected Members')"></h4>
                     <v-scroll-x-transition mode="in-out">
                       <div>
                         <v-scroll-x-transition group mode="in-out">
@@ -190,7 +189,6 @@
 import $auth from '@/core/Auth/auth'
 import $api from './routes/api'
 import Team from './Models/Team'
-import ManagerPicker from './cards/ManagerPicker'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -200,10 +198,6 @@ export default {
     } else {
       this.askUserBeforeNavigatingAway(next)
     }
-  },
-
-  components: {
-    ManagerPicker
   },
 
   computed: {
@@ -339,7 +333,7 @@ export default {
 
     displayUsersList () {
       axios.get(
-        $api.users.list()
+        $api.users.list(), { params: { per_page: '-1' } }
       ).then(response => {
         this.resource.users = Object.assign([], this.resource.users, response.data.data)
         this.resource.usersTotal = response.data.meta.last_page

@@ -37,6 +37,19 @@ export default [
       // },
       // System
       {
+        path: 'formulas',
+        props: true,
+        name: 'best.formulas',
+        component: () => import('../Formulas.vue'),
+        meta: {
+          title: 'BEST Formulas',
+          sort: 6,
+          authenticatable: true,
+          permission: 'best.formulas',
+          icon: 'mdi-book-multiple-variant',
+        },
+      },
+      {
         path: 'system',
         props: true,
         name: 'settings.system',

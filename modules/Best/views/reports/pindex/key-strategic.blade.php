@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <h1 class="mb-5 dt-secondary">@lang('KEY STRATEGIC RECOMMENDATIONS')</h1>
+        <h1 class="mb-3 dt-secondary">@lang('KEY STRATEGIC RECOMMENDATIONS')</h1>
       </div>
     </div>
   </div>
@@ -12,16 +12,17 @@
     @foreach (collect($data['key:recommendations'])->chunk(2) as $chunk)
       <div class="col-md-6">
         @foreach ($chunk as $key => $recommendation)
-          <h4 class="mb-4">@lang($key)</h4>
-          <div class="row four-tec">
+
+          <div class="row four-tec mb-4">
             <div class="col-auto">
-              <div class="img{{ $key }} card">
-                <div class="card-body">
-                  <img height="48" src="{{ $recommendation['icon'] }}">
+              <div class="img{{ $key }} card circular">
+                <div class="card-body p-3">
+                  <img height="24" src="{{ $recommendation['icon'] }}">
                 </div>
               </div>
             </div>
-            <div class="col">
+            <div class="col dt-recommendation-title">
+              <h2 class="mb-0">@lang($key)</h2>
               <p class="mb-0">@lang($recommendation['comment'])</p>
             </div>
           </div>

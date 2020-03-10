@@ -1,6 +1,6 @@
 <div class="dt-divider" style="height: 50px;"></div>
 <h1 class="dt-primary">@lang('Productivity Indicators')</h1>
-<table class="table">
+<table class="table table-indicator-main">
   <tbody>
     @foreach ($data as $key => $d)
       <tr class="title table-indicator">

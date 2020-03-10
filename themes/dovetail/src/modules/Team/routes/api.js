@@ -7,6 +7,14 @@ export default {
     return '/api/v1/teams'
   },
 
+  delete: function (id = null) {
+    return `/api/v1/teams/delete/${id}`
+  },
+
+  trashed: function () {
+    return '/api/v1/teams/trashed'
+  },
+
   restore: function (id = null) {
     return `/api/v1/teams/restore/${id}`
   },

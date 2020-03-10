@@ -4,19 +4,19 @@
     <div class="col-md-6 col-sm-12">
       <div class="row">
         <div class="col-md-5 col-sm-12">
-          <p><strong>@lang('Organisation Name') :</strong></p>
+          <h4 class="mb-1">@lang('Organisation Name') :</h4>
         </div>
         <div class="col">
-          <p>{{ __($data['organisation:profile']['name']) }}</p>
+          <p class="mb-1">{{ __($data['organisation:profile']['name']) }}</p>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-5 col-sm-12">
-          <p><strong>@lang('File Number') :</strong></p>
+          <h4 class="mb-1">@lang('File Number') :</h4>
         </div>
         <div class="col">
-          <p>{{ __($data['organisation:profile']['refnum']) }}</p>
+          <p class="mb-1">{{ __($data['organisation:profile']['refnum']) }}</p>
         </div>
       </div>
     </div>
@@ -24,19 +24,19 @@
     <div class="col-md-6 col-sm-12">
       <div class="row">
         <div class="col-md-5 col-sm-12">
-          <p><strong>@lang('Industry') :</strong></p>
+          <h4 class="mb-1">@lang('Industry') :</h4>
         </div>
         <div class="col">
-          <p>{{ __($data['organisation:profile']['metadata']['industry']) }}</p>
+          <p class="mb-1">{{ __($data['organisation:profile']['metadata']['industry']) }}</p>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-5 col-sm-12">
-          <p><strong>@lang('Staff Strength') :</strong></p>
+          <h4 class="mb-1">@lang('Staff Strength') :</h4>
         </div>
         <div class="col">
-          <p>{{ __($data['organisation:profile']['metadata']['staffstrength']) }}</p>
+          <p class="mb-1">{{ __($data['organisation:profile']['metadata']['staffstrength']) }}</p>
         </div>
       </div>
     </div>

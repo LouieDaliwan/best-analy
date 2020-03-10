@@ -7,6 +7,7 @@ class Team {
     this.users = []
     this.managers = []
     this.selected = []
+    this.preview = null
 
     this.data = {
       code: '',

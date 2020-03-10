@@ -3,24 +3,18 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <h1 class="mb-5 dt-secondary">@lang('Overall Findings')</h1>
+        <h1 class="mb-3 dt-secondary">@lang('Overall Findings')</h1>
       </div>
     </div>
   </div>
 
   <div class="row align-items-center justify-content-center">
     <div class="col-md-3 col-sm-12">
-      <div class="mb-3">
-        <canvas id="overall-{{ $data['taxonomy']['id'] }}"></canvas>
-      </div>
+      <canvas id="overall-{{ $data['taxonomy']['id'] }}"></canvas>
     </div>
 
     <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <p>@lang($data['overall:comment'])</p>
-        </div>
-      </div>
+      <p class="mb-0">@lang($data['overall:comment'])</p>
     </div>
   </div>
 </section>
@@ -35,7 +29,7 @@
         {
           data: [overallFindings, 100-overallFindings],
           backgroundColor: [
-            "#ed8a3b",
+            "{{ $data['pindex:color'] }}",
           ],
         }
       ],
@@ -45,13 +39,13 @@
       legend: {
         display: false
       },
-      cutoutPercentage: 60,
+      cutoutPercentage: 70,
     }
   });
   textCenter(overallFindings, myChart);
   function textCenter(val, chart) {
     Chart.pluginService.register({
-      beforeDraw: function(chartx) {
+      afterDraw: function(chartx) {
         var width = chart.chart.width,
             height = chart.chart.height,
             ctx = chart.chart.ctx;

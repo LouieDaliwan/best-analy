@@ -2,7 +2,7 @@ export default {
   name: 'trans',
   methods: {
     trans: function (string, defaultString) {
-      return this.$i18n.t(string, defaultString)
+      return this.$i18n.tc(string, 1, defaultString)
     },
 
     __: function (string, defaultString) {

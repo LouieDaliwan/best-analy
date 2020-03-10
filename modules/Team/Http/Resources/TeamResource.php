@@ -21,6 +21,7 @@ class TeamResource extends JsonResource
             'author' => $this->author,
             'created' => $this->created,
             'modified' => $this->modified,
+            'deleted' => $this->deleted,
         ]);
     }
 }

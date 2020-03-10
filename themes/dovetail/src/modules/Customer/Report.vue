@@ -5,9 +5,16 @@
     <page-header :back="{ to: {name: 'companies.reports'}, text: trans('Back to Reports') }">
       <template v-slot:title>{{ trans('Report Preview') }}</template>
       <template v-slot:utilities>
-        <!-- <a href="#" @click.prevent="downloadReport" class="dt-link text--decoration-none mr-4">{{ trans('Download Report') }}</a> -->
-        <a href="#" @click.prevent="goToSurveyPage(resource.data)" class="dt-link text--decoration-none mr-4"><v-icon left>mdi-search</v-icon>{{ trans('View Survey') }}</a>
+        <a class="dt-link text--decoration-none mr-4" @click="goToShowPage('ar')">
+          <!-- <v-icon small left>mdi-delete-outline</v-icon> -->
+          {{ trans('View Report in Arabic') }}
+        </a>
       </template>
+      <!-- <template v-slot:utilities>
+        <a href="?lang=ar" @click.prevent="downloadReport" class="dt-link text--decoration-none mr-4">{{ trans('Download Report') }}</a>
+        <a href="#" @click.prevent="goToSurveyPage(resource.data)" class="dt-link text--decoration-none mr-4"><v-icon left>mdi-search</v-icon>{{ trans('View Survey') }}</a>
+
+      </template> -->
     </page-header>
 
     <template v-if="resource.loading">
@@ -23,37 +30,65 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      resource: {
-        loading: false,
-        data: {},
-      },
-      url: null,
-    }),
+export default {
+  data: () => ({
+    resource: {
+      loading: false,
+      data: {},
+    },
+    url: null,
+  }),
 
-    methods: {
-      getReport () {
-        axios.get(
-          `/api/v1/reports/${this.$route.params.report}`
-        ).then(response => {
-          this.resource.data = response.data.data
-          let id = this.resource.data.value['current:index']['taxonomy']['id'] || null
-          let type = this.$route.query.type || 'index'
-          this.url = `/best/preview/reports/${this.$route.params.report}?type=${type}&taxonomy_id=${id}`
-        })
-      },
+  methods: {
+    getReport () {
+      let lang = this.$route.query.lang
+      axios.get(
+        `/api/v1/reports/${this.$route.params.report}`, {
+          params: { lang: lang }
+        }
+      ).then(response => {
+        this.resource.data = response.data.data
+        let id = this.resource.data.value['current:index']['taxonomy']['id'] || null
+        let type = this.$route.query.type || 'index'
+        this.url = `/best/preview/reports/${this.$route.params.report}?type=${type}&taxonomy_id=${id}&lang=${lang}`
+      })
+    },
 
-      goToSurveyPage (item) {
+    goToSurveyPage (item) {
+      this.$router.push({
+        name: 'companies.response',
+        query: { month: item.remarks },
+        params: {
+          id: this.$route.params.id,
+          taxonomy: item.value['current:index']['taxonomy']['id'] || null,
+          survey: item.value['survey:id'],
+        },
+      })
+    },
+
+      goToShowPage (ar) {
         this.$router.push({
-          name: 'companies.response',
-          query: { month: item.remarks },
+           name: 'reports.show',
           params: {
             id: this.$route.params.id,
-            taxonomy: item.value['current:index']['taxonomy']['id'] || null,
-            survey: item.value['survey:id'],
+            report: this.$route.params.report
           },
-        })
+          query: {
+            lang: 'ar'
+          }
+        }).catch(err => {})
+        this.$router.go()
+
+        // this.$router.go({
+        //   name: 'reports.show',
+        //   params: {
+        //     id: this.$route.params.id,
+        //     report: this.$route.params.report
+        //   },
+        //   query: {
+        //     lang: 'ar'
+        //   },
+        // })
       },
 
       downloadReport () {
@@ -69,23 +104,23 @@
         // })
       },
 
-      setIframeHeight () {
-        this.resource.loading = true
-        document.querySelector('iframe').addEventListener('load', function (e) {
-          var iframe = this
-          var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow
+    setIframeHeight () {
+      this.resource.loading = true
+      document.querySelector('iframe').addEventListener('load', function (e) {
+        var iframe = this
+        var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow
 
-          if (iframeWin.document.body) {
-            iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight
-          }
-        })
-        this.resource.loading = false
-      }
-    },
+        if (iframeWin.document.body) {
+          iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight
+        }
+      })
+      this.resource.loading = false
+    }
+  },
 
-    mounted () {
-      this.setIframeHeight()
-      this.getReport()
-    },
-  }
+  mounted () {
+    this.setIframeHeight()
+    this.getReport()
+  },
+}
 </script>

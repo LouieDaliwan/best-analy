@@ -4,11 +4,11 @@ export default [
     name: 'companies',
     meta: {
       title: 'Company',
-      icon: 'mdi-briefcase',
+      icon: 'mdi-briefcase-outline',
       authenticatable: true,
       sort: 5,
       permission: ['customers.index', 'customers.owned'],
-      children: ['companies.index', 'companies.show', 'companies.owned', 'companies.find', 'companies.preview', 'companies.survey', 'companies.trashed'],
+      children: ['companies.index', 'companies.show', 'companies.owned', 'companies.find', 'companies.preview', 'companies.survey', 'companies.trashed', 'companies.reports', 'reports.show'],
     },
     children: [
       {
@@ -19,7 +19,7 @@ export default [
           authenticatable: true,
           sort: 5,
           permission: 'customers.index',
-          children: ['companies.index', 'companies.show', 'companies.reports', 'companies.survey'],
+          children: ['companies.index', 'companies.show', 'companies.reports', 'companies.survey', 'companies.preview', 'companies.reports', 'reports.show'],
         },
       },
       {
@@ -31,7 +31,7 @@ export default [
           sort: 5,
           'viewable:superadmins': false,
           permission: 'customers.owned',
-          children: ['companies.owned'],
+          children: ['companies.owned', 'companies.show', 'companies.reports', 'companies.survey', 'companies.preview', 'companies.reports', 'reports.show'],
         },
       },
       {

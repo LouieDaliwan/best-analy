@@ -129,7 +129,7 @@
             large
             color="primary"
             exact
-            :to="{name: 'companies.generate'}">
+            :to="{name: 'companies.find'}">
             <v-icon small left>mdi-file-document-box-search-outline</v-icon>
             {{ trans('Find Company') }}
           </v-btn>

@@ -4,6 +4,12 @@
 
     <page-header :back="{ to: {name: 'companies.reports'}, text: trans('Back to Reports') }">
       <template v-slot:title>{{ trans('Report Preview') }}</template>
+      <template v-slot:utilities>
+        <a class="dt-link text--decoration-none mr-4" @click="goToShowPage('ar')">
+          <!-- <v-icon small left>mdi-delete-outline</v-icon> -->
+          {{ trans('View Report in Arabic') }}
+        </a>
+      </template>
     </page-header>
 
     <template v-if="resource.loading">
@@ -61,7 +67,32 @@ export default {
         }
       })
       this.resource.loading = false
-    }
+    },
+
+    goToShowPage (ar) {
+      this.$router.push({
+         name: 'reports.show',
+        params: {
+          id: this.$route.params.id,
+          report: this.$route.params.report
+        },
+        query: {
+          lang: 'ar'
+        }
+      }).catch(err => {})
+      this.$router.go()
+
+      // this.$router.go({
+      //   name: 'reports.show',
+      //   params: {
+      //     id: this.$route.params.id,
+      //     report: this.$route.params.report
+      //   },
+      //   query: {
+      //     lang: 'ar'
+      //   },
+      // })
+    },
   },
 
   mounted () {

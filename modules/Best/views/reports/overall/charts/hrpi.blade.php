@@ -1,24 +1,18 @@
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-between align-items-center">
-      <h2 class="dt-secondary mb-0">@lang($data['indices']['HRPI']['pindex']) {{ __('Perfomarnce Index') }}</h2>
-      <div>
-        <span class="dt-button-primary-soft mx-2 font-weight-bold" style="font-size: 17px;">
-          {{ $data['indices']['HRPI']['overall:total'] }}%
-        </span>
-      </div>
+      <h2 class="dt-secondary mb-0">@lang($data['indices']['HRPI']['pindex']) {{ __('Performance Index') }}</h2>
+      <h2 class="mb-0 dt-secondary">
+        {{ $data['indices']['HRPI']['overall:total'] }}%
+      </h2>
     </div>
   </div>
   <div class="border-top"></div>
   <div class="card-body">
-    <div class="row align-items-center">
-      <div class="col-md-4">
-        <p>@lang($data['indices']['HRPI']['overall:comment:overall'])</p>
-      </div>
-      <div class="col-md-8 col-sm-12">
-        <canvas height="100" id="overall-hrpi"></canvas>
-      </div>
+    <div class="mb-3">
+      <canvas height="100" id="overall-hrpi"></canvas>
     </div>
+    <p>@lang($data['indices']['HRPI']['overall:comment:overall'])</p>
   </div>
 </div>
 
@@ -45,7 +39,7 @@
           ["Performance", "Management"],
           ["Learning &", "Development"],
           ["Career & Talent", "Management"],
-          ["Employee Engagement &", "Communication"],
+          ["Employee", "Engagement &", "Communication"],
         ],
         datasets: [
           {
@@ -56,6 +50,7 @@
         ],
       },
       options: {
+        cornerRadius: 20,
         legend: {
           position: 'bottom',
           display: false,
@@ -68,7 +63,7 @@
         },
         scales: {
           xAxes: [{
-            barPercentage: 0.3,
+            barPercentage: 0.2,
             gridLines: {
               zeroLineColor: chartColors.primaryLighten2,
               display: false,

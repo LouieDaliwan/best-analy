@@ -42,10 +42,8 @@
       <v-col cols="12" md="12">
         <v-card>
           <template v-if="resource.data.description">
-            <v-card-title v-text="trans('Team Detail')"></v-card-title>
-            <v-card-text>
-              <p>{{ resource.data.description }}</p>
-            </v-card-text>
+            <h4 class="mb-3" v-text="trans('Team Detail')"></h4>
+            <p>{{ resource.data.description }}</p>
           </template>
 
           <v-card-title v-text="trans('Team Manager')"></v-card-title>
@@ -53,27 +51,64 @@
             <user-account-detail-card v-model="resource.data.lead"></user-account-detail-card>
           </v-card-text>
 
-          <div class="d-flex">
+          <div class="d-flex mb-4">
             <v-divider></v-divider>
             <v-icon small color="muted" class="mx-3 mt-n2">mdi-account-settings</v-icon>
             <v-divider></v-divider>
           </div>
 
           <v-row>
-            <v-col>
-              <v-card-text>
+            <v-col cols="12" md="6" class="pt-0">
+              <v-card-text class="pt-0">
                 <h4 class="mb-5">{{ trans('Team Members') }}</h4>
-                <treeview-field v-model="search"></treeview-field>
                 <treeview-pagination
                   :items="resource.data.users"
                   :search="search"
+                  :activatable="true"
+                  @active="previewMember"
                 ></treeview-pagination>
               </v-card-text>
             </v-col>
 
             <v-divider vertical></v-divider>
-            <v-col cols="12" md="6">
 
+            <v-col class="pt-0">
+              <v-scroll-y-transition mode="out-in">
+                <div v-if="resource.preview" :key="resource.preview.id">
+                  <v-row justify="center">
+                    <v-col cols="auto" class="pt-1">
+                      <div class=" d-flex">
+                        <v-avatar class="mr-3" size="32" color="workspace">
+                          <v-img :src="resource.preview.avatar"></v-img>
+                        </v-avatar>
+                        <p class="font-weight-bold" v-text="resource.preview.displayname"></p>
+                      </div>
+                      <div class="mb-2">
+                        <v-icon small class="mr-2 muted--text">mdi-at</v-icon>
+                        <span class="muted--text">{{ resource.preview.username }}</span>
+                      </div>
+                      <div class="muted--text mb-2">
+                        <v-icon small class="mr-2 muted--text">mdi-email-outline</v-icon>
+                        <span class="muted--text">{{ resource.preview.email }}</span>
+                      </div>
+                      <div class="muted--text">
+                        <v-icon small class="mr-2 muted--text">mdi-account-outline</v-icon>
+                        {{ resource.preview.role }}
+                      </div>
+                    </v-col>
+                  </v-row>
+                </div>
+                <div v-else>
+                  <v-row justify="center">
+                    <v-col cols="auto">
+                      <checklist-icon height="100" class="primary--text" style="filter: grayscale(0.8) brightness(150%);"></checklist-icon>
+                      <p class="muted--text pa-3">
+                        {{ trans('Select members from the list to view details') }}
+                      </p>
+                    </v-col>
+                  </v-row>
+                </div>
+              </v-scroll-y-transition>
             </v-col>
           </v-row>
         </v-card>
@@ -91,7 +126,6 @@ export default {
   computed: {
     filter () {
       return undefined
-      // return (item, search, textKey) => item[textKey].indexOf(search) > -1
     },
   },
 
@@ -163,6 +197,10 @@ export default {
         })
       }).finally(() => { item.loading = false })
     },
+
+    previewMember (val) {
+      this.resource.preview = val[0]
+    }
   },
 
   mounted () {

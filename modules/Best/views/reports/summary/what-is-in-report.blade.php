@@ -4,30 +4,46 @@
     <div class="col-md-12">
       <h1 class="dt-primary">@lang('What\'s in the Report')</h1>
       {{-- Section I --}}
-      <h2 class="dt-secondary"><span class="section__badge">@lang('I.')</span> @lang(':appcode Score', ['appcode' => settings('app:code')])</h2>
+      <h2 class="dt-secondary">@lang('I.') @lang(':appcode Score', ['appcode' => settings('app:code')])</h2>
       <p>@lang('best::reports.Score Description', ['appcode' => settings('app:code')])</p>
 
       <div class="card">
         <div class="card-body">
-          <table class="no-border">
-            <tbody>
-              <tr class="mb-4">
-                <td><span class="badge badge-soft-red mx-2 font-weight-bold" style="color: red;">@lang('RED')</span></td>
-                <td><span class="red mdi mdi-circle mr-3"></span></td>
-                <td style="color: #ff0000">@lang('Rudimentary efficiency practices in place. Require considerable overhaul and/or introduction of new efficiency process and/or manuals.')</td>
-              </tr>
-              <tr>
-                <td><span class="badge badge-soft-amber mx-2 font-weight-bold">@lang('AMBER')</span></td>
-                <td><span class="amber mdi mdi-circle mr-3"></span></td>
-                <td style="color: #ffa500">@lang('Generally stable with efficiency elements in place but exists some inconsistencies, needs some streamlining and several introduction of new process and/or manuals. Recommends further consultancy diagnostics.')</td>
-              </tr>
-              <tr>
-                <td><span class="badge badge-soft-success mx-2 font-weight-bold" style="color: #008000;">@lang('GREEN')</span></td>
-                <td><span class="green mdi mdi-circle mr-3"></span></td>
-                <td style="color: #008000">@lang('Organisation is in good shape. :appcode Elements implemented well with effective forms, processes, policies and structured systems. Recommends microscopic validation.', ['appcode' => settings('app:code')])</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="row">
+            <div class="col-sm-12 col-md-2">
+              <div class="d-flex justify-content-between mb-3">
+                <div><span class="badge badge-soft-red font-weight-bold" style="color: red;">@lang('RED')</span></div>
+                <div><span class="red mdi mdi-circle ml-4"></span></div>
+              </div>
+            </div>
+            <div class="col">
+              <p class="red">@lang('Rudimentary efficiency practices in place. Require considerable overhaul and/or introduction of new efficiency process and/or manuals.')</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 col-md-2">
+              <div class="d-flex justify-content-between mb-3">
+                <div><span class="badge badge-soft-amber font-weight-bold amber">@lang('AMBER')</span></div>
+                <div><span class="amber mdi mdi-circle ml-4"></span></div>
+              </div>
+            </div>
+            <div class="col">
+              <p class="amber">@lang('Generally stable with efficiency elements in place but exists some inconsistencies, needs some streamlining and several introduction of new process and/or manuals. Recommends further consultancy diagnostics.')</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 col-md-2">
+              <div class="d-flex justify-content-between mb-3">
+                <div><span class="badge badge-soft-green font-weight-bold green">@lang('GREEN')</span></div>
+                <div><span class="green mdi mdi-circle ml-4"></span></div>
+              </div>
+            </div>
+            <div class="col">
+              <p class="green">@lang('Organisation is in good shape. :appcode Elements implemented well with effective forms, processes, policies and structured systems. Recommends microscopic validation.', ['appcode' => settings('app:code')])</p>
+            </div>
+          </div>
         </div>
       </div>
       {{-- Section I --}}
@@ -37,7 +53,7 @@
       <div class="card mb-3">
         <div class="card-body">
           @foreach ($indices ?? $data['indices'] ?? [] as $index)
-            <h4 class="font-weight-bold my-0">{{ strtoupper($index['pindex:code']) }} :: {{ $index['pindex'] }}</h4>
+            <h4 class="mb-3">{{ strtoupper($index['pindex:code']) }} : {{ $index['pindex'] }}</h4>
             <p>{!! $index['pindex:description'] !!}</p>
           @endforeach
         </div>

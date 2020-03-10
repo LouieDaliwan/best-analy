@@ -159,7 +159,7 @@
                 </v-tab-item>
                 <v-tab-item key="tab-1">
                   <v-card class="mb-3">
-                    <v-card-title>{{ trans('Quantitative Assessment 1') }}</v-card-title>
+                    <v-card-title>{{ trans('Income Statement') }}</v-card-title>
                     <v-card-text style="overflow-x: auto;">
                       <v-simple-table style="min-width: 800px" class="transparent mb-3">
                         <tbody>
@@ -204,7 +204,7 @@
                     </v-card-text>
                   </v-card>
                   <v-card class="mb-3">
-                    <v-card-title>{{ trans('Balance Sheet Statement') }}</v-card-title>
+                    <v-card-title>{{ trans('Balance Sheet') }}</v-card-title>
                     <v-card-text style="overflow-x: auto;">
                       <v-simple-table style="min-width: 800px" class="transparent mb-3">
                         <tbody>

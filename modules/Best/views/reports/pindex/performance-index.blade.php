@@ -2,7 +2,10 @@
 <section class="pindex">
   <div class="row">
     <div class="col-md-12">
-      <h1 class="dt-primary">{{ __($data['pindex:code']) }} :: {{ __($data['pindex']) }}</h1>
+      <h1 style="color: {{ $data['pindex:color'] }};">
+        {{ __($data['pindex:code']) }} :
+        @lang($data['pindex'])
+      </h1>
     </div>
   </div>
 

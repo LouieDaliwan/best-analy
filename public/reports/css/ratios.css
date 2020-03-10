@@ -1,9 +1,11 @@
 .table-ratio table tr td {
-  font-size: 12px;
+  font-size: 15px;
+  padding: 5px;
 }
 
 .table-ratio table tr th {
   font-size: 12px;
+  padding: 5px;
 }
 
 .title:not(:nth-child(1)) {
@@ -12,7 +14,8 @@
   color: #ffffff;
 }
 
-.title1 td {
+.title1 td,
+.ratioLIQUIDITY-18 {
   display: none;
 }
 

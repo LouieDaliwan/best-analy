@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <h1 class="mb-5 dt-secondary text-capitalize">@lang('Overall Organisations Enablers Metrics')</h1>
+        <h1 class="mb-5 dt-secondary text-capitalize">@lang('Overall Organisation\'s Enablers Metrics')</h1>
       </div>
     </div>
   </div>
@@ -21,67 +21,60 @@
     </div>
 
     <div class="col-md-6 col-sm-12">
-      <div class="mb-3">
-        <div class="row four-tec">
-          <div class="col-auto">
-            <div class="imgWorkflow card">
-              <div class="card-body p-3">
-                <img height="32" src="{{ asset('reports/assets/icons/workflow-processes.svg') }}">
-              </div>
+      {{-- Documentation --}}
+      <div class="row four-tec mb-4">
+        <div class="col-auto">
+          <div class="imgDocumentation card circular">
+            <div class="card-body p-3">
+              <img height="24" src="{{ asset('reports/assets/icons/documentation.svg') }}">
             </div>
-          </div>
-          <div class="col">
-            <h4>@lang('Workflow Processess')</h4>
-            <p class="mb-0">@lang($data['overall:enablers']['enablers']['Workflow Processess'])</p>
           </div>
         </div>
-      </div>
-
-      <div class="mb-3">
-        <div class="row four-tec">
-          <div class="col-auto">
-            <div class="imgTalent card">
-              <div class="card-body p-3">
-                <img height="32" src="{{ asset('reports/assets/icons/talent.svg') }}">
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <h4>@lang('Talent')</h4>
-            <p class="mb-0">@lang($data['overall:enablers']['enablers']['Talent'])</p>
-          </div>
+        <div class="col dt-recommendation-title">
+          <h2 class="mb-0">@lang('Documentation')</h2>
+          <p class="mb-0">@lang($data['overall:enablers']['enablers']['Documentation'])</p>
         </div>
       </div>
-
-      <div class="mb-3">
-        <div class="row four-tec">
-          <div class="col-auto">
-            <div class="imgDocumentation card">
-              <div class="card-body p-3">
-                <img height="32" src="{{ asset('reports/assets/icons/documentation.svg') }}">
-              </div>
+      {{-- Talent --}}
+      <div class="row four-tec mb-4">
+        <div class="col-auto">
+          <div class="imgTalent card circular">
+            <div class="card-body p-3">
+              <img height="24" src="{{ asset('reports/assets/icons/talent.svg') }}">
             </div>
-          </div>
-          <div class="col">
-            <h4>@lang('Documentation')</h4>
-            <p class="mb-0">@lang($data['overall:enablers']['enablers']['Documentation'])</p>
           </div>
         </div>
+        <div class="col dt-recommendation-title">
+          <h2 class="mb-0">@lang('Talent')</h2>
+          <p class="mb-0">@lang($data['overall:enablers']['enablers']['Talent'])</p>
+        </div>
       </div>
-
-      <div class="mb-3">
-        <div class="row four-tec">
-          <div class="col-auto">
-            <div class="imgTechnology card">
-              <div class="card-body p-3">
-                <img height="32" src="{{ asset('reports/assets/icons/technology.svg') }}">
-              </div>
+      {{-- Technology --}}
+      <div class="row four-tec mb-4">
+        <div class="col-auto">
+          <div class="imgTechnology card circular">
+            <div class="card-body p-3">
+              <img height="24" src="{{ asset('reports/assets/icons/technology.svg') }}">
             </div>
           </div>
-          <div class="col">
-            <h4>@lang('Technology')</h4>
-            <p class="mb-0">@lang($data['overall:enablers']['enablers']['Technology'])</p>
+        </div>
+        <div class="col dt-recommendation-title">
+          <h2 class="mb-0">@lang('Technology')</h2>
+          <p class="mb-0">@lang($data['overall:enablers']['enablers']['Technology'])</p>
+        </div>
+      </div>
+      {{-- Workflow Progress --}}
+      <div class="row four-tec mb-4">
+        <div class="col-auto">
+          <div class="imgWorkflow card circular">
+            <div class="card-body p-3">
+              <img height="24" src="{{ asset('reports/assets/icons/workflow-processes.svg') }}">
+            </div>
           </div>
+        </div>
+        <div class="col dt-recommendation-title">
+          <h2 class="mb-0">@lang('Workflow Processess')</h2>
+          <p class="mb-0">@lang($data['overall:enablers']['enablers']['Workflow Processess'])</p>
         </div>
       </div>
     </div>

@@ -132,6 +132,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
             $this->data['indices'][$taxonomy->alias] = [
                 'taxonomy' => $taxonomy->toArray(),
+                'page' => $i + 3,
                 'pindex' => $taxonomy->name,
                 'pindex:code' => $taxonomy->alias,
                 'pindex:description' => $taxonomy->description,
@@ -155,8 +156,8 @@ class FormulaService extends Service implements FormulaServiceInterface
                     $taxonomy->alias, $customer->name, $total
                 ),
                 'box:comments' => [
-                    $this->getFirstBoxComment($total, $group, $taxonomy->alias),
-                    $this->getSecondBoxComment($total, $group, $taxonomy->alias),
+                    $this->getFirstBoxComment($group, $taxonomy->alias),
+                    $this->getSecondBoxComment($group, $taxonomy->alias),
                 ],
                 'key:enablers' => $enablers = $this->getKeyEnablers($this->reports, $customer->name, $taxonomy->alias),
                 'key:enablers:description' => $this->getKeyEnablersDescription($taxonomy->alias),
@@ -318,6 +319,12 @@ class FormulaService extends Service implements FormulaServiceInterface
         return [
             'label' => ['Documentation', 'Talent', 'Technology', 'Workflow Processes'],
             'data' => [$documentationAvg*100, $talentAvg*100, $technologyAvg*100, $workflowAvg*100],
+            'keyed:data' => [
+                'Documentation' => $documentationAvg*100,
+                'Talent' => $talentAvg*100,
+                'Technology' => $technologyAvg*100,
+                'Workflow Processes' => $workflowAvg*100,
+            ]
         ];
     }
 
@@ -597,12 +604,11 @@ class FormulaService extends Service implements FormulaServiceInterface
     /**
      * Retrieve the box comments.
      *
-     * @param  integer                       $total
      * @param  Illuminate\Support\Collection $group
      * @param  string                        $code
      * @return string|array
      */
-    public function getFirstBoxComment($total, $group, $code)
+    public function getFirstBoxComment($group, $code)
     {
         $code = strtolower($code);
 
@@ -611,8 +617,14 @@ class FormulaService extends Service implements FormulaServiceInterface
         if ($group->avg() >= 1) {
             $firstSentence =  trans("best::comments.{$code}.100");
         } else {
-            $fifthElement = $group->sort()->keys()->get(4);
-            $fourthElement = $group->sort()->keys()->get(3);
+            // Last element.
+            $fifthElement = $group->sortByDesc(function ($item) {
+                return $item;
+            })->keys()->get(0);
+            // Second to the last.
+            $fourthElement = $group->sortByDesc(function ($item) {
+                return $item;
+            })->keys()->get(1);
 
             if ($group->sort()->get($fifthElement) == $group->sort()->get($fourthElement)) {
                 $firstSentence = trans("best::comments.{$code}.first.based on responses", [
@@ -639,12 +651,11 @@ class FormulaService extends Service implements FormulaServiceInterface
     /**
      * Retrieve the box comments.
      *
-     * @param  integer                       $total
      * @param  Illuminate\Support\Collection $group
      * @param  string                        $code
      * @return string|array
      */
-    public function getSecondBoxComment($total, $group, $code)
+    public function getSecondBoxComment($group, $code)
     {
         $code = strtolower($code);
         $firstElement = $group->sort()->keys()->get(0);
@@ -757,7 +768,7 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  float  $total
      * @return mixed
      */
-    protected function getOverallFindingsComment($code, $customer, $total)
+    public function getOverallFindingsComment($code, $customer, $total)
     {
         switch ($code) {
             case 'BSPI':

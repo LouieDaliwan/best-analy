@@ -27,9 +27,9 @@
 
             <language-switcher class="mb-6"></language-switcher>
 
-            <div class="d-flex justify-end">
+            <!-- <div class="d-flex justify-end">
               <v-btn @click="saveSettings" :block="$vuetify.breakpoint.smAndDown" large color="primary" v-text="trans('Save Settings')"></v-btn>
-            </div>
+            </div> -->
           </v-card-text>
         </v-card>
       </v-col>

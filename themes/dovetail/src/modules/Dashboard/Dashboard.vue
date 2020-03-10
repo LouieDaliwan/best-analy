@@ -122,7 +122,7 @@
             large
             color="primary"
             exact
-            :to="{name: 'companies.generate'}">
+            :to="{name: 'companies.find'}">
             <v-icon small left>mdi-file-document-box-search-outline</v-icon>
             {{ trans('Find Company') }}
           </v-btn>
@@ -226,7 +226,7 @@ export default {
     getPaginatedData: function (params = null, caller = null) {
       params = Object.assign(params ? params : this.$route.query, { search: this.resources.search })
       this.resources.loading = true
-      axios.get(this.api.list(), { params })
+      axios.get(this.api.owned(), { params })
         .then(response => {
           this.resources = Object.assign({}, this.resources, response.data)
           this.resources.options = Object.assign(this.resources.options, response.data.meta, params)

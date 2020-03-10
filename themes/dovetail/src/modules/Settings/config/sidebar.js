@@ -32,6 +32,17 @@ export default [
       //     permission: 'settings.branding',
       //   },
       // },
+      {
+        code: 'settings.formulas',
+        name: 'best.formulas',
+        meta: {
+          title: 'Formulas',
+          authenticatable: true,
+          permission: 'best.formulas',
+          sort: 501,
+        },
+        permission: 'settings.formulas',
+      },
       // System
       {
         code: 'settings.system',

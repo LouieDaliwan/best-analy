@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <h1 class="mb-5 dt-secondary">@lang($data['pindex']) @lang('Element\'s Score')</h1>
+        <h1 class="mb-3 dt-secondary">@lang($data['pindex']) @lang('Element\'s Score')</h1>
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="col-md-7">
-      <div class="card">
+      <div class="card mb-0">
         <div class="card-body">
           <canvas id="elements-score-{{ $data['pindex:code'] }}"></canvas>
         </div>
@@ -67,6 +67,7 @@ $(document).ready(function() {
       ],
     },
     options: {
+      cornerRadius: 20,
       responsive: true,
       tooltips: {
         enabled: true,
@@ -101,12 +102,13 @@ $(document).ready(function() {
             fontColor: '#044b7f',
             fontFamily: 'Rubik, sans-serif',
             fontSize: 12,
+            max: 100,
             callback: function(value){return value+ "%"}
           },
         }],
         maxBarThickness: 5,
         yAxes: [{
-          barPercentage: 0.4,
+          barPercentage: 0.3,
           gridLines: {
             display: false,
           },

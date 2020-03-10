@@ -63,7 +63,7 @@
         <!-- Alertbox -->
 
         <v-row>
-          <v-col cols="12" md="9">
+          <v-col cols="12">
             <template v-if="isFetchingResource">
               <skeleton-edit></skeleton-edit>
             </template>
@@ -102,6 +102,16 @@
                     </validation-provider>
                   </v-col>
                   <v-col cols="12">
+                    <validation-provider vid="manager_id" rules="required" :name="trans('manager_id')" v-slot="{ errors }">
+                      <manager-picker
+                        :dense="isDense"
+                        :disabled="isLoading"
+                        name="manager_id"
+                        v-model="resource.data.manager_id"
+                      ></manager-picker>
+                    </validation-provider>
+                  </v-col>
+                  <v-col cols="12">
                     <v-textarea
                       :label="trans('Description')"
                       auto-grow
@@ -115,14 +125,72 @@
                 </v-row>
                 <input type="hidden" name="user_id" :value="auth.id">
               </v-card-text>
+
+              <div class="d-flex mb-4">
+                <v-divider></v-divider>
+                <v-icon small color="muted" class="mx-3 mt-n2">mdi-account-settings</v-icon>
+                <v-divider></v-divider>
+              </div>
+
+              <v-row>
+                <v-col class="pt-0">
+                  <v-card-text class="pt-0">
+                    <h4 class="mb-5" v-text="trans('Select Members')"></h4>
+                    <treeview-field v-model="search"></treeview-field>
+                    <validation-provider vid="users" name="users[]" rules="required" v-slot="{ errors }">
+                      <v-card-text :key="item" class="error--text" v-html="item" v-for="item in errors"></v-card-text>
+                    </validation-provider>
+                    <treeview-pagination
+                      :items="resource.users"
+                      :search="search"
+                      :selectable="true"
+                      v-model="resource.selected"
+                    ></treeview-pagination>
+
+                    <input type="hidden" v-for="item in resource.selected" name="users[]" :value="item.id">
+                  </v-card-text>
+                </v-col>
+
+                <v-divider vertical class="d-none d-md-block"></v-divider>
+
+                <v-col cols="12" md="6" class="pt-0">
+                  <v-card-text v-if="resource.selected.length" class="pt-0">
+                    <h4 class="mb-5" v-text="trans('Selected Members')"></h4>
+                    <v-scroll-x-transition mode="in-out">
+                      <div>
+                        <v-scroll-x-transition group mode="in-out">
+                          <div v-for="(member, i) in resource.selected" :key="i">
+                            <div :class="{'d-none': member.active}" class="py-3 px-4">
+                              <v-avatar class="mr-6" size="32" color="workspace">
+                                <v-img :src="member.avatar"></v-img>
+                              </v-avatar>
+                              <span v-text="member.displayname"></span>
+                            </div>
+                          </div>
+                        </v-scroll-x-transition>
+                      </div>
+                    </v-scroll-x-transition>
+                  </v-card-text>
+                  <v-card-text class="text-center" v-else>
+                    <v-scroll-x-transition mode="out-in">
+                      <div>
+                        <checklist-icon height="100" class="primary--text" style="filter: grayscale(0.8) brightness(150%);"></checklist-icon>
+                        <p class="muted--text pa-3">
+                          {{ trans('Select members from the list to view details') }}
+                        </p>
+                      </div>
+                    </v-scroll-x-transition>
+                  </v-card-text>
+                </v-col>
+              </v-row>
             </v-card>
           </v-col>
-          <v-col cols="12" md="3">
+          <!-- <v-col cols="12" md="3">
             <template v-if="isFetchingResource">
               <skeleton-metainfo-card></skeleton-metainfo-card>
             </template>
             <metainfo-card v-show="isFinishedFetchingResource" :list="metaInfoCardList"></metainfo-card>
-          </v-col>
+          </v-col> -->
         </v-row>
       </v-form>
     </validation-observer>
@@ -185,7 +253,7 @@ export default {
 
   components: {
     SkeletonEdit,
-    SkeletonIcon
+    SkeletonIcon,
   },
 
   data: () => ({
@@ -193,6 +261,8 @@ export default {
     loading: true,
     resource: new Team,
     isValid: true,
+    search: '',
+    searchSelectedMember: '',
   }),
 
   methods: {
@@ -342,12 +412,37 @@ export default {
       }).finally(() => { this.load(false) })
     },
 
+    displayUsersList () {
+      axios.get(
+        $api.users.list(), { params: { per_page: '-1' } }
+      ).then(response => {
+        this.resource.users = Object.assign([], this.resource.users, response.data.data)
+        this.resource.usersTotal = response.data.meta.last_page
+        this.resource.users = this.resource.users.map(function (item, i) {
+          return Object.assign(item, {
+            key: item.id,
+            name: item.displayname+' '+item.username+' '+item.email,
+            order: i,
+          })
+        })
+      }).finally(() => {
+        this.getResource()
+      })
+    },
+
     getResource: function () {
       axios.get(
         $api.show(this.$route.params.id)
       ).then(response => {
         this.resource.data = Object.assign(response.data.data)
-        this.resource.data.metadata = Object.assign([], this.resource.data.metadata)
+        this.resource.data.manager_id = Object.assign([], [this.resource.data.manager_id])
+        this.resource.selected = this.resource.data.members.map(function (item, i) {
+          return Object.assign(item, {
+            key: item.id,
+            name: item.displayname+' '+item.username+' '+item.email,
+            order: i,
+          })
+        })
       }).finally(() => {
         this.load(false)
         this.resource.isPrestine = true
@@ -356,7 +451,8 @@ export default {
   },
 
   mounted () {
-    this.getResource()
+    // this.getResource(),
+    this.displayUsersList()
   },
 
   watch: {
@@ -370,6 +466,17 @@ export default {
         }
       },
       deep: true,
+    },
+
+    'resource.selected': {
+      handler (val) {
+        this.resource.isPrestine = false
+        this.resource.hasErrors = this.$refs.updateform.flags.invalid
+        if (!this.resource.hasErrors) {
+          this.hideAlertbox()
+        }
+      },
+      deep: false,
     },
   },
 }

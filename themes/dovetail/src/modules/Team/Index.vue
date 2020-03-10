@@ -3,6 +3,13 @@
     <metatag :title="trans('All Team')"></metatag>
 
     <page-header>
+      <template v-slot:utilities>
+        <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'teams.trashed'}">
+          <v-icon small left>mdi-delete-outline</v-icon>
+          {{ trans('Trashed Team') }}
+        </router-link>
+      </template>
+
       <template v-slot:action>
         <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'teams.create' }">
           <v-icon small left>mdi-account-multiple-plus-outline</v-icon>
@@ -17,9 +24,10 @@
         <toolbar-menu
           :items.sync="tabletoolbar"
           bulk
-          deletable
-          @update:delete="bulkDeleteResources"
+          downloadable
+          trashable
           @update:search="search"
+          @update:trash="bulkTrashResource"
           >
         </toolbar-menu>
         <v-slide-y-reverse-transition mode="out-in">
@@ -59,17 +67,6 @@
             </template>
             <!-- Name -->
 
-            <!-- Description -->
-            <template v-slot:item.description="{ item }">
-              <v-tooltip bottom transition="scroll-y-transition" max-width="300">
-                <template v-slot:activator="{ on }">
-                  <span v-on="on" class="text--ellipsis-1">{{ trans(item.description) }}</span>
-                </template>
-                <span>{{ trans(item.description) }}</span>
-              </v-tooltip>
-            </template>
-            <!-- Description -->
-
             <!-- Manager -->
             <template v-slot:item.author="{ item }">
               <v-tooltip bottom transition="scroll-y-transition" max-width="300">
@@ -101,16 +98,16 @@
                 </v-tooltip>
                 <!-- Edit -->
 
-                <!-- Permanently Delete -->
+                <!-- Move to Trash -->
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <v-btn @click="askUserToPermanentlyDeleteResource(item)" icon v-on="on">
-                      <v-icon small>mdi-delete-forever-outline</v-icon>
+                    <v-btn @click="askUserToDestroyTeam(item)" icon v-on="on">
+                      <v-icon small>mdi-delete-outline</v-icon>
                     </v-btn>
                   </template>
-                  <span>{{ trans_choice('Permanently delete this team', 1) }}</span>
+                  <span>{{ trans('Move to trash') }}</span>
                 </v-tooltip>
-                <!-- Permanently Delete -->
+                <!-- Move to Trash -->
               </div>
             </template>
             <!-- Action buttons -->
@@ -190,7 +187,6 @@ export default {
       selected: [],
       headers: [
         { text: trans('Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
-        { text: trans('Description'), align: 'left', value: 'description', class: 'text-no-wrap' },
         { text: trans('Manager'), align: 'left', value: 'author', class: 'text-no-wrap' },
         { text: trans('Last Modified'), value: 'updated_at', class: 'text-no-wrap' },
         { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
@@ -276,74 +272,74 @@ export default {
       this.$refs['tablesearch'].focus()
     },
 
-   askUserToPermanentlyDeleteResource (item) {
+    bulkTrashResource () {
+      let selected = this.selected
+      axios.delete($api.destroy(null), { data: { id: selected } })
+        .then(response => {
+          this.getPaginatedData(null, 'bulkTrashResource')
+          this.tabletoolbar.toggleTrash = false
+          this.tabletoolbar.toggleBulkEdit = false
+          this.hideDialog()
+          this.showSnackbar({
+            text: trans_choice('Team successfully moved to trash', this.tabletoolbar.bulkCount)
+          })
+        })
+        .catch(err => {
+          this.errorDialog({
+            width: 400,
+            buttons: { cancel: { show: false } },
+            title: trans('Whoops! An error occured'),
+            text: err.response.data.message,
+          })
+        })
+    },
+
+    askUserToDestroyTeam (item) {
       this.showDialog({
-        color: 'error',
+        color: 'warning',
         illustration: man,
         illustrationWidth: 200,
         illustrationHeight: 160,
         width: '420',
-        title: 'You are about to permanently delete the selected team.',
-        text: ['Some data related to the account will still remain.', trans('Are you sure you want to permanently delete?', {name: item.name})],
+        title: 'You are about to move to trash the selected team.',
+        text: ['Some data related to team will still remain.', trans('Are you sure you want to move :name to Trash?', {name: item.name})],
         buttons: {
           cancel: { show: true, color: 'link' },
           action: {
-            text: 'Permanently delete',
-            color: 'error',
+            text: 'Move to Trash',
+            color: 'warning',
             callback: (dialog) => {
               this.loadDialog(true)
-              this.deleteResource(item)
+              this.destroyResource(item)
             }
           }
         }
       })
     },
 
-    deleteResource (item) {
+    destroyResource (item) {
       item.loading = true
-      axios.destroy(
-        $api.destroy(item.id)
-      ).then(response => {
-        item.active = false
-        this.getPaginatedData(null)
-        this.hideDialog()
-        this.showSnackbar({
-          text: trans_choice('Index successfully deleted', 1)
+      axios.delete($api.destroy(item.id))
+        .then(response => {
+          item.active = false
+          this.getPaginatedData(null, 'destroyResource')
+          this.showSnackbar({
+            text: trans_choice('Team successfully moved to trash', 1)
+          })
+          this.hideDialog()
         })
-      }).catch(err => {
-        this.errorDialog({
-          width: 400,
-          buttons: { cancel: { show: false } },
-          title: trans('Whoops! An error occured'),
-          text: err.response.data.message,
+        .catch(err => {
+          this.errorDialog({
+            width: 400,
+            buttons: { cancel: { show: false } },
+            title: trans('Whoops! An error occured'),
+            text: err.response.data.message,
+          })
         })
-      }).finally(() => {
-        item.active = false
-        item.loading = false
-      })
-    },
-
-    bulkDeleteResources () {
-      let selected = this.selected
-      axios.delete(
-        $api.delete(null), {
-          data: { id: selected }
-      }).then(response => {
-        this.getPaginatedData(null)
-        this.tabletoolbar.toggleTrash = false
-        this.tabletoolbar.toggleBulkEdit = false
-        this.hideDialog()
-        this.showSnackbar({
-          text: trans_choice('Items permanently deleted', this.tabletoolbar.bulkCount)
+        .finally(() => {
+          item.active = false
+          item.loading = false
         })
-      }).catch(err => {
-        this.errorDialog({
-          width: 400,
-          buttons: { cancel: { show: false } },
-          title: trans('Whoops! An error occured'),
-          text: err.response.data.message,
-        })
-      })
     },
   },
 

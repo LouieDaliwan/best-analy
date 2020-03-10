@@ -8,7 +8,7 @@ export default [
       authenticatable: true,
       sort: 5,
       permission: 'teams.index',
-      children: ['teams.index', 'teams.create', 'teams.edit', 'teams.trashed'],
+      children: ['teams.index', 'teams.create', 'teams.show', 'teams.edit', 'teams.trashed'],
     },
     children: [
       {
@@ -19,7 +19,7 @@ export default [
           authenticatable: true,
           sort: 5,
           permission: 'teams.index',
-          children: ['teams.index', 'teams.edit'],
+          children: ['teams.index', 'teams.edit', 'teams.show'],
         },
       },
       {
@@ -30,6 +30,16 @@ export default [
           authenticatable: true,
           sort: 6,
           permission: 'teams.create',
+        },
+      },
+      {
+        code: 'teams.trashed',
+        name: 'teams.trashed',
+        meta: {
+          title: 'Trashed Teams',
+          authenticatable: true,
+          sort: 5,
+          permission: 'teams.trashed',
         },
       },
     ],

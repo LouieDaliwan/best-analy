@@ -3,31 +3,38 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <h1 class="mb-5 dt-secondary">@lang('Key Enablers')</h1>
+        <h1 class="mb-3 dt-secondary">@lang('Key Enablers')</h1>
         <p>@lang($data['key:enablers:description'] ?? null)</p>
       </div>
     </div>
   </div>
 
-  <div class="row align-items-center">
-    <div class="col-md-12 col-sm-12">
-      <div class="card">
-        <div class="card-body">
-          <canvas height="80" class="my-3" id="key-enablers-{{ $data['pindex:code'] }}"></canvas>
-        </div>
-      </div>
+  <div class="card">
+    <div class="card-body">
+      <canvas height="80" class="my-3" id="key-enablers-{{ $data['pindex:code'] }}"></canvas>
     </div>
+  </div>
 
-    <div class="col-md-12 col-sm-12">
-      <div class="row">
-        @foreach ($data['key:enablers']['data'] as $key => $enabler)
-          <div class="col-md-6 col-sm-12">
-            <h4 class="mb-3">@lang($key): <span class="mx-3 dt-secondary">{{ $enabler['value'] }}%</span></h4>
-            <p>@lang($enabler['comment'])</p>
+  <div class="row">
+    @foreach ($data['key:enablers']['data'] as $key => $enabler)
+      <div class="col-md-6 col-sm-12">
+        <h2 class="mb-3">@lang($key)</h2>
+
+        <div class="d-flex justify-content-between mb-3">
+          <div class="d-fsdsdlex align-items-center">
+            {{-- <span style="width: 10px; height: 10px; background: #f43b47; display: inline-block; border-radius: 100%;"></span> --}}
+            <h4 class="mb-2">{{ $data['pindex:code'] }}</h4>
+            <div><span class="enablers-badge-index">{{ $enabler['value'] }}%</span></div>
           </div>
-        @endforeach
+          <div class="d-flesdsx align-items-center">
+            <h4 class="mb-2">{{ __('ORG. AVG') }}</h4>
+            <div class="text-right"><span class="enablers-badge-org">{{ $orig['keyed:data'][$key] }}%</span></div>
+          </div>
+        </div>
+
+        <p>@lang($enabler['comment'])</p>
       </div>
-    </div>
+    @endforeach
   </div>
 </section>
 
@@ -47,21 +54,23 @@ $(document).ready(function() {
       datasets: [
         {
           data: {!! json_encode(collect($data['key:enablers']['chart']['dataset'])->values()->toArray()) !!},
-          backgroundColor: '#f43b47',
+          backgroundColor: '#555da6',
           label: "{{ $data['pindex:code'] }}",
-          borderColor: '#f43b47',
+          borderColor: '#555da6',
           fill: false,
           borderWidth: 3,
-          pointBorderWidth: 10,
+          pointBorderWidth: 5,
+          lineTension: 0.6
         },
         {
           data: {!! json_encode(collect($orig['data'])->values()->toArray()) !!},
-          backgroundColor: '#453a94',
-          label: "ORIG. AVG",
-          borderColor: '#453a94',
+          backgroundColor: '#ca247a',
+          label: "ORG. AVG",
+          borderColor: '#ca247a',
           fill: false,
           borderWidth: 3,
-          pointBorderWidth: 10,
+          pointBorderWidth: 5,
+          lineTension: 0.6
         },
       ],
     },
@@ -82,6 +91,9 @@ $(document).ready(function() {
           fontColor: '#044b7f',
           fontFamily: 'Rubik, sans-serif',
           fontSize: 15,
+          usePointStyle: true,
+          padding: 30,
+          boxWidth: 20,
         }
       },
       scales: {

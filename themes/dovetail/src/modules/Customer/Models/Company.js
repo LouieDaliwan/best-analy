@@ -7,7 +7,7 @@ class Company {
 
     this.metadata = {
       'years': {
-        '<div class="d-none">Years</div>': {
+        'Years': {
           'Year1': 'Year 1',
           'Year2': 'Year 2',
           'Year3': 'Year 3',

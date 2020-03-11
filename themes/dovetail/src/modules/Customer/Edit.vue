@@ -170,7 +170,9 @@
                             <td><strong>{{ trans('Period 3') }}<br>{{ trans('(most recent)') }}</strong></td>
                           </tr>
                           <tr :key="i" v-for="(data, i) in resource.metadata['years']">
-                            <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
+                            <td :colspan="data.length ? 1 : '100%'">
+                              <div class="year-label" v-html="trans(i)"></div>
+                            </td>
                             <td :key="k" v-for="(d, k) in data">
                               <v-text-field
                                 :disabled="isLoading"
@@ -464,3 +466,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.year-label {
+  display: none;
+}
+</style>

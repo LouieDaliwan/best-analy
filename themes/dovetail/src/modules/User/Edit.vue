@@ -200,8 +200,9 @@
               </v-card-text>
             </v-card>
 
-            <can code="password.change">
             <account-details v-model="resource"></account-details>
+            <can code="password.change">
+              <change-password-field v-model="resource.password"></change-password-field>
             </can>
 
             <v-card>
@@ -241,6 +242,7 @@
 <script>
 import $api from './routes/api'
 import AccountDetails from './cards/AccountDetails'
+import ChangePasswordField from './cards/ChangePasswordField'
 import SkeletonEdit from './cards/SkeletonEdit'
 import SkeletonRolePicker from './cards/SkeletonRolePicker'
 import User from './Models/User'
@@ -257,6 +259,7 @@ export default {
 
   components: {
     AccountDetails,
+    ChangePasswordField,
     SkeletonEdit,
     SkeletonRolePicker,
   },
@@ -423,6 +426,7 @@ export default {
 
     submit (e) {
       this.load()
+      this.hideErrorbox()
       e.preventDefault()
 
       axios.post(
@@ -482,6 +486,14 @@ export default {
   },
 
   watch: {
+    'resource.password': function (val) {
+      this.resource.isPrestine = false
+      this.resource.hasErrors = this.$refs.updateform.flags.invalid
+      if (!this.resource.hasErrors) {
+        this.hideAlertbox()
+      }
+    },
+
     'resource.data': {
       handler (val) {
         this.resource.isPrestine = false

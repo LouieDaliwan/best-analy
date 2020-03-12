@@ -60,7 +60,15 @@ class UserService extends Service implements UserServiceInterface
             'email' => ['required', 'email', Rule::unique($this->getTable())->ignore($id)],
             'username' => ['required', Rule::unique($this->getTable())->ignore($id)],
             'password' => 'sometimes|required|min:6',
-            'roles' => 'required',
+            'roles.*' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'roles.required' => 'The role field is required',
+            'roles.*.required' => 'The role field is required',
         ];
     }
 

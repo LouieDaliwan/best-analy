@@ -29,4 +29,16 @@ class UserRequest extends FormRequest
             UserServiceInterface::class
         )->rules($this->route('user'));
     }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return $this->container->make(
+            UserServiceInterface::class
+        )->messages();
+    }
 }

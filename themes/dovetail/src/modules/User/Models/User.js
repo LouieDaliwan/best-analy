@@ -4,6 +4,7 @@ class User {
     this.isPrestine = true
     this.isValid = true
     this.errors = []
+    this.password = null
 
     this.data = {
       prefixname: '',

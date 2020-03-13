@@ -265,7 +265,7 @@ export default {
     }, 200),
 
     goToShowIndexPage (company) {
-      return { name: 'companies.show', params: { id: company.id } }
+      return { name: 'companies.show', params: { id: company.id }, query: { from: this.$route.fullPath } }
     },
 
     focusSearchBar () {

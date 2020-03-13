@@ -115,6 +115,8 @@ class FormulaService extends Service implements FormulaServiceInterface
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {
             $survey = $taxonomy->survey;
+            $enablers = null;
+            $this->reports = null;
 
             if (is_null($survey)) {
                 break;
@@ -162,6 +164,8 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'key:enablers' => $enablers = $this->getKeyEnablers($this->reports, $customer->name, $taxonomy->alias),
                 'key:enablers:description' => $this->getKeyEnablersDescription($taxonomy->alias),
                 'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias),
+                'has:reports' => $this->reports->count(),
+                'reports' => $this->reports,
             ];
         }//end foreach
 
@@ -296,34 +300,36 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function getOriginalAverage($indices)
     {
-        $indices = collect($indices)->map(function ($i) {
+        $indices = collect($indices)->filter(function ($i) {
+            return $i['has:reports'];
+        })->map(function ($i) {
             return $i['key:enablers']['data'];
         });
 
-        $documentationAvg = $indices->map(function ($i) {
+        $documentationAvg = round($indices->map(function ($i) {
             return $i['Documentation']['value']/100;
-        })->avg();
+        })->avg() * 100);
 
-        $talentAvg = $indices->map(function ($i) {
+        $talentAvg = round($indices->map(function ($i) {
             return $i['Talent']['value']/100;
-        })->avg();
+        })->avg() * 100);
 
-        $technologyAvg = $indices->map(function ($i) {
+        $technologyAvg = round($indices->map(function ($i) {
             return $i['Technology']['value']/100;
-        })->avg();
+        })->avg() * 100);
 
-        $workflowAvg = $indices->map(function ($i) {
+        $workflowAvg = round($indices->map(function ($i) {
             return $i['Workflow Processes']['value']/100;
-        })->avg();
+        })->avg() * 100);
 
         return [
             'label' => ['Documentation', 'Talent', 'Technology', 'Workflow Processes'],
-            'data' => [$documentationAvg*100, $talentAvg*100, $technologyAvg*100, $workflowAvg*100],
+            'data' => [$documentationAvg, $talentAvg, $technologyAvg, $workflowAvg],
             'keyed:data' => [
-                'Documentation' => $documentationAvg*100,
-                'Talent' => $talentAvg*100,
-                'Technology' => $technologyAvg*100,
-                'Workflow Processes' => $workflowAvg*100,
+                'Documentation' => $documentationAvg,
+                'Talent' => $talentAvg,
+                'Technology' => $technologyAvg,
+                'Workflow Processes' => $workflowAvg,
             ]
         ];
     }
@@ -382,6 +388,7 @@ class FormulaService extends Service implements FormulaServiceInterface
             $list = KeyStrategicRecommendationComments::get($enabler, $index);
             $icon = Str::slug($enabler);
             $recommendations[$enabler] = [
+                'comments' => (array) $list,
                 'comment' => implode(' || ', (array) $list),
                 'icon' => asset("reports/assets/icons/$icon.svg"),
             ];
@@ -406,6 +413,8 @@ class FormulaService extends Service implements FormulaServiceInterface
         })->filter(function ($submission) {
             return ($submission->submissible->metadata['category']['Documentation'] ?? false)
                 && $submission->submissible->metadata['category']['Documentation'] == 'Y';
+        })->reject(function ($submission) {
+            return (float) $submission->metadata['average'] == 0.00;
         });
 
         $talent = $reports->map(function ($report) {
@@ -413,6 +422,8 @@ class FormulaService extends Service implements FormulaServiceInterface
         })->filter(function ($submission) {
             return ($submission->submissible->metadata['category']['Talent'] ?? false)
                 && $submission->submissible->metadata['category']['Talent'] == 'Y';
+        })->reject(function ($submission) {
+            return (float) $submission->metadata['average'] == 0.00;
         });
 
         $technology = $reports->map(function ($report) {
@@ -420,6 +431,8 @@ class FormulaService extends Service implements FormulaServiceInterface
         })->filter(function ($submission) {
             return ($submission->submissible->metadata['category']['Technology'] ?? false)
                 && $submission->submissible->metadata['category']['Technology'] == 'Y';
+        })->reject(function ($submission) {
+            return (float) $submission->metadata['average'] == 0.00;
         });
 
         $workflow = $reports->map(function ($report) {
@@ -427,40 +440,66 @@ class FormulaService extends Service implements FormulaServiceInterface
         })->filter(function ($submission) {
             return ($submission->submissible->metadata['category']['Workflow Processes'] ?? false)
                 && $submission->submissible->metadata['category']['Workflow Processes'] == 'Y';
+        })->reject(function ($submission) {
+            return (float) $submission->metadata['average'] == 0.00;
         });
 
-        $documentationValue = round((($documentation->sum('results') ?: 0) / ($documentation->count() ?: 1) / 5) * 100);
-        $talentValue = round((($talent->sum('results') ?: 0) / ($talent->count() ?: 1) / 10) * 100);
-        $technologyValue = round((($technology->sum('results') ?: 0) / ($technology->count() ?: 1) / 10) * 100);
-        $workflowValue = round((($workflow->sum('results') ?: 0) / ($workflow->count() ?: 1) / 10) * 100);
+        $docScoreValue = config("modules.best.scores.key_enablers_score.{$code}.Documentation");
+        $documentationValue = round((
+            ($documentation->sum('results')/($documentation->count() ?: 1))/$docScoreValue
+        ) * 100);
+
+        $talentScoreValue = config("modules.best.scores.key_enablers_score.{$code}.Talent");
+        $talentValue = round((
+            ($talent->sum('results')/($talent->count() ?: 1))/$talentScoreValue
+        ) * 100);
+
+        $technologyScoreValue = config("modules.best.scores.key_enablers_score.{$code}.Technology");
+        $technologyValue = round((
+            ($technology->sum('results')/($technology->count() ?: 1))/$technologyScoreValue
+        ) * 100);
+
+        $workflowScoreValue = config("modules.best.scores.key_enablers_score.{$code}.Workflow Processes");
+        $workflowValue = round((
+            ($workflow->sum('results')/($workflow->count() ?: 1))/$workflowScoreValue
+        ) * 100);
 
         $documentationComment = '';
         $documentationSubscore = $documentation->sortBy('metadata.subscore')->take(3)->values();
         if (($documentationValue/100) > config('modules.best.scores.grades.red')) {
             if (($documentationValue/100) > config('modules.best.scores.grades.amber')) {
-                $documentationComment = trans("best::enablers/$code.documentation.50to90", [
+                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
+                $commentValue = $hasGreaterThan90 ? 'greaterThan90' : '50to90';
+                $documentationComment = trans("best::enablers/$code.documentation.$commentValue", [
                     'name' => $customer ?? null,
-                    'item1' => $documentationSubscore->get(0)->submissible->metadata['comment'] ?? null,
-                    'item2' => $documentationSubscore->get(1)->submissible->metadata['comment'] ?? null,
-                    'item3' => $documentationSubscore->get(2)->submissible->metadata['comment'] ?? null,
+                    'item1' => __($documentationSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($documentationSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($documentationSubscore->get(2)->submissible->metadata['comment'] ?? null),
                 ]);
             } else {
-                $documentationComment = trans("best::enablers/$code.documentation.30to50", [
+                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
+                $commentValue = $hasGreaterThan90 ? '50to90' : '30to50';
+                $documentationComment = trans("best::enablers/$code.documentation.$commentValue", [
                     'name' => $customer ?? null,
-                    'item1' => $documentationSubscore->get(0)->submissible->metadata['comment'] ?? null,
-                    'item2' => $documentationSubscore->get(1)->submissible->metadata['comment'] ?? null,
-                    'item3' => $documentationSubscore->get(2)->submissible->metadata['comment'] ?? null,
+                    'item1' => __($documentationSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($documentationSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($documentationSubscore->get(2)->submissible->metadata['comment'] ?? null),
                 ]);
             }
         } else {
             if (($documentationValue/100) < config('modules.best.scores.grades.nonlight')) {
-                $documentationComment = trans("best::enablers/$code.documentation.less30");
+                $documentationComment = trans("best::enablers/$code.documentation.less30", [
+                    'name' => $customer ?? null,
+                    'item1' => __($documentationSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($documentationSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($documentationSubscore->get(2)->submissible->metadata['comment'] ?? null),
+                ]);
             } else {
                 $documentationComment = trans("best::enablers/$code.documentation.30to50", [
                     'name' => $customer ?? null,
-                    'item1' => $documentationSubscore->get(0)->submissible->metadata['comment'] ?? null,
-                    'item2' => $documentationSubscore->get(1)->submissible->metadata['comment'] ?? null,
-                    'item3' => $documentationSubscore->get(2)->submissible->metadata['comment'] ?? null,
+                    'item1' => __($documentationSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($documentationSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($documentationSubscore->get(2)->submissible->metadata['comment'] ?? null),
                 ]);
             }
         }//end if
@@ -469,24 +508,38 @@ class FormulaService extends Service implements FormulaServiceInterface
         $talentSubscore = $talent->sortBy('metadata.subscore')->take(3)->values();
         if (($talentValue/100) > config('modules.best.scores.grades.red')) {
             if (($talentValue/100) > config('modules.best.scores.grades.amber')) {
-                $talentComment = trans("best::enablers/$code.talent.50to90", ['name' => $customer]);
+                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
+                $commentValue = $hasGreaterThan90 ? 'greaterThan90' : '50to90';
+                $talentComment = trans("best::enablers/$code.talent.$commentValue", [
+                    'name' => $customer,
+                    'item1' => __($talentSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($talentSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($talentSubscore->get(2)->submissible->metadata['comment'] ?? null),
+                ]);
             } else {
-                $talentComment = trans("best::enablers/$code.talent.30to50", [
+                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
+                $commentValue = $hasGreaterThan90 ? '50to90' : '30to50';
+                $talentComment = trans("best::enablers/$code.talent.$commentValue", [
                     'name' => $customer ?? null,
-                    'item1' => $talentSubscore->get(0)->submissible->metadata['comment'] ?? null,
-                    'item2' => $talentSubscore->get(1)->submissible->metadata['comment'] ?? null,
-                    'item3' => $talentSubscore->get(2)->submissible->metadata['comment'] ?? null,
+                    'item1' => __($talentSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($talentSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($talentSubscore->get(2)->submissible->metadata['comment'] ?? null),
                 ]);
             }
         } else {
             if (($talentValue/100) < config('modules.best.scores.grades.nonlight')) {
-                $talentComment = trans("best::enablers/$code.talent.less30");
+                $talentComment = trans("best::enablers/$code.talent.less30", [
+                    'name' => $customer,
+                    'item1' => __($talentSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($talentSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($talentSubscore->get(2)->submissible->metadata['comment'] ?? null),
+                ]);
             } else {
                 $talentComment = trans("best::enablers/$code.talent.30to50", [
                     'name' => $customer ?? null,
-                    'item1' => $talentSubscore->get(0)->submissible->metadata['comment'] ?? null,
-                    'item2' => $talentSubscore->get(1)->submissible->metadata['comment'] ?? null,
-                    'item3' => $talentSubscore->get(2)->submissible->metadata['comment'] ?? null,
+                    'item1' => __($talentSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($talentSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($talentSubscore->get(2)->submissible->metadata['comment'] ?? null),
                 ]);
             }
         }//end if
@@ -495,24 +548,38 @@ class FormulaService extends Service implements FormulaServiceInterface
         $technologySubscore = $technology->sortBy('metadata.subscore')->take(3)->values();
         if (($technologyValue/100) > config('modules.best.scores.grades.red')) {
             if (($technologyValue/100) > config('modules.best.scores.grades.amber')) {
-                $technologyComment = trans("best::enablers/$code.technology.50to90");
+                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
+                $commentValue = $hasGreaterThan90 ? 'greaterThan90' : '50to90';
+                $technologyComment = trans("best::enablers/$code.technology.$commentValue", [
+                    'name' => $customer,
+                    'item1' => __($technologySubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($technologySubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($technologySubscore->get(2)->submissible->metadata['comment'] ?? null),
+                ]);
             } else {
-                $technologyComment = trans("best::enablers/$code.technology.30to50", [
+                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
+                $commentValue = $hasGreaterThan90 ? '50to90' : '30to50';
+                $technologyComment = trans("best::enablers/$code.technology.$commentValue", [
                     'name' => $customer ?? null,
-                    'item1' => $technologySubscore->get(0)->submissible->metadata['comment'] ?? null,
-                    'item2' => $technologySubscore->get(1)->submissible->metadata['comment'] ?? null,
-                    'item3' => $technologySubscore->get(2)->submissible->metadata['comment'] ?? null,
+                    'item1' => __($technologySubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($technologySubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($technologySubscore->get(2)->submissible->metadata['comment'] ?? null),
                 ]);
             }
         } else {
             if (($technologyValue/100) < config('modules.best.scores.grades.nonlight')) {
-                $technologyComment = trans("best::enablers/$code.technology.less30");
+                $technologyComment = trans("best::enablers/$code.technology.less30", [
+                    'name' => $customer ?? null,
+                    'item1' => __($technologySubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($technologySubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($technologySubscore->get(2)->submissible->metadata['comment'] ?? null),
+                ]);
             } else {
                 $technologyComment = trans("best::enablers/$code.technology.30to50", [
                     'name' => $customer ?? null,
-                    'item1' => $technologySubscore->get(0)->submissible->metadata['comment'] ?? null,
-                    'item2' => $technologySubscore->get(1)->submissible->metadata['comment'] ?? null,
-                    'item3' => $technologySubscore->get(2)->submissible->metadata['comment'] ?? null,
+                    'item1' => __($technologySubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($technologySubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($technologySubscore->get(2)->submissible->metadata['comment'] ?? null),
                 ]);
             }
         }//end if
@@ -521,31 +588,45 @@ class FormulaService extends Service implements FormulaServiceInterface
         $workflowSubscore = $workflow->sortBy('metadata.subscore')->take(3)->values();
         if (($workflowValue/100) > config('modules.best.scores.grades.red')) {
             if (($workflowValue/100) > config('modules.best.scores.grades.amber')) {
-                $workflowComment = trans("best::enablers/$code.workflow.50to90");
-            } else {
-                $workflowComment = trans("best::enablers/$code.workflow.30to50", [
+                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
+                $commentValue = $hasGreaterThan90 ? 'greaterThan90' : '50to90';
+                $workflowComment = trans("best::enablers/$code.workflow.$commentValue", [
                     'name' => $customer ?? null,
-                    'item1' => $workflowSubscore->get(0)->submissible->metadata['comment'] ?? null,
-                    'item2' => $workflowSubscore->get(1)->submissible->metadata['comment'] ?? null,
-                    'item3' => $workflowSubscore->get(2)->submissible->metadata['comment'] ?? null,
+                    'item1' => __($workflowSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($workflowSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($workflowSubscore->get(2)->submissible->metadata['comment'] ?? null),
+                ]);
+            } else {
+                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
+                $commentValue = $hasGreaterThan90 ? '50to90' : '30to50';
+                $workflowComment = trans("best::enablers/$code.workflow.$commentValue", [
+                    'name' => $customer ?? null,
+                    'item1' => __($workflowSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($workflowSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($workflowSubscore->get(2)->submissible->metadata['comment'] ?? null),
                 ]);
             }
         } else {
             if (($workflowValue/100) < config('modules.best.scores.grades.nonlight')) {
-                $workflowComment = trans("best::enablers/$code.workflow.less30");
+                $workflowComment = trans("best::enablers/$code.workflow.less30", [
+                    'name' => $customer ?? null,
+                    'item1' => __($workflowSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($workflowSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($workflowSubscore->get(2)->submissible->metadata['comment'] ?? null),
+                ]);
             } else {
                 $workflowComment = trans("best::enablers/$code.workflow.30to50", [
                     'name' => $customer ?? null,
-                    'item1' => $workflowSubscore->get(0)->submissible->metadata['comment'] ?? null,
-                    'item2' => $workflowSubscore->get(1)->submissible->metadata['comment'] ?? null,
-                    'item3' => $workflowSubscore->get(2)->submissible->metadata['comment'] ?? null,
+                    'item1' => __($workflowSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($workflowSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($workflowSubscore->get(2)->submissible->metadata['comment'] ?? null),
                 ]);
             }
         }//end if
 
         return [
             'chart' => [
-                'labels' => ['Documentation', 'Talent', 'Technology', 'Workflow Processes'],
+                'labels' => [__('Documentation'), __('Talent'), __('Technology'), __('Workflow Processes')],
                 'dataset' => [$documentationValue, $talentValue, $technologyValue, $workflowValue],
             ],
             'data' => [
@@ -612,10 +693,10 @@ class FormulaService extends Service implements FormulaServiceInterface
     {
         $code = strtolower($code);
 
-        $firstSentence = '';
+        $firstSentence = [];
 
         if ($group->avg() >= 1) {
-            $firstSentence =  trans("best::comments.{$code}.100");
+            $firstSentence[] =  trans("best::comments.{$code}.100");
         } else {
             // Last element.
             $fifthElement = $group->sortByDesc(function ($item) {
@@ -627,21 +708,22 @@ class FormulaService extends Service implements FormulaServiceInterface
             })->keys()->get(1);
 
             if ($group->sort()->get($fifthElement) == $group->sort()->get($fourthElement)) {
-                $firstSentence = trans("best::comments.{$code}.first.based on responses", [
-                    'item1' => $fifthElement, 'item2' => $fourthElement
+                $firstSentence[] = trans("best::comments.{$code}.first.based on responses", [
+                    'item1' => __($fifthElement), 'item2' => __($fourthElement)
                 ]);
             } else {
-                $firstSentence = trans("best::comments.{$code}.first.most well implemented", [
-                    'item1' => $fifthElement
+                $firstSentence[] = trans("best::comments.{$code}.first.most well implemented", [
+                    'item1' => __($fifthElement)
                 ]);
             }
 
             if ($group->sort()->get($fifthElement) == $group->sort()->get($fourthElement)) {
-                $firstSentence .= '';
+                $firstSentence[] = '';
             } else {
-                $firstSentence .=  ' || '.trans("best::comments.{$code}.first.followed by", [
+                $firstSentence[] = trans("best::comments.{$code}.first.followed by", [
                     'name' => $fourthElement, 'score' => round(($group->sort()->get($fourthElement)*100)).'%'
-                ]).' || '.trans("best::comments.{$code}.first.it is imperative");
+                ]);
+                $firstSentence[] = trans("best::comments.{$code}.first.it is imperative");
             }
         }//end if
 
@@ -662,8 +744,8 @@ class FormulaService extends Service implements FormulaServiceInterface
         $secondElement = $group->sort()->keys()->get(1);
 
         return trans("best::comments.{$code}.second", [
-            'item1' => $firstElement,
-            'item2' => $secondElement,
+            'item1' => __($firstElement),
+            'item2' => __($secondElement),
         ]);
     }
 
@@ -688,7 +770,9 @@ class FormulaService extends Service implements FormulaServiceInterface
     public function getChartedGroupedAverage($group)
     {
         return [
-            'labels' => $group->keys(),
+            'labels' => $group->keys()->map(function ($item) {
+                return __($item);
+            }),
             'data' => $group->values()->map(function ($i) {
                 return $i*100;
             }),

@@ -36,7 +36,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                         })->map(function ($cell) {
                             return str_replace('%', '', $cell);
                         })->values()->toArray(),
-                        'backgroundColor' => ['#2AF598', '#08AEEA'],
+                        'backgroundColor' => ['#6751bd', '#6751bd'],
                     ],
                     // Year 2.
                     [
@@ -49,7 +49,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                         })->map(function ($cell) {
                             return str_replace('%', '', $cell);
                         })->values()->toArray(),
-                        'backgroundColor' => ['#00c6fb', '#005bea'],
+                        'backgroundColor' => ['#ed4886', '#ed4886'],
                     ],
                     // Year 3.
                     [
@@ -62,16 +62,36 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                         })->map(function ($cell) {
                             return str_replace('%', '', $cell);
                         })->values()->toArray(),
-                        'backgroundColor' => ['#21D4FD', '#B721FF'],
+                        'backgroundColor' => ['#6299dd', '#6299dd'],
                     ],
                 ],
             ],
 
             'comments' => [
-                $spreadsheet->getSheetByName('FinancialAnalysisReport')->getCell('BF17')->getCalculatedValue(),
-                $spreadsheet->getSheetByName('FinancialAnalysisReport')->getCell('BF18')->getCalculatedValue(),
-                $spreadsheet->getSheetByName('FinancialAnalysisReport')->getCell('BF19')->getCalculatedValue(),
-                $spreadsheet->getSheetByName('FinancialAnalysisReport')->getCell('BF20')->getCalculatedValue(),
+                explode(
+                    '||', $spreadsheet
+                        ->getSheetByName('FinancialAnalysisReport')
+                        ->getCell('BF17')
+                        ->getCalculatedValue()
+                ),
+                explode(
+                    '||', $spreadsheet
+                        ->getSheetByName('FinancialAnalysisReport')
+                        ->getCell('BF18')
+                        ->getCalculatedValue()
+                ),
+                explode(
+                    '||', $spreadsheet
+                        ->getSheetByName('FinancialAnalysisReport')
+                        ->getCell('BF19')
+                        ->getCalculatedValue()
+                ),
+                explode(
+                    '||', $spreadsheet
+                        ->getSheetByName('FinancialAnalysisReport')
+                        ->getCell('BF20')
+                        ->getCalculatedValue()
+                ),
             ],
         ];
     }

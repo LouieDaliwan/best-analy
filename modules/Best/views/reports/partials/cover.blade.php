@@ -47,7 +47,7 @@
             <p class="mb-0">{{ $data['cover:date'] }}</p>
             <div class="mt-5">
               <cite>
-                <small class="text-muted">{{ __('Empowered by') }} {{ settings('app:author') }}</small>
+                <small class="text-muted">{{ __('Powered by') }} {{ settings('app:author') }}</small>
               </cite>
             </div>
           </div>

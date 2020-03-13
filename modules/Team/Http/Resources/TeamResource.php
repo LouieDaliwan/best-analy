@@ -16,6 +16,7 @@ class TeamResource extends JsonResource
     public function toArray($request)
     {
         return array_merge(parent::toArray($request), [
+            'manager' => new UserResource($this->manager),
             'lead' => new UserResource($this->manager),
             'members' => UserResource::collection($this->members),
             'author' => $this->author,

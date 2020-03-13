@@ -10,6 +10,7 @@ use Team\Services\TeamServiceInterface;
 use Tests\ActingAsUser;
 use Tests\TestCase;
 use Tests\WithPermissionsPolicy;
+use User\Models\User;
 
 /**
  * @package Team\Tests\Feature\Api
@@ -41,7 +42,10 @@ class TeamsOwnedTest extends TestCase
         Passport::actingAs($user = $this->asNonSuperAdmin(['teams.owned']), ['teams.owned']);
         $this->withPermissionsPolicy();
 
-        $teams = factory(Team::class, 5)->create(['user_id' => $user->getKey()]);
+        $team = factory(Team::class)->create(['manager_id' => $user->getKey()]);
+        $team->members()->attach(factory(User::class)->create());
+        $team->members()->attach(factory(User::class)->create());
+        $team->members()->attach(factory(User::class)->create());
 
         // Actions
         $response = $this->get(route('api.teams.owned'));
@@ -49,11 +53,9 @@ class TeamsOwnedTest extends TestCase
         // Assertions
         $response
             ->assertSuccessful()
-            ->assertJson(['data' => [['user_id' => $user->getKey()]]])
             ->assertJsonStructure([
                 'data' => [[
-                    'name', 'code', 'description', 'icon',
-                    'lead', 'members', 'author', 'created', 'modified',
+                    'members', 'lead', 'created', 'modified',
                 ]],
             ]);
     }

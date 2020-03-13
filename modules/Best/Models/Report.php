@@ -54,19 +54,6 @@ class Report extends Model
     }
 
     /**
-     * Get the indexable data array for the model.
-     *
-     * @return array
-     */
-    public function toSearchableArray()
-    {
-        return array_merge($this->toArray(), [
-            'value' => json_encode($this->value),
-            'customer' => $this->customer->name,
-        ]);
-    }
-
-    /**
      * Retrieve the modified created_at value.
      *
      * @return string
@@ -87,15 +74,31 @@ class Report extends Model
     public function getFileAttribute()
     {
         try {
-            $name = $this->created.$this->key;
+            $path = $this->value['filepath'] ?? null;
 
-            return chunk_split(base64_encode(
-                file_get_contents(storage_path("reports/{$this->getKey()}/$name.pdf"))
-            ));
+            if (! is_null($path)) {
+                return chunk_split(base64_encode(
+                    file_get_contents(storage_path($path))
+                ));
+            }
         } catch (\Exception $e) {
             unset($e);
         }
 
         return null;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return array_merge($this->toArray(), [
+            'filepath' => $this->value['filepath'] ?? null,
+            'value' => json_encode($this->value),
+            'customer' => $this->customer->name,
+        ]);
     }
 }

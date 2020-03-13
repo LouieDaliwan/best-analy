@@ -7,23 +7,7 @@
     </template>
 
     <template v-else>
-      <page-header>
-        <template v-slot:back>
-          <div class="mb-2">
-            <can code="customers.index">
-              <router-link tag="a" exact :to="{ name: 'companies.index' }" class="text--decoration-none body-1 dt-link">
-                <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
-                <span v-text="trans('Companies')"></span>
-              </router-link>
-              <template v-slot:unpermitted>
-                <router-link tag="a" exact :to="{ name: 'companies.owned' }" class="text--decoration-none body-1 dt-link">
-                  <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
-                  <span v-text="trans('Companies')"></span>
-                </router-link>
-              </template>
-            </can>
-          </div>
-        </template>
+      <page-header :back="{ to: { name: 'companies.index' }, text: trans('Companies') }">
         <template v-slot:title>
           <span :class="$vuetify.breakpoint.smAndUp ? '' : 'title font-weight-bold'" class="mb-3">{{ resource.data.name }}</span>
         </template>
@@ -52,11 +36,11 @@
         <div class="mb-6">
           <v-row>
             <v-col cols="4" md="2" class="py-0"><p class="mb-0 font-weight-bold">{{ trans('Staff Strength') }}:</p></v-col>
-            <v-col cols="auto" class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata['staffstrength'] || null }}</p></v-col>
+            <v-col cols="auto" class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata && resource.data.metadata['staffstrength'] || null }}</p></v-col>
           </v-row>
           <v-row>
             <v-col cols="4" md="2" class="py-0"><p class="mb-0 font-weight-bold">{{ trans('Industry') }}:</p></v-col>
-            <v-col cols="auto" class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata['industry'] || null }}</p></v-col>
+            <v-col cols="auto" class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata && resource.data.metadata['industry'] || null }}</p></v-col>
           </v-row>
         </div>
         <p class="font-weight-regular">

@@ -11,10 +11,12 @@
       </template>
 
       <template v-slot:action>
-        <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'teams.create' }">
-          <v-icon small left>mdi-account-multiple-plus-outline</v-icon>
-          {{ trans('Add Team') }}
-        </v-btn>
+        <can code="teams.create">
+          <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'teams.create' }">
+            <v-icon small left>mdi-account-multiple-plus-outline</v-icon>
+            {{ trans('Add Team') }}
+          </v-btn>
+        </can>
       </template>
     </page-header>
 
@@ -71,9 +73,9 @@
             <template v-slot:item.author="{ item }">
               <v-tooltip bottom transition="scroll-y-transition" max-width="300">
                 <template v-slot:activator="{ on }">
-                  <span v-on="on" class="text-no-wrap">{{ trans(item.author) }}</span>
+                  <span v-on="on" class="text-no-wrap">{{ trans(item.manager.displayname) }}</span>
                 </template>
-                <span>{{ trans(item.author) }}</span>
+                <span>{{ trans(item.manager.displayname) }}</span>
               </v-tooltip>
             </template>
             <!-- Manager -->
@@ -121,14 +123,16 @@
     <div v-if="resourcesIsEmpty">
       <empty-state>
         <template v-slot:actions>
-          <v-btn
-            large
-            color="primary"
-            exact
-            :to="{name: 'teams.create'}">
-            <v-icon small left>mdi-account-multiple-plus-outline</v-icon>
-            {{ trans('Add Team') }}
-          </v-btn>
+          <can code="teams.create">
+            <v-btn
+              large
+              color="primary"
+              exact
+              :to="{name: 'teams.create'}">
+              <v-icon small left>mdi-account-multiple-plus-outline</v-icon>
+              {{ trans('Add Team') }}
+            </v-btn>
+          </can>
         </template>
       </empty-state>
     </div>

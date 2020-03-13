@@ -102,10 +102,10 @@ return [
         'fuzziness' => env('TNTSEARCH_FUZZINESS', true),
         'fuzzy' => [
             'prefix_length' => 2,
-            'max_expansions' => 100,
-            'distance' => 8,
+            'max_expansions' => 500,
+            'distance' => 3,
         ],
-        'asYouType' => false,
+        'asYouType' => env('TNTSEARCH_AS_YOU_TYPE', true),
         'searchBoolean' => env('TNTSEARCH_BOOLEAN', true),
     ],
 

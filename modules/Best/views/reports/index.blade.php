@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <div class="container">
+    {{-- <div class="container">
       <div class="main-body">
         <div class="main-content pb-3">
           @include('best::reports.partials.header')
@@ -56,7 +56,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
 
     <div class="container">
       <div class="main-body">
@@ -65,15 +65,17 @@
         </div>
         <div class="mt-2 border-bottom"></div>
         <div class="main-content">
-          @include('best::reports.partials.organisation-profile')
+          @include('best::reports.overall.organisation-profile')
           @include('best::reports.pindex.performance-index', ['data' => $data['current:pindex'], 'orig' => $data['overall:enablers:orig'] ?? null])
           @include('best::reports.partials.disclaimer')
           @include('best::reports.partials.footer')
           <div class="text-right">
             @if ($data['current:index']['pindex:code'] == 'FMPI')
-              <div style="font-size: 12px;">{{ __('Page 2 of 4') }}</div>
+              {{-- <div style="font-size: 12px;">{{ __('Page 2 of 4') }}</div> --}}
+              <div style="font-size: 12px;">{{ __('Page 1 of 3') }}</div>
             @else
-              <div style="font-size: 12px;">{{ __('Page 2 of 2') }}</div>
+              {{-- <div style="font-size: 12px;">{{ __('Page 2 of 2') }}</div> --}}
+              <div style="font-size: 12px;">{{ __('Page 1 of 1') }}</div>
             @endif
           </div>
         </div>
@@ -88,7 +90,7 @@
           </div>
           <div class="mt-2 border-bottom"></div>
           <div class="main-content">
-            @include('best::reports.partials.organisation-profile')
+            @include('best::reports.overall.organisation-profile')
             @include('best::reports.analysis.profitability')
             @include('best::reports.analysis.liquidity')
             @include('best::reports.analysis.efficiency')
@@ -97,7 +99,7 @@
             @include('best::reports.partials.disclaimer')
             @include('best::reports.partials.footer')
             <div class="text-right">
-              <div style="font-size: 12px;">{{ __('Page 3 of 4') }}</div>
+              <div style="font-size: 12px;">{{ __('Page 2 of 3') }}</div>
             </div>
           </div>
         </div>
@@ -110,12 +112,12 @@
           </div>
           <div class="mt-2 border-bottom"></div>
           <div class="main-content">
-            @include('best::reports.partials.organisation-profile')
+            @include('best::reports.overall.organisation-profile')
             @include('best::reports.table.index')
             @include('best::reports.partials.disclaimer')
             @include('best::reports.partials.footer')
             <div class="text-right">
-              <div style="font-size: 12px;">{{ __('Page 4 of 4') }}</div>
+              <div style="font-size: 12px;">{{ __('Page 3 of 3') }}</div>
             </div>
           </div>
         </div>

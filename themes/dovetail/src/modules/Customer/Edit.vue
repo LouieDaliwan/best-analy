@@ -177,6 +177,7 @@
                               <v-text-field
                                 :disabled="isLoading"
                                 :name="`metadata[years][${i}][${k}]`"
+                                :label="trans(k)"
                                 class="dt-text-field"
                                 dense
                                 hide-details
@@ -215,6 +216,24 @@
                             <td><strong>{{ trans('Period 1') }}</strong></td>
                             <td><strong>{{ trans('Period 2') }}</strong></td>
                             <td><strong>{{ trans('Period 3') }}<br>{{ trans('(most recent)') }}</strong></td>
+                          </tr>
+                          <tr :key="i" v-for="(data, i) in resource.metadata['years']">
+                            <td :colspan="data.length ? 1 : '100%'">
+                              <div class="year-label" v-html="trans(i)"></div>
+                            </td>
+                            <td :key="k" v-for="(d, k) in data">
+                              <v-text-field
+                                :disabled="isLoading"
+                                :name="`metadata[years][${i}][${k}]`"
+                                :label="trans(k)"
+                                class="dt-text-field"
+                                dense
+                                hide-details
+                                outlined
+                                v-model="resource.data.financials['years'][i][k]"
+                                >
+                              </v-text-field>
+                            </td>
                           </tr>
                           <tr :key="i" v-for="(data, i) in resource.metadata['balance-sheet']">
                             <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>

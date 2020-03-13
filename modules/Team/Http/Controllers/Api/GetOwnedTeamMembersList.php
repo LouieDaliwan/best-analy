@@ -8,7 +8,7 @@ use Team\Http\Requests\OwnedTeamRequest;
 use Team\Http\Resources\OwnedTeamResource;
 use Team\Services\TeamServiceInterface;
 
-class GetOwnedTeams extends ApiController
+class GetOwnedTeamMembersList extends ApiController
 {
     /**
      * Handle the incoming request.
@@ -19,6 +19,6 @@ class GetOwnedTeams extends ApiController
      */
     public function __invoke(OwnedTeamRequest $request, TeamServiceInterface $service)
     {
-        return OwnedTeamResource::collection($service->list());
+        return OwnedTeamResource::collection($service->onlyManaged());
     }
 }

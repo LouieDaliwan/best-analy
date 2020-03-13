@@ -7,6 +7,7 @@ use Core\Models\Relations\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
+use Team\Models\Member;
 use User\Models\User;
 
 class Team extends Model
@@ -30,7 +31,7 @@ class Team extends Model
      */
     public function members()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Member::class, 'team_user', 'team_id', 'user_id', null, null, 'users');
     }
 
     /**

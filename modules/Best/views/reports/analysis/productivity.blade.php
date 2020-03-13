@@ -30,7 +30,9 @@
              &nbsp;
           </div>
           <div class="col">
-            <p>{{ $comments }}</p>
+            @foreach ($comments as $comment)
+              <p>{{ $comment }}</p>
+            @endforeach
           </div>
         </div>
       @endforeach

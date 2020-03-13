@@ -10,8 +10,12 @@
 
   <div class="row">
     <div class="col-md-6 col-sm-12">
-      <p>@lang($data['overall:enablers']['comment:first'])</p>
-      <p>@lang($data['overall:enablers']['comment:second'])</p>
+      @foreach ($data['overall:enablers']['comment:first'] as $comment)
+        <p>@lang($comment)</p>
+      @endforeach
+      @foreach ($data['overall:enablers']['comment:second'] as $comment)
+        <p>@lang($comment)</p>
+      @endforeach
 
       <div class="card">
         <div class="card-body">
@@ -32,7 +36,9 @@
         </div>
         <div class="col dt-recommendation-title">
           <h2 class="mb-0">@lang('Documentation')</h2>
-          <p class="mb-0">@lang($data['overall:enablers']['enablers']['Documentation'])</p>
+          @foreach ($data['overall:enablers']['enablers']['Documentation'] as $comment)
+            <p class="mb-0">@lang($comment)</p>
+          @endforeach
         </div>
       </div>
       {{-- Talent --}}
@@ -46,7 +52,9 @@
         </div>
         <div class="col dt-recommendation-title">
           <h2 class="mb-0">@lang('Talent')</h2>
-          <p class="mb-0">@lang($data['overall:enablers']['enablers']['Talent'])</p>
+          @foreach ($data['overall:enablers']['enablers']['Talent'] as $comment)
+            <p class="mb-0">@lang($comment)</p>
+          @endforeach
         </div>
       </div>
       {{-- Technology --}}
@@ -60,7 +68,9 @@
         </div>
         <div class="col dt-recommendation-title">
           <h2 class="mb-0">@lang('Technology')</h2>
-          <p class="mb-0">@lang($data['overall:enablers']['enablers']['Technology'])</p>
+          @foreach ($data['overall:enablers']['enablers']['Technology'] as $comment)
+            <p class="mb-0">@lang($comment)</p>
+          @endforeach
         </div>
       </div>
       {{-- Workflow Progress --}}
@@ -74,7 +84,9 @@
         </div>
         <div class="col dt-recommendation-title">
           <h2 class="mb-0">@lang('Workflow Processess')</h2>
-          <p class="mb-0">@lang($data['overall:enablers']['enablers']['Workflow Processess'])</p>
+          @foreach ($data['overall:enablers']['enablers']['Workflow Processess'] as $comment)
+            <p class="mb-0">@lang($comment)</p>
+          @endforeach
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@
 
   <div class="row align-items-start justify-content-center">
     <div class="col">
-      @foreach ($data['box:comments'] as $comment)
+      @foreach ($data['box:comments'] as $comments)
         <div class="row">
           <div class="col-auto mt-2">
             {{-- SVG arrow --}}
@@ -24,7 +24,10 @@
             {{-- SVG arrow --}}
           </div>
           <div class="col">
-            <p>@lang($comment)</p>
+            @php($comments = (array) $comments)
+            @foreach ($comments ?? [] as $comment)
+              <p>@lang($comment)</p>
+            @endforeach
           </div>
         </div>
       @endforeach

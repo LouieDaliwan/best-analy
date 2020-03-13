@@ -79,12 +79,30 @@ abstract class AbstractAnalysis implements Contracts\FinancialAnalysisReportInte
      */
     public static function loadCustomerDataToFile(Spreadsheet $spreadsheet, Customer $customer)
     {
+        // Load Customer data to Customer Tab.
+        $sheet = $spreadsheet->getSheetByName('Customer');
+        $sheet->getCell('B2')->setValue($customer->name);
+        $sheet->getCell('B3')->setValue($customer->refnum);
+        $sheet->getCell('B4')->setValue($customer->metadata['staffstrength']);
+        $sheet->getCell('B5')->setValue($customer->metadata['industry']);
+
         // Years labels.
         $sheet = $spreadsheet->getSheetByName('FS_inputs');
         $fsinputs = $customer->metadata['years'] ?? [];
-        $sheet->getCell('AC8')->setValue($fsinputs['<div class="d-none">Years</div>']['Year1'] ?? 'Year 1');
-        $sheet->getCell('AI8')->setValue($fsinputs['<div class="d-none">Years</div>']['Year2'] ?? 'Year 2');
-        $sheet->getCell('AO8')->setValue($fsinputs['<div class="d-none">Years</div>']['Year3'] ?? 'Year 3');
+        $sheet->getCell('AC8')->setValue($fsinputs['Years']['Year1'] ?? 'Year 1');
+        $sheet->getCell('AI8')->setValue($fsinputs['Years']['Year2'] ?? 'Year 2');
+        $sheet->getCell('AO8')->setValue($fsinputs['Years']['Year3'] ?? 'Year 3');
+        // Years labels in Balance Sheets.
+        $sheet->getCell('BI8')->setValue($fsinputs['Years']['Year1'] ?? 'Year 1');
+        $sheet->getCell('BO8')->setValue($fsinputs['Years']['Year2'] ?? 'Year 2');
+        $sheet->getCell('BU8')->setValue($fsinputs['Years']['Year3'] ?? 'Year 3');
+
+        // Years labels in ProductivityIndicators.
+        $sheet = $spreadsheet->getSheetByName('ProductivityIndicators');
+        $fsinputs = $customer->metadata['years'] ?? [];
+        $sheet->getCell('D4')->setValue($fsinputs['Years']['Year1'] ?? 'Year 1');
+        $sheet->getCell('E4')->setValue($fsinputs['Years']['Year2'] ?? 'Year 2');
+        $sheet->getCell('F4')->setValue($fsinputs['Years']['Year3'] ?? 'Year 3');
 
         // Load Financial Statement Quantitative Assessment 1.
         $sheet = $spreadsheet->getSheetByName('FS_inputs');

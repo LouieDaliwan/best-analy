@@ -117,17 +117,21 @@
                     </validation-provider>
                   </v-col>
                   <v-col cols="12" md="6">
-                    <v-text-field
-                      :dense="isDense"
-                      :disabled="isLoading"
-                      :label="trans('Weightage')"
-                      class="dt-text-field"
-                      name="metadata[weightage]"
-                      outlined
-                      type="number"
-                      v-model="resource.data.metadata['weightage']"
-                      >
-                    </v-text-field>
+                    <validation-provider vid="metadata.weightage" name="weightage" v-slot="{ errors }">
+                      <v-text-field
+                        :dense="isDense"
+                        :disabled="isLoading"
+                        :error-messages="errors"
+                        :label="trans('Weightage')"
+                        class="dt-text-field"
+                        name="metadata[weightage]"
+                        outlined
+                        min="0.0"
+                        type="number"
+                        v-model="resource.data.metadata.weightage"
+                        >
+                      </v-text-field>
+                    </validation-provider>
                   </v-col>
                   <v-col cols="12" md="6">
                     <v-text-field
@@ -352,6 +356,7 @@ export default {
 
     submit (e) {
       this.load()
+      this.hideAlertbox()
       e.preventDefault()
 
       axios.post(

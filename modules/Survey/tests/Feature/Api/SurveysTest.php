@@ -520,7 +520,9 @@ class SurveysTest extends TestCase
 
         // Assertions
         $response->assertForbidden();
-        $this->assertDatabaseHas($survey->getTable(), $survey->toArray());
+        $this->assertDatabaseHas($survey->getTable(), collect(
+            $survey->toArray()
+        )->except('metadata')->toArray());
     }
 
     /**
@@ -544,7 +546,9 @@ class SurveysTest extends TestCase
         // Assertions
         $response->assertSuccessful();
         $surveys->each(function ($survey) {
-            $this->assertDatabaseMissing($survey->getTable(), $survey->toArray());
+            $this->assertDatabaseMissing($survey->getTable(), collect(
+                $survey->toArray()
+            )->except('metadata')->toArray());
         });
     }
 

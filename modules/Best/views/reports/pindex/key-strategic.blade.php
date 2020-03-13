@@ -23,7 +23,9 @@
             </div>
             <div class="col dt-recommendation-title">
               <h2 class="mb-0">@lang($key)</h2>
-              <p class="mb-0">@lang($recommendation['comment'])</p>
+              @foreach ($recommendation['comments'] as $comment)
+                <p class="mb-0">@lang($comment)</p>
+              @endforeach
             </div>
           </div>
         @endforeach

@@ -97,18 +97,7 @@ export default [
         },
       },
       {
-        path: ':id/reports',
-        name: 'companies.reports',
-        component: () => import('../Reports.vue'),
-        meta: {
-          title: ':slug',
-          sort: 8,
-          authenticatable: true,
-          permission: 'customers.show',
-        },
-      },
-      {
-        path: ':id/reports/overall',
+        path: ':id/overall/reports',
         name: 'reports.overall',
         component: () => import('../Overall.vue'),
         meta: {
@@ -117,6 +106,17 @@ export default [
           authenticatable: true,
           permission: 'customers.show',
           icon: 'mdi-book-multiple-variant',
+        },
+      },
+      {
+        path: ':id/reports',
+        name: 'companies.reports',
+        component: () => import('../Reports.vue'),
+        meta: {
+          title: ':slug',
+          sort: 8,
+          authenticatable: true,
+          permission: 'customers.show',
         },
       },
       {

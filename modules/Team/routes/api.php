@@ -12,7 +12,7 @@
  */
 
 Route::prefix('v1')->middleware('auth:api', 'auth.permissions')->group(function () {
-    Route::ownedResource('teams', 'Api\GetOwnedTeams');
+    Route::ownedResource('teams', 'Api\GetOwnedTeamMembersList');
     Route::softDeletes('teams', 'Api\TeamController');
     Route::apiResource('teams', 'Api\TeamController');
 });

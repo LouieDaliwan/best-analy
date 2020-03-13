@@ -20,6 +20,15 @@ class Survey extends Model
         SoftDeletes;
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'metadata' => 'json',
+    ];
+
+    /**
      * The attributes that are not mass assignable.
      *
      * @var array
@@ -105,5 +114,17 @@ class Survey extends Model
         })->reject(function ($submission) {
             return is_null($submission);
         })->count() > 0;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return array_merge($this->toArray(), [
+            'metadata' => json_encode($this->metadata),
+        ]);
     }
 }

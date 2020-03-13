@@ -109,4 +109,11 @@ return [
         'description' => 'Ability to manage only owned team.',
         'group' => 'team',
     ],
+
+    'members-teams' => [
+        'name' => 'members-teams',
+        'code' => 'teams.members',
+        'description' => 'Ability to view list of their team members.',
+        'group' => 'team',
+    ],
 ];

@@ -99,7 +99,7 @@
                       <v-icon small>mdi-pencil-outline</v-icon>
                     </v-btn>
                   </template>
-                  <span>{{ trans('Edit Financial Performance inputs') }}</span>
+                  <span>{{ trans('Edit Company Information') }}</span>
                 </v-tooltip>
                 <!-- Edit Inputs -->
                 <!-- Move to Trash -->
@@ -265,7 +265,7 @@ export default {
     }, 200),
 
     goToShowIndexPage (company) {
-      return { name: 'companies.show', params: { id: company.id } }
+      return { name: 'companies.show', params: { id: company.id }, query: { from: this.$route.fullPath } }
     },
 
     focusSearchBar () {

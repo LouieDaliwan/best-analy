@@ -35,6 +35,7 @@
           color="primary"
           exact
           large
+          v-if="allReportPresent"
           >
           <v-icon small left>mdi-file-chart-outline</v-icon>
           {{ __('Overall Report') }}
@@ -172,6 +173,10 @@ export default {
 
     resourcesIsEmpty () {
       return window._.isEmpty(this.resources.data) && !this.resources.loading
+    },
+
+    allReportPresent () {
+      return this.resources.data.length == 4
     },
   },
 

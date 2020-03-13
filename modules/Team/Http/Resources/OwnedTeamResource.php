@@ -3,6 +3,7 @@
 namespace Team\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Team\Http\Resources\MemberResource;
 use User\Http\Resources\User as UserResource;
 
 class OwnedTeamResource extends JsonResource
@@ -16,8 +17,8 @@ class OwnedTeamResource extends JsonResource
     public function toArray($request)
     {
         return array_merge(parent::toArray($request), [
+            'members' => MemberResource::collection($this->members ?? []),
             'lead' => new UserResource($this->manager),
-            'members' => UserResource::collection($this->members),
             'author' => $this->author,
             'created' => $this->created,
             'modified' => $this->modified,

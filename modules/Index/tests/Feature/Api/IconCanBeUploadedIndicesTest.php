@@ -45,11 +45,12 @@ class IconCanBeUploadedIndicesTest extends TestCase
 
         // Actions
         $index = factory(Index::class)->make(['user_id' => $user->getKey()]);
-        $index = array_merge($index->toArray(), [
-            'photo' => $attributes = UploadedFile::fake()->image('best-analytics.jpeg'),
+        $attributes = array_merge($index->toArray(), [
+            'photo' => UploadedFile::fake()->image('best-analytics.jpeg'),
+            'metadata' => ['weightage' => 0.25],
         ]);
 
-        $response = $this->post(route('api.indices.store'), $index);
+        $response = $this->post(route('api.indices.store'), $attributes);
         $index = $this->service->first();
 
         // Assertions
@@ -80,6 +81,7 @@ class IconCanBeUploadedIndicesTest extends TestCase
                     $this->faker->fileExtension()
                 )
             ),
+            'metadata' => ['weightage' => 0.25],
         ]);
 
         // Actions

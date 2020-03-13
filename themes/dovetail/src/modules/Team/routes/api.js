@@ -15,6 +15,10 @@ export default {
     return '/api/v1/teams/trashed'
   },
 
+  owned: function () {
+    return '/api/v1/teams/owned'
+  },
+
   restore: function (id = null) {
     return `/api/v1/teams/restore/${id}`
   },

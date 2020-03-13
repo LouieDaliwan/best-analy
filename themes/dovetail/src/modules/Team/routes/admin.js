@@ -23,6 +23,18 @@ export default [
         },
       },
       {
+        path: '/admin/teams/owned',
+        name: 'teams.owned',
+        component: () => import('../Owned.vue'),
+        meta: {
+          title: 'My Team',
+          sort: 7,
+          authenticatable: true,
+          permission: 'teams.owned',
+          icon: 'mdi-book-multiple-variant',
+        },
+      },
+      {
         path: 'create',
         props: true,
         name: 'teams.create',

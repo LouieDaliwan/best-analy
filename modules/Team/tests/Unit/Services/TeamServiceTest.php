@@ -148,6 +148,7 @@ class TeamServiceTest extends TestCase
 
         // Actions
         $this->service->destroy($teams->pluck('id')->toArray());
+        $teams = $this->service->withTrashed()->whereIn('id', $teams->pluck('id')->toArray())->get();
 
         // Assertions
         $teams->each(function ($team) {

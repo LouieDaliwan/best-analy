@@ -11,7 +11,7 @@ $factory->define(Survey::class, function (Faker $faker) {
         'title' => $title = Str::title($faker->unique()->words($nb = 3, $asText = true)),
         'code' => Str::slug($title),
         'body' => $faker->sentence($nbWords = 6, $variableNbWords = true),
-        'metadata' => json_encode($faker->words($nb = 10)),
+        'metadata' => null,
         'type' => 'survey',
         'formable_id' => function () {
             return factory(Taxonomy::class)->create()->getKey();

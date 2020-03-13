@@ -7,8 +7,8 @@ export default [
       icon: 'mdi-account-multiple-outline',
       authenticatable: true,
       sort: 5,
-      permission: 'teams.index',
-      children: ['teams.index', 'teams.create', 'teams.show', 'teams.edit', 'teams.trashed'],
+      permission: ['teams.index', 'teams.owned'],
+      children: ['teams.index', 'teams.create', 'teams.owned', 'teams.show', 'teams.edit', 'teams.trashed'],
     },
     children: [
       {
@@ -19,6 +19,17 @@ export default [
           authenticatable: true,
           sort: 5,
           permission: 'teams.index',
+          children: ['teams.index', 'teams.edit', 'teams.show'],
+        },
+      },
+      {
+        code: 'teams.owned',
+        name: 'teams.owned',
+        meta: {
+          title: 'My Team',
+          authenticatable: true,
+          sort: 6,
+          permission: 'teams.owned',
           children: ['teams.index', 'teams.edit', 'teams.show'],
         },
       },

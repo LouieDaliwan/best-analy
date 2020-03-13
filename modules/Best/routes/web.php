@@ -59,6 +59,7 @@ Route::get('best/formula/check', function (Request $request) {
 });
 
 Route::get('best/preview/reports/overall', function (Request $request, FormulaServiceInterface $service) {
+    app()->setLocale($request->get('lang') ?: 'en');
     $file = $request->get('month') ?: date('m-Y');
     $user = User::find($request->get('user_id'));
     Auth::login($user);

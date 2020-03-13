@@ -41,7 +41,7 @@
         </template>
       </v-autocomplete>
     </validation-provider>
-    <input type="hidden" name="manager_id" v-model="manager">
+    <!-- <input type="hidden" name="manager_id" v-model="manager"> -->
   </section>
 </template>
 

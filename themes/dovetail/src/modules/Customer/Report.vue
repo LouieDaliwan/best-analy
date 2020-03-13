@@ -4,16 +4,19 @@
 
     <page-header :back="{ to: {name: 'companies.reports'}, text: trans('Back to Reports') }">
       <template v-slot:title>{{ trans('Report Preview') }}</template>
-      <template v-slot:utilities>
-        <a class="dt-link text--decoration-none mr-4" @click="goToShowPage('ar')">
-          <!-- <v-icon small left>mdi-delete-outline</v-icon> -->
+      <template v-slot:action>
+        <v-btn v-if="resource.lang == 'en'" :block="$vuetify.breakpoint.smAndDown" large color="primary" @click="goToShowPage('ar')">
+          <v-icon small left>mdi-earth</v-icon>
           {{ trans('View Report in Arabic') }}
-        </a>
+        </v-btn>
+        <v-btn v-else :block="$vuetify.breakpoint.smAndDown" large color="primary" @click="goToShowPage('en')">
+          <v-icon small left>mdi-earth</v-icon>
+          {{ trans('View Report in English') }}
+        </v-btn>
       </template>
       <!-- <template v-slot:utilities>
         <a href="?lang=ar" @click.prevent="downloadReport" class="dt-link text--decoration-none mr-4">{{ trans('Download Report') }}</a>
         <a href="#" @click.prevent="goToSurveyPage(resource.data)" class="dt-link text--decoration-none mr-4"><v-icon left>mdi-search</v-icon>{{ trans('View Survey') }}</a>
-
       </template> -->
     </page-header>
 
@@ -33,6 +36,7 @@
 export default {
   data: () => ({
     resource: {
+      lang: window.localStorage.getItem('report:lang') || 'en',
       loading: false,
       data: {},
     },
@@ -66,29 +70,20 @@ export default {
       })
     },
 
-      goToShowPage (ar) {
+      goToShowPage (lang = 'en') {
+        window.localStorage.setItem('report:lang', lang)
+        this.resource.lang = lang
         this.$router.push({
-           name: 'reports.show',
+          name: 'reports.show',
           params: {
             id: this.$route.params.id,
             report: this.$route.params.report
           },
           query: {
-            lang: 'ar'
+            lang: lang,
           }
         }).catch(err => {})
         this.$router.go()
-
-        // this.$router.go({
-        //   name: 'reports.show',
-        //   params: {
-        //     id: this.$route.params.id,
-        //     report: this.$route.params.report
-        //   },
-        //   query: {
-        //     lang: 'ar'
-        //   },
-        // })
       },
 
       downloadReport () {
@@ -124,3 +119,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+iframe {
+  min-height: 500px;
+}
+</style>

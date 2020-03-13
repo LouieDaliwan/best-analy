@@ -92,7 +92,7 @@
                       <v-icon small>mdi-pencil-outline</v-icon>
                     </v-btn>
                   </template>
-                  <span>{{ trans('Edit Financial Performance inputs') }}</span>
+                  <span>{{ trans('Edit Company Information') }}</span>
                 </v-tooltip>
                 <!-- Edit Inputs -->
                 <!-- Move to Trash -->

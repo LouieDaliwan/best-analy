@@ -117,6 +117,13 @@ return [
         'group' => 'survey',
     ],
 
+    'submission-surveys' => [
+        'name' => 'submission-surveys',
+        'code' => 'surveys.submission',
+        'description' => 'Ability to view list of survey fields.',
+        'group' => 'survey',
+    ],
+
     'report-surveys' => [
         'name' => 'report-surveys',
         'code' => 'surveys.report',

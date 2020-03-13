@@ -41,13 +41,13 @@
     <v-row>
       <v-col cols="12" md="12">
         <v-card>
-          <template v-if="resource.data.description">
-            <h4 class="mb-3" v-text="trans('Team Detail')"></h4>
-            <p>{{ resource.data.description }}</p>
-          </template>
-
-          <v-card-title v-text="trans('Team Manager')"></v-card-title>
           <v-card-text>
+            <template v-if="resource.data.description">
+              <h4 class="mb-3" v-text="trans('Team Detail')"></h4>
+              <p class="mb-4">{{ resource.data.description }}</p>
+            </template>
+
+            <h4 class="mb-3" v-text="trans('Team Manager')"></h4>
             <user-account-detail-card v-model="resource.data.lead"></user-account-detail-card>
           </v-card-text>
 

@@ -2,26 +2,26 @@
 
 return [
     'fmpi' => [
-        'above90' => 'Overall, the FMPI seemed to suggest that a well-controlled & organised financial management system is in place.<br>Should continue to monitor the internal controls',
-        'mid50to89' => 'Overall, the FMPI seemed to suggest a generally moderate score.<br>Current financial controls and processes implemented can still be improved in areas identified weak based on the deeper analysis.',
-        'below50' => 'Overall, the FMPI seemed to suggest a serious efficiency issue within :name.<br>Immediate actions to strengthen financial management processes & controls is advised.',
+        'above90' => 'بشكل عام، يبدو أن FMPI  يقترح  وجود نظام إدارة مالية جيد التحكم والتنظيم. يجب متابعة مراقبة الضوابط الداخلية.',
+        'mid50to89' => 'بشكل عام، يبدو أن FMPI يقترح  درجة معتدلة عموماً. ولا يزال بوسعها تحسين الضوابط والعمليات المالية الحالية المنفذة في مجالات محددة بالضعف استنادا إلى التحليل الأعمق.',
+        'below50' => 'بشكل عام، يبدو أن FMPI يقترح مسألة خطيرة تتعلق بالكفاءة داخل :name.<br>تُنصح باتخاذ إجراءات فورية لتقوية عمليات الإدارة المالية وضوابطها.',
     ],
 
     'hrpi' => [
-        'above90' => 'Overall, the HRPI seemed to suggest that a very structured HR system with processes is in place.<br>:name may consider identifying specific element(s) which could spur further improvements.',
-        'mid50to89' => 'Overall, the HRPI seemed to suggest a generally moderate score, with some room for improvements in their employee management processes.<br>Further detailed diagnostics may be required to align some of the weaker HR elements.',
-        'below50' => 'Overall, the HRPI seemed to suggest a serious efficiency issue within :name.<br>Comprehensive transformation is advised across all HR functions.',
+        'above90' => 'بشكل عام، يبدو أن HRPI يقترح وجود نظام الموارد البشرية المنظم للغاية مع وجود العمليات.<br> على :name أن تفكر في تحديد عنصر (عناصر) معين قد يحفز المزيد من التحسينات.',
+        'mid50to89' => 'بشكل عام، يبدو أن HRPI يقترح درجة معتدلة عموما، مع وجود مساحة لإجراء التحسينات في عمليات إدارة الموظفين. قد يلزم إجراء المزيد من التشخيصات التفصيلية لمواءمة بعض عناصر الموارد البشرية الأضعف.',
+        'below50' => 'بشكل عام، يبدو أن HRPI يقترح وجود مسألة خطيرة تتعلق بالكفاءة داخل :name.<br>تُنصح بإجراء تحويل شامل على جميع وظائف الموارد البشرية.',
     ],
 
     'pmpi' => [
-        'above90' => 'Overall, the PMPI seemed to suggest very well-documented processes with effective productivity practices. <br>:name may consider reviewing its benchmarks and choices of operational indicators to facilitate better alignment with industry practices.',
-        'mid50to89' => 'Overall, the PMPI seemed to suggest a generally moderate score.<br>Improvements to their operational processes is recommended to better reflect the expected processes & productivity management practices.',
-        'below50' => 'Overall, the PMPI seemed to suggest a serious efficiency issue within :name.<br>This underscores the need to transform its entire productivity practices.',
+        'above90' => 'بشكل عام، يبدو أن PMPI يقترح عمليات موثقة جيدة جدا مع ممارسات فعالة في مجال الانتاجية. <br> وعلى :name أن تفكر في مراجعة معاييرها واختياراتها للمؤشرات التشغيلية لتسهيل المواءمة بشكل أفضل مع ممارسات الصناعة.',
+        'mid50to89' => 'بشكل عام، يبدو أن PMPI  يقترح درجة عادلة عموما. وتوصى بإدخال تحسينات على العمليات التشغيلية الخاصة بها لتعكس عمليات  وممارسات إدارة الإنتاجية المتوقعة على نحو أفضل.',
+        'below50' => 'بشكل عام، يبدو أن PMPI  يقترح وجود مسألة خطيرة تتعلق بالكفاءة داخل :name.<br> وهذا يؤكد على الحاجة إلى تحويل ممارساتها الإنتاجية كاملا.',
     ],
 
     'bspi' => [
-        'above90' => 'Overall, the BSPI seemed to suggest that a very structured organisational continuity & risk management is in place.<br> :name may consider looking into identifying specific areas to strengthen management & organisational practices.',
-        'mid50to89' => 'Overall, the BSPI seemed to suggest that some changes to management approaches are likely to improve the organisation sustainability score.<br>Detailed diagnostics guided by recommendations in the detailed report may be required.',
-        'below50' => 'Overall, the BSPI seemed to suggest a serious efficiency issue within :name.<br>This underscores the need to transform the overall organisational practices to support sustainable improvements.',
+        'above90' => 'بشكل عام، يبدو أن  BSPI يقترح وجود استمرارية تنظيمية وإدارة المخاطر المنظمة للغاية. <br> وعلى :name النظر في تحديد مجالات محددة لتعزيز الممارسات الإدارية والتنظيمية.',
+        'mid50to89' => 'بشكل عام، يبدو أن BSPI يقترح تأدية بعض التغييرات في النهج الإدارية إلى تحسين درجة الاستدامة في المنظمة. قد يلزم إجراء عمليات التشخيصات المفصلة التي تسترشد بالتوصيات الواردة في التقرير المفصل.',
+        'below50' => 'بشكل عام، يبدو أن  BSPI يقترح بوجود مسألة خطيرة تتعلق بالكفاءة داخل :name. وهذا يؤكد الحاجة إلى تحويل الممارسات التنظيمية العامة لدعم التحسينات المستدامة.',
     ],
 ];

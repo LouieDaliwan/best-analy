@@ -5,10 +5,21 @@
     <page-header :back="{ to: {name: 'companies.reports'}, text: trans('Back to Reports') }">
       <template v-slot:title>{{ trans('Report Preview') }}</template>
       <template v-slot:utilities>
-        <a class="dt-link text--decoration-none mr-4" @click="goToShowPage('ar')">
-          <!-- <v-icon small left>mdi-delete-outline</v-icon> -->
-          {{ trans('View Report in Arabic') }}
+        <a class="dt-link text--decoration-none mr-4" @click="sendToCrm(item)">
+          <v-icon small left>mdi-send</v-icon>
+          {{ trans('Send Report to CRM') }}
         </a>
+      </template>
+
+      <template v-slot:action>
+        <v-btn v-if="resource.lang == 'en'" :block="$vuetify.breakpoint.smAndDown" large color="primary" @click="goToShowPage('ar')">
+          <v-icon small left>mdi-earth</v-icon>
+          {{ trans('View Report in Arabic') }}
+        </v-btn>
+        <v-btn v-else :block="$vuetify.breakpoint.smAndDown" large color="primary" @click="goToShowPage('en')">
+          <v-icon small left>mdi-earth</v-icon>
+          {{ trans('View Report in English') }}
+        </v-btn>
       </template>
     </page-header>
 
@@ -43,6 +54,21 @@ export default {
       this.url = `/best/preview/reports/overall?user_id=${id}&customer_id=${customerId}`
     },
 
+    sendToCrm (item) {
+      let data = {
+        Id: this.resource.data.token,
+        FileNo: this.resource.data.refnum,
+        OverallScore: item.value['overall:score'],
+        FileContentBase64: item.fileContentBase64,
+        'Lessons Learnt': item.value['overall:comment'],
+      }
+      axios.post(
+        $api.crm.save(), data
+      ).then(response => {
+        console.log(response)
+      })
+    },
+
     downloadReport () {
       window.location.href = `/reports/${this.$route.params.report}/download`
       // axios.get(
@@ -69,29 +95,21 @@ export default {
       this.resource.loading = false
     },
 
-    goToShowPage (ar) {
+    goToShowPage (lang = 'en') {
+      window.localStorage.setItem('report:lang', lang)
+      this.resource.lang = lang
       this.$router.push({
-         name: 'reports.show',
+        name: 'reports.overall',
         params: {
           id: this.$route.params.id,
           report: this.$route.params.report
         },
         query: {
-          lang: 'ar'
+          lang: lang,
+          type: 'overall',
         }
       }).catch(err => {})
       this.$router.go()
-
-      // this.$router.go({
-      //   name: 'reports.show',
-      //   params: {
-      //     id: this.$route.params.id,
-      //     report: this.$route.params.report
-      //   },
-      //   query: {
-      //     lang: 'ar'
-      //   },
-      // })
     },
   },
 

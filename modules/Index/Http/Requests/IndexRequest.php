@@ -30,4 +30,16 @@ class IndexRequest extends FormRequest
             IndexServiceInterface::class
         )->rules($this->route('index'));
     }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return $this->container->make(
+            IndexServiceInterface::class
+        )->messages();
+    }
 }

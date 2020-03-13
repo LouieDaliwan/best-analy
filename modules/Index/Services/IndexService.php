@@ -7,6 +7,7 @@ use Core\Application\Service\Concerns\HaveAuthorization;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Index\Models\Index;
 use Taxonomy\Services\TaxonomyService;
 use User\Models\User;
@@ -47,6 +48,37 @@ class IndexService extends TaxonomyService implements IndexServiceInterface
     {
         $this->model = $model;
         $this->request = $request;
+    }
+
+    /**
+     * Define the validation rules for the model.
+     *
+     * @param  integer|null $id
+     * @return array
+     */
+    public function rules($id = null)
+    {
+        return [
+            'name' => 'required|max:255',
+            'alias' => 'required|max:255',
+            'code' => ['required', 'max:255', Rule::unique($this->getTable())->ignore($id)],
+            'type' => 'required|max:255',
+            'metadata.weightage' => 'required|numeric|gt:0|lte:.25',
+        ];
+    }
+
+    /**
+     * Define the validation messages for the model.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'metadata.weightage.required' => 'The weightage field is required',
+            'metadata.weightage.gt' => 'The weightage field must be greater than 0',
+            'metadata.weightage.lte' => 'The weightage field must be less than or equal 0.25',
+        ];
     }
 
     /**

@@ -14,21 +14,27 @@ abstract class FinancialRatios extends AbstractAnalysis
      */
     public static function getReport(Customer $customer)
     {
+        $spreadsheet = self::getSpreadsheet($customer)->getSheetByName('FS_inputs');
+        $years = [
+            null,
+            $spreadsheet->getCell('AC8')->getFormattedValue() ?? 'Year 1',
+            $spreadsheet->getCell('AI8')->getFormattedValue() ?? 'Year 2',
+            $spreadsheet->getCell('AO8')->getFormattedValue() ?? 'Year 3 (most recent)',
+        ];
+
         $spreadsheet = self::getSpreadsheet($customer)->getSheetByName('Ratios');
 
         $profitabilityTitle = $spreadsheet->getCell('A2')->getFormattedValue();
         $liquidityTitle = $spreadsheet->getCell('A39')->getFormattedValue();
         $efficiencyTitle = $spreadsheet->getCell('A61')->getFormattedValue();
         $solvencyTitle = $spreadsheet->getCell('A85')->getFormattedValue();
-        $productivityTitle = $spreadsheet->getCell('A95')->getFormattedValue();
 
         return [
-            '' => [[null, 'Year 1', 'Year 2', 'Year 3 (most recent)']],
+            '' => [$years],
             $profitabilityTitle => $spreadsheet->rangeToArray('B3:E36'),
             $liquidityTitle => $spreadsheet->rangeToArray('B39:E59'),
             $efficiencyTitle => $spreadsheet->rangeToArray('B61:E83'),
             $solvencyTitle => $spreadsheet->rangeToArray('B85:E93'),
-            $productivityTitle => $spreadsheet->rangeToArray('B95:E98'),
         ];
     }
 }

@@ -260,34 +260,4 @@ class FormFieldTest extends TestCase
             $this->assertDatabaseMissing($this->service->getTable(), collect($attribute)->except('form_id')->toArray());
         });
     }
-
-    /**
-     * @test
-     * @group  feature
-     * @group  feature:api
-     * @group  feature:api:field
-     * @return void
-     */
-    public function a_user_cannot_permanently_delete_multiple_form_field_owned_by_others()
-    {
-        // Arrangemets
-        Passport::actingAs($user = $this->asNonSuperAdmin(['surveys.delete']), ['surveys.delete']);
-        $this->withPermissionsPolicy();
-
-        $surveys = factory(Survey::class, 2)->create()->random();
-        $fields = [];
-        $surveys->each(function ($survey) use ($fields) {
-            $fields[] = factory(Field::class, 10)->create(['form_id' => $survey->getKey()]);
-        });
-
-        // Actions
-        $attributes = $surveys->toArray();
-        $response = $this->delete(route('api.surveys.delete'), $attributes);
-
-        // Arrangemets
-        $response->assertForbidden();
-        collect($attributes)->each(function ($attribute) {
-            $this->assertDatabaseMissing($this->service->getTable(), collect($attribute)->except('form_id')->toArray());
-        });
-    }
 }

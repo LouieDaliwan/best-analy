@@ -5,6 +5,7 @@ namespace Team\Services;
 use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Validation\Rule;
 use Team\Models\Team;
 use User\Models\User;
@@ -61,6 +62,30 @@ class TeamService extends Service implements TeamServiceInterface
             'manager_id' => 'required|numeric',
             'users' => 'required|array',
         ];
+    }
+
+    /**
+     * Only retrieve resources that the user owns.
+     *
+     * @return this
+     */
+    public function onlyManaged()
+    {
+        if ($this->isSearching()) {
+            $this->model = $this->whereIn(
+                $this->getKeyName(), $this->search(
+                    $this->request()->get('search')
+                )->keys()->toArray()
+            );
+        }
+
+        $model = $this->model->whereManagerId($this->auth()->id())->with($this->appendToList ?? []);
+
+        $model = $model->paginate($this->getPerPage());
+
+        $sorted = $this->sortAndOrder($model);
+
+        return new LengthAwarePaginator($sorted, $model->total(), $model->perPage());
     }
 
     /**

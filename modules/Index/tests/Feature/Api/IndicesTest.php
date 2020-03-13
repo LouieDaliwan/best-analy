@@ -105,16 +105,20 @@ class IndicesTest extends TestCase
     public function a_user_can_store_an_index_to_database()
     {
         // Arrangements
+        $this->withoutExceptionHandling();
         Passport::actingAs($user = $this->asNonSuperAdmin(['indices.store']), ['indices.store']);
         $this->withPermissionsPolicy();
 
         // Actions
         $attributes = factory(Index::class)->make(['user_id' => $user->getKey()])->toArray();
+        $attributes = array_merge($attributes, ['metadata' => ['weightage' => .25]]);
         $response = $this->post(route('api.indices.store'), $attributes);
 
         // Assertions
         $response->assertSuccessful();
-        $this->assertDatabaseHas($this->service->getTable(), $attributes);
+        $this->assertDatabaseHas($this->service->getTable(), collect(
+            $attributes
+        )->except('metadata')->toArray());
     }
 
     /**
@@ -192,11 +196,14 @@ class IndicesTest extends TestCase
 
         // Actions
         $attributes = factory(Index::class)->make(['user_id' => $user->getKey()])->toArray();
+        $attributes = array_merge($attributes, ['metadata' => ['weightage' => 0.25]]);
         $response = $this->put(route('api.indices.update', $index->getKey()), $attributes);
 
         // Assertions
         $response->assertSuccessful();
-        $this->assertDatabaseHas($index->getTable(), $attributes);
+        $this->assertDatabaseHas($index->getTable(), collect(
+            $attributes
+        )->except('metadata')->toArray());
     }
 
     /**

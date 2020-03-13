@@ -85,18 +85,6 @@ export default [
         },
       },
       {
-        path: ':id/reports/:report',
-        name: 'reports.show',
-        component: () => import('../Report.vue'),
-        meta: {
-          title: 'Report Preview',
-          sort: 9,
-          authenticatable: true,
-          permission: 'customers.show',
-          icon: 'mdi-book-multiple-variant',
-        },
-      },
-      {
         path: ':id/overall/reports',
         name: 'reports.overall',
         component: () => import('../Overall.vue'),
@@ -117,6 +105,18 @@ export default [
           sort: 8,
           authenticatable: true,
           permission: 'customers.show',
+        },
+      },
+      {
+        path: ':id/reports/:report',
+        name: 'reports.show',
+        component: () => import('../Report.vue'),
+        meta: {
+          title: 'Report Preview',
+          sort: 9,
+          authenticatable: true,
+          permission: 'customers.show',
+          icon: 'mdi-book-multiple-variant',
         },
       },
       {

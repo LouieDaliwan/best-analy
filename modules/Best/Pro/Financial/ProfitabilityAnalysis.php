@@ -142,8 +142,8 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $bi4 = $spreadsheet->getCell('BI4')->getCalculatedValue();
-        $h19 = $spreadsheet->getCell('H19')->getCalculatedValue();
-        $h21 = $spreadsheet->getCell('H21')->getCalculatedValue();
+        $h19 = $spreadsheet->getCell('H19')->getCalculatedValue() ?: 0;
+        $h21 = $spreadsheet->getCell('H21')->getCalculatedValue() ?: 0;
 
         if ($h19 == "") {
             $output = "";
@@ -176,10 +176,11 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $bj4 = $spreadsheet->getCell('BJ4')->getCalculatedValue();
-        $h19 = $spreadsheet->getCell('H19')->getCalculatedValue();
-        $h20 = $spreadsheet->getCell('H20')->getCalculatedValue();
-        $h21 = $spreadsheet->getCell('H21')->getCalculatedValue();
-
+        $h19 = $spreadsheet->getCell('H19')->getCalculatedValue() ?: 0;
+        $h20 = $spreadsheet->getCell('H20')->getCalculatedValue() ?: 0;
+        $h21 = $spreadsheet->getCell('H21')->getCalculatedValue() ?: 0;
+        \Illuminate\Support\Facades\Log::info("H20 - $h20");
+        \Illuminate\Support\Facades\Log::info("H20 - $h21");
         $number1 = abs(round(($h21-$h20)*100, 2));
         if ($h19 == "" && ($h21-$h20) > 0) {
             if (($h21-$h20) > $bj4) {
@@ -217,8 +218,8 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         $output = '';
 
         $bk4 = $spreadsheet->getCell('BK4')->getCalculatedValue();
-        $h19 = $spreadsheet->getCell('H19')->getCalculatedValue();
-        $h20 = $spreadsheet->getCell('H20')->getCalculatedValue();
+        $h19 = $spreadsheet->getCell('H19')->getCalculatedValue() ?: 0;
+        $h20 = $spreadsheet->getCell('H20')->getCalculatedValue() ?: 0;
         $d19 = $spreadsheet->getCell('D19')->getCalculatedValue();
         $d20 = $spreadsheet->getCell('D20')->getCalculatedValue();
         $item1 = $d19;
@@ -296,8 +297,8 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     public static function getBC5Comment($spreadsheet)
     {
         $output = '';
-        $k19 = $spreadsheet->getCell('K19')->getCalculatedValue();
-        $k21 = $spreadsheet->getCell('K20')->getCalculatedValue();
+        $k19 = $spreadsheet->getCell('K19')->getCalculatedValue() ?: 0;
+        $k21 = $spreadsheet->getCell('K20')->getCalculatedValue() ?: 0;
         $bi5 = $spreadsheet->getCell('BI5')->getCalculatedValue();
 
         if ($k19 == "") {
@@ -331,9 +332,9 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $bj5 = $spreadsheet->getCell('BJ5')->getCalculatedValue();
-        $k19 = $spreadsheet->getCell('K19')->getCalculatedValue();
-        $k20 = $spreadsheet->getCell('K20')->getCalculatedValue();
-        $k21 = $spreadsheet->getCell('K21')->getCalculatedValue();
+        $k19 = $spreadsheet->getCell('K19')->getCalculatedValue() ?: 0;
+        $k20 = $spreadsheet->getCell('K20')->getCalculatedValue() ?: 0;
+        $k21 = $spreadsheet->getCell('K21')->getCalculatedValue() ?: 0;
 
         $number1 = abs(round(($k21-$k20)*100, 2));
         if ($k19 == "" && ($k21-$k20) > 0) {
@@ -371,8 +372,8 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $bk5 = $spreadsheet->getCell('BK5')->getCalculatedValue();
-        $k19 = $spreadsheet->getCell('K19')->getCalculatedValue();
-        $k20 = $spreadsheet->getCell('K20')->getCalculatedValue();
+        $k19 = $spreadsheet->getCell('K19')->getCalculatedValue() ?: 0;
+        $k20 = $spreadsheet->getCell('K20')->getCalculatedValue() ?: 0;
         $d19 = $spreadsheet->getCell('D19')->getCalculatedValue();
         $d20 = $spreadsheet->getCell('D20')->getCalculatedValue();
         $item1 = $d19;
@@ -455,8 +456,8 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $bi6 = $spreadsheet->getCell('BI6')->getCalculatedValue();
-        $n19 = $spreadsheet->getCell('N19')->getCalculatedValue();
-        $n21 = $spreadsheet->getCell('N21')->getCalculatedValue();
+        $n19 = $spreadsheet->getCell('N19')->getCalculatedValue() ?: 0;
+        $n21 = $spreadsheet->getCell('N21')->getCalculatedValue() ?: 0;
 
         if ($n19 == "") {
             $output = "";
@@ -487,9 +488,9 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $bj6 = $spreadsheet->getCell('BJ6')->getCalculatedValue();
-        $n19 = $spreadsheet->getCell('N19')->getCalculatedValue();
-        $n20 = $spreadsheet->getCell('N20')->getCalculatedValue();
-        $n21 = $spreadsheet->getCell('N21')->getCalculatedValue();
+        $n19 = $spreadsheet->getCell('N19')->getCalculatedValue() ?: 0;
+        $n20 = $spreadsheet->getCell('N20')->getCalculatedValue() ?: 0;
+        $n21 = $spreadsheet->getCell('N21')->getCalculatedValue() ?: 0;
 
         $number1 = abs(round(($n21-$n20)*100, 2));
         if ($n19 == "" && ($n21-$n20) > 0) {

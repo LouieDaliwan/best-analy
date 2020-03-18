@@ -3,7 +3,7 @@
 use Best\Pro\TrafficLight;
 
 return [
-    TrafficLight::RED_LIGHT => ':name has less than expected efficiency practices in place. Requires considerable overhaul and/or introduction of new efficiency process and/or manuals.',
-    TrafficLight::AMBER_LIGHT => ':name is generally in a stable position with desired efficiency elements in place. Streamlining and introduction of new processes and/or manuals is recommended. Recommends further detailed diagnostics.',
-    TrafficLight::GREEN_LIGHT => ':name is in a very good shape. :apptitle elements are well implemented with effective forms, processes, policies and structured systems in place. Recommends that a"&" validation of findings through engagements to be executed.',
+    TrafficLight::RED_LIGHT => ':name لديها ممارسات كفاءة أقل من المتوقع. تتطلب إصلاحاً كبيراً و/أو إدخال عملية و/أو أدلة جديدة للكفاءة.',
+    TrafficLight::AMBER_LIGHT => ':name  تكون بصفة عامة في وضع مستقر مع وجود عناصر الكفاءة المطلوبة. يوصى بتبسيط وإدخال عمليات و/أو أدلة جديدة. توصي بإجراء المزيد من التشخيصات التفصيلية.',
+    TrafficLight::GREEN_LIGHT => ':name في وضع جيد جدا. يتم تنفيذ العناصر :appcode  بشكل جيد مع وجود أشكال وعمليات وسياسات وأنظمة منظمة فعالة. توصي"&" بتنفيذ عملية التحقق من النتائج عبر طريق المشاركة.',
 ];

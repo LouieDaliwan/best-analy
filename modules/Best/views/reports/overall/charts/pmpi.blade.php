@@ -33,11 +33,11 @@
       type: 'bar',
       data: {
         labels: [
-          ["Policies &", "Procedures"],
-          ["Quality", "Management"],
-          ["Technology &", "Tools"],
-          ["Customer", "Experience"],
-          ["Business", "Competitiveness"],
+          ['{!! __("Policies &") !!}', '{!! __("Procedures") !!}'],
+          ['{{ __("Quality") }}', '{{ __("Management") }}'],
+          ['{!! __("Technology &") !!}', '{!! __("Tools") !!}'],
+          ['{{ __("Customer") }}', '{{ __("Experience") }}'],
+          ['{{ __("Business") }}', '{{ __("Competitiveness") }}'],
         ],
         datasets: [
           {
@@ -90,7 +90,7 @@
               fontFamily: 'Rubik, sans-serif',
               fontSize: 13,
               // min: -100,
-              // max: 100,
+              max: 100,
               callback: function(value){return value+ "%"}
             }
           }]

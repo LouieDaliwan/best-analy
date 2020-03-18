@@ -33,10 +33,10 @@
       type: 'bar',
       data: {
         labels: [
-          "Leadership",
-          ["Risk", "Management"],
-          ["Organisational", "Management"],
-          ["Organisational", "Culture"],
+          '{{ __("Leadership") }}',
+          ['{{ __("Risk") }}', '{{ __("Management") }}'],
+          ['{{ __("Organisational") }}', '{{ __("Management") }}'],
+          ['{{ __("Organisational") }}', '{{ __("Culture") }}'],
         ],
         datasets: [
           {
@@ -89,7 +89,7 @@
               fontFamily: 'Rubik, sans-serif',
               fontSize: 13,
               // min: -100,
-              // max: 100,
+              max: 100,
               callback: function(value){return value+ "%"}
             }
           }]

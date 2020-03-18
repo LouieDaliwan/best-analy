@@ -62,4 +62,20 @@ class ReportService extends Service implements ReportServiceInterface
         $this->model = $model;
         $this->request = $request;
     }
+
+    /**
+     * Permanently delete model resource.
+     *
+     * @param  integer|array $id
+     * @return void
+     */
+    public function delete($id)
+    {
+        $this
+            ->model()
+            ->whereIn($this->model()->getKeyName(), (array) $id)
+            ->get()->each(function ($resource) {
+                $resource->forceDelete();
+            });
+    }
 }

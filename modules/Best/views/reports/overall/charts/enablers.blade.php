@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <h1 class="mb-5 dt-secondary text-capitalize">@lang('Overall Organisation\'s Enablers Metrics')</h1>
+        <h1 class="mb-5 dt-secondary text-capitalize">@lang("Overall Organisation's Enablers Metrics")</h1>
       </div>
     </div>
   </div>
@@ -37,7 +37,7 @@
         <div class="col dt-recommendation-title">
           <h2 class="mb-0">@lang('Documentation')</h2>
           @foreach ($data['overall:enablers']['enablers']['Documentation'] as $comment)
-            <p class="mb-0">@lang($comment)</p>
+            <p class="mb-0">{{ $comment }}</p>
           @endforeach
         </div>
       </div>
@@ -83,7 +83,7 @@
           </div>
         </div>
         <div class="col dt-recommendation-title">
-          <h2 class="mb-0">@lang('Workflow Processess')</h2>
+          <h2 class="mb-0">@lang('Workflow Processes')</h2>
           @foreach ($data['overall:enablers']['enablers']['Workflow Processess'] as $comment)
             <p class="mb-0">@lang($comment)</p>
           @endforeach

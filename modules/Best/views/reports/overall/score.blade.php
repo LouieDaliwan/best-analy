@@ -3,7 +3,9 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <h1 class="mb-5 dt-primary text-uppercase">@lang('BEST SCORE')</h1>
+        <h1 class="mb-5 dt-primary text-uppercase">
+          @lang('best::reports.:appcode Score', ['appcode' => __(settings('app:code'))])
+        </h1>
       </div>
     </div>
   </div>

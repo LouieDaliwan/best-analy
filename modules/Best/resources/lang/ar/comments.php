@@ -2,50 +2,50 @@
 
 return [
     'fmpi' => [
-        '100' => 'The organisation is perceived to have achieved optimal performance across all financial management areas, subjected to on-site review of the documentation and discussions with the relevant employees in the organisation.<br>Continuous review and enhancement across all areas is recommended.',
+        '100' => 'يُنظر إلى أن المنظمة حققت أفضل أداء في جميع المجالات، وتخضع لاستعراض الوثائق والمناقشات في الموقع مع عدد أكبر من الموظفين في المنظمة توصى بإجراء استعراض وتحسينات مستمرة في جميع المجالات',
 
         'first' => [
             'based on responses' => "استنادا إلى الردود على البيانات الفردية الواردة في الدراسة الاستقصائية للإدارة المالية، تم تنفيذ  :item1 and ':item2' على أفضل وجه",
             'most well implemented' => "استنادا إلى الردود على البيانات الفردية الواردة في الدراسة الاستقصائية للإدارة المالية، تم تنفيذ  :item1  على أفضل وجه",
-            'followed by' => 'This is followed by :name with a score of :score',
-            'it is imperative' => 'However, it is imperative that the organisation strive to uplift all other financial management elements.',
+            'followed by' => 'يتبع ذلك, :name بدرجة :score',
+            'it is imperative' => 'ومع ذلك، فمن الضروري أن تسعى المنظمة إلى رفع مستوى جميع عناصر الإدارة المالية الأخرى.',
         ],
-        'second' => "The following 2 areas ':item1' and ':item2' should be the immediate top focus for further review and transformation.",
+        'second' => "ينبغي أن يكون المجالان التاليان :item1 و:item2 محوري التركيز المباشر لضمان وجود منظمة سليمة ذات أهداف مستدامة طويلة الاجل.",
     ],
 
     'hrpi' => [
-        '100' => 'The organisation is perceived to have achieved optimal performance across all financial management areas, subjected to on-site review of the documentation and discussions with the relevant employees in the organisation.<br>Continuous review and enhancement across all areas is recommended.',
+        '100' => 'يُنظر إلى أن المنظمة حققت أفضل أداء في جميع المجالات، وتخضع لاستعراض الوثائق والمناقشات في الموقع مع عدد أكبر من الموظفين في المنظمة توصى بإجراء استعراض وتحسينات مستمرة في جميع المجالات',
 
         'first' => [
-            'based on responses' => 'Based on the responses to the individual statements measuring the various HR elements, :item1 and :item2 activities have been most well implemented.',
-            'most well implemented' => 'Based on the responses to the individual statements measuring the various HR elements, :item1 has been the most well implemented.',
-            'followed by' => 'This is followed by :name with a score of :score',
-            'it is imperative' => 'However, it is imperative that the organisation strive to uplift all the other HR elements.',
+            'based on responses' => 'استناداً إلى الردود على البيانات الفردية التي تقيس مختلف عناصر الموارد البشرية، تم تنفيذ عناصر :item1و على أفضل وجهاستناداً إلى الردود على البيانات الفردية التي تقيس مختلف عناصر الموارد البشرية، تم تنفيذ عنصر :item2 على أفضل وجه',
+            'most well implemented' => 'استناداً إلى الردود على البيانات الفردية التي تقيس مختلف عناصر الموارد البشرية، تم تنفيذ عناصر :item1و على أفضل وجهاستناداً إلى الردود على البيانات الفردية التي تقيس مختلف عناصر الموارد البشرية، تم تنفيذ عنصر على أفضل وجه',
+            'followed by' => 'يتبع ذلك, :name بدرجة :score',
+            'it is imperative' => 'ومع ذلك، فمن الضروري أن تسعى المنظمة إلى رفع مستوى جميع عناصر الموارد البشرية الأخرى.',
         ],
-        'second' => "The following 2 areas ':item1' and ':item2' should be the immediate top focus for further review and transformation.",
+        'second' => "ينبغي أن يكون المجالان التاليان :item1 و:item2 محوري التركيز المباشر لضمان وجود منظمة سليمة ذات أهداف مستدامة طويلة الاجل.",
     ],
 
     'pmpi' => [
-        '100' => 'The organisation is perceived to have achieved optimal performance across all financial management areas, subjected to on-site review of the documentation and discussions with the relevant employees in the organisation.<br>Continuous review and enhancement across all areas is recommended.',
+        '100' => 'يُنظر إلى أن المنظمة حققت أفضل أداء في جميع المجالات، وتخضع لاستعراض الوثائق والمناقشات في الموقع مع عدد أكبر من الموظفين في المنظمة توصى بإجراء استعراض وتحسينات مستمرة في جميع المجالات',
 
         'first' => [
-            'based on responses' => 'Based on the responses to the individual statements relating to productivity management practices, :item1 and :item2 activities have been most well implemented.',
-            'most well implemented' => 'Based on the responses to the individual statements relating to productivity management practices, :item1 has been the most well implemented.',
-            'followed by' => 'This is followed by :name with a score of :score',
-            'it is imperative' => 'However, it is imperative that the organisation continues with its productivity improvement.',
+            'based on responses' => 'استناداً إلى الردود على البيانات الفردية المتعلقة بممارسات إدارة الإنتاجية، تم تنفيذ عناصر :item1',
+            'most well implemented' => 'استناداً إلى الردود على البيانات الفردية المتعلقة بممارسات إدارة الإنتاجية، تم تنفيذ عنصر :item1 على أفضل وجه',
+            'followed by' => 'يتبع ذلك, :name بدرجة :score',
+            'it is imperative' => 'ومع ذلك، فمن الضروري أن تواصل المنظمة بتحسين انتاجيتها.',
         ],
-        'second' => "The following 2 areas ':item1' and ':item2' should be the immediate top focus for further review and transformation.",
+        'second' => "ينبغي أن يكون المجالان التاليان :item1 و:item2 محوري التركيز المباشر لضمان وجود منظمة سليمة ذات أهداف مستدامة طويلة الاجل.",
     ],
 
     'bspi' => [
-        '100' => 'The organisation is perceived to have achieved optimal performance across all areas, subjected to on-site review of the documentation and discussions with more employees in the organisation.<br>Continuous review and enhancement across all areas is recommended.',
+        '100' => 'يُنظر إلى أن المنظمة حققت أفضل أداء في جميع المجالات، وتخضع لاستعراض الوثائق والمناقشات في الموقع مع عدد أكبر من الموظفين في المنظمة توصى بإجراء استعراض وتحسينات مستمرة في جميع المجالات',
 
         'first' => [
             'based on responses' => "واستنادا إلى الردود على البيانات الفردية المتعلقة باستدامة الأعمال التجارية، تم تنفيذ ':item1' and ':item2' على أفضل وجه",
             'most well implemented' => "واستنادا إلى الردود على البيانات الفردية المتعلقة باستدامة الأعمال التجارية، تم تنفيذ ':item1' على أفضل وجه",
-            'followed by' => 'This is followed by :name with a score of :score',
-            'it is imperative' => 'However, it is imperative that the organisation strive to strengthen the overall organisational management practices.',
+            'followed by' => 'يتبع ذلك, :name بدرجة :score',
+            'it is imperative' => 'ومع ذلك، فمن الضروري أن تسعى المنظمة إلى تعزيز الممارسات العامة للإدارة التنظيمية',
         ],
-        'second' => "The following 2 areas ':item1' and ':item2' should be the immediate top focus for further review and transformation.",
+        'second' => "ينبغي أن يكون المجالان التاليان :item1 و:item2 محوري التركيز المباشر لضمان وجود منظمة سليمة ذات أهداف مستدامة طويلة الاجل.",
     ],
 ];

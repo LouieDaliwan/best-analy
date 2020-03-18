@@ -15,7 +15,7 @@
           </div>
           <div class="text-center">
             <h1 class="display-4">@lang("Business Excellence Survey Toolkit (BEST)")</h1>
-            <h1 class="display-4">{{ __('Overall Report') }}</h1>
+            <h1 class="display-4">@lang('Overall Report')</h1>
           </div>
         {{-- header --}}
 
@@ -43,7 +43,7 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-md-10">
-        <p class="mb-0"><strong>{{ __('Prepared for:') }}</strong></p>
+        <h4 class="mb-0">@lang('Prepared for'):</h4>
         <h2 class="dt-primary mb-0">{{ $data['organisation:profile']['name'] }}</h2>
         <p class="mb-0">{{ $data['cover:date'] }}</p>
         <div class="mt-5">

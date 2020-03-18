@@ -18,4 +18,7 @@ Route::prefix('v1')->group(function () {
 
 Route::prefix('v1')->middleware('auth:api')->group(function () {
     Route::post('reports/{survey}/generate', 'Api\GeneratePerformanceIndexReport')->name('surveys.report');
+    Route::get('reports', 'Api\Report\GetReportList')->name('reports.index');
+    Route::get('reports/{report}', 'Api\Report\GetReport')->name('reports.single');
+    Route::delete('reports/{report}', 'Api\Report\DeleteReport')->name('reports.delete');
 });

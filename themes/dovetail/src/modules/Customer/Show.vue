@@ -24,6 +24,7 @@
             color="primary"
             exact
             large
+            v-if="resourcesHasReport"
             >
             <v-icon small left>mdi-file-chart-outline</v-icon>
             {{ __('View Reports') }}
@@ -128,6 +129,11 @@ export default {
     resourcesIsEmpty () {
       return window._.isEmpty(this.resource.data) && !this.resource.loading
     },
+
+    resourcesHasReport () {
+      console.log(this.resource.data.indices.filter((i) => (i['is:finished'])).length)
+      return this.resource.data.indices.filter((i) => (i['is:finished'])).length >= 1
+    }
   },
 
   data: () => ({

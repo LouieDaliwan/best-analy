@@ -3,7 +3,7 @@
 namespace Survey\Unit\Services;
 
 use Best\Models\Report;
-use Best\Services\FormulaServiceInterface;
+use Best\Services\ReportServiceInterface;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -31,15 +31,12 @@ class ReportServiceTest extends TestCase
     public function a_user_can_store_a_report_to_database()
     {
         // Arrangements
-        $service = app(FormulaServiceInterface::class);
+        $service = app(ReportServiceInterface::class);
         $attributes = factory(Report::class)->make()->toArray();
 
         // Actions
         $attributes = array_merge($attributes, [
-            'metadata' => json_encode([
-                'subscore' => $this->faker->randomDigitNotNull(),
-                'average' => number_format($this->faker->randomDigitNotNull(), 2),
-            ]),
+            'value' => $this->faker->randomDigitNotNull(),
         ]);
         $actual = $service->store($attributes);
 

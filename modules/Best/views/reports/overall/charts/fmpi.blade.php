@@ -33,11 +33,11 @@
       type: 'bar',
       data: {
         labels: [
-          ["Cost", "Management"],
-          ["Financial", "Analysis"],
-          ["Financial", "Controls"],
-          ["Forecasting &", "Budgeting"],
-          ["Financial Risk", "Management"],
+          ['{{ __("Cost") }}', '{{ __("Management") }}'],
+          ['{{ __("Financial") }}', '{{ __("Analysis") }}'],
+          ['{{ __("Financial") }}', '{{ __("Controls") }}'],
+          ['{!! __("Forecasting &") !!}', '{{ __("Budgeting") }}'],
+          ['{{ __("Financial Risk") }}', '{{ __("Management") }}'],
         ],
         datasets: [
           {
@@ -90,7 +90,7 @@
               fontFamily: 'Rubik, sans-serif',
               fontSize: 13,
               // min: -100,
-              // max: 100,
+              max: 100,
               callback: function(value){return value+ "%"}
             }
           }]

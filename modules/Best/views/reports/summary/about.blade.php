@@ -5,12 +5,12 @@
       <h1 class="dt-primary">@lang('About the Report')</h1>
       <p class="mb-0">
         @lang('best::reports.description', [
-          'apptitle' => settings('app:fulltitle'),
-          'appcode' => settings('app:code'),
-          'bspi' => 'Business Sustainability',
-          'pmpi' => 'Productivity Management',
-          'fmpi' => 'Financial Management',
-          'hrpi' => 'Human Resource',
+          'apptitle' => __(settings('app:fulltitle')),
+          'appcode' => __(settings('app:code')),
+          'bspi' => __('Business Sustainability'),
+          'pmpi' => __('Productivity Management'),
+          'fmpi' => __('Financial Management'),
+          'hrpi' => __('Human Resource'),
         ])
       </p>
     </div>

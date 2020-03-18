@@ -233,7 +233,7 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function getOverallComment($score, $customer)
     {
-        return trans("best::grading.$score", ['name' => $customer]);
+        return trans("best::grading.$score", ['name' => $customer, 'appcode' => settings('app:code')]);
     }
 
     /**
@@ -284,7 +284,7 @@ class FormulaService extends Service implements FormulaServiceInterface
             ],
 
             'chart' => [
-                'label' => ['Workflow Processess', 'Talent', 'Documentation', 'Technology'],
+                'label' => [ __('Workflow Processess'), __('Talent'), __('Documentation'), __('Technology')],
                 'data' => [$workflowAvg*100, $talentAvg*100, $documentationAvg*100, $technologyAvg*100],
             ],
         ];
@@ -721,7 +721,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 $firstSentence[] = '';
             } else {
                 $firstSentence[] = trans("best::comments.{$code}.first.followed by", [
-                    'name' => $fourthElement, 'score' => round(($group->sort()->get($fourthElement)*100)).'%'
+                    'name' => __($fourthElement), 'score' => round(($group->sort()->get($fourthElement)*100)).'%'
                 ]);
                 $firstSentence[] = trans("best::comments.{$code}.first.it is imperative");
             }
@@ -872,12 +872,12 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         if ($total > config('modules.best.scores.grades.red')) {
             if ($total > config('modules.best.scores.grades.amber')) {
-                $comment = trans("best::overall.{$code}.above90", ['name' => $customer]);
+                $comment = trans("best::overall.{$code}.above90", ['name' => $customer, 'appcode' => 'asfsdf']);
             } else {
-                $comment = trans("best::overall.{$code}.mid50to89", ['name' => $customer]);
+                $comment = trans("best::overall.{$code}.mid50to89", ['name' => $customer, 'appcode' => 'asfsdf']);
             }
         } else {
-            $comment = trans("best::overall.{$code}.below50", ['name' => $customer]);
+            $comment = trans("best::overall.{$code}.below50", ['name' => $customer, 'appcode' => 'asfsdf']);
         }
 
         return $comment;

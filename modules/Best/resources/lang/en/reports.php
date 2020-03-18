@@ -12,5 +12,6 @@ return [
         'Channel resources to address critical areas of concern, appropriately',
         'Strategically assess which elements of organisational excellence will require interventions',
     ],
+    ':appcode Score' => "BEST Score",
     'Score Description' => 'The :appcode Score gives the organisation an idea of how well the core functions of the organisation are performing. Using a traffic light system, the score is organised into 3 broad categories:'
 ];

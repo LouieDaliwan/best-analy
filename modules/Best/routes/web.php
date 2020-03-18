@@ -60,12 +60,14 @@ Route::get('best/formula/check', function (Request $request) {
 
 Route::get('best/preview/reports/overall', function (Request $request, FormulaServiceInterface $service) {
     app()->setLocale($request->get('lang') ?: 'en');
+
     $file = $request->get('month') ?: date('m-Y');
     $user = User::find($request->get('user_id'));
     Auth::login($user);
 
     $attributes = ['customer_id' => $request->get('customer_id')];
-    $data = $service->generate(\Survey\Models\Survey::find(1), $attributes);
+    $survey = \Survey\Models\Survey::find($request->get('survey_id') ?: 1);
+    $data = $service->generate($survey, $attributes);
 
     return view("best::reports.overall")->withData($data);
 });

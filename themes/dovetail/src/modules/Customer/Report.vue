@@ -20,11 +20,11 @@
       </template> -->
     </page-header>
 
-    <template v-if="resource.loading">
+    <!-- <template v-if="resource.loading">
       <skeleton-show></skeleton-show>
-    </template>
+    </template> -->
 
-    <template v-else>
+    <template>
       <v-card outlined>
         <iframe width="100%" id="iframe-preview" :src="url" frameborder="0"></iframe>
       </v-card>
@@ -45,7 +45,8 @@ export default {
 
   methods: {
     getReport () {
-      let lang = this.$route.query.lang
+      let lang = this.$route.query.lang || this.resource.lang
+      this.$router.push({ query: { lang: lang }}).catch(err => {})
       axios.get(
         `/api/v1/reports/${this.$route.params.report}`, {
           params: { lang: lang }

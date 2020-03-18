@@ -19,9 +19,9 @@
               <div class="mb-3">
                 <img height="140" src="{{ $data['pindex:icon'] }}" alt="{{ $data['pindex'] }}"/>
               </div>
-              <h1 class="mb-2 dt-{{ $data['pindex:code'] }}">{{ $data['pindex'] }} {{ trans('Performance Index') }} ({{ $data['pindex:code'] }})
+              <h1 class="mb-2 dt-{{ $data['pindex:code'] }}">@lang($data['pindex']) @lang('Performance Index') ({{ $data['pindex:code'] }})
               </h1>
-              <h1 class="mb-4">{{ trans('Diagnostic Report') }}</h1>
+              <h1 class="mb-4">@lang('Diagnostic') @lang('Report')</h1>
             </div>
             @foreach ($data['elements:charts']['labels'] as $label)
               <div class="ml-4sds">
@@ -42,7 +42,7 @@
         <div class="dt-divider" style="height: 50px;"></div>
         <div class="row justify-content-center">
           <div class="col-md-10">
-            <p class="mb-0"><strong>{{ __('Prepared for:') }}</strong></p>
+            <h4 class="mb-0">@lang('Prepared for'):</h4>
             <h2 class="dt-{{ $data['pindex:code'] }} mb-0">{{ $data['customer:name'] }}</h2>
             <p class="mb-0">{{ $data['cover:date'] }}</p>
             <div class="mt-5">

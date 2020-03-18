@@ -33,13 +33,13 @@
       type: 'bar',
       data: {
         labels: [
-          ["Manpower", "Planning"],
-          ["Recruitment &", "Selection"],
-          ["Compensation &", "Benefits"],
-          ["Performance", "Management"],
-          ["Learning &", "Development"],
-          ["Career & Talent", "Management"],
-          ["Employee", "Engagement &", "Communication"],
+          ['{{ __("Manpower") }}', '{{ __("Planning") }}'],
+          ['{!! __("Recruitment &") !!}', '{{ __("Selection") }}'],
+          ['{!! __("Compensation &") !!}', '{{ __("Benefits") }}'],
+          ['{{ __("Performance") }}', '{{ __("Management") }}'],
+          ['{!! __("Learning &") !!}', '{!! __("Development") !!}'],
+          ['{!! __("Career & Talent") !!}', '{{ __("Management") }}'],
+          ['{!! __("Employee") !!}', '{!! __("Engagement &") !!}', '{!! __("Communication") !!}'],
         ],
         datasets: [
           {
@@ -91,7 +91,7 @@
               fontFamily: 'Rubik, sans-serif',
               fontSize: 13,
               // min: -100,
-              // max: 100,
+              max: 100,
               callback: function(value){return value+ "%"}
             }
           }]

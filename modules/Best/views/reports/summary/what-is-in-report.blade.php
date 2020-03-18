@@ -4,8 +4,8 @@
     <div class="col-md-12">
       <h1 class="dt-primary">@lang('What\'s in the Report')</h1>
       {{-- Section I --}}
-      <h2 class="dt-secondary">@lang('I.') @lang(':appcode Score', ['appcode' => settings('app:code')])</h2>
-      <p>@lang('best::reports.Score Description', ['appcode' => settings('app:code')])</p>
+      <h2 class="dt-secondary">@lang('I.') @lang('best::reports.:appcode Score', ['appcode' => __(settings('app:code'))])</h2>
+      <p>@lang('best::reports.Score Description', ['appcode' => __(settings('app:code'))])</p>
 
       <div class="card">
         <div class="card-body">
@@ -49,12 +49,14 @@
       {{-- Section I --}}
 
       {{-- Section II --}}
-      <h2 class="dt-secondary">@lang('II.') @lang(':appcode Elements', ['appcode' => settings('app:code')])</h2>
+      <h2 class="dt-secondary">@lang('II.') @lang('best::elements.:appcode Elements', ['appcode' => settings('app:code')])</h2>
       <div class="card mb-3">
         <div class="card-body">
           @foreach ($indices ?? $data['indices'] ?? [] as $index)
-            <h4 class="mb-3">{{ strtoupper($index['pindex:code']) }} : {{ $index['pindex'] }}</h4>
-            <p>{!! $index['pindex:description'] !!}</p>
+            <h4 class="mb-3">{{ strtoupper($index['pindex:code']) }} : {{ __($index['pindex']) }}</h4>
+            @foreach (trans("best::indices/descriptions.{$index['pindex:code']}") ?? [] as $desc)
+              <p>- {{ $desc }}</p>
+            @endforeach
           @endforeach
         </div>
       </div>

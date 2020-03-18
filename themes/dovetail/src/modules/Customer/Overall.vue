@@ -41,6 +41,7 @@ import $auth from '@/core/Auth/auth'
 export default {
   data: () => ({
     resource: {
+      lang: window.localStorage.getItem('report:lang') || 'en',
       loading: false,
       data: {},
     },
@@ -51,7 +52,9 @@ export default {
     getReport () {
       let id = $auth.getId()
       let customerId = this.$route.params.id
-      this.url = `/best/preview/reports/overall?user_id=${id}&customer_id=${customerId}`
+      let lang = this.$route.query.lang || this.resource.lang
+      this.$router.replace({query: { lang: lang }}).catch(err => {})
+      this.url = `/best/preview/reports/overall?user_id=${id}&customer_id=${customerId}&lang=${lang}`
     },
 
     sendToCrm (item) {

@@ -59,7 +59,7 @@
         </div>
         <div class="mt-2 border-bottom"></div>
         <div class="main-content">
-          @include('best::reports.overall.organisation-profile')
+          @include('best::reports.partials.organisation-profile')
           @include('best::reports.overall.score')
           @include('best::reports.overall.pindex')
           @include('best::reports.partials.disclaimer')
@@ -80,7 +80,7 @@
           </div>
           <div class="mt-2 border-bottom"></div>
           <div class="main-content">
-            @include('best::reports.overall.organisation-profile')
+            @include('best::reports.partials.organisation-profile')
             @include('best::reports.pindex.performance-index', ['data' => $index, 'orig' => $data['overall:enablers:orig']])
             @include('best::reports.partials.disclaimer')
             @include('best::reports.partials.footer')
@@ -99,7 +99,7 @@
         </div>
         <div class="mt-2 border-bottom"></div>
         <div class="main-content">
-          @include('best::reports.overall.organisation-profile')
+          @include('best::reports.partials.organisation-profile')
           @include('best::reports.analysis.profitability')
           @include('best::reports.analysis.liquidity')
           @include('best::reports.analysis.efficiency')
@@ -121,7 +121,7 @@
         </div>
         <div class="mt-2 border-bottom"></div>
         <div class="main-content">
-          @include('best::reports.overall.organisation-profile')
+          @include('best::reports.partials.organisation-profile')
           @include('best::reports.table.index')
           @include('best::reports.partials.disclaimer')
           @include('best::reports.partials.footer')

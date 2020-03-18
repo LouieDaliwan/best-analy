@@ -141,7 +141,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     public static function getBE12Comment($spreadsheet)
     {
         $output = '';
-        $ai19 = $spreadsheet->getCell('AI19')->getCalculatedValue();
+        $ai19 = $spreadsheet->getCell('AI19')->getCalculatedValue() ?: 1;
         $ai20 = $spreadsheet->getCell('AI20')->getCalculatedValue();
         $bk12 = $spreadsheet->getCell('BK12')->getCalculatedValue();
         $d19 = $spreadsheet->getCell('D19')->getCalculatedValue();
@@ -197,7 +197,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     public static function getBC12Comment($spreadsheet)
     {
         $output = '';
-        $ai19 = $spreadsheet->getCell('AI19')->getCalculatedValue();
+        $ai19 = $spreadsheet->getCell('AI19')->getCalculatedValue() ?: 1;
         $ai21 = $spreadsheet->getCell('AI21')->getCalculatedValue();
         $bi12 = $spreadsheet->getCell('BI12')->getCalculatedValue();
 
@@ -233,7 +233,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
         $output = '';
         $customer = $main->getSheetByName('Customer')->getCell('B2')->getCalculatedValue();
         $ai19 = $spreadsheet->getCell('AI19')->getCalculatedValue();
-        $ai20 = $spreadsheet->getCell('AI20')->getCalculatedValue();
+        $ai20 = $spreadsheet->getCell('AI20')->getCalculatedValue() ?: 1;
         $ai21 = $spreadsheet->getCell('AI21')->getCalculatedValue();
         $bj12 = $spreadsheet->getCell('BJ12')->getCalculatedValue();
 
@@ -325,7 +325,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     public static function getBC13Comment($spreadsheet)
     {
         $output = '';
-        $am19 = $spreadsheet->getCell('AM19')->getCalculatedValue();
+        $am19 = $spreadsheet->getCell('AM19')->getCalculatedValue() ?: 1;
         $am21 = $spreadsheet->getCell('AM21')->getCalculatedValue();
         $bi13 = $spreadsheet->getCell('BI13')->getCalculatedValue();
 
@@ -360,7 +360,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $am19 = $spreadsheet->getCell('AM19')->getCalculatedValue();
-        $am20 = $spreadsheet->getCell('AM20')->getCalculatedValue();
+        $am20 = $spreadsheet->getCell('AM20')->getCalculatedValue() ?: 1;
         $am21 = $spreadsheet->getCell('AM21')->getCalculatedValue();
         $bj13 = $spreadsheet->getCell('BJ13')->getCalculatedValue();
 
@@ -405,7 +405,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     {
         $output = '';
 
-        $am19 = $spreadsheet->getCell('AM19')->getCalculatedValue();
+        $am19 = $spreadsheet->getCell('AM19')->getCalculatedValue() ?: 1;
         $am20 = $spreadsheet->getCell('AM20')->getCalculatedValue();
         $bk13 = $spreadsheet->getCell('BK13')->getCalculatedValue();
         $d19 = $spreadsheet->getCell('D19')->getCalculatedValue();
@@ -490,7 +490,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     public static function getBC14Comment($spreadsheet)
     {
         $output = '';
-        $aq19 = $spreadsheet->getCell('AQ19')->getCalculatedValue();
+        $aq19 = $spreadsheet->getCell('AQ19')->getCalculatedValue() ?: 1;
         $aq21 = $spreadsheet->getCell('AQ21')->getCalculatedValue();
         $bi14 = $spreadsheet->getCell('BI14')->getCalculatedValue();
 
@@ -525,7 +525,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $aq19 = $spreadsheet->getCell('AQ19')->getCalculatedValue();
-        $aq20 = $spreadsheet->getCell('AQ20')->getCalculatedValue();
+        $aq20 = $spreadsheet->getCell('AQ20')->getCalculatedValue() ?: 1;
         $aq21 = $spreadsheet->getCell('AQ21')->getCalculatedValue();
         $bj14 = $spreadsheet->getCell('BJ14')->getCalculatedValue();
 
@@ -564,7 +564,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     public static function getBE14Comment($spreadsheet)
     {
         $output = '';
-        $aq19 = $spreadsheet->getCell('AQ19')->getCalculatedValue();
+        $aq19 = $spreadsheet->getCell('AQ19')->getCalculatedValue() ?: 1;
         $aq20 = $spreadsheet->getCell('AQ20')->getCalculatedValue();
         $d19 = $spreadsheet->getCell('D19')->getCalculatedValue();
         $d20 = $spreadsheet->getCell('D20')->getCalculatedValue();

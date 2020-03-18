@@ -92,7 +92,6 @@ class CustomerService extends Service implements CustomerServiceInterface
     public function listReports(Customer $customer)
     {
         $this->model = $customer->reports();
-        dd($this->model->get());
 
         if ($this->isSearching()) {
             $this->model = $this->whereIn(

@@ -202,7 +202,21 @@ export default {
         this.submitting = false
       })
 
-    }, 2000),
+      // setTimeout(() => {
+      //   this.showDialog({
+      //     title: this.trans('Saving Data'),
+      //     persistent: true,
+      //     text: [
+      //       this.trans('Please wait, overriding some previous data.'),
+      //       this.trans('This might take a minute or two.'),
+      //     ],
+      //     buttons: {
+      //       cancel: { show: false },
+      //       action: { show: false },
+      //     }
+      //   })
+      // }, 6000)
+    }, 900),
 
     choose (item, answer) {
       if (this.answers.filter(function (a) {
@@ -274,5 +288,13 @@ export default {
   mounted () {
     this.getResource()
   },
+
+  watch: {
+    submitting: function (val) {
+      if (!val) {
+        this.hideDialog()
+      }
+    }
+  }
 }
 </script>

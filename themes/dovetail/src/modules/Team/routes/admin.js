@@ -78,6 +78,41 @@ export default [
           icon: 'mdi-book-multiple-variant',
         },
       },
+      {
+        path: 'reports/customer/:customer/user/:user',
+        name: 'teams.reports',
+        component: () => import('../Reports.vue'),
+        meta: {
+          title: ':slug',
+          sort: 8,
+          authenticatable: true,
+          permission: 'teams.members',
+        },
+      },
+      {
+        path: ':id/reports/:report',
+        name: 'teams.report',
+        component: () => import('../Report.vue'),
+        meta: {
+          title: 'Report Preview',
+          sort: 9,
+          authenticatable: true,
+          permission: 'teams.members',
+          icon: 'mdi-book-multiple-variant',
+        },
+      },
+      {
+        path: ':id/overall/reports',
+        name: 'teams.overall',
+        component: () => import('../Overall.vue'),
+        meta: {
+          title: 'Report Overall',
+          sort: 9,
+          authenticatable: true,
+          permission: 'teams.members',
+          icon: 'mdi-book-multiple-variant',
+        },
+      },
     ],
   }
 ]

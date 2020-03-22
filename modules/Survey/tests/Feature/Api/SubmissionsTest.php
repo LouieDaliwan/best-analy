@@ -40,6 +40,7 @@ class SubmissionsTest extends TestCase
     public function a_user_can_store_a_field_submission_to_database()
     {
         // Arrangements
+        $this->withoutExceptionHandling();
         Passport::actingAs($user = $this->asNonSuperAdmin(['submissions.store']), ['submissions.store']);
         $this->withPermissionsPolicy();
 
@@ -51,7 +52,7 @@ class SubmissionsTest extends TestCase
                 'submissible_id' => $field->getKey(),
                 'submissible_type' => get_class($field),
                 'customer_id' => $customer->getKey(),
-            ]);
+            ])->toArray();
         }
 
         $response = $this->post(route('api.submissions.store'), $submissions);

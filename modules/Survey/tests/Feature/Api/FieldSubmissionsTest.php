@@ -41,6 +41,7 @@ class FieldSubmissionsTest extends TestCase
     public function a_user_can_submit_their_answer_to_the_survey()
     {
         // Arrangements
+        $this->withoutExceptionHandling();
         Passport::actingAs($user = $this->asNonSuperAdmin(['surveys.submit']), ['surveys.submit']);
         $this->withPermissionsPolicy();
 
@@ -53,8 +54,8 @@ class FieldSubmissionsTest extends TestCase
                 'id' => $field->getKey(),
                 'submission' => factory(Submission::class)->make([
                     'user_id' => $user->getKey(),
-                    'submissible_id' => null,
-                    'submissible_type' => null,
+                    'submissible_id' => $field->getKey(),
+                    'submissible_type' => get_class($field),
                     'metadata' => null,
                 ])->toArray(),
             ];

@@ -57,7 +57,13 @@ class SubmissionService extends Service implements SubmissionServiceInterface
         $model = $this->model;
 
         foreach ($attributes as $attribute) {
-            $model = $this->save($model, $attribute);
+            $model = $model->updateOrCreate([
+                'submissible_id' => $attribute['submissible_id'] ?? null,
+                'submissible_type' => $attribute['submissible_type'] ?? null,
+                'remarks' => $attribute['remarks'] ?? null,
+                'user_id' => $attribute['user_id'] ?? null,
+                'customer_id' => $attribute['customer_id'] ?? null,
+            ], $attribute);
         }
 
         return $model;

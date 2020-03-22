@@ -12,16 +12,10 @@ use User\Models\User;
 $factory->define(Report::class, function (Faker $faker) {
     return [
         'key' => $faker->word(),
-        'value' => json_encode($faker->words($nb = 6, $asText = false)),
+        'value' => $faker->words($nb = 6, $asText = true),
         'remarks' => $faker->randomDigitNotNull(),
-        'customer_id' => function () {
-            return factory(Customer::class)->create()->getKey();
-        },
-        'form_id' => function () {
-            return factory(Survey::class)->create()->getKey();
-        },
-        'user_id' => function () {
-            return factory(User::class)->create()->getKey();
-        },
+        'customer_id' => factory(Customer::class)->create()->getKey(),
+        'form_id' => factory(Survey::class)->create()->getKey(),
+        'user_id' => factory(User::class)->create()->getKey(),
     ];
 });

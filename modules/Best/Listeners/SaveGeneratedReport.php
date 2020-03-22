@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\File;
 
-class SaveGeneratedReport
+class SaveGeneratedReport implements ShouldQueue
 {
     /**
      * The SubmissionService instance to be used.
@@ -35,11 +35,14 @@ class SaveGeneratedReport
      */
     public function handle($event)
     {
-        $filepath = $this->save($event);
-
-        $this->service->store([
+        $this->service->updateOrCreate([
+            'remarks' => date('m-Y'),
+            'customer_id' => $event->data['organisation:profile']['id'],
+            'form_id' => $event->data['survey:id'],
+            'user_id' => $event->data['user:id'],
+        ], [
             'key' => trans($event->data['current:index']['pindex'].' Report'),
-            'value' => array_merge(['filepath' => $filepath], $event->data),
+            'value' => array_merge(['filepath' => $this->save($event)], $event->data),
             'remarks' => date('m-Y'),
             'customer_id' => $event->data['organisation:profile']['id'],
             'form_id' => $event->data['survey:id'],
@@ -57,7 +60,7 @@ class SaveGeneratedReport
     {
         $html = view("best::reports.index")->withData($event->data)->render();
         $refnum = $event->data['current:index']['customer:refnum'];
-        $hash = date('YmdHis');
+        $hash = date('m-Y');
         $name = "{$event->data['current:index']['pindex']} Report - {$refnum}-{$hash}.html";
         $date = date('Y-m-d');
 

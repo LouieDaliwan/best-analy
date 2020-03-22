@@ -62,7 +62,7 @@ abstract class OverallOrganisationEnablerMetrics
                                 $comment[] = __("A deep-dive into talent pool and documentation is recommended to review gaps that may exist.", ['name' => $name]);
                             }
                         } else {
-                            if ($techAvg < self::COMMENT_POINT_4_TOP && $workflowAvg > sefl::COMMENT_POINT_4_LEFT) {
+                            if ($techAvg < self::COMMENT_POINT_4_TOP && $workflowAvg > self::COMMENT_POINT_4_LEFT) {
                                 if ($workflowAvg > self::COMMENT_POINT_8_LEFT && $techAvg < self::COMMENT_POINT_8_TOP) {
                                     $comment[] = __("With a highly efficient workflow process supported by very good technology, any further technological investment will be expected to deliver a more significant value added improvements for :name's customers.", ['name' => $name]);
                                 } else {

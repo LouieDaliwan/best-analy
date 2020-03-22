@@ -101,7 +101,11 @@ class CustomerService extends Service implements CustomerServiceInterface
             );
         }
 
-        $model = $this->model->paginate($this->getPerPage());
+        $model = $this->model->whereUserId($this->auth()->id());
+
+        $model = $model->whereRemarks($this->request()->get('month') ?: date('m-Y'));
+
+        $model = $model->paginate($this->getPerPage());
 
         $sorted = $this->sortAndOrder($model);
 

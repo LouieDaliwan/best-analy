@@ -2,18 +2,25 @@
   <admin>
     <metatag :title="trans('All Team')"></metatag>
 
-    <page-header></page-header>
+    <page-header>
+      <template v-slot:utilities>
+        <p class="mb-0 muted--text">
+          {{ __('Click arrow down icon to view the list of companies per Counselor') }}.
+        </p>
+      </template>
+    </page-header>
 
     <!-- Data table -->
     <div v-show="resourcesIsNotEmpty">
       <v-card v-for="(team, i) in resources.data" :key="i">
-        <toolbar-menu
+        <!-- <toolbar-menu
           :items.sync="tabletoolbar"
           @update:search="search"
           >
-        </toolbar-menu>
+        </toolbar-menu> -->
         <v-slide-y-reverse-transition mode="out-in">
           <v-data-table
+            show-expand
             :headers="resources.headers"
             :items="team.members"
             :loading="resources.loading"
@@ -25,8 +32,31 @@
             color="primary"
             item-key="id"
             v-model="resources.selected"
+            single-expand
             >
             <template v-slot:progress><span></span></template>
+
+            <template v-slot:expanded-item="{ headers, item }">
+              <template v-if="item.customers.length">
+                <td :colspan="headers.length">
+                  <template v-for="(customer, k) in item.customers">
+                    <p :key="k" class="my-3">
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <span class="mt-1" v-on="on"><router-link tag="a" exact :to="{name: 'teams.reports', params: {customer: customer.id, user: item.id}, query: { from: $route.fullPath }}" v-text="customer.name" class="text-no-wrap text--decoration-none secondary--text"></router-link></span>
+                        </template>
+                        <span>{{ trans('View Reports') }}</span>
+                      </v-tooltip>
+                    </p>
+                  </template>
+                </td>
+              </template>
+              <template v-else>
+                <td :colspan="headers.length">
+                  <p class="muted--text my-3"><em v-text="__('No companies found.')"></em></p>
+                </td>
+              </template>
+            </template>
 
             <template v-slot:loading>
               <v-slide-y-transition mode="out-in">
@@ -45,7 +75,7 @@
                   <template v-slot:activator="{ on }">
                     <span class="mt-1" v-on="on"><router-link tag="a" exact :to="{ name: 'users.show', params: { id: item.id }, query: { from: $route.fullPath } }" v-text="item.displayname" class="text-no-wrap text--decoration-none"></router-link></span>
                   </template>
-                  <span>{{ trans('View Details') }}</span>
+                  <span>{{ trans('View member details') }}</span>
                 </v-tooltip>
                 <template v-slot:unpermitted>
                   <span v-text="item.displayname" class="text-no-wrap text--decoration-none mt-1"></span>
@@ -55,11 +85,11 @@
             <!-- Name -->
 
             <!-- Customer -->
-            <template v-slot:item.customers="{ item }">
+            <!-- <template v-slot:item.customers="{ item }">
               <template v-for="(customer, k) in item.customers">
                 <p :key="k" class="mb-1"><router-link tag="a" exact :to="{name: 'companies.show', params: {id: customer.id}, query: { from: $route.fullPath }}">{{ customer.name }}</router-link></p>
               </template>
-            </template>
+            </template> -->
             <!-- Customer -->
           </v-data-table>
         </v-slide-y-reverse-transition>
@@ -140,7 +170,8 @@ export default {
       selected: [],
       headers: [
         { text: trans('Member Name'), align: 'left', value: 'displayname', class: 'text-no-wrap' },
-        { text: trans('Companies'), align: 'left', value: 'customers', class: 'text-no-wrap' },
+        { text: trans('Companies'), align: 'center', value: 'customers:count', class: 'text-no-wrap' },
+        { text: trans('No. of Reports'), align: 'center', value: 'reports:count', class: 'text-no-wrap' },
       ],
       data: []
     },

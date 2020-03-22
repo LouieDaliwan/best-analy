@@ -104,7 +104,7 @@ export default [
           title: ':slug',
           sort: 8,
           authenticatable: true,
-          permission: 'customers.show',
+          permission: 'customers.reports',
         },
       },
       {

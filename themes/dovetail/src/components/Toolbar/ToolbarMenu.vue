@@ -158,6 +158,10 @@
               </template>
             </template>
             <!-- list and grid view -->
+
+            <!-- filter -->
+            <slot name="filter"></slot>
+            <!-- filter -->
           </div>
         </v-col>
       </v-row>

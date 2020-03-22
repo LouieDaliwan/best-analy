@@ -39,5 +39,23 @@ export default {
     list: function () {
       return '/api/v1/users'
     },
+  },
+
+  customers: {
+    show: function (customer) {
+      return `/api/v1/customers/${customer}`
+    }
+  },
+
+  reports: {
+    users: {
+      list : function (customer, user) {
+        return `/api/v1/reports/customer/${customer}/user/${user}`
+      },
+
+      show: function (user) {
+        return `/api/v1/users/${user}`
+      },
+    }
   }
 }

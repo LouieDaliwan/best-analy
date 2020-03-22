@@ -3,11 +3,15 @@
     <metatag :title="resource.data.title"></metatag>
     <back-to-top></back-to-top>
 
-    <page-header>
-      <template v-slot:back>
+    <page-header :back="{ to: { name: 'companies.show', params: {id: $route.params.id}}, text: 'Back' }">
+      <!-- <template v-slot:back>
         <div class="mb-2">
           <can code="customers.show">
-            <router-link tag="a" exact :to="{ name: 'companies.reports', params: {id: $route.params.id} }" class="text--decoration-none body-1 dt-link">
+            <router-link
+              tag="a"
+              exact
+              :to="{ name: 'companies', params: {id: $route.params.id}, query: { from: $route.fullPath } }"
+              class="text--decoration-none body-1 dt-link">
               <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
               <span v-text="trans('Back')"></span>
             </router-link>
@@ -19,7 +23,7 @@
             </template>
           </can>
         </div>
-      </template>
+      </template> -->
       <template v-slot:title>{{ resource.data.title }}</template>
     </page-header>
     <template v-if="resource.loading">

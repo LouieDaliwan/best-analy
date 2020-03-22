@@ -50,7 +50,7 @@ export default {
 
   methods: {
     getReport () {
-      let id = $auth.getId()
+      let id = this.$route.query.user_id || $auth.getId()
       let customerId = this.$route.params.id
       let lang = this.$route.query.lang || this.resource.lang
       this.$router.replace({query: { lang: lang }}).catch(err => {})

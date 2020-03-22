@@ -56,7 +56,18 @@ class ComputePerformanceIndexFromSurvey implements ShouldQueue
             'month' => date('m-Y'),
         ];
 
-        $this->service->store($attributes);
+        $formulas = $this->service
+            ->where('reportable_id', $submission->getKey())
+            ->where('customer_id', $customer->getKey())
+            ->where('taxonomy_id', $taxonomy->getKey())
+            ->where('form_id', $form->getKey())
+            ->where('user_id', user()->getKey())
+            ->where('month', date('m-Y'))
+            ->get();
+
+        $formulas->each->delete();
+
+        $this->service->create($attributes);
 
         $isLastField = $this->service->where(
             'key', $code
@@ -77,6 +88,7 @@ class ComputePerformanceIndexFromSurvey implements ShouldQueue
                 'customer_id' => $customer->getKey(),
                 'taxonomy_id' => $taxonomy->getKey(),
             ]);
+
             event(new ReportGenerated($data));
         }
     }

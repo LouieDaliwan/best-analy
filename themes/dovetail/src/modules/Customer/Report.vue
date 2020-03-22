@@ -45,6 +45,7 @@ export default {
 
   methods: {
     getReport () {
+      this.resources.loading = true
       let lang = this.$route.query.lang || this.resource.lang
       this.$router.push({ query: { lang: lang }}).catch(err => {})
       axios.get(

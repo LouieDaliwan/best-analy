@@ -18,17 +18,19 @@
           <!-- Export button -->
 
           <!-- List of All Reports button -->
-          <v-btn
-            :block="$vuetify.breakpoint.smAndDown"
-            :to="{name: 'companies.reports', params: { id: $route.params.id }}"
-            color="primary"
-            exact
-            large
-            v-if="resourcesHasReport"
-            >
-            <v-icon small left>mdi-file-chart-outline</v-icon>
-            {{ __('View Reports') }}
-          </v-btn>
+          <can code="customers.reports">
+            <v-btn
+              :block="$vuetify.breakpoint.smAndDown"
+              :to="{name: 'companies.reports', params: { id: $route.params.id }}"
+              color="primary"
+              exact
+              large
+              v-if="resourcesHasReport"
+              >
+              <v-icon small left>mdi-file-chart-outline</v-icon>
+              {{ __('View Reports') }}
+            </v-btn>
+          </can>
           <!-- List of All Reports button -->
         </template>
       </page-header>
@@ -131,7 +133,6 @@ export default {
     },
 
     resourcesHasReport () {
-      console.log(this.resource.data.indices.filter((i) => (i['is:finished'])).length)
       return this.resource.data.indices.filter((i) => (i['is:finished'])).length >= 1
     }
   },

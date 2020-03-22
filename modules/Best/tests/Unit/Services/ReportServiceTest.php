@@ -43,4 +43,28 @@ class ReportServiceTest extends TestCase
         // Assertions
         $this->assertDatabaseHas($service->getTable(), $attributes);
     }
+
+    /**
+     * @test
+     * @group  unit
+     * @group  unit:survey
+     * @group  unit:survey:service
+     * @group  unit:survey:service:report
+     * @return void
+     */
+    public function a_user_can_retrieve_the_list_of_available_months_from_the_reports_table()
+    {
+        // Arrangements
+        $service = app(ReportServiceInterface::class);
+
+        factory(Report::class, 2)->create(['remarks' => '02-2020']);
+        factory(Report::class, 2)->create(['remarks' => '03-2020']);
+
+        // Actions
+        $actual = $service->getMonths();
+
+        // Assertions
+        $this->assertIsArray($actual);
+        $this->assertTrue(2 == count($actual));
+    }
 }

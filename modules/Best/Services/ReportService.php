@@ -16,10 +16,12 @@ use Best\Pro\TrafficLight;
 use Core\Application\Service\Service;
 use Customer\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 use Index\Models\Index;
 use Spatie\Browsershot\Browsershot;
 use Survey\Models\Survey;
+use User\Models\User;
 
 class ReportService extends Service implements ReportServiceInterface
 {
@@ -77,5 +79,48 @@ class ReportService extends Service implements ReportServiceInterface
             ->get()->each(function ($resource) {
                 $resource->forceDelete();
             });
+    }
+
+    /**
+     * Retrieve list of reports from given user and customer.
+     *
+     * @param  \User\Models\User         $user
+     * @param  \Customer\Models\Customer $customer
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function onlyFromUser(User $user, Customer $customer)
+    {
+        if ($this->isSearching()) {
+            $this->model = $this->whereIn(
+                $this->getKeyName(), $this->search(
+                    $this->request()->get('search')
+                )->keys()->toArray()
+            );
+        }
+
+        $model = $this->model->whereUserId($user->getKey())->whereCustomerId($customer->getKey());
+
+        $model = $model->whereRemarks($this->request()->get('month') ?: date('m-Y'));
+
+        $model = $model->paginate($this->getPerPage());
+
+        $sorted = $this->sortAndOrder($model);
+
+        return new LengthAwarePaginator($sorted, $model->total(), $model->perPage());
+    }
+
+    /**
+     * Retrieve the list of available months.
+     *
+     * @return array
+     */
+    public function getMonths()
+    {
+        $model = $this->model->groupBy('remarks')->pluck('remarks');
+
+        return $model->map(function ($item) {
+            $month = date('d-m-Y', strtotime("01-$item"));
+            return ['value' => $item, 'text' => date('M Y', strtotime($month))];
+        })->toArray();
     }
 }

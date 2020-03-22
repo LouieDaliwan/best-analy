@@ -1,6 +1,6 @@
 <template>
   <admin>
-    <metatag :title="trans('Dashboard')"></metatag>
+    <metatag :title="trans('All Company')"></metatag>
 
     <page-header>
       <template v-slot:action>
@@ -76,14 +76,16 @@
             <template v-slot:item.action="{ item }">
               <div class="text-no-wrap">
                 <!-- Show Reports -->
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn :to="{name: 'companies.reports', params: { id: item.id }}" icon v-on="on">
-                      <v-icon small>mdi-file-chart-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('View Reports') }}</span>
-                </v-tooltip>
+                <can code="customers.reports">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn :to="{name: 'companies.reports', params: { id: item.id }}" icon v-on="on">
+                        <v-icon small>mdi-file-chart-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('View Reports') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Show Reports -->
                 <!-- Edit Inputs -->
                 <v-tooltip bottom>
@@ -226,7 +228,7 @@ export default {
     getPaginatedData: function (params = null, caller = null) {
       params = Object.assign(params ? params : this.$route.query, { search: this.resources.search })
       this.resources.loading = true
-      axios.get(this.api.owned(), { params })
+      axios.get(this.api.list(), { params })
         .then(response => {
           this.resources = Object.assign({}, this.resources, response.data)
           this.resources.options = Object.assign(this.resources.options, response.data.meta, params)
@@ -258,7 +260,7 @@ export default {
     }, 200),
 
     goToShowIndexPage (company) {
-      return { name: 'companies.show', params: { id: company.id } }
+      return { name: 'companies.show', params: { id: company.id }, query: { from: this.$route.fullPath } }
     },
 
     focusSearchBar () {

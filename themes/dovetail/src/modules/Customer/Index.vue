@@ -83,14 +83,16 @@
             <template v-slot:item.action="{ item }">
               <div class="text-no-wrap">
                 <!-- Show Reports -->
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn :to="{name: 'companies.reports', params: { id: item.id }}" icon v-on="on">
-                      <v-icon small>mdi-file-chart-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('View Reports') }}</span>
-                </v-tooltip>
+                <can code="customers.reports">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn :to="{name: 'companies.reports', params: { id: item.id }}" icon v-on="on">
+                        <v-icon small>mdi-file-chart-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('View Reports') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Show Reports -->
                 <!-- Edit Inputs -->
                 <v-tooltip bottom>

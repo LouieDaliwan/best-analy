@@ -8,7 +8,7 @@ export default [
       authenticatable: true,
       sort: 5,
       permission: ['teams.index', 'teams.owned'],
-      children: ['teams.index', 'teams.create', 'teams.owned', 'teams.show', 'teams.edit', 'teams.trashed'],
+      children: ['teams.index', 'teams.create', 'teams.owned', 'teams.show', 'teams.edit', 'teams.trashed', 'teams.reports', 'teams.overall', 'teams.report'],
     },
     children: [
       {
@@ -30,7 +30,7 @@ export default [
           authenticatable: true,
           sort: 6,
           permission: 'teams.owned',
-          children: ['teams.index', 'teams.edit', 'teams.show'],
+          children: ['teams.index', 'teams.edit', 'teams.show', 'teams.reports', 'teams.overall', 'teams.report'],
         },
       },
       {

@@ -23,11 +23,11 @@
       </template>
     </page-header>
 
-    <template v-if="resource.loading">
+    <!-- <template v-if="resource.loading">
       <skeleton-show></skeleton-show>
-    </template>
+    </template> -->
 
-    <template v-else>
+    <template>
       <v-card outlined>
         <iframe width="100%" id="iframe-preview" :src="url" frameborder="0"></iframe>
       </v-card>

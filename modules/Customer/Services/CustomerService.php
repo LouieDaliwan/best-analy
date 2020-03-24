@@ -2,6 +2,7 @@
 
 namespace Customer\Services;
 
+use Best\Models\Report;
 use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
 use Customer\Models\Customer;
@@ -92,10 +93,11 @@ class CustomerService extends Service implements CustomerServiceInterface
     public function listReports(Customer $customer)
     {
         $this->model = $customer->reports();
+        $report = new Report;
 
         if ($this->isSearching()) {
             $this->model = $this->whereIn(
-                $this->getKeyName(), $this->search(
+                'id', $report->search(
                     $this->request()->get('search')
                 )->keys()->toArray()
             );

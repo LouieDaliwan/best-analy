@@ -14,17 +14,13 @@
           {{ trans('View Report in English') }}
         </v-btn>
       </template>
-      <!-- <template v-slot:utilities>
-        <a href="?lang=ar" @click.prevent="downloadReport" class="dt-link text--decoration-none mr-4">{{ trans('Download Report') }}</a>
-        <a href="#" @click.prevent="goToSurveyPage(resource.data)" class="dt-link text--decoration-none mr-4"><v-icon left>mdi-search</v-icon>{{ trans('View Survey') }}</a>
-      </template> -->
     </page-header>
 
-    <!-- <template v-if="resource.loading">
+    <template v-if="isFetchingResource">
       <skeleton-show></skeleton-show>
-    </template> -->
+    </template>
 
-    <template>
+    <template v-show="isFinishedFetchingResource">
       <v-card outlined>
         <iframe width="100%" id="iframe-preview" :src="url" frameborder="0"></iframe>
       </v-card>
@@ -33,7 +29,22 @@
 </template>
 
 <script>
+import SkeletonShow from './cards/SkeletonShow'
+
 export default {
+  computed: {
+    isFetchingResource () {
+      return this.resource.loading
+    },
+    isFinishedFetchingResource () {
+      return !this.resource.loading
+    },
+  },
+
+  components: {
+    SkeletonShow
+  },
+
   data: () => ({
     resource: {
       lang: window.localStorage.getItem('report:lang') || 'en',
@@ -45,7 +56,7 @@ export default {
 
   methods: {
     getReport () {
-      this.resources.loading = true
+      this.resource.loading = true
       let lang = this.$route.query.lang || this.resource.lang
       this.$router.push({ query: { lang: lang }}).catch(err => {})
       axios.get(
@@ -57,7 +68,7 @@ export default {
         let id = this.resource.data.value['current:index']['taxonomy']['id'] || null
         let type = this.$route.query.type || 'index'
         this.url = `/best/preview/reports/${this.$route.params.report}?type=${type}&taxonomy_id=${id}&lang=${lang}`
-      })
+      }).finally(() => { this.resource.loading = false })
     },
 
     goToSurveyPage (item) {
@@ -72,38 +83,37 @@ export default {
       })
     },
 
-      goToShowPage (lang = 'en') {
-        window.localStorage.setItem('report:lang', lang)
-        this.resource.lang = lang
-        this.$router.push({
-          name: 'reports.show',
-          params: {
-            id: this.$route.params.id,
-            report: this.$route.params.report
-          },
-          query: {
-            lang: lang,
-          }
-        }).catch(err => {})
-        this.$router.go()
-      },
+    goToShowPage (lang = 'en') {
+      window.localStorage.setItem('report:lang', lang)
+      this.resource.lang = lang
+      this.$router.push({
+        name: 'reports.show',
+        params: {
+          id: this.$route.params.id,
+          report: this.$route.params.report
+        },
+        query: {
+          lang: lang,
+        }
+      }).catch(err => {})
+      this.$router.go()
+    },
 
-      downloadReport () {
-        window.location.href = `/reports/${this.$route.params.report}/download`
-        // axios.get(
-        //   `/api/v1/reports/${this.$route.params.report}/download`
-        // ).then(response => {
-        //   let blob = new Blob([response.data], { type: 'application/pdf' })
-        //   let link = document.createElement('a')
-        //   link.href = window.URL.createObjectURL(blob)
-        //   link.download = `Report.pdf`
-        //   link.click()
-        // })
-      },
+    downloadReport () {
+      window.location.href = `/reports/${this.$route.params.report}/download`
+      // axios.get(
+      //   `/api/v1/reports/${this.$route.params.report}/download`
+      // ).then(response => {
+      //   let blob = new Blob([response.data], { type: 'application/pdf' })
+      //   let link = document.createElement('a')
+      //   link.href = window.URL.createObjectURL(blob)
+      //   link.download = `Report.pdf`
+      //   link.click()
+      // })
+    },
 
     setIframeHeight () {
-      this.resource.loading = true
-      document.querySelector('iframe').addEventListener('load', function (e) {
+      document.querySelector('#iframe-preview').addEventListener('load', function (e) {
         var iframe = this
         var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow
 
@@ -111,8 +121,8 @@ export default {
           iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight
         }
       })
-      this.resource.loading = false
     }
+
   },
 
   mounted () {
@@ -122,8 +132,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<!-- <style scoped>
 iframe {
   min-height: 500px;
 }
-</style>
+</style> -->

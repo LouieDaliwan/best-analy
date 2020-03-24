@@ -1,0 +1,33 @@
+<template>
+  <v-sheet class="sticky dt-sheet criteria">
+    <v-slide-group single show-arrows>
+      <v-slide-item>
+        <v-banner class="dt-banner" elevation="1">
+          <v-row justify="center" align="start">
+          <v-col class="text-center" v-for="(rate, r) in rates" :key="r">
+            <v-avatar color="primary" size="20" class="mb-2">
+              <small class="white--text">{{ rate.number }}</small>
+            </v-avatar>
+            <div class="overline" v-html="rate.text"></div>
+          </v-col>
+          </v-row>
+        </v-banner>
+      </v-slide-item>
+    </v-slide-group>
+  </v-sheet>
+</template>
+
+<script>
+  export default {
+    data: () => ({
+      rates: [
+        { number: '1', text: 'No existing <br/> processes & practices' },
+        { number: '2', text: 'Processes present <br/> but not practised' },
+        { number: '3', text: 'Processes are <br/> poorly practiced' },
+        { number: '4', text: 'Processes practised <br/> effectively by some' },
+        { number: '5', text: 'Processes practised <br/> effectively by most' },
+        { number: '6', text: 'N/A' },
+      ],
+    })
+  }
+</script>

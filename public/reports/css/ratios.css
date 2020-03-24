@@ -368,3 +368,28 @@
   font-weight: 500;
 }
 
+/*Hide empty tr*/
+.ratioPROFITABILITY-2,
+.ratioPROFITABILITY-7,
+.ratioPROFITABILITY-12,
+.ratioPROFITABILITY-17,
+.ratioPROFITABILITY-22,
+.ratioPROFITABILITY-27,
+.ratioPROFITABILITY-32,
+.ratioLIQUIDITY-4,
+.ratioLIQUIDITY-3,
+.ratioLIQUIDITY-9,
+.ratioLIQUIDITY-10,
+.ratioLIQUIDITY-16,
+.ratioLIQUIDITY-19,
+.EFFICIENCY-4,
+.EFFICIENCY-6,
+.EFFICIENCY-11,
+.EFFICIENCY-13,
+.EFFICIENCY-18,
+.SOLVENCY-4,
+.ratiodetail-26
+{
+  display: none;
+}
+/*Hide empty tr*/

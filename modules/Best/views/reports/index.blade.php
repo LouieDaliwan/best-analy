@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+<html lang="{{ app()->getLocale() }}">
 <head>
   <title>{{ settings('app:fulltitle') }} @lang('Toolkit Report')</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -18,6 +18,11 @@
   <style>{{ theme()->inlined(public_path('reports/css/theme.min.css')) }}</style>
   <style>{{ theme()->inlined(public_path('reports/css/ratios.css')) }}</style>
   <style>{{ theme()->inlined(public_path('reports/css/indicators.css')) }}</style>
+
+  {{-- RTL --}}
+  @if (app()->getLocale() == 'ar')
+    <style>{{ theme()->inlined(public_path('reports/css/rtl.css')) }}</style>
+  @endif
 </head>
 
 <body>

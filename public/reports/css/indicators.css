@@ -237,3 +237,17 @@
   border-top: 1px solid #868e96;
 }
 /*first row on title*/
+
+/*Hide empty tr*/
+.ratiodetail-2,
+.ratiodetail-5,
+.ratiodetail-8,
+.ratiodetail-11,
+.ratiodetail-14,
+.ratiodetail-17,
+.ratiodetail-20,
+.ratiodetail-23
+{
+  display: none;
+}
+/*Hide empty tr*/

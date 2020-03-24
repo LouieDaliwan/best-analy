@@ -132,14 +132,9 @@
 import $auth from '@/core/Auth/auth'
 import $api from './routes/api'
 import Survey from '@/modules/Survey/Models/Survey'
-import Criteria from '@/modules/Survey/cards/Criteria'
 import { mapActions } from 'vuex'
 
 export default {
-  components: {
-    Criteria,
-  },
-
   computed: {
     _: function () {
       return window._

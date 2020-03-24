@@ -143,6 +143,14 @@
 
     <!-- Empty state -->
     <div v-if="resourcesIsEmpty">
+      <toolbar-menu
+        :items.sync="tabletoolbar"
+        @update:search="search"
+        >
+        <template v-slot:filter>
+          <monthly-picker></monthly-picker>
+        </template>
+      </toolbar-menu>
       <empty-state>
         <template v-slot:actions>
           <v-btn

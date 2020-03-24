@@ -1,15 +1,16 @@
 <template>
   <v-select
     :items="resource.data"
+    :label="trans('Select Month...')"
+    @change="changeMonth"
+    append-icon="mdi-chevron-down"
     background-color="selects"
     class="dt-text-field"
     hide-details
     menu-props="offsetY"
     name="roles"
     outlined
-    :label="trans('Select Month...')"
     ref="roles"
-    @change="changeMonth"
     v-model="resource.month"
     >
     <template v-slot:item="{ item }">

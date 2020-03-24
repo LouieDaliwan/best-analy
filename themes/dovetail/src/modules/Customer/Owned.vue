@@ -83,34 +83,40 @@
             <template v-slot:item.action="{ item }">
               <div class="text-no-wrap">
                 <!-- Show Reports -->
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn :to="{name: 'companies.reports', params: { id: item.id }}" icon v-on="on">
-                      <v-icon small>mdi-paperclip</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('View Monthly Reports') }}</span>
-                </v-tooltip>
+                <can code="customers.reports">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn :to="{name: 'companies.reports', params: { id: item.id }}" icon v-on="on">
+                        <v-icon small>mdi-paperclip</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('View Monthly Reports') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Show Reports -->
                 <!-- Edit Inputs -->
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn :to="{name: 'companies.edit', params: { id: item.id }}" icon v-on="on">
-                      <v-icon small>mdi-pencil-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('Edit Financial Performance inputs') }}</span>
-                </v-tooltip>
+                <can code="customers.edit">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn :to="{name: 'companies.edit', params: { id: item.id }}" icon v-on="on">
+                        <v-icon small>mdi-pencil-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('Edit Financial Performance inputs') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Edit Inputs -->
                 <!-- Move to Trash -->
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn @click="askUserToDestroyCompany(item)" icon v-on="on">
-                      <v-icon small>mdi-delete-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('Move to trash') }}</span>
-                </v-tooltip>
+                <can code="customers.destroy">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn @click="askUserToDestroyCompany(item)" icon v-on="on">
+                        <v-icon small>mdi-delete-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('Move to trash') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Move to Trash -->
               </div>
             </template>

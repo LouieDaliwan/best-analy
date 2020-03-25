@@ -41,7 +41,7 @@ export default [
           title: 'Find Company',
           authenticatable: true,
           sort: 6,
-          permission: 'customers.index',
+          permission: 'crm.search',
         },
       },
       {

@@ -131,7 +131,6 @@ export default {
 
   data: () => ({
     api: $api,
-
     resource: new Team,
     search: null,
   }),

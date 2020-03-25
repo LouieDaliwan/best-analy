@@ -66,6 +66,7 @@ export const actions = {
         .then((response) => {
           localStorage.removeItem('user')
           localStorage.removeItem('token')
+          localStorage.removeItem('report:lang')
           resolve(response)
         })
         .catch(err => {

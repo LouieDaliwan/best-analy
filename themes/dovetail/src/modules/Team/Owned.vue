@@ -1,12 +1,18 @@
 <template>
   <admin>
-    <metatag :title="trans('All Team')"></metatag>
+    <metatag :title="trans('My Team')"></metatag>
 
     <page-header>
       <template v-slot:utilities>
         <p class="mb-0 muted--text">
           {{ __('Click arrow down icon to view the list of companies per Counselor') }}.
         </p>
+      </template>
+      <template v-slot:action>
+        <v-btn color="primary" @click="openExportDialog">
+          <v-icon left>mdi-file-pdf-outline</v-icon>
+          {{ trans('Export') }}
+        </v-btn>
       </template>
     </page-header>
 
@@ -100,6 +106,11 @@
   <!-- <code v-text="item" v-for="item in resources"></code> -->
     <!-- Empty state -->
     <div v-if="resourcesIsEmpty">
+      <toolbar-menu
+        :items.sync="tabletoolbar"
+        @update:search="search"
+        >
+      </toolbar-menu>
       <empty-state>
         <template v-slot:actions>
           <can code="teams.create">
@@ -327,6 +338,28 @@ export default {
           item.loading = false
         })
     },
+
+    openExportDialog () {
+      this.$store.dispatch('dialog/show', {
+        illustration: () => import('@/components/Icons/ExportIcon.vue'),
+        title: trans('Export Report'),
+        text: [trans('Download the table as PDF file.')],
+        buttons: {
+          action: {
+            text: trans('Export'),
+            callback: () => {
+              let userId = $auth.getId()
+              window.location.href = `/teams/export?user_id=${userId}`
+              // return new Promise((resolve, reject) => {
+              //   let userId = $auth.getId()
+              //   axios.get(`/teams/export?user_id=${userId}`)
+              //   this.$store.dispatch('dialog/hide')
+              // })
+            },
+          }
+        },
+      })
+    }
   },
 
   watch: {

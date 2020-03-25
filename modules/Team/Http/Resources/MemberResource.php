@@ -16,10 +16,11 @@ class MemberResource extends JsonResource
     public function toArray($request)
     {
         return array_merge(parent::toArray($request), [
-            'displayname' => $this->displayname,
+            'avatar' => $this->avatar,
             'customers' => $this->customers,
-            'reports' => $this->reports,
             'customers:count' => is_null($this->customers) ? 0 : $this->customers->count(),
+            'displayname' => $this->displayname,
+            'reports' => $this->reports,
             'reports:count' => is_null($this->reports) ? 0 : $this->reports->count(),
         ]);
     }

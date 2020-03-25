@@ -5,6 +5,7 @@ namespace Customer\Http\Controllers\Api;
 use Core\Http\Controllers\Api\ApiController;
 use Customer\Http\Requests\CustomerRequest;
 use Customer\Http\Requests\OwnedCustomerRequest;
+use Customer\Http\Resources\AllCustomerResource;
 use Customer\Http\Resources\CustomerResource;
 use Customer\Services\CustomerServiceInterface;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ class CustomerController extends ApiController
      */
     public function index()
     {
-        return CustomerResource::collection($this->service()->list());
+        return AllCustomerResource::collection($this->service()->list());
     }
 
     /**
@@ -118,6 +119,6 @@ class CustomerController extends ApiController
      */
     public function owned()
     {
-        return CustomerResource::collection($this->service()->list());
+        return AllCustomerResource::collection($this->service()->list());
     }
 }

@@ -79,7 +79,8 @@ class TeamService extends Service implements TeamServiceInterface
             );
         }
 
-        $model = $this->model->whereManagerId($this->auth()->id())->with($this->appendToList ?? []);
+        $managerId = $this->request()->get('user_id') ?: $this->auth()->id();
+        $model = $this->model->whereManagerId($managerId)->with($this->appendToList ?? []);
 
         $model = $model->paginate($this->getPerPage());
 

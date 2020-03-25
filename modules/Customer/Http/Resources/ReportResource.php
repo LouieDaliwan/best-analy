@@ -2,7 +2,7 @@
 
 namespace Customer\Http\Resources;
 
-use Customer\Http\Resources\CustomerResource;
+use Customer\Http\Resources\AllCustomerResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Index\Http\Resources\IndexResource;
 use Index\Models\Index;
@@ -18,7 +18,7 @@ class ReportResource extends JsonResource
     public function toArray($request)
     {
         return collect(array_merge(parent::toArray($request), [
-            'customer' => new CustomerResource($this->customer),
+            'customer' => new AllCustomerResource($this->customer),
             'month' => $this->month,
             'author' => $this->author,
             'created' => $this->created,

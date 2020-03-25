@@ -116,4 +116,11 @@ return [
         'description' => 'Ability to view list of their team members.',
         'group' => 'team',
     ],
+
+    'export-teams' => [
+        'name' => 'export-teams',
+        'code' => 'teams.export',
+        'description' => 'Ability to export team data.',
+        'group' => 'team',
+    ],
 ];

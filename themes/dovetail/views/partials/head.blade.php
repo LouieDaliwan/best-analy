@@ -15,7 +15,7 @@
     @show
   </title>
   {{-- <base href="{{ url('/') }}"> --}}
-  <meta name="description" content="{{ __('@page()->description()') }}">
+  <meta name="description" content="{{ settings('app:tagline') }}">
   <!-- CSRF Token -->
   @stack('tokens')
     <meta name="csrf-token" content="{{ csrf_token() }}">

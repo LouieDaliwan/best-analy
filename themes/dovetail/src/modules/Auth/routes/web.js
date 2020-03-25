@@ -1,4 +1,5 @@
 import store from '@/store'
+import router from 'vue-router'
 
 export default [
   {
@@ -24,12 +25,17 @@ export default [
         },
         beforeEnter: (to, from, next) => {
           const isAuthenticated = store.getters['auth/isAuthenticated']
-
+          console.log('isAuthenticated', isAuthenticated)
           if (isAuthenticated) {
-            return next({name: 'dashboard'})
+            let from = to.query.from || {name: 'dashboard'}
+            return next(from)
+          } else {
+            // store.dispatch(
+            //   'auth/logout'
+            // ).then(response => {
+              return next()
+            // })
           }
-
-          return next()
         },
       },
       {
@@ -38,6 +44,7 @@ export default [
         beforeEnter: (to, from, next) => {
           store.dispatch('auth/logout')
             .then(response => {
+              // next({name: 'login'})
               window.location.reload()
             })
         },

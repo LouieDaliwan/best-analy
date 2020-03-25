@@ -20,8 +20,11 @@ Route::middleware('json.force')->prefix('v1')->group(function () {
     Route::post('register', 'Api\Auth\RegisterController@register')->name('register');
 });
 
-Route::middleware(['auth:api', 'json.force', 'client.credentials'])->prefix('v1')->group(function () {
+Route::middleware(['json.force'])->prefix('v1')->group(function () {
     Route::post('validate/token', 'Api\ValidateToken')->name('validate.token');
+});
+
+Route::middleware(['auth:api', 'json.force', 'client.credentials'])->prefix('v1')->group(function () {
 
     Route::get('logout', 'Api\Auth\LoginController@logout')->name('logout');
     Route::post('logout', 'Api\Auth\LoginController@logout')->name('logout');

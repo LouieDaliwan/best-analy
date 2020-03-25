@@ -122,7 +122,6 @@ export default {
         }
       })
     }
-
   },
 
   mounted () {
@@ -131,9 +130,3 @@ export default {
   },
 }
 </script>
-
-<!-- <style scoped>
-iframe {
-  min-height: 500px;
-}
-</style> -->

@@ -157,9 +157,9 @@
             large
             color="primary"
             exact
-            :to="{name: 'companies.owned'}">
-            <v-icon small left>mdi-file-document-box-search-outline</v-icon>
-            {{ trans('Back to My Companies') }}
+            :to="{name: 'companies.show'}">
+            <v-icon small left>mdi-credit-card-outline</v-icon>
+            {{ trans('Back to Indices') }}
           </v-btn>
         </template>
       </empty-state>

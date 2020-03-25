@@ -122,6 +122,11 @@
 
     <!-- Empty state -->
     <div v-if="resourcesIsEmpty">
+      <toolbar-menu
+        :items.sync="tabletoolbar"
+        @update:search="search"
+        >
+      </toolbar-menu>
       <empty-state>
         <template v-slot:actions>
           <v-btn
@@ -232,7 +237,7 @@ export default {
     getPaginatedData: function (params = null, caller = null) {
       params = Object.assign(params ? params : this.$route.query, { search: this.resources.search })
       this.resources.loading = true
-      axios.get(this.api.list(), { params })
+      axios.get(this.api.owned(), { params })
         .then(response => {
           this.resources = Object.assign({}, this.resources, response.data)
           this.resources.options = Object.assign(this.resources.options, response.data.meta, params)

@@ -16,7 +16,9 @@ class CustomerResource extends JsonResource
      */
     public function toArray($request)
     {
-        $data = collect(array_merge(parent::toArray($request), [
+        $customer = parent::toArray($request);
+
+        $data = collect(array_merge($customer, [
             'name' => $this->name,
             'refnum' => $this->refnum,
             'code' => $this->code,

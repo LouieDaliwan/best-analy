@@ -71,7 +71,7 @@
         <v-row>
           <v-col cols="12" md="12">
             <v-card flat color="transparent">
-              <v-tabs :vertical="isDesktop" class="dt-tabs" background-color="transparent">
+              <v-tabs v-model="tabs" :vertical="isDesktop" class="dt-tabs" background-color="transparent">
                 <v-tab key="tab-0">{{ trans('Company Information') }}</v-tab>
                 <v-tab key="tab-1">{{ trans('Financial Statements') }}</v-tab>
                 <v-tab-item key="tab-0">
@@ -303,8 +303,9 @@ export default {
     },
   },
 
-  data: () => ({
+  data: (vm) => ({
     resource: new Company,
+    tabs: 1,
   }),
 
   methods: {
@@ -464,11 +465,16 @@ export default {
         this.resource.isPrestine = true
       })
     },
+
+    activateTab () {
+      this.tabs = parseInt(this.$route.query.tab || 0)
+    },
   },
 
   mounted () {
     this.hideSidebar()
     this.getResource()
+    this.activateTab()
   },
 
   watch: {

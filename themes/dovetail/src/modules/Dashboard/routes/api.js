@@ -64,5 +64,8 @@ export default {
     update: function () {
       return `/api/v1/crm/customers/update`
     },
+    save: function () {
+      return `/api/v1/crm/customers/save`
+    },
   },
 }

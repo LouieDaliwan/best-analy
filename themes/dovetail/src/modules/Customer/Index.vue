@@ -4,12 +4,13 @@
 
     <page-header>
       <template v-slot:utilities>
-        <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'companies.trashed'}">
-          <v-icon small left>mdi-delete-outline</v-icon>
-          {{ trans('Trashed Company') }}
-        </router-link>
+        <can code="customers.trashed">
+          <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'companies.trashed'}">
+            <v-icon small left>mdi-delete-outline</v-icon>
+            {{ trans('Trashed Company') }}
+          </router-link>
+        </can>
       </template>
-
       <template v-slot:action>
         <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'companies.find' }">
           <v-icon small left>mdi-file-document-box-search-outline</v-icon>
@@ -56,16 +57,21 @@
               </v-slide-y-transition>
             </template>
 
-            <!-- Name -->
+            <!-- Name with edit page -->
               <template v-slot:item.name="{ item }">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <span class="mt-1" v-on="on"><router-link tag="a" exact :to="goToShowIndexPage(item)" v-text="item.name" class="text-no-wrap text--decoration-none"></router-link></span>
+                <can code="customers.edit">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <span class="mt-1" v-on="on"><router-link tag="a" exact :to="{name: 'companies.edit', params: { id: item.id }}" v-text="item.name" class="text-no-wrap text--decoration-none"></router-link></span>
+                    </template>
+                    <span>{{ trans('Edit Company Information') }}</span>
+                  </v-tooltip>
+                  <template v-slot:unpermitted>
+                    <span v-text="item.name"></span>
                   </template>
-                  <span>{{ trans('Answer Survey Evaluation') }}</span>
-                </v-tooltip>
+                </can>
               </template>
-              <!-- Name -->
+              <!-- Name with edit page -->
 
               <!-- File No. -->
               <template v-slot:item.refnum="{ item }">
@@ -82,6 +88,28 @@
             <!-- Action buttons -->
             <template v-slot:item.action="{ item }">
               <div class="text-no-wrap">
+                <!-- Answer Survey -->
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn :to="goToShowIndexPage(item)" icon v-on="on">
+                      <v-icon small>mdi-view-grid-outline</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ trans('Answer Survey') }}</span>
+                </v-tooltip>
+                <!-- Answer Survey -->
+                <!-- Edit Financial Statements -->
+                <can code="customers.edit">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn :to="{name: 'companies.edit', params: { id: item.id }, query: { tab: 1 } }" icon v-on="on">
+                        <v-icon small>mdi-pencil-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('Edit Financial Statements') }}</span>
+                  </v-tooltip>
+                </can>
+                <!-- Edit Financial Statements -->
                 <!-- Show Reports -->
                 <can code="customers.reports">
                   <v-tooltip bottom>
@@ -94,18 +122,16 @@
                   </v-tooltip>
                 </can>
                 <!-- Show Reports -->
-                <!-- Edit Inputs -->
-                <can code="customers.edit">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                      <v-btn :to="{name: 'companies.edit', params: { id: item.id }}" icon v-on="on">
-                        <v-icon small>mdi-pencil-outline</v-icon>
-                      </v-btn>
-                    </template>
-                    <span>{{ trans('Edit Company Information') }}</span>
-                  </v-tooltip>
-                </can>
-                <!-- Edit Inputs -->
+                <!-- Send Report -->
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn @click="sendToCrm(item)" icon v-on="on">
+                      <v-icon small>mdi-send</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ trans('Send Report to CRM') }}</span>
+                </v-tooltip>
+                <!-- Send Report -->
                 <!-- Move to Trash -->
                 <can code="customers.destroy">
                   <v-tooltip bottom>
@@ -201,7 +227,7 @@ export default {
       headers: [
         { text: trans('Company Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
         { text: trans('File No.'), align: 'left', value: 'refnum', class: 'text-no-wrap' },
-        { text: trans('Business Counselor'), align: 'left', value: 'counselor', class: 'text-no-wrap' },
+        // { text: trans('Business Counselor'), align: 'left', value: 'counselor', class: 'text-no-wrap' },
         { text: trans('Report Generated By'), align: 'left', value: 'author', class: 'text-no-wrap' },
         { text: trans('Last Modified'), value: 'updated_at', class: 'text-no-wrap' },
         { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
@@ -244,7 +270,7 @@ export default {
     getPaginatedData: function (params = null, caller = null) {
       params = Object.assign(params ? params : this.$route.query, { search: this.resources.search })
       this.resources.loading = true
-      axios.get(this.api.list(), { params })
+      axios.get(this.api.owned(), { params })
         .then(response => {
           this.resources = Object.assign({}, this.resources, response.data)
           this.resources.options = Object.assign(this.resources.options, response.data.meta, params)
@@ -281,6 +307,21 @@ export default {
 
     focusSearchBar () {
       this.$refs['tablesearch'].focus()
+    },
+
+    sendToCrm (item) {
+      let data = {
+        Id: this.resources.data.token,
+        FileNo: this.resources.data.refnum,
+        OverallScore: item.value['overall:score'],
+        FileContentBase64: item.fileContentBase64,
+        'Lessons Learnt': item.value['overall:comment'],
+      }
+      axios.post(
+        $api.crm.save(), data
+      ).then(response => {
+        console.log(response)
+      })
     },
 
     bulkTrashResource () {
@@ -355,7 +396,7 @@ export default {
   },
 
   mounted: function () {
-    // this.changeOptionsFromRouterQueries()
+    this.changeOptionsFromRouterQueries()
   },
 
   watch: {

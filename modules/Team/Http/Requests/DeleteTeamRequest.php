@@ -16,7 +16,7 @@ class DeleteTeamRequest extends FormRequest
     {
         return $this->container->make(
             TeamServiceInterface::class
-        )->authorize($this->team);
+        )->authorize($this->team, 'teams');
     }
 
     /**

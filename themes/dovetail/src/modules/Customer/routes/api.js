@@ -73,5 +73,8 @@ export default {
     download: function (id) {
       return `/api/v1/reports/${id}/download`
     },
+    delete: function (id) {
+      return `/api/v1/reports/${id}`
+    }
   },
 }

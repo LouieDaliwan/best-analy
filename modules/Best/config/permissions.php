@@ -25,4 +25,10 @@ return [
         'description' => 'Ability to view list of BEST formulas',
         'group' => 'best',
     ],
+    'delete-report' => [
+        'name' => 'delete-report',
+        'code' =>  'reports.delete',
+        'description' => 'Ability to delete the report permanently',
+        'group' => 'best',
+    ],
 ];

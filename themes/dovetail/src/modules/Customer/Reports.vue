@@ -123,14 +123,16 @@
                 </v-tooltip>
                 <!-- Show Reports -->
                 <!-- Move to Trash -->
-                <!-- <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn @click="askUserToDestroyReport(item)" icon v-on="on">
-                      <v-icon small>mdi-delete-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('Move to trash') }}</span>
-                </v-tooltip> -->
+                <can code="reports.delete">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn @click="askUserToDestroyReport(item)" icon v-on="on">
+                        <v-icon small>mdi-delete-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('Delete report permanently') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Move to Trash -->
               </div>
             </template>
@@ -171,6 +173,7 @@
 <script>
 import $api from './routes/api'
 import Company from './Models/Company'
+import { mapActions } from 'vuex'
 
 export default {
   computed: {
@@ -226,6 +229,14 @@ export default {
   }),
 
   methods: {
+    ...mapActions({
+      errorDialog: 'dialog/error',
+      loadDialog: 'dialog/loading',
+      showDialog: 'dialog/show',
+      hideDialog: 'dialog/hide',
+      showSnackbar: 'snackbar/show',
+    }),
+
     sendToCrm (item) {
       let data = {
         Id: this.resource.data.token,
@@ -298,7 +309,7 @@ export default {
     askUserToDestroyReport (item) {
       this.showDialog({
         color: 'error',
-        illustration: man,
+        illustration: () => import('@/components/Icons/ManThrowingAwayPaperIcon.vue'),
         illustrationWidth: 200,
         illustrationHeight: 160,
         width: '420',
@@ -311,10 +322,34 @@ export default {
             color: 'error',
             callback: (dialog) => {
               this.loadDialog(true)
-              this.destroyResource(item)
+              this.deleteResource(item)
             }
           }
         }
+      })
+    },
+
+    deleteResource (item) {
+      item.loading = true
+      axios.delete(
+        $api.reports.delete(item.id)
+      ).then(response => {
+        item.active = false
+        this.getPaginatedData(null)
+        this.hideDialog()
+        this.showSnackbar({
+          text: trans_choice('Company successfully deleted', 1)
+        })
+      }).catch(err => {
+        this.errorDialog({
+          width: 400,
+          buttons: { cancel: { show: false } },
+          title: trans('Whoops! An error occured'),
+          text: err.response.data.message,
+        })
+      }).finally(() => {
+        item.active = false
+        item.loading = false
       })
     },
 

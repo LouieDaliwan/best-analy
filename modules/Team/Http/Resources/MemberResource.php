@@ -21,6 +21,7 @@ class MemberResource extends JsonResource
             'customers:count' => is_null($this->customers) ? 0 : $this->customers->count(),
             'displayname' => $this->displayname,
             'reports' => $this->reports,
+            'role' => $this->role,
             'reports:count' => is_null($this->reports) ? 0 : $this->reports->count(),
         ]);
     }

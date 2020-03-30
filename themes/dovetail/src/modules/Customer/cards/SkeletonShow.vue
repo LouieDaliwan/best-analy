@@ -10,8 +10,20 @@
       </template>
     </page-header>
 
-    <div class="text-center">
-      <v-skeleton-loader type="image" class="mb-4"></v-skeleton-loader>
+    <v-row>
+      <v-col cols="12" md="6">
+        <v-skeleton-loader type="image" class="mb-4"></v-skeleton-loader>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-skeleton-loader type="image" class="mb-4"></v-skeleton-loader>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-skeleton-loader type="image" class="mb-4"></v-skeleton-loader>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-skeleton-loader type="image" class="mb-4"></v-skeleton-loader>
+      </v-col>
+    </v-row>
     </div>
   </section>
 </template>

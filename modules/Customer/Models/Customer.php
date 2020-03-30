@@ -54,6 +54,16 @@ class Customer extends Model
     }
 
     /**
+     * Retrieve the overall report for the customer if available.
+     *
+     * @return mixed
+     */
+    public function getReportAttribute()
+    {
+        return $this->reports->first();
+    }
+
+    /**
      * Retrieve the business councelor name from CRM.
      *
      * @return string

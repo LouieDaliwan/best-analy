@@ -41,6 +41,7 @@ class CustomersTest extends TestCase
     public function a_user_can_only_view_their_owned_paginated_list_of_customers()
     {
         // Arrangements
+        $this->withoutExceptionHandling();
         Passport::actingAs($user = $this->asNonSuperAdmin(['customers.index', 'customers.owned']), ['customers.index']);
         $this->withPermissionsPolicy();
         $customers = factory(Customer::class, 3)->create(['user_id' => $user->getKey()])->random();

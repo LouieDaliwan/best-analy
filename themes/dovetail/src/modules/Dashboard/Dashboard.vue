@@ -117,9 +117,7 @@
                 <!-- Send Report -->
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <v-btn @click="sendToCrm(item)" icon v-on="on">
-                      <v-icon small>mdi-send</v-icon>
-                    </v-btn>
+                    <span v-on="on"><send-report-to-crm-button :customer="item.id" :user="item.user_id"></send-report-to-crm-button></span>
                   </template>
                   <span>{{ trans('Send Report to CRM') }}</span>
                 </v-tooltip>
@@ -172,9 +170,14 @@
 <script>
 import $api from './routes/api'
 import man from '@/components/Icons/ManThrowingAwayPaperIcon.vue'
+import SendReportToCrmButton from '@/modules/Customer/cards/SendReportToCrmButton.vue'
 import { mapActions } from 'vuex'
 
 export default {
+  components: {
+    SendReportToCrmButton,
+  },
+
   computed: {
     resourcesIsNotEmpty () {
       return !this.resourcesIsEmpty

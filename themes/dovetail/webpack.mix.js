@@ -34,6 +34,10 @@ mix
           test: /\.scss/,
           loader: 'import-glob-loader'
         },
+        {
+          test: /\.sass/,
+          loader: 'import-glob-loader'
+        },
       ]
     },
     resolve: {

@@ -14,6 +14,7 @@ use Best\Pro\Financial\SolvencyAnalysis;
 use Best\Pro\KeyStrategicRecommendationComments;
 use Best\Pro\TrafficLight;
 use Core\Application\Service\Service;
+use Customer\Http\Resources\ReportResource;
 use Customer\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -122,5 +123,24 @@ class ReportService extends Service implements ReportServiceInterface
             $month = date('d-m-Y', strtotime("01-$item"));
             return ['value' => $item, 'text' => date('M Y', strtotime($month))];
         })->toArray();
+    }
+
+    /**
+     * Retrieve list of reports from given user and customer.
+     *
+     * @param  \User\Models\User         $user
+     * @param  \Customer\Models\Customer $customer
+     * @return array
+     */
+    public function getOverallReportFromUser(User $user, Customer $customer)
+    {
+        $model = $this->model->whereUserId($user->getKey())->whereCustomerId($customer->getKey());
+
+        $model = $model->whereRemarks($this->request()->get('month') ?: date('m-Y'));
+
+        return [
+            'report' => new ReportResource($model->first()),
+            'customer' => $customer,
+        ];
     }
 }

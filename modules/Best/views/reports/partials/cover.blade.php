@@ -42,13 +42,32 @@
         <div class="dt-divider" style="height: 50px;"></div>
         <div class="row justify-content-center">
           <div class="col-md-10">
-            <h4 class="mb-0">@lang('Prepared for'):</h4>
+            {{-- <h4 class="mb-0">@lang('Prepared for'):</h4>
             <h2 class="dt-{{ $data['pindex:code'] }} mb-0">{{ $data['customer:name'] }}</h2>
             <p class="mb-0">{{ $data['cover:date'] }}</p>
             <div class="mt-5">
               <cite>
                 <small class="text-muted">{{ __('Powered by') }} {{ settings('app:author') }}</small>
               </cite>
+            </div> --}}
+            <div class="row justify-content-between">
+              <div class="col-md-6 col-sm-12">
+                <h4 class="mb-0">@lang('Prepared for'):</h4>
+                <h2 class="dt-{{ $data['pindex:code'] }} mb-0">{{ $data['customer:name'] }}</h2>
+                <p class="mb-0">{{ $data['cover:date'] }}</p>
+                <div class="mt-5">
+                  <cite>
+                    <small>{{ __('Powered by') }} {{ settings('app:author') }}</small>
+                  </cite>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                <div>
+                  <h4 class="mb-0">@lang('Prepared by'):</h4>
+                  <div style="background: #12263f; height: 1px; margin-top: 40px;"></div>
+                  <div style="background: #12263f; height: 1px; margin-top: 50px;"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

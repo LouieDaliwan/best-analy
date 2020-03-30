@@ -71,191 +71,191 @@
         <v-row>
           <v-col cols="12" md="12">
             <v-card flat color="transparent">
-              <v-tabs v-model="tabs" :vertical="isDesktop" class="dt-tabs" background-color="transparent">
-                <v-tab key="tab-0">{{ trans('Company Information') }}</v-tab>
-                <v-tab key="tab-1">{{ trans('Financial Statements') }}</v-tab>
-                <v-tab-item key="tab-0">
-                  <v-card>
-                    <v-card-text>
-                      <validation-provider vid="metadata[email]" :name="trans('Email')" rules="email" v-slot="{ errors }">
-                        <v-text-field
-                          :dense="isDense"
-                          :disabled="isLoading"
-                          :error-messages="errors"
-                          :label="trans('Company Email')"
-                          autofocus
-                          class="dt-text-field"
-                          name="metadata[email]"
-                          outlined
-                          prepend-inner-icon="mdi-email-outline"
-                          v-model="resource.data.metadata['email']"
-                          >
-                        </v-text-field>
-                      </validation-provider>
+              <tabs v-model="tabsModel">
+                <template v-slot:item>
+                  <v-tab-item key="tab-0">
+                    <v-card>
+                      <v-card-text>
+                        <validation-provider vid="metadata[email]" :name="trans('Email')" rules="email" v-slot="{ errors }">
+                          <v-text-field
+                            :dense="isDense"
+                            :disabled="isLoading"
+                            :error-messages="errors"
+                            :label="trans('Company Email')"
+                            autofocus
+                            class="dt-text-field"
+                            name="metadata[email]"
+                            outlined
+                            prepend-inner-icon="mdi-email-outline"
+                            v-model="resource.data.metadata['email']"
+                            >
+                          </v-text-field>
+                        </validation-provider>
 
-                      <validation-provider vid="metadata[address]" :name="trans('Company Address')" v-slot="{ errors }">
-                        <v-text-field
-                          :dense="isDense"
-                          :disabled="isLoading"
-                          :error-messages="errors"
-                          :label="trans('Company Address')"
-                          autofocus
-                          class="dt-text-field"
-                          name="metadata[address]"
-                          outlined
-                          prepend-inner-icon="mdi-map-marker"
-                          v-model="resource.data.metadata['address']"
-                          >
-                        </v-text-field>
-                      </validation-provider>
+                        <validation-provider vid="metadata[address]" :name="trans('Company Address')" v-slot="{ errors }">
+                          <v-text-field
+                            :dense="isDense"
+                            :disabled="isLoading"
+                            :error-messages="errors"
+                            :label="trans('Company Address')"
+                            autofocus
+                            class="dt-text-field"
+                            name="metadata[address]"
+                            outlined
+                            prepend-inner-icon="mdi-map-marker"
+                            v-model="resource.data.metadata['address']"
+                            >
+                          </v-text-field>
+                        </validation-provider>
 
-                      <validation-provider vid="metadata[website]" :name="trans('Website')" v-slot="{ errors }">
-                        <v-text-field
-                          :dense="isDense"
-                          :disabled="isLoading"
-                          :error-messages="errors"
-                          :label="trans('Website')"
-                          autofocus
-                          class="dt-text-field"
-                          name="metadata[website]"
-                          outlined
-                          prepend-inner-icon="mdi-earth"
-                          v-model="resource.data.metadata['website']"
-                          >
-                        </v-text-field>
-                      </validation-provider>
+                        <validation-provider vid="metadata[website]" :name="trans('Website')" v-slot="{ errors }">
+                          <v-text-field
+                            :dense="isDense"
+                            :disabled="isLoading"
+                            :error-messages="errors"
+                            :label="trans('Website')"
+                            autofocus
+                            class="dt-text-field"
+                            name="metadata[website]"
+                            outlined
+                            prepend-inner-icon="mdi-earth"
+                            v-model="resource.data.metadata['website']"
+                            >
+                          </v-text-field>
+                        </validation-provider>
 
-                      <validation-provider vid="metadata[staffstrength]" :name="trans('Staff Strength')" v-slot="{ errors }">
-                        <v-text-field
-                          :dense="isDense"
-                          :disabled="isLoading"
-                          :error-messages="errors"
-                          :label="trans('Staff Strength')"
-                          autofocus
-                          class="dt-text-field"
-                          name="metadata[staffstrength]"
-                          outlined
-                          type="number"
-                          v-model="resource.data.metadata['staffstrength']"
-                          >
-                        </v-text-field>
-                      </validation-provider>
+                        <validation-provider vid="metadata[staffstrength]" :name="trans('Staff Strength')" v-slot="{ errors }">
+                          <v-text-field
+                            :dense="isDense"
+                            :disabled="isLoading"
+                            :error-messages="errors"
+                            :label="trans('Staff Strength')"
+                            autofocus
+                            class="dt-text-field"
+                            name="metadata[staffstrength]"
+                            outlined
+                            type="number"
+                            v-model="resource.data.metadata['staffstrength']"
+                            >
+                          </v-text-field>
+                        </validation-provider>
 
-                      <validation-provider vid="metadata[industry]" :name="trans('Industry')" v-slot="{ errors }">
-                        <v-text-field
-                          :dense="isDense"
-                          :disabled="isLoading"
-                          :error-messages="errors"
-                          :label="trans('Industry')"
-                          class="dt-text-field"
-                          name="metadata[industry]"
-                          outlined
-                          v-model="resource.data.metadata['industry']"
-                          >
-                        </v-text-field>
-                      </validation-provider>
-                    </v-card-text>
-                  </v-card>
-                </v-tab-item>
-                <v-tab-item key="tab-1">
-                  <v-card class="mb-3">
-                    <v-card-title>{{ trans('Income Statement') }}</v-card-title>
-                    <v-card-text style="overflow-x: auto;">
-                      <v-simple-table style="min-width: 800px" class="transparent mb-3">
-                        <tbody>
-                          <tr style="vertical-align: top">
-                            <td colspan="100%"></td>
-                            <td><strong>{{ trans('Period 1') }}</strong></td>
-                            <td><strong>{{ trans('Period 2') }}</strong></td>
-                            <td><strong>{{ trans('Period 3') }}<br>{{ trans('(most recent)') }}</strong></td>
-                          </tr>
-                          <tr :key="i" v-for="(data, i) in resource.metadata['years']">
-                            <td :colspan="data.length ? 1 : '100%'">
-                              <div class="year-label" v-html="trans(i)"></div>
-                            </td>
-                            <td :key="k" v-for="(d, k) in data">
-                              <v-text-field
-                                :disabled="isLoading"
-                                :name="`metadata[years][${i}][${k}]`"
-                                :label="trans(k)"
-                                class="dt-text-field"
-                                dense
-                                hide-details
-                                outlined
-                                v-model="resource.data.financials['years'][i][k]"
-                                >
-                              </v-text-field>
-                            </td>
-                          </tr>
-                          <tr :key="i" v-for="(data, i) in resource.metadata['fps-qa1']">
-                            <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
-                            <td :key="k" v-for="(d, k) in data">
-                              <v-text-field
-                                :disabled="isLoading"
-                                :name="`metadata[fps-qa1][${i}][${k}]`"
-                                class="dt-text-field"
-                                dense
-                                hide-details
-                                outlined
-                                v-model="resource.data.financials['fps-qa1'][i][k]"
-                                >
-                              </v-text-field>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </v-simple-table>
-                    </v-card-text>
-                  </v-card>
-                  <v-card class="mb-3">
-                    <v-card-title>{{ trans('Balance Sheet') }}</v-card-title>
-                    <v-card-text style="overflow-x: auto;">
-                      <v-simple-table style="min-width: 800px" class="transparent mb-3">
-                        <tbody>
-                          <tr style="vertical-align: top">
-                            <td colspan="100%"></td>
-                            <td><strong>{{ trans('Period 1') }}</strong></td>
-                            <td><strong>{{ trans('Period 2') }}</strong></td>
-                            <td><strong>{{ trans('Period 3') }}<br>{{ trans('(most recent)') }}</strong></td>
-                          </tr>
-                          <tr :key="i" v-for="(data, i) in resource.metadata['years']">
-                            <td :colspan="data.length ? 1 : '100%'">
-                              <div class="year-label" v-html="trans(i)"></div>
-                            </td>
-                            <td :key="k" v-for="(d, k) in data">
-                              <v-text-field
-                                :disabled="isLoading"
-                                :name="`metadata[years][${i}][${k}]`"
-                                :label="trans(k)"
-                                class="dt-text-field"
-                                dense
-                                hide-details
-                                outlined
-                                v-model="resource.data.financials['years'][i][k]"
-                                >
-                              </v-text-field>
-                            </td>
-                          </tr>
-                          <tr :key="i" v-for="(data, i) in resource.metadata['balance-sheet']">
-                            <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
-                            <td :key="k" v-for="(d, k) in data">
-                              <v-text-field
-                                :disabled="isLoading"
-                                :name="`metadata[balance-sheet][${i}][${k}]`"
-                                class="dt-text-field"
-                                dense
-                                hide-details
-                                outlined
-                                v-model="resource.data.financials['balance-sheet'][i][k]"
-                                >
-                              </v-text-field>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </v-simple-table>
-                    </v-card-text>
-                  </v-card>
-                </v-tab-item>
-              </v-tabs>
+                        <validation-provider vid="metadata[industry]" :name="trans('Industry')" v-slot="{ errors }">
+                          <v-text-field
+                            :dense="isDense"
+                            :disabled="isLoading"
+                            :error-messages="errors"
+                            :label="trans('Industry')"
+                            class="dt-text-field"
+                            name="metadata[industry]"
+                            outlined
+                            v-model="resource.data.metadata['industry']"
+                            >
+                          </v-text-field>
+                        </validation-provider>
+                      </v-card-text>
+                    </v-card>
+                  </v-tab-item>
+                  <v-tab-item key="tab-1">
+                    <v-card class="mb-3">
+                      <v-card-title>{{ trans('Income Statement') }}</v-card-title>
+                      <v-card-text style="overflow-x: auto;">
+                        <v-simple-table style="min-width: 800px" class="transparent mb-3">
+                          <tbody>
+                            <tr style="vertical-align: top">
+                              <td colspan="100%"></td>
+                              <td><strong>{{ trans('Period 1') }}</strong></td>
+                              <td><strong>{{ trans('Period 2') }}</strong></td>
+                              <td><strong>{{ trans('Period 3') }}<br>{{ trans('(most recent)') }}</strong></td>
+                            </tr>
+                            <tr :key="i" v-for="(data, i) in resource.metadata['years']">
+                              <td :colspan="data.length ? 1 : '100%'">
+                                <div class="year-label" v-html="trans(i)"></div>
+                              </td>
+                              <td :key="k" v-for="(d, k) in data">
+                                <v-text-field
+                                  :disabled="isLoading"
+                                  :name="`metadata[years][${i}][${k}]`"
+                                  :label="trans(k)"
+                                  class="dt-text-field"
+                                  dense
+                                  hide-details
+                                  outlined
+                                  v-model="resource.data.financials['years'][i][k]"
+                                  >
+                                </v-text-field>
+                              </td>
+                            </tr>
+                            <tr :key="i" v-for="(data, i) in resource.metadata['fps-qa1']">
+                              <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
+                              <td :key="k" v-for="(d, k) in data">
+                                <v-text-field
+                                  :disabled="isLoading"
+                                  :name="`metadata[fps-qa1][${i}][${k}]`"
+                                  class="dt-text-field"
+                                  dense
+                                  hide-details
+                                  outlined
+                                  v-model="resource.data.financials['fps-qa1'][i][k]"
+                                  >
+                                </v-text-field>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </v-simple-table>
+                      </v-card-text>
+                    </v-card>
+                    <v-card class="mb-3">
+                      <v-card-title>{{ trans('Balance Sheet') }}</v-card-title>
+                      <v-card-text style="overflow-x: auto;">
+                        <v-simple-table style="min-width: 800px" class="transparent mb-3">
+                          <tbody>
+                            <tr style="vertical-align: top">
+                              <td colspan="100%"></td>
+                              <td><strong>{{ trans('Period 1') }}</strong></td>
+                              <td><strong>{{ trans('Period 2') }}</strong></td>
+                              <td><strong>{{ trans('Period 3') }}<br>{{ trans('(most recent)') }}</strong></td>
+                            </tr>
+                            <tr :key="i" v-for="(data, i) in resource.metadata['years']">
+                              <td :colspan="data.length ? 1 : '100%'">
+                                <div class="year-label" v-html="trans(i)"></div>
+                              </td>
+                              <td :key="k" v-for="(d, k) in data">
+                                <v-text-field
+                                  :disabled="isLoading"
+                                  :name="`metadata[years][${i}][${k}]`"
+                                  :label="trans(k)"
+                                  class="dt-text-field"
+                                  dense
+                                  hide-details
+                                  outlined
+                                  v-model="resource.data.financials['years'][i][k]"
+                                  >
+                                </v-text-field>
+                              </td>
+                            </tr>
+                            <tr :key="i" v-for="(data, i) in resource.metadata['balance-sheet']">
+                              <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
+                              <td :key="k" v-for="(d, k) in data">
+                                <v-text-field
+                                  :disabled="isLoading"
+                                  :name="`metadata[balance-sheet][${i}][${k}]`"
+                                  class="dt-text-field"
+                                  dense
+                                  hide-details
+                                  outlined
+                                  v-model="resource.data.financials['balance-sheet'][i][k]"
+                                  >
+                                </v-text-field>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </v-simple-table>
+                      </v-card-text>
+                    </v-card>
+                  </v-tab-item>
+                </template>
+              </tabs>
             </v-card>
           </v-col>
         </v-row>
@@ -305,7 +305,7 @@ export default {
 
   data: (vm) => ({
     resource: new Company,
-    tabs: 1,
+    tabsModel: 1,
   }),
 
   methods: {
@@ -467,7 +467,7 @@ export default {
     },
 
     activateTab () {
-      this.tabs = parseInt(this.$route.query.tab || 0)
+      this.tabsModel = parseInt(this.$route.query.tab || 0)
     },
   },
 
@@ -491,9 +491,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.year-label {
-  display: none;
-}
-</style>

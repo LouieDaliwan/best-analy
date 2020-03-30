@@ -150,6 +150,7 @@ export default {
       ).then(response => {
         this.resource.data = response.data.data
         this.resource.data.users = this.resource.data.members
+        console.log(this.resource.data.users)
       }).finally(() => { this.resource.loading = false })
     },
 

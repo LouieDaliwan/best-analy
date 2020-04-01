@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "69756a3f56986f74a8cb74b512485600",
+    "content-hash": "01803f07b2d47e183700dc1e64acacee",
     "packages": [
         {
             "name": "anam/phantommagick",
@@ -5409,6 +5409,67 @@
             ],
             "description": "Prettify PHPUnit output",
             "time": "2019-11-21T19:36:58+00:00"
+        },
+        {
+            "name": "spatie/laravel-translation-loader",
+            "version": "2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-translation-loader.git",
+                "reference": "760d28a7cee3a02d7a348afcfff8333a0d712995"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-translation-loader/zipball/760d28a7cee3a02d7a348afcfff8333a0d712995",
+                "reference": "760d28a7cee3a02d7a348afcfff8333a0d712995",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/translation": "~5.8.0|^6.0|^7.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.8.0|^4.0|^5.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\TranslationLoader\\TranslationServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\TranslationLoader\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Store your language lines in the database, yaml or other sources",
+            "homepage": "https://github.com/spatie/laravel-translation-loader",
+            "keywords": [
+                "database",
+                "db",
+                "i8n",
+                "language",
+                "laravel",
+                "laravel-translation-loader",
+                "spatie",
+                "translate"
+            ],
+            "time": "2020-03-03T15:00:15+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

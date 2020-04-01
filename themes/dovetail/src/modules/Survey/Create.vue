@@ -133,7 +133,14 @@
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][total]`" :value="field.total">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][wts]`" :value="field.wts">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][comment]`" :value="field.comment">
-                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][categories]`" :value="field.categories">
+
+                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][Document]`" value="">
+                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][Talent]`" value="">
+                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][Technology]`" value="">
+                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][Workflow Processes]`" value="">
+                    <template v-for="category in field.categories">
+                      <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][${category}]`" value="Y">
+                    </template>
                   </template>
                 </template>
               </v-card-text>

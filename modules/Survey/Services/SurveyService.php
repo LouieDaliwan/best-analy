@@ -7,6 +7,7 @@ use Core\Application\Service\Service;
 use Customer\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Spatie\TranslationLoader\LanguageLine;
 use Survey\Models\Survey;
 use User\Models\User;
 
@@ -110,6 +111,26 @@ class SurveyService extends Service implements SurveyServiceInterface
         ));
         $model->save();
 
+        LanguageLine::updateOrCreate([
+            'group' => '*',
+            'key' => $attributes['title'],
+        ], [
+            'text' => [
+                'en' => $attributes['title'],
+                'ar' => $attributes['title_arabic'] ?? $attributes['title'],
+            ],
+        ]);
+
+        LanguageLine::updateOrCreate([
+            'group' => '*',
+            'key' => $attributes['body'],
+        ], [
+            'text' => [
+                'en' => $attributes['body'],
+                'ar' => $attributes['body_arabic'] ?? $attributes['body'],
+            ],
+        ]);
+
         // Create or update survey fields.
         $fields = collect($attributes['fields'] ?? [])->values()->each(function ($field, $i) use ($model) {
             $model->fields()->updateOrCreate([
@@ -123,6 +144,42 @@ class SurveyService extends Service implements SurveyServiceInterface
                 ], $field['metadata'] ?? []),
                 'group' => $field['group'] ?? null,
             ]);
+
+            // Add `group` translations.
+            LanguageLine::updateOrCreate([
+                'group' => '*',
+                'key' => $field['group'],
+            ], [
+                'text' => [
+                    'en' => $field['group'],
+                    'ar' => $field['group_arabic'] ?? $field['group'],
+                ],
+            ]);
+
+            // Add `title` translations.
+            LanguageLine::updateOrCreate([
+                'group' => '*',
+                'key' => $field['title'],
+            ], [
+                'text' => [
+                    'en' => $field['title'],
+                    'ar' => $field['title_arabic'] ?? $field['title'],
+                ],
+            ]);
+
+            // Add `comment` translations.
+            if (isset($field['metadata']['comment'])) {
+                LanguageLine::updateOrCreate([
+                    'group' => '*',
+                    'key' => $field['metadata']['comment'] ?? null,
+                ], [
+                    'text' => [
+                        'en' => $field['metadata']['comment'] ?? null,
+                        'ar' => $field['metadata']['comment_arabic']
+                             ?? $field['metadata']['comment'] ?? null,
+                    ],
+                ]);
+            }
         });
 
         $model->fields()

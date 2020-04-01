@@ -115,6 +115,7 @@ class SurveyService extends Service implements SurveyServiceInterface
             'group' => '*',
             'key' => $attributes['title'],
         ], [
+            'group' => '*',
             'text' => [
                 'en' => $attributes['title'],
                 'ar' => $attributes['title_arabic'] ?? $attributes['title'],
@@ -125,6 +126,7 @@ class SurveyService extends Service implements SurveyServiceInterface
             'group' => '*',
             'key' => $attributes['body'],
         ], [
+            'group' => '*',
             'text' => [
                 'en' => $attributes['body'],
                 'ar' => $attributes['body_arabic'] ?? $attributes['body'],
@@ -150,6 +152,7 @@ class SurveyService extends Service implements SurveyServiceInterface
                 'group' => '*',
                 'key' => $field['group'],
             ], [
+                'group' => '*',
                 'text' => [
                     'en' => $field['group'],
                     'ar' => $field['group_arabic'] ?? $field['group'],
@@ -161,6 +164,7 @@ class SurveyService extends Service implements SurveyServiceInterface
                 'group' => '*',
                 'key' => $field['title'],
             ], [
+                'group' => '*',
                 'text' => [
                     'en' => $field['title'],
                     'ar' => $field['title_arabic'] ?? $field['title'],
@@ -173,6 +177,7 @@ class SurveyService extends Service implements SurveyServiceInterface
                     'group' => '*',
                     'key' => $field['metadata']['comment'] ?? null,
                 ], [
+                    'group' => '*',
                     'text' => [
                         'en' => $field['metadata']['comment'] ?? null,
                         'ar' => $field['metadata']['comment_arabic']

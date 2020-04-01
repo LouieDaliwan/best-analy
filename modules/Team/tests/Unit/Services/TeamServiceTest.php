@@ -129,6 +129,7 @@ class TeamServiceTest extends TestCase
 
         // Actions
         $this->service->destroy($team->getKey());
+        $team = $this->service->withTrashed()->find($team->getKey());
 
         // Assertions
         $this->assertSoftDeleted($this->service->getTable(), $team->toArray());

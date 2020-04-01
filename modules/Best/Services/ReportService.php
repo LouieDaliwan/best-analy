@@ -143,4 +143,23 @@ class ReportService extends Service implements ReportServiceInterface
             'customer' => $customer,
         ];
     }
+
+    /**
+     * Retrieve list of reports from given user and customer.
+     *
+     * @param  \User\Models\User         $user
+     * @param  \Customer\Models\Customer $customer
+     * @return array
+     */
+    public function getFinancialRatiosFromUser(User $user, Customer $customer)
+    {
+        $model = $this->model->whereUserId($user->getKey())->whereCustomerId($customer->getKey());
+
+        $model = $model->whereRemarks($this->request()->get('month') ?: date('m-Y'));
+
+        return [
+            'report' => $model->first(),
+            'customer' => $customer,
+        ];
+    }
 }

@@ -42,6 +42,7 @@
                   <p :class="$vuetify.breakpoint.smAndUp ? 'headline py-4' : 'subtitle-2'" class="mb-0 font-weight-bold">
                     {{ trans(f) }}
                   </p>
+                  <p v-html="fields[0].metadata.group_arabic"></p>
                 </v-col>
                 <!-- group -->
 
@@ -57,6 +58,7 @@
                     </v-col>
                     <v-col :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
                       <p :class="$vuetify.breakpoint.smAndUp ? 'title' : null">{{ trans(field.title) }}</p>
+                      <p class="rtl-text" :class="$vuetify.breakpoint.smAndUp ? 'title' : null">{{ trans(field.metadata.title_arabic) }}</p>
                     </v-col>
                   </v-row>
 

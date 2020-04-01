@@ -15,6 +15,7 @@ Route::post('reports/download', 'Api\DownloadPerformanceIndexReport')->name('rep
 // Using this on frontend.
 Route::get('best/reports/{report}/pdf', 'Api\GetPerformanceIndexPdfReport')->name('reports.show');
 Route::get('best/reports/{report}', 'Api\GetPerformanceIndexReport')->name('reports.show');
+Route::get('best/reports/ratios/{report}', 'Api\GetPerformanceIndexReport');
 
 Route::get('best/formula/check', function (Request $request) {
     $method = $request->get('type');
@@ -70,6 +71,20 @@ Route::get('best/preview/reports/overall', function (Request $request, FormulaSe
     $data = $service->generate($survey, $attributes);
 
     return view("best::reports.overall")->withData($data);
+});
+
+Route::get('best/preview/reports/ratios', function (Request $request, FormulaServiceInterface $service) {
+    app()->setLocale($request->get('lang') ?: 'en');
+
+    $file = $request->get('month') ?: date('m-Y');
+    $user = User::find($request->get('user_id'));
+    Auth::login($user);
+
+    $attributes = ['customer_id' => $request->get('customer_id')];
+    $survey = \Survey\Models\Survey::find($request->get('survey_id') ?: 1);
+    $data = $service->generate($survey, $attributes);
+
+    return view("best::reports.financialratio")->withData($data);
 });
 
 Route::get(

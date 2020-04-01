@@ -82,30 +82,37 @@
                     </validation-provider>
                   </v-col>
                   <v-col cols="12">
-                    <validation-provider vid="code" rules="required" :name="trans('code')" v-slot="{ errors }">
-                      <v-text-field
-                        :dense="isDense"
-                        :disabled="isLoading"
-                        :error-messages="errors"
-                        :label="trans('Survey Code')"
-                        :value="slugify(resource.data.title)"
-                        class="dt-text-field"
-                        name="code"
-                        outlined
-                      ></v-text-field>
-                    </validation-provider>
+                    <v-text-field
+                      :dense="isDense"
+                      :disabled="isLoading"
+                      :label="trans('Survey Title (arabic)')"
+                      class="dt-text-field"
+                      name="metadata[title_arabic]"
+                      outlined
+                      >
+                    </v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-textarea
                       :label="trans('Survey Description')"
                       auto-grow
                       class="dt-text-field"
-                      hide-details
                       name="body"
                       outlined
                     ></v-textarea>
                   </v-col>
+                  <v-col cols="12">
+                    <v-textarea
+                      :label="trans('Survey Description (arabic)')"
+                      auto-grow
+                      class="dt-text-field"
+                      hide-details
+                      name="metadata[body_arabic]"
+                      outlined
+                    ></v-textarea>
+                  </v-col>
                 </v-row>
+                <input type="hidden" :value="slugify(resource.data.title)" name="code">
                 <input type="hidden" name="type" value="survey">
                 <input type="hidden" name="formable_type" value="Index\Models\Index">
                 <input type="hidden" name="formable_id" :value="resource.data.indices">
@@ -134,13 +141,21 @@
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][wts]`" :value="field.wts">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][comment]`" :value="field.comment">
 
-                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][Document]`" value="">
+                    <!-- Categories -->
+                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][Documentation]`" value="">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][Talent]`" value="">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][Technology]`" value="">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][Workflow Processes]`" value="">
                     <template v-for="category in field.categories">
                       <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][${category}]`" value="Y">
                     </template>
+                    <!-- Categories -->
+
+                    <!-- Arabic -->
+                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][group_arabic]`" :value="group.group_arabic">
+                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][title_arabic]`" :value="field.title_arabic">
+                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][comment_arabic]`" :value="field.comment_arabic">
+                    <!-- Arabic -->
                   </template>
                 </template>
               </v-card-text>

@@ -23,6 +23,11 @@ Route::prefix('v1')->middleware('auth:api')->group(function () {
         'Api\GetUserCustomerOverallReport'
     )->name('reports.user');
 
+    Route::get(
+        'reports/ratios/customer/{customer}/user/{user}',
+        'Api\GetUserCustomerRatiosReportPage'
+    )->name('reports.ratios');
+
     Route::get('reports/customer/{customer}/user/{user}', 'Api\GetUserCustomerReportsList')->name('reports.user');
     Route::post('reports/{survey}/generate', 'Api\GeneratePerformanceIndexReport')->name('surveys.report');
     Route::get('reports', 'Api\Report\GetReportList')->name('reports.index');

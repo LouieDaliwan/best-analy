@@ -7,9 +7,14 @@ class Survey {
 
     this.data = {
       title: '',
+      title_arabic: '',
       code: '',
       body: '',
-      metadata: '',
+      body_arabic: '',
+      metadata: {
+        title_arabic: '',
+        body_arabic: '',
+      },
       type: '',
       user_id: '',
       created: '',
@@ -18,6 +23,7 @@ class Survey {
       fields: [
         {
           group: '',
+          group_arabic: '',
           type: '',
           children: [],
         }

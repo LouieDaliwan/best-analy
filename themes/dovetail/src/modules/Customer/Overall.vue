@@ -3,7 +3,6 @@
     <metatag :title="trans('Find Company')"></metatag>
 
     <page-header :back="{ to: {name: 'companies.reports'}, text: trans('Back to Reports') }">
-      <template v-slot:title>{{ trans('Report Preview') }}</template>
       <template v-slot:utilities>
         <a class="dt-link text--decoration-none mr-4" @click="sendToCrm(item)">
           <v-icon small left>mdi-send</v-icon>

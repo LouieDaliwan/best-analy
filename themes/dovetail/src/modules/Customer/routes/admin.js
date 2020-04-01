@@ -89,7 +89,19 @@ export default [
         name: 'reports.overall',
         component: () => import('../Overall.vue'),
         meta: {
-          title: 'Report Overall',
+          title: 'Overall Report',
+          sort: 9,
+          authenticatable: true,
+          permission: 'customers.show',
+          icon: 'mdi-book-multiple-variant',
+        },
+      },
+      {
+        path: ':id/ratios/reports',
+        name: 'reports.ratios',
+        component: () => import('../Ratio.vue'),
+        meta: {
+          title: 'Financial Ratios',
           sort: 9,
           authenticatable: true,
           permission: 'customers.show',

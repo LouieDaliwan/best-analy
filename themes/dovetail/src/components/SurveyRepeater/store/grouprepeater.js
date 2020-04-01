@@ -2,6 +2,7 @@ export const state = () => ({
   grouprepeater: {
     template: {
       group: '',
+      group_arabic: '',
       type: '',
       children: [{
         title: '',

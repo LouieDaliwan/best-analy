@@ -48,6 +48,7 @@
                 <p class="headline py-4 mb-0 font-weight-bold">
                   {{ trans(i) }}
                 </p>
+                <p v-html="group[0].metadata.group_arabic"></p>
               </v-col>
               <v-col cols="12" md="10" v-for="(field, f) in group" :key="f">
                 <v-row>
@@ -58,11 +59,13 @@
                   </v-col>
                   <v-col>
                     <p class="title">{{ trans(field.title) }}</p>
+                    <p class="title rtl-text">{{ trans(field.metadata.title_arabic) }}</p>
                     <p>
                       <span class="link--text mr-6">{{ __('Total Number') }}: &nbsp; {{ trans(field.metadata.total) }}</span>
                       <span class="link--text mr-6">{{ __('WTS') }}: &nbsp; {{ trans(field.metadata.wts) }}</span>
                     </p>
                     <p><span class="link--text mr-6">{{ __('Comment') }}: &nbsp; {{ trans(field.metadata.comment) }}</span></p>
+                    <p class="rtl-text"><span class="link--text mr-6">{{ __('تعليق') }}: &nbsp; {{ trans(field.metadata.comment_arabic) }}</span></p>
                     <!-- Category -->
                     <p>
                       <span class="muted--text mr-6">{{ trans('Category') }}:</span>

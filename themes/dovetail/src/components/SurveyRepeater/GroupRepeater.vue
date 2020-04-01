@@ -50,13 +50,23 @@
                   <v-text-field
                     :error-messages="errors"
                     :label="trans('Group Name')"
-                    class="dt-text-field"
+                    class="dt-text-field mt-4"
                     outlined
                     v-model="item.group"
                     >
                   </v-text-field>
                 </validation-provider>
-
+                <v-row>
+                  <v-col>
+                    <v-text-field
+                      :label="trans('Group Name (arabic)')"
+                      class="dt-text-field"
+                      outlined
+                      v-model="item.group_arabic"
+                      >
+                    </v-text-field>
+                  </v-col>
+                </v-row>
                 <field-repeater :fields="fields" :key="i" v-model="item.children"></field-repeater>
               </v-col>
             </v-row>
@@ -114,6 +124,7 @@ export default {
     item () {
       return {
         group: '',
+        group_arabic: '',
         type: '',
         children: [],
       }

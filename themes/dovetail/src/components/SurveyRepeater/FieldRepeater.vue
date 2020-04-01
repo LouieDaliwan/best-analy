@@ -61,6 +61,15 @@
                       </v-text-field>
                     </validation-provider>
                   </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      :label="trans('Field Title (arabic)')"
+                      class="dt-text-field"
+                      outlined
+                      v-model="item.title_arabic"
+                      >
+                    </v-text-field>
+                  </v-col>
                   <v-col cols="12" md="6">
                     <validation-provider vid="total" :name="trans('total')" rules="required" v-slot="{ errors }">
                       <v-text-field
@@ -68,7 +77,6 @@
                         :label="trans('Total Number')"
                         class="dt-text-field"
                         outlined
-                        :hide-details="$vuetify.breakpoint.mdAndUp"
                         v-model="item.total"
                         >
                       </v-text-field>
@@ -81,13 +89,12 @@
                         :label="trans('WTS')"
                         class="dt-text-field"
                         outlined
-                        :hide-details="$vuetify.breakpoint.mdAndUp"
                         v-model="item.wts"
                         >
                       </v-text-field>
                     </validation-provider>
                   </v-col>
-                  <v-col cols="12" >
+                  <v-col cols="12">
                     <validation-provider vid="comment" :name="trans('comment')" rules="required" v-slot="{ errors }">
                       <v-textarea
                         :error-messages="errors"
@@ -95,11 +102,20 @@
                         class="dt-text-field"
                         outlined
                         auto-grow
-                        :hide-details="$vuetify.breakpoint.mdAndUp"
                         v-model="item.comment"
                         >
                       </v-textarea>
                     </validation-provider>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-textarea
+                      :label="trans('Comment (arabic)')"
+                      class="dt-text-field"
+                      outlined
+                      auto-grow
+                      v-model="item.comment_arabic"
+                      >
+                    </v-textarea>
                   </v-col>
                   <v-col cols="12">
                     <div class="my-3">
@@ -177,10 +193,12 @@ export default {
     item () {
       return {
         title: '',
+        title_arabic: '',
         code: '',
         total: '',
         wts: '',
         comment: '',
+        comment_arabic: '',
         categories: [],
       }
     },

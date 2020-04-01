@@ -29,9 +29,7 @@
   <main>
     <div class="container">
       <div class="main-body">
-        {{-- <div class="main-content"> --}}
-          @include('best::reports.overall.cover')
-        {{-- </div> --}}
+        @include('best::reports.overall.cover')
       </div>
     </div>
 
@@ -50,7 +48,7 @@
           @include('best::reports.summary.data-privacy')
           @include('best::reports.partials.footer')
           <div class="text-right">
-            <div style="font-size: 12px;">{{ __('Page 1 of 8') }}</div>
+            <div style="font-size: 12px;">{{ __('Page 1 of 6') }}</div>
           </div>
         </div>
       </div>
@@ -70,7 +68,7 @@
           @include('best::reports.partials.disclaimer')
           @include('best::reports.partials.footer')
           <div class="text-right">
-            <div style="font-size: 12px;">{{ __('Page 2 of 8') }}</div>
+            <div style="font-size: 12px;">{{ __('Page 2 of 6') }}</div>
           </div>
         </div>
       </div>
@@ -90,14 +88,15 @@
             @include('best::reports.partials.disclaimer')
             @include('best::reports.partials.footer')
             <div class="text-right">
-              <div style="font-size: 12px;">{{ $index['page'] }} of 8</div>
+              <div style="font-size: 12px;">{{ $index['page'] }} of 6</div>
             </div>
           </div>
         </div>
       </div>
     @endforeach
 
-    <div class="container">
+    {{-- Analysis --}}
+    {{-- <div class="container">
       <div class="main-body">
         <div class="main-content pb-3">
           @include('best::reports.partials.header')
@@ -113,13 +112,15 @@
           @include('best::reports.partials.disclaimer')
           @include('best::reports.partials.footer')
           <div class="text-right">
-            <div style="font-size: 12px;">{{ __('Page 7 of 8') }}</div>
+            <div style="font-size: 12px;">{{ __('Page 7 of 6') }}</div>
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
+    {{-- Analysis --}}
 
-    <div class="container">
+    {{-- Ratios --}}
+    {{-- <div class="container">
       <div class="main-body">
         <div class="main-content pb-3">
           @include('best::reports.partials.header')
@@ -131,11 +132,12 @@
           @include('best::reports.partials.disclaimer')
           @include('best::reports.partials.footer')
           <div class="text-right">
-            <div style="font-size: 12px;">{{ __('Page 8 of 8') }}</div>
+            <div style="font-size: 12px;">{{ __('Page 8 of 6') }}</div>
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
+    {{-- Ratios --}}
   </main>
 </body>
 </html>

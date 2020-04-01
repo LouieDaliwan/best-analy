@@ -88,18 +88,17 @@
                     </validation-provider>
                   </v-col>
                   <v-col cols="12">
-                    <validation-provider vid="code" rules="required" :name="trans('code')" v-slot="{ errors }">
-                      <v-text-field
-                        :dense="isDense"
-                        :disabled="isLoading"
-                        :error-messages="errors"
-                        :label="trans('Survey Code')"
-                        :value="slugify(resource.data.title)"
-                        class="dt-text-field"
-                        name="code"
-                        outlined
-                      ></v-text-field>
-                    </validation-provider>
+                    <v-text-field
+                      :dense="isDense"
+                      :disabled="isLoading"
+                      :label="trans('Survey Title (arabic)')"
+                      autofocus
+                      class="dt-text-field"
+                      name="metadata[title_arabic]"
+                      outlined
+                      v-model="resource.data.metadata.title_arabic"
+                      >
+                    </v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-textarea
@@ -112,7 +111,19 @@
                       v-model="resource.data.body"
                     ></v-textarea>
                   </v-col>
+                  <v-col cols="12">
+                    <v-textarea
+                      :label="trans('Survey Description (arabic)')"
+                      auto-grow
+                      class="dt-text-field"
+                      hide-details
+                      name="metadata[body_arabic]"
+                      outlined
+                      v-model="resource.data.metadata.body_arabic"
+                    ></v-textarea>
+                  </v-col>
                 </v-row>
+                <input type="hidden" :value="slugify(resource.data.title)" name="code">
                 <input type="hidden" name="type" value="survey">
                 <input type="hidden" name="formable_type" value="Index\Models\Index">
                 <input type="hidden" name="formable_id" :value="resource.data.surveys">
@@ -142,13 +153,22 @@
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][wts]`" :value="field.wts">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][comment]`" :value="field.comment">
 
+                    <!-- Arabic -->
+                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][group_arabic]`" :value="group.group_arabic">
+                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][title_arabic]`" :value="field.title_arabic">
+                    <input type="hidden" :name="`fields[${group.group+g+f}][metadata][comment_arabic]`" :value="field.comment_arabic">
+                    <!-- Arabic -->
+
+                    <!-- Categories -->
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][Document]`" value="">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][Talent]`" value="">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][Technology]`" value="">
                     <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][Workflow Processes]`" value="">
+
                     <template v-for="category in field.categories">
                       <input type="hidden" :name="`fields[${group.group+g+f}][metadata][category][${category}]`" value="Y">
                     </template>
+                    <!-- Categories -->
                   </template>
                 </template>
               </v-card-text>
@@ -391,13 +411,15 @@ export default {
       axios.get(
         $api.show(this.$route.params.id)
       ).then(response => {
-        this.resource.data = Object.assign(response.data.data)
+        this.resource.data = Object.assign(this.resource.data, response.data.data)
+        this.resource.data.metadata = Object.assign({}, this.resource.data.metadata)
         this.resource.data.indices = Object.assign([], [this.resource.data.formable_id])
         this.resource.data.fields = Object.values(
           this.resource.data['fields:grouped']
         ).map((i, k) => {
           return {
             group: i[0].group,
+            group_arabic: i[0].metadata.group_arabic,
             type: i[0].type,
             children: i.map((j) => {
               let category = Object.keys(j.metadata['category']).filter(function (p) {
@@ -410,6 +432,8 @@ export default {
                 total: j.metadata['total'],
                 wts: j.metadata['wts'],
                 comment: j.metadata['comment'],
+                comment_arabic: j.metadata['comment_arabic'],
+                title_arabic: j.metadata['title_arabic'] || null,
                 categories: category,
               }
             }),

@@ -9,7 +9,12 @@
         </p>
       </template>
       <template v-slot:action>
-        <v-btn color="primary" @click="openExportDialog">
+        <v-btn
+          :block="$vuetify.breakpoint.smAndDown"
+          @click="openExportDialog"
+          color="primary"
+          large
+          >
           <v-icon left>mdi-file-pdf-outline</v-icon>
           {{ trans('Export') }}
         </v-btn>

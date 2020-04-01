@@ -113,6 +113,18 @@ export default [
           icon: 'mdi-book-multiple-variant',
         },
       },
+      {
+        path: ':id/ratios/reports',
+        name: 'teams.ratios',
+        component: () => import('../Ratio.vue'),
+        meta: {
+          title: 'Financial Ratios',
+          sort: 9,
+          authenticatable: true,
+          permission: 'teams.members',
+          icon: 'mdi-book-multiple-variant',
+        },
+      },
     ],
   }
 ]

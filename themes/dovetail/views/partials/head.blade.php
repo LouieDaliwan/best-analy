@@ -26,11 +26,11 @@
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ theme('dist/favicons/apple-touch-icon.png') }}">
-    {{-- <link rel="icon" type="image/png" sizes="32x32" href="{{ theme('dist/favicons/favicon-32x32.png') }}"> --}}
-    {{-- <link rel="icon" type="image/png" sizes="16x16" href="{{ theme('dist/favicons/favicon-16x16.png') }}"> --}}
-    {{-- <link rel="manifest" href="{{ theme('dist/manifest.json') }}"> --}}
-    <link rel="mask-icon" color="{{ theme()->detail('colors.primary') }}" href="{{ theme('dist/favicons/safari-pinned-tab.svg') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url('favicons/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url('favicons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url('favicons/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ theme('dist/manifest.json') }}">
+    <link rel="mask-icon" color="{{ theme()->detail('colors.primary') }}" href="{{ url('favicons/safari-pinned-tab.svg') }}">
     <meta name="theme-color" content="{{ theme()->detail('colors.primary') }}">
   @show
   @stack('seo')

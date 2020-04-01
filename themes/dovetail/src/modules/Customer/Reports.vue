@@ -27,6 +27,19 @@
       <template v-slot:action>
         <v-btn
           :block="$vuetify.breakpoint.smAndDown"
+          @click="previewRatiosReport"
+          color="primary"
+          exact
+          large
+          v-if="allReportPresent"
+          class="mr-3"
+          >
+          <v-icon small left>mdi-table-eye</v-icon>
+          {{ __('Financial Ratio Report') }}
+        </v-btn>
+
+        <v-btn
+          :block="$vuetify.breakpoint.smAndDown"
           @click="previewOverallReport"
           color="primary"
           exact
@@ -249,6 +262,12 @@ export default {
         $api.crm.save(), data
       ).then(response => {
       })
+    },
+
+    previewRatiosReport () {
+      this.$router.push({ name: 'reports.ratios', query: {
+        type: 'ratios'
+      }, params: { id: this.$route.params.id } })
     },
 
     previewOverallReport () {

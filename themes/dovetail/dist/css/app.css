@@ -209,6 +209,11 @@ pre {
   box-shadow: var(--box-shadow) !important;
 }
 
+.rtl-text {
+  direction: rtl;
+  text-align: right;
+}
+
 .group-separator {
   border-left: 2px dashed var(--separator);
   content: "";

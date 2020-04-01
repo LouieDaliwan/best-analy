@@ -26,9 +26,6 @@
 </head>
 
 <body>
-    {{-- @include('best::reports.overall.score')
-    @include('best::reports.overall.pindex') --}}
-
   <main>
     <div class="container">
       <div class="main-body">
@@ -37,31 +34,6 @@
         </div>
       </div>
     </div>
-
-    {{-- <div class="container">
-      <div class="main-body">
-        <div class="main-content pb-3">
-          @include('best::reports.partials.header')
-        </div>
-        <div class="mt-2 border-bottom"></div>
-        <div class="main-content">
-          @include('best::reports.summary.about')
-          @include('best::reports.summary.report-objectives')
-          @include('best::reports.summary.key-benefits')
-          @include('best::reports.summary.what-is-in-report')
-          @include('best::reports.summary.data-reliability-validity')
-          @include('best::reports.summary.data-privacy')
-          @include('best::reports.partials.footer')
-          <div class="text-right">
-            @if ($data['current:index']['pindex:code'] == 'FMPI')
-              <div style="font-size: 12px;">{{ __('Page 1 of 4') }}</div>
-            @else
-              <div style="font-size: 12px;">{{ __('Page 1 of 2') }}</div>
-            @endif
-          </div>
-        </div>
-      </div>
-    </div> --}}
 
     <div class="container">
       <div class="main-body">
@@ -75,19 +47,18 @@
           @include('best::reports.partials.disclaimer')
           @include('best::reports.partials.footer')
           <div class="text-right">
-            @if ($data['current:index']['pindex:code'] == 'FMPI')
-              {{-- <div style="font-size: 12px;">{{ __('Page 2 of 4') }}</div> --}}
+            {{-- @if ($data['current:index']['pindex:code'] == 'FMPI')
               <div style="font-size: 12px;">{{ __('Page 1 of 3') }}</div>
-            @else
-              {{-- <div style="font-size: 12px;">{{ __('Page 2 of 2') }}</div> --}}
+            @else --}}
               <div style="font-size: 12px;">{{ __('Page 1 of 1') }}</div>
-            @endif
+            {{-- @endif --}}
           </div>
         </div>
       </div>
     </div>
 
-    @if ($data['current:index']['pindex:code'] == 'FMPI')
+    {{-- FMPI with Analysis --}}
+    {{-- @if ($data['current:index']['pindex:code'] == 'FMPI')
       <div class="container">
         <div class="main-body">
           <div class="main-content pb-3">
@@ -127,7 +98,8 @@
           </div>
         </div>
       </div>
-    @endif
+    @endif --}}
+    {{-- FMPI with Analysis --}}
   </main>
 </body>
 </html>

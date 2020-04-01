@@ -122,16 +122,18 @@ class SurveyService extends Service implements SurveyServiceInterface
             ],
         ]);
 
-        LanguageLine::updateOrCreate([
-            'group' => '*',
-            'key' => $attributes['body'],
-        ], [
-            'group' => '*',
-            'text' => [
-                'en' => $attributes['body'],
-                'ar' => $attributes['body_arabic'] ?? $attributes['body'],
-            ],
-        ]);
+        if (isset($attributes['body']) && ! is_null($attributes['body'])) {
+            LanguageLine::updateOrCreate([
+                'group' => '*',
+                'key' => $attributes['body'],
+            ], [
+                'group' => '*',
+                'text' => [
+                    'en' => $attributes['body'],
+                    'ar' => $attributes['body_arabic'] ?? $attributes['body'],
+                ],
+            ]);
+        }
 
         // Create or update survey fields.
         $fields = collect($attributes['fields'] ?? [])->values()->each(function ($field, $i) use ($model) {

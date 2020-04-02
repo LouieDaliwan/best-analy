@@ -53,7 +53,7 @@
     <validation-observer ref="updateform" v-slot="{ handleSubmit, errors, invalid, passed }">
       <v-form :disabled="isLoading" ref="updateform-form" autocomplete="false" @change="formIsChanged" v-on:submit.prevent="handleSubmit(submit($event))">
         <button :disabled="isFormDisabled" ref="submit-button" type="submit" class="d-none"></button>
-        <page-header :back="{ to: { name: 'companies.index' }, text: trans('Companies') }">
+        <page-header :back="{ to: { name: 'companies.owned' }, text: trans('Companies') }">
           <template v-slot:title>
             {{ trans('Edit :name', {'name': `${resource.data.name}'s Input Data`}) }}
           </template>
@@ -362,7 +362,7 @@ export default {
             text: trans('Discard'),
             callback: () => {
               this.hideDialog()
-              this.$router.replace({name: 'companies.index'})
+              this.$router.replace({name: 'companies.owned'})
             },
           },
         }

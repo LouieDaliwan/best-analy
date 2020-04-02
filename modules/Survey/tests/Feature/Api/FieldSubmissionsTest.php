@@ -41,7 +41,6 @@ class FieldSubmissionsTest extends TestCase
     public function a_user_can_submit_their_answer_to_the_survey()
     {
         // Arrangements
-        $this->withoutExceptionHandling();
         Passport::actingAs($user = $this->asNonSuperAdmin(['surveys.submit']), ['surveys.submit']);
         $this->withPermissionsPolicy();
 

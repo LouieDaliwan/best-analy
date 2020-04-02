@@ -18,6 +18,7 @@
   <style>{{ theme()->inlined(public_path('reports/css/theme.min.css')) }}</style>
   <style>{{ theme()->inlined(public_path('reports/css/ratios.css')) }}</style>
   <style>{{ theme()->inlined(public_path('reports/css/indicators.css')) }}</style>
+  <style>{{ theme()->inlined(public_path('reports/css/overall-cover.css')) }}</style>
 
   {{-- RTL --}}
   @if (app()->getLocale() == 'ar')

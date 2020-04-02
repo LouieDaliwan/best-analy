@@ -1,46 +1,39 @@
-<section
-  class="text-black ocean-radial">
-  <div class="ocean">
+<section class="text-black ocean-radial">
+  {{-- <div class="ocean">
     <div class="wave"></div>
     <div class="wave"></div>
+  </div> --}}
+
+  <div class="waveWrapper waveAnimation">
+    <div class="waveWrapperInner bgTop">
+      <div class="wave waveTop" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
+    </div>
+    <div class="waveWrapperInner bgMiddle">
+      <div class="wave waveMiddle" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
+    </div>
+    <div class="waveWrapperInner bgBottom">
+      <div class="wave waveBottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
+    </div>
   </div>
 
-  <div class="container">
+  <div class="container" style="position: relative; z-index: 10000;">
     <div class="row align-items-center justify-content-center">
       <div class="col-md-10 col-sm-12">
         <div class="dt-divider" style="height: 50px;"></div>
-        {{-- header --}}
+          {{-- header --}}
           <div class="mb-4 text-center">
             <img height="80" src="{{ asset('logo.svg') }}">
           </div>
+          <div style="height: 150px;"></div>
           <div class="text-center">
             <h1 class="display-4">@lang("Business Excellence Survey Toolkit (BEST)")</h1>
             <h1 class="display-4">@lang('Financial Ratios Report')</h1>
           </div>
-        {{-- header --}}
-
-        <div class="text-center">
-          <div style="margin-top: 100px; margin-bottom: 100px;">
-            <div class="row justify-content-center mb-4">
-              <div class="col-md-4 col-sm-12">
-                <img style="filter: hue-rotate(158deg) grayscale(0.4);" src="{{ asset('indices/all/png/fm2.png') }}">
-              </div>
-              <div class="col-md-4 col-sm-12">
-                <img src="{{ asset('indices/all/png/bs2.png') }}">
-              </div>
-            </div>
-            <div class="row justify-content-center">
-              <div class="col-md-4 col-sm-12">
-                <img style="filter: hue-rotate(50deg)" src="{{ asset('indices/all/png/pm2.png') }}">
-              </div>
-              <div class="col-md-4 col-sm-12">
-                <img style="filter: hue-rotate(201deg) grayscale(0.4);" src="{{ asset('indices/all/png/hr2.png') }}">
-              </div>
-            </div>
-          </div>
-        </div>
+          <div style="height: 150px;"></div>
+          {{-- header --}}
       </div>
     </div>
+
     <div class="row justify-content-center">
       <div class="col-md-10">
         <div class="row justify-content-between">

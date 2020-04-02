@@ -86,34 +86,52 @@ export default {
       })
     },
 
-      goToShowPage (lang = 'en') {
-        window.localStorage.setItem('report:lang', lang)
-        this.resource.lang = lang
-        this.$router.push({
-          name: 'teams.report',
-          params: {
-            id: this.$route.params.id,
-            report: this.$route.params.report
-          },
-          query: {
-            lang: lang,
-          }
-        }).catch(err => {})
-        this.$router.go()
-      },
+    goToShowPage (lang = 'en') {
+      window.localStorage.setItem('report:lang', lang)
+      this.resource.lang = lang
+      this.$router.push({
+        name: 'teams.report',
+        params: {
+          id: this.$route.params.id,
+          report: this.$route.params.report
+        },
+        query: {
+          lang: lang,
+          from: this.$route.query.from,
+          user_id: this.$route.query.user_id
+        }
+      }).catch(err => {})
+      this.$router.go()
+    },
 
-      downloadReport () {
-        window.location.href = `/reports/${this.$route.params.report}/download`
-        // axios.get(
-        //   `/api/v1/reports/${this.$route.params.report}/download`
-        // ).then(response => {
-        //   let blob = new Blob([response.data], { type: 'application/pdf' })
-        //   let link = document.createElement('a')
-        //   link.href = window.URL.createObjectURL(blob)
-        //   link.download = `Report.pdf`
-        //   link.click()
-        // })
-      },
+    // goToShowPage (lang = 'en') {
+    //   window.localStorage.setItem('report:lang', lang)
+    //   this.resource.lang = lang
+    //   this.$router.push({
+    //     name: 'teams.report',
+    //     params: {
+    //       id: this.$route.params.id,
+    //       report: this.$route.params.report
+    //     },
+    //     query: {
+    //       lang: lang,
+    //     }
+    //   }).catch(err => {})
+    //   this.$router.go()
+    // },
+
+    downloadReport () {
+      window.location.href = `/reports/${this.$route.params.report}/download`
+      // axios.get(
+      //   `/api/v1/reports/${this.$route.params.report}/download`
+      // ).then(response => {
+      //   let blob = new Blob([response.data], { type: 'application/pdf' })
+      //   let link = document.createElement('a')
+      //   link.href = window.URL.createObjectURL(blob)
+      //   link.download = `Report.pdf`
+      //   link.click()
+      // })
+    },
 
     setIframeHeight () {
       this.resource.loading = true

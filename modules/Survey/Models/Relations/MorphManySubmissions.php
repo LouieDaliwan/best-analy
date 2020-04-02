@@ -32,12 +32,15 @@ trait MorphManySubmissions
      * Save the account data [email, username, password]
      * to the details table.
      *
-     * @param  array $attributes
+     * @param  array  $attributes
+     * @param  string $remarks
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function submit(array $attributes)
+    public function submit(array $attributes, $remarks = null)
     {
-        $remarks = date('m-Y');
+        $remarks = is_null($remarks ?? null)
+            ? date('m-Y')
+            : date('m-Y', strtotime(date('Y-m', strtotime($remarks))));
         $submission = $this->submissions()->updateOrCreate([
             'remarks' => $remarks,
             'submissible_id' => $attributes['submissible_id'] ?? null,

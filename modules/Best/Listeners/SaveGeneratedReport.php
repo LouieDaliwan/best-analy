@@ -35,15 +35,16 @@ class SaveGeneratedReport implements ShouldQueue
      */
     public function handle($event)
     {
+        $remarks = $event->data['month'] ?? date('m-Y');
         $this->service->updateOrCreate([
-            'remarks' => date('m-Y'),
+            'remarks' => $remarks,
             'customer_id' => $event->data['organisation:profile']['id'],
             'form_id' => $event->data['survey:id'],
             'user_id' => $event->data['user:id'],
         ], [
             'key' => trans($event->data['current:index']['pindex'].' Report'),
             'value' => array_merge(['filepath' => $this->save($event)], $event->data),
-            'remarks' => date('m-Y'),
+            'remarks' => $remarks,
             'customer_id' => $event->data['organisation:profile']['id'],
             'form_id' => $event->data['survey:id'],
             'user_id' => $event->data['user:id'],

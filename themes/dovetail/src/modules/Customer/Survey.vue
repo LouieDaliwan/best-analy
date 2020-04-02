@@ -3,35 +3,40 @@
     <metatag :title="resource.data.title"></metatag>
     <back-to-top></back-to-top>
 
-    <page-header>
-      <template v-slot:back>
-        <div class="mb-2">
-          <can code="customers.show">
-            <router-link tag="a" exact :to="{ name: 'companies.show', params: {id: $route.params.id} }" class="text--decoration-none body-1 dt-link">
-              <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
-              <span v-text="trans('Back')"></span>
-            </router-link>
-            <template v-slot:unpermitted>
-              <router-link tag="a" exact :to="{ name: 'companies.owned' }" class="text--decoration-none body-1 dt-link">
+    <form ref="survey-submission-form" @submit.prevent="submit">
+
+      <page-header>
+        <template v-slot:back>
+          <div class="mb-2">
+            <can code="customers.show">
+              <router-link tag="a" exact :to="{ name: 'companies.show', params: {id: $route.params.id} }" class="text--decoration-none body-1 dt-link">
                 <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
                 <span v-text="trans('Back')"></span>
               </router-link>
-            </template>
-          </can>
-        </div>
-      </template>
-      <template v-slot:title>{{ resource.data.title }}</template>
-    </page-header>
-    <template v-if="resource.loading">
-      <v-row>
-        <v-col cols="12"><skeleton type="article"></skeleton></v-col>
-        <v-col cols="12"><skeleton type="article"></skeleton></v-col>
-        <v-col cols="12"><skeleton type="article"></skeleton></v-col>
-      </v-row>
-    </template>
+              <template v-slot:unpermitted>
+                <router-link tag="a" exact :to="{ name: 'companies.owned' }" class="text--decoration-none body-1 dt-link">
+                  <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
+                  <span v-text="trans('Back')"></span>
+                </router-link>
+              </template>
+            </can>
+          </div>
+        </template>
+        <template v-slot:title>{{ resource.data.title }}</template>
+        <template v-slot:action>
+          <survey-monthly-picker></survey-monthly-picker>
+        </template>
+      </page-header>
 
-    <template v-else>
-      <form ref="survey-submission-form" @submit.prevent="submit">
+      <template v-if="resource.loading">
+        <v-row>
+          <v-col cols="12"><skeleton type="article"></skeleton></v-col>
+          <v-col cols="12"><skeleton type="article"></skeleton></v-col>
+          <v-col cols="12"><skeleton type="article"></skeleton></v-col>
+        </v-row>
+      </template>
+
+      <template v-else>
         <v-card>
           <criteria></criteria>
           <template v-for="(fields, f) in resource.data['fields:grouped']">
@@ -122,9 +127,8 @@
           </v-card-text>
           <!-- Submit -->
         </v-card>
-      </form>
-    </template>
-
+      </template>
+    </form>
 
     <bottom-navigation v-model="progress"></bottom-navigation>
   </admin>
@@ -184,6 +188,9 @@ export default {
 
     submit: _.debounce(function (event) {
       let data = new FormData(this.$refs['survey-submission-form'])
+      // for(var pair of data.entries()) {
+      //   console.log(pair[0]+ ', '+ pair[1]);
+      // }
       axios.post(
         $api.surveys.submit(this.$route.params.survey), data
       ).then(response => {
@@ -198,21 +205,6 @@ export default {
       }).finally(() => {
         this.submitting = false
       })
-
-      // setTimeout(() => {
-      //   this.showDialog({
-      //     title: this.trans('Saving Data'),
-      //     persistent: true,
-      //     text: [
-      //       this.trans('Please wait, overriding some previous data.'),
-      //       this.trans('This might take a minute or two.'),
-      //     ],
-      //     buttons: {
-      //       cancel: { show: false },
-      //       action: { show: false },
-      //     }
-      //   })
-      // }, 6000)
     }, 900),
 
     choose (item, answer) {

@@ -111,6 +111,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['organisation:profile'] = $customer->toArray();
         $this->data['survey:id'] = $survey->getKey();
         $this->data['user:id'] = $user->getKey();
+        $this->data['month'] = $attributes['month'] ?? date('m-Y');
 
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {

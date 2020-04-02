@@ -207,7 +207,7 @@ class SurveyService extends Service implements SurveyServiceInterface
     {
         foreach ($attributes['fields'] as $attribute) {
             $field = $survey->fields()->findOrFail($attribute['id']);
-            $field->submit($attribute['submission']);
+            $field->submit($attribute['submission'], $attributes['remarks'] ?? null);
         }
     }
 

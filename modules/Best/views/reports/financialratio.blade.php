@@ -18,6 +18,7 @@
   <style>{{ theme()->inlined(public_path('reports/css/theme.min.css')) }}</style>
   <style>{{ theme()->inlined(public_path('reports/css/ratios.css')) }}</style>
   <style>{{ theme()->inlined(public_path('reports/css/indicators.css')) }}</style>
+  <style>{{ theme()->inlined(public_path('reports/css/ratio-cover.css')) }}</style>
 
   {{-- RTL --}}
   @if (app()->getLocale() == 'ar')
@@ -28,7 +29,7 @@
 <body>
   <main>
     <div class="container">
-      <div class="main-body">
+      <div class="main-body" style="position: relative;">
         @include('best::reports.ratio.cover')
       </div>
     </div>

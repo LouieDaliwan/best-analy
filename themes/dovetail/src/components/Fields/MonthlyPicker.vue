@@ -4,6 +4,7 @@
     :label="trans('Select Month...')"
     @change="changeMonth"
     append-icon="mdi-chevron-down"
+    prepend-inner-icon="mdi-calendar"
     background-color="selects"
     class="dt-text-field"
     hide-details

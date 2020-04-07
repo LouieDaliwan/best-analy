@@ -83,8 +83,8 @@ abstract class AbstractAnalysis implements Contracts\FinancialAnalysisReportInte
         $sheet = $spreadsheet->getSheetByName('Customer');
         $sheet->getCell('B2')->setValue($customer->name);
         $sheet->getCell('B3')->setValue($customer->refnum);
-        $sheet->getCell('B4')->setValue($customer->metadata['staffstrength']);
-        $sheet->getCell('B5')->setValue($customer->metadata['industry']);
+        $sheet->getCell('B4')->setValue($customer->metadata['staffstrength'] ?? null);
+        $sheet->getCell('B5')->setValue($customer->metadata['industry'] ?? null);
 
         // Years labels.
         $sheet = $spreadsheet->getSheetByName('FS_inputs');

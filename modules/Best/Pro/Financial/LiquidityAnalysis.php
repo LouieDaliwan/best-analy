@@ -169,6 +169,9 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
             }
         } else {
             if (($ai20-$ai19) < 0) {
+                $item1 = $d19;
+                $item2 = $d20;
+                $number1 = abs(round(($ai20-$ai19)/$ai19*100, 2));
                 if (($ai20-$ai19) < (-$bk12)) {
                     $output = __("Records have also shown that current ratio saw a significant year on year decrease by :number1% from :item1 to :item2.", [
                         'item1' => $item1,

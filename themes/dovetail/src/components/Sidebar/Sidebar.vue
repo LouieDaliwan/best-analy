@@ -98,6 +98,9 @@
 
     <!-- Sidebar Footer -->
     <template v-slot:append>
+      <div class="mx-4">
+        <language-button></language-button>
+      </div>
       <div class="px-4 py-2 d-flex justify-space-between align-center">
         <div class="white--text"><small>{{ __('powered by SSA Consulting') }}</small></div>
         <!-- <v-btn icon @click="$store.dispatch('theme/toggle', {vm: vuetify, dark: !dark})"> -->

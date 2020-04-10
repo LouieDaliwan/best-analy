@@ -51,6 +51,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
                         })->map(function ($cell) {
                             return str_replace('%', '', $cell);
                         })->values()->toArray(),
+                        'bg' => '#a2d5ac',
                         'backgroundColor' => ['#a2d5ac', '#a2d5ac'],
                     ],
                     // Year 2.
@@ -63,6 +64,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
                         })->map(function ($cell) {
                             return $cell;
                         })->values()->toArray(),
+                        'bg' => '#3aada8',
                         'backgroundColor' => ['#3aada8', '#3aada8'],
                     ],
                     // Year 3.
@@ -75,6 +77,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
                         })->map(function ($cell) {
                             return str_replace('%', '', $cell);
                         })->values()->toArray(),
+                        'bg' => '#557c83',
                         'backgroundColor' => ['#557c83', '#557c83'],
                     ],
                 ],
@@ -179,8 +182,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         $h19 = $spreadsheet->getCell('H19')->getCalculatedValue() ?: 0;
         $h20 = $spreadsheet->getCell('H20')->getCalculatedValue() ?: 0;
         $h21 = $spreadsheet->getCell('H21')->getCalculatedValue() ?: 0;
-        \Illuminate\Support\Facades\Log::info("H20 - $h20");
-        \Illuminate\Support\Facades\Log::info("H20 - $h21");
+
         $number1 = abs(round(($h21-$h20)*100, 2));
         if ($h19 == "" && ($h21-$h20) > 0) {
             if (($h21-$h20) > $bj4) {

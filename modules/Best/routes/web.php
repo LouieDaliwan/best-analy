@@ -134,3 +134,43 @@ Route::get(
         return view("best::reports.pdf.$file")->withData($data);
     }
 );
+
+Route::get('best/dompdf', function (Request $request, FormulaServiceInterface $service) {
+    app()->setLocale($request->get('lang') ?: 'en');
+
+    $file = $request->get('type') ?: 'index';
+
+    $taxonomy_id = $request->get('taxonomy_id');
+
+    if (is_null($request->get('report_id'))) {
+        return null;
+    }
+
+    $report = \Best\Models\Report::find($request->get('report_id'));
+
+    Auth::login($report->user);
+
+    $attributes = ['customer_id' => $report->customer->getKey(), 'taxonomy_id' => $taxonomy_id];
+    $data = $service->generate($report->survey, $attributes);
+
+    $type = $request->get('type') ?: 'index';
+
+    $pdf = \Barryvdh\Snappy\Facades\SnappyPdf::loadHTML(view("best::reports.pdf.$type")->withData($data));
+
+    if ($request->get('view') == 'blade') {
+        return view("best::reports.pdf.$type")->withData($data);
+    }
+
+    try {
+        return $pdf
+            ->setPaper('legal')
+            ->setOption('enable-javascript', true)
+            ->setOption('debug-javascript', true)
+            ->stream('dom.pdf');
+    } catch (\Exception $e) {
+        Log::info('error -->', $e->getMessage());
+    }
+});
+
+Route::get('best/reports/pdf/preview', 'Report\PreviewPdfReport');
+Route::get('best/reports/pdf/preview/overall', 'Report\PreviewOverallPdfReport');

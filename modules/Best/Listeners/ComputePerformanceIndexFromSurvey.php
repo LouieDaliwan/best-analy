@@ -83,8 +83,6 @@ class ComputePerformanceIndexFromSurvey implements ShouldQueue
             'month', $submission->remarks ?? date('m-Y')
         )->count();
 
-        \Illuminate\Support\Facades\Log::info('compute-'.$submission->remarks ?? date('m-Y'));
-
         if ($isLastField === $form->fields->count()) {
             $data = $this->service->generate($form, [
                 'customer_id' => $customer->getKey(),

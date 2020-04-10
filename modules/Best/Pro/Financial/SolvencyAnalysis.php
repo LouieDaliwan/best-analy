@@ -44,6 +44,7 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
                         })->map(function ($cell) {
                             return str_replace('%', '', $cell);
                         })->values()->toArray(),
+                        'bg' => '#a2d5ac',
                         'backgroundColor' => ['#a2d5ac', '#a2d5ac'],
                     ],
                     // Year 2.
@@ -56,6 +57,7 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
                         })->map(function ($cell) {
                             return str_replace('%', '', $cell);
                         })->values()->toArray(),
+                        'bg' => '#3aada8',
                         'backgroundColor' => ['#3aada8', '#3aada8'],
                     ],
                     // Year 3.
@@ -68,6 +70,7 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
                         })->map(function ($cell) {
                             return str_replace('%', '', $cell);
                         })->values()->toArray(),
+                        'bg' => '#557c83',
                         'backgroundColor' => ['#557c83', '#557c83'],
                     ],
                 ],

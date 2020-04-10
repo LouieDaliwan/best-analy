@@ -31,6 +31,7 @@
           color="primary"
           exact
           large
+          text
           v-if="allReportPresent"
           class="mr-3"
           >
@@ -115,6 +116,16 @@
             <!-- Action buttons -->
             <template v-slot:item.action="{ item }">
               <div class="text-no-wrap">
+                <!-- Preview Report -->
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn target="_blank" @click="previewPDFReport(item)" icon v-on="on">
+                      <v-icon small>mdi-file-pdf</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ trans('Preview PDF Report') }}</span>
+                </v-tooltip>
+                <!-- Preview Report -->
                 <!-- Send Report -->
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
@@ -240,6 +251,10 @@ export default {
   }),
 
   methods: {
+    previewPDFReport (item) {
+      window.open(`/best/reports/pdf/preview?report_id=${item.id}&type=index`, '_blank')
+    },
+
     sendToCrm (item) {
       let data = {
         Id: this.resource.data.token,

@@ -11,49 +11,50 @@ export default [
     },
     children: [
       // General
-      {
-        code: 'settings.general',
-        name: 'settings.general',
-        meta: {
-          title: 'General',
-          authenticatable: true,
-          sort: 501,
-          permission: 'settings.preferences',
-        },
-      },
-      // Branding
       // {
-      //   code: 'settings.branding',
-      //   name: 'settings.branding',
+      //   code: 'settings.general',
+      //   name: 'settings.general',
       //   meta: {
-      //     title: 'Branding',
+      //     title: 'General',
       //     authenticatable: true,
       //     sort: 501,
-      //     permission: 'settings.branding',
+      //     permission: 'settings.preferences',
       //   },
       // },
+      // Branding
       {
-        code: 'settings.formulas',
-        name: 'best.formulas',
+        code: 'settings.branding',
+        name: 'settings.branding',
         meta: {
-          title: 'Formulas',
+          title: 'Branding',
           authenticatable: true,
-          permission: 'best.formulas',
           sort: 501,
+          permission: 'settings.branding',
         },
-        permission: 'settings.formulas',
       },
+      // Formula
+      // {
+      //   code: 'settings.formulas',
+      //   name: 'best.formulas',
+      //   meta: {
+      //     title: 'Formulas',
+      //     authenticatable: true,
+      //     permission: 'best.formulas',
+      //     sort: 501,
+      //   },
+      //   permission: 'settings.formulas',
+      // },
       // System
-      {
-        code: 'settings.system',
-        name: 'settings.system',
-        meta: {
-          title: 'System',
-          authenticatable: true,
-          sort: 501,
-        },
-        permission: 'settings.system',
-      },
+      // {
+      //   code: 'settings.system',
+      //   name: 'settings.system',
+      //   meta: {
+      //     title: 'System',
+      //     authenticatable: true,
+      //     sort: 501,
+      //   },
+      //   permission: 'settings.system',
+      // },
     ],
   }
 ]

@@ -1,0 +1,122 @@
+.font-weight-bold {
+  font-family: 'Rubik', sans-serif;
+}
+.circular {
+  border-radius: 100% !important;
+  display: inline-block;
+}
+
+.badge {
+  padding: 3px;
+  border-radius: 6px;
+  font-size: 7px;
+}
+.badge-bg-amber {
+  color: #de9f00 !important;
+  background-color: #de9f00;
+}
+.badge-bg-success {
+  color: #00d97e;
+  background-color: #00d97e;
+}
+.badge-bg-green {
+  color: #00d97e;
+  background-color: #00d97e;
+}
+.badge-bg-red {
+  color: #e63757;
+  background-color: #e63757;
+}
+.badge-soft-amber {
+  color: #de9f00 !important;
+  background-color: #fdf3d9;
+}
+.badge-soft-green {
+  color: #00d97e;
+  background-color: #ccf7e5;
+}
+.badge-soft-red {
+  color: #e63757;
+  background-color: #fad7dd;
+}
+.red {
+  color: rgb(255, 0, 0);
+}
+.amber {
+  color: rgb(255, 165, 0);
+}
+.green {
+  color: rgb(0, 128, 0);
+}
+.dt-recommendation-title .dt-Documentation {
+  color: #ff591b;
+}
+.dt-recommendation-title .dt-Technology {
+  color: #e85c5b;
+}
+.dt-recommendation-title .dt-Talent {
+  color: #58a67e;
+}
+.dt-recommendation-title .dt-Workflow {
+  color: #3777a3;
+}
+.imgDocumentation {
+  /*background: #f58b3d !important;*/
+  background: rgba(245, 139, 61, 0.30) !important;
+  /*background: linear-gradient(-20deg, #ff591b 0%, #f58b3d 100%);*/
+}
+.imgTechnology {
+  /*background: #e85c5b !important;*/
+  background: rgba(232, 92, 91, 0.30) !important;
+  /*background: linear-gradient(-20deg, #f9245a 0%, #e85c5b 100%);*/
+}
+.imgTalent {
+  /*background: #58a67e !important;*/
+  background: rgba(88, 166, 126, 0.30) !important;
+  /*background: linear-gradient(-20deg, #58a67e 0%, #94ff5e 100%);*/
+}
+.imgWorkflow {
+  /*background: #3777a3 !important;*/
+  background: rgba(55, 119, 163, 0.30) !important;
+  /*background: linear-gradient(-20deg, #3777a3 0%, #2ce6e6 100%);*/
+}
+.dt-button-primary-soft {
+  background: rgba(55, 119, 163, 0.40);
+  color: #3777a3;
+  padding: 6px;
+  border-radius: 6px;
+}
+.dt-BSPI {
+  color: #3777a3;
+}
+.dt-FMPI {
+  color: #f58b3d;
+}
+.dt-HRPI {
+  color: #e85c5b;
+}
+.dt-PMPI {
+  color: #58a67e;
+}
+.enablers-badge-index-color {
+  color: #555da6;
+}
+.enablers-badge-index {
+  color: #555da6;
+  background: rgba(85, 93, 166, 0.3);
+  padding: 5px;
+  font-size: 13px;
+  border-radius: 5px;
+  font-weight: 600;
+}
+.enablers-badge-org-color {
+  color: #ca247a;
+}
+.enablers-badge-org {
+  color: #ca247a;
+  background: rgba(202, 36, 122, 0.3);
+  padding: 5px;
+  font-size: 13px;
+  border-radius: 5px;
+  font-weight: 600;
+}

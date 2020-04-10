@@ -4,6 +4,10 @@
 
     <page-header :back="{ to: {name: 'companies.reports'}, text: trans('Back to Reports') }">
       <template v-slot:utilities>
+        <a v-if="resource.data.report" class="dt-link text--decoration-none mr-4" @click.prevent="previewPDFOverallReport(resource.data.report)">
+          <v-icon small left>mdi-file-pdf</v-icon>
+          {{ trans('Preview PDF Report') }}
+        </a>
         <a class="dt-link text--decoration-none mr-4" @click="sendToCrm(item)">
           <v-icon small left>mdi-send</v-icon>
           {{ trans('Send Report to CRM') }}
@@ -48,12 +52,27 @@ export default {
   }),
 
   methods: {
+    getReportData () {
+      let customer = this.$route.params.id
+      let user = this.$route.query.user_id || $auth.getId()
+      axios.get(
+        `/api/v1/reports/overall/customer/${customer}/user/${user}`
+      ).then(response => {
+        this.resource.data = response.data
+      })
+    },
+
     getReport () {
       let id = this.$route.query.user_id || $auth.getId()
       let customerId = this.$route.params.id
       let lang = this.$route.query.lang || this.resource.lang
-      this.$router.replace({query: { lang: lang }}).catch(err => {})
+      let query = Object.assign({}, this.$route.query, { lang: lang})
+      this.$router.replace({query}).catch(err => {})
       this.url = `/best/preview/reports/ratios?user_id=${id}&customer_id=${customerId}&lang=${lang}`
+    },
+
+    previewPDFOverallReport (item) {
+      window.open(`/best/reports/pdf/preview?report_id=${item.id}&type=financialratio`, '_blank')
     },
 
     sendToCrm (item) {
@@ -117,6 +136,7 @@ export default {
 
   mounted () {
     this.setIframeHeight()
+    this.getReportData()
     this.getReport()
   },
 }

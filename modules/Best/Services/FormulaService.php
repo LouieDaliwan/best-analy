@@ -392,6 +392,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'comments' => (array) $list,
                 'comment' => implode(' || ', (array) $list),
                 'icon' => asset("reports/assets/icons/$icon.svg"),
+                'icon:path' => public_path("reports/assets/icons/$icon.svg"),
             ];
         }
 

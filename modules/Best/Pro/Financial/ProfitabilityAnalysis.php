@@ -466,7 +466,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         } else {
             if (($n21-$n19)/$n19 > 0) {
                 if (($n21-$n19)/$n19>$bi6) {
-                    $output = __("Overall net margin reflected a significant increasing trend.","Overall net margin reflected an increasing trend.");
+                    $output = __("Overall net margin reflected a significant increasing trend.");
                 }
             } else {
                 if (($n21-$n19)/$n19 < (-$bi6)) {

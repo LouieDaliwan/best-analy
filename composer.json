@@ -35,6 +35,7 @@
     "sempro/phpunit-pretty-print": "^1.2",
     "spatie/laravel-translation-loader": "^2.6",
     "teamtnt/laravel-scout-tntsearch-driver": "^7.0",
+    "wemersonjanuario/wkhtmltopdf-windows": "0.12.2.3",
     "wikimedia/composer-merge-plugin": "^1.4"
   },
   "require-dev": {

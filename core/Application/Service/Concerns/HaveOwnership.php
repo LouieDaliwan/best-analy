@@ -18,7 +18,7 @@ trait HaveOwnership
      */
     public function onlyOwned()
     {
-        if ($this->userIsUnrestricted($this->model()->getTable()) && $this->isOwnable()) {
+        if ($this->userIsUnrestricted() && $this->isOwnable()) {
             return $this->model;
         }
 

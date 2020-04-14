@@ -125,12 +125,21 @@ abstract class Service implements ServiceInterface
      * Check if authenticated user is part
      * of the superadmin group.
      *
-     * @param  string $key
      * @return boolean
      */
-    public function userIsUnrestricted(string $key): bool
+    public function userIsUnrestricted(): bool
     {
-        return $this->auth()->user()->isUnrestricted($key);
+        return $this->auth()->user()->isUnrestricted($this->getUnrestrictedKey());
+    }
+
+    /**
+     * Retrieve the unrestricted key used by the service.
+     *
+     * @return string
+     */
+    public function getUnrestrictedKey(): string
+    {
+        return $this->unrestrictedKey ?? $this->model->getTable();
     }
 
     /**

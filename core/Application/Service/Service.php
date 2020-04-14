@@ -122,6 +122,18 @@ abstract class Service implements ServiceInterface
     }
 
     /**
+     * Check if authenticated user is part
+     * of the superadmin group.
+     *
+     * @param  string $key
+     * @return boolean
+     */
+    public function userIsUnrestricted(string $key): bool
+    {
+        return $this->auth()->user()->isUnrestricted($key);
+    }
+
+    /**
      * Retrieve all model resources as array.
      *
      * @return object

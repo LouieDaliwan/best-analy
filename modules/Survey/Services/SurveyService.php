@@ -37,6 +37,13 @@ class SurveyService extends Service implements SurveyServiceInterface
     protected $ownable = true;
 
     /**
+     * The key used when checking for unrestrictions.
+     *
+     * @var string
+     */
+    protected $unrestrictedKey = 'surveys';
+
+    /**
      * Constructor to bind model to a repository.
      *
      * @param \Survey\Models\Survey    $model

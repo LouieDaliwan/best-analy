@@ -18,6 +18,10 @@ trait HaveOwnership
      */
     public function onlyOwned()
     {
+        if ($this->userIsUnrestricted($this->model()->getTable()) && $this->isOwnable()) {
+            return $this->model;
+        }
+
         if (! $this->userIsSuperAdmin() && $this->isOwnable()) {
             return $this->model->where('user_id', $this->auth()->id());
         }

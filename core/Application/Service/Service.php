@@ -77,7 +77,9 @@ abstract class Service implements ServiceInterface
      */
     public function table(): string
     {
-        return $this->table ?? $this->model()->getTable();
+        $model = get_class($this->model());
+
+        return $this->table ?? with(new $model)->getTable();
     }
 
     /**
@@ -139,7 +141,7 @@ abstract class Service implements ServiceInterface
      */
     public function getUnrestrictedKey(): string
     {
-        return $this->unrestrictedKey ?? $this->model->getTable();
+        return $this->unrestrictedKey ?? $this->getTable();
     }
 
     /**

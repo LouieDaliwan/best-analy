@@ -3,6 +3,7 @@
 namespace Core\Application\Service;
 
 use Core\Application\Permissions\RemoveApiPrefixFromPermission;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -77,7 +78,13 @@ abstract class Service implements ServiceInterface
      */
     public function table(): string
     {
-        return $this->table ?? $this->model()->getTable();
+        $model = $this->model();
+
+        if ($model instanceof Builder) {
+            $model = get_class($model->getModel());
+        }
+
+        return $this->table ?? with(new $model)->getTable();
     }
 
     /**
@@ -139,7 +146,7 @@ abstract class Service implements ServiceInterface
      */
     public function getUnrestrictedKey(): string
     {
-        return $this->unrestrictedKey ?? $this->model->getTable();
+        return $this->unrestrictedKey ?? $this->getTable();
     }
 
     /**

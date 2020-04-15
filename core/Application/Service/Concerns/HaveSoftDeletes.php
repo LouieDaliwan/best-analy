@@ -13,10 +13,10 @@ trait HaveSoftDeletes
      */
     public function listTrashed()
     {
-        $model = $this->with($this->appendToList ?? [])->onlyTrashed();
+        $this->model = $this->with($this->appendToList ?? [])->onlyTrashed();
 
         if ($this->isSearching()) {
-            $model = $this->searchTrash();
+            $this->model = $this->searchTrash();
         }
 
         $model = $this->onlyOwned();

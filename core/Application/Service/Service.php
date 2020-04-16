@@ -136,6 +136,10 @@ abstract class Service implements ServiceInterface
      */
     public function userIsUnrestricted(): bool
     {
+        if (is_null($this->auth()->user())) {
+            return false;
+        }
+
         return $this->auth()->user()->isUnrestricted($this->getUnrestrictedKey());
     }
 

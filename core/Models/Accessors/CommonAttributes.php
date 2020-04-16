@@ -4,6 +4,7 @@ namespace Core\Models\Accessors;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Laravolt\Avatar\Avatar;
 
 trait CommonAttributes
 {

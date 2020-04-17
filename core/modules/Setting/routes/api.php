@@ -2,6 +2,7 @@
 
 Route::prefix('v1/settings')->middleware(['auth:api', 'auth.permissions'])->group(function () {
     Route::get('branding', 'Api\BrandingController');
+    Route::post('branding', 'Api\SaveBranding');
 });
 
 Route::prefix('v1')->middleware(['auth:api', 'auth.permissions'])->group(function () {

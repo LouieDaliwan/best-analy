@@ -3,7 +3,7 @@
   <div class="d-flex justify-content-center align-items-center">
     <div class="row justify-content-center align-items-center">
       <div class="col-md-auto col-sm-12">
-        <div class="mb-md-0 mb-3 text-center text-md-left"><img height="52" src="{{ asset('logo.svg') }}"></div>
+        <div class="mb-md-0 mb-3 text-center text-md-left"><img height="52" src="{{ theme()->logo() }}"></div>
       </div>
       <div class="col">
         <div class="text-center text-md-left">

@@ -22,7 +22,7 @@
                 <td valign="top">
                   <div class="imgDocumentation circular mr-3">
                     <div class="p-3">
-                      <img height="15" src="{{ public_path('reports/assets/icons/documentation.svg') }}">
+                      <img height="15" src="{{ public_path('reports/assets/icons/png/documentation.png') }}">
                     </div>
                   </div>
                 </td>
@@ -39,7 +39,7 @@
                 <td valign="top">
                   <div class="imgTalent circular mr-3">
                     <div class="p-3">
-                      <img height="15" src="{{ public_path('reports/assets/icons/talent.svg') }}">
+                      <img height="15" src="{{ public_path('reports/assets/icons/png/talent.png') }}">
                     </div>
                   </div>
                 </td>
@@ -63,7 +63,7 @@
                 <td valign="top">
                   <div class="imgTechnology circular mr-3">
                     <div class="p-3">
-                      <img height="15" src="{{ public_path('reports/assets/icons/technology.svg') }}">
+                      <img height="15" src="{{ public_path('reports/assets/icons/png/technology.png') }}">
                     </div>
                   </div>
                 </td>
@@ -81,7 +81,7 @@
                 <td valign="top">
                   <div class="imgWorkflow Processess circular mr-3">
                     <div class="p-3">
-                      <img height="15" src="{{ public_path('reports/assets/icons/workflow-processes.svg') }}">
+                      <img height="15" src="{{ public_path('reports/assets/icons/png/workflow-processes.png') }}">
                     </div>
                   </div>
                 </td>

@@ -1,4 +1,5 @@
 {
+  "Inventory": "المخزون",
   "Comment": "تعليق",
   "Profitability Analysis": "تحليل الربحية",
   "Liquidity Analysis": "تحليل السيولة",
@@ -364,7 +365,6 @@
   "Year 3": "السنة 3",
   "This measures the efficiency & effectiveness of employees in generating value added (VA)": "هذه تقيس كفاءة الموظفين وفعاليتهم في توليد القيمة المضافة (VA)",
   "Ratios and Indicators Table page": "Start",
-  "No immediate 'Technology' intervention required in the short-term": "تنفيذ الحل لتخطيط موارد المؤسسة",
   "Detailed review of documentation practices and policies are required. This may have serious ramifications when audits needs to be carried, internally or externally": "يلزم إجراء استعراض مفصل لممارسات وسياسات الوثائق. وقد يكون لذلك تداعيات خطيرة عندما يلزم إجراء عمليات مراجعة الحسابات، داخليا أو خارجيا",
   "While some documentation processes are observed, more can still be done to ensure that these expectations are clearly communicated to employees on how it should be carried out.": "وفي حين يلاحظ بعض عمليات التوثيق، لا يزال بوسعها القيام بالمزيد لضمان إبلاغ الموظفين بهذه التوقعات حول كيفية تنفيذها بوضوح.",
   "Overall, documentation processes have have exceeded expectations.": "بشكل عام، تجاوزت عمليات التوثيق التوقعات.",

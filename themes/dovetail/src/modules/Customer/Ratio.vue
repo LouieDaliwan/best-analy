@@ -72,7 +72,8 @@ export default {
     },
 
     previewPDFOverallReport (item) {
-      window.open(`/best/reports/pdf/preview?report_id=${item.id}&type=financialratio`, '_blank')
+      let lang = this.$route.query.lang || this.resource.lang
+      window.open(`/best/reports/pdf/preview?report_id=${item.id}&type=financialratio&lang=${lang}`, '_blank')
     },
 
     sendToCrm (item) {

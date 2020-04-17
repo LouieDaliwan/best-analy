@@ -71,8 +71,8 @@ $(document).ready(function() {
         $data['analysis:financial']['efficiency']['charts']['labels'])->values()->toArray()
       ) !!}, --}}
       labels: [
-        ['{{ __("Trade") }}', '{{ __("Receivables (days)") }}'],
-        ["Trade", "Payable (days)"],
+        ['{{ __("Trade") }}', '{{ __("Receivables - days") }}'],
+        ["Trade", "Payable - days"],
         ["Asset", "Turnover"],
         ["Inventory", "Turnover"],
       ],

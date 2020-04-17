@@ -36,7 +36,7 @@ class IndexService extends TaxonomyService implements IndexServiceInterface
      *
      * @var boolean
      */
-    protected $ownable = true;
+    protected $ownable = false;
 
     /**
      * Constructor to bind model to a repository.

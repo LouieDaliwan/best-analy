@@ -742,18 +742,18 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
         if ($t43 == '' && (($t45-$t44) > 0)) {
             if (($t45-$t44) > $bj20) {
                 $number1 = abs(round(($t45-$t44)/$t44*100, 2));
-                $output = __("Overall inventory turnover reflected a significant improvement trend, increasing by :number1%", ['number1' => $number1]);
+                $output = __("Overall inventory turnover reflected a significant improvement trend, increasing by :number1%.", ['number1' => $number1]);
             } else {
                 $number1 = abs(round(($t45-$t44)/$t44*100, 2));
-                $output = __("Overall inventory turnover reflected improvements, increasing by :number1%", ['number1' => $number1]);
+                $output = __("Overall inventory turnover reflected improvements, increasing by :number1%.", ['number1' => $number1]);
             }
         } else {
             if ($q32 == '' && ($t45-$t44) < 0) {
                 if (($t45-$t44) < (-$bj20)) {
                     $number1 = abs(round(($t45-$t44)/$t44*100, 2));
-                    $output = __("Overall inventory turnover has seen a significant dip in demand, declining by :number1% over the years", ['number1' => $number1]);
+                    $output = __("Overall inventory turnover has seen a significant dip in demand, declining by :number1% over the years.", ['number1' => $number1]);
                 } else {
-                    $output = __("Overall dip in demand has seen inventory turnover decline by :number1% over the years", ['number1' => $number1]);
+                    $output = __("Overall dip in demand has seen inventory turnover decline by :number1% over the years.", ['number1' => $number1]);
                 }
             } else {
                 if ($t45 > $t44) {

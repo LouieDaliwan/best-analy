@@ -1,0 +1,12 @@
+.text-center {
+  text-align: center !important;
+}
+
+section, div, table {
+  text-align: right;
+  direction: rtl;
+}
+
+span svg {
+  transform: rotate(180deg);
+}

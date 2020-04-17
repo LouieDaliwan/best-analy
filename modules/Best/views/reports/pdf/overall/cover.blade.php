@@ -11,7 +11,7 @@
         <div class="dt-divider" style="height: 50px;"></div>
         {{-- header --}}
           <div class="mb-4 text-center">
-            <img height="80" src="{{ public_path('logo.svg') }}">
+            <img height="80" src="{{ theme()->logopath() }}">
           </div>
           <div class="text-center">
             <h1 class="display-4">@lang("Business Excellence Survey Toolkit (BEST)")</h1>
@@ -43,6 +43,10 @@
           <h4 class="mb-3">@lang('Prepared for'):</h4>
           <h2 class="mb-3 mb-0">{{ $data['organisation:profile']['name'] }}</h2>
           <p class="mb-0">{{ $data['cover:date'] }}</p>
+          @if ($data['customer:counselor'] ?? null)
+            <h4 class="mb-0 mt-3">@lang('Business Councelor'):</h4>
+            <p class="mb-0">{{ $data['customer:counselor'] }}</p>
+          @endif
           <div class="mt-5">
             <cite>
               <small>{{ __('Powered by') }} {{ settings('app:author') }}</small>

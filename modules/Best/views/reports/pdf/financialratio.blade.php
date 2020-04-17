@@ -22,7 +22,7 @@
 
   {{-- RTL --}}
   @if (app()->getLocale() == 'ar')
-    <style>{{ theme()->inlined(public_path('reports/css/rtl.css')) }}</style>
+    <style>{{ theme()->inlined(public_path('reports/css/rtlpdf.css')) }}</style>
   @endif
 
   <style>

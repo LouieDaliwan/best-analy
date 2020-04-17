@@ -74,7 +74,11 @@
               <tabs v-model="tabsModel">
                 <template v-slot:item>
                   <v-tab-item key="tab-0">
-                    <v-card>
+                    <template v-if="isFetchingResource">
+                      <skeleton-edit-company></skeleton-edit-company>
+                    </template>
+
+                    <v-card v-show="isFinishedFetchingResource">
                       <v-card-text>
                         <validation-provider vid="metadata[email]" :name="trans('Email')" rules="email" v-slot="{ errors }">
                           <v-text-field
@@ -156,103 +160,110 @@
                       </v-card-text>
                     </v-card>
                   </v-tab-item>
+
                   <v-tab-item key="tab-1">
-                    <v-card class="mb-3">
-                      <v-card-title>{{ trans('Income Statement') }}</v-card-title>
-                      <v-card-text style="overflow-x: auto;">
-                        <v-simple-table style="min-width: 800px" class="transparent mb-3">
-                          <tbody>
-                            <tr style="vertical-align: top">
-                              <td colspan="100%"></td>
-                              <td><strong>{{ trans('Period 1') }}</strong></td>
-                              <td><strong>{{ trans('Period 2') }}</strong></td>
-                              <td><strong>{{ trans('Period 3') }}<br>{{ trans('(most recent)') }}</strong></td>
-                            </tr>
-                            <tr :key="i" v-for="(data, i) in resource.metadata['years']">
-                              <td :colspan="data.length ? 1 : '100%'">
-                                <div class="year-label" v-html="trans(i)"></div>
-                              </td>
-                              <td :key="k" v-for="(d, k) in data">
-                                <v-text-field
-                                  :disabled="isLoading"
-                                  :name="`metadata[years][${i}][${k}]`"
-                                  :label="trans(k)"
-                                  class="dt-text-field"
-                                  dense
-                                  hide-details
-                                  outlined
-                                  v-model="resource.data.financials['years'][i][k]"
-                                  >
-                                </v-text-field>
-                              </td>
-                            </tr>
-                            <tr :key="i" v-for="(data, i) in resource.metadata['fps-qa1']">
-                              <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
-                              <td :key="k" v-for="(d, k) in data">
-                                <v-text-field
-                                  :disabled="isLoading"
-                                  :name="`metadata[fps-qa1][${i}][${k}]`"
-                                  class="dt-text-field"
-                                  dense
-                                  hide-details
-                                  outlined
-                                  v-model="resource.data.financials['fps-qa1'][i][k]"
-                                  >
-                                </v-text-field>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </v-simple-table>
-                      </v-card-text>
-                    </v-card>
-                    <v-card class="mb-3">
-                      <v-card-title>{{ trans('Balance Sheet') }}</v-card-title>
-                      <v-card-text style="overflow-x: auto;">
-                        <v-simple-table style="min-width: 800px" class="transparent mb-3">
-                          <tbody>
-                            <tr style="vertical-align: top">
-                              <td colspan="100%"></td>
-                              <td><strong>{{ trans('Period 1') }}</strong></td>
-                              <td><strong>{{ trans('Period 2') }}</strong></td>
-                              <td><strong>{{ trans('Period 3') }}<br>{{ trans('(most recent)') }}</strong></td>
-                            </tr>
-                            <tr :key="i" v-for="(data, i) in resource.metadata['years']">
-                              <td :colspan="data.length ? 1 : '100%'">
-                                <div class="year-label" v-html="trans(i)"></div>
-                              </td>
-                              <td :key="k" v-for="(d, k) in data">
-                                <v-text-field
-                                  :disabled="isLoading"
-                                  :name="`metadata[years][${i}][${k}]`"
-                                  :label="trans(k)"
-                                  class="dt-text-field"
-                                  dense
-                                  hide-details
-                                  outlined
-                                  v-model="resource.data.financials['years'][i][k]"
-                                  >
-                                </v-text-field>
-                              </td>
-                            </tr>
-                            <tr :key="i" v-for="(data, i) in resource.metadata['balance-sheet']">
-                              <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
-                              <td :key="k" v-for="(d, k) in data">
-                                <v-text-field
-                                  :disabled="isLoading"
-                                  :name="`metadata[balance-sheet][${i}][${k}]`"
-                                  class="dt-text-field"
-                                  dense
-                                  hide-details
-                                  outlined
-                                  v-model="resource.data.financials['balance-sheet'][i][k]"
-                                  >
-                                </v-text-field>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </v-simple-table>
-                      </v-card-text>
-                    </v-card>
+                    <template v-if="isFetchingResource">
+                      <skeleton-edit-financial></skeleton-edit-financial>
+                    </template>
+
+                    <div v-show="isFinishedFetchingResource">
+                      <v-card class="mb-3">
+                        <v-card-title>{{ trans('Income Statement') }}</v-card-title>
+                        <v-card-text style="overflow-x: auto;">
+                          <v-simple-table style="min-width: 800px" class="transparent mb-3">
+                            <tbody>
+                              <tr style="vertical-align: top">
+                                <td colspan="100%"></td>
+                                <td><strong>{{ trans('Period 1') }}</strong></td>
+                                <td><strong>{{ trans('Period 2') }}</strong></td>
+                                <td><strong>{{ trans('Period 3') }}<br>{{ trans('(most recent)') }}</strong></td>
+                              </tr>
+                              <tr :key="i" v-for="(data, i) in resource.metadata['years']">
+                                <td :colspan="data.length ? 1 : '100%'">
+                                  <div class="year-label" v-html="trans(i)"></div>
+                                </td>
+                                <td :key="k" v-for="(d, k) in data">
+                                  <v-text-field
+                                    :disabled="isLoading"
+                                    :name="`metadata[years][${i}][${k}]`"
+                                    :label="trans(k)"
+                                    class="dt-text-field"
+                                    dense
+                                    hide-details
+                                    outlined
+                                    v-model="resource.data.financials['years'][i][k]"
+                                    >
+                                  </v-text-field>
+                                </td>
+                              </tr>
+                              <tr :key="i" v-for="(data, i) in resource.metadata['fps-qa1']">
+                                <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
+                                <td :key="k" v-for="(d, k) in data">
+                                  <v-text-field
+                                    :disabled="isLoading"
+                                    :name="`metadata[fps-qa1][${i}][${k}]`"
+                                    class="dt-text-field"
+                                    dense
+                                    hide-details
+                                    outlined
+                                    v-model="resource.data.financials['fps-qa1'][i][k]"
+                                    >
+                                  </v-text-field>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </v-simple-table>
+                        </v-card-text>
+                      </v-card>
+                      <v-card class="mb-3">
+                        <v-card-title>{{ trans('Balance Sheet') }}</v-card-title>
+                        <v-card-text style="overflow-x: auto;">
+                          <v-simple-table style="min-width: 800px" class="transparent mb-3">
+                            <tbody>
+                              <tr style="vertical-align: top">
+                                <td colspan="100%"></td>
+                                <td><strong>{{ trans('Period 1') }}</strong></td>
+                                <td><strong>{{ trans('Period 2') }}</strong></td>
+                                <td><strong>{{ trans('Period 3') }}<br>{{ trans('(most recent)') }}</strong></td>
+                              </tr>
+                              <tr :key="i" v-for="(data, i) in resource.metadata['years']">
+                                <td :colspan="data.length ? 1 : '100%'">
+                                  <div class="year-label" v-html="trans(i)"></div>
+                                </td>
+                                <td :key="k" v-for="(d, k) in data">
+                                  <v-text-field
+                                    :disabled="isLoading"
+                                    :name="`metadata[years][${i}][${k}]`"
+                                    :label="trans(k)"
+                                    class="dt-text-field"
+                                    dense
+                                    hide-details
+                                    outlined
+                                    v-model="resource.data.financials['years'][i][k]"
+                                    >
+                                  </v-text-field>
+                                </td>
+                              </tr>
+                              <tr :key="i" v-for="(data, i) in resource.metadata['balance-sheet']">
+                                <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
+                                <td :key="k" v-for="(d, k) in data">
+                                  <v-text-field
+                                    :disabled="isLoading"
+                                    :name="`metadata[balance-sheet][${i}][${k}]`"
+                                    class="dt-text-field"
+                                    dense
+                                    hide-details
+                                    outlined
+                                    v-model="resource.data.financials['balance-sheet'][i][k]"
+                                    >
+                                  </v-text-field>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </v-simple-table>
+                        </v-card-text>
+                      </v-card>
+                    </div>
                   </v-tab-item>
                 </template>
               </tabs>
@@ -267,6 +278,8 @@
 <script>
 import $api from './routes/api'
 import Company from './Models/Company'
+import SkeletonEditCompany from './cards/SkeletonEditCompany'
+import SkeletonEditFinancial from './cards/SkeletonEditFinancial'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -276,6 +289,11 @@ export default {
     } else {
       this.askUserBeforeNavigatingAway(next)
     }
+  },
+
+  components: {
+    SkeletonEditCompany,
+    SkeletonEditFinancial
   },
 
   computed: {
@@ -301,10 +319,17 @@ export default {
     isNotFormPrestine () {
       return !this.isFormPrestine
     },
+    isFetchingResource () {
+      return this.loading
+    },
+    isFinishedFetchingResource () {
+      return !this.loading
+    },
   },
 
   data: (vm) => ({
     resource: new Company,
+    loading: true,
     tabsModel: 1,
   }),
 
@@ -371,6 +396,7 @@ export default {
 
     load (val = true) {
       this.resource.loading = val
+      this.loading = val
     },
 
     formIsChanged () {

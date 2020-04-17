@@ -4,6 +4,13 @@
 
     <page-header :back="{ to: {name: 'companies.reports'}, text: trans('Back to Reports') }">
       <template v-slot:title>{{ trans('Report Preview') }}</template>
+      <template v-slot:utilities>
+        <a v-if="resource.data" class="dt-link text--decoration-none mr-4" @click.prevent="previewPDFReport(resource.data)">
+          <v-icon small left>mdi-file-pdf</v-icon>
+          {{ trans('Preview PDF Report') }}
+        </a>
+      </template>
+
       <template v-slot:action>
         <v-btn v-if="resource.lang == 'en'" :block="$vuetify.breakpoint.smAndDown" large color="primary" @click="goToShowPage('ar')">
           <v-icon small left>mdi-earth</v-icon>
@@ -16,9 +23,9 @@
       </template>
     </page-header>
 
-    <template v-if="isFetchingResource">
+    <!-- <template v-if="isFetchingResource">
       <skeleton-show></skeleton-show>
-    </template>
+    </template> -->
 
     <template v-show="isFinishedFetchingResource">
       <v-card outlined>
@@ -29,6 +36,7 @@
 </template>
 
 <script>
+import $auth from '@/core/Auth/auth'
 import SkeletonShow from './cards/SkeletonShow'
 
 export default {
@@ -49,12 +57,31 @@ export default {
     resource: {
       lang: window.localStorage.getItem('report:lang') || 'en',
       loading: false,
+      file: {},
       data: {},
     },
     url: null,
   }),
 
   methods: {
+    getReportData () {
+      let customer = this.$route.params.id
+      let user = this.$route.query.user_id || $auth.getId()
+      axios.get(
+        `/api/v1/reports/overall/customer/${customer}/user/${user}`
+      ).then(response => {
+        this.resource.file = response.data
+      })
+    },
+
+    previewPDFReport (item) {
+      let lang = this.$route.query.lang || this.resource.lang
+      window.open(
+        `/best/reports/pdf/preview?report_id=${item.id}&month=${item.remarks}&lang=${lang}`,
+        '_blank'
+      )
+    },
+
     getReport () {
       this.resource.loading = true
       let lang = this.$route.query.lang || this.resource.lang
@@ -126,6 +153,7 @@ export default {
 
   mounted () {
     this.setIframeHeight()
+    this.getReportData()
     this.getReport()
   },
 }

@@ -30,7 +30,7 @@
         <div class="col-auto">
           <div class="imgDocumentation card circular">
             <div class="card-body p-3">
-              <img height="24" src="{{ asset('reports/assets/icons/documentation.svg') }}">
+              <img height="24" src="{{ asset('reports/assets/icons/png/documentation.png') }}">
             </div>
           </div>
         </div>
@@ -46,7 +46,7 @@
         <div class="col-auto">
           <div class="imgTalent card circular">
             <div class="card-body p-3">
-              <img height="24" src="{{ asset('reports/assets/icons/talent.svg') }}">
+              <img height="24" src="{{ asset('reports/assets/icons/png/talent.png') }}">
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@
         <div class="col-auto">
           <div class="imgTechnology card circular">
             <div class="card-body p-3">
-              <img height="24" src="{{ asset('reports/assets/icons/technology.svg') }}">
+              <img height="24" src="{{ asset('reports/assets/icons/png/technology.png') }}">
             </div>
           </div>
         </div>
@@ -78,7 +78,7 @@
         <div class="col-auto">
           <div class="imgWorkflow card circular">
             <div class="card-body p-3">
-              <img height="24" src="{{ asset('reports/assets/icons/workflow-processes.svg') }}">
+              <img height="24" src="{{ asset('reports/assets/icons/png/workflow-processes.png') }}">
             </div>
           </div>
         </div>

@@ -1,4 +1,6 @@
-class Index {
+import app from '@/config/app.js'
+
+class General {
   constructor () {
     this.loading = false
     this.isPrestine = true
@@ -6,9 +8,9 @@ class Index {
     this.errors = []
 
     this.data = {
-      logo: '',
+      file: app.logo
     }
   }
 }
 
-export default Index
+export default General

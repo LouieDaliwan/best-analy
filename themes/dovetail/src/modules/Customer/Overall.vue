@@ -72,8 +72,9 @@ export default {
     },
 
     previewPDFOverallReport (item) {
+      let lang = this.$route.query.lang || this.resource.lang
       window.open(
-        `/best/reports/pdf/preview/overall?user=${item.user_id}&customer=${item.customer_id}&month=${item.remarks}`,
+        `/best/reports/pdf/preview/overall?user=${item.user_id}&customer=${item.customer_id}&month=${item.remarks}&lang=${lang}`,
         '_blank'
       )
     },

@@ -117,14 +117,14 @@
             <template v-slot:item.action="{ item }">
               <div class="text-no-wrap">
                 <!-- Preview Report -->
-                <v-tooltip bottom>
+                <!-- <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <v-btn target="_blank" @click="previewPDFReport(item)" icon v-on="on">
                       <v-icon small>mdi-file-pdf</v-icon>
                     </v-btn>
                   </template>
                   <span>{{ trans('Preview PDF Report') }}</span>
-                </v-tooltip>
+                </v-tooltip> -->
                 <!-- Preview Report -->
                 <!-- Send Report -->
                 <v-tooltip bottom>

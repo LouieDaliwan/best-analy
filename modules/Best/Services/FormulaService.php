@@ -150,6 +150,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'customer:name' => $customer->name,
                 'customer:refnum' => $customer->refnum,
                 'customer:industry' => $customer->metadata['industry'] ?? null,
+                'customer:counselor' => $customer->metadata['BusinessCounselorName'] ?? null,
                 'customer:staffstrength' => $customer->metadata['staffstrength'] ?? null,
                 'subscore:score' => $totalSubscoreScore = $this->getTotalIndexSubscoreScore($survey),
                 'subscore:total' => $totalSubscoreTotal = $this->getTotalIndexSubscoreTotal($survey),
@@ -391,8 +392,8 @@ class FormulaService extends Service implements FormulaServiceInterface
             $recommendations[$enabler] = [
                 'comments' => (array) $list,
                 'comment' => implode(' || ', (array) $list),
-                'icon' => asset("reports/assets/icons/$icon.svg"),
-                'icon:path' => public_path("reports/assets/icons/$icon.svg"),
+                'icon' => asset("reports/assets/icons/png/$icon.png"),
+                'icon:path' => public_path("reports/assets/icons/png/$icon.png"),
             ];
         }
 

@@ -139,7 +139,37 @@ class ThemeRepository extends Repository implements Contracts\ThemeRepositoryInt
      */
     public function logo()
     {
-        return settings('site_logo', theme('dist/logos/logo.svg'));
+        $logo = 'logo.png';
+
+        if (file_exists(public_path('logo.svg'))) {
+            $logo = 'logo.svg';
+        }
+
+        if (file_exists(public_path('logo.png'))) {
+            $logo = 'logo.png';
+        }
+
+        return url(settings('app:logo', $logo));
+    }
+
+    /**
+     * Retrieve the app's logo.
+     *
+     * @return string
+     */
+    public function logopath()
+    {
+        $logo = 'logo.png';
+
+        if (file_exists(public_path('logo.svg'))) {
+            $logo = 'logo.svg';
+        }
+
+        if (file_exists(public_path('logo.png'))) {
+            $logo = 'logo.png';
+        }
+
+        return public_path(settings('app:logo', $logo));
     }
 
     /**

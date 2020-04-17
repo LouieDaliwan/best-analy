@@ -17,6 +17,6 @@ class SaveSettings extends ApiController
      */
     public function __invoke(Request $request, SettingServiceInterface $service)
     {
-        return response()->json($this->service()->store($request->all()));
+        return response()->json($service->store($request->all()));
     }
 }

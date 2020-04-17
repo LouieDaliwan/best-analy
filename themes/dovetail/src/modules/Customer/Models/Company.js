@@ -560,6 +560,7 @@ class Company {
       description: '',
       metadata: {},
       financials: this.metadata,
+      reports: [],
     }
   }
 }

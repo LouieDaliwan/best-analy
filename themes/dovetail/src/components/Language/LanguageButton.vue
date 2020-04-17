@@ -29,7 +29,7 @@
 export default {
   computed: {
     localeIsEn () {
-      return this.locale == 'en' || this.locale == 'null' || this.locale == null
+      return this.locale == null || this.locale == 'null' || this.locale == 'en'
     },
 
     lang: {
@@ -42,7 +42,7 @@ export default {
     },
 
     locale: function () {
-      return this.lang == $app.fallback_locale ? null : this.lang
+      return this.lang == $app.fallback_locale && this.$i18n.locale ? null : this.lang
     }
   },
 

@@ -75,33 +75,6 @@ class IndicesTest extends TestCase
      * @group  feature:api:index
      * @return void
      */
-    public function a_user_cannot_retrieve_the_paginated_list_of_indices_owned_by_others()
-    {
-        // Arrangements
-        Passport::actingAs($user = $this->asNonSuperAdmin(['indices.index']), ['indices.index']);
-        $this->withPermissionsPolicy();
-
-        $owned = factory(Index::class, 5)->create(['user_id' => $user->getKey()]);
-        $indices = factory(Index::class, 5)->create();
-
-        // Actions
-        $response = $this->get(route('api.indices.index'));
-
-        // Assertions
-        $response
-            ->assertSuccessful()
-            ->assertJson(['data' => $owned->toArray()])
-            ->assertDontSee($indices->random()->code)
-            ->assertJsonMissing($indices->toArray());
-    }
-
-    /**
-     * @test
-     * @group  feature
-     * @group  feature:api
-     * @group  feature:api:index
-     * @return void
-     */
     public function a_user_can_store_an_index_to_database()
     {
         // Arrangements
@@ -360,35 +333,6 @@ class IndicesTest extends TestCase
                     'deleted',
                 ]],
             ]);
-    }
-
-    /**
-     * @test
-     * @group  feature
-     * @group  feature:api
-     * @group  feature:api:index
-     * @return void
-     */
-    public function a_user_cannot_retrieve_the_paginated_list_of_trashed_indices_owned_by_others()
-    {
-        // Arrangements
-        Passport::actingAs($user = $this->asNonSuperAdmin(['indices.trashed']), ['indices.trashed']);
-        $this->withPermissionsPolicy();
-
-        $owned = factory(Index::class, 5)->create(['user_id' => $user->getKey()]);
-        $owned->each->delete();
-        $indices = factory(Index::class, 5)->create();
-        $indices->each->delete();
-
-        // Actions
-        $response = $this->get(route('api.indices.trashed'));
-
-        // Assertions
-        $response
-            ->assertSuccessful()
-            ->assertJson(['data' => $owned->toArray()])
-            ->assertDontSee($indices->random()->code)
-            ->assertJsonMissing($indices->toArray());
     }
 
     /**

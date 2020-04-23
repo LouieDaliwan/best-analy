@@ -17,7 +17,7 @@
           <div class="col-md-10 col-sm-12">
             <div class="text-center">
               <div class="mb-3 text-center">
-                <img height="140" src="{{ $data['pindex:icon'] }}" alt="{{ $data['pindex'] }}"/>
+                <img height="140" src="{{ $data['pindex:icon'] }}"/>
               </div>
               <h1 class="mb-2 dt-{{ $data['pindex:code'] }}">@lang($data['pindex']) @lang('Performance Index') ({{ $data['pindex:code'] }})
               </h1>
@@ -55,18 +55,11 @@
             @endforeach
           </div>
         </div>
+
         <div class="dt-divider" style="height: 50px;"></div>
+
         <div class="row justify-content-center">
           <div class="col-md-10">
-            {{-- <h4 class="mb-0">@lang('Prepared for'):</h4>
-            <h2 class="dt-{{ $data['pindex:code'] }} mb-0">{{ $data['customer:name'] }}</h2>
-            <p class="mb-0">{{ $data['cover:date'] }}</p>
-            <div class="mt-5">
-              <cite>
-                <small class="text-muted">{{ __('Powered by') }} {{ settings('app:author') }}</small>
-              </cite>
-            </div> --}}
-
             <table width="100%">
               <tr>
                 <td valign="top">
@@ -97,5 +90,4 @@
       </div>
     </div>
   </div>
-  {{-- /*<div class="dt-divider" style="height: 100px;"></div>*/ --}}
 </div>

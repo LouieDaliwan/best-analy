@@ -1,6 +1,6 @@
 <template>
   <admin>
-    <metatag :title="__('Settings')"></metatag>
+    <metatag :title="__('Taxonomy')"></metatag>
 
     <template v-slot:appbar>
       <v-container class="py-0 px-0">
@@ -52,7 +52,7 @@
         <button ref="submit-button" type="submit" class="d-none"></button>
         <page-header>
           <template v-slot:title>
-            {{ trans('Settings') }}
+            {{ trans('Taxonomy') }}
           </template>
         </page-header>
 
@@ -61,7 +61,7 @@
         <!-- Alertbox -->
 
         <v-row>
-          <v-col cols="12" md="9">
+          <v-col cols="12">
             <template v-if="isFetchingResource">
               <skeleton-edit></skeleton-edit>
             </template>
@@ -161,18 +161,6 @@
                 </v-col>
               </v-row>
             </div>
-          </v-col>
-
-          <v-col cols="12" md="3">
-            <template v-if="isFetchingResource">
-              <skeleton-icon></skeleton-icon>
-            </template>
-            <v-card v-show="isFinishedFetchingResource" class="mb-3">
-              <v-card-title class="pb-0">{{ __('App Logo') }}</v-card-title>
-              <v-card-text class="text-center">
-                <upload-avatar name="file" avatar="file" v-model="resource.data['file']"></upload-avatar>
-              </v-card-text>
-            </v-card>
           </v-col>
         </v-row>
       </v-form>

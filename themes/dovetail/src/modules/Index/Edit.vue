@@ -88,6 +88,19 @@
                     </validation-provider>
                   </v-col>
                   <v-col cols="12">
+                    <v-text-field
+                      :dense="isDense"
+                      :disabled="isLoading"
+                      :label="trans('Name (arabic)')"
+                      autofocus
+                      class="dt-text-field"
+                      name="metadata[name_arabic]"
+                      outlined
+                      v-model="resource.data.metadata.name_arabic"
+                      >
+                    </v-text-field>
+                  </v-col>
+                  <v-col cols="12">
                     <validation-provider vid="code" rules="required" :name="trans('code')" v-slot="{ errors }">
                       <v-text-field
                         :dense="isDense"
@@ -155,6 +168,17 @@
                       name="description"
                       outlined
                       v-model="resource.data.description"
+                    ></v-textarea>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-textarea
+                      :label="trans('Description (arabic)')"
+                      auto-grow
+                      class="dt-text-field"
+                      hide-details
+                      name="metadata[description_arabic]"
+                      outlined
+                      v-model="resource.data.metadata['description_arabic']"
                     ></v-textarea>
                   </v-col>
                 </v-row>

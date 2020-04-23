@@ -53,16 +53,16 @@
           </template>
 
           <v-list>
-            <v-list-item>
+           <!--  <v-list-item>
               <v-list-item-action>
                 <v-icon small class="text--muted">mdi-account-outline</v-icon>
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title v-text="trans('My Profile')"></v-list-item-title>
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
 
-            <v-list-item>
+            <v-list-item :to="{ name: 'settings' }" exact>
               <v-list-item-action>
                 <v-icon small class="text--muted">mdi-tune</v-icon>
               </v-list-item-action>

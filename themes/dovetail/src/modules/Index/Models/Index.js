@@ -15,6 +15,8 @@ class Index {
       metadata: {
         weightage: '',
         color: '',
+        name_arabic: '',
+        description_arabic: '',
       },
       created: '',
     }

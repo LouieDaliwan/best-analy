@@ -112,6 +112,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['survey:id'] = $survey->getKey();
         $this->data['user:id'] = $user->getKey();
         $this->data['month'] = $attributes['month'] ?? date('m-Y');
+        $this->data['month:formatted'] = date('M Y', strtotime($attributes['month'] ?? date('M Y')));
 
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {
@@ -131,6 +132,9 @@ class FormulaService extends Service implements FormulaServiceInterface
                 $survey->getKey()
             )->whereUserId(
                 $user->getKey()
+            )->where(
+                'month',
+                $attributes['month'] ?? date('m-Y')
             )->get();
 
             $this->data['indices'][$taxonomy->alias] = [
@@ -168,6 +172,8 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias),
                 'has:reports' => $this->reports->count(),
                 'reports' => $this->reports,
+                'sitevisit:date' => $attributes['month'] ?? date('m-Y'),
+                'sitevisit:date:formatted' => date('M Y', strtotime($attributes['month'] ?? date('M Y'))),
             ];
         }//end foreach
 

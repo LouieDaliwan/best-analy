@@ -119,6 +119,25 @@ abstract class KeyStrategicRecommendationComments
     }
 
     /**
+     * List of strategic recommendations.
+     *
+     * @return array
+     */
+    public static function otherRecommendations()
+    {
+        return [
+            "No immediate 'Technology' intervention required in the short-term",
+            "No immediate 'Documentation' intervention required in the short-term",
+            "No immediate 'Talent' intervention required in the short-term",
+            "No immediate 'Workflow Processes' intervention required in the short-term",
+            "Overall Comments",
+            "Client Signature",
+            "Manager Signature",
+            "Business Counselor Signature",
+        ];
+    }
+
+    /**
      * Retrieve the empty comment.
      *
      * @param  string $name

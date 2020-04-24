@@ -30,4 +30,8 @@ export default {
   destroy: function (id = null) {
     return `/api/v1/indices/${id}`
   },
+
+  translation: function () {
+    return '/api/v1/best/settings/translations/keys'
+  }
 }

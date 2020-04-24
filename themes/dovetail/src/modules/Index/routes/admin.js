@@ -46,6 +46,17 @@ export default [
         },
       },
       {
+        path: 'settings',
+        name: 'indices.settings',
+        component: () => import('../Settings.vue'),
+        meta: {
+          title: 'Settings Index',
+          sort: 7,
+          authenticatable: true,
+          icon: 'mdi-book-multiple-variant',
+        },
+      },
+      {
         path: 'edit/:id',
         name: 'indices.edit',
         component: () => import('../Edit.vue'),

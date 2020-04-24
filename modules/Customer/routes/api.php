@@ -12,3 +12,7 @@ Route::prefix('v1')->middleware(['auth:api', 'json.force'])->group(function () {
     Route::post('crm/customers/save', 'Api\Crm\SaveUpdatedCustomerDataToCrm')->name('crm.save');
     Route::get('crm/customers/search/{crmnumber}', 'Api\Crm\FindCustomerFromCrm')->name('crm.search');
 });
+
+Route::prefix('v1')->group(function () {
+    Route::get('crm/customers/{crmnumber}/financial/ratios', 'Api\Crm\GetCustomerFinancialRatios');
+});

@@ -3,6 +3,7 @@
 namespace Customer\Models;
 
 use Best\Models\Report;
+use Best\Pro\Financial\ProfitAndLossStatement;
 use Core\Models\Accessors\CommonAttributes;
 use Core\Models\Relations\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
@@ -83,5 +84,18 @@ class Customer extends Model
         return array_merge($this->toArray(), [
             'metadata' => json_encode($this->metadata),
         ]);
+    }
+
+    /**
+     * Retrieve the metdata formatted for the CRM.
+     *
+     * @return array
+     */
+    public function getMetadataForCrm()
+    {
+        return dd($this->metadata['balance-sheet'], ProfitAndLossStatement::getReport($this));
+        return [
+            'Revenue' => ''
+        ];
     }
 }

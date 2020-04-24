@@ -166,6 +166,7 @@ export default {
         user_id: $auth.getId(),
         metadata: {
           FundingRequestNo: data.FundingRequestNo,
+          SiteVisitDate: data.SiteVisitDate || null,
           BusinessCounselorName: data.BusinessCounselorName,
         },
       }

@@ -34,3 +34,8 @@ Route::prefix('v1')->middleware('auth:api')->group(function () {
     Route::get('reports/{report}', 'Api\Report\GetReport')->name('reports.single');
     Route::delete('reports/{report}', 'Api\Report\DeleteReport')->name('reports.delete');
 });
+
+Route::prefix('v1')->middleware('auth:api')->group(function () {
+    Route::get('best/settings/translations/keys', 'Api\Settings\GetTranslationKeys');
+    Route::post('best/settings/translations/keys', 'Api\Settings\SaveTranslationKeys');
+});

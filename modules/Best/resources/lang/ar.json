@@ -632,5 +632,13 @@
   "While some use of technology is in place, more needs to be done to ensure that the processes maximises the available systems and tools available to achieve greater work efficiency.": "في حين أن هناك بعض الاستخدام للتكنولوجيا، فإنه يلزم بذل المزيد لضمان أن العمليات تزيد إلى أقصى حد من النظم والأدوات المتاحة لتحقيق قدر أكبر من الكفاءة في العمل.",
   "Overall, substantial technology adoption is present that should drive the organisational efficiency and facilitate streamlining of work processes.": "بشكل عام، يوجد اعتماد كبير للتكنولوجيا ومن شأنه أن يدفع الكفاءة التنظيمية وأن ييسر تبسيط عمليات العمل.",
   "Overall, :name has shown efforts to integrate and adopt relevant technology to enhance their work processes.": "بشكل عام، :name قد أظهرت جهودا لدمج واعتماد التكنولوجيا المناسبة لتعزيز عمليات عملها.",
-  "x :appcode Score": ":appcode Score"
+  "x :appcode Score": ":appcode Score",
+  "No immediate 'Technology' intervention required in the short-term": "لا يحتاج إلى إعتراض 'تقنية/تكنولوجيا' في وقت قصير فورًا",
+  "No immediate 'Documentation' intervention required in the short-term": "لا يحتاج إلى إعتراض 'توثيق' في وقت قصير فورًا",
+  "No immediate 'Talent' intervention required in the short-term": "لا يحتاج إلى إعتراض 'موهبة\\مهارة' في وقت قصير فورًا",
+  "No immediate 'Workflow Processes' intervention required in the short-term": "لا يحتاج إلى إعتراض 'سيرالعمل' في وقت قصير فورًا",
+  "Overall Comments": "تعليقات الجذابة",
+  "Client Signature": "توقيع العميل",
+  "Manager Signature": "توقيع المدير",
+  "Business Counselor Signature": "توقيع مستشارشركة الأعمال"
 }

@@ -45,6 +45,12 @@
               <h4 class="mb-0 mt-3">@lang('Business Councelor'):</h4>
               <p class="mb-0">{{ $data['customer:counselor'] }}</p>
             @endif
+
+            <div class="mt-5">
+              <h4 class="mb-0">@lang('Site Visit Date'):</h4>
+              <p>{{ $data['month:formatted'] }}</p>
+            </div>
+
             <div class="mt-5">
               <cite>
                 <small>{{ __('Powered by') }} {{ settings('app:author') }}</small>

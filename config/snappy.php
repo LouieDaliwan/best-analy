@@ -35,7 +35,7 @@ return [
 
     'pdf' => [
         'enabled' => true,
-        'binary'  => env('WKHTML_PDF_BINARY', '"D:\home\site\wwwroot\vendor\h4cc\wkhtmltopdf-amd64\bin\wkhtmltopdf-amd64"'),
+        'binary'  => env('WKHTML_PDF_BINARY', '"D:\home\site\wwwroot\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\64bit\wkhtmltopdf.exe"'),
         'timeout' => false,
         'options' => [],
         'env'     => [],

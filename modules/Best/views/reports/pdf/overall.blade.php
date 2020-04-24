@@ -57,7 +57,7 @@
     @include('best::reports.pdf.summary.data-privacy')
     @include('best::reports.pdf.partials.footer')
     <div class="text-right">
-      <div style="font-size: 12px;">{{ __('Page 1 of 6') }}</div>
+      <div style="font-size: 12px;">{{ __('Page 1 of 7') }}</div>
     </div>
   </div>
 
@@ -71,7 +71,7 @@
     @include('best::reports.pdf.partials.disclaimer')
     @include('best::reports.pdf.partials.footer')
     <div class="text-right">
-      <div style="font-size: 12px;">{{ __('Page 2 of 6') }}</div>
+      <div style="font-size: 12px;">{{ __('Page 2 of 7') }}</div>
     </div>
   </div>
   {{-- overall --}}
@@ -85,9 +85,25 @@
       @include('best::reports.pdf.partials.disclaimer')
       @include('best::reports.pdf.partials.footer')
       <div class="text-right">
-        <div style="font-size: 12px;">{{ $index['page'] }} of 6</div>
+        <div style="font-size: 12px;">{{ $index['page'] }} of 7</div>
       </div>
     </div>
   @endforeach
+
+  {{-- comments --}}
+  <div class="sheet" style="line-height: 1.3;">
+    @include('best::reports.pdf.partials.header')
+    <div class="my-2 border-bottom"></div>
+    @include('best::reports.pdf.partials.organisation-profile')
+    <div style="height: 1400px;">
+      @include('best::reports.pdf.overall.comments')
+    </div>
+    @include('best::reports.pdf.partials.disclaimer')
+    @include('best::reports.pdf.partials.footer')
+    <div class="text-right">
+      <div style="font-size: 12px;">{{ __('Page 7 of 7') }}</div>
+    </div>
+  </div>
+  {{-- comments --}}
 </body>
 </html>

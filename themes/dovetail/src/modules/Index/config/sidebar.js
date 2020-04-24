@@ -8,7 +8,7 @@ export default [
       authenticatable: true,
       sort: 5,
       permission: 'indices.index',
-      children: ['indices.index', 'indices.create', 'indices.edit', 'indices.trashed'],
+      children: ['indices.index', 'indices.create', 'indices.edit', 'indices.trashed', 'indices.settings'],
     },
     children: [
       {
@@ -40,6 +40,16 @@ export default [
           authenticatable: true,
           sort: 5,
           permission: 'indices.trashed',
+        },
+      },
+      {
+        code: 'indices.settings',
+        name: 'indices.settings',
+        meta: {
+          title: 'Settings',
+          authenticatable: true,
+          sort: 7,
+          permission: 'indices.index',
         },
       },
     ],

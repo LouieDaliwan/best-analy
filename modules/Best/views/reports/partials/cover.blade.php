@@ -11,7 +11,6 @@
             <h1 class="display-4">@lang("Business Excellence Survey Toolkit (BEST)")</h1>
           </div>
         {{-- header --}}
-
         <div class="dt-divider" style="height: 50px;"></div>
         <div class="row align-items-center justify-content-center">
           <div class="col-md-10 col-sm-12">
@@ -42,14 +41,6 @@
         <div class="dt-divider" style="height: 50px;"></div>
         <div class="row justify-content-center">
           <div class="col-md-10">
-            {{-- <h4 class="mb-0">@lang('Prepared for'):</h4>
-            <h2 class="dt-{{ $data['pindex:code'] }} mb-0">{{ $data['customer:name'] }}</h2>
-            <p class="mb-0">{{ $data['cover:date'] }}</p>
-            <div class="mt-5">
-              <cite>
-                <small class="text-muted">{{ __('Powered by') }} {{ settings('app:author') }}</small>
-              </cite>
-            </div> --}}
             <div class="row justify-content-between">
               <div class="col-md-6 col-sm-12">
                 <h4 class="mb-0">@lang('Prepared for'):</h4>
@@ -59,6 +50,12 @@
                   <h4 class="mb-0 mt-3">@lang('Business Councelor'):</h4>
                   <p class="mb-0">{{ $data['customer:counselor'] }}</p>
                 @endif
+
+                <div class="mt-5">
+                  <h4 class="mb-0">@lang('Site Visit Date'):</h4>
+                  <p>{{ $data['sitevisit:date:formatted'] }}</p>
+                </div>
+
                 <div class="mt-5">
                   <cite>
                     <small>{{ __('Powered by') }} {{ settings('app:author') }}</small>

@@ -17,7 +17,7 @@
           <div class="col-md-10 col-sm-12">
             <div class="text-center">
               <div class="mb-3 text-center">
-                <img height="140" src="{{ $data['pindex:icon'] }}"/>
+                <img height="140" src="{{ $data['pindex:icon'] ?? null }}"/>
               </div>
               <h1 class="mb-2 dt-{{ $data['pindex:code'] }}">@lang($data['pindex']) @lang('Performance Index') ({{ $data['pindex:code'] }})
               </h1>
@@ -70,6 +70,14 @@
                     <h4 class="mb-0 mt-3">@lang('Business Councelor'):</h4>
                     <p class="mb-0">{{ $data['customer:counselor'] }}</p>
                   @endif
+
+                  @if ($data['sitevisit:date:formatted'] ?? null)
+                    <div class="mt-5">
+                      <h4 class="mb-0">@lang('Site Visit Date'):</h4>
+                      <p>{{ $data['sitevisit:date:formatted'] }}</p>
+                    </div>
+                  @endif
+
                   <div class="mt-5">
                     <cite>
                       <small>{{ __('Powered by') }} {{ settings('app:author') }}</small>

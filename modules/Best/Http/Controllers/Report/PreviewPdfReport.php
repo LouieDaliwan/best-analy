@@ -4,6 +4,7 @@ namespace Best\Http\Controllers\Report;
 
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Best\Models\Report;
+use Best\Services\FormulaServiceInterface;
 use Core\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,10 +14,11 @@ class PreviewPdfReport extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request               $request
+     * @param  \Best\Services\FormulaServiceInterface $service
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, FormulaServiceInterface $service)
     {
         app()->setLocale($request->get('lang') ?: 'en');
 
@@ -26,7 +28,9 @@ class PreviewPdfReport extends Controller
 
         $type = $request->get('type') ?: 'index';
         $report = Report::find($request->get('report_id'));
-        $data = $report->value;
+        $taxonomyId = $request->get('taxonomy_id') ?: $report->value['current:index']['taxonomy']['id'] ?? null;
+        $attributes = ['customer_id' => $report->customer->getKey(), 'taxonomy_id' => $taxonomyId];
+        $data = $service->generate($report->survey, $attributes);
 
         Auth::login($report->user);
 

@@ -1,6 +1,6 @@
 <template>
   <admin>
-    <metatag :title="__('Taxonomy')"></metatag>
+    <metatag :title="__('Summary of Recommendation')"></metatag>
 
     <template v-slot:appbar>
       <v-container class="py-0 px-0">
@@ -52,7 +52,7 @@
         <button ref="submit-button" type="submit" class="d-none"></button>
         <page-header>
           <template v-slot:title>
-            {{ trans('Taxonomy') }}
+            {{ trans('Summary of Recommendation') }}
           </template>
         </page-header>
 

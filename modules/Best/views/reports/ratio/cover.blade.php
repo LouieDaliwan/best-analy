@@ -27,7 +27,7 @@
           <div style="height: 150px;"></div>
           <div class="text-center">
             <h1 class="display-4">@lang("Business Excellence Survey Toolkit (BEST)")</h1>
-            <h1 class="display-4">@lang('Financial Ratios Report')</h1>
+            <h1 class="display-4">@lang('Financial Analysis Report')</h1>
           </div>
           <div style="height: 150px;"></div>
           {{-- header --}}
@@ -61,7 +61,7 @@
             <div>
               <h4 class="mb-0">@lang('Prepared by'):</h4>
               <div style="background: #12263f; height: 1px; margin-top: 40px;"></div>
-              <div style="background: #12263f; height: 1px; margin-top: 50px;"></div>
+              <div class="text-center mt-2">{{ $data['report:user'] }}</div>
             </div>
           </div>
         </div>

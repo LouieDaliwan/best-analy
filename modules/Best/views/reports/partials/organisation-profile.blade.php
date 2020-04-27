@@ -6,6 +6,10 @@
         <h4 class="mb-1">@lang('Organisation Name'):</h4>
         <p class="mb-1 mx-3">{{ __($data['organisation:profile']['name']) }}</p>
       </div>
+      <div class="d-flex align-items-center">
+        <h4 class="mb-1">@lang('Site Visit Date'):</h4>
+        <p class="mb-1 mx-3">{{ __($data['month:formatted']) }}</p>
+      </div>
     </div>
     <div class="col-md-6 col-sm-12">
       <div class="d-flex align-items-center">

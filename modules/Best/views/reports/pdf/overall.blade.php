@@ -19,7 +19,7 @@
 
   {{-- RTL --}}
   @if (app()->getLocale() == 'ar')
-    <style>{{ theme()->inlined(public_path('reports/css/rtl.css')) }}</style>
+    <style>{{ theme()->inlined(public_path('reports/css/rtlpdf.css')) }}</style>
   @endif
 
   <style>
@@ -95,7 +95,7 @@
     @include('best::reports.pdf.partials.header')
     <div class="my-2 border-bottom"></div>
     @include('best::reports.pdf.partials.organisation-profile')
-    <div style="height: 1400px;">
+    <div style="height: 1350px;">
       @include('best::reports.pdf.overall.comments')
     </div>
     @include('best::reports.pdf.partials.disclaimer')

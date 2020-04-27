@@ -68,7 +68,7 @@
             <div>
               <h4 class="mb-0">@lang('Prepared by'):</h4>
               <div style="background: #12263f; height: 1px; margin-top: 40px;"></div>
-              <div style="background: #12263f; height: 1px; margin-top: 50px;"></div>
+              <div class="text-center mt-2">{{ $data['report:user'] }}</div>
             </div>
           </div>
         </div>

@@ -90,25 +90,29 @@
             <template v-slot:item.action="{ item }">
               <div class="text-no-wrap">
                 <!-- Edit -->
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn :to="{name: 'surveys.edit', params: {id: item.id}}" icon v-on="on">
-                      <v-icon small>mdi-pencil-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('Edit this survey') }}</span>
-                </v-tooltip>
+                <can code="surveys.edit">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn :to="{name: 'surveys.edit', params: {id: item.id}}" icon v-on="on">
+                        <v-icon small>mdi-pencil-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('Edit this survey') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Edit -->
 
                 <!-- Move to Trash -->
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn @click="askUserToDestroySurvey(item)" icon v-on="on">
-                      <v-icon small>mdi-delete-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('Move to trash') }}</span>
-                </v-tooltip>
+                <can code="surveys.destroy">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn @click="askUserToDestroySurvey(item)" icon v-on="on">
+                        <v-icon small>mdi-delete-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('Move to trash') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Move to Trash -->
               </div>
             </template>
@@ -194,7 +198,7 @@ export default {
         { text: trans('Title'), align: 'left', value: 'title', class: 'text-no-wrap' },
         { text: trans('Body'), align: 'left', value: 'body', class: 'text-no-wrap' },
         { text: trans('Last Modified'), value: 'updated_at', class: 'text-no-wrap' },
-        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
+        { text: trans(''), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
       ],
       data: []
     },

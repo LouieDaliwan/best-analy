@@ -44,7 +44,7 @@ class SettingService extends Service implements SettingServiceInterface
     public function getAllTranslationKeys()
     {
         $data = [
-            'fmpi' => collect(
+            'Edit Financial Management' => collect(
                 KeyStrategicRecommendationComments::fmpiRecommendations()
             )->map(function ($d) {
                 return [
@@ -52,7 +52,7 @@ class SettingService extends Service implements SettingServiceInterface
                     'ar' => __(collect($d)->values()->shift(), [], 'ar')
                 ];
             })->toArray(),
-            'hrpi' => collect(
+            'Edit Human Resource' => collect(
                 KeyStrategicRecommendationComments::hrpiRecommendations()
             )->map(function ($d) {
                 return [
@@ -60,7 +60,7 @@ class SettingService extends Service implements SettingServiceInterface
                     'ar' => __(collect($d)->values()->shift(), [], 'ar')
                 ];
             })->toArray(),
-            'bspi' => collect(
+            'Edit Business Sustainability' => collect(
                 KeyStrategicRecommendationComments::bspiRecommendations()
             )->map(function ($d) {
                 return [
@@ -68,7 +68,7 @@ class SettingService extends Service implements SettingServiceInterface
                     'ar' => __(collect($d)->values()->shift(), [], 'ar')
                 ];
             })->toArray(),
-            'pmpi' => collect(
+            'Edit Productivity Management' => collect(
                 KeyStrategicRecommendationComments::pmpiRecommendations()
             )->map(function ($d) {
                 return [
@@ -76,7 +76,7 @@ class SettingService extends Service implements SettingServiceInterface
                     'ar' => __(collect($d)->values()->shift(), [], 'ar')
                 ];
             })->toArray(),
-            'others' => collect(
+            'Others' => collect(
                 KeyStrategicRecommendationComments::otherRecommendations()
             )->map(function ($d) {
                 return [

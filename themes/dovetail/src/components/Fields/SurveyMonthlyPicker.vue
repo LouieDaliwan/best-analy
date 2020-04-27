@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="body-2 mb-2">{{ __('Generate Month') }}:</div>
+    <div class="body-2 mb-2">{{ __('Site visit date') }}:</div>
     <v-menu
       :close-on-content-click="false"
       ref="survey"

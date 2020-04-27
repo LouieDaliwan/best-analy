@@ -1,7 +1,7 @@
 <template>
   <v-select
     :items="resource.data"
-    :label="trans('Select Month...')"
+    :label="trans('Site Visit Date')"
     @change="changeMonth"
     append-icon="mdi-chevron-down"
     prepend-inner-icon="mdi-calendar"

@@ -118,7 +118,7 @@ export default [
         name: 'teams.ratios',
         component: () => import('../Ratio.vue'),
         meta: {
-          title: 'Financial Ratios',
+          title: 'Financial Analysis',
           sort: 9,
           authenticatable: true,
           permission: 'teams.members',

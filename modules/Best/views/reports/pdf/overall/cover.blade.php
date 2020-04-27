@@ -24,12 +24,12 @@
 
             <table width="100%">
               <tr>
-                <td><img style="filter: hue-rotate(158deg) grayscale(0.4);" src="{{ public_path('indices/all/hue/fm2.png') }}"></td>
-                <td><img src="{{ public_path('indices/all/hue/bs2.png') }}"></td>
+                <td align="center"><img style="filter: hue-rotate(158deg) grayscale(0.4);" src="{{ public_path('indices/all/hue/fm2.png') }}"></td>
+                <td align="center"><img src="{{ public_path('indices/all/hue/bs2.png') }}"></td>
               </tr>
               <tr>
-                <td><img style="filter: hue-rotate(50deg)" src="{{ public_path('indices/all/hue/pm2.png') }}"></td>
-                <td><img style="filter: hue-rotate(201deg) grayscale(0.4);" src="{{ public_path('indices/all/hue/hr2.png') }}"></td>
+                <td align="center"><img style="filter: hue-rotate(50deg)" src="{{ public_path('indices/all/hue/pm2.png') }}"></td>
+                <td align="center"><img style="filter: hue-rotate(201deg) grayscale(0.4);" src="{{ public_path('indices/all/hue/hr2.png') }}"></td>
               </tr>
             </table>
           </div>
@@ -65,7 +65,7 @@
           <div>
             <h4 class="mb-0">@lang('Prepared by'):</h4>
             <div style="background: #12263f; height: 1px; margin-top: 40px;"></div>
-            <div style="background: #12263f; height: 1px; margin-top: 50px;"></div>
+            <div class="text-center mt-2">{{ $data['report:user'] ?? null }}</div>
           </div>
         </td>
       </tr>

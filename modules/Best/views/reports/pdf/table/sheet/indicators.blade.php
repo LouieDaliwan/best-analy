@@ -1,4 +1,4 @@
-<div class="dt-divider" style="height: 50px;"></div>
+{{-- <div class="dt-divider" style="height: 50px;"></div> --}}
 <h1 class="dt-primary">@lang('Productivity Indicators')</h1>
 <style>
   td[colspan=3], td.colspan-text, .colspan-text {

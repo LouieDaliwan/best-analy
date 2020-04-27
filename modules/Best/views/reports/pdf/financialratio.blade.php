@@ -69,7 +69,7 @@
   </div>
 
   {{-- Ratios --}}
-  <div class="sheet">
+  <div class="sheet" style="zoom: 0.7; line-height: 1;">
     @include('best::reports.pdf.partials.header')
     <div class="my-2 border-bottom"></div>
     @include('best::reports.pdf.partials.organisation-profile')

@@ -172,6 +172,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias),
                 'has:reports' => $this->reports->count(),
                 'reports' => $this->reports,
+                'report:user' => $this->reports->first()->author,
                 'sitevisit:date' => $attributes['month'] ?? date('m-Y'),
                 'sitevisit:date:formatted' => date('M Y', strtotime($attributes['month'] ?? date('M Y'))),
             ];

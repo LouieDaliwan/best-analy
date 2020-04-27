@@ -4,6 +4,7 @@ namespace Best\Http\Controllers\Report;
 
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Best\Models\Report;
+use Best\Services\FormulaServiceInterface;
 use Best\Services\ReportServiceInterface;
 use Core\Http\Controllers\Controller;
 use Customer\Models\Customer;
@@ -29,9 +30,11 @@ class PreviewOverallPdfReport extends Controller
         $customer = Customer::find($request->get('customer'));
         $remarks = $request->get('remarks');
         $report = $service->getOverallReportFromUser($user, $customer);
-        Auth::login($report->user);
 
-        $data = $service->generate($report->survey, $attributes);
+        Auth::login($report['report']->user);
+
+        $attributes = ['customer_id' => $report['report']->customer->getKey(), 'taxonomy_id' => null];
+        $data = app(FormulaServiceInterface::class)->generate($report['report']->survey, $attributes);
         $name = sprintf("BEST Overall Report - %s (%s)", $report['customer']->name, $report['report']->remarks);
 
         if ($request->get('view') == 'blade') {

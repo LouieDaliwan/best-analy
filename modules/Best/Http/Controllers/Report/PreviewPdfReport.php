@@ -28,11 +28,11 @@ class PreviewPdfReport extends Controller
 
         $type = $request->get('type') ?: 'index';
         $report = Report::find($request->get('report_id'));
+        Auth::login($report->user);
+
         $taxonomyId = $request->get('taxonomy_id') ?: $report->value['current:index']['taxonomy']['id'] ?? null;
         $attributes = ['customer_id' => $report->customer->getKey(), 'taxonomy_id' => $taxonomyId];
         $data = $service->generate($report->survey, $attributes);
-
-        Auth::login($report->user);
 
         $pdf = SnappyPdf::loadHTML(view("best::reports.pdf.$type")->withData($data));
 

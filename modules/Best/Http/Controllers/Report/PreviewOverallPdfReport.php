@@ -29,10 +29,10 @@ class PreviewOverallPdfReport extends Controller
         $customer = Customer::find($request->get('customer'));
         $remarks = $request->get('remarks');
         $report = $service->getOverallReportFromUser($user, $customer);
-        $data = $report['report']->value;
-        $name = sprintf("BEST Overall Report - %s (%s)", $report['customer']->name, $report['report']->remarks);
+        Auth::login($report->user);
 
-        Auth::login($report['report']->user);
+        $data = $service->generate($report->survey, $attributes);
+        $name = sprintf("BEST Overall Report - %s (%s)", $report['customer']->name, $report['report']->remarks);
 
         if ($request->get('view') == 'blade') {
             return view("best::reports.pdf.$type")->withData($data);

@@ -172,7 +172,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias),
                 'has:reports' => $this->reports->count(),
                 'reports' => $this->reports,
-                'report:user' => $this->reports->first()->author,
+                'report:user' => $user->displayname,
                 'sitevisit:date' => $attributes['month'] ?? date('m-Y'),
                 'sitevisit:date:formatted' => date('M Y', strtotime($attributes['month'] ?? date('M Y'))),
             ];
@@ -197,6 +197,9 @@ class FormulaService extends Service implements FormulaServiceInterface
         // Retrieve the Financial Ratios and Productivity Indicators.
         $this->data['ratios:financial'] = $this->getFinancialRatios($customer);
         $this->data['indicators:productivity'] = $this->getProductivityIndicators($customer);
+
+        // User object.
+        $this->data['report:user'] = $user->displayname;
 
         $index = Index::find($attributes['taxonomy_id'] ?? false);
         if ($index) {

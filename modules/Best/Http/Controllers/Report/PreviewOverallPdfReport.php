@@ -33,7 +33,11 @@ class PreviewOverallPdfReport extends Controller
 
         Auth::login($report['report']->user);
 
-        $attributes = ['customer_id' => $report['report']->customer->getKey(), 'taxonomy_id' => null];
+        $attributes = [
+            'customer_id' => $report['report']->customer->getKey(),
+            'taxonomy_id' => null,
+            'month' => $report['report']->remarks,
+        ];
         $data = app(FormulaServiceInterface::class)->generate($report['report']->survey, $attributes);
         $name = sprintf("BEST Overall Report - %s (%s)", $report['customer']->name, $report['report']->remarks);
 

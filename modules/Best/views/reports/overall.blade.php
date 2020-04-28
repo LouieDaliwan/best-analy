@@ -49,7 +49,7 @@
           @include('best::reports.summary.data-privacy')
           @include('best::reports.partials.footer')
           <div class="text-right">
-            <div style="font-size: 12px;">{{ __('Page 1 of 6') }}</div>
+            <div style="font-size: 12px;">{{ __('Page 1 of 7') }}</div>
           </div>
         </div>
       </div>
@@ -69,7 +69,7 @@
           @include('best::reports.partials.disclaimer')
           @include('best::reports.partials.footer')
           <div class="text-right">
-            <div style="font-size: 12px;">{{ __('Page 2 of 6') }}</div>
+            <div style="font-size: 12px;">{{ __('Page 2 of 7') }}</div>
           </div>
         </div>
       </div>
@@ -89,12 +89,29 @@
             @include('best::reports.partials.disclaimer')
             @include('best::reports.partials.footer')
             <div class="text-right">
-              <div style="font-size: 12px;">{{ $index['page'] }} of 6</div>
+              <div style="font-size: 12px;">{{ $index['page'] }} of 7</div>
             </div>
           </div>
         </div>
       </div>
     @endforeach
+
+    {{-- comments --}}
+    <div class="container">
+      <div class="main-body">
+        <div class="main-content pb-3">
+          @include('best::reports.partials.header')
+          @include('best::reports.partials.organisation-profile')
+          @include('best::reports.overall.comments')
+          @include('best::reports.partials.disclaimer')
+          @include('best::reports.partials.footer')
+          <div class="text-right">
+            <div style="font-size: 12px;">{{ __('Page 7 of 7') }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{-- comments --}}
 
     {{-- Analysis --}}
     {{-- <div class="container">
@@ -113,7 +130,7 @@
           @include('best::reports.partials.disclaimer')
           @include('best::reports.partials.footer')
           <div class="text-right">
-            <div style="font-size: 12px;">{{ __('Page 7 of 6') }}</div>
+            <div style="font-size: 12px;">{{ __('Page 7 of 7') }}</div>
           </div>
         </div>
       </div>
@@ -133,7 +150,7 @@
           @include('best::reports.partials.disclaimer')
           @include('best::reports.partials.footer')
           <div class="text-right">
-            <div style="font-size: 12px;">{{ __('Page 8 of 6') }}</div>
+            <div style="font-size: 12px;">{{ __('Page 8 of 7') }}</div>
           </div>
         </div>
       </div>

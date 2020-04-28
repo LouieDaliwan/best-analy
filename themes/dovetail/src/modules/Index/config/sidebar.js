@@ -49,7 +49,7 @@ export default [
           title: 'Settings',
           authenticatable: true,
           sort: 7,
-          permission: 'indices.index',
+          permission: 'indices.settings',
         },
       },
     ],

@@ -36,7 +36,7 @@
           class="mr-3"
           >
           <v-icon small left>mdi-table-eye</v-icon>
-          {{ __('Financial Ratio Report') }}
+          {{ __('Financial Analysis Report') }}
         </v-btn>
 
         <v-btn

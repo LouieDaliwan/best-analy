@@ -109,4 +109,11 @@ return [
         'description' => 'Ability to manage only owned index.',
         'group' => 'index',
     ],
+
+    'settings-indices' => [
+        'name' => 'settings-indices',
+        'code' => 'indices.settings',
+        'description' => 'Ability to view indices settings.',
+        'group' => 'index',
+    ],
 ];

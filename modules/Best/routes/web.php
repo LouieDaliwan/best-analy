@@ -80,7 +80,10 @@ Route::get('best/preview/reports/ratios', function (Request $request, FormulaSer
     $user = User::find($request->get('user_id'));
     Auth::login($user);
 
-    $attributes = ['customer_id' => $request->get('customer_id')];
+    $attributes = [
+        'customer_id' => $request->get('customer_id'),
+        'month' => $file,
+    ];
     $survey = \Survey\Models\Survey::find($request->get('survey_id') ?: 1);
     $data = $service->generate($survey, $attributes);
 
@@ -97,7 +100,11 @@ Route::get(
 
         Auth::login($report->user);
 
-        $attributes = ['customer_id' => $report->customer->getKey(), 'taxonomy_id' => $taxonomy_id];
+        $attributes = [
+            'customer_id' => $report->customer->getKey(),
+            'taxonomy_id' => $taxonomy_id,
+            'month' => $report->remarks,
+        ];
         $data = $service->generate($report->survey, $attributes);
 
         return view("best::reports.$file")->withData($data);

@@ -17,7 +17,7 @@
           </tr>
           <tr>
             <td width="50%">
-              <div class="text-center mt-3">Client Signature</div>
+              <div class="text-center mt-3">{{ __('Client Signature') }}</div>
             </td>
           </tr>
         </table>
@@ -29,7 +29,7 @@
           </tr>
           <tr>
             <td width="50%">
-              <div class="text-center mt-3">Manager Signature</div>
+              <div class="text-center mt-3">{{ __('Manager Signature') }}</div>
             </td>
           </tr>
         </table>
@@ -41,7 +41,7 @@
           </tr>
           <tr>
             <td>
-              <div class="text-center mt-3">Business Counselor Signature</div>
+              <div class="text-center mt-3">{{ __('Business Counselor Signature') }}</div>
             </td>
           </tr>
         </table>

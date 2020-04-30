@@ -40,7 +40,7 @@
 
     <v-row>
       <v-col cols="12" md="12">
-        <v-card>
+        <v-card class="mb-5">
           <v-card-text>
             <template v-if="resource.data.description">
               <h4 class="mb-3" v-text="trans('Team Detail')"></h4>
@@ -112,6 +112,89 @@
             </v-col>
           </v-row>
         </v-card>
+
+        <!-- Data Table -->
+        <h3 class="mb-3">{{ __('Team Reports') }}</h3>
+        <v-card>
+          <v-slide-y-reverse-transition mode="out-in">
+            <v-data-table
+              show-expand
+              :headers="resources.headers"
+              :items="resource.data.members"
+              :loading="resources.loading"
+              :mobile-breakpoint="NaN"
+              :options.sync="resources.options"
+              :server-items-length="resources.meta.total"
+              :show-select="tabletoolbar.toggleBulkEdit"
+              @update:options="optionsChanged"
+              color="primary"
+              item-key="id"
+              v-model="resources.selected"
+              single-expand
+              >
+              <template v-slot:progress><span></span></template>
+
+              <template v-slot:expanded-item="{ headers, item }">
+                <template v-if="item.customers.length">
+                  <td :colspan="headers.length">
+                    <template v-for="(customer, k) in item.customers">
+                      <p :key="k" class="my-3">
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on }">
+                            <span class="mt-1" v-on="on"><router-link tag="a" exact :to="{name: 'teams.reports', params: {customer: customer.id, user: item.id}, query: { from: $route.fullPath }}" v-text="customer.name" class="text-no-wrap text--decoration-none secondary--text"></router-link></span>
+                          </template>
+                          <span>{{ trans('View Reports') }}</span>
+                        </v-tooltip>
+                      </p>
+                    </template>
+                  </td>
+                </template>
+                <template v-else>
+                  <td :colspan="headers.length">
+                    <p class="muted--text my-3"><em v-text="__('No companies found.')"></em></p>
+                  </td>
+                </template>
+              </template>
+
+              <template v-slot:loading>
+                <v-slide-y-transition mode="out-in">
+                  <div>
+                    <div v-for="(j,i) in resources.options.itemsPerPage" :key="i">
+                      <skeleton-table></skeleton-table>
+                    </div>
+                  </div>
+                </v-slide-y-transition>
+              </template>
+
+              <!-- Name -->
+              <template v-slot:item.displayname="{ item }">
+                <can code="users.show">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <span class="mt-1" v-on="on"><router-link tag="a" exact :to="{ name: 'users.show', params: { id: item.id }, query: { from: $route.fullPath } }" v-text="item.displayname" class="text-no-wrap text--decoration-none"></router-link></span>
+                    </template>
+                    <span>{{ trans('View member details') }}</span>
+                  </v-tooltip>
+                  <template v-slot:unpermitted>
+                    <span v-text="item.displayname" class="text-no-wrap text--decoration-none mt-1"></span>
+                  </template>
+                </can>
+              </template>
+              <!-- Name -->
+
+              <!-- Customer -->
+              <!-- <template v-slot:item.customers="{ item }">
+                <template v-for="(customer, k) in item.customers">
+                  <p :key="k" class="mb-1"><router-link tag="a" exact :to="{name: 'companies.show', params: {id: customer.id}, query: { from: $route.fullPath }}">{{ customer.name }}</router-link></p>
+                </template>
+              </template> -->
+              <!-- Customer -->
+            </v-data-table>
+          </v-slide-y-reverse-transition>
+        </v-card>
+        <!-- Data Table -->
+
+        <div style="height: 150px;"></div>
       </v-col>
     </v-row>
   </admin>
@@ -119,6 +202,8 @@
 
 <script>
 import $api from './routes/api'
+import $auth from '@/core/Auth/auth'
+import man from '@/components/Icons/ManThrowingAwayPaperIcon.vue'
 import Team from './Models/Team'
 import { mapActions } from 'vuex'
 
@@ -127,11 +212,56 @@ export default {
     filter () {
       return undefined
     },
+
+    options: function () {
+      return {
+        per_page: this.resources.options.itemsPerPage,
+        page: this.resources.options.page,
+        sort: this.resources.options.sortBy[0] || undefined,
+        order: this.resources.options.sortDesc[0] || false ? 'desc' : 'asc',
+      }
+    },
+
+    selected: function () {
+      return this.resources.selected.map((item) => (item.id) )
+    },
   },
 
   data: () => ({
     api: $api,
     resource: new Team,
+    auth: $auth.getUser(),
+    resources: {
+      loading: true,
+      search: null,
+      options: {
+        page: 1,
+        pageCount: 0,
+        itemsPerPage: 10,
+        sortDesc: [],
+        sortBy: [],
+      },
+      meta: {},
+      modes: {
+        bulkedit: false,
+      },
+      selected: [],
+      headers: [
+        { text: trans('Member Name'), align: 'left', value: 'displayname', class: 'text-no-wrap' },
+        { text: trans('Companies'), align: 'center', value: 'customers:count', class: 'text-no-wrap' },
+        { text: trans('No. of Reports'), align: 'center', value: 'reports:count', class: 'text-no-wrap' },
+      ],
+      data: []
+    },
+    tabletoolbar: {
+      bulkCount: 0,
+      isSearching: false,
+      search: null,
+      listGridView: false,
+      toggleBulkEdit: false,
+      toggleTrash: false,
+      verticaldiv: false,
+    },
     search: null,
   }),
 
@@ -150,7 +280,6 @@ export default {
       ).then(response => {
         this.resource.data = response.data.data
         this.resource.data.users = this.resource.data.members
-        console.log(this.resource.data.users)
       }).finally(() => { this.resource.loading = false })
     },
 
@@ -200,11 +329,131 @@ export default {
 
     previewMember (val) {
       this.resource.preview = val[0]
+    },
+
+    changeOptionsFromRouterQueries () {
+      this.options.per_page = this.$route.query.per_page
+      this.options.page = parseInt(this.$route.query.page)
+      this.options.search = this.$route.query.search
+      this.resources.search = this.options.search
+      this.tabletoolbar.search = this.options.search
+    },
+
+    optionsChanged (options) {
+      this.getPaginatedData(this.options)
+    },
+
+    getPaginatedData: function (params = null, caller = null) {
+      params = Object.assign(params ? params : this.$route.query, {
+        search: this.resources.search,
+        user_id: $auth.getId(),
+      })
+      this.resources.loading = true
+      axios.get(this.api.owned(), { params })
+        .then(response => {
+          this.resources = Object.assign({}, this.resources, response.data)
+          this.resources.options = Object.assign(this.resources.options, response.data.meta, params)
+          this.resources.loading = false
+          this.$router.push({query: Object.assign({}, this.$route.query, params)}).catch(err => {})
+        })
+        .catch(err => {
+          this.errorDialog({
+            width: 400,
+            buttons: { cancel: { show: false } },
+            title: trans('Whoops! An error occured'),
+            text: err.response.data.message,
+          })
+        })
+        .finally(() => {
+          this.resources.data.map(function (data) {
+            return Object.assign(data, {loading: false})
+          })
+        })
+    },
+
+    goToShowTeamPage (team) {
+      return { name: 'teams.show', params: { id: team.id, slug: team.name } }
+    },
+
+    search: _.debounce(function (event) {
+      this.resources.search = event.srcElement.value || ''
+      this.tabletoolbar.isSearching = false
+      if (this.resources.searching) {
+        this.getPaginatedData(this.options, 'search')
+        this.resources.searching = false
+      }
+    }, 200),
+
+    focusSearchBar () {
+      this.$refs['tablesearch'].focus()
+    },
+
+    askUserToDestroyTeam (item) {
+      this.showDialog({
+        color: 'warning',
+        illustration: man,
+        illustrationWidth: 200,
+        illustrationHeight: 160,
+        width: '420',
+        title: 'You are about to move to trash the selected team.',
+        text: ['Some data related to team will still remain.', trans('Are you sure you want to move :name to Trash?', {name: item.name})],
+        buttons: {
+          cancel: { show: true, color: 'link' },
+          action: {
+            text: 'Move to Trash',
+            color: 'warning',
+            callback: (dialog) => {
+              this.loadDialog(true)
+              this.destroyResource(item)
+            }
+          }
+        }
+      })
+    },
+
+    openExportDialog () {
+      this.$store.dispatch('dialog/show', {
+        illustration: () => import('@/components/Icons/ExportIcon.vue'),
+        title: trans('Export Report'),
+        text: [trans('Download the table as PDF file.')],
+        buttons: {
+          action: {
+            text: trans('Export'),
+            callback: () => {
+              let userId = $auth.getId()
+              window.location.href = `/teams/export?user_id=${userId}`
+              // return new Promise((resolve, reject) => {
+              //   let userId = $auth.getId()
+              //   axios.get(`/teams/export?user_id=${userId}`)
+              //   this.$store.dispatch('dialog/hide')
+              // })
+            },
+          }
+        },
+      })
     }
   },
 
   mounted () {
     this.getResource()
+    this.changeOptionsFromRouterQueries()
+    this.getPaginatedData()
+  },
+
+  watch: {
+    'resources.search': function (val) {
+      this.resources.searching = true
+    },
+
+    'resources.selected': function (val) {
+      this.tabletoolbar.bulkCount = val.length
+    },
+
+    'tabletoolbar.toggleBulkEdit': function (val) {
+      if (!val) {
+        this.resources.selected = []
+      }
+    }
   },
 }
 </script>

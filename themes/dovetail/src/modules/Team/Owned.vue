@@ -23,88 +23,86 @@
 
     <!-- Data table -->
     <div v-show="resourcesIsNotEmpty">
-      <v-card v-for="(team, i) in resources.data" :key="i">
-        <!-- <toolbar-menu
-          :items.sync="tabletoolbar"
-          @update:search="search"
-          >
-        </toolbar-menu> -->
-        <v-slide-y-reverse-transition mode="out-in">
-          <v-data-table
-            show-expand
-            :headers="resources.headers"
-            :items="team.members"
-            :loading="resources.loading"
-            :mobile-breakpoint="NaN"
-            :options.sync="resources.options"
-            :server-items-length="resources.meta.total"
-            :show-select="tabletoolbar.toggleBulkEdit"
-            @update:options="optionsChanged"
-            color="primary"
-            item-key="id"
-            v-model="resources.selected"
-            single-expand
-            >
-            <template v-slot:progress><span></span></template>
+      <div v-for="(team, i) in resources.data" :key="i">
+        <h4 class="mb-3">{{ team.name }}</h4>
+        <v-card class="mb-4">
+          <v-slide-y-reverse-transition mode="out-in">
+            <v-data-table
+              show-expand
+              :headers="resources.headers"
+              :items="team.members"
+              :loading="resources.loading"
+              :mobile-breakpoint="NaN"
+              :options.sync="resources.options"
+              :server-items-length="resources.meta.total"
+              :show-select="tabletoolbar.toggleBulkEdit"
+              @update:options="optionsChanged"
+              color="primary"
+              item-key="id"
+              v-model="resources.selected"
+              single-expand
+              >
+              <template v-slot:progress><span></span></template>
 
-            <template v-slot:expanded-item="{ headers, item }">
-              <template v-if="item.customers.length">
-                <td :colspan="headers.length">
-                  <template v-for="(customer, k) in item.customers">
-                    <p :key="k" class="my-3">
-                      <v-tooltip bottom>
-                        <template v-slot:activator="{ on }">
-                          <span class="mt-1" v-on="on"><router-link tag="a" exact :to="{name: 'teams.reports', params: {customer: customer.id, user: item.id}, query: { from: $route.fullPath }}" v-text="customer.name" class="text-no-wrap text--decoration-none secondary--text"></router-link></span>
-                        </template>
-                        <span>{{ trans('View Reports') }}</span>
-                      </v-tooltip>
-                    </p>
-                  </template>
-                </td>
-              </template>
-              <template v-else>
-                <td :colspan="headers.length">
-                  <p class="muted--text my-3"><em v-text="__('No companies found.')"></em></p>
-                </td>
-              </template>
-            </template>
-
-            <template v-slot:loading>
-              <v-slide-y-transition mode="out-in">
-                <div>
-                  <div v-for="(j,i) in resources.options.itemsPerPage" :key="i">
-                    <skeleton-table></skeleton-table>
-                  </div>
-                </div>
-              </v-slide-y-transition>
-            </template>
-
-            <!-- Name -->
-            <template v-slot:item.displayname="{ item }">
-              <can code="users.show">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <span class="mt-1" v-on="on"><router-link tag="a" exact :to="{ name: 'users.show', params: { id: item.id }, query: { from: $route.fullPath } }" v-text="item.displayname" class="text-no-wrap text--decoration-none"></router-link></span>
-                  </template>
-                  <span>{{ trans('View member details') }}</span>
-                </v-tooltip>
-                <template v-slot:unpermitted>
-                  <span v-text="item.displayname" class="text-no-wrap text--decoration-none mt-1"></span>
+              <template v-slot:expanded-item="{ headers, item }">
+                <template v-if="item.customers.length">
+                  <td :colspan="headers.length">
+                    <template v-for="(customer, k) in item.customers">
+                      <p :key="k" class="my-3">
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on }">
+                            <span class="mt-1" v-on="on"><router-link tag="a" exact :to="{name: 'teams.reports', params: {customer: customer.id, user: item.id}, query: { from: $route.fullPath }}" v-text="customer.name" class="text-no-wrap text--decoration-none secondary--text"></router-link></span>
+                          </template>
+                          <span>{{ trans('View Reports') }}</span>
+                        </v-tooltip>
+                      </p>
+                    </template>
+                  </td>
                 </template>
-              </can>
-            </template>
-            <!-- Name -->
-
-            <!-- Customer -->
-            <!-- <template v-slot:item.customers="{ item }">
-              <template v-for="(customer, k) in item.customers">
-                <p :key="k" class="mb-1"><router-link tag="a" exact :to="{name: 'companies.show', params: {id: customer.id}, query: { from: $route.fullPath }}">{{ customer.name }}</router-link></p>
+                <template v-else>
+                  <td :colspan="headers.length">
+                    <p class="muted--text my-3"><em v-text="__('No companies found.')"></em></p>
+                  </td>
+                </template>
               </template>
-            </template> -->
-            <!-- Customer -->
-          </v-data-table>
-        </v-slide-y-reverse-transition>
-      </v-card>
+
+              <template v-slot:loading>
+                <v-slide-y-transition mode="out-in">
+                  <div>
+                    <div v-for="(j,i) in resources.options.itemsPerPage" :key="i">
+                      <skeleton-table></skeleton-table>
+                    </div>
+                  </div>
+                </v-slide-y-transition>
+              </template>
+
+              <!-- Name -->
+              <template v-slot:item.displayname="{ item }">
+                <can code="users.show">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <span class="mt-1" v-on="on"><router-link tag="a" exact :to="{ name: 'users.show', params: { id: item.id }, query: { from: $route.fullPath } }" v-text="item.displayname" class="text-no-wrap text--decoration-none"></router-link></span>
+                    </template>
+                    <span>{{ trans('View member details') }}</span>
+                  </v-tooltip>
+                  <template v-slot:unpermitted>
+                    <span v-text="item.displayname" class="text-no-wrap text--decoration-none mt-1"></span>
+                  </template>
+                </can>
+              </template>
+              <!-- Name -->
+
+              <!-- Customer -->
+              <!-- <template v-slot:item.customers="{ item }">
+                <template v-for="(customer, k) in item.customers">
+                  <p :key="k" class="mb-1"><router-link tag="a" exact :to="{name: 'companies.show', params: {id: customer.id}, query: { from: $route.fullPath }}">{{ customer.name }}</router-link></p>
+                </template>
+              </template> -->
+              <!-- Customer -->
+            </v-data-table>
+          </v-slide-y-reverse-transition>
+        </v-card>
+      </div>
     </div>
     <!-- Data table -->
 

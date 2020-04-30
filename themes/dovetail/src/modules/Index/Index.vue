@@ -11,10 +11,12 @@
       </template>
 
       <template v-slot:action>
-        <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'indices.create' }">
-          <v-icon small left>mdi-credit-card-plus-outline</v-icon>
-          {{ trans('Add Index') }}
-        </v-btn>
+        <can code="indices.create">
+          <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'indices.create' }">
+            <v-icon small left>mdi-credit-card-plus-outline</v-icon>
+            {{ trans('Add Index') }}
+          </v-btn>
+        </can>
       </template>
     </page-header>
 
@@ -86,25 +88,29 @@
             <template v-slot:item.action="{ item }">
               <div class="text-no-wrap">
                 <!-- Edit -->
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn :to="{name: 'indices.edit', params: {id: item.id}}" icon v-on="on">
-                      <v-icon small>mdi-pencil-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('Edit this index') }}</span>
-                </v-tooltip>
+                <can code="indices.edit">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn :to="{name: 'indices.edit', params: {id: item.id}}" icon v-on="on">
+                        <v-icon small>mdi-pencil-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('Edit this index') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Edit -->
 
                 <!-- Move to Trash -->
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn @click="askUserToDestroyIndex(item)" icon v-on="on">
-                      <v-icon small>mdi-delete-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('Move to trash') }}</span>
-                </v-tooltip>
+                <can code="indices.destroy">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn @click="askUserToDestroyIndex(item)" icon v-on="on">
+                        <v-icon small>mdi-delete-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('Move to trash') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Move to Trash -->
               </div>
             </template>

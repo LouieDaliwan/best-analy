@@ -32,7 +32,7 @@
           } else {
             clearInterval(fadeEffect);
           }
-        }, 3000);
+        }, 100);
 
         window.addEventListener('load', () => { this.loader = false });
       }

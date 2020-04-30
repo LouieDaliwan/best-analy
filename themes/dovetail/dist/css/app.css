@@ -42,6 +42,7 @@
   --soft-warning: #fdf3d9;
   --padding-base: 20px;
   --margin-base: 20px;
+  --full-height: 100vh;
 }
 
 html {
@@ -535,6 +536,83 @@ pre {
 
 .v-menu__content {
   border-radius: var(--global-radius);
+}
+
+.loader {
+  -webkit-box-align: center;
+          align-items: center;
+  background: va(--white);
+  display: -webkit-box;
+  display: flex;
+  height: var(--full-height);
+  -webkit-box-pack: center;
+          justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  -webkit-transition: opacity 0.3s linear;
+  transition: opacity 0.3s linear;
+  width: 100%;
+  z-index: 9999;
+}
+
+@-webkit-keyframes s_rotate1 {
+  0% {
+    -webkit-transform: rotate -360deg;
+  }
+}
+
+@keyframes s_rotate1 {
+  0% {
+    -webkit-transform: rotate -360deg;
+  }
+}
+
+@-webkit-keyframes s_rotate2 {
+  0%, 50% {
+    -webkit-transform: rotate -360deg;
+  }
+}
+
+@keyframes s_rotate2 {
+  0%, 50% {
+    -webkit-transform: rotate -360deg;
+  }
+}
+
+@-webkit-keyframes s_grow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes s_grow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.spinner {
+  -webkit-animation: s_rotate1 4.5s infinite linear;
+          animation: s_rotate1 4.5s infinite linear;
+  height: 2rem;
+  margin: 8rem auto;
+  width: 2rem;
+}
+
+.spinner svg {
+  -webkit-animation: s_rotate2 2s infinite linear;
+          animation: s_rotate2 2s infinite linear;
+}
+
+.spinner path {
+  -webkit-animation: s_grow 1s alternate infinite linear;
+          animation: s_grow 1s alternate infinite linear;
+  fill: none;
+  stroke: var(--primary);
+  stroke-dasharray: 600;
+  stroke-dashoffset: 580;
+  stroke-width: 18;
 }
 
 .theme--dark .v-sheet {

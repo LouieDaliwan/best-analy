@@ -39,8 +39,8 @@ trait MorphManySubmissions
     public function submit(array $attributes, $remarks = null)
     {
         $remarks = is_null($remarks ?? null)
-            ? date('m-Y')
-            : date('m-Y', strtotime(date('Y-m', strtotime($remarks))));
+            ? date('Y-m-d H:i:s')
+            : date('Y-m-d H:i:s', strtotime(date('Y-m-d', strtotime($remarks))));
         $submission = $this->submissions()->updateOrCreate([
             'remarks' => $remarks,
             'submissible_id' => $attributes['submissible_id'] ?? null,

@@ -39,6 +39,8 @@ class PreviewOverallPdfReport extends Controller
             'month' => $report['report']->remarks,
         ];
         $data = app(FormulaServiceInterface::class)->generate($report['report']->survey, $attributes);
+        $data['month:formatted'] = date('M d, Y', strtotime($data['month'] ?? date('Y-m-d')));
+        $data['current:pindex']['sitevisit:date:formatted'] = date('M d, Y', strtotime($data['month']));
         $name = sprintf("BEST Overall Report - %s (%s)", $report['customer']->name, $report['report']->remarks);
 
         if ($request->get('view') == 'blade') {

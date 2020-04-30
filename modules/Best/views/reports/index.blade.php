@@ -56,50 +56,6 @@
         </div>
       </div>
     </div>
-
-    {{-- FMPI with Analysis --}}
-    {{-- @if ($data['current:index']['pindex:code'] == 'FMPI')
-      <div class="container">
-        <div class="main-body">
-          <div class="main-content pb-3">
-            @include('best::reports.partials.header')
-          </div>
-          <div class="mt-2 border-bottom"></div>
-          <div class="main-content">
-            @include('best::reports.partials.organisation-profile')
-            @include('best::reports.analysis.profitability')
-            @include('best::reports.analysis.liquidity')
-            @include('best::reports.analysis.efficiency')
-            @include('best::reports.analysis.solvency')
-            @include('best::reports.analysis.productivity')
-            @include('best::reports.partials.disclaimer')
-            @include('best::reports.partials.footer')
-            <div class="text-right">
-              <div style="font-size: 12px;">{{ __('Page 2 of 3') }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="main-body">
-          <div class="main-content pb-3">
-            @include('best::reports.partials.header')
-          </div>
-          <div class="mt-2 border-bottom"></div>
-          <div class="main-content">
-            @include('best::reports.partials.organisation-profile')
-            @include('best::reports.table.index')
-            @include('best::reports.partials.disclaimer')
-            @include('best::reports.partials.footer')
-            <div class="text-right">
-              <div style="font-size: 12px;">{{ __('Page 3 of 3') }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    @endif --}}
-    {{-- FMPI with Analysis --}}
   </main>
 </body>
 </html>

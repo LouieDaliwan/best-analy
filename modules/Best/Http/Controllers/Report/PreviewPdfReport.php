@@ -37,6 +37,8 @@ class PreviewPdfReport extends Controller
             'month' => $report->remarks,
         ];
         $data = $service->generate($report->survey, $attributes);
+        $data['month:formatted'] = date('M d, Y', strtotime($data['month'] ?? date('Y-m-d')));
+        $data['current:pindex']['sitevisit:date:formatted'] = date('M d, Y', strtotime($data['month']));
 
         $pdf = SnappyPdf::loadHTML(view("best::reports.pdf.$type")->withData($data));
 

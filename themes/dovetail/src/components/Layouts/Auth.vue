@@ -3,6 +3,10 @@
     <!-- Main Content -->
 
     <v-content>
+      <!-- Preloader -->
+      <preloader></preloader>
+      <!-- Preloader -->
+
       <!-- Main -->
       <v-slide-y-transition mode="out-in">
         <router-view></router-view>

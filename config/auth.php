@@ -46,6 +46,11 @@ return [
             'provider' => 'users',
         ],
 
+        'ldap' => [
+            'driver' => 'passport',
+            'provider' => 'ldap',
+        ],
+
         'admin' => [
             'driver' => 'admin',
             'provider' => 'users',
@@ -78,6 +83,19 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => User\Models\User::class,
+        ],
+
+        'ldap' => [
+            'driver' => 'ldap',
+            'model' => LdapRecord\Models\ActiveDirectory\User::class,
+            'database' => [
+                'model' => Best\Models\User::class,
+                'sync_passwords' => false,
+                'sync_attributes' => [
+                    'name' => 'cn',
+                    'email' => 'mail',
+                ],
+            ],
         ],
     ],
 

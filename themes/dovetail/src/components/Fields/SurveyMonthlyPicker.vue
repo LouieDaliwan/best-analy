@@ -14,8 +14,8 @@
         <v-text-field
           background-color="selects"
           class="dt-text-field"
+          hint="YYYY/MM/DD format"
           dense
-          hide-details
           outlined
           append-icon="mdi-calendar"
           readonly
@@ -26,7 +26,7 @@
       </template>
       <v-date-picker
         v-model="resource.date"
-        type="month"
+        show-current
         no-title
         scrollable
         @input="resource.menu = false"
@@ -40,7 +40,7 @@
 export default {
   data: (vm) => ({
     resource: {
-      date: new Date().toISOString().substr(0, 7),
+      date: new Date().toISOString().substr(0, 10),
       survey: false,
     },
   }),

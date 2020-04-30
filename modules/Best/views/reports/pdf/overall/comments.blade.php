@@ -1,3 +1,4 @@
+
 <section class="my-2">
   <h3 class="dt-BSPI">{{ __('Overall Comments') }}</h3>
 
@@ -10,32 +11,32 @@
   {{-- e-signature --}}
   <table class="text-center" width="100%">
     <tr>
-      <td align="center">
-        <table>
+      <td width="33%" align="center">
+        <table width="90%">
           <tr>
-            <td width="50%"><div style="border: 1px solid #12263f; height: 40px;"></div></td>
+            <td><div style="border: 1px solid #12263f; height: 40px;"></div></td>
           </tr>
           <tr>
-            <td width="50%">
+            <td>
               <div class="text-center mt-3">{{ __('Client Signature') }}</div>
             </td>
           </tr>
         </table>
       </td>
-      <td align="center">
-        <table>
+      <td width="33%" align="center">
+        <table width="90%">
           <tr>
-            <td width="50%"><div style="border: 1px solid #12263f; height: 40px;"></div></td>
+            <td><div style="border: 1px solid #12263f; height: 40px;"></div></td>
           </tr>
           <tr>
-            <td width="50%">
+            <td>
               <div class="text-center mt-3">{{ __('Manager Signature') }}</div>
             </td>
           </tr>
         </table>
       </td>
-      <td align="center">
-        <table>
+      <td width="33%" align="center">
+        <table width="90%">
           <tr>
             <td><div style="border: 1px solid #12263f; height: 40px;"></div></td>
           </tr>

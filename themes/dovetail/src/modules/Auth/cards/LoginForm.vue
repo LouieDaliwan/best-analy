@@ -43,6 +43,10 @@
           <span>{{ $t('Signing in...') }}</span>
         </template>
       </v-btn>
+
+      <v-divider class="my-4"></v-divider>
+
+      <microsoft-login></microsoft-login>
     </v-form>
   </validation-observer>
 </template>

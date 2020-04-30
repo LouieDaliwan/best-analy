@@ -19,7 +19,7 @@ export default [
           authenticatable: true,
           sort: 5,
           permission: 'customers.index',
-          children: ['companies.index', 'companies.show', 'companies.reports', 'companies.survey', 'companies.preview', 'companies.reports', 'reports.show'],
+          children: ['companies.index', 'companies.show', 'companies.reports', 'companies.survey', 'companies.preview', 'companies.reports', 'reports.show', 'companies.owned'],
         },
       },
       {

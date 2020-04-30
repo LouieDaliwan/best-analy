@@ -18,6 +18,13 @@ abstract class AbstractAnalysis implements Contracts\FinancialAnalysisReportInte
     public static $filePath;
 
     /**
+     * The static spreadsheet object;
+     *
+     * @var \PhpOffice\PhpSpreadsheet\Spreadsheet
+     */
+    public static $sp = null;
+
+    /**
      * Generate the report.
      *
      * @param  \Customer\Models\Customer $customer
@@ -55,7 +62,8 @@ abstract class AbstractAnalysis implements Contracts\FinancialAnalysisReportInte
      */
     public static function getSpreadsheet(Customer $customer)
     {
-        $newFile = self::$filePath = self::getSpreadsheetFile(date('YmdHis').rand());
+        $prefix = auth()->user() ? auth()->user()->getKey() : null;
+        $newFile = self::$filePath = self::getSpreadsheetFile($prefix);
         copy(self::getSpreadsheetFile(), $newFile);
 
         Settings::setChartRenderer(JpGraph::class);
@@ -64,10 +72,11 @@ abstract class AbstractAnalysis implements Contracts\FinancialAnalysisReportInte
         $spreadsheet = $reader->load($newFile);
 
         $spreadsheet = self::loadCustomerDataToFile($spreadsheet, $customer);
+        self::$sp = $spreadsheet;
 
         self::unlinkFile();
 
-        return $spreadsheet;
+        return self::$sp;
     }
 
     /**

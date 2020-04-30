@@ -4,10 +4,6 @@
   <title>{{ settings('app:fulltitle') }} @lang('Toolkit Report')</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-  {{-- Fonts --}}
-  {{-- <link href="https://fonts.googleapis.com/css?family=Rubik:400,500&display=swap" rel="stylesheet"> --}}
-  {{-- <link rel="stylesheet" href="//cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css"> --}}
-
   {{-- Chart --}}
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
@@ -16,7 +12,6 @@
   {{-- Theme CSS --}}
   <style>{{ theme()->inlined(public_path('reports/css/basic.css')) }}</style>
   <style>{{ theme()->inlined(public_path('reports/css/theme.min.css')) }}</style>
-  {{-- <style>{{ theme()->inlined(public_path('reports/css/report.css')) }}</style> --}}
   <style>{{ theme()->inlined(public_path('reports/css/ratios.css')) }}</style>
   <style>{{ theme()->inlined(public_path('reports/css/indicators.css')) }}</style>
 

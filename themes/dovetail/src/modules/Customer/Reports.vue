@@ -10,12 +10,6 @@
               <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
               <span v-text="trans('Indices')"></span>
             </router-link>
-            <template v-slot:unpermitted>
-              <router-link tag="a" exact :to="{ name: 'companies.show' }" class="text--decoration-none body-1 dt-link">
-                <v-icon small class="mb-1">mdi mdi-chevron-left</v-icon>
-                <span v-text="trans('Indices')"></span>
-              </router-link>
-            </template>
           </can>
         </div>
       </template>

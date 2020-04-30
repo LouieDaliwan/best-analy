@@ -53,7 +53,7 @@ class ComputePerformanceIndexFromSurvey implements ShouldQueue
             'taxonomy_id' => $taxonomy->getKey(),
             'form_id' => $form->getKey(),
             'user_id' => user()->getKey(),
-            'month' => $submission->remarks ?? date('m-Y'),
+            'month' => $submission->remarks ?? date('d-m-Y'),
         ];
 
         $formulas = $this->service
@@ -62,7 +62,7 @@ class ComputePerformanceIndexFromSurvey implements ShouldQueue
             ->where('taxonomy_id', $taxonomy->getKey())
             ->where('form_id', $form->getKey())
             ->where('user_id', user()->getKey())
-            ->where('month', $submission->remarks ?? date('m-Y'))
+            ->where('month', $submission->remarks ?? date('d-m-Y'))
             ->get();
 
         $formulas->each->delete();
@@ -80,7 +80,7 @@ class ComputePerformanceIndexFromSurvey implements ShouldQueue
         )->where(
             'user_id', user()->getKey()
         )->where(
-            'month', $submission->remarks ?? date('m-Y')
+            'month', $submission->remarks ?? date('Y-m-d H:i:s')
         )->count();
 
         if ($isLastField === $form->fields->count()) {

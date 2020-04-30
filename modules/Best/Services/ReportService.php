@@ -117,10 +117,12 @@ class ReportService extends Service implements ReportServiceInterface
      */
     public function getMonths()
     {
-        $model = $this->model->groupBy('remarks')->pluck('remarks');
+        $model = $this->model->groupBy('month')->pluck('month');
 
-        return $model->map(function ($item) {
-            $month = date('d-m-Y', strtotime("01-$item"));
+        return $model->reject(function ($item) {
+            return is_null($item);
+        })->map(function ($item) {
+            $month = date('d-m-Y', strtotime("01-{$item}"));
             return ['value' => $item, 'text' => date('M Y', strtotime($month))];
         })->toArray();
     }
@@ -136,7 +138,7 @@ class ReportService extends Service implements ReportServiceInterface
     {
         $model = $this->model->whereUserId($user->getKey())->whereCustomerId($customer->getKey());
 
-        $model = $model->whereRemarks($this->request()->get('month') ?: date('m-Y'));
+        $model = $model->where('month', $this->request()->get('month') ?: date('m-Y'));
 
         return [
             'report' => new ReportResource($model->latest('created_at')->first()),

@@ -10,17 +10,17 @@
   <div class="row">
     <div class="col-sm-4">
       <div style="border: 1px solid #12263f; height: 40px;"></div>
-      <div class="text-center mt-3">Client Signature</div>
+      <div class="text-center mt-3">{{ __('Client Signature') }}</div>
     </div>
 
     <div class="col-sm-4">
       <div style="border: 1px solid #12263f; height: 40px;"></div>
-      <div class="text-center mt-3">Manager Signature</div>
+      <div class="text-center mt-3">{{ __('Manager Signature') }}</div>
     </div>
 
     <div class="col-sm-4">
       <div style="border: 1px solid #12263f; height: 40px;"></div>
-      <div class="text-center mt-3">Business Counselor Signature Signature</div>
+      <div class="text-center mt-3">{{ __('Business Counselor Signature') }}</div>
     </div>
   </div>
 </section>

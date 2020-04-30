@@ -105,7 +105,13 @@ class CustomerService extends Service implements CustomerServiceInterface
 
         $model = $this->model->whereUserId($this->auth()->id());
 
-        $model = $model->whereRemarks($this->request()->get('month') ?: date('m-Y'));
+        $monthVar = explode('-', $this->request()->get('month') ?? '');
+
+        $month = $this->request()->get('month') ? $monthVar[0] : date('m');
+        $model = $model->whereMonth('remarks', $month);
+
+        $year = $this->request()->get('month') ? $monthVar[1] : date('Y');
+        $model = $model->whereYear('remarks', $year);
 
         $model = $model->paginate($this->getPerPage());
 

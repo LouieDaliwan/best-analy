@@ -59,6 +59,12 @@ export const actions = {
     })
   },
 
+  socialite: ({ commit }, data) => {
+    $auth.authorize(data.token, data.user)
+    commit('AUTH_SUCCESS', data.user)
+    commit('SET_TOKEN', data.token)
+  },
+
   logout: ({ commit }) => {
     return new Promise((resolve, reject) => {
       commit('AUTH_REQUEST')

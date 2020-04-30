@@ -57,8 +57,8 @@ class ReportServiceTest extends TestCase
         // Arrangements
         $service = app(ReportServiceInterface::class);
 
-        factory(Report::class, 2)->create(['remarks' => '02-2020']);
-        factory(Report::class, 2)->create(['remarks' => '03-2020']);
+        factory(Report::class, 2)->create(['month' => '02-2020']);
+        factory(Report::class, 2)->create(['month' => '03-2020']);
 
         // Actions
         $actual = $service->getMonths();

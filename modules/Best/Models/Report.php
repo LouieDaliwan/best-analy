@@ -67,19 +67,6 @@ class Report extends Model
     }
 
     /**
-     * Retrieve the modified month value.
-     *
-     * @return string
-     */
-    public function getMonthAttribute()
-    {
-        $remarks = $this->remarks;
-        $month = date('d-m-Y', strtotime("01-{$remarks}"));
-
-        return date('M Y', strtotime($month));
-    }
-
-    /**
      * Retrieve the file.
      *
      * @return mixed

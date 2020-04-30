@@ -4,12 +4,12 @@
       <div class="col-md-12">
         <div class="dt-divider" style="height: 50px;"></div>
         {{-- header --}}
-          <div class="mb-4 text-center">
-            <img height="80" src="{{ theme()->logo() }}">
-          </div>
-          <div class="text-center">
-            <h1 class="display-4">@lang("Business Excellence Survey Toolkit (BEST)")</h1>
-          </div>
+        <div class="mb-4 text-center">
+          <img height="80" src="{{ theme()->logo() }}">
+        </div>
+        <div class="text-center">
+          <h1 class="display-4">@lang("Business Excellence Survey Toolkit (BEST)")</h1>
+        </div>
         {{-- header --}}
         <div class="dt-divider" style="height: 50px;"></div>
         <div class="row align-items-center justify-content-center">

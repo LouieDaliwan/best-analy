@@ -78,7 +78,7 @@ export default {
     previewPDFReport (item) {
       let lang = this.$route.query.lang || this.resource.lang
       window.open(
-        `/best/reports/pdf/preview?report_id=${item.id}&month=${item.remarks}&lang=${lang}`,
+        `/best/reports/pdf/preview?report_id=${item.id}&month=${item.month}&lang=${lang}`,
         '_blank'
       )
     },

@@ -35,7 +35,7 @@ class SaveGeneratedReport implements ShouldQueue
      */
     public function handle($event)
     {
-        $remarks = $event->data['month'] ?? date('m-Y');
+        $remarks = $event->data['month'] ?? date('Y-m-d H:i:s');
         $this->service->updateOrCreate([
             'remarks' => $remarks,
             'customer_id' => $event->data['organisation:profile']['id'],
@@ -45,6 +45,7 @@ class SaveGeneratedReport implements ShouldQueue
             'key' => trans($event->data['current:index']['pindex'].' Report'),
             'value' => array_merge(['filepath' => $this->save($event)], $event->data),
             'remarks' => $remarks,
+            'month' => date('m-Y', strtotime($remarks)),
             'customer_id' => $event->data['organisation:profile']['id'],
             'form_id' => $event->data['survey:id'],
             'user_id' => $event->data['user:id'],
@@ -61,7 +62,7 @@ class SaveGeneratedReport implements ShouldQueue
     {
         $html = view("best::reports.index")->withData($event->data)->render();
         $refnum = $event->data['current:index']['customer:refnum'];
-        $hash = date('m-Y');
+        $hash = date('d-m-Y');
         $name = "{$event->data['current:index']['pindex']} Report - {$refnum}-{$hash}.html";
         $date = date('Y-m-d');
 

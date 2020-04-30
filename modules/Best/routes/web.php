@@ -9,6 +9,8 @@ use Spatie\Browsershot\Browsershot;
 use Survey\Models\Survey;
 use User\Models\User;
 
+Route::post('best/login/microsoft', 'Api\Ldap\LoginController@login');
+
 Route::post('reports/{report}/download', 'Api\DownloadPerformanceIndexReport');
 Route::post('reports/download', 'Api\DownloadPerformanceIndexReport')->name('reports.download');
 
@@ -63,12 +65,24 @@ Route::get('best/preview/reports/overall', function (Request $request, FormulaSe
     app()->setLocale($request->get('lang') ?: 'en');
 
     $file = $request->get('month') ?: date('m-Y');
+    $customerId = $request->get('customer_id');
     $user = User::find($request->get('user_id'));
     Auth::login($user);
 
-    $attributes = ['customer_id' => $request->get('customer_id')];
+    $report = Report::where('month', $file)
+        ->whereCustomerId($customerId)
+        ->whereUserId($user->getKey())
+        ->latest()->first();
+
+    $attributes = [
+        'customer_id' => $customerId,
+        'month' => $report->remarks ?? date('Y-m-d H:i:s'),
+    ];
+
     $survey = \Survey\Models\Survey::find($request->get('survey_id') ?: 1);
     $data = $service->generate($survey, $attributes);
+    $data['month:formatted'] = date('M d, Y', strtotime($data['month'] ?? date('Y-m-d')));
+    $data['current:pindex']['sitevisit:date:formatted'] = date('M d, Y', strtotime($data['month']));
 
     return view("best::reports.overall")->withData($data);
 });
@@ -77,15 +91,23 @@ Route::get('best/preview/reports/ratios', function (Request $request, FormulaSer
     app()->setLocale($request->get('lang') ?: 'en');
 
     $file = $request->get('month') ?: date('m-Y');
+    $customerId = $request->get('customer_id');
     $user = User::find($request->get('user_id'));
     Auth::login($user);
 
+    $report = Report::where('month', $file)
+        ->whereCustomerId($customerId)
+        ->whereUserId($user->getKey())
+        ->latest()->first();
+
     $attributes = [
         'customer_id' => $request->get('customer_id'),
-        'month' => $file,
+        'month' => $report->remarks ?? date('Y-m-d H:i:s'),
     ];
     $survey = \Survey\Models\Survey::find($request->get('survey_id') ?: 1);
     $data = $service->generate($survey, $attributes);
+    $data['month:formatted'] = date('M d, Y', strtotime($data['month'] ?? date('Y-m-d')));
+    $data['current:pindex']['sitevisit:date:formatted'] = date('M d, Y', strtotime($data['month']));
 
     return view("best::reports.financialratio")->withData($data);
 });
@@ -106,6 +128,8 @@ Route::get(
             'month' => $report->remarks,
         ];
         $data = $service->generate($report->survey, $attributes);
+        $data['month:formatted'] = date('M d, Y', strtotime($data['month'] ?? date('Y-m-d')));
+        $data['current:pindex']['sitevisit:date:formatted'] = date('M d, Y', strtotime($data['month']));
 
         return view("best::reports.$file")->withData($data);
     }
@@ -121,7 +145,6 @@ Route::get(
 
         $attributes = ['customer_id' => $report->customer->getKey(), 'taxonomy_id' => $taxonomy_id];
         $data = $service->generate($report->survey, $attributes);
-        dd($data);
 
         return view("best::reports.$file")->withData($data);
     }

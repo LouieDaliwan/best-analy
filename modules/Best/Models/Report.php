@@ -67,6 +67,19 @@ class Report extends Model
     }
 
     /**
+     * Retrieve the modified created_at value.
+     *
+     * @return string
+     */
+    public function getRemarkedAttribute()
+    {
+        return date(
+            settings('formal:date', 'd-M, Y'),
+            strtotime($this->attributes['remarks'])
+        );
+    }
+
+    /**
      * Retrieve the file.
      *
      * @return mixed

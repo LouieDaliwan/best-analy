@@ -4,7 +4,7 @@
 
     <v-content>
       <!-- Preloader -->
-      <preloader></preloader>
+      <!-- <preloader></preloader> -->
       <!-- Preloader -->
 
       <!-- Main -->

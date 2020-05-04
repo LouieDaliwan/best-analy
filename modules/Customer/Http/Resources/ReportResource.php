@@ -20,6 +20,7 @@ class ReportResource extends JsonResource
         return collect(array_merge(parent::toArray($request), [
             'customer' => new AllCustomerResource($this->customer),
             'month' => $this->month,
+            'remarked' => $this->remarked,
             'author' => $this->author,
             'created' => $this->created,
             'deleted' => $this->deleted,

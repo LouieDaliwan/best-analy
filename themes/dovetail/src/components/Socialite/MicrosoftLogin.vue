@@ -3,7 +3,8 @@
     x-large block
     @click="signInWithMicrosoftAccount"
     >
-    {{ $t('Sign in with Microsoft Account') }}
+    <img src="@/components/Illustration/ms.png" class="mr-6" height="20">
+    <span class="mt-1" style="text-transform: none;">{{ $t('Sign in with Microsoft') }}</span>
   </v-btn>
 </template>
 

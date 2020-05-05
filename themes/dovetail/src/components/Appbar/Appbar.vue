@@ -1,7 +1,7 @@
 <template>
   <v-app-bar
     app
-    hide-on-scroll
+    :hide-on-scroll="$vuetify.breakpoint.mdAndUp"
     flat
     :clipped-left="sidebar.clipped"
     v-if="appbar.model"

@@ -118,8 +118,8 @@
         <v-card>
           <v-slide-y-reverse-transition mode="out-in">
             <v-data-table
-              show-expand
               :headers="resources.headers"
+              :hide-default-footer="true"
               :items="resource.data.members"
               :loading="resources.loading"
               :mobile-breakpoint="NaN"
@@ -129,8 +129,9 @@
               @update:options="optionsChanged"
               color="primary"
               item-key="id"
-              v-model="resources.selected"
+              show-expand
               single-expand
+              v-model="resources.selected"
               >
               <template v-slot:progress><span></span></template>
 

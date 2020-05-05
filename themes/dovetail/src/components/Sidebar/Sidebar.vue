@@ -93,6 +93,21 @@
         </template>
         <!-- Menu without Children -->
       </template>
+
+      <!-- FAQ -->
+      <template>
+        <!-- <can code=""> -->
+          <v-list-item color="white" link exact :to="{name: 'faq.index'}">
+            <v-list-item-icon>
+              <v-icon small v-text="__('mdi-frequently-asked-questions')"></v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title v-text="__('FAQs')" class="font-weight-bold"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        <!-- </can> -->
+      </template>
+      <!-- FAQ -->
     </v-list>
     <!-- Menu Items -->
 

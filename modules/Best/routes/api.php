@@ -15,6 +15,7 @@ Route::prefix('v1')->group(function () {
     Route::get('reports/misc/months/all', 'Api\GetReportsMonths');
     Route::get('reports/{report}/download', 'Api\DownloadPerformanceIndexReport')->name('reports.show');
     Route::get('reports/{report}', 'Api\GetReport');
+    Route::get('faqs/contents', 'Api\GetFAQContent');
 });
 
 Route::prefix('v1')->middleware('auth:api')->group(function () {

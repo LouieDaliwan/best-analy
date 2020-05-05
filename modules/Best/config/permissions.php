@@ -31,4 +31,22 @@ return [
         'description' => 'Ability to delete the report permanently',
         'group' => 'best',
     ],
+    'faq-admin' => [
+        'name' => 'faq-admin',
+        'code' =>  'faqs.admin',
+        'description' => 'Ability to view instructional videos of the app for admin role',
+        'group' => 'best',
+    ],
+    'faq-manager' => [
+        'name' => 'faq-manager',
+        'code' =>  'faqs.manager',
+        'description' => 'Ability to view instructional videos of the app for manager role',
+        'group' => 'best',
+    ],
+    'faq-counselor' => [
+        'name' => 'faq-counselor',
+        'code' =>  'faqs.counselor',
+        'description' => 'Ability to view instructional videos of the app for business counselor role',
+        'group' => 'best',
+    ],
 ];

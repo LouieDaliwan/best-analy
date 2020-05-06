@@ -75,11 +75,14 @@
                   <v-col>
                     <h3 class="mt-5 font-weight-bold text-uppercase mb-2 mt-2 text-md-left text-center" v-text="resource.name"></h3>
                     <h4 class="text-uppercase muted--text mb-0 text-md-left text-center" v-text="('Performance Index')"></h4>
-                    <div class="mt-3" v-for="(item, i) in resources.reports" :key="i">
+                    <small class="overlines" v-if="resource.report">
+                      {{ __('Modified') }}: {{ resource.report.modified }}
+                    </small>
+                    <!-- <div class="mt-3" v-for="(item, i) in resources.reports" :key="i">
                       <small class="overlines" v-if="resource.id == item.value['current:index'].taxonomy.id">
                         {{ __('Modified') }}: {{ item.modified }}
                       </small>
-                    </div>
+                    </div> -->
                   </v-col>
                   <v-col class="text-md-right text-center">
                     <img height="80" :src="resource.icon" :alt="resource.name">

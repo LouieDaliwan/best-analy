@@ -2,6 +2,9 @@
 
 namespace Customer\Http\Resources;
 
+use Best\Models\Report;
+use Best\Services\FormulaServiceInterface;
+use Customer\Http\Resources\ReportResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Index\Http\Resources\IndexResource;
 use Index\Models\Index;
@@ -30,8 +33,17 @@ class CustomerResource extends JsonResource
             'deleted' => $this->deleted,
             'modified' => $this->modified,
             'indices' => Index::all()->map(function ($index) use ($request) {
+                $attributes = [
+                    'customer_id' => $this->getKey(),
+                    'taxonomy_id' => $index->getKey(),
+                    'month' => $request->get('month') ?? date('m-Y'),
+                ];
                 return array_merge(with(new IndexResource($index))->toArray($request), [
-                    'is:finished' => $index->survey && $index->survey->isFinishedWithCustomer($this),
+                    'report' => new ReportResource($report = Report::where('month', $attributes['month'])
+                        ->whereCustomerId($this->getKey())
+                        ->whereFormId($index->survey->getKey())
+                        ->whereUserId(user()->getKey())->latest()->first()),
+                    'is:finished' => ! is_null($report),
                 ]);
             })->toArray(),
         ]));

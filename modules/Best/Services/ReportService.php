@@ -101,7 +101,7 @@ class ReportService extends Service implements ReportServiceInterface
 
         $model = $this->model->whereUserId($user->getKey())->whereCustomerId($customer->getKey());
 
-        $model = $model->whereRemarks($this->request()->get('month') ?: date('m-Y'));
+        $model = $model->where('month', $this->request()->get('month') ?: date('m-Y'));
 
         $model = $model->paginate($this->getPerPage());
 

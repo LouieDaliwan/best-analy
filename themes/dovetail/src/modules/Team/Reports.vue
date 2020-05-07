@@ -147,14 +147,16 @@
                 </v-tooltip>
                 <!-- Show Reports -->
                 <!-- Move to Trash -->
-                <!-- <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn @click="askUserToDestroyReport(item)" icon v-on="on">
-                      <v-icon small>mdi-delete-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('Move to trash') }}</span>
-                </v-tooltip> -->
+                <can code="teams.destroy">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn @click="askUserToDestroyReport(item)" icon v-on="on">
+                        <v-icon small>mdi-delete-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('Move to trash') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Move to Trash -->
               </div>
             </template>
@@ -195,6 +197,7 @@
 <script>
 import $api from './routes/api'
 import Team from './Models/Team'
+import { mapActions } from 'vuex'
 
 export default {
   computed: {
@@ -251,6 +254,14 @@ export default {
   }),
 
   methods: {
+    ...mapActions({
+      errorDialog: 'dialog/error',
+      loadDialog: 'dialog/loading',
+      showDialog: 'dialog/show',
+      hideDialog: 'dialog/hide',
+      showSnackbar: 'snackbar/show',
+    }),
+
     previewPDFReport (item) {
       window.open(`/best/reports/pdf/preview?report_id=${item.id}&type=index`, '_blank')
     },
@@ -350,23 +361,47 @@ export default {
     askUserToDestroyReport (item) {
       this.showDialog({
         color: 'error',
-        illustration: man,
+        illustration: () => import('@/components/Icons/ManThrowingAwayPaperIcon.vue'),
         illustrationWidth: 200,
         illustrationHeight: 160,
         width: '420',
-        title: 'You are about to move to trash the selected company.',
-        text: ['Some data related to company will still remain.', trans('Are you sure you want to move :name to Trash?', {name: item.name})],
+        title: 'You are about to permanently delete the selected report.',
+        text: ['Some data related to report will still remain.', trans('Are you sure you want to permanently delete :name?', { name: item.key })],
         buttons: {
           cancel: { show: true, color: 'link' },
           action: {
-            text: 'Move to Trash',
+            text: 'Delete',
             color: 'error',
             callback: (dialog) => {
               this.loadDialog(true)
-              this.destroyResource(item)
+              this.deleteResource(item)
             }
           }
         }
+      })
+    },
+
+    deleteResource (item) {
+      item.loading = true
+      axios.delete(
+        $api.reports.delete(item.id)
+      ).then(response => {
+        item.active = false
+        this.getPaginatedData(null)
+        this.hideDialog()
+        this.showSnackbar({
+          text: trans_choice('Report successfully deleted', 1)
+        })
+      }).catch(err => {
+        this.errorDialog({
+          width: 400,
+          buttons: { cancel: { show: false } },
+          title: trans('Whoops! An error occured'),
+          text: err.response.data.message,
+        })
+      }).finally(() => {
+        item.active = false
+        item.loading = false
       })
     },
 

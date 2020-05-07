@@ -12,6 +12,7 @@
     </page-header>
 
     <!-- Data table -->
+    <h3 class="mb-3">{{ __('Companies') }}</h3>
     <div v-show="resourcesIsNotEmpty">
       <v-card>
         <toolbar-menu
@@ -81,14 +82,16 @@
             <template v-slot:item.action="{ item }">
               <div class="text-no-wrap">
                 <!-- Answer Survey -->
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn :to="goToShowIndexPage(item)" icon v-on="on">
-                      <v-icon small>mdi-view-grid-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('Answer Survey') }}</span>
-                </v-tooltip>
+                <can code="customers.survey">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn :to="goToShowIndexPage(item)" icon v-on="on">
+                        <v-icon small>mdi-view-grid-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('Answer Survey') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Answer Survey -->
                 <!-- Edit Financial Statements -->
                 <can code="customers.edit">
@@ -103,7 +106,7 @@
                 </can>
                 <!-- Edit Financial Statements -->
                 <!-- Show Reports -->
-                <can code="customers.reports">
+                <can code="customers.survey">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn :to="{name: 'companies.reports', params: { id: item.id }}" icon v-on="on">
@@ -115,12 +118,14 @@
                 </can>
                 <!-- Show Reports -->
                 <!-- Send Report -->
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <span v-on="on"><send-report-to-crm-button :customer="item.id" :user="item.user_id"></send-report-to-crm-button></span>
-                  </template>
-                  <span>{{ trans('Send Report to CRM') }}</span>
-                </v-tooltip>
+                <can code="customers.survey">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <span v-on="on"><send-report-to-crm-button :customer="item.id" :user="item.user_id"></send-report-to-crm-button></span>
+                    </template>
+                    <span>{{ trans('Send Report to CRM') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Send Report -->
                 <!-- Move to Trash -->
                 <can code="customers.destroy">
@@ -164,6 +169,16 @@
       </empty-state>
     </div>
     <!-- Empty state -->
+
+    <can code="teams.dashboard">
+      <div>
+        <v-card height="50px" flat class="transparent"></v-card>
+        <!-- Teams -->
+        <h3 class="mb-3">{{ __('All Teams') }}</h3>
+        <team-index></team-index>
+        <!-- Teams -->
+      </div>
+    </can>
   </admin>
 </template>
 
@@ -172,10 +187,12 @@ import $api from './routes/api'
 import man from '@/components/Icons/ManThrowingAwayPaperIcon.vue'
 import SendReportToCrmButton from '@/modules/Customer/cards/SendReportToCrmButton.vue'
 import { mapActions } from 'vuex'
+import TeamIndex from './cards/Teams.vue'
 
 export default {
   components: {
     SendReportToCrmButton,
+    TeamIndex
   },
 
   computed: {

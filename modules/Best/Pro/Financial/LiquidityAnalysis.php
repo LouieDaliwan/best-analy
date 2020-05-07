@@ -538,16 +538,16 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
         $number1 = abs(round(($aq21-$aq20)/$aq20*100, 2));
         if ($aq19 == "" && ($aq21-$aq20) > 0) {
             if (($aq21-$aq20) > $bj14) {
-                $output = __("Overall, the working capital to total assets reflected a significant increasing trend by :number1%.", ['number1' => $number1]);
+                $output = __("Overall, the working capital turnover reflected a significant increasing trend by :number1%.", ['number1' => $number1]);
             } else {
-                $output = __("Overall, the working capital to total assets reflected an increasing trend by :number1%.", ['number1' => $number1]);
+                $output = __("Overall, the working capital turnover reflected an increasing trend by :number1%.", ['number1' => $number1]);
             }
         } else {
             if ($aq19 == "" && ($aq21-$aq20) < 0) {
                 if (($aq21-$aq20) < (-$bj14)) {
-                    $output = __("Overall, the working capital to total assets has seen a significant decline by :number1% over the years.", ['number1' => $number1]);
+                    $output = __("Overall, the working capital turnover has seen a significant decline by :number1% over the years.", ['number1' => $number1]);
                 } else {
-                    $output = __("Overall, the working capital to total assets has seen a decline by :number1% over the years.", ['number1' => $number1]);
+                    $output = __("Overall, the working capital turnover has seen a decline by :number1% over the years.", ['number1' => $number1]);
                 }
             } else {
                 if ($aq21-$aq20 > 0) {
@@ -583,13 +583,13 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
         $number1 = abs(round(($aq20-$aq19)/$aq19*100, 2));
         if (($aq20-$aq19) > 0) {
             if (($n28-$n27) > $bk14) {
-                $output = __("Records have also indicated that the working capital to total assets notched a significant year on year increase by :number1% from :item1 to :item2.", [
+                $output = __("Records have also indicated that the working capital turnover notched a significant year on year increase by :number1% from :item1 to :item2.", [
                     'item1' => $item1,
                     'item2' => $item2,
                     'number1' => $number1,
                 ]);
             } else {
-                $output = __("Records have also indicated that the working capital to total assets notched a year on year increase by :number1% from :item1 to :item2.", [
+                $output = __("Records have also indicated that the working capital turnover notched a year on year increase by :number1% from :item1 to :item2.", [
                     'item1' => $item1,
                     'item2' => $item2,
                     'number1' => $number1,
@@ -598,13 +598,13 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
         } else {
             if (($aq20-$aq19) < 0) {
                 if (($aq20-$aq19) < (-$bk14)) {
-                    $output = __("Records have also indicated that the working capital to total assets notched a significant year on year decrease by :number1% from :item1 to :item2.", [
+                    $output = __("Records have also indicated that the working capital turnover notched a significant year on year decrease by :number1% from :item1 to :item2.", [
                         'item1' => $item1,
                         'item2' => $item2,
                         'number1' => $number1,
                     ]);
                 } else {
-                    $output = __("Records have also indicated that the working capital to total assets notched a year on year decrease by :number1% from :item1 to :item2.", [
+                    $output = __("Records have also indicated that the working capital turnover notched a year on year decrease by :number1% from :item1 to :item2.", [
                         'item1' => $item1,
                         'item2' => $item2,
                         'number1' => $number1,

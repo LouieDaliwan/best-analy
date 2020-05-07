@@ -39,8 +39,8 @@ return [
 
     'has_greaterThan90_value' => [
         'hrpi' => true,
-        'bspi' => false,
-        'pmpi' => false,
-        'fmpi' => false,
+        'bspi' => true,
+        'pmpi' => true,
+        'fmpi' => true,
     ],
 ];

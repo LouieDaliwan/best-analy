@@ -31,6 +31,7 @@
   "Item was moved to trash": "Item was moved to trash | Items were moved to trash",
   "Move :name to Trash?": "Move <strong>{name}</strong> to Trash?",
   "Are you sure you want to move :name to Trash?": "Are you sure you want to move <strong>{name}</strong> to Trash?",
+  "Are you sure you want to permanently delete :name?": "Are you sure you want to permanently delete <strong>{name}</strong>?",
   "Are you sure you want to deactivate and move :name to Trash?": "Are you sure you want to deactivate and move <strong>{name}</strong> to Trash?",
   "Are you sure you want to move the selected item to trash?": "Are you sure you want to move the selected item to trash? | Are you sure you want to move the selected items to trash?",
   "Restore Selected Item": "No Item Selected | Restore Selected Item | Restore Selected Items",

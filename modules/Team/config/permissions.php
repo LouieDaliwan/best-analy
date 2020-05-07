@@ -79,6 +79,12 @@ return [
         'description' => 'Ability to restore the team from trash',
         'group' => 'team',
     ],
+    'dashboard-team' => [
+        'name' => 'dashboard-team',
+        'code' => 'teams.dashboard',
+        'description' => 'Ability to view all teams from the dashboard',
+        'group' => 'team',
+    ],
 
     /**
      *--------------------------------------------------------------------------

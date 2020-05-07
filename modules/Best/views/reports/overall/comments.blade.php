@@ -2,7 +2,7 @@
   <h3 class="dt-BSPI">{{ __('Overall Comments') }}</h3>
 
   {{-- box --}}
-  <div style="border: 1px solid #333333; width: 100%; height: 500px;"></div>
+  <div style="border: 1px solid #333333; width: 100%; height: 80px;"></div>
   {{-- box --}}
 
   <div style="height: 100px;"></div>

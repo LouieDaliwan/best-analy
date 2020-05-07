@@ -56,6 +56,10 @@ export default {
       show: function (user) {
         return `/api/v1/users/${user}`
       },
+    },
+
+    delete: function (id) {
+      return `/api/v1/reports/${id}`
     }
   }
 }

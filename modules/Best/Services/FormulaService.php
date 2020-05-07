@@ -156,6 +156,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'customer:industry' => $customer->metadata['industry'] ?? null,
                 'customer:counselor' => $customer->metadata['BusinessCounselorName'] ?? null,
                 'customer:staffstrength' => $customer->metadata['staffstrength'] ?? null,
+                'customer:type' => $customer->metadata['type'] ?? null,
                 'subscore:score' => $totalSubscoreScore = $this->getTotalIndexSubscoreScore($survey),
                 'subscore:total' => $totalSubscoreTotal = $this->getTotalIndexSubscoreTotal($survey),
                 'overall:total' => $total = $this->getOverallTotalAverage($totalSubscoreScore, $totalSubscoreTotal),
@@ -200,6 +201,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         // User object.
         $this->data['report:user'] = $user->displayname;
+        $this->data['customer:type'] = $customer->metadata['type'] ?? null;
 
         $index = Index::find($attributes['taxonomy_id'] ?? false);
         if ($index) {

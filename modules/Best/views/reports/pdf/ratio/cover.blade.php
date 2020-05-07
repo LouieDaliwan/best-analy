@@ -28,6 +28,9 @@
           <div class="text-center">
             <h1 class="display-4 dt-BSPI">@lang("Business Excellence Survey Toolkit (BEST)")</h1>
             <h1 class="display-4 dt-BSPI">@lang('Financial Analysis Report')</h1>
+            @if (isset($data['customer:type']))
+              <h2 class="font-weight-normal">({{ __('Based on') }} {{ $data['customer:type'] }} {{ __('Financials') }})</h2>
+            @endif
           </div>
           <div style="height: 150px;"></div>
           {{-- header --}}

@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/admin/faq',
+    path: 'faq',
     name: 'admin.faq',
     redirect: {name: 'faq.index'},
     component: () => import('@/App.vue'),
@@ -12,7 +12,7 @@ export default [
     },
     children: [
       {
-        path: 'faq',
+        path: '',
         name: 'faq.index',
         component: () => import('../Index.vue'),
         meta: {

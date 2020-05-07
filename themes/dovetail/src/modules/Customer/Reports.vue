@@ -2,8 +2,8 @@
   <admin>
     <metatag :title="resource.data.name"></metatag>
 
-    <page-header>
-      <template v-slot:back>
+    <page-header :back="{ to: { name: 'companies.show' }, text: trans('Back') }">
+      <!-- <template v-slot:back>
         <div class="mb-2">
           <can code="customers.index">
             <router-link tag="a" exact :to="{ name: 'companies.show' }" class="text--decoration-none body-1 dt-link">
@@ -12,7 +12,7 @@
             </router-link>
           </can>
         </div>
-      </template>
+      </template> -->
       <template v-slot:title>{{ resource.data.name }}</template>
       <template v-slot:utilities>
         <h4 class="muted--text" v-text="trans('Reports List')"></h4>
@@ -344,12 +344,12 @@ export default {
         illustrationWidth: 200,
         illustrationHeight: 160,
         width: '420',
-        title: 'You are about to move to trash the selected company.',
-        text: ['Some data related to company will still remain.', trans('Are you sure you want to move :name to Trash?', {name: item.name})],
+        title: 'You are about to permanently delete the selected report.',
+        text: ['Some data related to report will still remain.', trans('Are you sure you want to permanently delete :name?', { name: item.key })],
         buttons: {
           cancel: { show: true, color: 'link' },
           action: {
-            text: 'Move to Trash',
+            text: 'Delete',
             color: 'error',
             callback: (dialog) => {
               this.loadDialog(true)
@@ -369,7 +369,7 @@ export default {
         this.getPaginatedData(null)
         this.hideDialog()
         this.showSnackbar({
-          text: trans_choice('Company successfully deleted', 1)
+          text: trans_choice('Report successfully deleted', 1)
         })
       }).catch(err => {
         this.errorDialog({

@@ -79,6 +79,12 @@ return [
         'description' => 'Ability to restore the customer from trash',
         'group' => 'customer',
     ],
+    'survey-customer' => [
+        'name' => 'survey-customer',
+        'code' => 'customers.survey',
+        'description' => 'Ability to answer survey',
+        'group' => 'customer',
+    ],
 
     /**
      *--------------------------------------------------------------------------

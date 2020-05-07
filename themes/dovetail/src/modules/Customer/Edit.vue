@@ -57,6 +57,16 @@
           <template v-slot:title>
             {{ trans('Edit :name', {'name': `${resource.data.name}'s Input Data`}) }}
           </template>
+          <template v-slot:action>
+            <validation-provider vid="metadata[type]" :name="trans('Type')" rules="email" v-slot="{ errors }">
+              <div>
+                <v-radio-group hide-details v-model="resource.data.metadata.type" row mandatory>
+                  <v-radio label="Audited Financials" name="metadata[type]" value="Audited"></v-radio>
+                  <v-radio label="In-House Financials" name="metadata[type]" value="In-House"></v-radio>
+                </v-radio-group>
+              </div>
+            </validation-provider>
+          </template>
         </page-header>
 
         <!-- Alertbox -->

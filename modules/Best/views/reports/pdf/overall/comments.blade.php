@@ -1,9 +1,8 @@
-
 <section class="my-2">
   <h3 class="dt-BSPI">{{ __('Overall Comments') }}</h3>
 
   {{-- box --}}
-  <div style="border: 1px solid #333333; width: 100%; height: 800px;"></div>
+  <div style="border: 1px solid #333333; width: 100%; height: 70px;"></div>
   {{-- box --}}
 
   <div style="height: 300px;"></div>

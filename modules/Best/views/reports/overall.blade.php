@@ -89,7 +89,7 @@
             @include('best::reports.partials.disclaimer')
             @include('best::reports.partials.footer')
             <div class="text-right">
-              <div style="font-size: 12px;">{{ $index['page'] }} of 7</div>
+              <div style="font-size: 12px;">Page <span style="display: none;" class="text-white">-</span>{{ $index['page'] }}<span style="display: none;" class="text-white">-</span> of 7</div>
             </div>
           </div>
         </div>

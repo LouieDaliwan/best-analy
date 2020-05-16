@@ -237,7 +237,6 @@ export default {
       axios.get(this.api.owned(), { params })
         .then(response => {
           this.resources = Object.assign({}, this.resources, response.data)
-          console.log(this.resources)
           this.resources.options = Object.assign(this.resources.options, response.data.meta, params)
           this.resources.loading = false
           this.$router.push({query: Object.assign({}, this.$route.query, params)}).catch(err => {})

@@ -41,13 +41,14 @@ trait MorphManySubmissions
         $remarks = is_null($remarks ?? null)
             ? date('Y-m-d H:i:s')
             : date('Y-m-d H:i:s', strtotime(date('Y-m-d', strtotime($remarks))));
+        $monthkey = date('m-Y', strtotime($remarks));
         $submission = $this->submissions()->updateOrCreate([
-            'remarks' => $remarks,
+            'monthkey' => $monthkey,
             'submissible_id' => $attributes['submissible_id'] ?? null,
             'user_id' => $attributes['user_id'] ?? null,
             'customer_id' => $attributes['customer_id'] ?? null,
         ], array_merge(
-            ['remarks' => $remarks], $attributes
+            ['remarks' => $remarks, 'monthkey' => $monthkey], $attributes
         ));
         $this->fireModelEvent('submitted', false, $submission);
 

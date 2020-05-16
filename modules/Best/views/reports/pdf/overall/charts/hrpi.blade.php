@@ -18,8 +18,8 @@
       <p class="mb-0">@lang($data['indices']['HRPI']['overall:comment:overall'])</p>
     </td>
     <td>
-      <div class="mr-3" style="width: 500px; height: 200px;">
-        <canvas id="overall-hrpi" style="width: 500px; height: 200px;"></canvas>
+      <div class="mr-3" style="width: 650px; height: 180px;">
+        <canvas id="overall-hrpi" style="width: 650px; height: 180px;"></canvas>
       </div>
     </td>
   </tr>
@@ -95,7 +95,7 @@
               beginAtZero: true,
               fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',
-              fontSize: 12,
+              fontSize: 10,
             },
           }],
           maxBarThickness: 5,

@@ -6,6 +6,7 @@ use Best\Models\Best;
 use Best\Pro\KeyStrategicRecommendationComments;
 use Core\Application\Service\Service;
 use Illuminate\Http\Request;
+use Setting\Models\Setting;
 use Spatie\TranslationLoader\LanguageLine;
 
 class SettingService extends Service implements SettingServiceInterface
@@ -109,5 +110,24 @@ class SettingService extends Service implements SettingServiceInterface
                 ],
             ]);
         }
+    }
+
+    /**
+     * Save the overall comments.
+     *
+     * @param  array $attributes
+     * @return mixed
+     */
+    public function saveOverallComment($attributes)
+    {
+        $key = "overall:comment/".$attributes['customer_id'].$attributes['key'];
+
+        return Setting::updateOrCreate([
+            'key' => $key,
+            'user_id' => $attributes['user_id'] ?? auth()->id(),
+        ], [
+            'value' => $attributes['value'],
+            'user_id' => $attributes['user_id'] ?? auth()->id(),
+        ]);
     }
 }

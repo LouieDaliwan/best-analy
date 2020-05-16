@@ -11,7 +11,7 @@
   <table>
     <tr>
       <td v-align="middle">
-        <div class="mr-3" style="width: 80px; height: 80px;">
+        <div class="mx-3" style="width: 80px; height: 80px;">
           <canvas id="overall-{{ $data['taxonomy']['id'] }}"></canvas>
         </div>
       </td>

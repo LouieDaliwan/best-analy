@@ -41,6 +41,7 @@ class ComputePerformanceIndexFromSurvey implements ShouldQueue
         $customer = $submission->customer;
         $form = $field->survey;
         $percentage = $submission->metadata['average'] ?? 0;
+        $monthkey = $submission->remarks ? date('m-Y', strtotime($submission->remarks)) : date('m-Y');
 
         $attributes = [
             'key' => $code = sprintf('%s-%s', date('m-Y'), $customer->code),
@@ -54,6 +55,7 @@ class ComputePerformanceIndexFromSurvey implements ShouldQueue
             'form_id' => $form->getKey(),
             'user_id' => user()->getKey(),
             'month' => $submission->remarks ?? date('d-m-Y'),
+            'monthkey' => $monthkey,
         ];
 
         $formulas = $this->service
@@ -62,7 +64,7 @@ class ComputePerformanceIndexFromSurvey implements ShouldQueue
             ->where('taxonomy_id', $taxonomy->getKey())
             ->where('form_id', $form->getKey())
             ->where('user_id', user()->getKey())
-            ->where('month', $submission->remarks ?? date('d-m-Y'))
+            ->where('monthkey', $monthkey)
             ->get();
 
         $formulas->each->delete();

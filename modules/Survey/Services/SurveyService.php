@@ -164,7 +164,7 @@ class SurveyService extends Service implements SurveyServiceInterface
                 'group' => '*',
                 'text' => [
                     'en' => $field['group'],
-                    'ar' => $field['group_arabic'] ?? $field['group'],
+                    'ar' => $field['group_arabic'] ?? $field['metadata']['group_arabic'] ?? $field['group'],
                 ],
             ]);
 
@@ -176,7 +176,7 @@ class SurveyService extends Service implements SurveyServiceInterface
                 'group' => '*',
                 'text' => [
                     'en' => $field['title'],
-                    'ar' => $field['title_arabic'] ?? $field['title'],
+                    'ar' => $field['title_arabic'] ?? $field['metadata']['title_arabic'] ?? $field['title'],
                 ],
             ]);
 

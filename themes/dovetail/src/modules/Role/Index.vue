@@ -83,24 +83,28 @@
             <template v-slot:item.action="{ item }">
               <div class="text-no-wrap">
                 <!-- Edit -->
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn :to="{name: 'roles.edit', params: {id: item.id}}" icon v-on="on">
-                      <v-icon small>mdi-pencil-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('Edit this role') }}</span>
-                </v-tooltip>
+                <can code="roles.edit">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn :to="{name: 'roles.edit', params: {id: item.id}}" icon v-on="on">
+                        <v-icon small>mdi-pencil-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('Edit this role') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Edit -->
                 <!-- Move to Trash -->
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn @click="askUserToDestroyRole(item)" icon v-on="on">
-                      <v-icon small>mdi-delete-outline</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>{{ trans('Move to trash') }}</span>
-                </v-tooltip>
+                <can code="roles.destroy">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-btn @click="askUserToDestroyRole(item)" icon v-on="on">
+                        <v-icon small>mdi-delete-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ trans('Move to trash') }}</span>
+                  </v-tooltip>
+                </can>
                 <!-- Move to Trash -->
               </div>
             </template>

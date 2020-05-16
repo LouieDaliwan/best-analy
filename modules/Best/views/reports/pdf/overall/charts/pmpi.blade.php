@@ -20,7 +20,7 @@
       </div>
     </td>
     <td>
-      <p class="mb-0">@lang($data['indices']['PMPI']['overall:comment:overall'])</p>
+      <p class="mb-0 mr-3">@lang($data['indices']['PMPI']['overall:comment:overall'])</p>
     </td>
   </tr>
 </table>
@@ -93,7 +93,7 @@
               beginAtZero: true,
               fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',
-              fontSize: 12,
+              fontSize: 11,
             },
           }],
           maxBarThickness: 5,

@@ -10,7 +10,7 @@
         </a>
         <a class="dt-link text--decoration-none mr-4" @click="sendToCrm(item)">
           <v-icon small left>mdi-send</v-icon>
-          {{ trans('Send Report to CRM') }}
+          {{ trans('Send Financial Analysis Report to CRM') }}
         </a>
       </template>
 
@@ -67,13 +67,15 @@ export default {
       let customerId = this.$route.params.id
       let lang = this.$route.query.lang || this.resource.lang
       let query = Object.assign({}, this.$route.query, { lang: lang})
+      let filename = "Financial Analysis Report"
       this.$router.replace({query}).catch(err => {})
-      this.url = `/best/preview/reports/ratios?user_id=${id}&customer_id=${customerId}&lang=${lang}`
+      this.url = `/best/preview/reports/ratios?user_id=${id}&customer_id=${customerId}&lang=${lang}&filename=${filename}`
     },
 
     previewPDFOverallReport (item) {
+      let filename = "Financial Analysis Report"
       let lang = this.$route.query.lang || this.resource.lang
-      window.open(`/best/reports/pdf/preview?report_id=${item.id}&type=financialratio&lang=${lang}`, '_blank')
+      window.open(`/best/reports/pdf/preview?report_id=${item.id}&type=financialratio&lang=${lang}&filename=${filename}`, '_blank')
     },
 
     sendToCrm (item) {

@@ -19,6 +19,8 @@ Route::prefix('v1')->group(function () {
 });
 
 Route::prefix('v1')->middleware('auth:api')->group(function () {
+    Route::post('settings/overall/comment', 'Api\Settings\SaveOverallComment');
+
     Route::get(
         'reports/overall/customer/{customer}/user/{user}',
         'Api\GetUserCustomerOverallReport'

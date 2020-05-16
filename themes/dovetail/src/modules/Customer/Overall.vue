@@ -4,14 +4,15 @@
 
     <page-header :back="{ to: {name: 'companies.reports'}, text: trans('Back to Reports') }">
       <template v-slot:utilities>
-        <a v-if="resource.data.report" class="dt-link text--decoration-none mr-4" @click.prevent="previewPDFOverallReport(resource.data.report)">
-          <v-icon small left>mdi-file-pdf</v-icon>
-          {{ trans('Preview PDF Report') }}
-        </a>
-        <a class="dt-link text--decoration-none mr-4" @click="sendToCrm(item)">
-          <v-icon small left>mdi-send</v-icon>
-          {{ trans('Send Report to CRM') }}
-        </a>
+        <div class="mb-2">
+          <a v-if="resource.data.report" class="dt-link text--decoration-none mr-4" @click.prevent="previewPDFOverallReport(resource.data.report)">
+            <v-icon small left>mdi-file-pdf</v-icon>
+            {{ trans('Preview PDF Report') }}
+          </a>
+        </div>
+        <can code="reports.comment">
+          <add-overall-comment :month.sync="resource.data.report.month"></add-overall-comment>
+        </can>
       </template>
 
       <template v-slot:action>
@@ -23,6 +24,12 @@
           <v-icon small left>mdi-earth</v-icon>
           {{ trans('View Report in English') }}
         </v-btn>
+        <div class="mt-3">
+          <a class="dt-link text--decoration-none mr-4" @click="sendToCrm(item)">
+            <v-icon small left>mdi-send</v-icon>
+            {{ trans('Send Overall Report to CRM') }}
+          </a>
+        </div>
       </template>
     </page-header>
 
@@ -46,7 +53,11 @@ export default {
     resource: {
       lang: window.localStorage.getItem('report:lang') || 'en',
       loading: false,
-      data: {},
+      data: {
+        report: {
+          month: '',
+        },
+      },
     },
     url: null,
   }),

@@ -2,7 +2,11 @@
   <h3 class="dt-BSPI">{{ __('Overall Comments') }}</h3>
 
   {{-- box --}}
-  <div style="border: 1px solid #333333; width: 100%; height: 70px;"></div>
+  <div style="border: 1px solid #333333; width: 100%; height: 500px;">
+    <p class="p-3">
+      {!! nl2br($data['overall:user:comment'] ?? null) !!}
+    </p>
+  </div>
   {{-- box --}}
 
   <div style="height: 300px;"></div>

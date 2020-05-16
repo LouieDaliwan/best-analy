@@ -27,9 +27,9 @@
                   </div>
                 </td>
                 <td valign="top">
-                  <h4 class="mb-0">@lang('Documentation')</h4>
+                  <h4 class="mb-0 mr-3">@lang('Documentation')</h4>
                   @foreach ($data['overall:enablers']['enablers']['Documentation'] as $comment)
-                    <p class="mb-2">{{ $comment }}</p>
+                    <p class="mb-2 mr-3">{{ $comment }}</p>
                   @endforeach
                 </td>
               </tr>
@@ -44,9 +44,9 @@
                   </div>
                 </td>
                 <td valign="top">
-                  <h4 class="mb-0">@lang('Talent')</h4>
+                  <h4 class="mb-0 mr-3">@lang('Talent')</h4>
                   @foreach ($data['overall:enablers']['enablers']['Talent'] as $comment)
-                    <p class="mb-2">{{ $comment }}</p>
+                    <p class="mb-2 mr-3">{{ $comment }}</p>
                   @endforeach
                 </td>
               </tr>
@@ -68,9 +68,9 @@
                   </div>
                 </td>
                 <td valign="top">
-                  <h4 class="mb-0">@lang('Technology')</h4>
+                  <h4 class="mb-0 mr-3">@lang('Technology')</h4>
                   @foreach ($data['overall:enablers']['enablers']['Technology'] as $comment)
-                    <p class="mb-2">{{ $comment }}</p>
+                    <p class="mb-2 mr-3">{{ $comment }}</p>
                   @endforeach
                 </td>
               </tr>
@@ -86,9 +86,9 @@
                   </div>
                 </td>
                 <td valign="top">
-                  <h4 class="mb-0">@lang('Workflow Processess')</h4>
+                  <h4 class="mb-0 mr-3">@lang('Workflow Processess')</h4>
                   @foreach ($data['overall:enablers']['enablers']['Workflow Processess'] as $comment)
-                    <p class="mb-2">{{ $comment }}</p>
+                    <p class="mb-2 mr-3">{{ $comment }}</p>
                   @endforeach
                 </td>
               </tr>

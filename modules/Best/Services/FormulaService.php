@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Index\Models\Index;
+use Setting\Models\Setting;
 use Spatie\Browsershot\Browsershot;
 use Survey\Models\Survey;
 use User\Models\User;
@@ -107,12 +108,18 @@ class FormulaService extends Service implements FormulaServiceInterface
         $taxonomies = Index::all();
         $user = $this->auth()->user();
 
+        $monthkey = $attributes['monthkey'] ?? date('m-Y', strtotime($attributes['month']));
+
         // Retrieve the Customer array.
         $this->data['organisation:profile'] = $customer->toArray();
         $this->data['survey:id'] = $survey->getKey();
         $this->data['user:id'] = $user->getKey();
         $this->data['month'] = $attributes['month'] ?? date('m-Y');
+        $this->data['monthkey'] = $monthkey;
         $this->data['month:formatted'] = date('M Y', strtotime($attributes['month'] ?? date('M Y')));
+        $this->data['overall:user:comment'] = Setting::whereUserId($user->getKey())
+            ->whereKey("overall:comment/".$customer->getKey().$monthkey)
+            ->first()->value ?? null;
 
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {
@@ -133,8 +140,8 @@ class FormulaService extends Service implements FormulaServiceInterface
             )->whereUserId(
                 $user->getKey()
             )->where(
-                'month',
-                $attributes['month'] ?? date('m-Y')
+                'monthkey',
+                $monthkey
             )->get();
 
             $this->data['indices'][$taxonomy->alias] = [

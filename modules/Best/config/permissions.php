@@ -49,4 +49,10 @@ return [
         'description' => 'Ability to view instructional videos of the app for business counselor role',
         'group' => 'best',
     ],
+    'comment-report' => [
+        'name' => 'comment-report',
+        'code' =>  'reports.comment',
+        'description' => 'Ability to comment to overall report',
+        'group' => 'best',
+    ],
 ];

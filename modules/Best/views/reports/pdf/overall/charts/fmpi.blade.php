@@ -19,7 +19,7 @@
       </div>
     </td>
     <td>
-      <p class="mb-0">@lang($data['indices']['FMPI']['overall:comment:overall'])</p>
+      <p class="mb-0 mr-3">@lang($data['indices']['FMPI']['overall:comment:overall'])</p>
     </td>
   </tr>
 </table>

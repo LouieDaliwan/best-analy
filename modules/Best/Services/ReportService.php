@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 use Index\Models\Index;
+use Setting\Models\Setting;
 use Spatie\Browsershot\Browsershot;
 use Survey\Models\Survey;
 use User\Models\User;
@@ -141,8 +142,11 @@ class ReportService extends Service implements ReportServiceInterface
         $model = $model->where('month', $this->request()->get('month') ?: date('m-Y'));
 
         return [
-            'report' => new ReportResource($model->latest('created_at')->first()),
+            'report' => $model = new ReportResource($model->latest('created_at')->first()),
             'customer' => $customer,
+            'overall:comment' => Setting::whereUserId($user->getKey())
+                ->whereKey("overall:comment/".$customer->getKey().$model->month)
+                ->first()->value ?? null,
         ];
     }
 

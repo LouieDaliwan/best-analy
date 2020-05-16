@@ -127,7 +127,7 @@
                       <v-icon small>mdi-send</v-icon>
                     </v-btn>
                   </template>
-                  <span>{{ trans('Send Report to CRM') }}</span>
+                  <span>{{ trans('Send') }} {{ item.key }} {{ __('to CRM') }}</span>
                 </v-tooltip>
                 <!-- Send Report -->
                 <!-- Show Reports -->

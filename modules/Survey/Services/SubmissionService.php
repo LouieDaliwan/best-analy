@@ -57,13 +57,14 @@ class SubmissionService extends Service implements SubmissionServiceInterface
         $model = $this->model;
 
         foreach ($attributes as $attribute) {
+            $monthkey = date('m-Y', strtotime($attribute['remarks']));
             $model = $model->updateOrCreate([
                 'submissible_id' => $attribute['submissible_id'] ?? null,
                 'submissible_type' => $attribute['submissible_type'] ?? null,
-                'remarks' => $attribute['remarks'] ?? null,
+                'monthkey' => $monthkey,
                 'user_id' => $attribute['user_id'] ?? null,
                 'customer_id' => $attribute['customer_id'] ?? null,
-            ], $attribute);
+            ], array_merge(['monthkey' => $monthkey], $attribute));
         }
 
         return $model;

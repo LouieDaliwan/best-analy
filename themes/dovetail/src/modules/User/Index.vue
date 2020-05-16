@@ -3,12 +3,14 @@
     <metatag :title="trans('All Users')"></metatag>
 
     <page-header>
-      <template v-slot:utilities>
-        <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'users.trashed'}">
-          <v-icon small left>mdi-account-off-outline</v-icon>
-          {{ trans('Deactivated Users') }}
-        </router-link>
-      </template>
+      <can code="users.trashed">
+        <template v-slot:utilities>
+          <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'users.trashed'}">
+            <v-icon small left>mdi-account-off-outline</v-icon>
+            {{ trans('Deactivated Users') }}
+          </router-link>
+        </template>
+      </can>
 
       <template v-slot:action>
         <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'users.create' }">

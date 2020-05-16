@@ -45,17 +45,18 @@
   </div>
 
   {{-- Analysis --}}
-  <div class="sheet" style="zoom: 0.76; line-height: 1;">
-    @include('best::reports.pdf.partials.header')
-    <div class="my-2 border-bottom"></div>
-    @include('best::reports.pdf.partials.organisation-profile')
-    @include('best::reports.pdf.analysis.profitability')
-    @include('best::reports.pdf.analysis.liquidity')
+  <div class="sheet">
+    <div style="zoom: 0.76; line-height: 1;">
+      @include('best::reports.pdf.partials.header')
+      <div class="my-2 border-bottom"></div>
+      @include('best::reports.pdf.partials.organisation-profile')
+      @include('best::reports.pdf.analysis.profitability')
+      @include('best::reports.pdf.analysis.liquidity')
 
-    @include('best::reports.pdf.analysis.efficiency')
-    @include('best::reports.pdf.analysis.solvency')
-    @include('best::reports.pdf.analysis.productivity')
-
+      @include('best::reports.pdf.analysis.efficiency')
+      @include('best::reports.pdf.analysis.solvency')
+      @include('best::reports.pdf.analysis.productivity')
+    </div>
     @include('best::reports.pdf.partials.disclaimer')
     @include('best::reports.pdf.partials.footer')
     <div class="text-right">
@@ -64,11 +65,13 @@
   </div>
 
   {{-- Ratios --}}
-  <div class="sheet" style="zoom: 0.7; line-height: 1;">
-    @include('best::reports.pdf.partials.header')
-    <div class="my-2 border-bottom"></div>
-    @include('best::reports.pdf.partials.organisation-profile')
-    @include('best::reports.pdf.table.index')
+  <div class="sheet">
+    <div style="zoom: 0.7; line-height: 1;">
+      @include('best::reports.pdf.partials.header')
+      <div class="my-2 border-bottom"></div>
+      @include('best::reports.pdf.partials.organisation-profile')
+      @include('best::reports.pdf.table.index')
+    </div>
     @include('best::reports.pdf.partials.disclaimer')
     @include('best::reports.pdf.partials.footer')
     <div class="text-right">

@@ -52,7 +52,7 @@ export default [
           authenticatable: true,
           icon: 'mdi-shield-account-outline',
           sort: 6,
-          permission: 'users.index',
+          permission: 'roles.index',
           children: ['roles.index', 'roles.create', 'roles.edit', 'roles.show', 'roles.trashed'],
         }
       },
@@ -65,7 +65,7 @@ export default [
           authenticatable: true,
           icon: 'mdi-shield-lock',
           sort: 6,
-          permission: 'users.index',
+          permission: 'permissions.index',
           children: ['permissions.index'],
         }
       },

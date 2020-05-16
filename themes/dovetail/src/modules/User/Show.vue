@@ -5,7 +5,7 @@
     <page-header :back="{ to: { name: 'users.index' }, text: trans('Users') }">
       <template v-slot:title>{{ resource.data.displayname }}</template>
       <template v-slot:utilities>
-        <can code="users.show">
+        <can code="users.edit">
           <router-link tag="a" class="dt-link text--decoration-none mr-6" exact :to="{name: 'users.edit'}">
             <v-icon small class="mb-1">mdi-pencil-outline</v-icon>
             {{ trans('Edit') }}

@@ -123,7 +123,7 @@
                     <template v-slot:activator="{ on }">
                       <span v-on="on"><send-report-to-crm-button :customer="item.id" :user="item.user_id"></send-report-to-crm-button></span>
                     </template>
-                    <span>{{ trans('Send Report to CRM') }}</span>
+                    <span>{{ trans('Send All Reports for this month to CRM') }}</span>
                   </v-tooltip>
                 </can>
                 <!-- Send Report -->

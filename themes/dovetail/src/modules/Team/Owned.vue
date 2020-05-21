@@ -15,7 +15,7 @@
           color="primary"
           large
           >
-          <v-icon left>mdi-file-pdf-outline</v-icon>
+          <v-icon small left>mdi-file-excel-outline</v-icon>
           {{ trans('Export') }}
         </v-btn>
       </template>
@@ -347,7 +347,7 @@ export default {
       this.$store.dispatch('dialog/show', {
         illustration: () => import('@/components/Icons/ExportIcon.vue'),
         title: trans('Export Report'),
-        text: [trans('Download the table as PDF file.')],
+        text: [trans('Download the table as Excel file.')],
         buttons: {
           action: {
             text: trans('Export'),

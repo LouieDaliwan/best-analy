@@ -27,6 +27,15 @@ class Report extends Model
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'remarks',
+    ];
+
+    /**
      * The attributes that are not mass assignable.
      *
      * @var array

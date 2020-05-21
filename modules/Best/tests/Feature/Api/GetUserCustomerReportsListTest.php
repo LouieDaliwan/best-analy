@@ -46,7 +46,7 @@ class GetUserCustomerReportsListTest extends TestCase
         $user = factory(User::class)->create();
         $customer = factory(Customer::class, 2)->create(['user_id' => $user->getKey()])->random();
         $reports = factory(Report::class, 2)->create([
-            'remarks' => date('m-Y'),
+            'month' => date('m-Y'),
             'user_id' => $user->getKey(),
             'customer_id' => $customer->getKey(),
         ]);

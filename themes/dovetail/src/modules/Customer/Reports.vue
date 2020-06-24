@@ -240,6 +240,8 @@ export default {
     },
 
     sendToCrm (item) {
+      console.log(item)
+
       let data = {
         Id: this.resource.data.token,
         FileNo: this.resource.data.refnum,
@@ -247,6 +249,7 @@ export default {
         FileContentBase64: item.fileContentBase64,
         'Lessons Learnt': item.value['overall:comment'],
       }
+
       axios.post(
         $api.crm.save(), data
       ).then(response => {

@@ -32,6 +32,13 @@ export default {
     sendToCrm () {
       this.getReportData().then(response => {
         this.resource.data = response.data
+
+        if (! this.resource.data.customer) {
+          this.$store.dispatch('snackbar/show', { text: 'No report data found.'});
+
+          return false;
+        }
+
         let data = {
           Id: this.resource.data.customer.token,
           FileNo: this.resource.data.customer.refnum,
@@ -47,6 +54,8 @@ export default {
         }).catch(err => {
           this.$store.dispatch('snackbar/show', { text: trans('Unable to connect to CRM. Please check your network connection')})
         })
+      }).catch(err => {
+        console.log('err', err)
       })
     },
   }

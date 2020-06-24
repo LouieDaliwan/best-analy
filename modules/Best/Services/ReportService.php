@@ -141,6 +141,10 @@ class ReportService extends Service implements ReportServiceInterface
 
         $model = $model->where('month', $this->request()->get('month') ?: date('m-Y'));
 
+        if (! $model->exists()) {
+            return response()->json(['message' => 'Not found.'], 404);
+        }
+
         return [
             'report' => $model = new ReportResource($model->latest('created_at')->first()),
             'customer' => $customer,

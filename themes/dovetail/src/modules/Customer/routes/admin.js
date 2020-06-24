@@ -50,18 +50,6 @@ export default [
         },
       },
       {
-        path: 'preview',
-        props: true,
-        name: 'companies.preview',
-        component: () => import('../Preview.vue'),
-        meta: {
-          title: 'asd',
-          sort: 6,
-          authenticatable: true,
-          permission: 'crm.search',
-        },
-      },
-      {
         path: 'trashed',
         name: 'companies.trashed',
         component: () => import('../Trashed.vue'),

@@ -23,10 +23,6 @@
       </template>
     </page-header>
 
-    <!-- <template v-if="isFetchingResource">
-      <skeleton-show></skeleton-show>
-    </template> -->
-
     <template v-show="isFinishedFetchingResource">
       <v-card outlined>
         <iframe width="100%" id="iframe-preview" :src="url" frameborder="0"></iframe>
@@ -37,6 +33,7 @@
 
 <script>
 import $auth from '@/core/Auth/auth'
+import $api from './routes/api'
 import SkeletonShow from './cards/SkeletonShow'
 
 export default {
@@ -54,6 +51,8 @@ export default {
   },
 
   data: () => ({
+    api: $api,
+
     resource: {
       lang: window.localStorage.getItem('report:lang') || 'en',
       loading: false,
@@ -67,9 +66,8 @@ export default {
     getReportData () {
       let customer = this.$route.params.id
       let user = this.$route.query.user_id || $auth.getId()
-      axios.get(
-        `/api/v1/reports/overall/customer/${customer}/user/${user}`
-      ).then(response => {
+      axios.get($api.overall(customer, user)
+        ).then(response => {
         this.resource.file = response.data
       })
     },
@@ -128,15 +126,6 @@ export default {
 
     downloadReport () {
       window.location.href = `/reports/${this.$route.params.report}/download`
-      // axios.get(
-      //   `/api/v1/reports/${this.$route.params.report}/download`
-      // ).then(response => {
-      //   let blob = new Blob([response.data], { type: 'application/pdf' })
-      //   let link = document.createElement('a')
-      //   link.href = window.URL.createObjectURL(blob)
-      //   link.download = `Report.pdf`
-      //   link.click()
-      // })
     },
 
     setIframeHeight () {

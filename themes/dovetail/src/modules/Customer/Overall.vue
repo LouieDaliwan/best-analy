@@ -47,9 +47,12 @@
 
 <script>
 import $auth from '@/core/Auth/auth'
+import $api from './routes/api'
 
 export default {
   data: () => ({
+    api: $api,
+
     resource: {
       lang: window.localStorage.getItem('report:lang') || 'en',
       loading: false,
@@ -66,8 +69,7 @@ export default {
     getReportData () {
       let customer = this.$route.params.id
       let user = this.$route.query.user_id || $auth.getId()
-      axios.get(
-        `/api/v1/reports/overall/customer/${customer}/user/${user}`
+      axios.get($api.overall(customer, user)
       ).then(response => {
         this.resource.data = response.data
       })
@@ -107,15 +109,6 @@ export default {
 
     downloadReport () {
       window.location.href = `/reports/${this.$route.params.report}/download`
-      // axios.get(
-      //   `/api/v1/reports/${this.$route.params.report}/download`
-      // ).then(response => {
-      //   let blob = new Blob([response.data], { type: 'application/pdf' })
-      //   let link = document.createElement('a')
-      //   link.href = window.URL.createObjectURL(blob)
-      //   link.download = `Report.pdf`
-      //   link.click()
-      // })
     },
 
     setIframeHeight () {

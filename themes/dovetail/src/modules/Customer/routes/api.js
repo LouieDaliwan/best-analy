@@ -35,6 +35,10 @@ export default {
     return `/api/v1/customers/delete/${id}`
   },
 
+  overall: function (customer, user) {
+    return `/api/v1/reports/overall/customer/${customer}/user/${user}`
+  },
+
   indices: {
     list: function () {
       return '/api/v1/indices'

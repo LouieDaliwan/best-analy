@@ -103,9 +103,7 @@
                 <!-- Send Report -->
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <v-btn @click="sendToCrm(item)" icon v-on="on">
-                      <v-icon small>mdi-send</v-icon>
-                    </v-btn>
+                    <span v-on="on"><send-report-to-crm-button :customer="item.customer.id" :user="item.user_id"></send-report-to-crm-button></span>
                   </template>
                   <span>{{ trans('Send') }} {{ item.key }} {{ __('to CRM') }}</span>
                 </v-tooltip>
@@ -172,9 +170,14 @@
 import $auth from '@/core/Auth/auth'
 import $api from './routes/api'
 import Company from './Models/Company'
+import SendReportToCrmButton from '@/modules/Customer/cards/SendReportToCrmButton.vue'
 import { mapActions } from 'vuex'
 
 export default {
+  components: {
+    SendReportToCrmButton,
+  },
+
   computed: {
     resourcesIsNotEmpty () {
       return !this.resourcesIsEmpty
@@ -237,23 +240,6 @@ export default {
 
     previewPDFReport (item) {
       window.open(`/best/reports/pdf/preview?report_id=${item.id}&type=index`, '_blank')
-    },
-
-    sendToCrm (item) {
-      console.log(item)
-
-      let data = {
-        Id: this.resource.data.token,
-        FileNo: this.resource.data.refnum,
-        OverallScore: item.value['overall:score'],
-        FileContentBase64: item.fileContentBase64,
-        'Lessons Learnt': item.value['overall:comment'],
-      }
-
-      axios.post(
-        $api.crm.save(), data
-      ).then(response => {
-      })
     },
 
     previewRatiosReport () {

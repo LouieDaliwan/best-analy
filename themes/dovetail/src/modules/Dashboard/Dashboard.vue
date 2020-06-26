@@ -51,26 +51,32 @@
             </template>
 
             <!-- Name with edit page -->
-              <template v-slot:item.name="{ item }">
-                <can code="customers.edit">
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                      <span class="mt-1" v-on="on"><router-link tag="a" exact :to="{name: 'companies.edit', params: { id: item.id }}" v-text="item.name" class="text-no-wrap text--decoration-none"></router-link></span>
-                    </template>
-                    <span>{{ trans('Edit Company Information') }}</span>
-                  </v-tooltip>
-                  <template v-slot:unpermitted>
-                    <span v-text="item.name"></span>
+            <template v-slot:item.name="{ item }">
+              <can code="customers.edit">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <span class="mt-1" v-on="on"><router-link tag="a" exact :to="{name: 'companies.edit', params: { id: item.id }}" v-text="item.name" class="text-no-wrap text--decoration-none"></router-link></span>
                   </template>
-                </can>
-              </template>
-              <!-- Name with edit page -->
+                  <span>{{ trans('Edit Company Information') }}</span>
+                </v-tooltip>
+                <template v-slot:unpermitted>
+                  <span v-text="item.name"></span>
+                </template>
+              </can>
+            </template>
+            <!-- Name with edit page -->
 
-              <!-- File No. -->
-              <template v-slot:item.refnum="{ item }">
-                <span class="text-no-wrap" v-text="item.refnum"></span>
-              </template>
-              <!-- File No. -->
+            <!-- File No. -->
+            <template v-slot:item.filenumber="{ item }">
+              <span class="text-no-wrap" v-text="item.filenumber"></span>
+            </template>
+            <!-- File No. -->
+
+            <!-- Counselor. -->
+            <template v-slot:item.counselor="{ item }">
+              <span class="text-no-wrap" v-text="item.counselor"></span>
+            </template>
+            <!-- Counselor. -->
 
             <!-- Modified -->
             <template v-slot:item.updated_at="{ item }">
@@ -238,9 +244,9 @@ export default {
       selected: [],
       headers: [
         { text: trans('Company Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
-        { text: trans('File No.'), align: 'left', value: 'refnum', class: 'text-no-wrap' },
+        { text: trans('File No.'), align: 'left', value: 'filenumber', class: 'text-no-wrap' },
         { text: trans('Business Counselor'), align: 'left', value: 'counselor', class: 'text-no-wrap' },
-        { text: trans(' Peer BC'), align: 'left', value: 'author', class: 'text-no-wrap' },
+        { text: trans('Peer BC'), align: 'left', value: 'author', class: 'text-no-wrap' },
         { text: trans('Last Modified'), value: 'updated_at', class: 'text-no-wrap' },
         { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
       ],
@@ -285,6 +291,7 @@ export default {
       axios.get(this.api.owned(), { params })
         .then(response => {
           this.resources = Object.assign({}, this.resources, response.data)
+          console.log(this.resources)
           this.resources.options = Object.assign(this.resources.options, response.data.meta, params)
           this.resources.loading = false
           this.$router.push({query: Object.assign({}, this.$route.query, params)}).catch(err => {})
@@ -324,7 +331,7 @@ export default {
     sendToCrm (item) {
       let data = {
         Id: this.resources.data.token,
-        FileNo: this.resources.data.refnum,
+        FileNo: this.resources.data.filenumber,
         OverallScore: item.value['overall:score'],
         FileContentBase64: item.fileContentBase64,
         'Lessons Learnt': item.value['overall:comment'],

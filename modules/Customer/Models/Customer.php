@@ -69,9 +69,19 @@ class Customer extends Model
      *
      * @return string
      */
-    public function getCouncelorAttribute()
+    public function getCounselorAttribute()
     {
         return $this->metadata['BusinessCounselorName'] ?? null;
+    }
+
+    /**
+     * Retrieve the business councelor name from CRM.
+     *
+     * @return string
+     */
+    public function getFilenumberAttribute()
+    {
+        return $this->metadata['FileNo'] ?? null;
     }
 
     /**
@@ -87,13 +97,12 @@ class Customer extends Model
     }
 
     /**
-     * Retrieve the metdata formatted for the CRM.
+     * Retrieve the metadata formatted for the CRM.
      *
      * @return array
      */
     public function getMetadataForCrm()
     {
-        return dd($this->metadata['balance-sheet'], ProfitAndLossStatement::getReport($this));
         return [
             'Revenue' => ''
         ];

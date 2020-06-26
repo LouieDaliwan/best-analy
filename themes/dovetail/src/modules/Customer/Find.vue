@@ -127,6 +127,8 @@ export default {
         if (Code == CRM_CODE_FILE_NUMBER_DOES_NOT_EXIST) {
           this.errors.push(Message)
           return this.showSnackbar({
+            icon: false,
+            button: { show: true },
             text: this.trans(Message)
           })
         }
@@ -160,14 +162,16 @@ export default {
       let attributes = {
         name: data.CompanyName,
         code: this.slugify(data.CompanyName),
-        refnum: data.Id,
+        refnum: this.query,
         status: data.Status,
         token: data.Id,
         user_id: $auth.getId(),
         metadata: {
+          FileNo: this.query,
           FundingRequestNo: data.FundingRequestNo,
           SiteVisitDate: data.SiteVisitDate || null,
           BusinessCounselorName: data.BusinessCounselorName,
+          PeeBusinessCounselorName: data.PeeBusinessCounselorName,
         },
       }
 
@@ -175,6 +179,8 @@ export default {
         $api.crm.update(), attributes
       ).then(response => {
         this.showSnackbar({
+          icon: false,
+          button: { show: true },
           text: trans('Company successfully saved'),
         })
         this.goToCompanyShowPage(response.data.id)
@@ -182,7 +188,7 @@ export default {
     },
 
     goToCompanyShowPage (id) {
-      this.$router.push({name: 'companies.show', params: {id: id}})
+      this.$router.push({name: 'companies.edit', params: {id: id}})
     }
   },
 

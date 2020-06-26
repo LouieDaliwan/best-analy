@@ -51,6 +51,10 @@ export const actions = {
   show: (context, payload) => {
     context.commit('SHOW', payload)
   },
+
+  hide: (context) => {
+    context.commit('TOGGLE_TOAST', {show: false})
+  },
 }
 
 export default {

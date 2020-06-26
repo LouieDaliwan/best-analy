@@ -41,6 +41,7 @@ class PreviewPdfReport extends Controller
         $data['current:pindex']['sitevisit:date:formatted'] = date('M d, Y', strtotime($data['month']));
 
         $pdf = SnappyPdf::loadHTML(view("best::reports.pdf.$type")->withData($data));
+
         $filename = $request->get('filename') ?: $report->key;
 
         if ($request->get('view') == 'blade') {

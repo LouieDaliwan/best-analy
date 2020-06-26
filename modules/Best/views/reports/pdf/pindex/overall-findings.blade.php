@@ -20,6 +20,7 @@
   </table>
 </section>
 
+@push('js')
 <script>
   Chart.pluginService.register({
     afterUpdate: function (chart) {
@@ -97,7 +98,7 @@
     },
     options: {
       animation: false,
-      responsive: true,
+      responsive: false,
       legend: {
         display: false
       },
@@ -117,3 +118,4 @@
     }
   });
 </script>
+@endpush

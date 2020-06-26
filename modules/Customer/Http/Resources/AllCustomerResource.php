@@ -19,7 +19,9 @@ class AllCustomerResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'refnum' => $this->refnum,
+            'refnum' => strtoupper($this->refnum),
+            'token' => strtoupper($this->token),
+            'filenumber' => $this->filenumber,
             'code' => $this->code,
             'status' => $this->status,
             'user_id' => $this->user_id,

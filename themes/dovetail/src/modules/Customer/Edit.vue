@@ -167,6 +167,15 @@
                             >
                           </v-text-field>
                         </validation-provider>
+
+                        <!-- Metadata -->
+                        <input
+                          v-for="(meta, i) in resource.data.metadata"
+                          type="hidden"
+                          :name="`metadata[${i}]`"
+                          :value="resource.data.metadata[i]"
+                          >
+                        <!-- Metadata -->
                       </v-card-text>
                     </v-card>
                   </v-tab-item>
@@ -464,7 +473,7 @@ export default {
               code: 'customers.show',
               to: { name: 'companies.show', params: { id: this.resource.data.id } },
               icon: 'mdi-briefcase-search-outline',
-              text: trans('View Details'),
+              text: trans('Go to Survey Page'),
             },
             create: {
               code: 'crm.search',
@@ -495,6 +504,7 @@ export default {
       ).then(response => {
         this.resource.data = response.data.data
         this.resource.metadata = _.merge({}, this.resource.metadata, this.resource.data.metadata)
+        console.log(this.resource.metadata)
         this.resource.data.financials = this.resource.metadata
       }).finally(() => {
         this.load(false)

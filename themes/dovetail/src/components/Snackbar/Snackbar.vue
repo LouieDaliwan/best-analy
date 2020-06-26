@@ -12,7 +12,8 @@
       :vertical="snackbar.mode === 'vertical'"
       >
 
-      <v-icon v-if="snackbar.icon" dark small>{{ snackbar.icon }}</v-icon>
+      <v-icon v-if="snackbar.icon" dark small class="mr-3">{{ snackbar.icon }}</v-icon>
+      &nbsp;
       {{ snackbar.text }}
 
       <v-btn

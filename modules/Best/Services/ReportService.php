@@ -14,7 +14,7 @@ use Best\Pro\Financial\SolvencyAnalysis;
 use Best\Pro\KeyStrategicRecommendationComments;
 use Best\Pro\TrafficLight;
 use Core\Application\Service\Service;
-use Customer\Http\Resources\AllCustomerReport;
+use Customer\Http\Resources\AllCustomerResource;
 use Customer\Http\Resources\ReportResource;
 use Customer\Models\Customer;
 use Illuminate\Http\Request;
@@ -148,7 +148,7 @@ class ReportService extends Service implements ReportServiceInterface
 
         return [
             'report' => $model = new ReportResource($model->latest('created_at')->first()),
-            'customer' => $customer,
+            'customer' => new AllCustomerResource($customer),
             'overall:comment' => Setting::whereUserId($user->getKey())
                 ->whereKey("overall:comment/".$customer->getKey().$model->month)
                 ->first()->value ?? null,
@@ -170,7 +170,7 @@ class ReportService extends Service implements ReportServiceInterface
 
         return [
             'report' => $model->first(),
-            'customer' => new AllCustomerReport($customer),
+            'customer' => new AllCustomerResource($customer),
         ];
     }
 }

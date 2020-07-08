@@ -85,7 +85,7 @@ class Company {
           'Year2': '',
           'Year3': '',
         },
-        'Other Production Costs': {
+        'Direct Employee Cost': {
           'Year1': '',
           'Year2': '',
           'Year3': '',

@@ -65,6 +65,9 @@ export default {
     save: function () {
       return `/api/v1/crm/customers/save`
     },
+    sendDocument: function () {
+      return `/api/v1/crm/report/send`
+    },
   },
 
   reports: {

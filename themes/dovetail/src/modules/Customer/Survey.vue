@@ -3,6 +3,10 @@
     <metatag :title="resource.data.title"></metatag>
     <back-to-top></back-to-top>
 
+    <!-- TEST only -->
+    <div v-shortkey.once="['ctrl', 'alt', '.']" @shortkey="saveDummyData"></div>
+    <!-- TEST only -->
+
     <form ref="survey-submission-form" @submit.prevent="submit">
 
       <page-header>
@@ -188,9 +192,7 @@ export default {
 
     submit: _.debounce(function (event) {
       let data = new FormData(this.$refs['survey-submission-form'])
-      // for(var pair of data.entries()) {
-      //   console.log(pair[0]+ ', '+ pair[1]);
-      // }
+
       axios.post(
         $api.surveys.submit(this.$route.params.survey), data
       ).then(response => {
@@ -205,7 +207,7 @@ export default {
       }).finally(() => {
         this.submitting = false
       })
-    }, 900),
+    }, 100),
 
     choose (item, answer) {
       if (this.answers.filter(function (a) {
@@ -271,6 +273,40 @@ export default {
           text: err.response.data.message,
         })
       }).finally(() => { item.loading = false })
+    },
+
+    saveDummyData () {
+      let data = { fields: [] }
+      let fieldData = this.resource.data.fields
+      let total = fieldData.length
+
+      for (var i = total - 1; i >= 0; i--) {
+        data.fields.push({
+          id: fieldData[i].id,
+          submission: {
+            results: Math.floor(Math.random() * 5) + 1,
+            submissible_id: fieldData[i].id,
+            submissible_type: "Survey\\Models\\Field",
+            user_id: this.auth.id,
+            customer_id: this.companyId,
+          },
+        })
+      }
+
+      axios.post(
+        $api.surveys.submit(this.$route.params.survey), data
+      ).then(response => {
+        this.showSnackbar({
+          text: trans('Survey successfully submitted'),
+        })
+
+        this.$router.push({
+          name: 'companies.show',
+          params: { id: this.$route.params.id },
+        })
+      }).finally(() => {
+        this.submitting = false
+      })
     },
   },
 

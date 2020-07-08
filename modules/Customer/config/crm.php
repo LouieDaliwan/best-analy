@@ -10,6 +10,7 @@ return [
 
     'api' => [
         'get' => 'SiteVisit/GetSiteVisitByFileNo?FileNo=%s',
-        'post' => 'SiteVisit/UpdateSiteVisitById'
+        'post' => 'SiteVisit/UpdateSiteVisitById',
+        'document' => 'SiteVisit/UpdateSiteVisitDocumentById'
     ],
 ];

@@ -2,6 +2,10 @@
   <admin>
     <metatag :title="trans('Find Company')"></metatag>
 
+    <!-- TEST only -->
+    <div v-shortkey.once="['ctrl', 'alt', '.']" @shortkey="saveDummyCompany"></div>
+    <!-- TEST only -->
+
     <v-row>
       <v-col cols="12">
         <v-row justify="center">
@@ -69,6 +73,7 @@
 <script>
 import $api from './routes/api'
 import $auth from '@/core/Auth/auth'
+import Company from './Models/Company'
 import store from '@/store'
 import { CRM_CODE_FILE_NUMBER_DOES_NOT_EXIST } from './config/crm'
 import { mapActions } from 'vuex'
@@ -90,6 +95,7 @@ export default {
       { text: '', align: 'left', value: 'actions' },
     ],
     companies: [],
+    company: new Company,
   }),
 
   methods: {
@@ -155,10 +161,32 @@ export default {
     },
 
     goToNextStep () {
-      this.saveFoundCompany(this.companies[0])
+      this.prepFoundCompany(this.companies[0])
     },
 
-    saveFoundCompany (data) {
+    saveDummyCompany () {
+      let query = this.query || Math.random()
+
+      let attributes = {
+        name: 'Dummy Company ' + Math.random(),
+        code: this.slugify('Dummy Company ' + Math.random()),
+        refnum: query,
+        status: 'Pending',
+        token: '09-09090909-090909-0909-dummy',
+        user_id: $auth.getId(),
+        metadata: Object.assign({
+          FileNo: query,
+          FundingRequestNo: query,
+          SiteVisitDate: new Date,
+          BusinessCounselorName: Math.random(),
+          PeeBusinessCounselorName: Math.random(),
+        }, this.company.metadata),
+      }
+
+      this.saveFoundCompany(attributes)
+    },
+
+    prepFoundCompany (data) {
       let attributes = {
         name: data.CompanyName,
         code: this.slugify(data.CompanyName),
@@ -166,15 +194,19 @@ export default {
         status: data.Status,
         token: data.Id,
         user_id: $auth.getId(),
-        metadata: {
+        metadata: Object.assign({
           FileNo: this.query,
           FundingRequestNo: data.FundingRequestNo,
           SiteVisitDate: data.SiteVisitDate || null,
           BusinessCounselorName: data.BusinessCounselorName,
           PeeBusinessCounselorName: data.PeeBusinessCounselorName,
-        },
+        }, this.company.metadata),
       }
 
+      this.saveFoundCompany(attributes)
+    },
+
+    saveFoundCompany (attributes) {
       axios.post(
         $api.crm.update(), attributes
       ).then(response => {

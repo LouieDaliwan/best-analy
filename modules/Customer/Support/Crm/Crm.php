@@ -60,6 +60,20 @@ class Crm implements Contracts\CrmInterface
     }
 
     /**
+     * Send the document file to the url
+     * CRM API endpoint.
+     *
+     * @param  array $attributes
+     * @return object|mixed
+     */
+    public function sendDocument(array $attributes):? object
+    {
+        return json_decode($this->api->post(
+            $this->config['document'], ['form_params' => $attributes]
+        )->getBody());
+    }
+
+    /**
      * Retrieve the GET url of the CRM API endpoint.
      *
      * @return string

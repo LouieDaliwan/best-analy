@@ -1,6 +1,6 @@
 <template>
   <admin>
-    <metatag :title="trans('Find Company')"></metatag>
+    <metatag :title="trans('Overall Report')"></metatag>
 
     <page-header :back="{ to: {name: 'companies.reports'}, text: trans('Back to Reports') }">
       <template v-slot:utilities>
@@ -16,20 +16,24 @@
       </template>
 
       <template v-slot:action>
-        <v-btn v-if="resource.lang == 'en'" :block="$vuetify.breakpoint.smAndDown" large color="primary" @click="goToShowPage('ar')">
+        <div class="mb-3">
+          <div v-if="resource.data.customer">
+            <send-report-to-crm-button
+              type="overall"
+              with-file
+              :customer="resource.data.customer.id"
+              :user="resource.data.report.user_id"
+            ></send-report-to-crm-button>
+          </div>
+        </div>
+        <a v-if="resource.lang == 'en'" class="dt-link text--decoration-none mr-4" @click="goToShowPage('ar')">
           <v-icon small left>mdi-earth</v-icon>
           {{ trans('View Report in Arabic') }}
-        </v-btn>
-        <v-btn v-else :block="$vuetify.breakpoint.smAndDown" large color="primary" @click="goToShowPage('en')">
+        </a>
+        <a v-else class="dt-link text--decoration-none mr-4" @click="goToShowPage('en')">
           <v-icon small left>mdi-earth</v-icon>
           {{ trans('View Report in English') }}
-        </v-btn>
-        <div class="mt-3">
-          <a class="dt-link text--decoration-none mr-4" @click="sendToCrm(item)">
-            <v-icon small left>mdi-send</v-icon>
-            {{ trans('Send Overall Report to CRM') }}
-          </a>
-        </div>
+        </a>
       </template>
     </page-header>
 
@@ -48,8 +52,13 @@
 <script>
 import $auth from '@/core/Auth/auth'
 import $api from './routes/api'
+import SendReportToCrmButton from '@/modules/Customer/cards/SendReportToCrmButton.vue'
 
 export default {
+  components: {
+    SendReportToCrmButton,
+  },
+
   data: () => ({
     api: $api,
 

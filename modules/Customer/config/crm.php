@@ -11,6 +11,7 @@ return [
     'api' => [
         'get' => 'SiteVisit/GetSiteVisitByFileNo?FileNo=%s',
         'post' => 'SiteVisit/UpdateSiteVisitById',
-        'document' => 'SiteVisit/UpdateSiteVisitDocumentById'
+        'document' => 'SiteVisit/UpdateSiteVisitDocumentById',
+        'financial' => 'SiteVisit/AddFinancialsByFileNo',
     ],
 ];

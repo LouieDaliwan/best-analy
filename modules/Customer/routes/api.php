@@ -9,7 +9,8 @@ Route::prefix('v1')->middleware(['auth:api', 'json.force', 'auth.permissions'])-
 
 Route::prefix('v1')->middleware(['auth:api', 'json.force'])->group(function () {
     Route::post('crm/customers/update', 'Api\Crm\SaveFoundCustomerFromCrm')->name('crm.update');
-    Route::post('crm/report/send', 'Api\Crm\SendReportDocumentToCrm')->name('crm.update');
+    Route::post('crm/report/send', 'Api\Crm\SendReportDocumentToCrm')->name('crm.report');
+    Route::post('crm/financial/send', 'Api\Crm\SendFinancialDataToCrm')->name('crm.financial');
     Route::post('crm/customers/save', 'Api\Crm\SaveUpdatedCustomerDataToCrm')->name('crm.save');
     Route::get('crm/customers/search/{crmnumber}', 'Api\Crm\FindCustomerFromCrm')->name('crm.search');
 });

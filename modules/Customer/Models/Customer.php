@@ -81,7 +81,7 @@ class Customer extends Model
      */
     public function getFilenumberAttribute()
     {
-        return $this->metadata['FileNo'] ?? null;
+        return $this->metadata['FileNo'] ?? $this->refnum ?? null;
     }
 
     /**

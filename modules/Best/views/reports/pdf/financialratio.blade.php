@@ -5,9 +5,10 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
   {{-- Chart --}}
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
-  {{-- <script src="http://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script> --}}
+  <!-- <script>{{ theme()->inlined(public_path('reports/js/vendor.js')) }}</script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script> --}} -->
 
   {{-- Theme CSS --}}
   <style>{{ theme()->inlined(public_path('reports/css/basic.css')) }}</style>
@@ -79,6 +80,6 @@
     </div>
   </div>
   {{-- Ratios --}}
-  </main>
+
 </body>
 </html>

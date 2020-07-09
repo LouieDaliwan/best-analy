@@ -10,11 +10,13 @@ use Best\Pro\Financial\LiquidityAnalysis;
 use Best\Pro\Financial\ProductivityAnalysis;
 use Best\Pro\Financial\ProductivityIndicators;
 use Best\Pro\Financial\ProfitabilityAnalysis;
+use Best\Pro\Financial\ProfitAndLossStatement;
 use Best\Pro\Financial\SolvencyAnalysis;
 use Best\Pro\KeyStrategicRecommendationComments;
 use Best\Pro\TrafficLight;
 use Core\Application\Service\Service;
 use Customer\Http\Resources\AllCustomerResource;
+use Customer\Http\Resources\CustomerResource;
 use Customer\Http\Resources\ReportResource;
 use Customer\Models\Customer;
 use Illuminate\Http\Request;
@@ -148,7 +150,8 @@ class ReportService extends Service implements ReportServiceInterface
 
         return [
             'report' => $model = new ReportResource($model->latest('created_at')->first()),
-            'customer' => new AllCustomerResource($customer),
+            'customer' => new CustomerResource($customer),
+            'profit_and_loss' => ProfitAndLossStatement::getReport($customer),
             'overall:comment' => Setting::whereUserId($user->getKey())
                 ->whereKey("overall:comment/".$customer->getKey().$model->month)
                 ->first()->value ?? null,

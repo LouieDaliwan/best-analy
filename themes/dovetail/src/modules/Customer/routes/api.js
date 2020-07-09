@@ -68,6 +68,9 @@ export default {
     sendDocument: function () {
       return `/api/v1/crm/report/send`
     },
+    sendFinancial: function () {
+      return `/api/v1/crm/financial/send`
+    },
   },
 
   reports: {

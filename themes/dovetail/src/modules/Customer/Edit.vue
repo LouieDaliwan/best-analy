@@ -66,6 +66,12 @@
                 </v-radio-group>
               </div>
             </validation-provider>
+            <div class="mt-3 text-right">
+              <send-financial-data-to-crm-button
+                :customer="resource.data.id"
+                :user="resource.data.user_id"
+              ></send-financial-data-to-crm-button>
+            </div>
           </template>
         </page-header>
 
@@ -297,6 +303,7 @@
 <script>
 import $api from './routes/api'
 import Company from './Models/Company'
+import SendFinancialDataToCrmButton from './cards/SendFinancialDataToCrmButton'
 import SkeletonEditCompany from './cards/SkeletonEditCompany'
 import SkeletonEditFinancial from './cards/SkeletonEditFinancial'
 import { mapGetters, mapActions } from 'vuex'
@@ -312,7 +319,8 @@ export default {
 
   components: {
     SkeletonEditCompany,
-    SkeletonEditFinancial
+    SkeletonEditFinancial,
+    SendFinancialDataToCrmButton,
   },
 
   computed: {

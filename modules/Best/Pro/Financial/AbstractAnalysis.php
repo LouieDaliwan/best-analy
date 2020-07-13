@@ -62,7 +62,7 @@ abstract class AbstractAnalysis implements Contracts\FinancialAnalysisReportInte
      */
     public static function getSpreadsheet(Customer $customer)
     {
-        $prefix = auth()->user() ? auth()->user()->getKey() : null;
+        $prefix = auth()->user() ? auth()->user()->getKey() : (request()->get('prefix') ?? null);
         $newFile = self::$filePath = self::getSpreadsheetFile($prefix);
         copy(self::getSpreadsheetFile(), $newFile);
 

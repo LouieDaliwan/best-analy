@@ -14,6 +14,8 @@
   <style>{{ theme()->inlined(public_path('reports/css/basic.css')) }}</style>
   <style>{{ theme()->inlined(public_path('reports/css/theme.min.css')) }}</style>
 
+  <link rel="stylesheet" type="text/css" href="reports/css/paper.css">
+
   {{-- RTL --}}
   @if (app()->getLocale() == 'ar')
     <style>{{ theme()->inlined(public_path('reports/css/rtlpdf.css')) }}</style>

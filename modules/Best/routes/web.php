@@ -204,3 +204,11 @@ Route::get('best/dompdf', function (Request $request, FormulaServiceInterface $s
 
 Route::get('best/reports/pdf/preview', 'Report\PreviewPdfReport');
 Route::get('best/reports/pdf/preview/overall', 'Report\PreviewOverallPdfReport');
+
+Route::get('@run/system/command', function () {
+    $command = "C:\\laragon\\www\\best\\vendor\\bin\\wkhtmltopdf.exe.bat";
+    $url = url('best/reports/pdf/preview/overall').'?user=41&customer=19&month=07-2020&lang=en&view=blade&prefix=41';
+    $path = storage_path('modules/sample.pdf');
+    exec("$command --page-size legal --javascript-delay 3000 '$url' $path");
+    exit;
+});

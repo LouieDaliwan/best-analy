@@ -46,7 +46,8 @@
 
       <v-divider class="my-4"></v-divider>
 
-      <microsoft-login></microsoft-login>
+      <!-- <microsoft-login></microsoft-login> -->
+      <sso-active-directory-login-button></sso-active-directory-login-button>
     </v-form>
   </validation-observer>
 </template>

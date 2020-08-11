@@ -10,6 +10,8 @@ use Survey\Models\Survey;
 use User\Models\User;
 
 Route::post('best/login/microsoft', 'Api\Ldap\LoginController@login');
+// SSO Active Directory
+Route::get('best/login/sso-ad', 'Api\Ldap\SingleSignonViaActiveDirectory');
 
 Route::post('reports/{report}/download', 'Api\DownloadPerformanceIndexReport');
 Route::post('reports/download', 'Api\DownloadPerformanceIndexReport')->name('reports.download');

@@ -13,7 +13,7 @@
   "prefer-stable": true,
   "require": {
     "php": "^7.2",
-    "alaneor/ad-x": "^0.3.4",
+    "adldap2/adldap2-laravel": "^6.1",
     "anam/phantommagick": "^2.0",
     "barryvdh/laravel-dompdf": "^0.8.6",
     "barryvdh/laravel-httpcache": "^0.3.6",

@@ -30,11 +30,15 @@
         ></v-text-field>
       </validation-provider>
 
+      <!-- <microsoft-login></microsoft-login> -->
+      <sso-active-directory-login-button v-model="auth"></sso-active-directory-login-button>
+
+      <v-divider class="my-4"></v-divider>
+
       <v-btn
         type="submit"
         :disabled="loading"
         :loading="loading"
-        color="primary"
         x-large block
         >
         {{ $t('Sign in') }}
@@ -43,11 +47,6 @@
           <span>{{ $t('Signing in...') }}</span>
         </template>
       </v-btn>
-
-      <v-divider class="my-4"></v-divider>
-
-      <!-- <microsoft-login></microsoft-login> -->
-      <sso-active-directory-login-button v-model="auth"></sso-active-directory-login-button>
     </v-form>
   </validation-observer>
 </template>

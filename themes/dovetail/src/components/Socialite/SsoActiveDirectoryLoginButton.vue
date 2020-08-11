@@ -3,6 +3,7 @@
     <v-btn
       x-large block
       @click="signInToSSOAD"
+      color="primary"
       >
       <img
         :src="app.logo"

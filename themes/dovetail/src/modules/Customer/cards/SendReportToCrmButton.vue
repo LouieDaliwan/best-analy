@@ -69,6 +69,7 @@ export default {
     },
 
     getElements () {
+      console.log(this.resource.data)
       let report = this.resource.data.report.value || {}
       let _elements = {}
 
@@ -123,6 +124,8 @@ export default {
         })
 
         this.$store.dispatch('snackbar/show', { icon: 'mdi-spin mdi-loading', button: { show: false }, timeout: 0, text: 'Sending report to CRM. Establishing connection to CRM...'});
+
+        console.log('DATA', data);
 
         axios.post(
           `/api/v1/crm/customers/save`, data

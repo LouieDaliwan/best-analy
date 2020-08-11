@@ -60,10 +60,15 @@
           <template v-slot:action>
             <validation-provider vid="metadata[type]" :name="trans('Type')" rules="email" v-slot="{ errors }">
               <div>
-                <v-radio-group hide-details v-model="resource.data.metadata.type" row mandatory>
+                <label>Audited Financials</label>
+                <input type="radio" :checked="resource.data.metadata.type == 'Audited'" name="metadata[type]" value="Audited">
+                <span class="d-inline-block mx-3"></span>
+                <label>In-House Financials</label>
+                <input type="radio" :checked="resource.data.metadata.type == 'In-House'" name="metadata[type]" value="In-House">
+                <!-- <v-radio-group v-model="resource.data.metadata.type" row mandatory>
                   <v-radio label="Audited Financials" name="metadata[type]" value="Audited"></v-radio>
                   <v-radio label="In-House Financials" name="metadata[type]" value="In-House"></v-radio>
-                </v-radio-group>
+                </v-radio-group> -->
               </div>
             </validation-provider>
             <div class="mt-3 text-right">
@@ -512,7 +517,7 @@ export default {
       ).then(response => {
         this.resource.data = response.data.data
         this.resource.metadata = _.merge({}, this.resource.metadata, this.resource.data.metadata)
-        console.log(this.resource.metadata)
+        // console.log(this.resource.metadata)
         this.resource.data.financials = this.resource.metadata
       }).finally(() => {
         this.load(false)

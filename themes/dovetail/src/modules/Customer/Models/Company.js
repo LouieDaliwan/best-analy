@@ -558,7 +558,9 @@ class Company {
       code: '',
       refnum: '',
       description: '',
-      metadata: {},
+      metadata: {
+        type: '',
+      },
       financials: this.metadata,
       reports: [],
     }

@@ -103,7 +103,8 @@
                 <!-- Send Report -->
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <span v-on="on"><send-report-to-crm-button :customer="item.customer.id" :user="item.user_id"></send-report-to-crm-button></span>
+                    <span v-on="on"><send-individual-report-to-crm-button :item="item" :user="item.user_id"></send-individual-report-to-crm-button></span>
+                    <!-- <span v-on="on"><send-report-to-crm-button :customer="item.customer.id" :user="item.user_id"></send-report-to-crm-button></span> -->
                   </template>
                   <span>{{ trans('Send') }} {{ item.key }} {{ __('to CRM') }}</span>
                 </v-tooltip>
@@ -171,11 +172,13 @@ import $auth from '@/core/Auth/auth'
 import $api from './routes/api'
 import Company from './Models/Company'
 import SendReportToCrmButton from '@/modules/Customer/cards/SendReportToCrmButton.vue'
+import SendIndividualReportToCrmButton from '@/modules/Customer/cards/SendIndividualReportToCrmButton.vue'
 import { mapActions } from 'vuex'
 
 export default {
   components: {
     SendReportToCrmButton,
+    SendIndividualReportToCrmButton,
   },
 
   computed: {

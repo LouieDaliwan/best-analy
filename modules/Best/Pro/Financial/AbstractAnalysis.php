@@ -39,7 +39,7 @@ abstract class AbstractAnalysis implements Contracts\FinancialAnalysisReportInte
      */
     public static function unlinkFile()
     {
-        unlink(self::$filePath);
+        @unlink(self::$filePath);
     }
 
     /**

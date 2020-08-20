@@ -45,6 +45,8 @@ export default {
 
       _elements = _.mapKeys(_elements, function (v, k) { return k.replace(/\s+/g, ''); });
 
+      _elements = _.mapValues(_elements, function (v, k) { return v * 100; });
+
       return _elements;
     },
 
@@ -57,16 +59,20 @@ export default {
         return false;
       }
 
+      // console.log('e', this.getElements());
+
       let data = Object.assign(this.getElements(), {
         Id: _.toUpper(this.item.customer.token),
         FileNo: this.item.customer.filenumber,
         Status: 100000006,
-        OverallScore: this.item.value['overall:score'] || null,
+        OverallScore: (this.item.value['overall:score'] || 0) * 100,
         // FileContentBase64: this.item.fileContentBase64,
         Comments: this.item['overall:comment'] || null,
         OverallComment: this.item.value['overall:comment'] || null,
         'Lessons Learnt': this.item.value['overall:comment'] || null,
       })
+
+      console.log('data:scores', data);
 
       this.$store.dispatch('snackbar/show', { icon: 'mdi-spin mdi-loading', button: { show: false }, timeout: 0, text: 'Sending report to CRM. Establishing connection to CRM...'});
 

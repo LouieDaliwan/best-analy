@@ -94,6 +94,7 @@ export default {
         _elements = report['current:index'].elements;
       }
 
+      _elements = _.mapKeys(_elements, function (v, k) { return k.replace(/[^a-zA-Z]/g, ''); });
       _elements = _.mapKeys(_elements, function (v, k) { return k.replace(/\s+/g, ''); });
 
       _elements = _.mapValues(_elements, function (v, k) { return v * 100; });

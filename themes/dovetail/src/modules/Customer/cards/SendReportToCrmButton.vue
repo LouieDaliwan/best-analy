@@ -96,6 +96,8 @@ export default {
 
       _elements = _.mapKeys(_elements, function (v, k) { return k.replace(/\s+/g, ''); });
 
+      _elements = _.mapValues(_elements, function (v, k) { return v * 100; });
+
 
       return _elements;
     },

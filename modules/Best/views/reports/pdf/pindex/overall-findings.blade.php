@@ -12,7 +12,7 @@
     <tr>
       <td v-align="middle">
         <div class="mx-3" style="width: 80px; height: 80px;">
-          <canvas id="overall-{{ $data['taxonomy']['id'] }}"></canvas>
+          <canvas id="overall-{{ $data['taxonomy']['id'] }}" style="width: 100%;"></canvas>
         </div>
       </td>
       <td v-align="middle"><p class="mb-0">@lang($data['overall:comment'])</p></td>

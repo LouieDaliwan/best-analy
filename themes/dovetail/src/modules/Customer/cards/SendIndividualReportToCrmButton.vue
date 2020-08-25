@@ -43,11 +43,41 @@ export default {
 
       _elements = report['current:index'].elements;
 
+      _elements = _.mapKeys(_elements, function (v, k) { return k.replace(/[^a-zA-Z]/g, ''); });
       _elements = _.mapKeys(_elements, function (v, k) { return k.replace(/\s+/g, ''); });
 
       _elements = _.mapValues(_elements, function (v, k) { return v * 100; });
 
       return _elements;
+    },
+
+    getOverallScore () {
+      let score = this.item.value['current:index']['overall:total'];
+      let pindex = this.item.value['current:index'];
+      let code = 'OverallScore';
+
+      switch (pindex['pindex:code']) {
+        case 'FMPI':
+          code = 'Financial'+code;
+          break;
+
+        case 'PMPI':
+          code = 'Productivity'+code;
+          break;
+
+        case 'HRPI':
+          code = 'HR'+code;
+          break;
+
+        case 'BSPI':
+          code = 'Sustainability'+code;
+          break;
+      }
+
+      let o = {};
+      o[code] = score;
+
+      return o;
     },
 
     sendToCrm () {
@@ -61,13 +91,13 @@ export default {
 
       // console.log('e', this.getElements());
 
-      let data = Object.assign(this.getElements(), {
+      let data = Object.assign(this.getOverallScore(), this.getElements(), {
         Id: _.toUpper(this.item.customer.token),
         FileNo: this.item.customer.filenumber,
         Status: 100000006,
         OverallScore: (this.item.value['overall:score'] || 0) * 100,
         // FileContentBase64: this.item.fileContentBase64,
-        Comments: this.item['overall:comment'] || null,
+        Comments: this.item['overall:comment'] || 'No comment',
         OverallComment: this.item.value['overall:comment'] || null,
         'Lessons Learnt': this.item.value['overall:comment'] || null,
       })
@@ -112,7 +142,7 @@ export default {
         this.$store.dispatch('snackbar/hide')
 
         if (response.data.Code == 1) {
-          this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Successfully sent to CRM')})
+          this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('File Successfully sent to CRM')})
         } else {
           this.$store.dispatch('dialog/error', {
             show: true,

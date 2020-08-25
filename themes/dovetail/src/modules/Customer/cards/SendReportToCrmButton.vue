@@ -82,11 +82,11 @@ export default {
           let c = elements[i]
 
           _elements = Object.assign(_elements, c, {
-            OverallScore: report['overall:score'],
-            SustainabilityOverallScore: report.indices.BSPI['overall:total'],
-            FinancialOverallScore: report.indices.FMPI['overall:total'],
-            ProductivityOverallScore: report.indices.PMPI['overall:total'],
-            HROverallScore: report.indices.HRPI['overall:total'],
+            OverallScore: report['overall:score'] * 100,
+            SustainabilityOverallScore: report.indices.BSPI['overall:total']/100,
+            FinancialOverallScore: report.indices.FMPI['overall:total']/100,
+            ProductivityOverallScore: report.indices.PMPI['overall:total']/100,
+            HROverallScore: report.indices.HRPI['overall:total']/100,
           })
         }
 
@@ -94,12 +94,58 @@ export default {
         _elements = report['current:index'].elements;
       }
 
+      _elements = _.mapKeys(_elements, function (v, k) { return k.replace(/[^a-zA-Z]/g, ''); });
       _elements = _.mapKeys(_elements, function (v, k) { return k.replace(/\s+/g, ''); });
 
       _elements = _.mapValues(_elements, function (v, k) { return v * 100; });
 
+      _elements['EmployeeEngagement'] = _elements['EmployeeEngagementCommunication'] || 0;
+      _elements['CareerManagement'] = _elements['CareerTalentManagement'] || 0;
+
+      let d = report['overall:enablers']['chart'].data
+      let l = report['overall:enablers']['chart'].label
+
+      for (var i = d.length - 1; i >= 0; i--) {
+        let c = d[i]
+        _elements[l[i]] = c || 0;
+      }
+
+      // _elements['Documentation'] = report['overall:enablers']['enablers']['Documentation'] || '';
+      // _elements['Talent'] = report['overall:enablers']['enablers']['Talent'] || '';
+      // _elements['Technology'] = report['overall:enablers']['enablers']['Technology'] || '';
+      _elements['WorkflowProcesses'] = _elements['Workflow Processess'] || '';
+
 
       return _elements;
+    },
+
+    getOverallScore () {
+      let score = this.resource.data.report.value['current:index']['overall:total'];
+      let pindex = this.resource.data.report.value['current:index'];
+      let code = 'OverallScore';
+
+      switch (pindex['pindex:code']) {
+        case 'FMPI':
+          code = 'Financial'+code;
+          break;
+
+        case 'PMPI':
+          code = 'Productivity'+code;
+          break;
+
+        case 'HRPI':
+          code = 'HR'+code;
+          break;
+
+        case 'BSPI':
+          code = 'Sustainability'+code;
+          break;
+      }
+
+      let o = {};
+      o[code] = score;
+
+      return o;
     },
 
     sendToCrm () {
@@ -114,13 +160,13 @@ export default {
           return false;
         }
 
-        let data = Object.assign(this.getElements(), {
+        let data = Object.assign(this.getOverallScore(), this.getElements(), {
           Id: _.toUpper(this.resource.data.customer.token),
           FileNo: this.resource.data.customer.filenumber,
           Status: 100000006,
-          OverallScore: this.resource.data.report.value['overall:score'] || null,
+          OverallScore: this.resource.data.report.value['overall:score'] * 100 || null,
           // FileContentBase64: this.resource.data.report.fileContentBase64,
-          Comments: this.resource.data['overall:comment'] || null,
+          Comments: this.resource.data['overall:comment'] || 'No comment',
           OverallComment: this.resource.data.report.value['overall:comment'] || null,
           'Lessons Learnt': this.resource.data.report.value['overall:comment'] || null,
         })
@@ -170,7 +216,7 @@ export default {
           this.$store.dispatch('snackbar/hide')
 
           if (response.data.Code == 1) {
-            this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Successfully sent to CRM')})
+            this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('File Successfully sent to CRM')})
           } else {
             this.$store.dispatch('dialog/error', {
               show: true,

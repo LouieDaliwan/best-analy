@@ -2,10 +2,17 @@
 
 namespace Best\Listeners;
 
+use Barryvdh\Snappy\Facades\SnappyPdf;
+use Best\Services\FormulaServiceInterface;
 use Best\Services\ReportServiceInterface;
+use Customer\Models\Customer;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+use Index\Models\Index;
+use Survey\Models\Submission;
+use Taxonomy\Models\Taxonomy;
 
 class SaveGeneratedReport implements ShouldQueue
 {
@@ -35,6 +42,23 @@ class SaveGeneratedReport implements ShouldQueue
      */
     public function handle($event)
     {
+        // return;
+        $attributes = $event->attributes['fields'][0];
+        $form = $event->survey;
+        $customer = Customer::find($attributes['submission']['customer_id']);
+        $field = Submission::where('submissible_id', $attributes['submission']['submissible_id'])->where('submissible_type', $attributes['submission']['submissible_type'])->first();
+        $taxonomy = Index::find($form->formable->id);
+
+        $data = app(FormulaServiceInterface::class)->generate($form, [
+            'customer_id' => $customer->getKey(),
+            'taxonomy_id' => $taxonomy->getKey(),
+            'month' => $event->attributes['remarks'] ?? date('m-Y'),
+        ]);
+
+
+        $event->data = $data;
+        // -------
+
         $month = $event->data['monthkey'] ?? $event->data['month'] ?? date('m-Y');
         $remarks = $event->data['month'] ?? date('Y-m-d H:i:s');
         $this->service->updateOrCreate([
@@ -61,11 +85,52 @@ class SaveGeneratedReport implements ShouldQueue
      */
     public function save($event)
     {
-        $html = view("best::reports.index")->withData($event->data)->render();
+        app()->setLocale(request()->get('lang') ?: 'en');
+        // Log::info('called: ------------------');
+
+        $data = $event->data;
+        $data['month:formatted'] = date('M d, Y', strtotime($data['month'] ?? date('Y-m-d')));
+        $data['current:pindex']['sitevisit:date:formatted'] = date('M d, Y', strtotime($data['month']));
+
+        $type = 'index';
+        $refnum = $event->data['current:index']['customer:refnum'];
+        $hash = date('d-m-Y');
+        $date = date('Y-m-d');
+        $name = "{$event->data['current:index']['pindex']} Report - {$refnum}-{$hash}";
+
+        $html = view("best::reports.pdf.$type", ['data' => $data])->render();
+
+        if (! File::exists(storage_path("modules/reports/$date"))) {
+            File::makeDirectory(storage_path("modules/reports/$date"), 0755, true, true);
+        }
+
+        file_put_contents(storage_path("modules/reports/$date/$name.html"), $html);
+
+        $pdf = SnappyPdf::loadFile(storage_path("modules/reports/$date/$name.html"));
+
+        $path = storage_path("modules/reports/$date/$name.pdf");
+
+        if (file_exists($path)) {
+            File::delete($path);
+        }
+
+        if (! file_exists($path)) {
+            $pdf
+                ->setPaper('legal')
+                ->setOption('enable-javascript', true)
+                ->setOption('debug-javascript', true)
+                ->save($path);
+        }
+
+
+        return "modules/reports/$date/$name.pdf";
+
+
+
         $refnum = $event->data['current:index']['customer:refnum'];
         $hash = date('d-m-Y');
         $name = "{$event->data['current:index']['pindex']} Report - {$refnum}-{$hash}.html";
-        $date = date('Y-m-d');
+
 
         if (! File::exists(storage_path("modules/reports/$date"))) {
             File::makeDirectory(storage_path("modules/reports/$date"), 0755, true, true);

@@ -8,6 +8,7 @@ use Customer\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Spatie\TranslationLoader\LanguageLine;
+use Survey\Events\SurveyFinishedSubmitting;
 use Survey\Models\Survey;
 use User\Models\User;
 
@@ -216,6 +217,11 @@ class SurveyService extends Service implements SurveyServiceInterface
             $field = $survey->fields()->findOrFail($attribute['id']);
             $field->submit($attribute['submission'], $attributes['remarks'] ?? null);
         }
+
+        event(new SurveyFinishedSubmitting(
+            $survey,
+            $attributes ?? []
+        ));
     }
 
     /**

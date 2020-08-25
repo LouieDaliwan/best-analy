@@ -86,13 +86,13 @@ class ComputePerformanceIndexFromSurvey implements ShouldQueue
         )->count();
 
         if ($isLastField === $form->fields->count()) {
-            $data = $this->service->generate($form, [
-                'customer_id' => $customer->getKey(),
-                'taxonomy_id' => $taxonomy->getKey(),
-                'month' => $submission->remarks,
-            ]);
+            // $data = $this->service->generate($form, [
+            //     'customer_id' => $customer->getKey(),
+            //     'taxonomy_id' => $taxonomy->getKey(),
+            //     'month' => $submission->remarks,
+            // ]);
 
-            event(new ReportGenerated($data));
+            // event(new ReportGenerated($data));
         }
     }
 }

@@ -167,6 +167,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'subscore:score' => $totalSubscoreScore = $this->getTotalIndexSubscoreScore($survey),
                 'subscore:total' => $totalSubscoreTotal = $this->getTotalIndexSubscoreTotal($survey),
                 'overall:total' => $total = $this->getOverallTotalAverage($totalSubscoreScore, $totalSubscoreTotal),
+                $this->getIndexOverAllScoreKey($taxonomy) => $total,
                 'overall:comment' => $this->getOverallFindingsComment($taxonomy->alias, $customer->name, $total),
                 'overall:comment:overall' => $this->getOverallFindingsCommentOverall(
                     $taxonomy->alias, $customer->name, $total
@@ -825,6 +826,37 @@ class FormulaService extends Service implements FormulaServiceInterface
         return $survey->fields->map(function ($field) {
             return $field->metadata['total'] ?? 0;
         })->sum() ?: 1;
+    }
+
+    /**
+     * Retrieve the index overall score key.
+     *
+     * @param  \Taxonomy\Models\Taxonomy $index
+     * @return string
+     */
+    public function getIndexOverAllScoreKey($taxonomy)
+    {
+        $code = 'OverallScore';
+
+        switch ($taxonomy->alias) {
+            case 'FMPI':
+                $code = 'Financial'.$code;
+                break;
+
+            case 'PMPI':
+                $code = 'Productivity'.$code;
+                break;
+
+            case 'HRPI':
+                $code = 'HR'.$code;
+                break;
+
+            case 'BSPI':
+                $code = 'Sustainability'.$code;
+                break;
+        }
+
+        return $code;
     }
 
     /**

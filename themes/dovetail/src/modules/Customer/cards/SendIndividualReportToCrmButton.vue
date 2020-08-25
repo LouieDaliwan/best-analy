@@ -51,6 +51,35 @@ export default {
       return _elements;
     },
 
+    getOverallScore () {
+      let score = this.item.value['current:index']['overall:total'];
+      let pindex = this.item.value['current:index'];
+      let code = 'OverallScore';
+
+      switch (pindex['pindex:code']) {
+        case 'FMPI':
+          code = 'Financial'+code;
+          break;
+
+        case 'PMPI':
+          code = 'Productivity'+code;
+          break;
+
+        case 'HRPI':
+          code = 'HR'+code;
+          break;
+
+        case 'BSPI':
+          code = 'Sustainability'+code;
+          break;
+      }
+
+      let o = {};
+      o[code] = score;
+
+      return o;
+    },
+
     sendToCrm () {
       this.$store.dispatch('snackbar/show', { button: { show: false }, timeout: 0, text: 'Sending report to CRM. Please wait...'});
 
@@ -62,13 +91,13 @@ export default {
 
       // console.log('e', this.getElements());
 
-      let data = Object.assign(this.getElements(), {
+      let data = Object.assign(this.getOverallScore(), this.getElements(), {
         Id: _.toUpper(this.item.customer.token),
         FileNo: this.item.customer.filenumber,
         Status: 100000006,
         OverallScore: (this.item.value['overall:score'] || 0) * 100,
         // FileContentBase64: this.item.fileContentBase64,
-        Comments: this.item['overall:comment'] || 'No comment found.',
+        Comments: this.item['overall:comment'] || 'No comment',
         OverallComment: this.item.value['overall:comment'] || null,
         'Lessons Learnt': this.item.value['overall:comment'] || null,
       })
@@ -107,16 +136,13 @@ export default {
 
       this.$store.dispatch('snackbar/show', { icon: 'mdi-spin mdi-loading', button: { show: false }, timeout: 0, text: 'Sending Overall Report Document to CRM. Establishing connection to CRM...'});
 
-      console.log('document', data)
-
       axios.post(
         $api.crm.sendDocument(), data
       ).then(response => {
         this.$store.dispatch('snackbar/hide')
-        console.log('')
 
         if (response.data.Code == 1) {
-          this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Successfully sent to CRM')})
+          this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('File Successfully sent to CRM')})
         } else {
           this.$store.dispatch('dialog/error', {
             show: true,

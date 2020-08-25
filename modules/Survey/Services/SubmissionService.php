@@ -6,6 +6,7 @@ use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
 use Customer\Models\Customer;
 use Illuminate\Http\Request;
+use Survey\Events\SurveyFinishedSubmitting;
 use Survey\Models\Submission;
 use User\Models\User;
 
@@ -66,6 +67,11 @@ class SubmissionService extends Service implements SubmissionServiceInterface
                 'customer_id' => $attribute['customer_id'] ?? null,
             ], array_merge(['monthkey' => $monthkey], $attribute));
         }
+
+        event(new SurveyFinishedSubmitting(
+            User::find($attribute['user_id'] ?? false),
+            $attribute ?? []
+        ));
 
         return $model;
     }

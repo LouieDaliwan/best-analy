@@ -8,10 +8,11 @@
           <v-icon small left>mdi-file-pdf</v-icon>
           {{ trans('Preview PDF Report') }}
         </a>
-        <a class="dt-link text--decoration-none mr-4" @click="sendToCrm(item)">
+        <send-financial-data-to-crm-button v-if="resource.data.report" class="dt-link text--decoration-none mr-4" :customer="customerId" :user="userId"></send-financial-data-to-crm-button>
+        <!-- <a class="dt-link text--decoration-none mr-4" @click="sendToCrm(item)">
           <v-icon small left>mdi-send</v-icon>
           {{ trans('Send Financial Analysis Report to CRM') }}
-        </a>
+        </a> -->
       </template>
 
       <template v-slot:action>
@@ -40,8 +41,22 @@
 
 <script>
 import $auth from '@/core/Auth/auth'
+import SendFinancialDataToCrmButton from '@/modules/Customer/cards/SendFinancialDataToCrmButton.vue';
 
 export default {
+  components: {
+    SendFinancialDataToCrmButton
+  },
+
+  computed: {
+    customerId () {
+      return this.$route.params.id;
+    },
+    userId () {
+      return this.$route.query.user_id;
+    },
+  },
+
   data: () => ({
     resource: {
       lang: window.localStorage.getItem('report:lang') || 'en',
@@ -79,6 +94,7 @@ export default {
     },
 
     sendToCrm (item) {
+      console.log(this.resource.data)
       let data = {
         Id: this.resource.data.token,
         FileNo: this.resource.data.refnum,

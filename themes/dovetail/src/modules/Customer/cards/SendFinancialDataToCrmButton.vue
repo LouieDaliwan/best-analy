@@ -1,5 +1,5 @@
 <template>
-  <v-btn @click="sendToCrm">
+  <v-btn text @click="sendToCrm">
     <v-icon small>mdi-send</v-icon>
     {{ trans('Send Financial Data to CRM') }}
   </v-btn>

@@ -129,7 +129,7 @@ class SaveGeneratedReport implements ShouldQueue
             $pdf
                 ->setPaper('legal')
                 ->setOption('enable-javascript', true)
-                ->setOption('javascript-delay', 1000)
+                ->setOption('javascript-delay', 2000)
                 ->setOption('debug-javascript', true)
                 ->save($path);
         }

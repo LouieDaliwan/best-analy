@@ -110,6 +110,21 @@ class Report extends Model
         return null;
     }
 
+    public static function encodeToBase64($path)
+    {
+        try {
+            if (file_exists($path)) {
+                return chunk_split(base64_encode(
+                    file_get_contents($path)
+                ));
+            }
+        } catch (\Exception $e) {
+            unset($e);
+        }
+
+        return null;
+    }
+
     /**
      * Get the indexable data array for the model.
      *

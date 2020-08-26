@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Log;
 use Index\Models\Index;
 use Survey\Models\Submission;
 use Taxonomy\Models\Taxonomy;
+use Best\Models\User;
+use Setting\Models\Setting;
 
 class SaveGeneratedReport implements ShouldQueue
 {
@@ -75,6 +77,15 @@ class SaveGeneratedReport implements ShouldQueue
             'form_id' => $event->data['survey:id'],
             'user_id' => $event->data['user:id'],
         ]);
+
+        $allFourReportsForTheMonth = $this->service
+            ->where('month', $month)
+            ->where('customer_id', $customer->getKey())->latest('updated_at')->get(); // 4 indices
+
+        if ($allFourReportsForTheMonth->count() == 4) {
+            // Then generate the Overall Report.
+            $this->generateOverallReport($allFourReportsForTheMonth);
+        }
     }
 
     /**
@@ -118,6 +129,7 @@ class SaveGeneratedReport implements ShouldQueue
             $pdf
                 ->setPaper('legal')
                 ->setOption('enable-javascript', true)
+                ->setOption('javascript-delay', 1000)
                 ->setOption('debug-javascript', true)
                 ->save($path);
         }
@@ -139,5 +151,61 @@ class SaveGeneratedReport implements ShouldQueue
         file_put_contents(storage_path("modules/reports/$date/$name"), $html);
 
         return "modules/reports/$date/$name";
+    }
+
+    /**
+     * Generate overall report.
+     *
+     * @param  \Illuminate\Support\Collection $reports
+     * @return void
+     */
+    protected function generateOverallReport($reports)
+    {
+        app()->setLocale(request()->get('lang') ?: 'en');
+
+        $type = 'overall';
+        $report = $reports->first();
+        $remarks = $report->month;
+        $user = $report->user;
+        $hash = date('d-m-Y');
+        $date = date('Y-m-d');
+
+        $attributes = [
+            'customer_id' => $report->customer->getKey(),
+            'taxonomy_id' => null,
+            'month' => $report->remarks,
+        ];
+
+        $data = app(FormulaServiceInterface::class)->generate($report->survey, $attributes);
+        $data['month:formatted'] = date('M d, Y', strtotime($data['month'] ?? date('Y-m-d')));
+        $data['current:pindex']['sitevisit:date:formatted'] = date('M d, Y', strtotime($data['month']));
+        $name = sprintf("BEST Overall Report - %s (%s)", $report->customer->name, $remarks);
+
+        $html = view("best::reports.pdf.$type", ['data' => $data])->render();
+
+        if (! File::exists(storage_path("modules/reports/$date"))) {
+            File::makeDirectory(storage_path("modules/reports/$date"), 0755, true, true);
+        }
+
+        file_put_contents(storage_path("modules/reports/$date/$name.html"), $html);
+
+        $pdf = SnappyPdf::loadFile(storage_path("modules/reports/$date/$name.html"));
+
+        $path = storage_path("modules/reports/$date/$name.pdf");
+
+        if (file_exists($path)) {
+            File::delete($path);
+        }
+
+        if (! file_exists($path)) {
+            $pdf
+                ->setPaper('legal')
+                ->setOption('enable-javascript', true)
+                ->setOption('javascript-delay', 2000)
+                ->setOption('debug-javascript', true)
+                ->save($path);
+        }
+
+        Setting::updateOrCreate(['key' => "overall:report:$remarks"], ['value' => "modules/reports/$date/$name.pdf"]);
     }
 }

@@ -205,14 +205,17 @@ export default {
 
         let data = {
           Id: _.toUpper(this.resource.data.customer.token),
-          FileContentBase64: this.resource.data.report.fileContentBase64,
+          FileContentBase64: this.resource.data['overall:report'] || 'empty',
         }
+
+        // console.log(this.resource.data);
 
         this.$store.dispatch('snackbar/show', { icon: 'mdi-spin mdi-loading', button: { show: false }, timeout: 0, text: 'Sending Overall Report Document to CRM. Establishing connection to CRM...'});
 
         axios.post(
           $api.crm.sendDocument(), data
         ).then(response => {
+          console.log('asdasd', response.data);
           this.$store.dispatch('snackbar/hide')
 
           if (response.data.Code == 1) {

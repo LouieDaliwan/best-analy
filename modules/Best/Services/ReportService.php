@@ -148,8 +148,14 @@ class ReportService extends Service implements ReportServiceInterface
             return response()->json(['message' => 'Not found.'], 404);
         }
 
+        $model = new ReportResource($model->latest('updated_at')->first());
+
+        $remarks = $model->month;
+        $path = \Setting\Models\Setting::where('key', "overall:report:$remarks")->first();
+
         return [
-            'report' => $model = new ReportResource($model->latest('created_at')->first()),
+            'overall:report' => Report::encodeToBase64(storage_path($path->value)),
+            'report' => $model,
             'customer' => new CustomerResource($customer),
             'profit_and_loss' => ProfitAndLossStatement::getReport($customer),
             'overall:comment' => Setting::whereUserId($user->getKey())

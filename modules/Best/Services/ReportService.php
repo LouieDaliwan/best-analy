@@ -9,8 +9,8 @@ use Best\Pro\Financial\FinancialRatios;
 use Best\Pro\Financial\LiquidityAnalysis;
 use Best\Pro\Financial\ProductivityAnalysis;
 use Best\Pro\Financial\ProductivityIndicators;
-use Best\Pro\Financial\ProfitabilityAnalysis;
 use Best\Pro\Financial\ProfitAndLossStatement;
+use Best\Pro\Financial\ProfitabilityAnalysis;
 use Best\Pro\Financial\SolvencyAnalysis;
 use Best\Pro\KeyStrategicRecommendationComments;
 use Best\Pro\TrafficLight;
@@ -23,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 use Index\Models\Index;
+use Library\Models\Library;
 use Setting\Models\Setting;
 use Spatie\Browsershot\Browsershot;
 use Survey\Models\Survey;
@@ -151,10 +152,13 @@ class ReportService extends Service implements ReportServiceInterface
         $model = new ReportResource($model->latest('updated_at')->first());
 
         $remarks = $model->month;
-        $path = \Setting\Models\Setting::where('key', "overall:report:$remarks")->first();
+        $path = Library::where('name', "overall:report:$remarks")->first();
+
+        $financialReportPath = Library::where('name', "overall:financialratio:$remarks")->first();
 
         return [
-            'overall:report' => Report::encodeToBase64(storage_path($path->value)),
+            'overall:report' => $path ? Report::encodeToBase64(storage_path($path->pathname)) : null,
+            'report:financial' => $financialReportPath ? Report::encodeToBase64(storage_path($financialReportPath->pathname)) : null,
             'report' => $model,
             'customer' => new CustomerResource($customer),
             'profit_and_loss' => ProfitAndLossStatement::getReport($customer),

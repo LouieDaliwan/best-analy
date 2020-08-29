@@ -3,6 +3,7 @@
 namespace Best\Listeners;
 
 use Barryvdh\Snappy\Facades\SnappyPdf;
+use Best\Models\User;
 use Best\Services\FormulaServiceInterface;
 use Best\Services\ReportServiceInterface;
 use Customer\Models\Customer;
@@ -11,10 +12,10 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Index\Models\Index;
+use Library\Models\Library;
+use Setting\Models\Setting;
 use Survey\Models\Submission;
 use Taxonomy\Models\Taxonomy;
-use Best\Models\User;
-use Setting\Models\Setting;
 
 class SaveGeneratedReport implements ShouldQueue
 {
@@ -85,6 +86,7 @@ class SaveGeneratedReport implements ShouldQueue
         if ($allFourReportsForTheMonth->count() == 4) {
             // Then generate the Overall Report.
             $this->generateOverallReport($allFourReportsForTheMonth);
+            $this->save($event, 'financialratio', 'Financial Analysis');
         }
     }
 
@@ -94,7 +96,7 @@ class SaveGeneratedReport implements ShouldQueue
      * @param  mixed $event
      * @return string
      */
-    public function save($event)
+    public function save($event, $type = 'index', $filename = null)
     {
         app()->setLocale(request()->get('lang') ?: 'en');
         // Log::info('called: ------------------');
@@ -103,11 +105,11 @@ class SaveGeneratedReport implements ShouldQueue
         $data['month:formatted'] = date('M d, Y', strtotime($data['month'] ?? date('Y-m-d')));
         $data['current:pindex']['sitevisit:date:formatted'] = date('M d, Y', strtotime($data['month']));
 
-        $type = 'index';
         $refnum = $event->data['current:index']['customer:refnum'];
         $hash = date('d-m-Y');
         $date = date('Y-m-d');
-        $name = "{$event->data['current:index']['pindex']} Report - {$refnum}-{$hash}";
+        $name = $filename ?? $event->data['current:index']['pindex'];
+        $name = "$name Report - {$refnum}-{$hash}";
 
         $html = view("best::reports.pdf.$type", ['data' => $data])->render();
 
@@ -132,6 +134,16 @@ class SaveGeneratedReport implements ShouldQueue
                 ->setOption('javascript-delay', 2000)
                 ->setOption('debug-javascript', true)
                 ->save($path);
+        }
+
+        if ($type == 'financialratio') {
+            $month = date('m-Y');
+            Library::updateOrCreate([
+                'name' => "overall:financialratio:$month",
+            ], [
+                'pathname' => "modules/reports/$date/$name.pdf",
+                'url' => url("modules/reports/$date/$name.pdf"),
+            ]);
         }
 
 
@@ -206,6 +218,11 @@ class SaveGeneratedReport implements ShouldQueue
                 ->save($path);
         }
 
-        Setting::updateOrCreate(['key' => "overall:report:$remarks"], ['value' => "modules/reports/$date/$name.pdf"]);
+        Library::updateOrCreate([
+            'name' => "overall:report:$remarks",
+        ], [
+            'pathname' => "modules/reports/$date/$name.pdf",
+            'url' => url("modules/reports/$date/$name.pdf"),
+        ]);
     }
 }

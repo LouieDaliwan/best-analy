@@ -17,7 +17,7 @@
 
       <template v-slot:action>
         <div class="mb-3">
-          <div v-if="resource.data.customer">
+          <div v-if="resource.data.customer && isInEnglish">
             <send-report-to-crm-button
               type="overall"
               with-file
@@ -57,6 +57,12 @@ import SendReportToCrmButton from '@/modules/Customer/cards/SendReportToCrmButto
 export default {
   components: {
     SendReportToCrmButton,
+  },
+
+  computed: {
+    isInEnglish () {
+      return this.resource.lang == 'en';
+    },
   },
 
   data: () => ({

@@ -1,5 +1,5 @@
 <template>
-  <v-btn @click="sendBothDataToCrm" icon>
+  <v-btn :loading="isSending" :disabled="isSending" @click="sendDocumentToCrm" icon>
     <v-icon small>mdi-send</v-icon>
   </v-btn>
 </template>
@@ -11,6 +11,7 @@ export default {
   props: ['item', 'user', 'type'],
 
   data: () => ({
+    isSending: false,
     resource: {
       data: {}
     },
@@ -129,6 +130,8 @@ export default {
     },
 
     sendDocumentToCrm () {
+      this.isSending = true;
+
       let data = {
         Id: _.toUpper(this.item.customer.token),
         FileContentBase64: this.item.fileContentBase64,
@@ -154,6 +157,8 @@ export default {
         }
       }).catch(err => {
         this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
+      }).finally(() => {
+        this.isSending = false;
       });
     },
 

@@ -1,0 +1,22 @@
+
+ ✔ There is a separate API to send the pdf report only. Please ensure that you know which one that is to execute items 2 and 3 @done (20-08-29 11:21)
+
+ ✔ Check API for the Financial Performance report – It doesn’t seem to send the report back to the CRM. Please ensure you are using the API to send the report only, not to update the scores. @done (20-08-29 11:19)
+
+ ✔ The CRM buttons for the indv sections should only call for the API pdf file transfer (Same as above, check API) @done (20-08-29 10:37)
+
+ ✔ At the Overall Report (English), the Send to CRM button should only have 1 option which is to call both APIs the scores and the pdf report. @done (20-08-29 10:32)
+
+ ✔ When the overall report (Arabic) is shown, remove CRM button to send the report in Arabic. @done (20-08-29 10:34)
+
+
+
+
+1.      Change the API by removing the uat from the url
+
+2.      We will get the update later if there is a need to move files to another server. Else, we may just create a backup copy in the same server still linked to the staging crm.
+
+
+
+Any further details, I will be sharing with the client shortly.
+

@@ -1,7 +1,7 @@
 <template>
-  <v-btn text @click="sendToCrm">
-    <v-icon small>mdi-send</v-icon>
-    {{ trans('Send Financial Data to CRM') }}
+  <v-btn :loading="isSending" :disabled="isSending" @click="sendDocumentToCrm" large :block="$vuetify.breakpoint.smAndDown" color="primary">
+    <v-icon left small>mdi-send</v-icon>
+    {{ trans('Send Financial Report to CRM') }}
   </v-btn>
 </template>
 
@@ -12,6 +12,7 @@ export default {
   props: ['customer', 'user'],
 
   data: () => ({
+    isSending: false,
     resource: {
       data: {}
     },
@@ -97,6 +98,44 @@ export default {
         })
       }).catch(err => {
         console.log('err', err)
+      })
+    },
+
+    sendDocumentToCrm () {
+      this.isSending = true;
+
+      this.getReportData().then(response => {
+        this.resource.data = response.data
+
+        let data = {
+          Id: _.toUpper(this.resource.data.customer.token),
+          FileContentBase64: this.resource.data['report:financial'] || 'empty',
+        }
+
+        this.$store.dispatch('snackbar/show', { icon: 'mdi-spin mdi-loading', button: { show: false }, timeout: 0, text: 'Sending Financial Report Document to CRM. Establishing connection...'});
+
+        axios.post(
+          $api.crm.sendDocument(), data
+        ).then(response => {
+          console.log('data', response.data);
+          this.$store.dispatch('snackbar/hide')
+
+          if (response.data.Code == 1) {
+            this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('File Successfully sent to CRM')})
+          } else {
+            this.$store.dispatch('dialog/error', {
+              show: true,
+              width: 400,
+              buttons: { cancel: { show: false } },
+              title: 'Returned a Code ' + response.data.Code,
+              text: response.data.Message,
+            })
+          }
+        }).catch(err => {
+          this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
+        }).finally(() => {
+          this.isSending = false;
+        })
       })
     },
   }

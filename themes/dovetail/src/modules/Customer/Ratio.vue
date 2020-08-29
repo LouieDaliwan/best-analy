@@ -8,7 +8,6 @@
           <v-icon small left>mdi-file-pdf</v-icon>
           {{ trans('Preview PDF Report') }}
         </a>
-        <send-financial-data-to-crm-button v-if="resource.data.report" class="dt-link text--decoration-none mr-4" :customer="customerId" :user="userId"></send-financial-data-to-crm-button>
         <!-- <a class="dt-link text--decoration-none mr-4" @click="sendToCrm(item)">
           <v-icon small left>mdi-send</v-icon>
           {{ trans('Send Financial Analysis Report to CRM') }}
@@ -16,14 +15,17 @@
       </template>
 
       <template v-slot:action>
-        <v-btn v-if="resource.lang == 'en'" :block="$vuetify.breakpoint.smAndDown" large color="primary" @click="goToShowPage('ar')">
+        <div class="mb-3">
+          <send-financial-data-to-crm-button v-if="resource.data.report && isInEnglish" :customer="customerId" :user="userId"></send-financial-data-to-crm-button>
+        </div>
+        <a v-if="resource.lang == 'en'" class="dt-link text--decoration-none mr-4" @click="goToShowPage('ar')">
           <v-icon small left>mdi-earth</v-icon>
           {{ trans('View Report in Arabic') }}
-        </v-btn>
-        <v-btn v-else :block="$vuetify.breakpoint.smAndDown" large color="primary" @click="goToShowPage('en')">
+        </a>
+        <a v-else class="dt-link text--decoration-none mr-4" @click="goToShowPage('en')">
           <v-icon small left>mdi-earth</v-icon>
           {{ trans('View Report in English') }}
-        </v-btn>
+        </a>
       </template>
     </page-header>
 
@@ -49,11 +51,15 @@ export default {
   },
 
   computed: {
+    isInEnglish () {
+      return this.resource.lang == 'en';
+    },
+
     customerId () {
       return this.$route.params.id;
     },
     userId () {
-      return this.$route.query.user_id;
+      return this.$route.query.user_id ?? $auth.getId();
     },
   },
 

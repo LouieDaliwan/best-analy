@@ -1,10 +1,10 @@
 <template>
   <div v-if="isOverall">
-    <v-btn @click="sendToCrm" large :block="$vuetify.breakpoint.smAndDown" color="primary">
+    <v-btn :loading="isSending" :disabled="isSending" @click="sendBothDataToCrm" large :block="$vuetify.breakpoint.smAndDown" color="primary">
       <v-icon small left>mdi-send</v-icon>
       {{ trans('Send Scores to CRM') }}
     </v-btn>
-    <v-menu>
+    <!-- <v-menu>
       <template v-slot:activator="{ on }">
         <v-btn v-on="on" large :block="$vuetify.breakpoint.smAndDown" color="primary">
           <v-icon small>mdi-dots-horizontal</v-icon>
@@ -28,7 +28,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-    </v-menu>
+    </v-menu> -->
   </div>
   <v-btn v-else @click="sendToCrm" icon>
     <v-icon small>mdi-send</v-icon>
@@ -42,6 +42,8 @@ export default {
   props: ['customer', 'user', 'type'],
 
   data: () => ({
+    isSending: false,
+    sendBothScoresAndFile: false,
     resource: {
       data: {}
     },
@@ -149,6 +151,7 @@ export default {
     },
 
     sendToCrm () {
+      this.isSending = true;
       this.$store.dispatch('snackbar/show', { button: { show: false }, timeout: 0, text: 'Sending report to CRM. Please wait...'});
 
       this.getReportData().then(response => {
@@ -191,8 +194,15 @@ export default {
               text: response.data.Message,
             })
           }
+
+          if (this.sendBothScoresAndFile) {
+            console.log('sending file...');
+            this.sendDocumentToCrm();
+          }
         }).catch(err => {
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
+        }).finally(() => {
+          this.isSending = false;
         })
       }).catch(err => {
         console.log('err', err)
@@ -200,6 +210,8 @@ export default {
     },
 
     sendDocumentToCrm () {
+      this.isSending = true;
+
       this.getReportData().then(response => {
         this.resource.data = response.data
 
@@ -231,13 +243,16 @@ export default {
           }
         }).catch(err => {
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
+        }).finally(() => {
+          this.isSending = false;
         })
       });
     },
 
     sendBothDataToCrm () {
+      console.log('sending both scores + file...');
+      this.sendBothScoresAndFile = true
       this.sendToCrm()
-      this.sendDocumentToCrm()
     },
   }
 }

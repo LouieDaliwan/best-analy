@@ -2,7 +2,7 @@
 
 return [
     'client' => [
-        'base_uri' => 'https://smartapiuat.khalifafund.ae',
+        'base_uri' => env('CRM_BASE_URI', 'https://smartapiuat.khalifafund.ae'),
         'headers' => [
             'Accept' => 'application/json',
         ],

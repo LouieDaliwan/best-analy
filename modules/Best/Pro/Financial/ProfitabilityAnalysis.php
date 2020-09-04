@@ -529,11 +529,11 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     public static function getBE6Comment($spreadsheet)
     {
         $output = '';
-        $n19 = $spreadsheet->getCell("N19")->getCalculatedValue();
-        $n20 = $spreadsheet->getCell("N20")->getCalculatedValue();
-        $bk6 = $spreadsheet->getCell('BK6')->getCalculatedValue();
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue();
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue();
+        $n19 = $spreadsheet->getCell("N19")->getCalculatedValue() ?? 0;
+        $n20 = $spreadsheet->getCell("N20")->getCalculatedValue() ?? 0;
+        $bk6 = $spreadsheet->getCell('BK6')->getCalculatedValue() ?? 0;
+        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?? 0;
+        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?? 0;
 
         if ($n20>$n19) {
             if (($n20-$n19) > $bk6) {
@@ -612,9 +612,9 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     public static function getBC7Comment($spreadsheet)
     {
         $output = '';
-        $bi7 = $spreadsheet->getCell('BI7')->getCalculatedValue();
-        $q19 = $spreadsheet->getCell('Q19')->getCalculatedValue();
-        $q21 = $spreadsheet->getCell('Q21')->getCalculatedValue();
+        $bi7 = $spreadsheet->getCell('BI7')->getCalculatedValue() ?? 0;
+        $q19 = $spreadsheet->getCell('Q19')->getCalculatedValue() ?? 0;
+        $q21 = $spreadsheet->getCell('Q21')->getCalculatedValue() ?? 0;
 
         if ($q19 == "") {
             $output = "";
@@ -646,10 +646,10 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     public static function getBD7Comment($spreadsheet)
     {
         $output = '';
-        $bj7 = $spreadsheet->getCell('BJ7')->getCalculatedValue();
-        $q19 = $spreadsheet->getCell('Q19')->getCalculatedValue();
-        $q20 = $spreadsheet->getCell('Q20')->getCalculatedValue();
-        $q21 = $spreadsheet->getCell('Q21')->getCalculatedValue();
+        $bj7 = $spreadsheet->getCell('BJ7')->getCalculatedValue() ?? 0;
+        $q19 = $spreadsheet->getCell('Q19')->getCalculatedValue() ?? 0;
+        $q20 = $spreadsheet->getCell('Q20')->getCalculatedValue() ?? 0;
+        $q21 = $spreadsheet->getCell('Q21')->getCalculatedValue() ?? 0;
         $number1 = abs(round(($q21-$q20)*100, 2));
 
         if ($q19 == "" && ($q21-$q20) > 0) {

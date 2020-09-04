@@ -181,9 +181,9 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     {
         $output = '';
         $h43 = $spreadsheet->getCell('H43')->getCalculatedValue();
-        $h32 = $spreadsheet->getCell('H32')->getCalculatedValue();
-        $h44 = $spreadsheet->getCell('H44')->getCalculatedValue();
-        $h45 = $spreadsheet->getCell('H45')->getCalculatedValue();
+        $h32 = $spreadsheet->getCell('H32')->getCalculatedValue() ?: 0;
+        $h44 = $spreadsheet->getCell('H44')->getCalculatedValue() ?: 1;
+        $h45 = $spreadsheet->getCell('H45')->getCalculatedValue() ?: 0;
         $bj17 = $spreadsheet->getCell('BJ17')->getCalculatedValue();
 
         if ($h43 == "" && (($h45-$h44)/$h44 > 0)) {
@@ -371,8 +371,8 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
 
         $bj18 = $spreadsheet->getCell('BJ18')->getCalculatedValue();
         $l43 = $spreadsheet->getCell('L43')->getCalculatedValue();
-        $l44 = $spreadsheet->getCell('L44')->getCalculatedValue();
-        $l45 = $spreadsheet->getCell('L45')->getCalculatedValue();
+        $l44 = $spreadsheet->getCell('L44')->getCalculatedValue() ?: 1;
+        $l45 = $spreadsheet->getCell('L45')->getCalculatedValue() ?: 0;
 
         if ($l43 == '' && (($l45-$l44) > 0)) {
             if (($l45-$l44) > $bj18) {
@@ -548,9 +548,9 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     {
         $output = '';
         $p43 = $spreadsheet->getCell('P43')->getCalculatedValue();
-        $p44 = $spreadsheet->getCell('P44')->getCalculatedValue();
-        $p45 = $spreadsheet->getCell('P45')->getCalculatedValue();
-        $bj19 = $spreadsheet->getCell('BJ19')->getCalculatedValue();
+        $p44 = $spreadsheet->getCell('P44')->getCalculatedValue() ?: 1;
+        $p45 = $spreadsheet->getCell('P45')->getCalculatedValue() ?: 0;
+        $bj19 = $spreadsheet->getCell('BJ19')->getCalculatedValue() ?: 0;
 
         if ($p43 == "" && (($p45-$p44) > 0)) {
             if (($p45-$p44) > ($bj19)) {
@@ -733,11 +733,11 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     public static function getBD20Comment($spreadsheet)
     {
         $output = '';
-        $bj20 = $spreadsheet->getCell('BJ20')->getCalculatedValue();
+        $bj20 = $spreadsheet->getCell('BJ20')->getCalculatedValue() ?: 0;
         $q32 = $spreadsheet->getCell('Q32')->getCalculatedValue();
         $t43 = $spreadsheet->getCell('T43')->getCalculatedValue();
-        $t44 = $spreadsheet->getCell('T44')->getCalculatedValue();
-        $t45 = $spreadsheet->getCell('T45')->getCalculatedValue();
+        $t44 = $spreadsheet->getCell('T44')->getCalculatedValue() ?: 1;
+        $t45 = $spreadsheet->getCell('T45')->getCalculatedValue() ?: 0;
 
         if ($t43 == '' && (($t45-$t44) > 0)) {
             if (($t45-$t44) > $bj20) {
@@ -753,6 +753,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                     $number1 = abs(round(($t45-$t44)/$t44*100, 2));
                     $output = __("Overall inventory turnover has seen a significant dip in demand, declining by :number1% over the years.", ['number1' => $number1]);
                 } else {
+                    $number1 = abs(round(($t45-$t44)/$t44*100, 2));
                     $output = __("Overall dip in demand has seen inventory turnover decline by :number1% over the years.", ['number1' => $number1]);
                 }
             } else {

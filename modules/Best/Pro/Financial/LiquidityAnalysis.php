@@ -145,10 +145,10 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $ai19 = $spreadsheet->getCell('AI19')->getCalculatedValue() ?: 1;
-        $ai20 = $spreadsheet->getCell('AI20')->getCalculatedValue();
-        $bk12 = $spreadsheet->getCell('BK12')->getCalculatedValue();
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue();
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue();
+        $ai20 = $spreadsheet->getCell('AI20')->getCalculatedValue() ?: 0;
+        $bk12 = $spreadsheet->getCell('BK12')->getCalculatedValue() ?: 0;
+        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
+        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
 
         if (($ai20-$ai19) > 0) {
             if (($ai20-$ai19) > $bk12) {
@@ -412,10 +412,10 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
         $output = '';
 
         $am19 = $spreadsheet->getCell('AM19')->getCalculatedValue() ?: 1;
-        $am20 = $spreadsheet->getCell('AM20')->getCalculatedValue();
-        $bk13 = $spreadsheet->getCell('BK13')->getCalculatedValue();
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue();
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue();
+        $am20 = $spreadsheet->getCell('AM20')->getCalculatedValue() ?: 0;
+        $bk13 = $spreadsheet->getCell('BK13')->getCalculatedValue() ?: 0;
+        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
+        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
         $item1 = $d19;
         $item2 = $d20;
         $number1 = abs(round(($am20-$am19)/$am19*100, 2));
@@ -497,8 +497,8 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $aq19 = $spreadsheet->getCell('AQ19')->getCalculatedValue() ?: 1;
-        $aq21 = $spreadsheet->getCell('AQ21')->getCalculatedValue();
-        $bi14 = $spreadsheet->getCell('BI14')->getCalculatedValue();
+        $aq21 = $spreadsheet->getCell('AQ21')->getCalculatedValue() ?: 0;
+        $bi14 = $spreadsheet->getCell('BI14')->getCalculatedValue() ?: 0;
 
         if($aq19 == "") {
             $output = "";
@@ -532,8 +532,8 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
         $output = '';
         $aq19 = $spreadsheet->getCell('AQ19')->getCalculatedValue();
         $aq20 = $spreadsheet->getCell('AQ20')->getCalculatedValue() ?: 1;
-        $aq21 = $spreadsheet->getCell('AQ21')->getCalculatedValue();
-        $bj14 = $spreadsheet->getCell('BJ14')->getCalculatedValue();
+        $aq21 = $spreadsheet->getCell('AQ21')->getCalculatedValue() ?: 0;
+        $bj14 = $spreadsheet->getCell('BJ14')->getCalculatedValue() ?: 0;
 
         $number1 = abs(round(($aq21-$aq20)/$aq20*100, 2));
         if ($aq19 == "" && ($aq21-$aq20) > 0) {

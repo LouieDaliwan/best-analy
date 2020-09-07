@@ -529,11 +529,11 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     public static function getBE6Comment($spreadsheet)
     {
         $output = '';
-        $n19 = $spreadsheet->getCell("N19")->getCalculatedValue() ?? 0;
-        $n20 = $spreadsheet->getCell("N20")->getCalculatedValue() ?? 0;
-        $bk6 = $spreadsheet->getCell('BK6')->getCalculatedValue() ?? 0;
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?? 0;
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?? 0;
+        $n19 = $spreadsheet->getCell("N19")->getCalculatedValue() ?: 0;
+        $n20 = $spreadsheet->getCell("N20")->getCalculatedValue() ?: 0;
+        $bk6 = $spreadsheet->getCell('BK6')->getCalculatedValue() ?: 0;
+        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
+        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
 
         if ($n20>$n19) {
             if (($n20-$n19) > $bk6) {

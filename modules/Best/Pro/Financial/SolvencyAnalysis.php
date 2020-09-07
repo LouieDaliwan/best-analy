@@ -134,9 +134,9 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     {
         $output = null;
         $ai43 = $spreadsheet->getCell('AI43')->getCalculatedValue();
-        $ai44 = $spreadsheet->getCell('AI44')->getCalculatedValue();
-        $ai45 = $spreadsheet->getCell('AI45')->getCalculatedValue();
-        $bj24 = $spreadsheet->getCell('BJ24')->getCalculatedValue();
+        $ai44 = $spreadsheet->getCell('AI44')->getCalculatedValue() ?: 0;
+        $ai45 = $spreadsheet->getCell('AI45')->getCalculatedValue() ?: 0;
+        $bj24 = $spreadsheet->getCell('BJ24')->getCalculatedValue() ?: 0;
 
         if ($ai45-$ai44 == 0) {
             $output = '';
@@ -183,9 +183,9 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     {
         $output = '';
         $ai43 = $spreadsheet->getCell('AI43')->getCalculatedValue();
-        $ai44 = $spreadsheet->getCell('AI44')->getCalculatedValue();
-        $ai45 = $spreadsheet->getCell('AI45')->getCalculatedValue();
-        $bj24 = $spreadsheet->getCell('BJ24')->getCalculatedValue();
+        $ai44 = $spreadsheet->getCell('AI44')->getCalculatedValue() ?: 0;
+        $ai45 = $spreadsheet->getCell('AI45')->getCalculatedValue() ?: 0;
+        $bj24 = $spreadsheet->getCell('BJ24')->getCalculatedValue() ?: 0;
 
         if (($ai45-$ai44) == 0) {
             $output = '';
@@ -232,8 +232,8 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     {
         $output = '';
         $ai43 = $spreadsheet->getCell('AI43')->getCalculatedValue();
-        $ai44 = $spreadsheet->getCell('AI44')->getCalculatedValue();
-        $bk24 = $spreadsheet->getCell('BK24')->getCalculatedValue();
+        $ai44 = $spreadsheet->getCell('AI44')->getCalculatedValue() ?: 0;
+        $bk24 = $spreadsheet->getCell('BK24')->getCalculatedValue() ?: 0;
 
         if ($ai43 == '') {
             $output = '';
@@ -375,9 +375,9 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     {
         $output = '';
         $an43 = $spreadsheet->getCell('AN43')->getCalculatedValue();
-        $an44 = $spreadsheet->getCell('AN44')->getCalculatedValue();
-        $an45 = $spreadsheet->getCell('AN45')->getCalculatedValue();
-        $bj25 = $spreadsheet->getCell('BJ25')->getCalculatedValue();
+        $an44 = $spreadsheet->getCell('AN44')->getCalculatedValue() ?: 1;
+        $an45 = $spreadsheet->getCell('AN45')->getCalculatedValue() ?: 0;
+        $bj25 = $spreadsheet->getCell('BJ25')->getCalculatedValue() ?: 0;
 
         if ($an43 == "" && (($an45-$an44)<0)) {
             if (($an45-$an44) < (-$bj25)) {
@@ -419,11 +419,11 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     public static function getBE25Comment($spreadsheet)
     {
         $output = '';
-        $ae43 = $spreadsheet->getCell('AE43')->getCalculatedValue();
-        $ae44 = $spreadsheet->getCell('AE44')->getCalculatedValue();
+        $ae43 = $spreadsheet->getCell('AE43')->getCalculatedValue() ?: 0;
+        $ae44 = $spreadsheet->getCell('AE44')->getCalculatedValue() ?: 0;
         $an43 = $spreadsheet->getCell('AN43')->getCalculatedValue();
-        $an44 = $spreadsheet->getCell('AN44')->getCalculatedValue();
-        $bk25 = $spreadsheet->getCell('BK25')->getCalculatedValue();
+        $an44 = $spreadsheet->getCell('AN44')->getCalculatedValue() ?: 0;
+        $bk25 = $spreadsheet->getCell('BK25')->getCalculatedValue() ?: 0;
 
         if ($an43 == '') {
             $output = '';

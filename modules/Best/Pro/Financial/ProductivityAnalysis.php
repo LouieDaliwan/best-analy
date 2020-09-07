@@ -134,9 +134,9 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $ai69 = $spreadsheet->getCell('AI69')->getCalculatedValue();
-        $ai70 = $spreadsheet->getCell('AI70')->getCalculatedValue();
-        $ai71 = $spreadsheet->getCell('AI71')->getCalculatedValue();
-        $bj30 = $spreadsheet->getCell('BJ30')->getCalculatedValue();
+        $ai70 = $spreadsheet->getCell('AI70')->getCalculatedValue() ?: 1;
+        $ai71 = $spreadsheet->getCell('AI71')->getCalculatedValue() ?: 0;
+        $bj30 = $spreadsheet->getCell('BJ30')->getCalculatedValue() ?: 0;
 
         if ($ai69 == '' && (($ai71 - $ai70) < 0)) {
             if (($ai71 - $ai70) < (-$bj30)) {
@@ -179,8 +179,8 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $ai69 = $spreadsheet->getCell('AI69')->getCalculatedValue();
-        $ai71 = $spreadsheet->getCell('AI71')->getCalculatedValue();
-        $bi30 = $spreadsheet->getCell('BI30')->getCalculatedValue();
+        $ai71 = $spreadsheet->getCell('AI71')->getCalculatedValue() ?: 0;
+        $bi30 = $spreadsheet->getCell('BI30')->getCalculatedValue() ?: 0;
 
         if ($ai69 == '') {
             $output = '';
@@ -214,10 +214,10 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $ai69 = $spreadsheet->getCell('AI69')->getCalculatedValue();
-        $ai70 = $spreadsheet->getCell('AI70')->getCalculatedValue();
-        $bk30 = $spreadsheet->getCell('BK30')->getCalculatedValue();
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue();
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue();
+        $ai70 = $spreadsheet->getCell('AI70')->getCalculatedValue() ?: 0;
+        $bk30 = $spreadsheet->getCell('BK30')->getCalculatedValue() ?: 0;
+        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
+        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
 
         if ($ai69 == '') {
             $output = '';

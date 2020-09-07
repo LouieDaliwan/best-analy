@@ -1,5 +1,5 @@
 <template>
-  <v-btn :loading="isSending" :disabled="isSending" @click="sendDocumentToCrm" large :block="$vuetify.breakpoint.smAndDown" color="primary">
+  <v-btn :loading="isSending" :disabled="isSending" @click="sendBothScoreAndDocument" large :block="$vuetify.breakpoint.smAndDown" color="primary">
     <v-icon left small>mdi-send</v-icon>
     {{ trans('Send Financial Report to CRM') }}
   </v-btn>
@@ -37,6 +37,11 @@ export default {
           reject(err)
         })
       })
+    },
+
+    sendBothScoreAndDocument () {
+      this.sendToCrm();
+      this.sendDocumentToCrm();
     },
 
     sendToCrm () {

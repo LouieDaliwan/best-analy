@@ -1,34 +1,32 @@
 <template>
   <div v-if="isOverall">
-    <v-btn :loading="isSending" :disabled="isSending" @click="sendBothDataToCrm" large :block="$vuetify.breakpoint.smAndDown" color="primary">
+    <v-btn :loading="isSending" :disabled="isSending" @click="sendAllScoresAndDocuments" large :block="$vuetify.breakpoint.smAndDown" color="primary">
       <v-icon small left>mdi-send</v-icon>
-      {{ trans('Send Scores to CRM') }}
+      {{ trans('Send to CRM') }}
     </v-btn>
-    <!-- <v-menu>
-      <template v-slot:activator="{ on }">
-        <v-btn v-on="on" large :block="$vuetify.breakpoint.smAndDown" color="primary">
-          <v-icon small>mdi-dots-horizontal</v-icon>
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item @click="sendDocumentToCrm">
-          <v-list-item-action>
-            <v-icon small class="text--muted">mdi-paperclip</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="trans('Send Overall Report Document to CRM')"></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item @click="sendBothDataToCrm">
-          <v-list-item-action>
-            <v-icon small class="text--muted">mdi-paperclip</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="trans('Send Both Scores and Report Document to CRM')"></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-menu> -->
+    <v-dialog max-width="420" v-model="dialog" persistent>
+      <v-card>
+        <v-list>
+          <v-list-item v-for="(item, i) in checklist" :key="i" :title="item.message">
+            <v-list-item-content>
+              <v-list-item-title v-text="item.name"></v-list-item-title>
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-icon v-if="item.status == 'pending'" small left>mdi-checkbox-blank-circle-outline</v-icon>
+              <v-progress-circular v-else-if="item.status == 'sending'" indeterminate width="2" size="12"></v-progress-circular>
+              <v-icon v-else-if="item.status == 'done'" small left color="success">mdi-check</v-icon>
+              <div v-else-if="item.status == 'error'">
+                <v-icon small left color="error">mdi-alert-circle</v-icon>
+              </div>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn depressed @click="dialog = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
   <v-btn v-else @click="sendToCrm" icon>
     <v-icon small>mdi-send</v-icon>
@@ -43,6 +41,14 @@ export default {
 
   data: () => ({
     isSending: false,
+    sendAll: false,
+    checklist: [
+      { message: '', name: trans('Sending Overall Scores'), icon: 'mdi-cube-send', status: 'pending' },
+      { message: '', name: trans('Sending Overall Document'), icon: 'mdi-file-send', status: 'pending' },
+      { message: '', name: trans('Sending Financial Scores'), icon: 'mdi-cube-send', status: 'pending' },
+      { message: '', name: trans('Sending Financial Document'), icon: 'mdi-file-send', status: 'pending' },
+    ],
+    dialog: false,
     sendBothScoresAndFile: false,
     resource: {
       data: {}
@@ -56,6 +62,17 @@ export default {
   },
 
   methods: {
+    sendAllScoresAndDocuments () {
+      this.dialog = true;
+      this.sendAll = true;
+
+      this.checklist = this.checklist.map((item) => {
+        return Object.assign(item, {status: 'pending', message: ''});
+      });
+
+      this.sendToCrm();
+    },
+
     getReportData () {
       return new Promise((resolve, reject) => {
         let customer = this.customer
@@ -152,6 +169,8 @@ export default {
 
     sendToCrm () {
       this.isSending = true;
+      this.checklist[0].status = 'sending';
+
       this.$store.dispatch('snackbar/show', { button: { show: false }, timeout: 0, text: 'Sending report to CRM. Please wait...'});
 
       this.getReportData().then(response => {
@@ -176,33 +195,40 @@ export default {
 
         this.$store.dispatch('snackbar/show', { icon: 'mdi-spin mdi-loading', button: { show: false }, timeout: 0, text: 'Sending report to CRM. Establishing connection to CRM...'});
 
-        console.log('DATA', data);
+        console.log('Sending overall scores...', data);
 
         axios.post(
           `/api/v1/crm/customers/save`, data
         ).then(response => {
           this.$store.dispatch('snackbar/hide')
+          this.checklist[0].status = 'done';
 
           if (response.data.Code == 1) {
             this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Successfully sent to CRM')})
           } else {
-            this.$store.dispatch('dialog/error', {
-              show: true,
-              width: 400,
-              buttons: { cancel: { show: false } },
-              title: 'Returned a Code ' + response.data.Code,
-              text: response.data.Message,
-            })
+            this.checklist[0].status = 'error';
+            this.checklist[0].message = response.data.Message;
+            // this.$store.dispatch('dialog/error', {
+            //   show: true,
+            //   width: 400,
+            //   buttons: { cancel: { show: false } },
+            //   title: 'Returned a Code ' + response.data.Code,
+            //   text: response.data.Message,
+            // })
           }
 
           if (this.sendBothScoresAndFile) {
-            console.log('sending file...');
-            this.sendDocumentToCrm();
+            // this.sendDocumentToCrm();
           }
         }).catch(err => {
+          this.checklist[0].status = 'error';
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
         }).finally(() => {
           this.isSending = false;
+
+          if (this.sendAll) {
+            this.sendDocumentToCrm();
+          }
         })
       }).catch(err => {
         console.log('err', err)
@@ -211,48 +237,172 @@ export default {
 
     sendDocumentToCrm () {
       this.isSending = true;
+      this.checklist[1].status = 'sending';
 
       this.getReportData().then(response => {
         this.resource.data = response.data
 
         let data = {
           Id: _.toUpper(this.resource.data.customer.token),
+          FileName: "Overall Scores",
           FileContentBase64: this.resource.data['overall:report'] || 'empty',
         }
 
-        // console.log(this.resource.data);
+        console.log('Sending overall document...', data);
 
         this.$store.dispatch('snackbar/show', { icon: 'mdi-spin mdi-loading', button: { show: false }, timeout: 0, text: 'Sending Overall Report Document to CRM. Establishing connection to CRM...'});
 
         axios.post(
           $api.crm.sendDocument(), data
         ).then(response => {
-          console.log('asdasd', response.data);
           this.$store.dispatch('snackbar/hide')
+          this.checklist[1].status = 'done';
 
           if (response.data.Code == 1) {
             this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('File Successfully sent to CRM')})
           } else {
-            this.$store.dispatch('dialog/error', {
-              show: true,
-              width: 400,
-              buttons: { cancel: { show: false } },
-              title: 'Returned a Code ' + response.data.Code,
-              text: response.data.Message,
-            })
+            this.checklist[1].status = 'error';
+            this.checklist[1].message = response.data.Message;
+            // this.$store.dispatch('dialog/error', {
+            //   show: true,
+            //   width: 400,
+            //   buttons: { cancel: { show: false } },
+            //   title: 'Returned a Code ' + response.data.Code,
+            //   text: response.data.Message,
+            // })
           }
         }).catch(err => {
+          this.checklist[1].status = 'error';
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
         }).finally(() => {
           this.isSending = false;
+
+          if (this.sendAll) {
+            this.sendFinancialScores();
+          }
         })
       });
     },
 
     sendBothDataToCrm () {
-      console.log('sending both scores + file...');
       this.sendBothScoresAndFile = true
       this.sendToCrm()
+    },
+
+    sendFinancialScores () {
+      this.checklist[2].status = 'sending';
+      this.$store.dispatch('snackbar/show', { button: { show: false }, timeout: 0, text: 'Sending report to CRM. Please wait...'});
+
+      this.getReportData().then(response => {
+        this.resource.data = response.data
+
+        if (! this.resource.data.customer) {
+          this.$store.dispatch('snackbar/show', { text: 'No report data found.'});
+
+          return false;
+        }
+
+        let data = {
+          FileNo: this.resource.data.customer.filenumber,
+          YearofFinancial: this.resource.data.customer.metadata ? this.resource.data.customer.metadata.years.Years.Year3 : 'No year was set',
+          SubmissionDate: this.resource.data.profit_and_loss['Submission Date'],
+          Revenue: JSON.stringify(this.resource.data.profit_and_loss.Revenue),
+          CostofGoodsSold: JSON.stringify(this.resource.data.profit_and_loss.CostOfGoodsSold),
+          OtherExpenses: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses),
+          NonOperatingExpenses: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Non-Operating expenses (NOE)'] || {}),
+          OperatingLossProfit: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Operating (loss)/profit'] || {}),
+          Depreciation: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Depreciation'] || {}),
+          Taxes: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Taxes'] || {}),
+          NetLossProfits: this.resource.data.profit_and_loss.NetProfit.Year3,
+          FixedAssets: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets['Fixed Assets']),
+          TotalLiabilities: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets['Total Liabilities']),
+          StockholdersEquity: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets["Stockholder's Equity"]),
+          Marketing: JSON.stringify(this.resource.data.profit_and_loss.Marketing),
+          Rent: JSON.stringify(this.resource.data.profit_and_loss.Rent),
+          Salaries: JSON.stringify(this.resource.data.profit_and_loss.Salaries),
+          LicensingFees: JSON.stringify(this.resource.data.profit_and_loss['Licensing Fees']),
+          VisaEmploymentFees: JSON.stringify(this.resource.data.profit_and_loss['Visa / Employment Fees']),
+        }
+
+        console.log('Sending financial scores...', data);
+
+        this.$store.dispatch('snackbar/show', { icon: 'mdi-spin mdi-loading', button: { show: false }, timeout: 0, text: 'Sending report to CRM. Establishing connection to CRM...'});
+
+        axios.post(
+          $api.crm.sendFinancial(), data
+        ).then(response => {
+          this.$store.dispatch('snackbar/hide')
+          this.checklist[2].status = 'done';
+
+          if (response.data.Code == 1) {
+            this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Successfully sent to CRM')})
+          } else {
+            this.checklist[2].status = 'error';
+            this.checklist[2].message = response.data.Message;
+            // this.$store.dispatch('dialog/error', {
+            //   show: true,
+            //   width: 400,
+            //   buttons: { cancel: { show: false } },
+            //   title: 'Returned a Code ' + response.data.Code,
+            //   text: response.data.Message,
+            // })
+          }
+        }).catch(err => {
+          this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
+          this.checklist[2].status = 'error';
+        }).finally(() => {
+          if (this.sendAll) {
+            this.sendFinancialDocument();
+          }
+        })
+      }).catch(err => {
+        console.log('err', err)
+      })
+    },
+
+    sendFinancialDocument () {
+      this.checklist[3].status = 'sending';
+
+      this.getReportData().then(response => {
+        this.resource.data = response.data
+        console.log(this)
+        let data = {
+          Id: _.toUpper(this.resource.data.customer.token),
+          FileName: "Financial Ratios",
+          FileContentBase64: this.resource.data['report:financial'] || 'empty',
+        }
+
+        console.log('Sending financial document...', data);
+
+        this.$store.dispatch('snackbar/show', { icon: 'mdi-spin mdi-loading', button: { show: false }, timeout: 0, text: 'Sending Financial Report Document to CRM. Establishing connection...'});
+
+        axios.post(
+          $api.crm.sendDocument(), data
+        ).then(response => {
+          console.log('data', response.data);
+          this.$store.dispatch('snackbar/hide')
+          this.checklist[3].status = 'done';
+
+          if (response.data.Code == 1) {
+            this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('File Successfully sent to CRM')})
+          } else {
+            this.checklist[3].status = 'error';
+            this.checklist[3].message = response.data.Message;
+            // this.$store.dispatch('dialog/error', {
+            //   show: true,
+            //   width: 400,
+            //   buttons: { cancel: { show: false } },
+            //   title: 'Returned a Code ' + response.data.Code,
+            //   text: response.data.Message,
+            // })
+          }
+        }).catch(err => {
+          this.checklist[3].status = 'error';
+          this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
+        }).finally(() => {
+          // this.dialog = false
+        })
+      })
     },
   }
 }

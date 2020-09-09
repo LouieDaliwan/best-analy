@@ -16,16 +16,6 @@
       </template>
 
       <template v-slot:action>
-        <div class="mb-3">
-          <div v-if="resource.data.customer && isInEnglish">
-            <send-report-to-crm-button
-              type="overall"
-              with-file
-              :customer="resource.data.customer.id"
-              :user="resource.data.report.user_id"
-            ></send-report-to-crm-button>
-          </div>
-        </div>
         <a v-if="resource.lang == 'en'" class="dt-link text--decoration-none mr-4" @click="goToShowPage('ar')">
           <v-icon small left>mdi-earth</v-icon>
           {{ trans('View Report in Arabic') }}
@@ -34,6 +24,25 @@
           <v-icon small left>mdi-earth</v-icon>
           {{ trans('View Report in English') }}
         </a>
+        <div class="mb-3">
+          <div v-if="resource.data.customer && isInEnglish">
+            <send-report-to-crm-button
+              type="overall"
+              with-file
+              with-financials
+              class="mt-4"
+              :customer="resource.data.customer.id"
+              :user="resource.data.report.user_id"
+            ></send-report-to-crm-button>
+
+            <!-- <send-financial-data-to-crm-button
+              v-if="resource.data.report && isInEnglish"
+              class="mt-4"
+              :customer="resource.data.customer.id"
+              :user="resource.data.report.user_id"
+            ></send-financial-data-to-crm-button> -->
+          </div>
+        </div>
       </template>
     </page-header>
 
@@ -53,10 +62,12 @@
 import $auth from '@/core/Auth/auth'
 import $api from './routes/api'
 import SendReportToCrmButton from '@/modules/Customer/cards/SendReportToCrmButton.vue'
+import SendFinancialDataToCrmButton from '@/modules/Customer/cards/SendFinancialDataToCrmButton.vue';
 
 export default {
   components: {
     SendReportToCrmButton,
+    SendFinancialDataToCrmButton,
   },
 
   computed: {

@@ -78,7 +78,7 @@ export default {
           VisaEmploymentFees: JSON.stringify(this.resource.data.profit_and_loss['Visa / Employment Fees']),
         }
 
-        // console.log(this.resource.data, data)
+        console.log(data)
 
         this.$store.dispatch('snackbar/show', { icon: 'mdi-spin mdi-loading', button: { show: false }, timeout: 0, text: 'Sending report to CRM. Establishing connection to CRM...'});
 

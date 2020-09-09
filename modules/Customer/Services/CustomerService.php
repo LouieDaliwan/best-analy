@@ -8,6 +8,7 @@ use Core\Application\Service\Service;
 use Customer\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class CustomerService extends Service implements CustomerServiceInterface
@@ -79,10 +80,31 @@ class CustomerService extends Service implements CustomerServiceInterface
     public function saveFromCrm($attributes)
     {
         return $this->model()->updateOrCreate([
-            'code' => $attributes['code'],
+            'code' => $this->handleCode(Str::slug($attributes['code'])),
             'refnum' => $attributes['refnum'] ?? null,
         ], $attributes);
     }
+
+    /**
+     * Validate and sanitize slug.
+     *
+     * @param  string  $slug
+     * @param  integer $i
+     * @return string
+     */
+    public function handleCode($slug, $i = 0)
+    {
+        $text = $slug;
+
+        if ($this->whereCode($text)->exists()) {
+            do {
+                $text = sprintf('%s-%s', Str::slug($slug), ++$i);
+            } while ($this->whereCode($text)->exists());
+        }
+
+        return $text;
+    }
+
 
     /**
      * Retrieve all customer reports and

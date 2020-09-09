@@ -71,6 +71,7 @@ export default {
       });
 
       this.sendToCrm();
+      // this.sendFinancialScores();
     },
 
     getReportData () {
@@ -295,6 +296,7 @@ export default {
 
       this.getReportData().then(response => {
         this.resource.data = response.data
+        console.log(this.resource.data)
 
         if (! this.resource.data.customer) {
           this.$store.dispatch('snackbar/show', { text: 'No report data found.'});
@@ -302,27 +304,50 @@ export default {
           return false;
         }
 
+        // let data = {
+        //   FileNo: this.resource.data.customer.filenumber,
+        //   YearofFinancial: this.resource.data.customer.metadata ? this.resource.data.customer.metadata.years.Years.Year3 : 'No year was set',
+        //   SubmissionDate: this.resource.data.profit_and_loss['Submission Date'],
+        //   Revenue: JSON.stringify(this.resource.data.profit_and_loss.Revenue),
+        //   CostofGoodsSold: JSON.stringify(this.resource.data.profit_and_loss.CostOfGoodsSold),
+        //   OtherExpenses: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses),
+        //   NonOperatingExpenses: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Non-Operating expenses (NOE)'] || {}),
+        //   OperatingLossProfit: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Operating (loss)/profit'] || {}),
+        //   Depreciation: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Depreciation'] || {}),
+        //   Taxes: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Taxes'] || {}),
+        //   NetLossProfits: this.resource.data.profit_and_loss.NetProfit.Year3,
+        //   FixedAssets: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets['Fixed Assets']),
+        //   TotalLiabilities: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets['Total Liabilities']),
+        //   StockholdersEquity: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets["Stockholder's Equity"]),
+        //   Marketing: JSON.stringify(this.resource.data.profit_and_loss.Marketing),
+        //   Rent: JSON.stringify(this.resource.data.profit_and_loss.Rent),
+        //   Salaries: JSON.stringify(this.resource.data.profit_and_loss.Salaries),
+        //   LicensingFees: JSON.stringify(this.resource.data.profit_and_loss['Licensing Fees']),
+        //   VisaEmploymentFees: JSON.stringify(this.resource.data.profit_and_loss['Visa / Employment Fees']),
+        // }
+
         let data = {
           FileNo: this.resource.data.customer.filenumber,
           YearofFinancial: this.resource.data.customer.metadata ? this.resource.data.customer.metadata.years.Years.Year3 : 'No year was set',
-          SubmissionDate: this.resource.data.profit_and_loss['Submission Date'],
-          Revenue: JSON.stringify(this.resource.data.profit_and_loss.Revenue),
-          CostofGoodsSold: JSON.stringify(this.resource.data.profit_and_loss.CostOfGoodsSold),
-          OtherExpenses: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses),
-          NonOperatingExpenses: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Non-Operating expenses (NOE)'] || {}),
-          OperatingLossProfit: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Operating (loss)/profit'] || {}),
-          Depreciation: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Depreciation'] || {}),
-          Taxes: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Taxes'] || {}),
-          NetLossProfits: this.resource.data.profit_and_loss.NetProfit.Year3,
-          FixedAssets: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets['Fixed Assets']),
-          TotalLiabilities: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets['Total Liabilities']),
-          StockholdersEquity: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets["Stockholder's Equity"]),
-          Marketing: JSON.stringify(this.resource.data.profit_and_loss.Marketing),
-          Rent: JSON.stringify(this.resource.data.profit_and_loss.Rent),
-          Salaries: JSON.stringify(this.resource.data.profit_and_loss.Salaries),
-          LicensingFees: JSON.stringify(this.resource.data.profit_and_loss['Licensing Fees']),
-          VisaEmploymentFees: JSON.stringify(this.resource.data.profit_and_loss['Visa / Employment Fees']),
+          SubmissionDate: this.resource.data.profit_and_loss['Submission Date'] || this.resource.data.report.updated_at,
+          Revenue: this.resource.data.profit_and_loss.Revenue.Year3,
+          CostofGoodsSold: this.resource.data.profit_and_loss.CostOfGoodsSold.Year3,
+          OtherExpenses: this.resource.data.profit_and_loss.OtherExpenses.Year3 || '0',
+          NonOperatingExpenses: this.resource.data.profit_and_loss.OtherExpenses['Non-Operating expenses (NOE)'].Year3 || '0',
+          OperatingLossProfit: this.resource.data.profit_and_loss.OtherExpenses['Operating (loss)/profit'].Year3 || '0',
+          Depreciation: this.resource.data.profit_and_loss.OtherExpenses['Depreciation'].Year3 || '0',
+          Taxes: this.resource.data.profit_and_loss.OtherExpenses['Taxes'].Year3 || '0',
+          NetLossProfits: this.resource.data.profit_and_loss.NetProfit.Year3 || '0',
+          FixedAssets: this.resource.data.profit_and_loss.FixedAssets['Fixed Assets'].Year3 || '0',
+          TotalLiabilities: this.resource.data.profit_and_loss.FixedAssets['Total Liabilities'].Year3 || '0',
+          StockholdersEquity: this.resource.data.profit_and_loss.FixedAssets["Stockholders' Equity"].Year3 || '0',
+          Marketing: this.resource.data.profit_and_loss.Marketing.Year3 || '0',
+          Rent: this.resource.data.profit_and_loss.Rent.Year3 || '0',
+          Salaries: this.resource.data.profit_and_loss.Salaries.Year3 || '0',
+          LicensingFees: this.resource.data.profit_and_loss['Licensing Fees'].Year3 || '0',
+          VisaEmploymentFees: this.resource.data.profit_and_loss['Visa / Employment Fees'].Year3 || '0',
         }
+
 
         console.log('Sending financial scores...', data);
 

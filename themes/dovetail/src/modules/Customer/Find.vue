@@ -61,7 +61,7 @@
           >
           <!-- Actions -->
           <template v-slot:item.actions="{ item }">
-            <v-btn @click.prevent="goToNextStep" color="primary">{{ trans('Start') }}</v-btn>
+            <v-btn @click.prevent="goToNextStep(item)" color="primary">{{ trans('Start') }}</v-btn>
           </template>
           <!-- Actions -->
         </v-data-table>
@@ -160,8 +160,8 @@ export default {
       })
     },
 
-    goToNextStep () {
-      this.prepFoundCompany(this.companies[0])
+    goToNextStep (item) {
+      this.prepFoundCompany(item)
     },
 
     saveDummyCompany () {

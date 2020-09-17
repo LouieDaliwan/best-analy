@@ -1,3 +1,4 @@
+@dd(theme()->version())
 @include('dovetail::partials.head')
 
 @section('app')

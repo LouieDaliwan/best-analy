@@ -261,6 +261,7 @@ class ThemeManifest
             $manifests[$manifest['name']] = array_merge(
                 (array) $manifest, [
                 'name' => $manifest['name'],
+                'version' => $manifest['version'] ?? null,
                 'preview' => (array) $manifest['preview'] ?? [],
                 'author' => (array) $manifest['author'] ?? [],
                 'colors' => (array) $manifest['colors'] ?? [],

@@ -61,7 +61,7 @@ class ThemeRepository extends Repository implements Contracts\ThemeRepositoryInt
             return 'dev-'.date('YmdH');
         }
 
-        return $this->detail('version', app()->version());
+        return $this->detail('version', data_get($this->theme, 'version', app()->version()));
     }
 
     /**

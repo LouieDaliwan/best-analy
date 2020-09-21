@@ -341,8 +341,8 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     {
         $output = '';
         $an43 = $spreadsheet->getCell('AN43')->getCalculatedValue();
-        $an45 = $spreadsheet->getCell('AN45')->getCalculatedValue();
-        $bi25 = $spreadsheet->getCell('BI25')->getCalculatedValue();
+        $an45 = $spreadsheet->getCell('AN45')->getCalculatedValue() ?: 0;
+        $bi25 = $spreadsheet->getCell('BI25')->getCalculatedValue() ?: 0;
 
         if ($an43 == "") {
             $output = "";

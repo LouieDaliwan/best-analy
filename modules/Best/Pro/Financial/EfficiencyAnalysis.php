@@ -147,8 +147,8 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
         $output = '';
 
         $h43 = $spreadsheet->getCell('H43')->getCalculatedValue();
-        $h45 = $spreadsheet->getCell('H45')->getCalculatedValue();
-        $bi17 = $spreadsheet->getCell('BI17')->getCalculatedValue();
+        $h45 = $spreadsheet->getCell('H45')->getCalculatedValue() ?: 0;
+        $bi17 = $spreadsheet->getCell('BI17')->getCalculatedValue() ?: 0;
 
         if ($h43 == "") {
             $output = "";
@@ -181,10 +181,10 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     {
         $output = '';
         $h43 = $spreadsheet->getCell('H43')->getCalculatedValue();
-        $h32 = $spreadsheet->getCell('H32')->getCalculatedValue() ?: 0;
+        $h32 = $spreadsheet->getCell('H32')->getCalculatedValue();
         $h44 = $spreadsheet->getCell('H44')->getCalculatedValue() ?: 1;
         $h45 = $spreadsheet->getCell('H45')->getCalculatedValue() ?: 0;
-        $bj17 = $spreadsheet->getCell('BJ17')->getCalculatedValue();
+        $bj17 = $spreadsheet->getCell('BJ17')->getCalculatedValue() ?: 0;
 
         if ($h43 == "" && (($h45-$h44)/$h44 > 0)) {
             if (($h45-$h44)/$h44 > ($bj17)) {
@@ -226,11 +226,11 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     public static function getBE17Comment($spreadsheet)
     {
         $output = '';
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue();
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue();
+        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
+        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
         $h43 = $spreadsheet->getCell('H43')->getCalculatedValue();
-        $h44 = $spreadsheet->getCell('H44')->getCalculatedValue();
-        $bk17 = $spreadsheet->getCell('BK17')->getCalculatedValue();
+        $h44 = $spreadsheet->getCell('H44')->getCalculatedValue() ?: 0;
+        $bk17 = $spreadsheet->getCell('BK17')->getCalculatedValue() ?: 0;
 
         if ($h43 == '') {
             $output = '';
@@ -334,9 +334,9 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     {
         $output = '';
         $l43 = $spreadsheet->getCell('L43')->getCalculatedValue();
-        $bi18 = $spreadsheet->getCell('BI18')->getCalculatedValue();
-        $l43 = $spreadsheet->getCell('L43')->getCalculatedValue();
-        $l45 = $spreadsheet->getCell('L45')->getCalculatedValue();
+        $bi18 = $spreadsheet->getCell('BI18')->getCalculatedValue() ?: 0;
+        $l43 = $spreadsheet->getCell('L43')->getCalculatedValue() ?: 1;
+        $l45 = $spreadsheet->getCell('L45')->getCalculatedValue() ?: 0;
 
         if ($l43 == '') {
             $output = '';
@@ -407,10 +407,10 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     public static function getBE18Comment($spreadsheet)
     {
         $output = '';
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue();
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue();
+        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
+        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
         $l43 = $spreadsheet->getCell('L43')->getCalculatedValue();
-        $l44 = $spreadsheet->getCell('L44')->getCalculatedValue();
+        $l44 = $spreadsheet->getCell('L44')->getCalculatedValue() ?: 0;
 
         if ($l43 == '') {
             $output = '';
@@ -514,8 +514,8 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     {
         $output = '';
         $p43 = $spreadsheet->getCell('P43')->getCalculatedValue();
-        $p45 = $spreadsheet->getCell('P45')->getCalculatedValue();
-        $bi19 = $spreadsheet->getCell('BI19')->getCalculatedValue();
+        $p45 = $spreadsheet->getCell('P45')->getCalculatedValue() ?: 0;
+        $bi19 = $spreadsheet->getCell('BI19')->getCalculatedValue() ?: 0;
 
         if ($p43 == "") {
             $output = "";
@@ -592,11 +592,11 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     public static function getBE19Comment($spreadsheet)
     {
         $output = '';
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue();
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue();
+        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
+        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
         $p43 = $spreadsheet->getCell('P43')->getCalculatedValue();
-        $p44 = $spreadsheet->getCell('P44')->getCalculatedValue();
-        $bk19 = $spreadsheet->getCell('BK19')->getCalculatedValue();
+        $p44 = $spreadsheet->getCell('P44')->getCalculatedValue() ?: 0;
+        $bk19 = $spreadsheet->getCell('BK19')->getCalculatedValue() ?: 0;
 
         if ($p43 == '') {
             $output = '';
@@ -699,9 +699,9 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     public static function getBC20Comment($spreadsheet)
     {
         $output = '';
-        $bi20 = $spreadsheet->getCell('BI20')->getCalculatedValue();
+        $bi20 = $spreadsheet->getCell('BI20')->getCalculatedValue() ?: 0;
         $t43 = $spreadsheet->getCell('T43')->getCalculatedValue();
-        $t45 = $spreadsheet->getCell('T45')->getCalculatedValue();
+        $t45 = $spreadsheet->getCell('T45')->getCalculatedValue() ?: 0;
 
         if ($t43 == '') {
             $output = '';
@@ -779,11 +779,11 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     public static function getBE20Comment($spreadsheet)
     {
         $output = '';
-        $bk20 = $spreadsheet->getCell('bk20')->getCalculatedValue();
-        $d19 = $spreadsheet->getCell('d19')->getCalculatedValue();
-        $d20 = $spreadsheet->getCell('d20')->getCalculatedValue();
+        $bk20 = $spreadsheet->getCell('bk20')->getCalculatedValue() ?: 0;
+        $d19 = $spreadsheet->getCell('d19')->getCalculatedValue() ?: 0;
+        $d20 = $spreadsheet->getCell('d20')->getCalculatedValue() ?: 0;
         $t43 = $spreadsheet->getCell('t43')->getCalculatedValue();
-        $t44 = $spreadsheet->getCell('t44')->getCalculatedValue();
+        $t44 = $spreadsheet->getCell('t44')->getCalculatedValue() ?: 0;
 
         if ($t43 == '') {
             $output = '';

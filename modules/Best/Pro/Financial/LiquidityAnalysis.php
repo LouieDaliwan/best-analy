@@ -203,9 +203,9 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     public static function getBC12Comment($spreadsheet)
     {
         $output = '';
-        $ai19 = $spreadsheet->getCell('AI19')->getCalculatedValue() ?: 1;
-        $ai21 = $spreadsheet->getCell('AI21')->getCalculatedValue();
-        $bi12 = $spreadsheet->getCell('BI12')->getCalculatedValue();
+        $ai19 = $spreadsheet->getCell('AI19')->getCalculatedValue();
+        $ai21 = $spreadsheet->getCell('AI21')->getCalculatedValue() ?: 0;
+        $bi12 = $spreadsheet->getCell('BI12')->getCalculatedValue() ?: 0;
 
         if ($ai19 == "") {
             $output = "";
@@ -240,8 +240,8 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
         $customer = $main->getSheetByName('Customer')->getCell('B2')->getCalculatedValue();
         $ai19 = $spreadsheet->getCell('AI19')->getCalculatedValue();
         $ai20 = $spreadsheet->getCell('AI20')->getCalculatedValue() ?: 1;
-        $ai21 = $spreadsheet->getCell('AI21')->getCalculatedValue();
-        $bj12 = $spreadsheet->getCell('BJ12')->getCalculatedValue();
+        $ai21 = $spreadsheet->getCell('AI21')->getCalculatedValue() ?: 0;
+        $bj12 = $spreadsheet->getCell('BJ12')->getCalculatedValue() ?: 0;
 
         if ($ai19 == "" && ($ai21-$ai20) > 0) {
             if (($ai21-$ai20)>$bj12) {
@@ -331,9 +331,9 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     public static function getBC13Comment($spreadsheet)
     {
         $output = '';
-        $am19 = $spreadsheet->getCell('AM19')->getCalculatedValue() ?: 1;
-        $am21 = $spreadsheet->getCell('AM21')->getCalculatedValue();
-        $bi13 = $spreadsheet->getCell('BI13')->getCalculatedValue();
+        $am19 = $spreadsheet->getCell('AM19')->getCalculatedValue();
+        $am21 = $spreadsheet->getCell('AM21')->getCalculatedValue() ?: 0;
+        $bi13 = $spreadsheet->getCell('BI13')->getCalculatedValue() ?: 0;
 
         if ($am19 == "") {
             $output = "";
@@ -367,8 +367,8 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
         $output = '';
         $am19 = $spreadsheet->getCell('AM19')->getCalculatedValue();
         $am20 = $spreadsheet->getCell('AM20')->getCalculatedValue() ?: 1;
-        $am21 = $spreadsheet->getCell('AM21')->getCalculatedValue();
-        $bj13 = $spreadsheet->getCell('BJ13')->getCalculatedValue();
+        $am21 = $spreadsheet->getCell('AM21')->getCalculatedValue() ?: 0;
+        $bj13 = $spreadsheet->getCell('BJ13')->getCalculatedValue() ?: 0;
 
         if ($am19 == "" && ($am21-$am20) > 0) {
             if (($am21-$am20) > $bj13) {
@@ -496,7 +496,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     public static function getBC14Comment($spreadsheet)
     {
         $output = '';
-        $aq19 = $spreadsheet->getCell('AQ19')->getCalculatedValue() ?: 1;
+        $aq19 = $spreadsheet->getCell('AQ19')->getCalculatedValue();
         $aq21 = $spreadsheet->getCell('AQ21')->getCalculatedValue() ?: 0;
         $bi14 = $spreadsheet->getCell('BI14')->getCalculatedValue() ?: 0;
 
@@ -571,12 +571,12 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $aq19 = $spreadsheet->getCell('AQ19')->getCalculatedValue() ?: 1;
-        $aq20 = $spreadsheet->getCell('AQ20')->getCalculatedValue();
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue();
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue();
-        $n27 = $spreadsheet->getCell('N27')->getCalculatedValue();
-        $n28 = $spreadsheet->getCell('N28')->getCalculatedValue();
-        $bk14 = $spreadsheet->getCell('BK14')->getCalculatedValue();
+        $aq20 = $spreadsheet->getCell('AQ20')->getCalculatedValue() ?: 0;
+        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
+        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
+        $n27 = $spreadsheet->getCell('N27')->getCalculatedValue() ?: 0;
+        $n28 = $spreadsheet->getCell('N28')->getCalculatedValue() ?: 0;
+        $bk14 = $spreadsheet->getCell('BK14')->getCalculatedValue() ?: 0;
 
         $item1 = $d19;
         $item2 = $d20;

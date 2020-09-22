@@ -12,7 +12,17 @@
     <tr>
       <td v-align="middle">
         <div class="mx-3" style="width: 80px; height: 80px;">
-          <canvas id="overall-{{ $data['taxonomy']['id'] }}" style="width: 100%;"></canvas>
+          <svg width="100%" height="100%" viewBox="0 0 42 42" class="donut">
+            <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="#fff"></circle>
+            <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#eeeeee" stroke-width="3"></circle>
+            <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="{{ $data['pindex:color'] }}" stroke-dasharray="{{ round($data['overall:total']) }} 15" stroke-dashoffset="25" stroke-width="3"></circle>
+            <g class="chart-text">
+              <text x="50%" y="55%" class="chart-number" fill="{{ $data['pindex:color'] }}">
+                {{ round($data['overall:total']) }}%
+              </text>
+            </g>
+          </svg>
+          <canvas id="overall-{{ $data['taxonomy']['id'] }}" style="display: none; width: 100%;"></canvas>
         </div>
       </td>
       <td v-align="middle"><p class="mb-0">@lang($data['overall:comment'])</p></td>
@@ -84,7 +94,7 @@
   })
   var overallFindings = parseInt('{!! $data['overall:total'] !!}').toFixed(0);
   var myChart = new Chart(document.getElementById('overall-{{ $data['taxonomy']['id'] }}'), {
-    type: 'doughnut',
+    type: 'bar',
     data: {
       labels: ["Overall Findings"],
       datasets: [

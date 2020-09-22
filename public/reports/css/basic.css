@@ -120,3 +120,24 @@
   border-radius: 5px;
   font-weight: 600;
 }
+
+/* SVG Chart */
+.chart-text {
+  font: 16px/1.4em "Montserrat", Arial, sans-serif;
+  fill: #000;
+  -moz-transform: translateY(0.75em);
+  -ms-transform: translateY(0.75em);
+  -webkit-transform: translateY(0.75em);
+  transform: translateY(0.75em);
+}
+
+.chart-number {
+  font-size: 0.6em;
+  line-height: 1;
+  text-anchor: middle;
+  -moz-transform: translateY(-0.75em);
+  -ms-transform: translateY(-0.75em);
+  -webkit-transform: translateY(-0.75em);
+  transform: translateY(-0.75em);
+}
+

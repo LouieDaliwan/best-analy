@@ -131,14 +131,14 @@
                 </can>
                 <!-- Show Reports -->
                 <!-- Send Report -->
-                <can code="customers.survey">
+                <!-- <can code="customers.survey">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <span v-on="on"><send-report-to-crm-button :customer="item.id" :user="item.user_id"></send-report-to-crm-button></span>
                     </template>
                     <span>{{ trans('Send All Reports for this month to CRM') }}</span>
                   </v-tooltip>
-                </can>
+                </can> -->
                 <!-- Send Report -->
                 <!-- Move to Trash -->
                 <can code="customers.destroy">

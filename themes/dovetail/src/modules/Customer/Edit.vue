@@ -71,12 +71,12 @@
                 </v-radio-group> -->
               </div>
             </validation-provider>
-            <div class="mt-3 text-right">
+            <!-- <div class="mt-3 text-right">
               <send-financial-data-to-crm-button
                 :customer="resource.data.id"
                 :user="resource.data.user_id"
               ></send-financial-data-to-crm-button>
-            </div>
+            </div> -->
           </template>
         </page-header>
 
@@ -101,6 +101,21 @@
 
                     <v-card v-show="isFinishedFetchingResource">
                       <v-card-text>
+                        <validation-provider vid="name" :name="trans('Name')" rules="required" v-slot="{ errors }">
+                          <v-text-field
+                            :dense="isDense"
+                            :disabled="isLoading"
+                            :error-messages="errors"
+                            :label="trans('Company Name')"
+                            autofocus
+                            class="dt-text-field"
+                            name="name"
+                            outlined
+                            prepend-inner-icon="mdi-briefcase-outline"
+                            v-model="resource.data.name"
+                            >
+                          </v-text-field>
+                        </validation-provider>
                         <validation-provider vid="metadata[email]" :name="trans('Email')" rules="email" v-slot="{ errors }">
                           <v-text-field
                             :dense="isDense"

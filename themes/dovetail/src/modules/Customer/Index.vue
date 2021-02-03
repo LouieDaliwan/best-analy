@@ -12,6 +12,12 @@
         </can>
       </template>
       <template v-slot:action>
+        <can code="customers.create">
+          <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'companies.create' }" class="mb-3 mb-md-0">
+            <v-icon small left>mdi-briefcase-plus-outline</v-icon>
+            {{ trans('Add Company') }}
+          </v-btn>
+        </can>
         <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'companies.find' }">
           <v-icon small left>mdi-file-document-box-search-outline</v-icon>
           {{ trans('Find Company') }}
@@ -174,9 +180,9 @@
             large
             color="primary"
             exact
-            :to="{name: 'companies.find'}">
-            <v-icon small left>mdi-file-document-box-search-outline</v-icon>
-            {{ trans('Find Company') }}
+            :to="{name: 'companies.create'}">
+            <v-icon small left>mdi-briefcase-plus-outline</v-icon>
+            {{ trans('Add Company') }}
           </v-btn>
         </template>
       </empty-state>

@@ -506,7 +506,7 @@ export default {
             create: {
               code: 'crm.search',
               to: { name: 'companies.find' },
-              icon: 'mdi-briefcase-plus-outline',
+              icon: 'mdi-file-document-box-search-outline',
               text: trans('Find Another Company'),
             },
           },
@@ -532,7 +532,7 @@ export default {
       ).then(response => {
         this.resource.data = response.data.data
         this.resource.metadata = _.merge({}, this.resource.metadata, this.resource.data.metadata)
-        // console.log(this.resource.metadata)
+        // console.log(this.resource)
         this.resource.data.financials = this.resource.metadata
       }).finally(() => {
         this.load(false)

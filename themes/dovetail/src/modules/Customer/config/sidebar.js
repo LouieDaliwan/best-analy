@@ -8,7 +8,7 @@ export default [
       authenticatable: true,
       sort: 5,
       permission: ['customers.index', 'customers.owned'],
-      children: ['companies.index', 'companies.show', 'companies.owned', 'companies.find', 'companies.create','companies.preview', 'companies.survey', 'companies.trashed', 'companies.reports', 'reports.show'],
+      children: ['companies.index', 'companies.show', 'companies.owned', 'companies.find', 'companies.preview', 'companies.survey', 'companies.trashed', 'companies.reports', 'reports.show'],
     },
     children: [
       {
@@ -48,10 +48,11 @@ export default [
         code: 'companies.create',
         name: 'companies.create',
         meta: {
-          title: 'Create Company',
+          title: 'Add Company',
           authenticatable: true,
-          sort: 6,
-          permission: 'companies.create',
+          sort: 5,
+          permission: 'customers.create',
+          children: ['companies.create'],
         },
       },
       {

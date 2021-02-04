@@ -20,12 +20,14 @@ trait MorphManySubmissions
     /**
      * Retrieve the submission by user key.
      *
-     * @param  \User\Models\User $user
+     * @param  \User\Models\User    $user
+     * @param  int                  $customer_id
+     * @param  int                  $submissible_id
      * @return \Survey\Models\Submission
      */
-    public function submissionBy(User $user)
+    public function submissionBy(User $user, int $customer_id, int $submissible_id)
     {
-        return $this->submissions()->where('user_id', $user->getKey())->first();
+        return $this->submissions()->where('user_id', $user->getKey())->where('customer_id', $customer_id)->where('submissible_id', $submissible_id)->first();
     }
 
     /**

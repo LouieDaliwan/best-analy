@@ -85,7 +85,6 @@ Route::get('best/preview/reports/overall', function (Request $request, FormulaSe
     $data = $service->generate($survey, $attributes);
     $data['month:formatted'] = date('M d, Y', strtotime($data['month'] ?? date('Y-m-d')));
     $data['current:pindex']['sitevisit:date:formatted'] = date('M d, Y', strtotime($data['month']));
-
     return view("best::reports.overall")->withData($data);
 });
 

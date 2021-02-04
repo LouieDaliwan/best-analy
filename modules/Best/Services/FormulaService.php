@@ -164,7 +164,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'customer:counselor' => $customer->metadata['BusinessCounselorName'] ?? null,
                 'customer:staffstrength' => $customer->metadata['staffstrength'] ?? null,
                 'customer:type' => $customer->metadata['type'] ?? null,
-                'subscore:score' => $totalSubscoreScore = $this->getTotalIndexSubscoreScore($survey),
+                'subscore:score' => $totalSubscoreScore = $this->getTotalIndexSubscoreScore($survey, $attributes['customer_id']),
                 'subscore:total' => $totalSubscoreTotal = $this->getTotalIndexSubscoreTotal($survey),
                 'overall:total' => $total = $this->getOverallTotalAverage($totalSubscoreScore, $totalSubscoreTotal),
                 $this->getIndexOverAllScoreKey($taxonomy) => $total,
@@ -808,10 +808,10 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  Survey\Models\Survey $survey
      * @return string
      */
-    public function getTotalIndexSubscoreScore(Survey $survey)
+    public function getTotalIndexSubscoreScore(Survey $survey, int $customer_id)
     {
-        return $survey->fields->map(function ($field) {
-            return $field->submissionBy($this->auth()->user())->metadata['subscore'] ?? 0;
+        return $survey->fields->map(function ($field) use ($customer_id) {
+            return $field->submissionBy($this->auth()->user(), $customer_id, $field->id)->metadata['subscore'] ?? 0;
         })->sum();
     }
 

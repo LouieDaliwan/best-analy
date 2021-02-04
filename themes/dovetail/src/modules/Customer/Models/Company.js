@@ -102,12 +102,12 @@ class Company {
           'Year2': '10000',
           'Year3': '11000',
         },
-        "Insurance2 (not including employee's insurance)": {
+        "Insurance (not including employee's insurance) ": {
           'Year1': '',
           'Year2': '',
           'Year3': '',
         },
-        'Transportation2': {
+        'Transportation ': {
           'Year1': '1200',
           'Year2': '1200',
           'Year3': '1300',
@@ -650,12 +650,12 @@ class Company {
           'Year2': '',
           'Year3': '',
         },
-        "Insurance (not including employee's insurance)": {
+        "Insurance (not including employee's insurance) ": {
           'Year1': '',
           'Year2': '',
           'Year3': '',
         },
-        'Transportation': {
+        'Transportation ': {
           'Year1': '',
           'Year2': '',
           'Year3': '',

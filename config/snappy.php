@@ -35,9 +35,13 @@ return [
 
     'pdf' => [
         'enabled' => true,
-        'binary'  => env('WKHTML_PDF_BINARY', '"D:\home\site\wwwroot\vendor\wemersonjanuario\wkhtmltopdf-windows\bin\64bit\wkhtmltopdf.exe"'),
+        'binary'  => env('WKHTML_PDF_BINARY', '"/usr/local/bin/wkhtmltopdf"'),
         'timeout' => false,
-        'options' => [],
+        'options' => [
+            'enable-local-file-access' => true,
+            'orientation'   => 'landscape',
+            'encoding'      => 'UTF-8'
+        ],
         'env'     => [],
     ],
 

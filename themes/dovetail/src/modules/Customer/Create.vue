@@ -574,6 +574,7 @@ export default {
     this.hideSidebar()
     this.load(false)
     this.activateTab()
+    console.log('model', new Company)
   },
 
   watch: {

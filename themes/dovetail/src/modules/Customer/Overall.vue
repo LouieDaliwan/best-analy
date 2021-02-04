@@ -26,14 +26,14 @@
         </a>
         <div class="mb-3">
           <div v-if="resource.data.customer && isInEnglish">
-            <send-report-to-crm-button
+            <!-- <send-report-to-crm-button
               type="overall"
               with-file
               with-financials
               class="mt-4"
               :customer="resource.data.customer.id"
               :user="resource.data.report.user_id"
-            ></send-report-to-crm-button>
+            ></send-report-to-crm-button> -->
 
             <!-- <send-financial-data-to-crm-button
               v-if="resource.data.report && isInEnglish"

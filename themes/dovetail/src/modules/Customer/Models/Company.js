@@ -1109,7 +1109,7 @@ class Company {
       metadata: {
         type: '',
       },
-      financials: this.metadata,
+      financials: this.metadataOrig,
       reports: [],
     }
   }

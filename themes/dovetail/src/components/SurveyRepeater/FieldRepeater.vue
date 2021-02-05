@@ -44,7 +44,7 @@
             </div>
 
             <v-row>
-              <v-col cols="auto" md="1" class="d-none d-md-block">
+              <v-col cols="auto" md="1" class="d-none d-lg-block">
                 <div class="field-separator"></div>
               </v-col>
               <v-col>

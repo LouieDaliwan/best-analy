@@ -806,6 +806,8 @@ class FormulaService extends Service implements FormulaServiceInterface
      * Get the total subscore of the index.
      *
      * @param  Survey\Models\Survey $survey
+     * @param  int                  $customer_id
+     * @param  String               $monthkey
      * @return string
      */
     public function getTotalIndexSubscoreScore(Survey $survey, int $customer_id, String $monthkey)

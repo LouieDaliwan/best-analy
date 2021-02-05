@@ -23,6 +23,7 @@ trait MorphManySubmissions
      * @param  \User\Models\User    $user
      * @param  int                  $customer_id
      * @param  int                  $submissible_id
+     * @param  String               $monthkey
      * @return \Survey\Models\Submission
      */
     public function submissionBy(User $user, int $customer_id, int $submissible_id, String $monthkey)

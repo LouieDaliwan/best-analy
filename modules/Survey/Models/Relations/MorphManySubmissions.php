@@ -25,9 +25,14 @@ trait MorphManySubmissions
      * @param  int                  $submissible_id
      * @return \Survey\Models\Submission
      */
-    public function submissionBy(User $user, int $customer_id, int $submissible_id)
+    public function submissionBy(User $user, int $customer_id, int $submissible_id, String $monthkey)
     {
-        return $this->submissions()->where('user_id', $user->getKey())->where('customer_id', $customer_id)->where('submissible_id', $submissible_id)->first();
+        return $this->submissions()
+            ->where('user_id', $user->getKey())
+            ->where('customer_id', $customer_id)
+            ->where('submissible_id', $submissible_id)
+            ->where('monthkey', $monthkey)
+            ->first();
     }
 
     /**

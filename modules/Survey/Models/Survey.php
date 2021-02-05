@@ -81,7 +81,7 @@ class Survey extends Model
     public function getSubmissionAttribute()
     {
         return $this->fields->map(function ($field) {
-            return $field->submissionBy(user(), $field->form_id, $field->id);
+            return $field->submissionBy(user(), $field->form_id, $field->id, "");
         })->reject(function ($submission) {
             return is_null($submission);
         });

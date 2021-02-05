@@ -26,9 +26,9 @@
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url('logo.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url('logo.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url('logo.png') }}">
+    <link rel="apple-touch-icon" class="favicon" sizes="180x180" href="{{ url('logo.png') }}">
+    <link rel="icon" type="image/png" class="favicon" sizes="32x32" href="{{ url('logo.png') }}">
+    <link rel="icon" type="image/png" class="favicon" sizes="16x16" href="{{ url('logo.png') }}">
     <link rel="manifest" href="{{ theme('dist/manifest.json') }}">
     <link rel="mask-icon" color="{{ theme()->detail('colors.primary') }}" href="{{ url('favicons/safari-pinned-tab.svg') }}">
     <meta name="theme-color" content="{{ theme()->detail('colors.primary') }}">

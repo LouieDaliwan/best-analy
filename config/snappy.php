@@ -39,7 +39,7 @@ return [
         'timeout' => false,
         'options' => [
             'enable-local-file-access' => true,
-            'orientation'   => 'landscape',
+            'orientation'   => 'portrait',
             'encoding'      => 'UTF-8'
         ],
         'env'     => [],

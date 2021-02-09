@@ -8,6 +8,7 @@ use Best\Services\FormulaServiceInterface;
 use Core\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Best\Http\Controllers\Report\Helper\SvgChart;
 
 class PreviewPdfReport extends Controller
 {
@@ -43,6 +44,9 @@ class PreviewPdfReport extends Controller
         $pdf = SnappyPdf::loadHTML(view("best::reports.pdf.$type")->withData($data));
 
         $filename = $request->get('filename') ?: $report->key;
+
+        $score = 25;
+        $svgChart = SvgChart($score, 100);
 
         if ($request->get('view') == 'blade') {
             return view("best::reports.pdf.$type")->withData($data);

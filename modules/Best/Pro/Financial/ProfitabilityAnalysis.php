@@ -558,12 +558,18 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         } else {
             if ($n20<$n19) {
                 if (($n20-$n19) < (-$bk6)) {
+                    $item1 = $d19;
+                    $item2 = $d20;
+                    $number1 = abs(round(($n20-$n19)*100, 2));
                     $output = __("Records have also indicated that net profits experienced a significant year on year decrease by :number1% from :item1 to :item2.", [
                         'item1' => $item1,
                         'item2' => $item2,
                         'number1' => $number1,
                     ]);
                 } else {
+                    $item1 = $d19;
+                    $item2 = $d20;
+                    $number1 = abs(round(($n20-$n19)*100, 2));
                     $output = __("Records have also indicated that net profits experienced a year on year decrease by :number1% from :item1 to :item2.", [
                         'item1' => $item1,
                         'item2' => $item2,
@@ -647,14 +653,14 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $bj7 = $spreadsheet->getCell('BJ7')->getCalculatedValue() ?: 0;
-        $q19 = $spreadsheet->getCell('Q19')->getCalculatedValue();
+        $q19 = $spreadsheet->getCell('Q19')->getCalculatedValue() ?: 0;
         $q20 = $spreadsheet->getCell('Q20')->getCalculatedValue() ?: 0;
         $q21 = $spreadsheet->getCell('Q21')->getCalculatedValue() ?: 0;
         $number1 = abs(round(($q21-$q20)*100, 2));
 
         if ($q19 == "" && ($q21-$q20) > 0) {
             if (($q21-$q20) > $bj7) {
-                $output = __("Overall return on assets reflected a significant increasing trend by :number1%.","Overall return on assets reflected an increasing trend by :number1%.", ['number1' => $number1]);
+                $output = __("Overall return on assets reflected a significant increasing trend by :number1%.", ['number1' => $number1]);
             }
         } else {
             if ($q19 == "" && ($q21-$q20) < 0) {

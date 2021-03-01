@@ -396,6 +396,13 @@ class Company {
           'Year3': '',
         },
       },
+      'balance-sheet-total': {
+        'Total': {
+          'Year1': 0,
+          'Year2': 0,
+          'Year3': 0,
+        },
+      },
       'fps-qa2': {
         '<h4><strong>Operating Profit/(Loss)</strong></h4>': [],
         'Profit or (Loss) Before Income Tax': {
@@ -549,6 +556,13 @@ class Company {
           'Year1': '',
           'Year2': '',
           'Year3': '',
+        }
+      },
+      'financial-total': {
+        'Total': {
+          'Year1': 0,
+          'Year2': 0,
+          'Year3': 0,
         },
       }
     }
@@ -942,6 +956,13 @@ class Company {
           'Year1': '',
           'Year2': '',
           'Year3': '',
+        }
+      },
+      'balance-sheet-total': {
+        'Total': {
+          'Year1': 0,
+          'Year2': 0,
+          'Year3': 0,
         },
       },
       'fps-qa2': {
@@ -1098,7 +1119,14 @@ class Company {
           'Year2': '',
           'Year3': '',
         },
-      }
+      },
+      'financial-total': {
+        'Total': {
+          'Year1': 0,
+          'Year2': 0,
+          'Year3': 0,
+        },
+      },
     }
 
     this.data = {
@@ -1112,6 +1140,25 @@ class Company {
       financials: this.metadataOrig,
       reports: [],
     }
+  }
+
+  calculateThreeYears ( data, exclude = '' ) {
+    let totalPerYear = {
+      Year1: 0,
+      Year2: 0,
+      Year3: 0
+    }
+
+    for( const row in data ) {
+      if( data[row] ) {
+        for ( const column in data[row] ) {
+          if( data[row][column] ) 
+            totalPerYear[column] += data[row][column] !== '' ? parseInt( data[row][column] ) : 0
+        }
+      }
+    }
+
+    return totalPerYear
   }
 }
 

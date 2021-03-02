@@ -720,12 +720,10 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         if ($group->avg() >= 1) {
             $firstSentence[] =  trans("best::comments.{$code}.100");
-        } else {
-            // Last element.
+        } else if( $group->avg() >= .6 ) {
             $fifthElement = $group->sortByDesc(function ($item) {
                 return $item;
             })->keys()->get(0);
-            // Second to the last.
             $fourthElement = $group->sortByDesc(function ($item) {
                 return $item;
             })->keys()->get(1);
@@ -748,7 +746,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 ]);
                 $firstSentence[] = trans("best::comments.{$code}.first.it is imperative");
             }
-        }//end if
+        }
 
         return $firstSentence;
     }
@@ -763,13 +761,26 @@ class FormulaService extends Service implements FormulaServiceInterface
     public function getSecondBoxComment($group, $code)
     {
         $code = strtolower($code);
+
+        $secondSentence = [];
+
         $firstElement = $group->sort()->keys()->get(0);
         $secondElement = $group->sort()->keys()->get(1);
+        
+        if( $group->sort()->get($firstElement) < .6 ) {
+            if($group->sort()->get($secondElement)  < .6 ) {
+                $secondSentence[] = trans("best::comments.{$code}.second", [
+                    'item1' => __($firstElement),
+                    'item2' => __($secondElement),
+                ]);
+            } else {
+                $secondSentence[] = trans("best::comments.{$code}.second", [
+                    'item1' => __($firstElement)
+                ]);
+            }
+        }
 
-        return trans("best::comments.{$code}.second", [
-            'item1' => __($firstElement),
-            'item2' => __($secondElement),
-        ]);
+        return $secondSentence;
     }
 
     /**

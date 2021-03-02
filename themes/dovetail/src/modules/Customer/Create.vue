@@ -279,6 +279,24 @@
                                   </v-text-field>
                                 </td>
                               </tr>
+                              <tr :key="i" v-for="(data, i) in resource.metadata['financial-total']">
+                                <td :colspan="data.length ? 1 : '100%'">
+                                  <div class="year-label" v-html="trans(i)"></div>
+                                </td>
+                                <td :key="k" v-for="(d, k) in data">
+                                  <v-text-field
+                                    :disabled="isLoading"
+                                    label="Total"
+                                    class="dt-text-field"
+                                    dense
+                                    hide-details
+                                    outlined
+                                    v-model="resource.data.financials['financial-total'][i][k]"
+                                    readonly
+                                    >
+                                  </v-text-field>
+                                </td>
+                              </tr>
                             </tbody>
                           </v-simple-table>
                         </v-card-text>
@@ -323,6 +341,24 @@
                                     hide-details
                                     outlined
                                     v-model="resource.data.financials['balance-sheet'][i][k]"
+                                    >
+                                  </v-text-field>
+                                </td>
+                              </tr>
+                              <tr :key="i" v-for="(data, i) in resource.metadata['balance-sheet-total']">
+                                <td :colspan="data.length ? 1 : '100%'">
+                                  <div class="year-label" v-html="trans(i)"></div>
+                                </td>
+                                <td :key="k" v-for="(d, k) in data">
+                                  <v-text-field
+                                    :disabled="isLoading"
+                                    label="Total"
+                                    class="dt-text-field"
+                                    dense
+                                    hide-details
+                                    outlined
+                                    v-model="resource.data.financials['balance-sheet-total'][i][k]"
+                                    readonly
                                     >
                                   </v-text-field>
                                 </td>
@@ -568,12 +604,27 @@ export default {
     activateTab () {
       this.tabsModel = parseInt(this.$route.query.tab || 0)
     },
+
+    calculateTotals () {
+      let currentFinancialTotal = this.resource.data.financials[ 'financial-total' ].Total
+      const financialTotal = this.resource.calculateThreeYears( this.resource.data.financials[ 'fps-qa1' ] )
+
+      if( Object.entries( currentFinancialTotal ).toString() !== Object.entries( financialTotal ).toString() )
+        this.resource.data.financials[ 'financial-total' ].Total = financialTotal
+
+      let currentBalanceTotal = this.resource.data.financials[ 'balance-sheet-total' ].Total
+      const balanceTotal = this.resource.calculateThreeYears( this.resource.data.financials[ 'balance-sheet' ] )
+
+      if( Object.entries( currentBalanceTotal ).toString() !== Object.entries( balanceTotal ).toString() )
+        this.resource.data.financials[ 'balance-sheet-total' ].Total = balanceTotal
+    }
   },
 
   mounted () {
     this.hideSidebar()
     this.load(false)
     this.activateTab()
+    this.calculateTotals()
   },
 
   watch: {
@@ -581,6 +632,9 @@ export default {
       handler (val) {
         this.resource.isPrestine = false
         this.resource.hasErrors = this.$refs.addform.flags.invalid
+
+        this.calculateTotals()
+
         if (!this.resource.hasErrors) {
           this.hideAlertbox()
         }

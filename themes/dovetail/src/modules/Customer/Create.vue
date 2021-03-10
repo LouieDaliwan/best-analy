@@ -279,7 +279,7 @@
                                   </v-text-field>
                                 </td>
                               </tr>
-                              <tr :key="i" v-for="(data, i) in resource.metadata['financial-total']">
+                              <!-- <tr :key="i" v-for="(data, i) in resource.metadata['financial-total']">
                                 <td :colspan="data.length ? 1 : '100%'"><strong>Net Profit</strong></td>
                                 <td :key="k" v-for="(d, k) in data">
                                   <v-text-field
@@ -294,7 +294,7 @@
                                     >
                                   </v-text-field>
                                 </td>
-                              </tr>
+                              </tr> -->
                             </tbody>
                           </v-simple-table>
                         </v-card-text>
@@ -343,7 +343,7 @@
                                   </v-text-field>
                                 </td>
                               </tr>
-                              <tr :key="i" v-for="(data, i) in resource.metadata['balance-sheet-total']">
+                              <!-- <tr :key="i" v-for="(data, i) in resource.metadata['balance-sheet-total']">
                                 <td :colspan="data.length ? 1 : '100%'">
                                   <div class="year-label" v-html="trans(i)"></div>
                                 </td>
@@ -359,7 +359,7 @@
                                     readonly
                                     >
                                   </v-text-field>
-                                </td>
+                                </td> -->
                               </tr>
                             </tbody>
                           </v-simple-table>
@@ -622,7 +622,7 @@ export default {
     this.hideSidebar()
     this.load(false)
     this.activateTab()
-    this.calculateTotals()
+    // this.calculateTotals()
   },
 
   watch: {
@@ -631,7 +631,7 @@ export default {
         this.resource.isPrestine = false
         this.resource.hasErrors = this.$refs.addform.flags.invalid
 
-        this.calculateTotals()
+        // this.calculateTotals()
 
         if (!this.resource.hasErrors) {
           this.hideAlertbox()

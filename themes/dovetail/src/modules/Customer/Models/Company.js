@@ -1160,6 +1160,27 @@ class Company {
 
     return totalPerYear
   }
+
+  compulsoryItems () {
+    return [
+      'Sales',
+      'Raw Materials (direct & indirect)',
+      'Part-time/Temporary Labour',
+      'Utilities',
+      'Advertising',
+      'Employee Compensation',
+      'Cash',
+      'Trade Receivables',
+      'Fixed Assets',
+      'Trade Payables',
+      'Stockholders',
+      "Stockholders' Equity"
+    ]
+  }
+  
+  checkIfCompulsoryItems ( text ) {
+    return this.compulsoryItems().includes( text )
+  }
 }
 
 export default Company

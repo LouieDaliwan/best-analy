@@ -301,6 +301,17 @@ pre {
   text-overflow: ellipsis;
 }
 
+.compulsory {
+  position: relative;
+}
+
+.compulsory::before {
+  content: "*";
+  color: red;
+  position: absolute;
+  left: 0;
+}
+
 .v-application {
   font-family: var(--font-family-base);
 }

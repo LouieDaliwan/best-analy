@@ -68,3 +68,14 @@
     text-overflow: ellipsis;
   }
 }
+
+.compulsory {
+  position: relative;
+
+  &::before {
+    content: '*';
+    color: red;
+    position: absolute;
+    left: 0;
+  }
+}

@@ -265,7 +265,7 @@
                                 </td>
                               </tr>
                               <tr :key="i" v-for="(data, i) in resource.metadata['fps-qa1']">
-                                <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
+                                <td :colspan="data.length ? 1 : '100%'" :class="{ compulsory: resource.checkIfCompulsoryItems( i ) }" v-html="trans(i)"></td>
                                 <td :key="k" v-for="(d, k) in data">
                                   <v-text-field
                                     :disabled="isLoading"
@@ -280,9 +280,7 @@
                                 </td>
                               </tr>
                               <tr :key="i" v-for="(data, i) in resource.metadata['financial-total']">
-                                <td :colspan="data.length ? 1 : '100%'">
-                                  <div class="year-label" v-html="trans(i)"></div>
-                                </td>
+                                <td :colspan="data.length ? 1 : '100%'"><strong>Net Profit</strong></td>
                                 <td :key="k" v-for="(d, k) in data">
                                   <v-text-field
                                     :disabled="isLoading"
@@ -331,7 +329,7 @@
                                 </td>
                               </tr>
                               <tr :key="i" v-for="(data, i) in resource.metadata['balance-sheet']">
-                                <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
+                                <td :colspan="data.length ? 1 : '100%'" :class="{ compulsory: resource.checkIfCompulsoryItems( i ) }" v-html="trans(i)"></td>
                                 <td :key="k" v-for="(d, k) in data">
                                   <v-text-field
                                     :disabled="isLoading"

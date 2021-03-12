@@ -774,7 +774,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                     'item2' => __($secondElement),
                 ]);
             } else {
-                $secondSentence[] = trans("best::comments.{$code}.second", [
+                $secondSentence[] = trans("best::comments.{$code}.lowest", [
                     'item1' => __($firstElement)
                 ]);
             }

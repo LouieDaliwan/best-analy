@@ -213,6 +213,7 @@
 
                     <div v-show="isFinishedFetchingResource">
                       <v-card class="mb-3">
+                        <v-card-title><span class="red--text mr-2">*</span> - Denotes compulsory items</v-card-title>
                         <v-card-title>{{ trans('Income Statement') }}</v-card-title>
                         <v-card-text style="overflow-x: auto;">
                           <v-simple-table style="min-width: 800px" class="transparent mb-3">

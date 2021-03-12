@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12">
       <p class="dt-primary mb-1 font-weight-bold">@lang('Data Privacy')</p>
-      <p>@lang('By sharing company information, the Client has consented SSA Consulting Pte Ltd and its appointed technology vendor (collectively now called
+      <p>@lang('By sharing company information, the Client has consented Khalifa Fund for Entrepreneurhip Development Pte Ltd and its appointed technology vendor (collectively now called
 
 "the Consultant") to have access to the information. All data shared by the Client will be treated as strictly confidential and not disclosed to any
 

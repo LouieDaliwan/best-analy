@@ -50,18 +50,6 @@ export default [
         },
       },
       {
-        path: 'create',
-        name: 'companies.create',
-        component: () => import('../Create.vue'),
-        meta: {
-          title: 'Create Company',
-          sort: 6,
-          authenticatable: true,
-          permission: 'customers.create',
-          icon: 'mdi-book-multiple-variant',
-        },
-      },
-      {
         path: 'trashed',
         name: 'companies.trashed',
         component: () => import('../Trashed.vue'),

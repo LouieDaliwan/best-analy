@@ -45,17 +45,6 @@ export default [
         },
       },
       {
-        code: 'companies.create',
-        name: 'companies.create',
-        meta: {
-          title: 'Add Company',
-          authenticatable: true,
-          sort: 5,
-          permission: 'customers.create',
-          children: ['companies.create'],
-        },
-      },
-      {
         code: 'companies.trashed',
         name: 'companies.trashed',
         meta: {

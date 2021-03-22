@@ -131,8 +131,8 @@
                     </template>
                     <span>{{ trans('Send All Reports for this month to CRM') }}</span>
                   </v-tooltip>
-                </can> -->
-                <!-- Send Report
+                </can>
+                <!-- Send Report -->
                 <!-- Move to Trash -->
                 <can code="customers.destroy">
                   <v-tooltip bottom>

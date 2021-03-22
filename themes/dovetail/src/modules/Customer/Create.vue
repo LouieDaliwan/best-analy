@@ -71,12 +71,12 @@
                 </v-radio-group> -->
               </div>
             </validation-provider>
-            <div class="mt-3 text-right">
+            <!-- <div class="mt-3 text-right">
               <send-financial-data-to-crm-button
                 :customer="resource.data.id"
                 :user="resource.data.user_id"
               ></send-financial-data-to-crm-button>
-            </div>
+            </div> -->
           </template>
         </page-header>
 

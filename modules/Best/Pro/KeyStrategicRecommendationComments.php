@@ -30,7 +30,7 @@ abstract class KeyStrategicRecommendationComments
         if ($list->isEmpty()) {
             return self::getEmptyComment($keyword);
         }
-
+        
         return $list->toArray();
     }
 

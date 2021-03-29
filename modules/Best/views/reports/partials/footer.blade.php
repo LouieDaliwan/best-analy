@@ -7,7 +7,7 @@
             {{ __('Powered by') }}
             {{-- &copy; {{ settings('app:year') }} --}}
             {{ settings('app:author') }}<br />
-            {{ __('Owned by') }} {{ __('Khalifa Fund') }}
+            {{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}
           </strong>
         </cite>
       </footer>

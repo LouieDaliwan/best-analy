@@ -81,7 +81,7 @@
                   <div class="mt-5">
                     <cite>
                       <small>{{ __('Powered by') }} {{ settings('app:author') }}</small><br />
-                      <small>{{ __('Owned by') }} {{ __('Khalifa Fund') }}</small>
+                      <small>{{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}</small>
                     </cite>
                   </div>
                 </td>

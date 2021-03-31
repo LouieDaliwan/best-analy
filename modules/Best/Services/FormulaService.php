@@ -178,7 +178,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 ],
                 'key:enablers' => $enablers = $this->getKeyEnablers($this->reports, $customer->name, $taxonomy->alias),
                 'key:enablers:description' => $this->getKeyEnablersDescription($taxonomy->alias),
-                'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias),
+                'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias, $survey->fields),
                 'has:reports' => $this->reports->count(),
                 'reports' => $this->reports,
                 'report:user' => $user->displayname,
@@ -402,7 +402,7 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  string $index
      * @return array
      */
-    public function getKeyStrategicRecommendations($enablers, $index)
+    public function getKeyStrategicRecommendations($enablers, $index, $fields = null)
     {
         $index = strtolower($index);
 

@@ -215,12 +215,16 @@ abstract class KeyStrategicRecommendationComments
     public static function parseKeyword($keyword)
     {
         switch ($keyword) {
-            case 'Talent':
-                $keyword = 'Personnel';
+            case 'Personnel':
+                $keyword = 'Talent';
                 break;
 
-            case 'Workflow Processes':
-                $keyword = 'Process';
+            case 'Process':
+                $keyword = 'Workflow Processes';
+                break;
+
+            case 'ICT':
+                $keyword = 'Technology';
                 break;
 
             default:

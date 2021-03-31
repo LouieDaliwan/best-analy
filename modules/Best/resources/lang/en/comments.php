@@ -11,6 +11,7 @@ return [
             'it is imperative' => 'However, it is imperative that the organisation strive to uplift all other financial management elements.',
         ],
         'second' => "The following 2 areas ':item1' and ':item2' should be the immediate top focus for further review and transformation.",
+        'lowest' => "The :item1 should be the immediate top focus for further review and transformation."
     ],
 
     'hrpi' => [
@@ -23,6 +24,7 @@ return [
             'it is imperative' => 'However, it is imperative that the organisation strive to uplift all the other HR elements.',
         ],
         'second' => "The following 2 areas ':item1' and ':item2' should be the immediate top focus for further review and transformation.",
+        'lowest' => "The :item1 should be the immediate top focus for further review and transformation."
     ],
 
     'pmpi' => [
@@ -35,6 +37,7 @@ return [
             'it is imperative' => 'However, it is imperative that the organisation continues with its productivity improvement.',
         ],
         'second' => "The following 2 areas ':item1' and ':item2' should be the immediate top focus for further review and transformation.",
+        'lowest' => "The :item1 should be the immediate top focus for further review and transformation."
     ],
 
     'bspi' => [
@@ -47,5 +50,6 @@ return [
             'it is imperative' => 'However, it is imperative that the organisation strive to strengthen the overall organisational management practices.',
         ],
         'second' => "The following 2 areas ':item1' and ':item2' should be the immediate top focus for further review and transformation.",
+        'lowest' => "The :item1 should be the immediate top focus for further review and transformation."
     ],
 ];

@@ -15,6 +15,7 @@
           <tr>
             <td>
               @foreach ($data['box:comments'] as $comments)
+              @if (count($comments) > 0)
                 <tr>
                   <td valign="top">
                     <div class="mr-3">
@@ -54,6 +55,7 @@
                     @endforeach
                   </td>
                 </tr>
+              @endif
               @endforeach
             </td>
           </tr>

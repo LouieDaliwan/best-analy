@@ -6,7 +6,8 @@
           <strong style="font-size: 10px;">
             {{ __('Powered by') }}
             {{-- &copy; {{ settings('app:year') }} --}}
-            {{ settings('app:author') }}
+            {{ settings('app:author') }}<br />
+            {{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}
           </strong>
         {{-- </cite> --}}
       {{-- </footer> --}}

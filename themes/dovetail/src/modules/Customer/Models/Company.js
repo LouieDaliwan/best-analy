@@ -102,12 +102,12 @@ class Company {
           'Year2': '10000',
           'Year3': '11000',
         },
-        "Insurance (not including employee's insurance)": {
+        "Insurance (not including employee's insurance) ": {
           'Year1': '',
           'Year2': '',
           'Year3': '',
         },
-        'Transportation': {
+        'Transportation ': {
           'Year1': '1200',
           'Year2': '1200',
           'Year3': '1300',
@@ -396,6 +396,13 @@ class Company {
           'Year3': '',
         },
       },
+      'balance-sheet-total': {
+        'Total': {
+          'Year1': 0,
+          'Year2': 0,
+          'Year3': 0,
+        },
+      },
       'fps-qa2': {
         '<h4><strong>Operating Profit/(Loss)</strong></h4>': [],
         'Profit or (Loss) Before Income Tax': {
@@ -549,6 +556,13 @@ class Company {
           'Year1': '',
           'Year2': '',
           'Year3': '',
+        }
+      },
+      'financial-total': {
+        'Total': {
+          'Year1': 0,
+          'Year2': 0,
+          'Year3': 0,
         },
       }
     }
@@ -650,12 +664,12 @@ class Company {
           'Year2': '',
           'Year3': '',
         },
-        "Insurance (not including employee's insurance)": {
+        "Insurance (not including employee's insurance) ": {
           'Year1': '',
           'Year2': '',
           'Year3': '',
         },
-        'Transportation': {
+        'Transportation ': {
           'Year1': '',
           'Year2': '',
           'Year3': '',
@@ -942,6 +956,13 @@ class Company {
           'Year1': '',
           'Year2': '',
           'Year3': '',
+        }
+      },
+      'balance-sheet-total': {
+        'Total': {
+          'Year1': 0,
+          'Year2': 0,
+          'Year3': 0,
         },
       },
       'fps-qa2': {
@@ -1098,7 +1119,14 @@ class Company {
           'Year2': '',
           'Year3': '',
         },
-      }
+      },
+      'financial-total': {
+        'Total': {
+          'Year1': 0,
+          'Year2': 0,
+          'Year3': 0,
+        },
+      },
     }
 
     this.data = {
@@ -1109,9 +1137,49 @@ class Company {
       metadata: {
         type: '',
       },
-      financials: this.metadata,
+      financials: this.metadataOrig,
       reports: [],
     }
+  }
+
+  calculateThreeYears ( data, exclude = '' ) {
+    let totalPerYear = {
+      Year1: 0,
+      Year2: 0,
+      Year3: 0
+    }
+
+    for( const row in data ) {
+      if( data[row] ) {
+        for ( const column in data[row] ) {
+          if( data[row][column] ) 
+            totalPerYear[column] += data[row][column] !== '' ? parseInt( data[row][column] ) : 0
+        }
+      }
+    }
+
+    return totalPerYear
+  }
+
+  compulsoryItems () {
+    return [
+      'Sales',
+      'Raw Materials (direct & indirect)',
+      'Part-time/Temporary Labour',
+      'Utilities',
+      'Advertising',
+      'Employee Compensation',
+      'Cash',
+      'Trade Receivables',
+      'Fixed Assets',
+      'Trade Payables',
+      'Stockholders',
+      "Stockholders' Equity"
+    ]
+  }
+  
+  checkIfCompulsoryItems ( text ) {
+    return this.compulsoryItems().includes( text )
   }
 }
 

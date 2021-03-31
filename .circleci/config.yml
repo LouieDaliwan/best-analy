@@ -27,6 +27,7 @@ jobs:
       - run: sudo apt install -y libpng-dev libfreetype6-dev libjpeg62-turbo-dev
       - run: sudo docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
       - run: sudo docker-php-ext-install -j$(nproc) gd
+      - run: sudo composer self-update --1
 
       # Download and cache dependencies
       - restore_cache:

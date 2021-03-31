@@ -13,7 +13,7 @@ return [
         'greaterThan90' => 'Excellent employee development and management practices. This should be maintained to ensure everyone is onboard with the productivity drive.',
 		'50to90' => "Very good employee productivity development. One area to probably focus on is on :item1.",
 		'30to50' => 'Fair productivity practices and management. Organisation is recommended to focus on how employees can be prepared to execute :item1 & :item2.',
-		'less30' => 'Poor talent development processes and practices recorded. "&"More can be done to inculcate appropriate productivity awareness and practices among employees.',
+		'less30' => 'Poor talent development processes and practices recorded. More can be done to inculcate appropriate productivity awareness and practices among employees.',
 	],
 	'technology' => [
         'greaterThan90' => 'Excellent ICT implementation. Continue to upkeep the ICT to complement operational work processes.',

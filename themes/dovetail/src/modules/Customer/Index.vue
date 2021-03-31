@@ -174,9 +174,9 @@
             large
             color="primary"
             exact
-            :to="{name: 'companies.find'}">
-            <v-icon small left>mdi-file-document-box-search-outline</v-icon>
-            {{ trans('Find Company') }}
+            :to="{name: 'companies.create'}">
+            <v-icon small left>mdi-briefcase-plus-outline</v-icon>
+            {{ trans('Add Company') }}
           </v-btn>
         </template>
       </empty-state>

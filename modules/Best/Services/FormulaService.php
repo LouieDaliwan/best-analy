@@ -164,7 +164,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'customer:counselor' => $customer->metadata['BusinessCounselorName'] ?? null,
                 'customer:staffstrength' => $customer->metadata['staffstrength'] ?? null,
                 'customer:type' => $customer->metadata['type'] ?? null,
-                'subscore:score' => $totalSubscoreScore = $this->getTotalIndexSubscoreScore($survey),
+                'subscore:score' => $totalSubscoreScore = $this->getTotalIndexSubscoreScore($survey, $attributes['customer_id'], $monthkey),
                 'subscore:total' => $totalSubscoreTotal = $this->getTotalIndexSubscoreTotal($survey),
                 'overall:total' => $total = $this->getOverallTotalAverage($totalSubscoreScore, $totalSubscoreTotal),
                 $this->getIndexOverAllScoreKey($taxonomy) => $total,
@@ -710,12 +710,10 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         if ($group->avg() >= 1) {
             $firstSentence[] =  trans("best::comments.{$code}.100");
-        } else {
-            // Last element.
+        } else if( $group->avg() >= .6 ) {
             $fifthElement = $group->sortByDesc(function ($item) {
                 return $item;
             })->keys()->get(0);
-            // Second to the last.
             $fourthElement = $group->sortByDesc(function ($item) {
                 return $item;
             })->keys()->get(1);
@@ -738,7 +736,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 ]);
                 $firstSentence[] = trans("best::comments.{$code}.first.it is imperative");
             }
-        }//end if
+        }
 
         return $firstSentence;
     }
@@ -753,6 +751,9 @@ class FormulaService extends Service implements FormulaServiceInterface
     public function getSecondBoxComment($group, $code)
     {
         $code = strtolower($code);
+
+        $secondSentence = [];
+
         $firstElement = $group->sort()->keys()->get(0);
         $secondElement = $group->sort()->keys()->get(1);
 
@@ -769,10 +770,7 @@ class FormulaService extends Service implements FormulaServiceInterface
             }
         }
 
-        return trans("best::comments.{$code}.second", [
-            'item1' => __($firstElement),
-            'item2' => __($secondElement),
-        ]);
+        return $secondSentence;
     }
 
     /**
@@ -809,12 +807,14 @@ class FormulaService extends Service implements FormulaServiceInterface
      * Get the total subscore of the index.
      *
      * @param  Survey\Models\Survey $survey
+     * @param  int                  $customer_id
+     * @param  String               $monthkey
      * @return string
      */
-    public function getTotalIndexSubscoreScore(Survey $survey)
+    public function getTotalIndexSubscoreScore(Survey $survey, int $customer_id, String $monthkey)
     {
-        return $survey->fields->map(function ($field) {
-            return $field->submissionBy($this->auth()->user())->metadata['subscore'] ?? 0;
+        return $survey->fields->map(function ($field) use ($customer_id, $monthkey) {
+            return $field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata['subscore'] ?? 0;
         })->sum();
     }
 

@@ -222,6 +222,8 @@ class SurveyService extends Service implements SurveyServiceInterface
             $survey,
             $attributes ?? []
         ));
+
+        return true;
     }
 
     /**

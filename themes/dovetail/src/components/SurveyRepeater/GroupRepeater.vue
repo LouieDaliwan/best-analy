@@ -42,7 +42,7 @@
 
           <v-card-text>
             <v-row>
-              <v-col cols="auto" md="1" class="d-none d-md-block">
+              <v-col cols="auto" md="1" class="d-none d-lg-block">
                 <div class="group-separator"></div>
               </v-col>
               <v-col>

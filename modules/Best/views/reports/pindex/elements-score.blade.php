@@ -11,6 +11,7 @@
   <div class="row align-items-start justify-content-center">
     <div class="col">
       @foreach ($data['box:comments'] as $comments)
+      @if (count($comments) > 0)
         <div class="row">
           <div class="col-auto mt-2">
             {{-- SVG arrow --}}
@@ -30,6 +31,7 @@
             @endforeach
           </div>
         </div>
+      @endif
       @endforeach
     </div>
 

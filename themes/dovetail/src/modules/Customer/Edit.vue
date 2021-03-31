@@ -101,6 +101,21 @@
 
                     <v-card v-show="isFinishedFetchingResource">
                       <v-card-text>
+                        <validation-provider vid="name" :name="trans('Name')" rules="required" v-slot="{ errors }">
+                          <v-text-field
+                            :dense="isDense"
+                            :disabled="isLoading"
+                            :error-messages="errors"
+                            :label="trans('Company Name')"
+                            autofocus
+                            class="dt-text-field"
+                            name="name"
+                            outlined
+                            prepend-inner-icon="mdi-briefcase-outline"
+                            v-model="resource.data.name"
+                            >
+                          </v-text-field>
+                        </validation-provider>
                         <validation-provider vid="metadata[email]" :name="trans('Email')" rules="email" v-slot="{ errors }">
                           <v-text-field
                             :dense="isDense"
@@ -198,6 +213,7 @@
 
                     <div v-show="isFinishedFetchingResource">
                       <v-card class="mb-3">
+                        <v-card-title><span class="red--text mr-2">*</span> - Denotes compulsory items</v-card-title>
                         <v-card-title>{{ trans('Income Statement') }}</v-card-title>
                         <v-card-text style="overflow-x: auto;">
                           <v-simple-table style="min-width: 800px" class="transparent mb-3">
@@ -227,7 +243,7 @@
                                 </td>
                               </tr>
                               <tr :key="i" v-for="(data, i) in resource.metadata['fps-qa1']">
-                                <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
+                                <td :colspan="data.length ? 1 : '100%'" :class="{ compulsory: resource.checkIfCompulsoryItems( i ) }" v-html="trans(i)"></td>
                                 <td :key="k" v-for="(d, k) in data">
                                   <v-text-field
                                     :disabled="isLoading"
@@ -241,6 +257,22 @@
                                   </v-text-field>
                                 </td>
                               </tr>
+                              <!-- <tr :key="i" v-for="(data, i) in resource.metadata['financial-total']">
+                                <td :colspan="data.length ? 1 : '100%'"><strong>Net Profit</strong></td>
+                                <td :key="k" v-for="(d, k) in data">
+                                  <v-text-field
+                                    :disabled="isLoading"
+                                    label="Total"
+                                    class="dt-text-field"
+                                    dense
+                                    hide-details
+                                    outlined
+                                    v-model="resource.data.financials['financial-total'][i][k]"
+                                    readonly
+                                    >
+                                  </v-text-field>
+                                </td>
+                              </tr> -->
                             </tbody>
                           </v-simple-table>
                         </v-card-text>
@@ -275,7 +307,7 @@
                                 </td>
                               </tr>
                               <tr :key="i" v-for="(data, i) in resource.metadata['balance-sheet']">
-                                <td :colspan="data.length ? 1 : '100%'" v-html="trans(i)"></td>
+                                <td :colspan="data.length ? 1 : '100%'" :class="{ compulsory: resource.checkIfCompulsoryItems( i ) }" v-html="trans(i)"></td>
                                 <td :key="k" v-for="(d, k) in data">
                                   <v-text-field
                                     :disabled="isLoading"
@@ -289,6 +321,24 @@
                                   </v-text-field>
                                 </td>
                               </tr>
+                              <!-- <tr :key="i" v-for="(data, i) in resource.metadata['balance-sheet-total']">
+                                <td :colspan="data.length ? 1 : '100%'">
+                                  <div class="year-label" v-html="trans(i)"></div>
+                                </td>
+                                <td :key="k" v-for="(d, k) in data">
+                                  <v-text-field
+                                    :disabled="isLoading"
+                                    label="Total"
+                                    class="dt-text-field"
+                                    dense
+                                    hide-details
+                                    outlined
+                                    v-model="resource.data.financials['balance-sheet-total'][i][k]"
+                                    readonly
+                                    >
+                                  </v-text-field>
+                                </td>
+                              </tr> -->
                             </tbody>
                           </v-simple-table>
                         </v-card-text>
@@ -491,7 +541,7 @@ export default {
             create: {
               code: 'crm.search',
               to: { name: 'companies.find' },
-              icon: 'mdi-briefcase-plus-outline',
+              icon: 'mdi-file-document-box-search-outline',
               text: trans('Find Another Company'),
             },
           },
@@ -517,7 +567,6 @@ export default {
       ).then(response => {
         this.resource.data = response.data.data
         this.resource.metadata = _.merge({}, this.resource.metadata, this.resource.data.metadata)
-        // console.log(this.resource.metadata)
         this.resource.data.financials = this.resource.metadata
       }).finally(() => {
         this.load(false)
@@ -528,6 +577,20 @@ export default {
     activateTab () {
       this.tabsModel = parseInt(this.$route.query.tab || 0)
     },
+
+    calculateTotals () {
+      let currentFinancialTotal = this.resource.data.financials[ 'financial-total' ].Total
+      const financialTotal = this.resource.calculateThreeYears( this.resource.data.financials[ 'fps-qa1' ] )
+
+      if( Object.entries( currentFinancialTotal ).toString() !== Object.entries( financialTotal ).toString() )
+        this.resource.data.financials[ 'financial-total' ].Total = financialTotal
+
+      let currentBalanceTotal = this.resource.data.financials[ 'balance-sheet-total' ].Total
+      const balanceTotal = this.resource.calculateThreeYears( this.resource.data.financials[ 'balance-sheet' ] )
+
+      if( Object.entries( currentBalanceTotal ).toString() !== Object.entries( balanceTotal ).toString() )
+        this.resource.data.financials[ 'balance-sheet-total' ].Total = balanceTotal
+    }
   },
 
   mounted () {
@@ -541,6 +604,9 @@ export default {
       handler (val) {
         this.resource.isPrestine = false
         this.resource.hasErrors = this.$refs.updateform.flags.invalid
+
+        // this.calculateTotals()
+
         if (!this.resource.hasErrors) {
           this.hideAlertbox()
         }

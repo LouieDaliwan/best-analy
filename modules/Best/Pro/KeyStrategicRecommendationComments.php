@@ -31,10 +31,6 @@ abstract class KeyStrategicRecommendationComments
         if ($list->isEmpty()) {
             return self::getEmptyComment($keyword);
         }
-<<<<<<< Updated upstream
-
-        return $list->toArray();
-=======
 
         return $list->toArray();
     }
@@ -84,7 +80,6 @@ abstract class KeyStrategicRecommendationComments
         }
 
         return self::organizeRecommendation($temp_categories_recom);
->>>>>>> Stashed changes
     }
 
     /**
@@ -114,8 +109,6 @@ abstract class KeyStrategicRecommendationComments
      *
      * @return array
      */
-<<<<<<< Updated upstream
-=======
     public static function solutionRecommendations($index)
     {
         return config('ksrecommendation.'. $index .'.list');
@@ -126,7 +119,6 @@ abstract class KeyStrategicRecommendationComments
      *
      * @return array
      */
->>>>>>> Stashed changes
     public static function hrpiRecommendations()
     {
         return [

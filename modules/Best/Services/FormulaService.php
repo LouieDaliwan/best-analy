@@ -406,22 +406,8 @@ class FormulaService extends Service implements FormulaServiceInterface
     {
         $index = strtolower($index);
 
-<<<<<<< Updated upstream
-        foreach ($enablers['data'] as $enabler => $data) {
-            $list = KeyStrategicRecommendationComments::get($enabler, $index);
-            $icon = Str::slug($enabler);
-            $recommendations[$enabler] = [
-                'comments' => (array) $list,
-                'comment' => implode(' || ', (array) $list),
-                'icon' => asset("reports/assets/icons/png/$icon.png"),
-                'icon:path' => public_path("reports/assets/icons/png/$icon.png"),
-            ];
-        }
-
-        return $recommendations;
-=======
         return  KeyStrategicRecommendationComments::getSolution($enablers, $index, $fields);
->>>>>>> Stashed changes
+
     }
 
     /**

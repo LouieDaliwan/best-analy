@@ -755,8 +755,6 @@ class FormulaService extends Service implements FormulaServiceInterface
         $code = strtolower($code);
         $firstElement = $group->sort()->keys()->get(0);
         $secondElement = $group->sort()->keys()->get(1);
-<<<<<<< Updated upstream
-=======
 
         if( $group->sort()->get($firstElement) < .6 ) {
             if($group->sort()->get($secondElement)  < .6 ) {
@@ -770,7 +768,6 @@ class FormulaService extends Service implements FormulaServiceInterface
                 ]);
             }
         }
->>>>>>> Stashed changes
 
         return trans("best::comments.{$code}.second", [
             'item1' => __($firstElement),

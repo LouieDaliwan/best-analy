@@ -2,9 +2,6 @@
 <table width="100%">
   <tr>
     <td>
-      @if($_GET['lang'] == 'ar' )
-      <h4 class="dt-secondary mb-0">@lang($data['indices']['BSPI']['pindex'])</h4>
-      @else
       <h4 class="dt-secondary mb-0">@lang($data['indices']['BSPI']['pindex']) {{ __('Performance Index') }}</h4>
     </td>
     <td>

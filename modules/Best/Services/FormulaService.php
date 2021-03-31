@@ -406,6 +406,7 @@ class FormulaService extends Service implements FormulaServiceInterface
     {
         $index = strtolower($index);
 
+<<<<<<< Updated upstream
         foreach ($enablers['data'] as $enabler => $data) {
             $list = KeyStrategicRecommendationComments::get($enabler, $index);
             $icon = Str::slug($enabler);
@@ -418,6 +419,9 @@ class FormulaService extends Service implements FormulaServiceInterface
         }
 
         return $recommendations;
+=======
+        return  KeyStrategicRecommendationComments::getSolution($enablers, $index, $fields);
+>>>>>>> Stashed changes
     }
 
     /**
@@ -765,6 +769,22 @@ class FormulaService extends Service implements FormulaServiceInterface
         $code = strtolower($code);
         $firstElement = $group->sort()->keys()->get(0);
         $secondElement = $group->sort()->keys()->get(1);
+<<<<<<< Updated upstream
+=======
+
+        if( $group->sort()->get($firstElement) < .6 ) {
+            if($group->sort()->get($secondElement)  < .6 ) {
+                $secondSentence[] = trans("best::comments.{$code}.second", [
+                    'item1' => __($firstElement),
+                    'item2' => __($secondElement),
+                ]);
+            } else {
+                $secondSentence[] = trans("best::comments.{$code}.lowest", [
+                    'item1' => __($firstElement)
+                ]);
+            }
+        }
+>>>>>>> Stashed changes
 
         return trans("best::comments.{$code}.second", [
             'item1' => __($firstElement),

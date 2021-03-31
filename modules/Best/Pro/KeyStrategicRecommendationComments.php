@@ -1,6 +1,7 @@
 <?php
 
 namespace Best\Pro;
+use Illuminate\Support\Str;
 
 abstract class KeyStrategicRecommendationComments
 {
@@ -30,8 +31,60 @@ abstract class KeyStrategicRecommendationComments
         if ($list->isEmpty()) {
             return self::getEmptyComment($keyword);
         }
+<<<<<<< Updated upstream
 
         return $list->toArray();
+=======
+
+        return $list->toArray();
+    }
+
+    /**
+    * Retrive comment via subscore
+    * @author Louie Angelo Daliwan
+    * @param object $field
+    * @param string index
+    * @return string
+    */
+    public static function getSolution($enablers, $index, $fields)
+    {
+        $list = self::solutionRecommendations($index);
+
+        $temp_categories_recom = [
+            'Documentation' => ['Empty' => self::getEmptyComment('Documentation')],
+            'Talent' => ['Empty' => self::getEmptyComment('Talent')],
+            'Technology' => ['Empty' => self::getEmptyComment('Technology')],
+            'Workflow Processes' => ['Empty' => self::getEmptyComment('Workflow Processes')],
+        ];
+
+        $count = 1;
+
+        foreach($fields as $field){
+            $subscore = $field->submissions()->latest()->first()->metadata['subscore'];
+
+            if($subscore == 0) {continue;}
+
+            $reco = $list[$subscore];
+
+            $keyword = self::parseKeyword(key($reco));
+
+            if(array_key_exists('Empty', $temp_categories_recom[$keyword])){
+                unset($temp_categories_recom[$keyword]['Empty']);
+            }
+
+            if(!empty($temp_categories_recom[$keyword])){
+                in_array(array_values($reco)[0], $temp_categories_recom[$keyword]) ? : $temp_categories_recom[$keyword][] = array_values($reco)[0];
+            } else {
+                $temp_categories_recom[$keyword][] = array_values($reco)[0];
+            }
+
+            $count++;
+
+            if($count == config('ksrecommendation.' . $index . 'count')) {break;}
+        }
+
+        return self::organizeRecommendation($temp_categories_recom);
+>>>>>>> Stashed changes
     }
 
     /**
@@ -61,6 +114,19 @@ abstract class KeyStrategicRecommendationComments
      *
      * @return array
      */
+<<<<<<< Updated upstream
+=======
+    public static function solutionRecommendations($index)
+    {
+        return config('ksrecommendation.'. $index .'.list');
+    }
+
+    /**
+     * List of strategic recommendations.
+     *
+     * @return array
+     */
+>>>>>>> Stashed changes
     public static function hrpiRecommendations()
     {
         return [
@@ -171,5 +237,20 @@ abstract class KeyStrategicRecommendationComments
         }
 
         return $keyword;
+    }
+
+    protected static function organizeRecommendation($temp_categories_recom)
+    {
+        foreach($temp_categories_recom as $keyword => $data){
+            $icon = Str::slug($keyword);
+            $recommendations[$keyword] = [
+                'comments' => (array) $data,
+                'comment' => implode(' || ', (array) $data),
+                'icon' => asset("reports/assets/icons/png/$icon.png"),
+                'icon:path' => public_path("reports/assets/icons/png/$icon.png"),
+            ];
+        }
+
+        return $recommendations;
     }
 }

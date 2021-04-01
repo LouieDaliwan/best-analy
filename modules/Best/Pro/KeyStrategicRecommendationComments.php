@@ -2,6 +2,7 @@
 
 namespace Best\Pro;
 use Illuminate\Support\Str;
+use Best\Pro\PredictionScoreCard;
 
 abstract class KeyStrategicRecommendationComments
 {
@@ -31,7 +32,7 @@ abstract class KeyStrategicRecommendationComments
         if ($list->isEmpty()) {
             return self::getEmptyComment($keyword);
         }
-        
+
         return $list->toArray();
     }
 
@@ -45,6 +46,16 @@ abstract class KeyStrategicRecommendationComments
     public static function getSolution($enablers, $index, $fields)
     {
         $list = self::solutionRecommendations($index);
+
+        $subscores = [];
+        $count = 1;
+
+        foreach($fields as $field){
+            isset($subscores[$count]) ? : $subscores[$scount] = $subscore = $field->submissions()->latest()->first()->metadata['subscore'];
+            $count++;
+        }
+
+        $result = PredictionScoreCard::putSubScores($subscores);
 
         $temp_categories_recom = [
             'Documentation' => ['Empty' => self::getEmptyComment('Documentation')],
@@ -235,7 +246,8 @@ abstract class KeyStrategicRecommendationComments
         return $keyword;
     }
 
-    protected static function organizeRecommendation($temp_categories_recom)
+    //set the format recommendations in array
+    protected function organizeRecommendation($temp_categories_recom)
     {
         foreach($temp_categories_recom as $keyword => $data){
             $icon = Str::slug($keyword);
@@ -249,4 +261,6 @@ abstract class KeyStrategicRecommendationComments
 
         return $recommendations;
     }
+
+    protected function
 }

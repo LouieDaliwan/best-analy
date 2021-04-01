@@ -48,11 +48,8 @@ abstract class KeyStrategicRecommendationComments
         $list = self::solutionRecommendations($index);
 
         $subscores = [];
-        $count = 1;
-
         foreach($fields as $field){
             isset($subscores[$count]) ? : $subscores[$scount] = $subscore = $field->submissions()->latest()->first()->metadata['subscore'];
-            $count++;
         }
 
         $results = PredictionScoreCard::get($subscores);
@@ -66,8 +63,10 @@ abstract class KeyStrategicRecommendationComments
 
         $count = 1;
 
-        foreach($results as $result){
-            if($result == 0) {continue;}
+        foreach($fields as $field){
+            $subscore = $field->submissions()->latest()->first()->metadata['subscore'];
+
+            if($subscore == 0) {continue;}
 
             $reco = $list[$subscore];
 
@@ -118,7 +117,7 @@ abstract class KeyStrategicRecommendationComments
      *
      * @return array
      */
-    protected static function solutionRecommendations($index)
+    public static function solutionRecommendations($index)
     {
         return config('ksrecommendation.'. $index .'.list');
     }
@@ -245,7 +244,7 @@ abstract class KeyStrategicRecommendationComments
     }
 
     //set the format recommendations in array
-    protected function organizeRecommendation($temp_categories_recom)
+    protected static function organizeRecommendation($temp_categories_recom)
     {
         foreach($temp_categories_recom as $keyword => $data){
             $icon = Str::slug($keyword);
@@ -259,6 +258,4 @@ abstract class KeyStrategicRecommendationComments
 
         return $recommendations;
     }
-
-    protected function
 }

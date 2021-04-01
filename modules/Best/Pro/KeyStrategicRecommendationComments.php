@@ -39,7 +39,7 @@ abstract class KeyStrategicRecommendationComments
     /**
     * Retrive comment via subscore
     * @author Louie Angelo Daliwan
-    * @param object $field
+    * @param object field
     * @param string index
     * @return string
     */
@@ -55,7 +55,7 @@ abstract class KeyStrategicRecommendationComments
             $count++;
         }
 
-        $result = PredictionScoreCard::putSubScores($subscores);
+        $result = PredictionScoreCard::get($subscores);
 
         $temp_categories_recom = [
             'Documentation' => ['Empty' => self::getEmptyComment('Documentation')],

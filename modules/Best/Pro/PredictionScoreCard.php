@@ -25,13 +25,25 @@ class PredictionScoreCard
             !isset($results[$count]) ? : $results[$count];
 
             if($predictiveKey == 'y6v'){
-
+                $result =
+                    ($formula[0] * pow($subscores[5], 3)) +
+                    ($formula[1] * pow($subscores[5], 2)) +
+                    ($formula[2] * $subscores[5]) +
+                    $formula[3];
             } else if ($predictiveKey == 'y9v'){
-                $formula[]
+                $result =
+                    ($formula[0] * pow($subscores[8], 3)) +
+                    ($formula[1] * pow($subscores[8], 2)) +
+                    ($formula[2] * $subscores[8]) +
+                    $formula[3];
             } else  if ($predictiveKey == 'y13v') {
-
+                $result =
+                    ($formula[0] * pow($subscores[9], 3)) +
+                    ($formula[1] * pow($subscores[9], 2)) +
+                    ($formula[2] * $subscores[9]) +
+                    $formula[3];
             } else {
-                $results[$count] = round(
+                $results[$count] =
                     ($subscores[0] * $formula[0]) +
                     ($subscores[1] * $formula[1]) +
                     ($subscores[2] * $formula[2]) +
@@ -46,13 +58,13 @@ class PredictionScoreCard
                     ($subscores[11] * $formula[11]) +
                     ($subscores[12] * $formula[12]) +
                     ($subscores[13] * $formula[13]) +
-                    $formula[14], 0)
-                )
+                    $formula[14];
             }
 
+            $results[$count] = round($result, 0);
             $count++;
         }
-
+        dd($results);
       return $results;
 
     protected function FMPIcomputation($subscores)

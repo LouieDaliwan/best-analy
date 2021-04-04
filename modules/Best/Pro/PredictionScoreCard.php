@@ -115,14 +115,114 @@ class PredictionScoreCard
         return $results;
     }
 
-    protected static function PMPIcomputation($subscores)
+    protected static function PMPIcomputation($subscores, $index)
     {
         $formulas = self::predictionScoreFormula($index);
+
+        $results = [];
+        $count = 1;
+        !isset($results[$count]) ? : $results[$count];
+
+        foreach($formulas as $predictiveKey => $formula){
+            if(in_array($predictiveKey,  self::specialPredictiveKeys())) {
+
+                $subScoreIndex = self::getSubScoresIndex($predictiveKey);
+
+                if(count($formulas[$predictiveKey]) == 5){
+                     $result =
+                        ($formula[0] * pow($subscores[$subScoreIndex], 4)) +
+                        ($formula[1] * pow($subscores[$subScoreIndex], 3)) +
+                        ($formula[2] * pow($subscores[$subScoreIndex], 2)) +
+                        ($formula[3] * $subscores[$subScoreIndex]) +
+                        $formula[4];
+                }
+
+                if(count($formulas[$predictiveKey]) == 4){
+                     $result =
+                        ($formula[0] * pow($subscores[$subScoreIndex], 3)) +
+                        ($formula[1] * pow($subscores[$subScoreIndex], 2)) +
+                        ($formula[2] * $subscores[$subScoreIndex]) +
+                        $formula[3];
+                }
+            } else {
+                $result =
+                    ($subscores[0] * $formula[0]) +
+                    ($subscores[1] * $formula[1]) +
+                    ($subscores[2] * $formula[2]) +
+                    ($subscores[3] * $formula[3]) +
+                    ($subscores[4] * $formula[4]) +
+                    ($subscores[5] * $formula[5]) +
+                    ($subscores[6] * $formula[6]) +
+                    ($subscores[7] * $formula[7]) +
+                    ($subscores[8] * $formula[8]) +
+                    ($subscores[9] * $formula[9]) +
+                    ($subscores[10] * $formula[10]) +
+                    ($subscores[11] * $formula[11]) +
+                    ($subscores[12] * $formula[12]) +
+                    ($subscores[13] * $formula[13]) +
+                    $formula[14];
+            }
+
+            $results[$count] = round($result, 0);
+            $count++;
+        }
+
+        return $results;
     }
 
-    protected static function HRPIcomputation($subscores)
+    protected static function HRPIcomputation($subscores, $index)
     {
         $formulas = self::predictionScoreFormula($index);
+
+        $results = [];
+        $count = 1;
+        !isset($results[$count]) ? : $results[$count];
+
+        foreach($formulas as $predictiveKey => $formula){
+            if(in_array($predictiveKey,  self::specialPredictiveKeys())) {
+
+                $subScoreIndex = self::getSubScoresIndex($predictiveKey);
+
+                if(count($formulas[$predictiveKey]) == 5){
+                     $result =
+                        ($formula[0] * pow($subscores[$subScoreIndex], 4)) +
+                        ($formula[1] * pow($subscores[$subScoreIndex], 3)) +
+                        ($formula[2] * pow($subscores[$subScoreIndex], 2)) +
+                        ($formula[3] * $subscores[$subScoreIndex]) +
+                        $formula[4];
+                }
+
+                if(count($formulas[$predictiveKey]) == 4){
+                     $result =
+                        ($formula[0] * pow($subscores[$subScoreIndex], 3)) +
+                        ($formula[1] * pow($subscores[$subScoreIndex], 2)) +
+                        ($formula[2] * $subscores[$subScoreIndex]) +
+                        $formula[3];
+                }
+            } else {
+                $result =
+                    ($subscores[0] * $formula[0]) +
+                    ($subscores[1] * $formula[1]) +
+                    ($subscores[2] * $formula[2]) +
+                    ($subscores[3] * $formula[3]) +
+                    ($subscores[4] * $formula[4]) +
+                    ($subscores[5] * $formula[5]) +
+                    ($subscores[6] * $formula[6]) +
+                    ($subscores[7] * $formula[7]) +
+                    ($subscores[8] * $formula[8]) +
+                    ($subscores[9] * $formula[9]) +
+                    ($subscores[10] * $formula[10]) +
+                    ($subscores[11] * $formula[11]) +
+                    ($subscores[12] * $formula[12]) +
+                    ($subscores[13] * $formula[13]) +
+                    $formula[14];
+            }
+
+            $results[$count] = round($result, 0);
+            $count++;
+        }
+
+        return $results;
     }
 
     protected static function predictionScoreFormula($index)

@@ -47,8 +47,6 @@ abstract class KeyStrategicRecommendationComments
     {
         $list = self::solutionRecommendations($index);
 
-        $results = PredictionScoreCard::get($fields, $index);
-
         $temp_categories_recom = [
             'Documentation' => ['Empty' => self::getEmptyComment('Documentation')],
             'Talent' => ['Empty' => self::getEmptyComment('Talent')],
@@ -58,7 +56,8 @@ abstract class KeyStrategicRecommendationComments
 
         $count = 1;
 
-        foreach($results as $score){
+        //return PredictionScoreCard::get return array
+        foreach(PredictionScoreCard::get($fields, $index) as $score){
 
             if(!isset($list[$score])){continue;}
 

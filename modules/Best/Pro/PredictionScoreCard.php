@@ -5,23 +5,24 @@ namespace Best\Pro;
 class PredictionScoreCard
 {
     /**
-    * @param array subscores
+    * @param model object fields
     * @param string index
     * @author Louie Daliwan
     */
-    public static function get(array $subscores, $index)
+    public static function get($fields, $index)
     {
-        return call_user_func_array([PredictionScoreCard::class, "{$index}computation"], [$subscores]);
+        return call_user_func_array([PredictionScoreCard::class, "{$index}computation"], [self::getSubScores($fields)]);
     }
 
-    protected function BSPIcomputation($subscores)
+    protected static function BSPIcomputation($subscores)
     {
         $formulas = config('predictionscoreformula.bspi');
 
-        $results = []
+        $results = [];
         $count = 1;
 
-        foreach($formula as $predictiveKey => $formula){
+        foreach($formulas as $predictiveKey => $formula){
+
             !isset($results[$count]) ? : $results[$count];
 
             if($predictiveKey == 'y6v'){
@@ -38,12 +39,12 @@ class PredictionScoreCard
                     $formula[3];
             } else  if ($predictiveKey == 'y13v') {
                 $result =
-                    ($formula[0] * pow($subscores[9], 3)) +
-                    ($formula[1] * pow($subscores[9], 2)) +
-                    ($formula[2] * $subscores[9]) +
+                    ($formula[0] * pow($subscores[12], 3)) +
+                    ($formula[1] * pow($subscores[12], 2)) +
+                    ($formula[2] * $subscores[12]) +
                     $formula[3];
             } else {
-                $results[$count] =
+                $result =
                     ($subscores[0] * $formula[0]) +
                     ($subscores[1] * $formula[1]) +
                     ($subscores[2] * $formula[2]) +
@@ -64,21 +65,33 @@ class PredictionScoreCard
             $results[$count] = round($result, 0);
             $count++;
         }
-        dd($results);
-      return $results;
 
-    protected function FMPIcomputation($subscores)
+      return $results;
+    }
+
+    protected static function FMPIcomputation($subscores)
     {
          $formula = config('predictionscoreformula.bspi');
     }
 
-    protected function PMPIcomputation($subscores)
+    protected static function PMPIcomputation($subscores)
     {
         $formula = config('predictionscoreformula.pmpi');
     }
 
-    protected function HRPIcomputation($subscores)
+    protected static function HRPIcomputation($subscores)
     {
         $formula = config('predictionscoreformula.hrpi');
+    }
+
+    protected static function getSubScores($fields)
+    {
+        $subscores = [];
+
+        foreach($fields as $field){
+            $subscores[] = $field->submissions()->latest()->first()->metadata['subscore'];
+        }
+
+        return $subscores;
     }
 }

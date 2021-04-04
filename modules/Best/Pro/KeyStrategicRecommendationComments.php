@@ -47,12 +47,7 @@ abstract class KeyStrategicRecommendationComments
     {
         $list = self::solutionRecommendations($index);
 
-        $subscores = [];
-        foreach($fields as $field){
-            isset($subscores[$count]) ? : $subscores[$scount] = $subscore = $field->submissions()->latest()->first()->metadata['subscore'];
-        }
-
-        $results = PredictionScoreCard::get($subscores);
+        $results = PredictionScoreCard::get($fields, $index);
 
         $temp_categories_recom = [
             'Documentation' => ['Empty' => self::getEmptyComment('Documentation')],
@@ -63,12 +58,11 @@ abstract class KeyStrategicRecommendationComments
 
         $count = 1;
 
-        foreach($fields as $field){
-            $subscore = $field->submissions()->latest()->first()->metadata['subscore'];
+        foreach($results as $score){
 
-            if($subscore == 0) {continue;}
+            if(!isset($list[$score])){continue;}
 
-            $reco = $list[$subscore];
+            $reco = $list[$score];
 
             $keyword = self::parseKeyword(key($reco));
 

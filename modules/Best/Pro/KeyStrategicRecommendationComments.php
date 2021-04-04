@@ -56,7 +56,9 @@ abstract class KeyStrategicRecommendationComments
 
         $count = 1;
 
-        //return PredictionScoreCard::get return array
+        /*
+        * @return array PredictionScoreCard::get
+        */
         foreach(PredictionScoreCard::get($fields, $index) as $score){
 
             if(!isset($list[$score])){continue;}

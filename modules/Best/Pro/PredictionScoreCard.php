@@ -14,9 +14,9 @@ class PredictionScoreCard
         return call_user_func_array([PredictionScoreCard::class, "{$index}computation"], [self::getSubScores($fields)]);
     }
 
-    protected static function BSPIcomputation($subscores)
+    protected static function BSPIcomputation($subscores, $index)
     {
-        $formulas = config('predictionscoreformula.bspi');
+        $formulas = self::predictionScoreFormula($index);
 
         $results = [];
         $count = 1;
@@ -71,17 +71,22 @@ class PredictionScoreCard
 
     protected static function FMPIcomputation($subscores)
     {
-         $formula = config('predictionscoreformula.bspi');
+         $formulas = self::predictionScoreFormula($index);
     }
 
     protected static function PMPIcomputation($subscores)
     {
-        $formula = config('predictionscoreformula.pmpi');
+        $formulas = self::predictionScoreFormula($index);
     }
 
     protected static function HRPIcomputation($subscores)
     {
-        $formula = config('predictionscoreformula.hrpi');
+        $formulas = self::predictionScoreFormula($index);
+    }
+
+    protected static function predictionScoreFormula($index)
+    {
+        return config("predictionscoreformula.{$index}")
     }
 
     protected static function getSubScores($fields)

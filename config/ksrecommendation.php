@@ -33,7 +33,7 @@ return [
             '28' => ['Process' => 'Establish a whistleblowing system'],
             '29' => ['Process' => 'Conduct periodic external audit to review risk management practices'],
         ],
-        'count' => '10',
+        'count' => 10,
     ],
     'bspi' => [
         'list' => [
@@ -68,7 +68,7 @@ return [
             '27' => ['Process' => 'Review technology adoption within work processes'],
             '30' => ['Process' => 'Review workflow processes'],
         ],
-        'count' => '10'
+        'count' => 10,
     ],
     'pmpi' =>  [
         'list' => [
@@ -85,7 +85,7 @@ return [
             '10' => ['ICT' => 'Adopt IMPACT Assessment Tools to assess productivity'],
             '23' => ['ICT' => 'Set up Work Improvement Team (WIT) System'],
             '5' => ['Personnel' => 'Implement Customer Satisfaction Analysis'],
-            '8' => ['Personnel' => 'Conduct a training Needs Analysis'],
+            '9' => ['Personnel' => 'Conduct a training Needs Analysis'],
             '16' => ['Personnel' => 'Develop & Implement Mentorship Programme'],
             '7' => ['Process' => 'Adopt Process Benchmarking to match industry best practices'],
             '12' => ['Process' => 'Appoint or Conduct Market Research periodically'],
@@ -96,7 +96,7 @@ return [
             '21' => ['Process' => 'Improve organisation policy deployment'],
             '22' => ['Process' => 'Set up Work Improvement Team (WIT) System']
         ],
-        'count' => '10',
+        'count' => 10,
     ],
     'hrpi' => [
         'list' => [
@@ -132,6 +132,6 @@ return [
             '28' => ['Process' => 'Evaluate & Refine Employee Engagement & Communication Strategies'],
             '30' => ['Process' => 'Develop Competency Framework'],
         ],
-        'count' => '8',
+        'count' => 8,
     ]
 ];

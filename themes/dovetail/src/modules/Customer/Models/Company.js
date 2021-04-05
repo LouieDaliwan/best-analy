@@ -1149,11 +1149,18 @@ class Company {
       Year3: 0
     }
 
+    const itemsToAdd = this.itemsToAdd()
+
     for( const row in data ) {
       if( data[row] ) {
         for ( const column in data[row] ) {
-          if( data[row][column] ) 
-            totalPerYear[column] += data[row][column] !== '' ? parseInt( data[row][column] ) : 0
+          const value = data[row][column] !== '' ? parseInt( data[row][column] ) : 0
+          if( data[row][column] ) {
+            if( itemsToAdd.includes( row ) )
+              totalPerYear[column] += value
+            else 
+              totalPerYear[column] -= value
+          }
         }
       }
     }
@@ -1175,6 +1182,21 @@ class Company {
       'Trade Payables',
       'Stockholders',
       "Stockholders' Equity"
+    ]
+  }
+
+  itemsToAdd () {
+    return [
+      'Sales',
+      'Closing Stocks',
+      'Profit from Fixed Assets Sale',
+			'Profit from Foreign Exchange',
+			'Other Income',
+      'Cash',
+      'Trade Receivables',
+      'Inventories',
+      'Other CA',
+      'Fixed Assets'
     ]
   }
   

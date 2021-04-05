@@ -39,9 +39,9 @@ abstract class KeyStrategicRecommendationComments
     /**
     * Retrive comment via subscore
     * @author Louie Angelo Daliwan
-    * @param object field
+    * @param object fields
     * @param string index
-    * @return string
+    * @return array
     */
     public static function getSolution($enablers, $index, $fields)
     {
@@ -57,7 +57,7 @@ abstract class KeyStrategicRecommendationComments
         $count = 1;
 
         /*
-        * @return array PredictionScoreCard::get
+        * @return array PredictionScoreCard::get()
         */
         foreach(PredictionScoreCard::get($fields, $index) as $score){
 

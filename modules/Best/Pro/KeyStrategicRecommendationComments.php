@@ -79,7 +79,7 @@ abstract class KeyStrategicRecommendationComments
 
             $count++;
 
-            if($count == config('ksrecommendation.' . $index . 'count')) {break;}
+            if($count == config('ksrecommendation.' . $index . '.count')) {break;}
         }
 
         return self::organizeRecommendation($temp_categories_recom);

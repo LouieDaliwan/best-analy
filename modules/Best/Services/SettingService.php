@@ -46,7 +46,8 @@ class SettingService extends Service implements SettingServiceInterface
     {
         $data = [
             'Edit Financial Management' => collect(
-                KeyStrategicRecommendationComments::fmpiRecommendations()
+                config('ksrecommendation.fmpi.list')
+                // KeyStrategicRecommendationComments::fmpiRecommendations()
             )->map(function ($d) {
                 return [
                     'en' => collect($d)->values()->shift(),
@@ -54,7 +55,8 @@ class SettingService extends Service implements SettingServiceInterface
                 ];
             })->toArray(),
             'Edit Human Resource' => collect(
-                KeyStrategicRecommendationComments::hrpiRecommendations()
+                config('ksrecommendation.hrpi.list')
+                // KeyStrategicRecommendationComments::hrpiRecommendations()
             )->map(function ($d) {
                 return [
                     'en' => collect($d)->values()->shift(),
@@ -62,7 +64,8 @@ class SettingService extends Service implements SettingServiceInterface
                 ];
             })->toArray(),
             'Edit Business Sustainability' => collect(
-                KeyStrategicRecommendationComments::bspiRecommendations()
+                config('ksrecommendation.bspi.list')
+                // KeyStrategicRecommendationComments::bspiRecommendations()
             )->map(function ($d) {
                 return [
                     'en' => collect($d)->values()->shift(),
@@ -70,21 +73,22 @@ class SettingService extends Service implements SettingServiceInterface
                 ];
             })->toArray(),
             'Edit Productivity Management' => collect(
-                KeyStrategicRecommendationComments::pmpiRecommendations()
+                config('ksrecommendation.pmpi.list')
+                // KeyStrategicRecommendationComments::pmpiRecommendations()
             )->map(function ($d) {
                 return [
                     'en' => collect($d)->values()->shift(),
                     'ar' => __(collect($d)->values()->shift(), [], 'ar')
                 ];
             })->toArray(),
-            'Others' => collect(
-                KeyStrategicRecommendationComments::otherRecommendations()
-            )->map(function ($d) {
-                return [
-                    'en' => collect($d)->values()->shift(),
-                    'ar' => __(collect($d)->values()->shift(), [], 'ar')
-                ];
-            })->toArray(),
+            // 'Others' => collect(
+            //     KeyStrategicRecommendationComments::otherRecommendations()
+            // )->map(function ($d) {
+            //     return [
+            //         'en' => collect($d)->values()->shift(),
+            //         'ar' => __(collect($d)->values()->shift(), [], 'ar')
+            //     ];
+            // })->toArray(),
         ];
 
         return $data;

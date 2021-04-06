@@ -123,6 +123,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {
+
             $survey = $taxonomy->survey;
             $enablers = null;
             $this->reports = null;
@@ -178,7 +179,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 ],
                 'key:enablers' => $enablers = $this->getKeyEnablers($this->reports, $customer->name, $taxonomy->alias),
                 'key:enablers:description' => $this->getKeyEnablersDescription($taxonomy->alias),
-                'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias),
+                'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias, $survey->fields),
                 'has:reports' => $this->reports->count(),
                 'reports' => $this->reports,
                 'report:user' => $user->displayname,
@@ -402,22 +403,12 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  string $index
      * @return array
      */
-    public function getKeyStrategicRecommendations($enablers, $index)
+    public function getKeyStrategicRecommendations($enablers, $index, $fields = null)
     {
         $index = strtolower($index);
 
-        foreach ($enablers['data'] as $enabler => $data) {
-            $list = KeyStrategicRecommendationComments::get($enabler, $index);
-            $icon = Str::slug($enabler);
-            $recommendations[$enabler] = [
-                'comments' => (array) $list,
-                'comment' => implode(' || ', (array) $list),
-                'icon' => asset("reports/assets/icons/png/$icon.png"),
-                'icon:path' => public_path("reports/assets/icons/png/$icon.png"),
-            ];
-        }
+        return  KeyStrategicRecommendationComments::getSolution($enablers, $index, $fields);
 
-        return $recommendations;
     }
 
     /**
@@ -766,7 +757,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         $firstElement = $group->sort()->keys()->get(0);
         $secondElement = $group->sort()->keys()->get(1);
-        
+
         if( $group->sort()->get($firstElement) < .6 ) {
             if($group->sort()->get($secondElement)  < .6 ) {
                 $secondSentence[] = trans("best::comments.{$code}.second", [

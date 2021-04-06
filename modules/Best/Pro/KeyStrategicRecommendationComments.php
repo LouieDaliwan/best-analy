@@ -1,6 +1,8 @@
 <?php
 
 namespace Best\Pro;
+use Illuminate\Support\Str;
+use Best\Pro\PredictionScoreCard;
 
 abstract class KeyStrategicRecommendationComments
 {
@@ -30,8 +32,57 @@ abstract class KeyStrategicRecommendationComments
         if ($list->isEmpty()) {
             return self::getEmptyComment($keyword);
         }
-        
+
         return $list->toArray();
+    }
+
+    /**
+    * Retrive comment via subscore
+    * @author Louie Angelo Daliwan
+    * @param object fields
+    * @param string index
+    * @return array
+    */
+    public static function getSolution($enablers, $index, $fields)
+    {
+        $list = self::solutionRecommendations($index);
+
+        $temp_categories_recom = [
+            'Documentation' => ['Empty' => self::getEmptyComment('Documentation')],
+            'Talent' => ['Empty' => self::getEmptyComment('Talent')],
+            'Technology' => ['Empty' => self::getEmptyComment('Technology')],
+            'Workflow Processes' => ['Empty' => self::getEmptyComment('Workflow Processes')],
+        ];
+
+        $count = 1;
+
+        /*
+        * @return array PredictionScoreCard::get()
+        */
+        foreach(PredictionScoreCard::get($fields, $index) as $score){
+
+            if(!isset($list[$score])){continue;}
+
+            $reco = $list[$score];
+
+            $keyword = self::parseKeyword(key($reco));
+
+            if(array_key_exists('Empty', $temp_categories_recom[$keyword])){
+                unset($temp_categories_recom[$keyword]['Empty']);
+            }
+
+            if(!empty($temp_categories_recom[$keyword])){
+                in_array(array_values($reco)[0], $temp_categories_recom[$keyword]) ? : $temp_categories_recom[$keyword][] = array_values($reco)[0];
+            } else {
+                $temp_categories_recom[$keyword][] = array_values($reco)[0];
+            }
+
+            $count++;
+
+            if($count == config('ksrecommendation.' . $index . '.count')) {break;}
+        }
+
+        return self::organizeRecommendation($temp_categories_recom);
     }
 
     /**
@@ -54,6 +105,16 @@ abstract class KeyStrategicRecommendationComments
             ['Process' => 'Conduct comprehensive 3rd party due diligence'],
             ['Empty' => 'Review scope of financial management report'],
         ];
+    }
+
+    /**
+     * List of strategic recommendations.
+     *
+     * @return array
+     */
+    public static function solutionRecommendations($index)
+    {
+        return config('ksrecommendation.'. $index .'.list');
     }
 
     /**
@@ -157,12 +218,16 @@ abstract class KeyStrategicRecommendationComments
     public static function parseKeyword($keyword)
     {
         switch ($keyword) {
-            case 'Talent':
-                $keyword = 'Personnel';
+            case 'Personnel':
+                $keyword = 'Talent';
                 break;
 
-            case 'Workflow Processes':
-                $keyword = 'Process';
+            case 'Process':
+                $keyword = 'Workflow Processes';
+                break;
+
+            case 'ICT':
+                $keyword = 'Technology';
                 break;
 
             default:
@@ -171,5 +236,21 @@ abstract class KeyStrategicRecommendationComments
         }
 
         return $keyword;
+    }
+
+    //set the format recommendations in array
+    protected static function organizeRecommendation($temp_categories_recom)
+    {
+        foreach($temp_categories_recom as $keyword => $data){
+            $icon = Str::slug($keyword);
+            $recommendations[$keyword] = [
+                'comments' => (array) $data,
+                'comment' => implode(' || ', (array) $data),
+                'icon' => asset("reports/assets/icons/png/$icon.png"),
+                'icon:path' => public_path("reports/assets/icons/png/$icon.png"),
+            ];
+        }
+
+        return $recommendations;
     }
 }

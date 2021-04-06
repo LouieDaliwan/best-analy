@@ -308,7 +308,7 @@ class Company {
           'Year3': '',
         },
 
-        '<strongInterest On Loans/Hires</strong>': [],
+        '<strong>Interest On Loans/Hires</strong>': [],
         'Interest & Charges by Bank': {
           'Year1': '493458',
           'Year2': '493458',
@@ -870,7 +870,7 @@ class Company {
           'Year3': '',
         },
 
-        '<strongInterest On Loans/Hires</strong>': [],
+        '<strong>Interest On Loans/Hires</strong>': [],
         'Interest & Charges by Bank': {
           'Year1': '',
           'Year2': '',
@@ -1158,8 +1158,10 @@ class Company {
           if( data[row][column] ) {
             if( itemsToAdd.includes( row ) )
               totalPerYear[column] += value
-            else 
+            else {
               totalPerYear[column] -= value
+              console.log( row, totalPerYear[column], '-' + value )
+            }
           }
         }
       }

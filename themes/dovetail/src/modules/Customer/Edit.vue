@@ -224,7 +224,7 @@
                                 <td><strong>{{ trans('Period 2') }}</strong></td>
                                 <td><strong>{{ trans('Period 3') }}<br>{{ trans('(most recent)') }}</strong></td>
                               </tr>
-                              <tr :key="i" v-for="(data, i) in resource.metadata['years']">
+                              <tr v-for="(data, i) in resource.metadata['years']" :key="i">
                                 <td :colspan="data.length ? 1 : '100%'">
                                   <div class="year-label" v-html="trans(i)"></div>
                                 </td>
@@ -242,23 +242,41 @@
                                   </v-text-field>
                                 </td>
                               </tr>
-                              <tr :key="i" v-for="(data, i) in resource.metadata['fps-qa1']">
-                                <td :colspan="data.length ? 1 : '100%'" :class="{ compulsory: resource.checkIfCompulsoryItems( i ) }" v-html="trans(i)"></td>
-                                <td :key="k" v-for="(d, k) in data">
-                                  <v-text-field
-                                    :disabled="isLoading"
-                                    :name="`metadata[fps-qa1][${i}][${k}]`"
-                                    class="dt-text-field"
-                                    dense
-                                    hide-details
-                                    outlined
-                                    v-model="resource.data.financials['fps-qa1'][i][k]"
-                                    >
-                                  </v-text-field>
-                                </td>
-                              </tr>
+                              <template v-for="(data, i) in resource.metadata['fps-qa1']">
+                                <tr :key="i">
+                                  <td :colspan="data.length ? 1 : '100%'" :class="{ compulsory: resource.checkIfCompulsoryItems( i ) }" v-html="trans(i)"></td>
+                                  <td :key="k" v-for="(d, k) in data">
+                                    <v-text-field
+                                      :disabled="isLoading"
+                                      :name="`metadata[fps-qa1][${i}][${k}]`"
+                                      class="dt-text-field"
+                                      dense
+                                      hide-details
+                                      outlined
+                                      v-model="resource.data.financials['fps-qa1'][i][k]"
+                                      >
+                                    </v-text-field>
+                                  </td>
+                                </tr>
+                                <tr v-if="checkIfTotalIsNext( i )" :key="`${i}-1`">
+                                  <td :colspan="'100%'" class="text-right"><strong v-text="checkIfTotalIsNext( i ).title"></strong></td>
+                                  <td :key="k" v-for="(d, k) in checkIfTotalIsNext( i ).total">
+                                    <v-text-field
+                                      :disabled="isLoading"
+                                      label="Total"
+                                      class="dt-text-field"
+                                      dense
+                                      hide-details
+                                      outlined
+                                      :value="d"
+                                      readonly
+                                      >
+                                    </v-text-field>
+                                  </td>
+                                </tr>
+                              </template>
                               <tr>
-                                <td :colspan="'100%'"><strong>Net Profit</strong></td>
+                                <td :colspan="'100%'" class="text-right"><strong>Net Profit</strong></td>
                                 <td :key="k" v-for="(d, k) in financialTotal">
                                   <v-text-field
                                     :disabled="isLoading"
@@ -322,7 +340,7 @@
                                 </td>
                               </tr>
                               <tr>
-                                <td :colspan="'100%'"><strong>Balance</strong></td>
+                                <td :colspan="'100%'" class="text-right"><strong>Balance checked!</strong></td>
                                 <td :key="k" v-for="(d, k) in balanceTotal">
                                   <v-text-field
                                     :disabled="isLoading"
@@ -411,6 +429,46 @@ export default {
     resource: new Company,
     loading: true,
     tabsModel: 1,
+    costOfGoodSold: {
+      'Year1': 0,
+      'Year2': 0,
+      'Year3': 0,
+    },
+    totalProductionCost: {
+      'Year1': 0,
+      'Year2': 0,
+      'Year3': 0,
+    },
+    totalGeneralMgmtCost: {
+      'Year1': 0,
+      'Year2': 0,
+      'Year3': 0,
+    },
+    totalLabourExpenses: {
+      'Year1': 0,
+      'Year2': 0,
+      'Year3': 0,
+    },
+    totalDepreciation: {
+      'Year1': 0,
+      'Year2': 0,
+      'Year3': 0,
+    },
+    totalNonOperatingExpenses: {
+      'Year1': 0,
+      'Year2': 0,
+      'Year3': 0,
+    },
+    totalTaxes: {
+      'Year1': 0,
+      'Year2': 0,
+      'Year3': 0,
+    },
+    totalInterest: {
+      'Year1': 0,
+      'Year2': 0,
+      'Year3': 0,
+    },
     financialTotal: {
       'Year1': 0,
       'Year2': 0,
@@ -567,6 +625,52 @@ export default {
       }).finally(() => { this.load(false) })
     },
 
+    checkIfTotalIsNext ( i ) {
+      switch ( i ) {
+        case 'Closing Stocks': 
+          return {
+            title: 'Cost of Good Sold',
+            total: this.costOfGoodSold
+          }
+        case 'Direct Employee Cost': 
+          return {
+            title: 'Total Production Cost',
+            total: this.totalProductionCost
+          }
+        case 'Other Administrative Costs': 
+          return {
+            title: 'Total General Management Cost',
+            total: this.totalGeneralMgmtCost
+          }
+        case 'Other Labour Expenses': 
+          return {
+            title: 'Total Labour Expenses',
+            total: this.totalLabourExpenses
+          }
+        case 'Others (Depreciation)': 
+          return {
+            title: 'Total Depreciation',
+            total: this.totalDepreciation
+          }
+        case 'Others (Non-Operating Costs)':
+          return {
+            title: 'Net Non-Operating Expenses',
+            total: this.totalNonOperatingExpenses
+          }
+        case 'Others (excluding Income Tax)':
+          return {
+            title: 'Total Taxes',
+            total: this.totalTaxes
+          }
+        case 'Others (Interest on Loan/Hires)':
+          return {
+            title: 'Total Interest on Loans/Hires',
+            total: this.totalInterest
+          }
+      }
+      return false
+    },
+
     getResource () {
       this.resource.loading = true
       this.resource.isPrestine = false
@@ -587,17 +691,104 @@ export default {
     },
 
     calculateTotals () {
-      // let currentFinancialTotal = this.resource.data.financials[ 'financial-total' ].Total
-      this.financialTotal = this.resource.calculateThreeYears( this.resource.data.financials[ 'fps-qa1' ] )
+      const financialsFPS = this.resource.data.financials[ 'fps-qa1' ]
 
-      // if( Object.entries( currentFinancialTotal ).toString() !== Object.entries( financialTotal ).toString() )
-      // this.financialTotal = financialTotal
+      this.costOfGoodSold = this.multiplyToNegative( this.resource.calculateThreeYears({
+        'Opening Stocks': financialsFPS['Opening Stocks'],
+        'Raw Materials (direct & indirect)': financialsFPS['Raw Materials (direct & indirect)'],
+        'Closing Stocks': financialsFPS['Closing Stocks'],
+      }))
+      
+      this.totalProductionCost = this.multiplyToNegative( this.resource.calculateThreeYears({
+        'Cargo and Handling': financialsFPS['Cargo and Handling'],
+        'Part-time/Temporary Labour': financialsFPS['Part-time/Temporary Labour'],
+        "Insurance (not including employee's insurance)": financialsFPS["Insurance (not including employee's insurance)"],
+        'Transportation': financialsFPS['Transportation'],
+        'Utilities': financialsFPS['Utilities'],
+        'Maintenance (Building, Plant, and Machinery)': financialsFPS['Maintenance (Building, Plant, and Machinery)'],
+        'Lease of Plant and Machinery': financialsFPS['Lease of Plant and Machinery'],
+        'Direct Employee Cost': financialsFPS['Direct Employee Cost'],
+      }))
+      
+      this.totalGeneralMgmtCost = this.multiplyToNegative( this.resource.calculateThreeYears({
+        'Stationery Supplies and Printing': financialsFPS['Stationery Supplies and Printing'],
+        'Rental': financialsFPS['Rental'],
+        "Insurance (not including employee's insurance) ": financialsFPS["Insurance (not including employee's insurance) "],
+        'Transportation ': financialsFPS['Transportation '],
+        'Company Car/Bus etc.': financialsFPS['Company Car/Bus etc.'],
+        'Advertising': financialsFPS['Advertising'],
+        'Entertainment': financialsFPS['Entertainment'],
+        'Food and Drinks': financialsFPS['Food and Drinks'],
+        'Telephone and Fax': financialsFPS['Telephone and Fax'],
+        'Mail and Courier': financialsFPS['Mail and Courier'],
+        'Maintenance (Office Equipment)': financialsFPS['Maintenance (Office Equipment)'],
+        'Travel': financialsFPS['Travel'],
+        'Audit, Secretarial, and Professional Costs': financialsFPS['Audit, Secretarial, and Professional Costs'],
+        'Newspapers and Magazines': financialsFPS['Newspapers and Magazines'],
+        'Stamp Duty, Filing and Legal': financialsFPS['Stamp Duty, Filing and Legal'],
+        'Bank charges': financialsFPS['Bank charges'],
+        'Other Administrative Costs': financialsFPS['Other Administrative Costs'],
+      }))
+      
+      
+      this.totalLabourExpenses = this.multiplyToNegative( this.resource.calculateThreeYears({
+        'Employee Compensation': financialsFPS['Employee Compensation'],
+        'Bonuses': financialsFPS['Bonuses'],
+        'Provident Fund': financialsFPS['Provident Fund'],
+        'Employee Welfare': financialsFPS['Employee Welfare'],
+        'Medical Costs': financialsFPS['Medical Costs'],
+        'Employee Training': financialsFPS['Employee Training'],
+        "Director's Salary": financialsFPS["Director's Salary"],
+        'Employee Insurance': financialsFPS['Employee Insurance'],
+        'Other Labour Expenses': financialsFPS['Other Labour Expenses'],
+      }))
+      
+      this.totalDepreciation = this.multiplyToNegative( this.resource.calculateThreeYears({
+        'Buildings': financialsFPS['Buildings'],
+        'Plant, Machinery & Equipment': financialsFPS['Plant, Machinery & Equipment'],
+        'Others (Depreciation)': financialsFPS['Others (Depreciation)'],
+      }))
+      
+      this.totalNonOperatingExpenses = this.multiplyToNegative( this.resource.calculateThreeYears({
+        'Profit from Fixed Assets Sale': financialsFPS['Profit from Fixed Assets Sale'],
+        'Profit from Foreign Exchange': financialsFPS['Profit from Foreign Exchange'],
+        'Other Income': financialsFPS['Other Income'],
+        'Bad Debts': financialsFPS['Bad Debts'],
+        'Donations': financialsFPS['Donations'],
+        'Foreign Exchange Loss': financialsFPS['Foreign Exchange Loss'],
+        'Loss on Fixed Assets Sale': financialsFPS['Loss on Fixed Assets Sale'],
+        'Others (Non-Operating Costs)': financialsFPS['Others (Non-Operating Costs)'],
+      }))
 
-      // let currentBalanceTotal = this.resource.data.financials[ 'balance-sheet-total' ].Total
-      this.balanceTotal = this.resource.calculateThreeYears( this.resource.data.financials[ 'balance-sheet' ] )
+      this.totalTaxes = this.multiplyToNegative( this.resource.calculateThreeYears({
+        'Tax on Property': financialsFPS['Tax on Property'],
+        'Duties (Customs & Excise)': financialsFPS['Duties (Customs & Excise)'],
+        'Levy on Foreign Workers': financialsFPS['Levy on Foreign Workers'],
+        'Others (excluding Income Tax)': financialsFPS['Others (excluding Income Tax)']
+      }))
 
-      // if( Object.entries( currentBalanceTotal ).toString() !== Object.entries( balanceTotal ).toString() )
-      //   this.resource.data.financials[ 'balance-sheet-total' ].Total = balanceTotal
+      this.totalInterest = this.multiplyToNegative( this.resource.calculateThreeYears({
+        'Interest & Charges by Bank': financialsFPS['Interest & Charges by Bank'],
+        'Interest on Loan': financialsFPS['Interest on Loan'],
+        'Interest on Hire Purchase': financialsFPS['Interest on Hire Purchase'],
+        'Others (Interest on Loan/Hires)': financialsFPS['Others (Interest on Loan/Hires)']
+      }))
+
+      this.financialTotal = this.resource.calculateThreeYears( financialsFPS[ 'fps-qa1' ] )
+      this.balanceTotal = this.formatBalanceTotal( this.resource.calculateThreeYears( this.resource.data.financials[ 'balance-sheet' ] ) )
+    },
+
+    multiplyToNegative ( data ) {
+      Object.keys( data ).forEach( key => data[ key ] *= -1 )
+      return data
+    },
+
+    formatBalanceTotal ( data ) {
+      Object.keys( data ).forEach( key => {
+        if( data[ key ] === 0)
+         data[ key ] = 'Balanced!'
+      })
+      return data
     }
   },
 

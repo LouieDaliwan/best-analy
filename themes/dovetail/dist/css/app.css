@@ -301,6 +301,14 @@ pre {
   text-overflow: ellipsis;
 }
 
+.text-red input {
+  color: red !important;
+}
+
+.text-green input {
+  color: green !important;
+}
+
 .compulsory {
   position: relative;
 }

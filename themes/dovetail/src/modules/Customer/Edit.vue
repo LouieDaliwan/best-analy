@@ -242,6 +242,24 @@
                                   </v-text-field>
                                 </td>
                               </tr>
+                              <tr>
+                                <td :colspan="'100%'" class="text-right"><strong>Net Profit</strong></td>
+                                <td :key="k" v-for="(d, k) in financialTotal">
+                                  <v-text-field
+                                    :disabled="isLoading"
+                                    label="Total"
+                                    class="dt-text-field"
+                                    :class=" d > 0 ? 'text-green' : 'text-red' "
+                                    :color=" d > 0 ? 'green' : 'red' "
+                                    dense
+                                    hide-details
+                                    outlined
+                                    :value="d"
+                                    readonly
+                                    >
+                                  </v-text-field>
+                                </td>
+                              </tr>
                               <template v-for="(data, i) in resource.metadata['fps-qa1']">
                                 <tr :key="i">
                                   <td :colspan="data.length ? 1 : '100%'" :class="{ compulsory: resource.checkIfCompulsoryItems( i ) }" v-html="trans(i)"></td>
@@ -275,22 +293,6 @@
                                   </td>
                                 </tr>
                               </template>
-                              <tr>
-                                <td :colspan="'100%'" class="text-right"><strong>Net Profit</strong></td>
-                                <td :key="k" v-for="(d, k) in financialTotal">
-                                  <v-text-field
-                                    :disabled="isLoading"
-                                    label="Total"
-                                    class="dt-text-field"
-                                    dense
-                                    hide-details
-                                    outlined
-                                    :value="d"
-                                    readonly
-                                    >
-                                  </v-text-field>
-                                </td>
-                              </tr>
                             </tbody>
                           </v-simple-table>
                         </v-card-text>
@@ -324,6 +326,24 @@
                                   </v-text-field>
                                 </td>
                               </tr>
+                              <tr>
+                                <td :colspan="'100%'" class="text-right"><strong>Balance checked!</strong></td>
+                                <td :key="k" v-for="(d, k) in balanceTotal">
+                                  <v-text-field
+                                    :disabled="isLoading"
+                                    label="Total"
+                                    class="dt-text-field"
+                                    :class=" d !== 'Balanced!' ? 'text-red' : 'text-green' "
+                                    :color=" d !== 'Balanced!' ? 'red' : 'green' "
+                                    dense
+                                    hide-details
+                                    outlined
+                                    :value="d"
+                                    readonly
+                                    >
+                                  </v-text-field>
+                                </td>
+                              </tr>
                               <tr :key="i" v-for="(data, i) in resource.metadata['balance-sheet']">
                                 <td :colspan="data.length ? 1 : '100%'" :class="{ compulsory: resource.checkIfCompulsoryItems( i ) }" v-html="trans(i)"></td>
                                 <td :key="k" v-for="(d, k) in data">
@@ -335,22 +355,6 @@
                                     hide-details
                                     outlined
                                     v-model="resource.data.financials['balance-sheet'][i][k]"
-                                    >
-                                  </v-text-field>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td :colspan="'100%'" class="text-right"><strong>Balance checked!</strong></td>
-                                <td :key="k" v-for="(d, k) in balanceTotal">
-                                  <v-text-field
-                                    :disabled="isLoading"
-                                    label="Total"
-                                    class="dt-text-field"
-                                    dense
-                                    hide-details
-                                    outlined
-                                    :value="d"
-                                    readonly
                                     >
                                   </v-text-field>
                                 </td>
@@ -774,7 +778,7 @@ export default {
         'Others (Interest on Loan/Hires)': financialsFPS['Others (Interest on Loan/Hires)']
       }))
 
-      this.financialTotal = this.resource.calculateThreeYears( financialsFPS[ 'fps-qa1' ] )
+      this.financialTotal = this.resource.calculateThreeYears( financialsFPS )
       this.balanceTotal = this.formatBalanceTotal( this.resource.calculateThreeYears( this.resource.data.financials[ 'balance-sheet' ] ) )
     },
 

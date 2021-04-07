@@ -179,7 +179,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 ],
                 'key:enablers' => $enablers = $this->getKeyEnablers($this->reports, $customer->name, $taxonomy->alias),
                 'key:enablers:description' => $this->getKeyEnablersDescription($taxonomy->alias),
-                'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias, $survey->fields),
+                'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias, $survey->fields, $attributes['month']),
                 'has:reports' => $this->reports->count(),
                 'reports' => $this->reports,
                 'report:user' => $user->displayname,
@@ -401,13 +401,14 @@ class FormulaService extends Service implements FormulaServiceInterface
      *
      * @param  array  $enablers
      * @param  string $index
+     * @param object $month
      * @return array
      */
-    public function getKeyStrategicRecommendations($enablers, $index, $fields = null)
+    public function getKeyStrategicRecommendations($enablers, $index, $fields, $month)
     {
         $index = strtolower($index);
 
-        return  KeyStrategicRecommendationComments::getSolution($enablers, $index, $fields);
+        return  KeyStrategicRecommendationComments::getSolution($enablers, $index, $fields, $month);
 
     }
 

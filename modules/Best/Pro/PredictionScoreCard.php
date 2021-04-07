@@ -1,17 +1,19 @@
 <?php
 
 namespace Best\Pro;
+use Carbon\Carbon;
 
 class PredictionScoreCard
 {
     /**
     * @param model object fields
     * @param string index
+    * @param month
     * @author Louie Daliwan
     */
-    public static function get($fields, $index)
+    public static function get($fields, $index, $month)
     {
-        return call_user_func_array([PredictionScoreCard::class, "computation"], [self::getSubScores($fields), $index]);
+        return call_user_func_array([PredictionScoreCard::class, "computation"], [self::getSubScores($fields, $month), $index]);
     }
 
     protected static function computation($subscores, $index)
@@ -96,12 +98,17 @@ class PredictionScoreCard
         return config("predictionscoreformula.{$index}");
     }
 
-    protected static function getSubScores($fields)
+    protected static function getSubScores($fields, $month)
     {
         $subscores = [];
 
-        foreach($fields as $field){
-            $subscores[] = $field->submissions()->latest()->first()->metadata['subscore'];
+        $date = Carbon::parse($month);
+
+        foreach ($fields as $field) {
+            $subscores[] = $field->submissions()
+                ->whereMonth('created_at', $date->format('m'))
+                ->whereYear('created_at', $date->format('Y'))
+                ->first()->metadata['subscore'];
         }
 
         return $subscores;

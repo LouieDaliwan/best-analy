@@ -25,12 +25,12 @@ class PredictionScoreCard
         $count = 1;
         !isset($results[$count]) ? : $results[$count];
 
-         foreach($formulas as $predictiveKey => $formula){
-            if(in_array($predictiveKey,  self::specialPredictiveKeys())) {
+        foreach ($formulas as $predictiveKey => $formula) {
+            if (in_array($predictiveKey,  self::specialPredictiveKeys())) {
 
                 $subScoreIndex = self::getSubScoresIndex($predictiveKey);
 
-                if(count($formulas[$predictiveKey]) == 5){
+                if (count($formulas[$predictiveKey]) == 5) {
                      $result =
                         ($formula[0] * pow($subscores[$subScoreIndex], 4)) +
                         ($formula[1] * pow($subscores[$subScoreIndex], 3)) +
@@ -39,7 +39,7 @@ class PredictionScoreCard
                         $formula[4];
                 }
 
-                if(count($formulas[$predictiveKey]) == 4){
+                if (count($formulas[$predictiveKey]) == 4) {
                      $result =
                         ($formula[0] * pow($subscores[$subScoreIndex], 3)) +
                         ($formula[1] * pow($subscores[$subScoreIndex], 2)) +
@@ -47,7 +47,7 @@ class PredictionScoreCard
                         $formula[3];
                 }
             } else {
-                if($index == 'fmpi'){
+                if ($index == 'fmpi') {
                     $result =
                         pow($formula[0], $subscores[0]) *
                         pow($formula[1], $subscores[1]) *
@@ -115,6 +115,7 @@ class PredictionScoreCard
     protected static function getSubScoresIndex($predictiveKey)
     {
         switch ($predictiveKey) {
+
             case 'y1v':
                 $predictiveKey = '0';
                 break;
@@ -158,9 +159,11 @@ class PredictionScoreCard
               case 'y11v':
                 $predictiveKey = '10';
                 break;
+
             case 'y12v':
                 $predictiveKey = '11';
                 break;
+
             case 'y13v':
                 $predictiveKey = '12';
                 break;

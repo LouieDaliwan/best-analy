@@ -59,19 +59,21 @@ abstract class KeyStrategicRecommendationComments
         /*
         * @return array PredictionScoreCard::get()
         */
-        foreach(PredictionScoreCard::get($fields, $index) as $score){
+        foreach (PredictionScoreCard::get($fields, $index) as $score) {
 
-            if(!isset($list[$score])){continue;}
+            if (!isset($list[$score])) {
+                continue;
+            }
 
             $reco = $list[$score];
 
             $keyword = self::parseKeyword(key($reco));
 
-            if(array_key_exists('Empty', $temp_categories_recom[$keyword])){
+            if (array_key_exists('Empty', $temp_categories_recom[$keyword])) {
                 unset($temp_categories_recom[$keyword]['Empty']);
             }
 
-            if(!empty($temp_categories_recom[$keyword])){
+            if (!empty($temp_categories_recom[$keyword])) {
                 in_array(array_values($reco)[0], $temp_categories_recom[$keyword]) ? : $temp_categories_recom[$keyword][] = array_values($reco)[0];
             } else {
                 $temp_categories_recom[$keyword][] = array_values($reco)[0];
@@ -79,7 +81,9 @@ abstract class KeyStrategicRecommendationComments
 
             $count++;
 
-            if($count == config('ksrecommendation.' . $index . '.count')) {break;}
+            if ($count == config("ksrecommendation.{$index}.count")) {
+                break;
+            }
         }
 
         return self::organizeRecommendation($temp_categories_recom);
@@ -218,30 +222,33 @@ abstract class KeyStrategicRecommendationComments
     public static function parseKeyword($keyword)
     {
         switch ($keyword) {
-            case 'Personnel':
-                $keyword = 'Talent';
-                break;
+        case 'Personnel':
+            $keyword = 'Talent';
+            break;
 
-            case 'Process':
-                $keyword = 'Workflow Processes';
-                break;
+        case 'Process':
+            $keyword = 'Workflow Processes';
+            break;
 
-            case 'ICT':
-                $keyword = 'Technology';
-                break;
+        case 'ICT':
+            $keyword = 'Technology';
+            break;
 
-            default:
-                $keyword = $keyword;
-                break;
-        }
+        default:
+            $keyword = $keyword;
+            break;
+    }
 
         return $keyword;
     }
 
-    //set the format recommendations in array
+    /**
+    * @ param $temp_categories_recom
+    *set the format recommendations in array
+    */
     protected static function organizeRecommendation($temp_categories_recom)
     {
-        foreach($temp_categories_recom as $keyword => $data){
+        foreach ($temp_categories_recom as $keyword => $data) {
             $icon = Str::slug($keyword);
             $recommendations[$keyword] = [
                 'comments' => (array) $data,

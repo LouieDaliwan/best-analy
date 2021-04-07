@@ -40,4 +40,9 @@ class Field extends Model
     protected $observables = [
         'submitted',
     ];
+
+    public function sortBy()
+    {
+        return $this->orderBy('sort');
+    }
 }

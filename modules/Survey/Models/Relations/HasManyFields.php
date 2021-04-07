@@ -13,6 +13,6 @@ trait HasManyFields
      */
     public function fields()
     {
-        return $this->hasMany(Field::class, 'form_id');
+        return $this->hasMany(Field::class, 'form_id')->orderBy('sort', 'asc');
     }
 }

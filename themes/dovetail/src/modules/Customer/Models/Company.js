@@ -19,6 +19,13 @@ class Company {
           'Year2': '125000',
           'Year3': '200000',
         },
+        '<h4><strong>Purchase of Goods and Services</strong></h4>': [],
+        '<strong>Materials Consumed</strong>': [],
+        'Raw Materials (direct & indirect)': {
+          'Year1': '36000',
+          'Year2': '45000',
+          'Year3': '55000',
+        },
         '<strong>Change in Inventory Levels</strong>': [],
         'Opening Stocks': {
           'Year1': '8000',
@@ -31,13 +38,6 @@ class Company {
           'Year3': '3200',
         },
         '': [],
-        '<h4><strong>Purchase of Goods and Services</strong></h4>': [],
-        '<strong>Materials Consumed</strong>': [],
-        'Raw Materials (direct & indirect)': {
-          'Year1': '36000',
-          'Year2': '45000',
-          'Year3': '55000',
-        },
         'Stock Expiring': {
           'Year1': '',
           'Year2': '',
@@ -581,6 +581,13 @@ class Company {
           'Year2': '',
           'Year3': '',
         },
+        '<h4><strong>Purchase of Goods and Services</strong></h4>': [],
+        '<strong>Materials Consumed</strong>': [],
+        'Raw Materials (direct & indirect)': {
+          'Year1': '',
+          'Year2': '',
+          'Year3': '',
+        },
         '<strong>Change in Inventory Levels</strong>': [],
         'Opening Stocks': {
           'Year1': '',
@@ -593,13 +600,6 @@ class Company {
           'Year3': '',
         },
         '': [],
-        '<h4><strong>Purchase of Goods and Services</strong></h4>': [],
-        '<strong>Materials Consumed</strong>': [],
-        'Raw Materials (direct & indirect)': {
-          'Year1': '',
-          'Year2': '',
-          'Year3': '',
-        },
         'Stock Expiring': {
           'Year1': '',
           'Year2': '',

@@ -72,10 +72,10 @@
               </div>
             </validation-provider>
             <div class="mt-3 text-right">
-              <send-financial-data-to-crm-button
+              <!-- <send-financial-data-to-crm-button
                 :customer="resource.data.id"
                 :user="resource.data.user_id"
-              ></send-financial-data-to-crm-button>
+              ></send-financial-data-to-crm-button> -->
             </div>
           </template>
         </page-header>
@@ -253,7 +253,6 @@
                                     :color=" d > 0 ? 'green' : 'red' "
                                     dense
                                     hide-details
-                                    outlined
                                     :value="d"
                                     readonly
                                     >
@@ -285,7 +284,6 @@
                                       class="dt-text-field"
                                       dense
                                       hide-details
-                                      outlined
                                       :value="d"
                                       readonly
                                       >
@@ -331,13 +329,12 @@
                                 <td :key="k" v-for="(d, k) in balanceTotal">
                                   <v-text-field
                                     :disabled="isLoading"
-                                    label="Total"
+                                    label="Result"
                                     class="dt-text-field"
                                     :class=" d !== 'Balanced!' ? 'text-red' : 'text-green' "
                                     :color=" d !== 'Balanced!' ? 'red' : 'green' "
                                     dense
                                     hide-details
-                                    outlined
                                     :value="d"
                                     readonly
                                     >

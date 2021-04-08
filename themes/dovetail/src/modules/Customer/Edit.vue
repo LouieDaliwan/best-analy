@@ -72,10 +72,10 @@
               </div>
             </validation-provider>
             <div class="mt-3 text-right">
-              <!-- <send-financial-data-to-crm-button
+              <send-financial-data-to-crm-button
                 :customer="resource.data.id"
                 :user="resource.data.user_id"
-              ></send-financial-data-to-crm-button> -->
+              ></send-financial-data-to-crm-button>
             </div>
           </template>
         </page-header>

@@ -35,12 +35,12 @@
               :user="resource.data.report.user_id"
             ></send-report-to-crm-button>
 
-            <!-- <send-financial-data-to-crm-button
+            <send-financial-data-to-crm-button
               v-if="resource.data.report && isInEnglish"
               class="mt-4"
               :customer="resource.data.customer.id"
               :user="resource.data.report.user_id"
-            ></send-financial-data-to-crm-button> -->
+            ></send-financial-data-to-crm-button>
           </div>
         </div>
       </template>

@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Seeder;
 use Survey\Models\Survey;
 use Survey\Models\Field;

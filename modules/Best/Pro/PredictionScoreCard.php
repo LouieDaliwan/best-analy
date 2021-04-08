@@ -21,6 +21,13 @@ class PredictionScoreCard
         return self::compute(self::predictionScoreFormula($index), $index, $subscores);
     }
 
+    /**
+    * @param array formulas
+    * @param string index
+    * @param array subscores
+    * compute the subscores
+    * return array
+    */
     protected static function compute($formulas, $index, $subscores)
     {
         $results = [];
@@ -98,11 +105,22 @@ class PredictionScoreCard
         return $results;
     }
 
+    /**
+    * @param string index
+    * get the formula depend on the index
+    * return array
+    */
     protected static function predictionScoreFormula($index)
     {
         return config("predictionscoreformula.{$index}");
     }
 
+    /**
+    * @param object fields
+    * @param object $month
+    * get the subscore depends on the date submission
+    * return array
+    */
     protected static function getSubScores($fields, $month)
     {
         $subscores = [];
@@ -115,9 +133,9 @@ class PredictionScoreCard
                 ->whereYear('created_at', $date->format('Y'))
                 ->first();
 
-             if($submissions){
+            if ($submissions) {
                 $subscores[] = $submissions->metadata['subscore'];
-             }
+            }
         }
 
         return $subscores;
@@ -132,65 +150,66 @@ class PredictionScoreCard
     {
         switch ($predictiveKey) {
 
-            case 'y1v':
-                $predictiveKey = '0';
-                break;
+        case 'y1v':
+            $predictiveKey = '0';
+            break;
 
-            case 'y2v':
-                $predictiveKey = '1';
-                break;
+        case 'y2v':
+            $predictiveKey = '1';
+            break;
 
-            case 'y3v':
-                $predictiveKey = '2';
-                break;
+        case 'y3v':
+            $predictiveKey = '2';
+            break;
 
-            case 'y4v':
-                $predictiveKey = '3';
-                break;
+        case 'y4v':
+            $predictiveKey = '3';
+            break;
 
-            case 'y5v':
-                $predictiveKey = '4';
-                break;
+        case 'y5v':
+            $predictiveKey = '4';
+            break;
 
-            case 'y6v':
-                $predictiveKey = '5';
-                break;
+        case 'y6v':
+            $predictiveKey = '5';
+            break;
 
-            case 'y7v':
-                $predictiveKey = '6';
-                break;
+        case 'y7v':
+            $predictiveKey = '6';
+            break;
 
-            case 'y8v':
-                $predictiveKey = '7';
-                break;
+        case 'y8v':
+            $predictiveKey = '7';
+            break;
 
-            case 'y9v':
-                $predictiveKey = '8';
-                break;
+        case 'y9v':
+            $predictiveKey = '8';
+            break;
 
-             case 'y10v':
-                $predictiveKey = '9';
-                break;
+        case 'y10v':
+            $predictiveKey = '9';
+            break;
 
-              case 'y11v':
-                $predictiveKey = '10';
-                break;
+        case 'y11v':
+            $predictiveKey = '10';
+            break;
 
-            case 'y12v':
-                $predictiveKey = '11';
-                break;
+        case 'y12v':
+            $predictiveKey = '11';
+            break;
 
-            case 'y13v':
-                $predictiveKey = '12';
-                break;
+        case 'y13v':
+            $predictiveKey = '12';
+            break;
 
-            case 'y14v':
-                $predictiveKey = '13';
-                break;
+        case 'y14v':
+            $predictiveKey = '13';
+            break;
 
-            default:
-                $predictiveKey = 'none';
-                break;
+        default:
+            $predictiveKey = 'none';
+            break;
+
         }
 
         return $predictiveKey;

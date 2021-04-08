@@ -24,6 +24,11 @@ class PredictionScoreCard
     protected static function compute($formulas, $index, $subscores)
     {
         $results = [];
+
+        if (empty($subscores)) {
+            return $results;
+        }
+
         $count = 1;
         !isset($results[$count]) ? : $results[$count];
 
@@ -105,10 +110,14 @@ class PredictionScoreCard
         $date = Carbon::parse($month);
 
         foreach ($fields as $field) {
-            $subscores[] = $field->submissions()
+            $submissions = $field->submissions()
                 ->whereMonth('created_at', $date->format('m'))
                 ->whereYear('created_at', $date->format('Y'))
-                ->first()->metadata['subscore'];
+                ->first();
+
+             if($submissions){
+                $subscores[] = $submissions->metadata['subscore'];
+             }
         }
 
         return $subscores;

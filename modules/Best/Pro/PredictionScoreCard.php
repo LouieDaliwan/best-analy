@@ -40,25 +40,13 @@ class PredictionScoreCard
         !isset($results[$count]) ? : $results[$count];
 
         foreach ($formulas as $predictiveKey => $formula) {
+
             if (in_array($predictiveKey,  self::specialPredictiveKeys())) {
 
                 $subScoreIndex = self::getSubScoresIndex($predictiveKey);
 
-                if (count($formulas[$predictiveKey]) == 5) {
-                     $result =
-                        ($formula[0] * pow($subscores[$subScoreIndex], 4)) +
-                        ($formula[1] * pow($subscores[$subScoreIndex], 3)) +
-                        ($formula[2] * pow($subscores[$subScoreIndex], 2)) +
-                        ($formula[3] * $subscores[$subScoreIndex]) +
-                        $formula[4];
-                }
-
-                if (count($formulas[$predictiveKey]) == 4) {
-                     $result =
-                        ($formula[0] * pow($subscores[$subScoreIndex], 3)) +
-                        ($formula[1] * pow($subscores[$subScoreIndex], 2)) +
-                        ($formula[2] * $subscores[$subScoreIndex]) +
-                        $formula[3];
+                if (in_array(count($formulas[$predictiveKey]), [6,5,4,3])) {
+                    $result = self::computeSpecialPredictive($formulas, $formula, $predictiveKey,$subscores, $subScoreIndex);
                 }
             } else {
                 if ($index == 'fmpi') {
@@ -79,6 +67,7 @@ class PredictionScoreCard
                         pow($formula[13], $subscores[13]) *
                         $formula[14];
                 } else {
+
                     $result =
                         ($subscores[0] * $formula[0]) +
                         ($subscores[1] * $formula[1]) +
@@ -139,6 +128,54 @@ class PredictionScoreCard
         }
 
         return $subscores;
+    }
+
+    /**
+    * @param array formulas
+    * @param array formula
+    * @param array subscores
+    * @param string predictiveKey
+    * @param string subScoreIndex
+    * @author Louie Angelo Daliwan
+    * computation for special predictive
+    */
+    protected static function computeSpecialPredictive($formulas, $formula, $predictiveKey, $subscores, $subScoreIndex)
+    {
+        if (count($formulas[$predictiveKey]) == 6) {
+            $result =
+                ($formula[0] * pow($subscores[$subScoreIndex], 5)) +
+                ($formula[1] * pow($subscores[$subScoreIndex], 4)) +
+                ($formula[2] * pow($subscores[$subScoreIndex], 3)) +
+                ($formula[3] * pow($subscores[$subScoreIndex], 2)) +
+                ($formula[4] * $subscores[$subScoreIndex]) +
+                $formula[5];
+        }
+
+        if (count($formulas[$predictiveKey]) == 5) {
+             $result =
+                ($formula[0] * pow($subscores[$subScoreIndex], 4)) +
+                ($formula[1] * pow($subscores[$subScoreIndex], 3)) +
+                ($formula[2] * pow($subscores[$subScoreIndex], 2)) +
+                ($formula[3] * $subscores[$subScoreIndex]) +
+                $formula[4];
+        }
+
+        if (count($formulas[$predictiveKey]) == 4) {
+             $result =
+                ($formula[0] * pow($subscores[$subScoreIndex], 3)) +
+                ($formula[1] * pow($subscores[$subScoreIndex], 2)) +
+                ($formula[2] * $subscores[$subScoreIndex]) +
+                $formula[3];
+        }
+
+        if (count($formulas[$predictiveKey]) == 3) {
+             $result =
+                ($formula[0] * pow($subscores[$subScoreIndex], 2)) +
+                ($formula[1] * $subscores[$subScoreIndex]) +
+                $formula[2];
+        }
+
+        return $result;
     }
 
     protected static function specialPredictiveKeys()

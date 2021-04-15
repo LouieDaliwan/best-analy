@@ -260,7 +260,7 @@
                                 </td>
                               </tr>
                               <template v-for="(data, i) in resource.metadata['fps-qa1']">
-                                <tr :key="i">
+                                <tr :key="i" v-if="!['Stock Expiring', 'Other Materials Used'].includes( i )">
                                   <td :colspan="data.length ? 1 : '100%'" :class="{ compulsory: resource.checkIfCompulsoryItems( i ) }" v-html="trans(i)"></td>
                                   <td :key="k" v-for="(d, k) in data">
                                     <v-text-field
@@ -275,21 +275,27 @@
                                     </v-text-field>
                                   </td>
                                 </tr>
-                                <tr v-if="checkIfTotalIsNext( i )" :key="`${i}-1`">
-                                  <td :colspan="'100%'" class="text-right"><strong v-text="checkIfTotalIsNext( i ).title"></strong></td>
-                                  <td :key="k" v-for="(d, k) in checkIfTotalIsNext( i ).total">
-                                    <v-text-field
-                                      :disabled="isLoading"
-                                      label="Total"
-                                      class="dt-text-field"
-                                      dense
-                                      hide-details
-                                      :value="d"
-                                      readonly
-                                      >
-                                    </v-text-field>
-                                  </td>
-                                </tr>
+                                <total-row 
+                                  v-if="ct( i )" 
+                                  :title="ct( i ).title" 
+                                  :key="`${i}-1`" 
+                                  :totals="ct( i ).total"
+                                  :isLoading="isLoading"
+                                ></total-row>
+                                <total-row 
+                                  v-if="ct( ct( i ).title )" 
+                                  :title="ct( ct( i ).title ).title" 
+                                  :key="`${ ct( i ).title }-1`" 
+                                  :totals="ct( ct( i ).title ).total"
+                                  :isLoading="isLoading"
+                                ></total-row>
+                                <total-row 
+                                  v-if="ct( ct( ct( i ).title ).title )" 
+                                  :title="ct( ct( ct( i ).title ).title ).title" 
+                                  :key="`${ ct( ct( i ).title ).title }-1`" 
+                                  :totals="ct( ct( ct( i ).title ).title ).total"
+                                  :isLoading="isLoading"
+                                ></total-row>
                               </template>
                             </tbody>
                           </v-simple-table>
@@ -393,6 +399,7 @@ export default {
     SkeletonEditCompany,
     SkeletonEditFinancial,
     SendFinancialDataToCrmButton,
+    TotalRow: () => import( './partials/TotalRow')
   },
 
   computed: {
@@ -441,6 +448,16 @@ export default {
       'Year3': 0,
     },
     totalGeneralMgmtCost: {
+      'Year1': 0,
+      'Year2': 0,
+      'Year3': 0,
+    },
+    totalPurchases: {
+      'Year1': 0,
+      'Year2': 0,
+      'Year3': 0,
+    },
+    valueAdded: {
       'Year1': 0,
       'Year2': 0,
       'Year3': 0,
@@ -518,6 +535,63 @@ export default {
           },
         }
       })
+    },
+
+    ct ( i ) {
+      // checkIfTotalIsNext
+      switch ( i ) {
+        case 'Closing Stocks': 
+          return {
+            title: 'Cost of Good Sold',
+            total: this.costOfGoodSold
+          }
+        case 'Direct Employee Cost': 
+          return {
+            title: 'Total Production Cost',
+            total: this.totalProductionCost
+          }
+        case 'Other Administrative Costs': 
+          return {
+            title: 'Total General Management Cost',
+            total: this.totalGeneralMgmtCost
+          }
+        case 'Total General Management Cost':
+          return {
+            title: 'Total Purchase of Goods and Services',
+            total: this.totalPurchases
+          }
+        case 'Total Purchase of Goods and Services':
+          return {
+            title: 'Value Added',
+            total: this.valueAdded
+          }
+        case 'Other Labour Expenses': 
+          return {
+            title: 'Total Labour Expenses',
+            total: this.totalLabourExpenses
+          }
+        case 'Others (Depreciation)': 
+          return {
+            title: 'Total Depreciation',
+            total: this.totalDepreciation
+          }
+        case 'Others (Non-Operating Costs)':
+          return {
+            title: 'Net Non-Operating Expenses',
+            total: this.totalNonOperatingExpenses
+          }
+        case 'Others (excluding Income Tax)':
+          return {
+            title: 'Total Taxes',
+            total: this.totalTaxes
+          }
+        case 'Others (Interest on Loan/Hires)':
+          return {
+            title: 'Total Interest on Loans/Hires',
+            total: this.totalInterest
+          }
+      }
+      return false
     },
 
     askUserToDiscardUnsavedChanges () {
@@ -626,52 +700,6 @@ export default {
       }).finally(() => { this.load(false) })
     },
 
-    checkIfTotalIsNext ( i ) {
-      switch ( i ) {
-        case 'Closing Stocks': 
-          return {
-            title: 'Cost of Good Sold',
-            total: this.costOfGoodSold
-          }
-        case 'Direct Employee Cost': 
-          return {
-            title: 'Total Production Cost',
-            total: this.totalProductionCost
-          }
-        case 'Other Administrative Costs': 
-          return {
-            title: 'Total General Management Cost',
-            total: this.totalGeneralMgmtCost
-          }
-        case 'Other Labour Expenses': 
-          return {
-            title: 'Total Labour Expenses',
-            total: this.totalLabourExpenses
-          }
-        case 'Others (Depreciation)': 
-          return {
-            title: 'Total Depreciation',
-            total: this.totalDepreciation
-          }
-        case 'Others (Non-Operating Costs)':
-          return {
-            title: 'Net Non-Operating Expenses',
-            total: this.totalNonOperatingExpenses
-          }
-        case 'Others (excluding Income Tax)':
-          return {
-            title: 'Total Taxes',
-            total: this.totalTaxes
-          }
-        case 'Others (Interest on Loan/Hires)':
-          return {
-            title: 'Total Interest on Loans/Hires',
-            total: this.totalInterest
-          }
-      }
-      return false
-    },
-
     getResource () {
       this.resource.loading = true
       this.resource.isPrestine = false
@@ -730,7 +758,17 @@ export default {
         'Bank charges': financialsFPS['Bank charges'],
         'Other Administrative Costs': financialsFPS['Other Administrative Costs'],
       }))
-      
+
+      this.totalPurchases = this.multiplyToNegative( this.resource.calculateThreeYears({
+        'Cost of Good Sold': this.costOfGoodSold,
+        'Total Production Cost': this.totalProductionCost,
+        'Total General Management Cost': this.totalGeneralMgmtCost,
+      }) )
+
+      this.valueAdded = this.resource.calculateThreeYears({
+        'Sales': financialsFPS['Sales'],
+        'Total Purchases': this.totalPurchases
+      })
       
       this.totalLabourExpenses = this.multiplyToNegative( this.resource.calculateThreeYears({
         'Employee Compensation': financialsFPS['Employee Compensation'],

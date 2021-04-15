@@ -68,7 +68,6 @@ class Crm implements Contracts\CrmInterface
      */
     public function sendDocument(array $attributes):? object
     {
-        dd('sendDocument', $this->config['document'], ['form_params' => $attributes]);
         return json_decode($this->api->post(
             $this->config['document'], ['form_params' => $attributes]
         )->getBody());
@@ -83,7 +82,6 @@ class Crm implements Contracts\CrmInterface
      */
     public function sendFinancial(array $attributes):? object
     {
-        dd('sendFinancial', $this->config['financial'], ['form_params' => $attributes]);
         return json_decode($this->api->post(
             $this->config['financial'], ['form_params' => $attributes]
         )->getBody());

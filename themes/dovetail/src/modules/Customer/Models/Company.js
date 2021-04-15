@@ -37,18 +37,6 @@ class Company {
           'Year2': '6500',
           'Year3': '3200',
         },
-        '': [],
-        'Stock Expiring': {
-          'Year1': '',
-          'Year2': '',
-          'Year3': '',
-        },
-        'Other Materials Used': {
-          'Year1': '1500',
-          'Year2': '1000',
-          'Year3': '1000',
-        },
-        '': [],
         '<strong>Production Costs</strong>': [],
         'Cargo and Handling': {
           'Year1': '',
@@ -599,18 +587,6 @@ class Company {
           'Year2': '',
           'Year3': '',
         },
-        '': [],
-        'Stock Expiring': {
-          'Year1': '',
-          'Year2': '',
-          'Year3': '',
-        },
-        'Other Materials Used': {
-          'Year1': '',
-          'Year2': '',
-          'Year3': '',
-        },
-        '': [],
         '<strong>Production Costs</strong>': [],
         'Cargo and Handling': {
           'Year1': '',
@@ -1158,10 +1134,8 @@ class Company {
           if( data[row][column] ) {
             if( itemsToAdd.includes( row ) )
               totalPerYear[column] += value
-            else {
+            else
               totalPerYear[column] -= value
-              console.log( row, totalPerYear[column], '-' + value )
-            }
           }
         }
       }
@@ -1198,7 +1172,7 @@ class Company {
       'Trade Receivables',
       'Inventories',
       'Other CA',
-      'Fixed Assets'
+      'Fixed Assets',
     ]
   }
   

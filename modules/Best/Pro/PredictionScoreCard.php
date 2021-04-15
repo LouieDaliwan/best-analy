@@ -46,7 +46,7 @@ class PredictionScoreCard
                 $subScoreIndex = self::getSubScoresIndex($predictiveKey);
 
                 if (in_array(count($formulas[$predictiveKey]), [6,5,4,3])) {
-                    $result = self::computeSpecialPredictive($formulas, $formula, $predictiveKey,$subscores, $subScoreIndex);
+                    $result = self::computeSpecialPredictive($formulas, $formula, $predictiveKey, $subscores, $subScoreIndex);
                 }
             } else {
                 if ($index == 'fmpi') {

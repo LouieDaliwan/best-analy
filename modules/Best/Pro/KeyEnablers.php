@@ -46,6 +46,8 @@ class KeyEnablers
             ];
         }
 
+        $arr['chart']['dataset'] = $arr['data'];
+
         return $arr;
     }
 

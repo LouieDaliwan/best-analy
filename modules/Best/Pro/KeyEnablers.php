@@ -1,7 +1,6 @@
 <?php
 
 namespace Best\Pro;
-use Illuminate\Support\Str;
 
 class KeyEnablers
 {

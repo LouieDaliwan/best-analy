@@ -15,50 +15,46 @@ class KeyEnablers
 
     public static function get($reports, $customer, $code)
     {
-        $code = strtolower($code);
-
-        $documentation = self::map($reports, 'Documentation');
-        $documentationValue = self::getValue($code, $documentation, 'Documentation');
-        $documentationComment = self::getComment($documentation, $documentationValue, 'documentation', $code, $customer);
-
-        $talent = self::map($reports, 'Talent');
-        $talentValue = self::getValue($code, $talent, 'Talent');
-        $talentComment = self::getComment($talent, $talentValue, 'talent', $code, $customer);
-
-        $technology = self::map($reports, 'Technology');
-        $technologyValue = self::getValue($code, $technology, 'Technology');
-        $technologyComment = self::getComment($technology, $technologyValue, 'technology', $code, $customer);
-
-        $workflow = self::map($reports, 'Workflow Processes');
-        $workflowValue = self::getValue($code, $workflow, 'Workflow Processes');
-        $workflowComment = self::getComment($workflow, $workflowValue, 'workflow', $code, $customer);
-
-        return [
-            'chart' => [
-                'labels' => [__('Documentation'), __('Talent'), __('Technology'), __('Workflow Processes')],
-                'dataset' => [$documentationValue, $talentValue, $technologyValue, $workflowValue],
-            ],
-            'data' => [
-                'Documentation' => [
-                    'value' => $documentationValue,
-                    'comment' => $documentationComment,
-                ],
-                'Talent' => [
-                    'value' => $talentValue,
-                    'comment' => $talentComment,
-                ],
-                'Technology' => [
-                    'value' => $technologyValue,
-                    'comment' => $technologyComment,
-                ],
-                'Workflow Processes' => [
-                    'value' => $workflowValue,
-                    'comment' => $workflowComment,
-                ],
-            ],
-        ];
+        return self::evaluateIndexes($reports, $customer, strtolower($code));
     }
 
+    /**
+    * Evaluate overall result for key enablers
+    * @param  Illuminate\Support\Collection $reports
+    * @param  string                        $customer
+    * @param  string                        $code
+    * @return arr
+    */
+    protected static function evaluateIndexes($reports, $customer, $code)
+    {
+        $indexes = ['Documentation', 'Talent', 'Technology', 'Workflow Processes'];
+
+        $arr = [];
+
+        foreach ($indexes as $index) {
+            $temp_str = $index == 'Workflow Processes' ? substr($index, 0, 8) : $index;
+
+            $indexMap = self::map($reports, $index);
+
+            $indexValue = self::getValue($code, $indexMap, $index);
+
+            $arr['chart']['labels'][] = __($index);
+
+            isset($arr['data'][$index]) ? : $arr['data'][$index] = [
+                'value' => $indexValue,
+                'comment'=> self::getComment($indexMap, $indexValue, strtolower($temp_str), $code, $customer),
+            ];
+        }
+
+        return $arr;
+    }
+
+    /**
+    *  Trace the with average
+    * @param  Illuminate\Support\Collection $reports
+    * @param  string                        $index
+    * @return arr
+    */
     protected static function map($reports, $index)
     {
         return $reports->map(function ($report) use($index) {
@@ -71,12 +67,28 @@ class KeyEnablers
         });
     }
 
-
+    /**
+    * Get the value via index
+    * @param  string $code
+    * @param  string $index
+    * @param  string key
+    * @return string
+    */
     protected static function getValue($code, $index, $key)
     {
         $keyScoreValue = config("modules.best.scores.key_enablers_score.{$code}.{$key}");
         return round((($index->sum('results')/($index->count() ?: 1))/$keyScoreValue) * 100);
     }
+
+     /**
+    * Get the comment via index
+    * @param  Illuminate\Support\Collection $indexObject
+    * @param  int $indexValue
+    * @param  string $index
+    * @param  string $code
+    * @param  string $customer
+    * @return int
+    */
 
     protected static function getComment($indexObject, $indexValue, $index, $code, $customer)
     {

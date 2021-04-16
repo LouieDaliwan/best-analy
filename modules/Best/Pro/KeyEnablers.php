@@ -26,25 +26,13 @@ class KeyEnablers
 
         $workflow = self::map($reports, 'Workflow Processes');
 
-        $docScoreValue = config("modules.best.scores.key_enablers_score.{$code}.Documentation");
-        $documentationValue = round((
-            ($documentation->sum('results')/($documentation->count() ?: 1))/$docScoreValue
-        ) * 100);
+        $documentationValue = self::getValue($code, $documentation, 'Documentation');
 
-        $talentScoreValue = config("modules.best.scores.key_enablers_score.{$code}.Talent");
-        $talentValue = round((
-            ($talent->sum('results')/($talent->count() ?: 1))/$talentScoreValue
-        ) * 100);
+        $talentValue = self::getValue($code, $talent, 'Talent');
 
-        $technologyScoreValue = config("modules.best.scores.key_enablers_score.{$code}.Technology");
-        $technologyValue = round((
-            ($technology->sum('results')/($technology->count() ?: 1))/$technologyScoreValue
-        ) * 100);
+        $talentValue = self::getValue($code, $workflow, 'Technology');
 
-        $workflowScoreValue = config("modules.best.scores.key_enablers_score.{$code}.Workflow Processes");
-        $workflowValue = round((
-            ($workflow->sum('results')/($workflow->count() ?: 1))/$workflowScoreValue
-        ) * 100);
+        $workflowValue = self::getValue($code, $technology, 'Workflow Processes');
 
         $documentationComment = '';
         $documentationSubscore = $documentation->sortBy('metadata.subscore')->take(3)->values();
@@ -232,7 +220,7 @@ class KeyEnablers
         ];
     }
 
-    public static function map($reports, $index)
+    protected static function map($reports, $index)
     {
         return $reports->map(function ($report) use($index) {
             return $report->reportable;
@@ -243,6 +231,14 @@ class KeyEnablers
             return (float) $submission->metadata['average'] == 0.00;
         });
     }
+
+
+    protected static function documentationValue($code, $index, $key)
+    {
+        $keyScoreValue = config("modules.best.scores.key_enablers_score.{$code}.{$key}");
+        return round((($index->sum('results')/($index->count() ?: 1))/$keyScoreValue) * 100);
+    }
+
 
     /**
      * Retrieve comment via keyword.

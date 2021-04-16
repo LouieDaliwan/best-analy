@@ -358,6 +358,7 @@ class Company {
           'Year2': '1000',
           'Year3': '1000',
         },
+        '': [],
         'Trade Payables': {
           'Year1': '1200',
           'Year2': '1100',
@@ -908,6 +909,7 @@ class Company {
           'Year2': '',
           'Year3': '',
         },
+        '': [],
         'Trade Payables': {
           'Year1': '',
           'Year2': '',

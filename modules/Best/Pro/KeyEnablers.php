@@ -94,49 +94,32 @@ class KeyEnablers
 
     protected static function getComment($indexObject, $indexValue, $index, $code, $customer)
     {
-        $indexComment = '';
         $indexSubscore = $indexObject->sortBy('metadata.subscore')->take(3)->values();
-        if (($indexValue/100) > config('modules.best.scores.grades.red')) {
+        $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
+
+       if (($indexValue/100) > config('modules.best.scores.grades.red')) {
             if (($indexValue/100) > config('modules.best.scores.grades.amber')) {
-                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
                 $commentValue = $hasGreaterThan90 ? 'greaterThan90' : '50to90';
-                $indexComment = trans("best::enablers/$code.$index.$commentValue", [
-                    'name' => $customer ?? null,
-                    'item1' => __($indexSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($indexSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($indexSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
             } else {
-                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
                 $commentValue = $hasGreaterThan90 ? '50to90' : '30to50';
-                $indexComment = trans("best::enablers/$code.$index.$commentValue", [
-                    'name' => $customer ?? null,
-                    'item1' => __($indexSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($indexSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($indexSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
             }
         } else {
-            if (($indexValue/100) < config('modules.best.scores.grades.nonlight')) {
-                $indexComment = trans("best::enablers/$code.$index.less30", [
-                    'name' => $customer ?? null,
-                    'item1' => __($indexSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($indexSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($indexSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            } else {
-                $indexComment = trans("best::enablers/$code.$index.30to50", [
-                    'name' => $customer ?? null,
-                    'item1' => __($indexSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($indexSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($indexSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            }
+            $commentValue = ($indexValue/100) < config('modules.best.scores.grades.nonlight') ? "less30" : "30to50";
         }
 
-        return $indexComment;
+        return self::layoutComment($indexSubscore, $index, $commentValue, $code);
     }
 
+    protected static function layoutComment($indexSubscore, $index,$commentValue, $code)
+    {
+        return trans("best::enablers/$code.$index.$commentValue", [
+                    'name' => $customer ?? null,
+                    'item1' => __($indexSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($indexSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($indexSubscore->get(2)->submissible->metadata['comment'] ?? null),
+                ]
+        );
+    }
 
     /**
      * Retrieve comment via keyword.

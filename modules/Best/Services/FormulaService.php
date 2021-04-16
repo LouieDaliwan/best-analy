@@ -23,6 +23,7 @@ use Setting\Models\Setting;
 use Spatie\Browsershot\Browsershot;
 use Survey\Models\Survey;
 use User\Models\User;
+use Best\Pro\KeyEnablers;
 
 class FormulaService extends Service implements FormulaServiceInterface
 {
@@ -178,7 +179,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                     $this->getSecondBoxComment($group, $taxonomy->alias),
                 ],
                 'key:enablers' => $enablers = $this->getKeyEnablers($this->reports, $customer->name, $taxonomy->alias),
-                'key:enablers:description' => $this->getKeyEnablersDescription($taxonomy->alias),
+                'key:enablers:description' => $this->getKeyEnablersDescription($taxonomy->alias, $attributes['month'], $survey->fields),
                 'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias, $survey->fields, $attributes['month']),
                 'has:reports' => $this->reports->count(),
                 'reports' => $this->reports,
@@ -671,30 +672,9 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  string $code
      * @return string
      */
-    public function getKeyEnablersDescription($code)
+    public function getKeyEnablersDescription($code, $month, $fields)
     {
-        $code = strtolower($code);
-        $comment = '';
-
-        switch ($code) {
-            case 'fmpi':
-                $comment = trans("best::enablers/fmpi.description");
-                break;
-
-            case 'bspi':
-                $comment = trans("best::enablers/bspi.description");
-                break;
-
-            case 'hrpi':
-                $comment = trans("best::enablers/hrpi.description");
-                break;
-
-            case 'pmpi':
-                $comment = trans("best::enablers/pmpi.description");
-                break;
-        }
-
-        return $comment;
+        return KeyEnablers::getDescription($code, $month, $fields)
     }
 
     /**

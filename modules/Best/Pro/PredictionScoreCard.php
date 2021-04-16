@@ -67,7 +67,6 @@ class PredictionScoreCard
                         pow($formula[13], $subscores[13]) *
                         $formula[14];
                 } else {
-
                     $result =
                         ($subscores[0] * $formula[0]) +
                         ($subscores[1] * $formula[1]) +

@@ -19,180 +19,20 @@ class KeyEnablers
         $code = strtolower($code);
 
         $documentation = self::map($reports, 'Documentation');
+        $documentationValue = self::getValue($code, $documentation, 'Documentation');
+        $documentationComment = self::getComment($documentation, $documentationValue, 'documentation', $code, $customer);
 
         $talent = self::map($reports, 'Talent');
+        $talentValue = self::getValue($code, $talent, 'Talent');
+        $talentComment = self::getComment($talent, $talentValue, 'talent', $code, $customer);
 
         $technology = self::map($reports, 'Technology');
+        $technologyValue = self::getValue($code, $technology, 'Technology');
+        $technologyComment = self::getComment($technology, $technologyValue, 'technology', $code, $customer);
 
         $workflow = self::map($reports, 'Workflow Processes');
-
-        $documentationValue = self::getValue($code, $documentation, 'Documentation');
-
-        $talentValue = self::getValue($code, $talent, 'Talent');
-
-        $talentValue = self::getValue($code, $workflow, 'Technology');
-
-        $workflowValue = self::getValue($code, $technology, 'Workflow Processes');
-
-        $documentationComment = '';
-        $documentationSubscore = $documentation->sortBy('metadata.subscore')->take(3)->values();
-        if (($documentationValue/100) > config('modules.best.scores.grades.red')) {
-            if (($documentationValue/100) > config('modules.best.scores.grades.amber')) {
-                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
-                $commentValue = $hasGreaterThan90 ? 'greaterThan90' : '50to90';
-                $documentationComment = trans("best::enablers/$code.documentation.$commentValue", [
-                    'name' => $customer ?? null,
-                    'item1' => __($documentationSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($documentationSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($documentationSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            } else {
-                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
-                $commentValue = $hasGreaterThan90 ? '50to90' : '30to50';
-                $documentationComment = trans("best::enablers/$code.documentation.$commentValue", [
-                    'name' => $customer ?? null,
-                    'item1' => __($documentationSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($documentationSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($documentationSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            }
-        } else {
-            if (($documentationValue/100) < config('modules.best.scores.grades.nonlight')) {
-                $documentationComment = trans("best::enablers/$code.documentation.less30", [
-                    'name' => $customer ?? null,
-                    'item1' => __($documentationSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($documentationSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($documentationSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            } else {
-                $documentationComment = trans("best::enablers/$code.documentation.30to50", [
-                    'name' => $customer ?? null,
-                    'item1' => __($documentationSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($documentationSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($documentationSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            }
-        }//end if
-
-        $talentComment = '';
-        $talentSubscore = $talent->sortBy('metadata.subscore')->take(3)->values();
-        if (($talentValue/100) > config('modules.best.scores.grades.red')) {
-            if (($talentValue/100) > config('modules.best.scores.grades.amber')) {
-                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
-                $commentValue = $hasGreaterThan90 ? 'greaterThan90' : '50to90';
-                $talentComment = trans("best::enablers/$code.talent.$commentValue", [
-                    'name' => $customer,
-                    'item1' => __($talentSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($talentSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($talentSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            } else {
-                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
-                $commentValue = $hasGreaterThan90 ? '50to90' : '30to50';
-                $talentComment = trans("best::enablers/$code.talent.$commentValue", [
-                    'name' => $customer ?? null,
-                    'item1' => __($talentSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($talentSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($talentSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            }
-        } else {
-            if (($talentValue/100) < config('modules.best.scores.grades.nonlight')) {
-                $talentComment = trans("best::enablers/$code.talent.less30", [
-                    'name' => $customer,
-                    'item1' => __($talentSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($talentSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($talentSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            } else {
-                $talentComment = trans("best::enablers/$code.talent.30to50", [
-                    'name' => $customer ?? null,
-                    'item1' => __($talentSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($talentSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($talentSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            }
-        }//end if
-
-        $technologyComment = '';
-        $technologySubscore = $technology->sortBy('metadata.subscore')->take(3)->values();
-        if (($technologyValue/100) > config('modules.best.scores.grades.red')) {
-            if (($technologyValue/100) > config('modules.best.scores.grades.amber')) {
-                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
-                $commentValue = $hasGreaterThan90 ? 'greaterThan90' : '50to90';
-                $technologyComment = trans("best::enablers/$code.technology.$commentValue", [
-                    'name' => $customer,
-                    'item1' => __($technologySubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($technologySubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($technologySubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            } else {
-                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
-                $commentValue = $hasGreaterThan90 ? '50to90' : '30to50';
-                $technologyComment = trans("best::enablers/$code.technology.$commentValue", [
-                    'name' => $customer ?? null,
-                    'item1' => __($technologySubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($technologySubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($technologySubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            }
-        } else {
-            if (($technologyValue/100) < config('modules.best.scores.grades.nonlight')) {
-                $technologyComment = trans("best::enablers/$code.technology.less30", [
-                    'name' => $customer ?? null,
-                    'item1' => __($technologySubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($technologySubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($technologySubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            } else {
-                $technologyComment = trans("best::enablers/$code.technology.30to50", [
-                    'name' => $customer ?? null,
-                    'item1' => __($technologySubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($technologySubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($technologySubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            }
-        }//end if
-
-        $workflowComment = '';
-        $workflowSubscore = $workflow->sortBy('metadata.subscore')->take(3)->values();
-        if (($workflowValue/100) > config('modules.best.scores.grades.red')) {
-            if (($workflowValue/100) > config('modules.best.scores.grades.amber')) {
-                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
-                $commentValue = $hasGreaterThan90 ? 'greaterThan90' : '50to90';
-                $workflowComment = trans("best::enablers/$code.workflow.$commentValue", [
-                    'name' => $customer ?? null,
-                    'item1' => __($workflowSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($workflowSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($workflowSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            } else {
-                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
-                $commentValue = $hasGreaterThan90 ? '50to90' : '30to50';
-                $workflowComment = trans("best::enablers/$code.workflow.$commentValue", [
-                    'name' => $customer ?? null,
-                    'item1' => __($workflowSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($workflowSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($workflowSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            }
-        } else {
-            if (($workflowValue/100) < config('modules.best.scores.grades.nonlight')) {
-                $workflowComment = trans("best::enablers/$code.workflow.less30", [
-                    'name' => $customer ?? null,
-                    'item1' => __($workflowSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($workflowSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($workflowSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            } else {
-                $workflowComment = trans("best::enablers/$code.workflow.30to50", [
-                    'name' => $customer ?? null,
-                    'item1' => __($workflowSubscore->get(0)->submissible->metadata['comment'] ?? null),
-                    'item2' => __($workflowSubscore->get(1)->submissible->metadata['comment'] ?? null),
-                    'item3' => __($workflowSubscore->get(2)->submissible->metadata['comment'] ?? null),
-                ]);
-            }
-        }//end if
+        $workflowValue = self::getValue($code, $workflow, 'Workflow Processes');
+        $workflowComment = self::getComment($workflow, $workflowValue, 'workflow', $code, $customer);
 
         return [
             'chart' => [
@@ -233,10 +73,55 @@ class KeyEnablers
     }
 
 
-    protected static function documentationValue($code, $index, $key)
+    protected static function getValue($code, $index, $key)
     {
         $keyScoreValue = config("modules.best.scores.key_enablers_score.{$code}.{$key}");
         return round((($index->sum('results')/($index->count() ?: 1))/$keyScoreValue) * 100);
+    }
+
+    protected static function getComment($indexObject, $indexValue, $index, $code, $customer)
+    {
+        $indexComment = '';
+        $indexSubscore = $indexObject->sortBy('metadata.subscore')->take(3)->values();
+        if (($indexValue/100) > config('modules.best.scores.grades.red')) {
+            if (($indexValue/100) > config('modules.best.scores.grades.amber')) {
+                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
+                $commentValue = $hasGreaterThan90 ? 'greaterThan90' : '50to90';
+                $indexComment = trans("best::enablers/$code.$index.$commentValue", [
+                    'name' => $customer ?? null,
+                    'item1' => __($indexSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($indexSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($indexSubscore->get(2)->submissible->metadata['comment'] ?? null),
+                ]);
+            } else {
+                $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
+                $commentValue = $hasGreaterThan90 ? '50to90' : '30to50';
+                $indexComment = trans("best::enablers/$code.$index.$commentValue", [
+                    'name' => $customer ?? null,
+                    'item1' => __($indexSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($indexSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($indexSubscore->get(2)->submissible->metadata['comment'] ?? null),
+                ]);
+            }
+        } else {
+            if (($indexValue/100) < config('modules.best.scores.grades.nonlight')) {
+                $indexComment = trans("best::enablers/$code.$index.less30", [
+                    'name' => $customer ?? null,
+                    'item1' => __($indexSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($indexSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($indexSubscore->get(2)->submissible->metadata['comment'] ?? null),
+                ]);
+            } else {
+                $indexComment = trans("best::enablers/$code.$index.30to50", [
+                    'name' => $customer ?? null,
+                    'item1' => __($indexSubscore->get(0)->submissible->metadata['comment'] ?? null),
+                    'item2' => __($indexSubscore->get(1)->submissible->metadata['comment'] ?? null),
+                    'item3' => __($indexSubscore->get(2)->submissible->metadata['comment'] ?? null),
+                ]);
+            }
+        }
+
+        return $indexComment;
     }
 
 

@@ -6,7 +6,7 @@ use Carbon\Carbon;
 class PredictionScoreCard
 {
     /**
-    * @param model object fields
+    * @param model fields
     * @param string index
     * @param month
     * @author Louie Daliwan
@@ -16,6 +16,11 @@ class PredictionScoreCard
         return call_user_func_array([PredictionScoreCard::class, "computation"], [self::getSubScores($fields, $month), $index]);
     }
 
+    /**
+    * @param array subscores
+    * @param string index
+    * @author Louie Daliwan
+    */
     protected static function computation($subscores, $index)
     {
         return self::compute(self::predictionScoreFormula($index), $index, $subscores);
@@ -45,45 +50,24 @@ class PredictionScoreCard
 
                 $subScoreIndex = self::getSubScoresIndex($predictiveKey);
 
-                if (in_array(count($formulas[$predictiveKey]), [6,5,4,3])) {
-                    $result = self::computeSpecialPredictive($formulas, $formula, $predictiveKey, $subscores, $subScoreIndex);
-                }
+                $result = self::computeSpecialPredictive($formulas, $formula, $predictiveKey, $subscores, $subScoreIndex);
             } else {
-                if ($index == 'fmpi') {
-                    $result =
-                        pow($formula[0], $subscores[0]) *
-                        pow($formula[1], $subscores[1]) *
-                        pow($formula[2], $subscores[2]) *
-                        pow($formula[3], $subscores[3]) *
-                        pow($formula[4], $subscores[4]) *
-                        pow($formula[5], $subscores[5]) *
-                        pow($formula[6], $subscores[6]) *
-                        pow($formula[7], $subscores[7]) *
-                        pow($formula[8], $subscores[8]) *
-                        pow($formula[9], $subscores[9]) *
-                        pow($formula[10], $subscores[10]) *
-                        pow($formula[11], $subscores[11]) *
-                        pow($formula[12], $subscores[12]) *
-                        pow($formula[13], $subscores[13]) *
-                        $formula[14];
-                } else {
-                    $result =
-                        ($subscores[0] * $formula[0]) +
-                        ($subscores[1] * $formula[1]) +
-                        ($subscores[2] * $formula[2]) +
-                        ($subscores[3] * $formula[3]) +
-                        ($subscores[4] * $formula[4]) +
-                        ($subscores[5] * $formula[5]) +
-                        ($subscores[6] * $formula[6]) +
-                        ($subscores[7] * $formula[7]) +
-                        ($subscores[8] * $formula[8]) +
-                        ($subscores[9] * $formula[9]) +
-                        ($subscores[10] * $formula[10]) +
-                        ($subscores[11] * $formula[11]) +
-                        ($subscores[12] * $formula[12]) +
-                        ($subscores[13] * $formula[13]) +
-                        $formula[14];
-                }
+                $result =
+                    ($subscores[0] * $formula[0]) +
+                    ($subscores[1] * $formula[1]) +
+                    ($subscores[2] * $formula[2]) +
+                    ($subscores[3] * $formula[3]) +
+                    ($subscores[4] * $formula[4]) +
+                    ($subscores[5] * $formula[5]) +
+                    ($subscores[6] * $formula[6]) +
+                    ($subscores[7] * $formula[7]) +
+                    ($subscores[8] * $formula[8]) +
+                    ($subscores[9] * $formula[9]) +
+                    ($subscores[10] * $formula[10]) +
+                    ($subscores[11] * $formula[11]) +
+                    ($subscores[12] * $formula[12]) +
+                    ($subscores[13] * $formula[13]) +
+                    $formula[14];
             }
 
             $results[$count] = round($result, 0);

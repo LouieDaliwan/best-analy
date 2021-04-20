@@ -91,7 +91,6 @@ class KeyEnablers
     * @param  string $customer
     * @return int
     */
-
     protected static function getComment($indexObject, $indexValue, $index, $code, $customer)
     {
         $indexSubscore = $indexObject->sortBy('metadata.subscore')->take(3)->values();

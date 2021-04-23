@@ -167,7 +167,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'customer:staffstrength' => $customer->metadata['staffstrength'] ?? null,
                 'customer:type' => $customer->metadata['type'] ?? null,
                 'subscore:score' => $totalSubscoreScore = $this->getTotalIndexSubscoreScore($survey, $attributes['customer_id'], $monthkey),
-                'subscore:total' => $totalSubscoreTotal = $this->getTotalIndexSubscoreTotal($survey),
+                'subscore:total' => $totalSubscoreTotal = $this->getTotalIndexSubscoreTotal($survey, $attributes['customer_id'], $monthkey),
                 'overall:total' => $total = $this->getOverallTotalAverage($totalSubscoreScore, $totalSubscoreTotal),
                 $this->getIndexOverAllScoreKey($taxonomy) => $total,
                 'overall:comment' => $this->getOverallFindingsComment($taxonomy->alias, $customer->name, $total),
@@ -437,9 +437,8 @@ class FormulaService extends Service implements FormulaServiceInterface
         return KeyEnablers::getDescription($code, $month, $fields);
     }
 
-    /**
-     * Retrieve the box comments.
-     *
+
+     /*
      * @param  Illuminate\Support\Collection $group
      * @param  string                        $code
      * @return string|array
@@ -555,9 +554,23 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function getTotalIndexSubscoreScore(Survey $survey, int $customer_id, String $monthkey)
     {
-        return $survey->fields->map(function ($field) use ($customer_id, $monthkey) {
-            return $field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata['subscore'] ?? 0;
-        })->sum();
+
+        //will  optimize this
+        $subscore = collect([]);
+
+        foreach ($survey->fields as $field){
+            if($field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata['subscore'] != 0) {
+                $subscore->push($field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata['subscore']);
+            }
+        }
+
+        return $subscore->sum();
+
+
+        //old code
+        // return $survey->fields->map(function ($field) use ($customer_id, $monthkey) {
+        //     return $field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata['subscore'] ?? 0;
+        // })->sum();
     }
 
     /**
@@ -566,11 +579,25 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  Survey\Models\Survey $survey
      * @return string
      */
-    public function getTotalIndexSubscoreTotal(Survey $survey)
+    public function getTotalIndexSubscoreTotal(Survey $survey, $customer_id, $monthkey)
     {
-        return $survey->fields->map(function ($field) {
-            return $field->metadata['total'] ?? 0;
-        })->sum() ?: 1;
+
+        //will  optimize this
+        $subscore = collect([]);
+
+        foreach ($survey->fields as $field){
+            if($field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata['subscore'] != 0) {
+                $subscore->push($field->metadata['total'] ?? 0);
+            }
+        }
+        // dd($subscore->sum());
+        return $subscore->sum();
+
+
+        //old code
+        // return $survey->fields->map(function ($field) {
+        //     return $field->metadata['total'] ?? 0;
+        // })->sum() ?: 1;
     }
 
     /**

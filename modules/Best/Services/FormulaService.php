@@ -124,7 +124,6 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {
-
             $survey = $taxonomy->survey;
             $enablers = null;
             $this->reports = null;
@@ -556,6 +555,7 @@ class FormulaService extends Service implements FormulaServiceInterface
     {
 
         //will  optimize this
+        //author Louie Daliwan
         $subscore = collect([]);
 
         foreach ($survey->fields as $field){
@@ -583,6 +583,7 @@ class FormulaService extends Service implements FormulaServiceInterface
     {
 
         //will  optimize this
+        // author Louie Daliwan
         $subscore = collect([]);
 
         foreach ($survey->fields as $field){
@@ -590,7 +591,6 @@ class FormulaService extends Service implements FormulaServiceInterface
                 $subscore->push($field->metadata['total'] ?? 0);
             }
         }
-        // dd($subscore->sum());
         return $subscore->sum();
 
 

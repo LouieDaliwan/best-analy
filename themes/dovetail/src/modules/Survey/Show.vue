@@ -54,7 +54,7 @@
                 <v-row>
                   <v-col cols="12" md="auto">
                     <span class="text--text muted--text display-1 font-weight-bold">
-                      {{ field.metadata['sort'] || 0 }}
+                      {{ field.sort || 0 }}
                     </span>
                   </v-col>
                   <v-col>

@@ -62,7 +62,7 @@
                       <span
                         :class="$vuetify.breakpoint.smAndUp ? 'display-1' : 'title'"
                         class="text--text muted--text font-weight-bold"
-                        v-html="field.metadata['sort']"
+                        v-html="field.sort"
                       ></span>
                     </v-col>
                     <v-col :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">

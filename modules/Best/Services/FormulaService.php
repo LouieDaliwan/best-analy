@@ -24,6 +24,7 @@ use Spatie\Browsershot\Browsershot;
 use Survey\Models\Survey;
 use User\Models\User;
 use Best\Pro\KeyEnablers;
+use Carbon\Carbon;
 
 class FormulaService extends Service implements FormulaServiceInterface
 {
@@ -155,7 +156,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'pindex:icon' => $taxonomy->icon ?? '',
                 'pindex:color' => $taxonomy->metadata['color'] ?? null,
                 'survey:code' => $survey->code,
-                'elements' => $group = $this->getGroupedAverage(),
+                'elements' => $group = $this->getGroupedAverage($taxonomy->alias),
                 'elements:charts' => $this->getChartedGroupedAverage($group),
                 'cover:date' => date(settings('formal:date', 'Y-m-d')),
                 'cover:description' => $taxonomy->metadata['report:description'] ?? null,
@@ -230,8 +231,14 @@ class FormulaService extends Service implements FormulaServiceInterface
     public function getOverallScore($indices)
     {
         return round(collect($indices)->map(function ($index) {
+
+            if ($index['subscore:score'] == 0) {
+                return 0 * $index['pindex:weightage'];
+            }
+
             $avg = $index['subscore:score']/$index['subscore:total'];
             return $avg*$index['pindex:weightage'];
+
         })->sum(), 2);
     }
 
@@ -518,9 +525,34 @@ class FormulaService extends Service implements FormulaServiceInterface
      *
      * @return mixed
      */
-    public function getGroupedAverage()
+    public function getGroupedAverage($alias)
     {
-        return $this->reports->groupBy('group')->map(function ($g) {
+
+        //initiate collection
+        $collect = collect([]);
+
+        //will plot the phase 1 code
+        //wll optimize this
+        // dd($alias, $this->reports->groupBy('group'));
+
+        //$this->categoryItemsCount($alias);
+        foreach ($this->reports->groupBy('group') as $category => $items) {
+            $total_items = $this->categoryItemsCount($alias, $category));
+
+            foreach ($items->sortByDesc('created_at') as $item) {
+
+                //check if latest submission date via created_at
+
+                //get the value
+            }
+        }
+
+        return round($collect->avg(), 2) ;
+
+        //will comment this
+        return $this->reports->groupBy('group')->map(function ($g) use ($month) {
+            // dd($g);
+            // if($g->created_at->format('M Y') == )
             return round($g->avg('value'), 2);
         });
     }
@@ -553,7 +585,6 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function getTotalIndexSubscoreScore(Survey $survey, int $customer_id, String $monthkey)
     {
-
         //will  optimize this
         //author Louie Daliwan
         $subscore = collect([]);
@@ -640,6 +671,10 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function getOverallTotalAverage($score, $total)
     {
+        if ($score == 0) {
+            return 0;
+        }
+
         return round(($score/$total)*100, 2);
     }
 
@@ -707,5 +742,42 @@ class FormulaService extends Service implements FormulaServiceInterface
         }
 
         return $comment;
+    }
+
+    protected function categoryItemsCount($alias, $index)
+    {
+        $list = [
+            'FMPI' => [
+                'Cost Management' => 2,
+                'Financial Analysis' => 3,
+                'Financial Controls' => 3,
+                'Forecasting & Budgeting' => 4,
+                'Financial Risk Management' => 2,
+            ],
+            'BSPI' => [
+                'Leadership' => 3,
+                'Risk Management' => 4,
+                'Organisational Management' => 4,
+                'Organisational Culture' => 3,
+            ],
+            'PMPI' => [
+                'Policies & Procedures' => 3,
+                'Quality Management' => 6,
+                'Technology & Tools' => 3,
+                'Customer Experience' => 3,
+                'Business Comptetiveness' => 2,
+            ],
+            'HRPI' => [
+                'Manpower Planning' => 2,
+                'Recruitment & Selection' => 2,
+                'Compensation & Benefits' => 2,
+                'Performance Management' => 2,
+                'Learning & Development' => 2,
+                'Career & Talent Management' => 2,
+                'Employee Engagement' => 2,
+            ]
+        ];
+
+        return $list[$alias][$index];
     }
 }

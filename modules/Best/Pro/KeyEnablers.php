@@ -93,6 +93,7 @@ class KeyEnablers
     */
     protected static function getComment($indexObject, $indexValue, $index, $code, $customer)
     {
+        if ($indexValue == 0) return self::getNAComment($index);
         $indexSubscore = $indexObject->sortBy('metadata.subscore')->take(3)->values();
         $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
 
@@ -106,10 +107,10 @@ class KeyEnablers
             $commentValue = ($indexValue/100) < config('modules.best.scores.grades.nonlight') ? "less30" : "30to50";
         }
 
-        return self::layoutComment($indexSubscore, $index, $commentValue, $code);
+        return self::layoutComment($indexSubscore, $index, $commentValue, $code, $customer);
     }
 
-    protected static function layoutComment($indexSubscore, $index,$commentValue, $code)
+    protected static function layoutComment($indexSubscore, $index,$commentValue, $code, $customer)
     {
         return trans("best::enablers/$code.$index.$commentValue", [
                     'name' => $customer ?? null,
@@ -118,6 +119,21 @@ class KeyEnablers
                     'item3' => __($indexSubscore->get(2)->submissible->metadata['comment'] ?? null),
                 ]
         );
+    }
+
+    protected static function getNAComment($index) {
+        switch ($index) {
+            case 'documentation':
+                return 'It is critical to document matters as a basic practice.';
+            case 'talent':
+                return 'Do explore how you can work with a Team to improve efficiency.';
+            case 'technology':
+                return 'Adopting Useful Technology will greatly improve your business efficiency.';
+            case 'workflow':
+                return 'Implementing clear work processes can improve consistency in operations.';
+            default:
+                return '';
+        }
     }
 
     /**

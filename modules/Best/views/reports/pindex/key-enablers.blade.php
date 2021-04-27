@@ -24,7 +24,7 @@
           <div class="d-fsdsdlex align-items-center">
             {{-- <span style="width: 10px; height: 10px; background: #f43b47; display: inline-block; border-radius: 100%;"></span> --}}
             <h4 class="mb-2">{{ $data['pindex:code'] }}</h4>
-            <div><span class="enablers-badge-index">{{ $enabler['value'] }}%</span></div>
+            <div><span class="enablers-badge-index">{{ $enabler['value'] != 0 ? $enabler['value'].'%' : 'N/A' }}</span></div>
           </div>
           <div class="d-flesdsx align-items-center">
             <h4 class="mb-2">{{ __('ORG. AVG') }}</h4>

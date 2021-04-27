@@ -533,28 +533,33 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         //will plot the phase 1 code
         //wll optimize this
-        // dd($alias, $this->reports->groupBy('group'));
-
-        //$this->categoryItemsCount($alias);
         foreach ($this->reports->groupBy('group') as $category => $items) {
-            $total_items = $this->categoryItemsCount($alias, $category));
+
+            $total_items = $this->categoryItemsCount($alias, $category);
+
+            $temp_collect = collect([]);
 
             foreach ($items->sortByDesc('created_at') as $item) {
+                $count = 1;
 
-                //check if latest submission date via created_at
-
-                //get the value
+                if ($count != $total_items) {
+                    if ($item->values != 0) {
+                       $temp_collect->push($item->values);
+                    }
+                }
             }
-        }
 
-        return round($collect->avg(), 2) ;
+           $result = $temp_collect->isEmpty() ? 0 : round($temp_collect->avg(), 2);
+
+            $this->push($category, $result);
+        }
+        dd($collect);
+        return $collect;
 
         //will comment this
-        return $this->reports->groupBy('group')->map(function ($g) use ($month) {
-            // dd($g);
-            // if($g->created_at->format('M Y') == )
-            return round($g->avg('value'), 2);
-        });
+        // return $this->reports->groupBy('group')->map(function ($g) {
+        //     return round($g->avg('value'), 2);
+        // });
     }
 
     /**

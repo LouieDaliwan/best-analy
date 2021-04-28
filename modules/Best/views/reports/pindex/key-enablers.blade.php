@@ -28,7 +28,7 @@
           </div>
           <div class="d-flesdsx align-items-center">
             <h4 class="mb-2">{{ __('ORG. AVG') }}</h4>
-            <div class="text-right"><span class="enablers-badge-org">{{ $orig['keyed:data'][$key] }}%</span></div>
+            <div class="text-right"><span class="enablers-badge-org">{{ $orig['keyed:data'][$key] != 0 ? $orig['keyed:data'][$key].'%' : 'N/A' }}</span></div>
           </div>
         </div>
 

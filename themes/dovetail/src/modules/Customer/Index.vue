@@ -168,18 +168,7 @@
         @update:search="search"
         >
       </toolbar-menu>
-      <empty-state>
-        <template v-slot:actions>
-          <v-btn
-            large
-            color="primary"
-            exact
-            :to="{name: 'companies.create'}">
-            <v-icon small left>mdi-briefcase-plus-outline</v-icon>
-            {{ trans('Add Company') }}
-          </v-btn>
-        </template>
-      </empty-state>
+      <empty-state></empty-state>
     </div>
     <!-- Empty state -->
   </admin>

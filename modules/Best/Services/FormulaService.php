@@ -558,6 +558,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
             //put on the collection the category and result of computation
             $collect->put($category, $result);
+
         }
 
         return $collect;

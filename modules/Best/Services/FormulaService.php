@@ -533,27 +533,33 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         //will plot the phase 1 code
         //wll optimize this
+        //author Louie Daliwan
         foreach ($this->reports->groupBy('group') as $category => $items) {
 
             $total_items = $this->categoryItemsCount($alias, $category);
 
             $temp_collect = collect([]);
 
-            foreach ($items->sortByDesc('created_at') as $item) {
-                $count = 1;
+            $count = 0;
 
+            foreach ($items->sortByDesc('created_at') as $item) {
                 if ($count != $total_items) {
-                    if ($item->values != 0) {
-                       $temp_collect->push($item->values);
+                    if ($item->value != 0) {
+                        $temp_collect->push($item->value);
                     }
+                } else {
+                    continue;
                 }
+                $count ++;
             }
 
-           $result = $temp_collect->isEmpty() ? 0 : round($temp_collect->avg(), 2);
+            //check if the temporary collection is empty if yes the category is set to 0 unless get the avg of collected values
+            $result = $temp_collect->isEmpty() ? 0 : round($temp_collect->avg(), 2);
 
-            $this->push($category, $result);
+            //put on the collection the category and result of computation
+            $collect->put($category, $result);
         }
-        dd($collect);
+
         return $collect;
 
         //will comment this
@@ -770,7 +776,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'Quality Management' => 6,
                 'Technology & Tools' => 3,
                 'Customer Experience' => 3,
-                'Business Comptetiveness' => 2,
+                'Business Competitiveness' => 2,
             ],
             'HRPI' => [
                 'Manpower Planning' => 2,
@@ -779,7 +785,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'Performance Management' => 2,
                 'Learning & Development' => 2,
                 'Career & Talent Management' => 2,
-                'Employee Engagement' => 2,
+                'Employee Engagement & Communication' => 2,
             ]
         ];
 

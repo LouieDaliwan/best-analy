@@ -602,8 +602,9 @@ class FormulaService extends Service implements FormulaServiceInterface
         $subscore = collect([]);
 
         foreach ($survey->fields as $field){
-            if($field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata['subscore'] != 0) {
-                $subscore->push($field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata['subscore']);
+            if(isset($field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata)) {
+                if($field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata['subscore'] != 0) {
+                }
             }
         }
 
@@ -630,8 +631,10 @@ class FormulaService extends Service implements FormulaServiceInterface
         $subscore = collect([]);
 
         foreach ($survey->fields as $field){
-            if($field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata['subscore'] != 0) {
-                $subscore->push($field->metadata['total'] ?? 0);
+            if(isset($field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata)) {
+                if($field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata['subscore'] != 0) {
+                    $subscore->push($field->metadata['total'] ?? 0);
+                }
             }
         }
         return $subscore->sum();

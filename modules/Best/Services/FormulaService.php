@@ -611,6 +611,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         foreach ($survey->fields as $field){
             if(isset($field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata)) {
                 if($field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata['subscore'] != 0) {
+                    $subscore->push($field->submissionBy($this->auth()->user(), $customer_id, $field->id, $monthkey)->metadata['subscore']);
                 }
             }
         }

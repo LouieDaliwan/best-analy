@@ -56,7 +56,7 @@ class SaveGeneratedReport implements ShouldQueue
             'customer_id' => $customer->getKey(),
             'taxonomy_id' => $taxonomy->getKey(),
             'month' => $event->attributes['remarks'] ?? date('m-Y'),
-        ]);
+        ], $taxonomy->name);
 
 
         $event->data = $data;

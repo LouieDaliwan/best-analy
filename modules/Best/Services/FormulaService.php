@@ -104,7 +104,7 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  array                 $attributes
      * @return mixed
      */
-    public function generate(Survey $survey, array $attributes)
+    public function generate(Survey $survey, array $attributes, $taxonomy_name = null)
     {
         $customer = Customer::find($attributes['customer_id']);
         $taxonomies = Index::all();
@@ -125,6 +125,13 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {
+
+            if (!is_null($taxonomy_name)) {
+                if ($taxonomy->name != $taxonomy_name) {
+                    continue;
+                }
+            }
+
             $survey = $taxonomy->survey;
             $enablers = null;
             $this->reports = null;

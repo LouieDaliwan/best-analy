@@ -29,7 +29,9 @@
       </div>
     </div>
     <div class="col">
-      <p>@lang($data['overall:comment'])</p>
+      @if($data['overall:percentage'] != 0)
+        <p>@lang($data['overall:comment'])</p>
+      @endif
     </div>
   </div>
 </section>

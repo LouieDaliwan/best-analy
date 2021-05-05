@@ -126,11 +126,11 @@ class FormulaService extends Service implements FormulaServiceInterface
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {
 
-            if (!is_null($taxonomy_name)) {
-                if ($taxonomy->name != $taxonomy_name) {
-                    continue;
-                }
-            }
+            // if (!is_null($taxonomy_name)) {
+            //     if ($taxonomy->name != $taxonomy_name) {
+            //         continue;
+            //     }
+            // }
 
             $survey = $taxonomy->survey;
             $enablers = null;

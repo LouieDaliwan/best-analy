@@ -23,8 +23,10 @@
           </span>
         </div>
         <div class="overall-label ml-md-4 ml-0">
-          <span class="badge-bg-{{ $data['overall:result'] }}" style="width: 32px; height: 32px; display: inline-block; border-radius: 100%;">
-          </span>
+          @if($data['overall:percentage'] != 0)
+            <span class="badge-bg-{{ $data['overall:result'] }}" style="width: 32px; height: 32px; display: inline-block; border-radius: 100%;">
+            </span>
+          @endif
         </div>
       </div>
     </div>

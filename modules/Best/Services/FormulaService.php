@@ -237,7 +237,17 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function getOverallScore($indices)
     {
-        return round(collect($indices)->map(function ($index) {
+        $collect = collect($indices);
+
+        $exists_section_score_zero = $collect->map(function ($index) {
+            return $index['subscore:score'] == 0;
+        })->contains(true);
+
+        if ($exists_section_score_zero) {
+            return 0;
+        }
+
+        return round($collect->map(function ($index) {
 
             if ($index['subscore:score'] == 0) {
                 return 0 * $index['pindex:weightage'];

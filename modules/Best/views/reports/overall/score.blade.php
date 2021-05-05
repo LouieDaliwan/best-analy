@@ -15,7 +15,11 @@
       <div class="d-flex justify-content-md-around justify-content-between align-items-center mb-3">
         <div>
           <span class="badge badge-soft-{{ $data['overall:result'] }} font-weight-bold" style="color: {{ $data['overall:result'] }}; font-size: 20px;">
-            {{ $data['overall:percentage'] }}
+            @if($data['overall:percentage'] == 0)
+              NO DATA
+            @else
+              {{ $data['overall:percentage'] }}
+            @endif
           </span>
         </div>
         <div class="overall-label ml-md-4 ml-0">

@@ -51,7 +51,7 @@
     @include('best::reports.pdf.summary.data-reliability-validity')
     @include('best::reports.pdf.summary.data-privacy')
     @include('best::reports.pdf.partials.footer')
-    <div class="text-right">
+    <div class="text-right" style="margin-top: -30px">
       <div style="font-size: 12px;">{{ __('Page 1 of 7') }}</div>
     </div>
   </div>

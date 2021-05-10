@@ -65,7 +65,7 @@
     @include('best::reports.pdf.overall.pindex')
     @include('best::reports.pdf.partials.disclaimer')
     @include('best::reports.pdf.partials.footer')
-    <div class="text-right">
+    <div class="text-right" style="margin-top: -30px">
       <div style="font-size: 12px;">{{ __('Page 2 of 7') }}</div>
     </div>
   </div>
@@ -79,7 +79,7 @@
       @include('best::reports.pdf.pindex.performance-index', ['data' => $index, 'orig' => $data['overall:enablers:orig']])
       @include('best::reports.pdf.partials.disclaimer')
       @include('best::reports.pdf.partials.footer')
-      <div class="text-right">
+    <div class="text-right" style="margin-top: -30px">
         <div style="font-size: 12px;">Page <span style="display: none;" class="text-white">-</span>{{ $index['page'] }}<span style="display: none;" class="text-white">-</span> of 7</div>
       </div>
     </div>
@@ -95,7 +95,7 @@
     </div>
     @include('best::reports.pdf.partials.disclaimer')
     @include('best::reports.pdf.partials.footer')
-    <div class="text-right">
+    <div class="text-right" style="margin-top: -30px">
       <div style="font-size: 12px;">{{ __('Page 7 of 7') }}</div>
     </div>
   </div>

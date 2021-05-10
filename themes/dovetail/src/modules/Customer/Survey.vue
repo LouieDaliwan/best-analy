@@ -173,7 +173,7 @@ export default {
       { number: '3', text: 'Processes are poorly practiced' },
       { number: '4', text: 'Processes practised effectively by some' },
       { number: '5', text: 'Processes practised effectively by most' },
-      { number: '6', text: 'N/A' },
+      { number: 'N/A', text: 'N/A' },
     ],
     answers: [],
     resource: new Survey,

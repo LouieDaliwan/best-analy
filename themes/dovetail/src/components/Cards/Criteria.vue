@@ -26,7 +26,7 @@
         { number: '3', text: 'Processes are <br/> poorly practiced' },
         { number: '4', text: 'Processes practised <br/> effectively by some' },
         { number: '5', text: 'Processes practised <br/> effectively by most' },
-        { number: '6', text: 'N/A' },
+        { number: 'NA', text: 'N/A' },
       ],
     })
   }

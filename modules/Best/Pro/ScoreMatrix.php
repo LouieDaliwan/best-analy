@@ -10,7 +10,7 @@ abstract class ScoreMatrix
         '3' => 3,
         '4' => 4,
         '5' => 5,
-        '6' => 0,
+        'N/A' => 0,
     ];
 
     /**

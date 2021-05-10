@@ -4,10 +4,10 @@
       {{-- <footer class="blockquote-footer"> --}}
         {{-- <cite> --}}
           <strong style="font-size: 10px;">
-            {{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}
+            {{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}<br />
             {{ __('Powered by') }}
             {{-- &copy; {{ settings('app:year') }} --}}
-            {{ settings('app:author') }}<br />
+            {{ settings('app:author') }}
           </strong>
         {{-- </cite> --}}
       {{-- </footer> --}}

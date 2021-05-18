@@ -46,7 +46,7 @@ class PreviewPdfReport extends Controller
         $filename = $request->get('filename') ?: $report->key;
 
         $score = 25;
-        $svgChart = SvgChart($score, 100);
+        $svgChart = new SvgChart($score, 100);
 
         if ($request->get('view') == 'blade') {
             return view("best::reports.pdf.$type")->withData($data);

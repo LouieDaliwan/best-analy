@@ -11,9 +11,9 @@ class PredictionScoreCard
     * @param month
     * @author Louie Daliwan
     */
-    public static function get($fields, $index, $month)
+    public static function get($fields, $index, $month, $customerId)
     {
-        return call_user_func_array([PredictionScoreCard::class, "computation"], [self::getSubScores($fields, $month), $index]);
+        return call_user_func_array([PredictionScoreCard::class, "computation"], [self::getSubScores($fields, $month, $customerId), $index]);
     }
 
     /**
@@ -93,7 +93,7 @@ class PredictionScoreCard
     * get the subscore depends on the date submission
     * return array
     */
-    protected static function getSubScores($fields, $month)
+    protected static function getSubScores($fields, $month, $customerId)
     {
         $subscores = [];
 
@@ -101,6 +101,7 @@ class PredictionScoreCard
 
         foreach ($fields as $field) {
             $submissions = $field->submissions()
+                ->where('customer_id', $customerId)
                 ->whereMonth('created_at', $date->format('m'))
                 ->whereYear('created_at', $date->format('Y'))
                 ->first();

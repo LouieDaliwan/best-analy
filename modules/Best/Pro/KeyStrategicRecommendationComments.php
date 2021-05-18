@@ -43,7 +43,7 @@ abstract class KeyStrategicRecommendationComments
     * @param string index
     * @return array
     */
-    public static function getSolution($enablers, $index, $fields, $month)
+    public static function getSolution($enablers, $index, $fields, $month, $customerId)
     {
         $list = self::solutionRecommendations($index);
 
@@ -59,7 +59,7 @@ abstract class KeyStrategicRecommendationComments
         /*
         * @return array PredictionScoreCard::get()
         */
-        foreach (PredictionScoreCard::get($fields, $index, $month) as $score) {
+        foreach (PredictionScoreCard::get($fields, $index, $month, $customerId) as $score) {
 
             if (!isset($list[$score])) {
                 continue;

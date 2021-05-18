@@ -5,7 +5,7 @@
         <v-banner class="dt-banner" elevation="1">
           <v-row justify="center" align="start">
           <v-col class="text-center" v-for="(rate, r) in rates" :key="r">
-            <v-avatar color="primary" size="20" class="mb-2">
+            <v-avatar color="primary" size="21" class="mb-2">
               <small class="white--text">{{ rate.number }}</small>
             </v-avatar>
             <div class="overline" v-html="rate.text"></div>
@@ -26,7 +26,7 @@
         { number: '3', text: 'Processes are <br/> poorly practiced' },
         { number: '4', text: 'Processes practised <br/> effectively by some' },
         { number: '5', text: 'Processes practised <br/> effectively by most' },
-        { number: '6', text: 'N/A' },
+        { number: 'N/A', text: 'Not Applicable' },
       ],
     })
   }

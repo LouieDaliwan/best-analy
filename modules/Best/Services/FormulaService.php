@@ -125,13 +125,6 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {
-
-            // if (!is_null($taxonomy_name)) {
-            //     if ($taxonomy->name != $taxonomy_name) {
-            //         continue;
-            //     }
-            // }
-
             $survey = $taxonomy->survey;
             $enablers = null;
             $this->reports = null;
@@ -187,7 +180,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 ],
                 'key:enablers' => $enablers = $this->getKeyEnablers($this->reports, $customer->name, $taxonomy->alias),
                 'key:enablers:description' => $this->getKeyEnablersDescription($taxonomy->alias, $attributes['month'], $survey->fields),
-                'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias, $survey->fields, $attributes['month']),
+                'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias, $survey->fields, $attributes['month'], $customer->id),
                 'has:reports' => $this->reports->count(),
                 'reports' => $this->reports,
                 'report:user' => $user->displayname,
@@ -428,11 +421,11 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param object $month
      * @return array
      */
-    public function getKeyStrategicRecommendations($enablers, $index, $fields, $month)
+    public function getKeyStrategicRecommendations($enablers, $index, $fields, $month, $customerId)
     {
         $index = strtolower($index);
 
-        return  KeyStrategicRecommendationComments::getSolution($enablers, $index, $fields, $month);
+        return  KeyStrategicRecommendationComments::getSolution($enablers, $index, $fields, $month, $customerId);
 
     }
 

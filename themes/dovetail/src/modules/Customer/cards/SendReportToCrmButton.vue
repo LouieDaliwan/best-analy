@@ -326,6 +326,7 @@ export default {
         //   VisaEmploymentFees: JSON.stringify(this.resource.data.profit_and_loss['Visa / Employment Fees']),
         // }
 
+
         let data = {
           FileNo: this.resource.data.customer.filenumber,
           YearofFinancial: this.resource.data.customer.metadata ? this.resource.data.customer.metadata.years.Years.Year3 : 'No year was set',

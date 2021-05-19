@@ -59,7 +59,7 @@ export default {
         let data = {
           FileNo: this.resource.data.customer.filenumber,
           YearofFinancial: this.resource.data.customer.metadata.years.Years.Year3,
-          SubmissionDate: this.resource.data.profit_and_loss['Submission Date'],
+          SubmissionDate: this.resource.data.profit_and_loss['Submission Date'] || this.resource.data.report.updated_at,
           Revenue: this.resource.data.profit_and_loss.Revenue.Year3 || '0',
           CostofGoodsSold: this.resource.data.profit_and_loss.CostOfGoodsSold.Year3 || '0',
           // it should be 0?

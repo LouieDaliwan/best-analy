@@ -15,7 +15,7 @@
   <tr>
     <td>
       <div class="mr-3" style="width: 500px; height: 150px;">
-        <canvas id="overall-fmpi" style="width: 500px; height: 150px;"></canvas>
+        <canvas id="overall-fmpi"></canvas>
       </div>
     </td>
     <td>

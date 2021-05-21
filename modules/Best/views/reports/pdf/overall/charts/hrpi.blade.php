@@ -19,7 +19,7 @@
     </td>
     <td>
       <div class="mr-3" style="width: 650px; height: 180px;">
-        <canvas id="overall-hrpi" style="width: 650px; height: 180px;"></canvas>
+        <canvas id="overall-hrpi"></canvas>
       </div>
     </td>
   </tr>

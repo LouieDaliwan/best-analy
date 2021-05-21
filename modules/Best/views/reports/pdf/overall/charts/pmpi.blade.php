@@ -16,7 +16,7 @@
   <tr>
     <td>
       <div class="mr-3" style="width: 500px; height: 150px;">
-        <canvas id="overall-pmpi"></canvas>
+        <canvas id="overall-pmpi" style="width: 500px; height: 150px;"></canvas>
       </div>
     </td>
     <td>

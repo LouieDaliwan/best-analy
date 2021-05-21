@@ -77,7 +77,7 @@
 </section>
 
 <script>
-$(document).ready(function() {
+(function() {
   var ctx = document.getElementById("elements-score-{{ $data['pindex:code'] }}").getContext('2d');
   var chartColors = {
     primary:           'rgba(22, 123, 195, 1)',
@@ -158,5 +158,5 @@ $(document).ready(function() {
       }
     },
   });
-});
+})();
 </script>

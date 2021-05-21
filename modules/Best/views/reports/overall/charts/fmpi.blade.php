@@ -10,7 +10,7 @@
   <div class="border-top"></div>
   <div class="card-body">
     <div class="mb-3">
-      <canvas height="100" id="overall-fmpi"></canvas>
+      <canvas height="300" id="overall-fmpi"></canvas>
     </div>
     <p>@lang($data['indices']['FMPI']['overall:comment:overall'])</p>
   </div>

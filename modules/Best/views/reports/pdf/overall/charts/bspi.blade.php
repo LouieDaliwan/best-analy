@@ -19,7 +19,7 @@
     </td>
     <td>
       <div class="mr-3" style="width: 500px; height: 200px;">
-        <canvas height="100" id="overall-bspi" style="width: 500px; height: 200px;"></canvas>
+        <canvas id="overall-bspi" style="width: 500px; height: 200px;"></canvas>
       </div>
     </td>
   </tr>

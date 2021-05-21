@@ -18,8 +18,8 @@
       <p class="mb-0">@lang($data['indices']['BSPI']['overall:comment:overall'])</p>
     </td>
     <td>
-      <div class="mr-3" style="width: 500px; height: 200px;">
-        <canvas height="400" id="overall-bspi" style="width: 500px; height: 200px;"></canvas>
+      <div class="mr-3" style="width: 500px; height: 400px;">
+        <canvas height="400" id="overall-bspi" style="width: 500px; height: 400px;"></canvas>
       </div>
     </td>
   </tr>

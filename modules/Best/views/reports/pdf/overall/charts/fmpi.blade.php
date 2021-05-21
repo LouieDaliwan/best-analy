@@ -56,56 +56,48 @@
         ],
       },
       options: {
-        animation: false,
         cornerRadius: 20,
-        responsive: true,
-        tooltips: {
-          enabled: true,
-          mode: 'single',
-          callbacks: {
-            label: function(tooltipItems, data) {
-              return tooltipItems.xLabel+'%';
-            }
-          }
-        },
-        layout: {
-          padding: {
-            right: 20
-          }
-        },
         legend: {
-          display: false,
           position: 'bottom',
+          display: false,
           labels: {
+          padding: 50,
             fontColor: '#044b7f',
             fontFamily: 'Rubik, sans-serif',
-            fontSize: 12,
+            fontSize: 13,
           }
         },
         scales: {
           xAxes: [{
-            barPercentage: 0.3,
+            barPercentage: 0.2,
+            categoryPercentage: 0.5,
             gridLines: {
+              zeroLineColor: chartColors.primaryLighten2,
               display: false,
+              color: chartColors.muted,
+            },
+            ticks: {
+              fontColor: '#044b7f',
+              fontFamily: 'Rubik, sans-serif',
+              fontSize: 13,
+            },
+          }],
+          maxBarThickness: 3,
+          yAxes: [{
+            gridLines: {
+              zeroLineColor: chartColors.primaryLighten2,
+              display: true,
+              borderDash: [8, 4],
+              color: chartColors.muted,
             },
             ticks: {
               beginAtZero: true,
+              padding: 20,
+              maxTicksLimit: 5,
               fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',
-              fontSize: 12,
-            },
-          }],
-          maxBarThickness: 5,
-          yAxes: [{
-            barPercentage: 0.3,
-            gridLines: {
-              display: false,
-            },
-            ticks: {
-              fontColor: '#044b7f',
-              fontFamily: 'Rubik, sans-serif',
-              fontSize: 12,
-              min: 0,
+              fontSize: 13,
+              // min: -100,
               max: 100,
               callback: function(value){return value+ "%"}
             }
@@ -115,3 +107,4 @@
     });
   });
 </script>
+

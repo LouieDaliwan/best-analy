@@ -10,7 +10,7 @@
   <div class="border-top"></div>
   <div class="card-body">
     <div class="mb-3">
-      <canvas height="300" id="overall-hrpi"></canvas>
+      <canvas height="100" id="overall-hrpi"></canvas>
     </div>
     <p>@lang($data['indices']['HRPI']['overall:comment:overall'])</p>
   </div>

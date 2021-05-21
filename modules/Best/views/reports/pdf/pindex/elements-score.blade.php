@@ -66,7 +66,7 @@
           <tr>
             <td>
               <div class="mr-3" style="width: 400px; height: 200px;">
-                <canvas id="elements-score-{{ $data['pindex:code'] }}"></canvas>
+                <canvas height="300" id="elements-score-{{ $data['pindex:code'] }}"></canvas>
               </div>
             </td>
           </tr>

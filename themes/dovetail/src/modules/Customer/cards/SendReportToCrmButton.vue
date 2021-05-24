@@ -328,13 +328,13 @@ export default {
 
 
         let data = {
-          FileNo: parseInt(this.resource.data.customer.filenumber || 0),
+          FileNo: this.resource.data.customer.filenumber,
           YearofFinancial: this.resource.data.customer.metadata ? this.resource.data.customer.metadata.years.Years.Year3 : 'No year was set',
           SubmissionDate: this.resource.data.profit_and_loss['Submission Date'] || this.resource.data.report.updated_at,
           Revenue: parseInt(this.resource.data.profit_and_loss.Revenue.Year3 || 0),
           CostofGoodsSold: parseInt(this.resource.data.profit_and_loss.CostOfGoodsSold.Year3 || 0),
           OtherExpenses: parseInt(this.resource.data.profit_and_loss.OtherExpenses.Year3 || 0),
-          NonOperatingExpenses: parseInt(this.resource.data.profitt_and_loss.OtherExpenses['Non-Operating expenses (NOE)'].Year3 || 0),
+          NonOperatingExpenses: parseInt(this.resource.data.profit_and_loss.OtherExpenses['Non-Operating expenses (NOE)'].Year3 || 0),
           OperatingLossProfit: parseInt(this.resource.data.profit_and_loss.OtherExpenses['Operating (loss)/profit'].Year3 || 0),
           Depreciation: parseInt(this.resource.data.profit_and_loss.OtherExpenses['Depreciation'].Year3 || 0),
           Taxes: parseInt(this.resource.data.profit_and_loss.OtherExpenses['Taxes'].Year3 || 0),

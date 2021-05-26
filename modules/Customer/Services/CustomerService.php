@@ -79,10 +79,34 @@ class CustomerService extends Service implements CustomerServiceInterface
      */
     public function saveFromCrm($attributes)
     {
-        return Customer::updateOrCreate([
-            'code' => $this->handleCode(Str::slug($attributes['code'])),
-            'refnum' => $attributes['refnum'],
-        ], $attributes);
+        $customer = Customer::find($this->handleCode(Str::slug($attributes['code'])));
+
+        if($exist_customer) {
+            $exist_customer->name = $attributes['name'];
+            $exist_customer->metadata = $attributes['metadata'];
+            $exist_customer->refnum = $attributes['refnum'];
+            $exist_customer->status = $attributes['status'];
+            $exist_customer->user_id = $attributes['user_id'];
+            $exist_customer->token = $attributes['token'];
+            $exist_customer->save();
+
+            return $exist_customer;
+        } else {
+            return Customer::firstOrCreate([
+                'name' => $attributes['name'],
+                'metadata' => $attributes['metadata'],
+                'refnum' => $attributes['refnum'],
+                'status' => $attributes['status'],
+                'user_id' => $attributes['user_id'],
+                'token' => $attributes['token'],
+                'code' => $this->handleCode(Str::slug($attributes['code']))
+            ]);
+        }
+
+        // return Customer::updateOrCreate([
+        //     'code' => $this->handleCode(Str::slug($attributes['code'])),
+        //     'refnum' => $attributes['refnum'],
+        // ], $attributes);
     }
 
     /**

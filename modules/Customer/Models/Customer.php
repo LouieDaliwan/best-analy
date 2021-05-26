@@ -34,7 +34,16 @@ class Customer extends Model
      *
      * @var array
      */
-    protected $guarded = [];
+    // protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'refnum',
+        'code',
+        'token',
+        'metadata',
+        'status',
+        'user_id'
+    ];
 
     /**
      * Get all indices belonging to customer.

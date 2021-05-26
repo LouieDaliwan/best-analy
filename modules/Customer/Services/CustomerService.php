@@ -79,7 +79,7 @@ class CustomerService extends Service implements CustomerServiceInterface
      */
     public function saveFromCrm($attributes)
     {
-        $exist_customer = Customer::find(Str::slug($attributes['code']));
+        $exist_customer = Customer::where('code', Str::slug($attributes['code']))->first();
 
         if($exist_customer) {
             $exist_customer->name = $attributes['name'];

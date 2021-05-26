@@ -27,6 +27,8 @@ class Customer extends Model
         'metadata' => 'json',
     ];
 
+    protected $primaryKey = 'id';
+
     /**
      * The attributes that are not mass assignable.
      *

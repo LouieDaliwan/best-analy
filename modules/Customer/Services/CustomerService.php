@@ -79,9 +79,9 @@ class CustomerService extends Service implements CustomerServiceInterface
      */
     public function saveFromCrm($attributes)
     {
-        return $this->model()->updateOrCreate([
+        return Customer::updateOrCreate([
             'code' => $this->handleCode(Str::slug($attributes['code'])),
-            'refnum' => $attributes['refnum'] ?? null,
+            'refnum' => $attributes['refnum'],
         ], $attributes);
     }
 

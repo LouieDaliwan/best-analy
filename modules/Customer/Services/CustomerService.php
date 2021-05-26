@@ -83,9 +83,9 @@ class CustomerService extends Service implements CustomerServiceInterface
 
         if($exist_customer) {
             $exist_customer->name = $attributes['name'];
-            $exist_customer->metadata = $attributes['metadata'];
+            // $exist_customer->metadata = $attributes['metadata'];
             $exist_customer->refnum = $attributes['refnum'];
-            $exist_customer->status = $attributes['status'];
+            // $exist_customer->status = $attributes['status'];
             // $exist_customer->user_id = $attributes['user_id'];
             $exist_customer->token = $attributes['token'];
             $exist_customer->save();

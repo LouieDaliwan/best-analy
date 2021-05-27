@@ -124,7 +124,7 @@ class CustomerService extends Service implements CustomerServiceInterface
             $text = $i == 0 ? Str::slug($slug) : sprintf('%s-%s', Str::slug($slug), $i);
 
            $customer = Customer::where('code', $text)
-            ->where('user_id' =>  auth()->user()->id)
+            ->where('user_id',  auth()->user()->id)
             ->first();
 
             $i++;

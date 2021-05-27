@@ -14,9 +14,10 @@ class OwnedSurveyRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->container->make(
-            SurveyServiceInterface::class
-        )->authorize($this->survey, 'surveys');
+        return true;
+        // return $this->container->make(
+        //     SurveyServiceInterface::class
+        // )->authorize($this->survey, 'surveys');
     }
 
     /**

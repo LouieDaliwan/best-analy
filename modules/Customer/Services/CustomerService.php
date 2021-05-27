@@ -79,9 +79,10 @@ class CustomerService extends Service implements CustomerServiceInterface
      */
     public function saveFromCrm($attributes)
     {
-        $exist_customer = Customer::where('code', Str::slug($attributes['code']))->first();
+        $exist_customer = $this->checkCode(Str::slug($attributes['code']));
 
         if($exist_customer) {
+
             $exist_customer->name = $attributes['name'];
             // $exist_customer->metadata = $attributes['metadata'];
             $exist_customer->refnum = $attributes['refnum'];
@@ -91,7 +92,9 @@ class CustomerService extends Service implements CustomerServiceInterface
             $exist_customer->save();
 
             return $exist_customer;
+
         } else {
+
             return Customer::firstOrCreate([
                 'name' => $attributes['name'],
                 'metadata' => $attributes['metadata'],
@@ -107,6 +110,27 @@ class CustomerService extends Service implements CustomerServiceInterface
         //     'code' => $this->handleCode(Str::slug($attributes['code'])),
         //     'refnum' => $attributes['refnum'],
         // ], $attributes);
+    }
+
+    /**
+     *  Check the code if exist
+     *  @param string $slug
+     *  @return object
+     *  @author Louie Daliwan
+     */
+    protected function checkCode($slug, $i = 0)
+    {
+        do {
+            $text = $i == 0 ? Str::slug($slug) : sprintf('%s-%s', Str::slug($slug), $i);
+
+           $customer = Customer::where('code', $text)
+            ->where('user_id' =>  auth()->user()->id)
+            ->first();
+
+            $i++;
+        } while (is_null($customer));
+
+        return $customer;
     }
 
     /**

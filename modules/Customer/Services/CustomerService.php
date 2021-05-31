@@ -113,7 +113,7 @@ class CustomerService extends Service implements CustomerServiceInterface
     }
 
     /**
-     *  Check the code if exist
+     *  Check the code if exists
      *  @param string $slug
      *  @return object
      *  @author Louie Daliwan
@@ -123,9 +123,13 @@ class CustomerService extends Service implements CustomerServiceInterface
         do {
             $text = $i == 0 ? Str::slug($slug) : sprintf('%s-%s', Str::slug($slug), $i);
 
-           $customer = Customer::where('code', $text)
-            ->where('user_id',  auth()->user()->id)
-            ->first();
+            if (! $this->whereCode($text)->exists()) {
+                return null;
+            }
+
+            $customer = $this->model->where('code', $text)
+                ->whereUserId(auth()->user()->id)
+                ->first();
 
             $i++;
         } while (is_null($customer));

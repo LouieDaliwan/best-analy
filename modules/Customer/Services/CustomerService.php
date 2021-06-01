@@ -81,21 +81,11 @@ class CustomerService extends Service implements CustomerServiceInterface
     {
         $exist_customer = $this->checkCode(Str::slug($attributes['code']));
 
-        if($exist_customer) {
-
-            $metadata = $exist_customer->metadata;
-
-            $metadata['FileNo'] = $attributes['metadata']['FileNo'];
-            $metadata['FundingRequestNo'] = $attributes['metadata']['FundingRequestNo'];
-            $metadata['SiteVisitDate'] = $attributes['metadata']['SiteVisitDate'];
-            $metadata['BusinessCounselorName'] = $attributes['metadata']['BusinessCounselorName'];
-            $metadata['PeeBusinessCounselorName'] = $attributes['metadata']['PeeBusinessCounselorName'];
-
+        if ($exist_customer) {
             $exist_customer->name = $attributes['name'];
-            $exist_customer->metadata = $metadata;
+            $exist_customer->metadata = $this->updateMetdata($exist_customer);
             $exist_customer->refnum = $attributes['refnum'];
-            // $exist_customer->status = $attributes['status'];
-            // $exist_customer->user_id = $attributes['user_id'];
+            $exist_customer->status = $attributes['status'];
             $exist_customer->token = $attributes['token'];
             $exist_customer->save();
 
@@ -113,18 +103,14 @@ class CustomerService extends Service implements CustomerServiceInterface
                 'code' => $this->handleCode(Str::slug($attributes['code']))
             ]);
         }
-
-        // return Customer::updateOrCreate([
-        //     'code' => $this->handleCode(Str::slug($attributes['code'])),
-        //     'refnum' => $attributes['refnum'],
-        // ], $attributes);
     }
 
     /**
      *  Check the code if exists
-     *  @param string $slug
-     *  @return object
-     *  @author Louie Daliwan
+     * @param  string $slug
+     * @param  int    $i
+     * @return object
+     * @author Louie Daliwan
      */
     protected function checkCode($slug, $i = 0)
     {
@@ -143,6 +129,25 @@ class CustomerService extends Service implements CustomerServiceInterface
         } while (is_null($customer));
 
         return $customer;
+    }
+
+    /**
+     *  Update only specific keys on metadata
+     * @param  object $customer
+     * @return array
+     * @author Louie Daliwan
+     */
+    protected function updateMetadata($customer)
+    {
+        $metadata = $exist_customer->metadata;
+
+        $metadata['FileNo'] = $attributes['metadata']['FileNo'];
+        $metadata['FundingRequestNo'] = $attributes['metadata']['FundingRequestNo'];
+        $metadata['SiteVisitDate'] = $attributes['metadata']['SiteVisitDate'];
+        $metadata['BusinessCounselorName'] = $attributes['metadata']['BusinessCounselorName'];
+        $metadata['PeeBusinessCounselorName'] = $attributes['metadata']['PeeBusinessCounselorName'];
+
+        return $metadata;
     }
 
     /**

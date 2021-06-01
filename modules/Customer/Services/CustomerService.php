@@ -139,7 +139,7 @@ class CustomerService extends Service implements CustomerServiceInterface
      */
     protected function updateMetadata($customer)
     {
-        $metadata = $exist_customer->metadata;
+        $metadata = $customer->metadata;
 
         $metadata['FileNo'] = $attributes['metadata']['FileNo'];
         $metadata['FundingRequestNo'] = $attributes['metadata']['FundingRequestNo'];

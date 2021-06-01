@@ -51,7 +51,8 @@ export default {
         this.resource.data = response.data
 
         if (! this.resource.data.customer) {
-          this.$store.dispatch('snackbar/show', { text: 'Please complete all surveys for the Financial Report to be submitted.'});
+          this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: 'Please complete all surveys for the Financial Report to be submitted.'});
+
           this.isSending = false;
           return false;
         }

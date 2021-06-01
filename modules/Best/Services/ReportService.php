@@ -188,6 +188,8 @@ class ReportService extends Service implements ReportServiceInterface
         $name = 'Financial Analysis';
         $name = "$name Report - {$refnum}-{$hash}";
 
+        $data = app(FormulaFinancialRatioInterface::class)->generateRatio($customer, $user);
+
         $html = view("best::reports.pdf.$type", ['data' => $data])->render();
 
         if (! File::exists(storage_path("modules/reports/$date"))) {

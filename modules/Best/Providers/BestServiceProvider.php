@@ -8,6 +8,8 @@ use Best\Services\ReportService;
 use Best\Services\ReportServiceInterface;
 use Best\Services\SettingService;
 use Best\Services\SettingServiceInterface;
+use Best\Services\FormulaFinancialRatioInterface;
+use Best\Services\FormulaFinancialRatioService;
 use Core\Providers\BaseServiceProvider;
 use Survey\Services\FieldService;
 use Survey\Services\FieldServiceInterface;
@@ -49,6 +51,7 @@ class BestServiceProvider extends BaseServiceProvider
         $this->app->bind(FormulaServiceInterface::class, FormulaService::class);
         $this->app->bind(ReportServiceInterface::class, ReportService::class);
         $this->app->bind(SettingServiceInterface::class, SettingService::class);
+        $this->app->bind(FormulaFinancialRatioInterface::class, FormulaFinancialRatioService::class);
     }
 
     /**

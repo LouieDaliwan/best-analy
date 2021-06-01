@@ -27,6 +27,11 @@ Route::prefix('v1')->middleware('auth:api')->group(function () {
     )->name('reports.user');
 
     Route::get(
+        'reports/financial-ratio/customer/{customer}/user/{user}',
+        'Api\GetUserCustomerFinancialRerport'
+    )->name('reports.financial-ratio');
+
+    Route::get(
         'reports/ratios/customer/{customer}/user/{user}',
         'Api\GetUserCustomerRatiosReportPage'
     )->name('reports.ratios');

@@ -141,6 +141,7 @@ class ReportService extends Service implements ReportServiceInterface
      */
     public function getOverallReportFromUser(User $user, Customer $customer)
     {
+        // dd('test');
         $model = $this->model->whereUserId($user->getKey())->whereCustomerId($customer->getKey());
 
         $model = $model->where('month', $this->request()->get('month') ?: date('m-Y'));
@@ -166,6 +167,37 @@ class ReportService extends Service implements ReportServiceInterface
                 ->whereKey("overall:comment/".$customer->getKey().$model->month)
                 ->first()->value ?? null,
         ];
+    }
+
+    /**
+     * Retrieve list of reports from given user and customer.
+     *
+     * @param  \User\Models\User         $user
+     * @param  \Customer\Models\Customer $customer
+     * @return array
+     */
+    public function getFinancialRatio(User $user, Customer $customer)
+    {
+        $month = date('m-Y');
+        $date = date('Y-m-d');
+        $hash = date('d-m-Y');
+        $refnum = $customer->refnum;
+        $name = 'Financial Analysis';
+        $name = "$name Report - {$refnum}-{$hash}";
+
+        $financialReportPath = Library::updateOrCreate([
+            'name' => "overall:financialratio:$month",
+        ], [
+            'pathname' => "modules/reports/$date/$name.pdf",
+            'url' => url("modules/reports/$date/$name.pdf"),
+        ]);
+
+        return [
+            'report:financial' => $financialReportPath ? Report::encodeToBase64(storage_path($financialReportPath->pathname)) : null,
+            'customer' => new CustomerResource($customer),
+            'profit_and_loss' => ProfitAndLossStatement::getReport($customer)
+        ];
+
     }
 
     /**

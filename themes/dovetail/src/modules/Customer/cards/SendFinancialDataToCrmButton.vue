@@ -30,7 +30,7 @@ export default {
         let customer = this.customer
         let user = this.user
         axios.get(
-          `/api/v1/reports/overall/customer/${customer}/user/${user}`
+          `/api/v1/reports/financial-ratio/customer/${customer}/user/${user}`
         ).then(response => {
           resolve(response)
         }).catch(err => {
@@ -59,7 +59,8 @@ export default {
         let data = {
           FileNo: this.resource.data.customer.filenumber,
           YearofFinancial: this.resource.data.customer.metadata.years.Years.Year3,
-          SubmissionDate: this.resource.data.profit_and_loss['Submission Date'] || this.resource.data.report.updated_at,
+          SubmissionDate: this.resource.data.profit_and_loss['Submission Date'],
+          // SubmissionDate: this.resource.data.profit_and_loss['Submission Date'] || this.resource.data.report.updated_at,
           Revenue: parseInt(this.resource.data.profit_and_loss.Revenue.Year3 || 0),
           CostofGoodsSold: parseInt(this.resource.data.profit_and_loss.CostOfGoodsSold.Year3 || 0),
           // it should be 0?

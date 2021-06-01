@@ -28,7 +28,7 @@ Route::prefix('v1')->middleware('auth:api')->group(function () {
 
     Route::get(
         'reports/financial-ratio/customer/{customer}/user/{user}',
-        'Api\GetUserCustomerFinancialRerport'
+        'Api\GetUserCustomerFinancialReport'
     )->name('reports.financial-ratio');
 
     Route::get(

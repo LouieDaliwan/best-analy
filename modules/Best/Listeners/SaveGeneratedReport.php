@@ -150,7 +150,6 @@ class SaveGeneratedReport implements ShouldQueue
         return "modules/reports/$date/$name.pdf";
 
 
-
         $refnum = $event->data['current:index']['customer:refnum'];
         $hash = date('d-m-Y');
         $name = "{$event->data['current:index']['pindex']} Report - {$refnum}-{$hash}.html";

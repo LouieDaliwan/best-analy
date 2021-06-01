@@ -8,7 +8,7 @@ use Customer\Models\Customer;
 use Illuminate\Http\Request;
 use User\Models\User;
 
-class GetUserCustomerFinancialRerport extends ApiController
+class GetUserCustomerFinancialReport extends ApiController
 {
     /**
      * Handle the incoming request.

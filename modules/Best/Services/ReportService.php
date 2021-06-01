@@ -28,6 +28,8 @@ use Setting\Models\Setting;
 use Spatie\Browsershot\Browsershot;
 use Survey\Models\Survey;
 use User\Models\User;
+use Illuminate\Support\Facades\File;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 
 class ReportService extends Service implements ReportServiceInterface
 {
@@ -184,6 +186,31 @@ class ReportService extends Service implements ReportServiceInterface
         $refnum = $customer->refnum;
         $name = 'Financial Analysis';
         $name = "$name Report - {$refnum}-{$hash}";
+
+        $html = view("best::reports.pdf.$type", ['data' => $data])->render();
+
+        if (! File::exists(storage_path("modules/reports/$date"))) {
+            File::makeDirectory(storage_path("modules/reports/$date"), 0755, true, true);
+        }
+
+        file_put_contents(storage_path("modules/reports/$date/$name.html"), $html);
+
+        $pdf = SnappyPdf::loadFile(storage_path("modules/reports/$date/$name.html"));
+
+        $path = storage_path("modules/reports/$date/$name.pdf");
+
+        if (file_exists($path)) {
+            File::delete($path);
+        }
+
+        if (! file_exists($path)) {
+            $pdf
+                ->setPaper('legal')
+                ->setOption('enable-javascript', true)
+                ->setOption('javascript-delay', 2000)
+                ->setOption('debug-javascript', true)
+                ->save($path);
+        }
 
         $financialReportPath = Library::updateOrCreate([
             'name' => "overall:financialratio:$month",

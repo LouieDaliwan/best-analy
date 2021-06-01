@@ -52,7 +52,7 @@ export default {
 
         if (! this.resource.data.customer) {
           this.$store.dispatch('snackbar/show', { text: 'Please complete all surveys for the Financial Report to be submitted.'});
-
+          this.isSending = false;
           return false;
         }
 

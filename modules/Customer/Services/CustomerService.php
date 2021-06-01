@@ -83,7 +83,7 @@ class CustomerService extends Service implements CustomerServiceInterface
 
         if ($exist_customer) {
             $exist_customer->name = $attributes['name'];
-            $exist_customer->metadata = $this->updateMetadata($exist_customer);
+            $exist_customer->metadata = $this->updateMetadata($exist_customer, $attributes);
             $exist_customer->refnum = $attributes['refnum'];
             $exist_customer->status = $attributes['status'];
             $exist_customer->token = $attributes['token'];
@@ -137,7 +137,7 @@ class CustomerService extends Service implements CustomerServiceInterface
      * @return array
      * @author Louie Daliwan
      */
-    protected function updateMetadata($customer)
+    protected function updateMetadata($customer, $attributes)
     {
         $metadata = $customer->metadata;
 

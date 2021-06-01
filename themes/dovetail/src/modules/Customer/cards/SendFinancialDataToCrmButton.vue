@@ -30,7 +30,7 @@ export default {
         let customer = this.customer
         let user = this.user
         axios.get(
-          `/api/v1/reports/overall/customer/${customer}/user/${user}`
+          `/api/v1/reports/financial-ratio/customer/${customer}/user/${user}`
         ).then(response => {
           resolve(response)
         }).catch(err => {

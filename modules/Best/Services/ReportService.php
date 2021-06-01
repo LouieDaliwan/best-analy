@@ -184,6 +184,7 @@ class ReportService extends Service implements ReportServiceInterface
         $date = date('Y-m-d');
         $hash = date('d-m-Y');
         $refnum = $customer->refnum;
+        $type = 'financialratio';
         $name = 'Financial Analysis';
         $name = "$name Report - {$refnum}-{$hash}";
 

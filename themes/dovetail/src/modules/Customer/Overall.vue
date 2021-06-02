@@ -111,10 +111,11 @@ export default {
       let customerId = this.$route.params.id
       let lang = this.$route.query.lang || this.resource.lang
       let query = Object.assign({}, this.$route.query, { lang: lang})
-      this.month = this.$route.query.month
+      let month = this.$route.query.month
+      this.month = month;
 
       this.$router.replace({query}).catch(err => {})
-      this.url = `/best/preview/reports/overall?user_id=${id}&customer_id=${customerId}&month=${this.month}&lang=${lang}`
+      this.url = `/best/preview/reports/overall?user_id=${id}&customer_id=${customerId}&month=${month}&lang=${lang}`
     },
 
     previewPDFOverallReport (item) {

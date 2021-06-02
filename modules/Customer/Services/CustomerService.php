@@ -207,4 +207,40 @@ class CustomerService extends Service implements CustomerServiceInterface
 
         return new LengthAwarePaginator($sorted, $model->total(), $model->perPage());
     }
+
+    /**
+     * Check if the metadata financial statement have value
+     * @param  array $attributes
+     * @author Louie Daliwan
+     * @return array
+     */
+    public function checkFinancialStatementMetadata($attributes)
+    {
+        $keys = ['fps-qa1','balance-sheet'];
+
+        $years = ['Year1', 'Year2', 'Year3'];
+
+        $count_values = 0;
+
+        foreach ($keys as $key) {
+
+            $count = 0;
+
+            foreach ($attributes['metadata'][$key] as $field => $value) {
+
+                if ($attributes['metadata'][$key][$field][$years[$count]] != null) {
+                    $count_values++;
+                }
+
+                $count++;
+
+                if($years[$count] == 'Year3') {
+                    $count = 0;
+                }
+            }
+        }
+
+        $attributes['is_fs_has_no_zero_value'] = $count_values !=  0 ? true : false;
+        return $attributes;
+    }
 }

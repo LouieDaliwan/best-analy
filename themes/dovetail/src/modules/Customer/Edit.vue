@@ -73,6 +73,7 @@
             </validation-provider>
             <div class="mt-3 text-right">
               <send-financial-data-to-crm-button
+                v-if="resource.data.is_fs_has_no_zero_value"
                 :customer="resource.data.id"
                 :user="resource.data.user_id"
               ></send-financial-data-to-crm-button>
@@ -633,7 +634,8 @@ export default {
       formData.append('_method', 'put')
 
       data = formData
-
+      console.log('parse');
+      console.log(data);
       return data
     },
 
@@ -662,6 +664,7 @@ export default {
     },
 
     submit (e) {
+      console.log(this.resource.data);
       this.load()
       e.preventDefault()
 
@@ -670,7 +673,9 @@ export default {
         this.parseResourceData(this.resource.data),
       ).then(response => {
         this.resource.isPrestine = true
-        this.showSuccessbox({
+        console.log('response');
+        console.log(response.data);
+          this.showSuccessbox({
           text: trans('Company updated successfully'),
           buttons: {
             show: {

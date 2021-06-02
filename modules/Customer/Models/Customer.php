@@ -25,6 +25,7 @@ class Customer extends Model
      */
     protected $casts = [
         'metadata' => 'json',
+        'is_fs_has_no_zero_value' => 'boolean',
     ];
 
     protected $primaryKey = 'id';
@@ -42,7 +43,8 @@ class Customer extends Model
         'token',
         'metadata',
         'status',
-        'user_id'
+        'user_id',
+        'is_fs_has_no_zero_value'
     ];
 
     /**

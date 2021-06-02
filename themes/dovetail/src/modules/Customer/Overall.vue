@@ -11,7 +11,7 @@
           </a>
         </div>
         <can code="reports.comment">
-          <add-overall-comment v-if="resource.data.report" :month.sync="resource.data.report.month"></add-overall-comment>
+          <add-overall-comment :month.sync="resource.data.report.month"></add-overall-comment>
         </can>
       </template>
 
@@ -109,6 +109,8 @@ export default {
         params: month
       }).then(response => {
         this.resource.data = response.data
+
+        console.log(this.resource.data);
       })
     },
 

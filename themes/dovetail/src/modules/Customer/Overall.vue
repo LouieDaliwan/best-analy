@@ -105,11 +105,9 @@ export default {
       console.log(this.$route.query.month);
       console.log(month);
       console.log('getReportData');
-      axios.get($api.overall(customer, user), {
-        params: month
-      }).then(response => {
+      axios.get($api.overall(customer, user, month)).then(response => {
         this.resource.data = response.data
-
+        console.log(response.data)
         console.log(this.resource.data);
       })
     },

@@ -35,8 +35,8 @@ export default {
     return `/api/v1/customers/delete/${id}`
   },
 
-  overall: function (customer, user) {
-    return `/api/v1/reports/overall/customer/${customer}/user/${user}`
+  overall: function (customer, user, month) {
+    return `/api/v1/reports/overall/customer/${customer}/user/${user}?month=${month}`
   },
 
   indices: {

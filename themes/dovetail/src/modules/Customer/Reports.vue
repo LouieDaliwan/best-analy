@@ -253,10 +253,16 @@ export default {
     },
 
     previewOverallReport () {
+      console.log(this.resources.options.month);
       this.$router.push({ name: 'reports.overall', query: {
         type: 'overall',
         user_id: $auth.getId(),
-      }, params: { id: this.$route.params.id } })
+        month: this.resources.options.month
+      }, params: {
+          id: this.$route.params.id,
+          month: this.resources.options.month
+        }
+      })
     },
 
     changeOptionsFromRouterQueries () {

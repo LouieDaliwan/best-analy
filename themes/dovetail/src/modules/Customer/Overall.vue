@@ -33,6 +33,7 @@
               class="mt-4"
               :customer="resource.data.customer.id"
               :user="resource.data.report.user_id"
+              :month="month"
             ></send-report-to-crm-button>
 
             <send-financial-data-to-crm-button
@@ -78,6 +79,7 @@ export default {
 
   data: () => ({
     api: $api,
+    month: '',
 
     resource: {
       lang: window.localStorage.getItem('report:lang') || 'en',
@@ -88,6 +90,7 @@ export default {
         },
       },
     },
+
     url: null,
   }),
 
@@ -95,8 +98,10 @@ export default {
     getReportData () {
       let customer = this.$route.params.id
       let user = this.$route.query.user_id || $auth.getId()
-      axios.get($api.overall(customer, user)
-      ).then(response => {
+      let month = this.$route.query.month
+      axios.get($api.overall(customer, user), {
+        params: month
+      }).then(response => {
         this.resource.data = response.data
       })
     },
@@ -106,14 +111,17 @@ export default {
       let customerId = this.$route.params.id
       let lang = this.$route.query.lang || this.resource.lang
       let query = Object.assign({}, this.$route.query, { lang: lang})
+      this.month = this.$route.query.month
+
       this.$router.replace({query}).catch(err => {})
-      this.url = `/best/preview/reports/overall?user_id=${id}&customer_id=${customerId}&lang=${lang}`
+      this.url = `/best/preview/reports/overall?user_id=${id}&customer_id=${customerId}&month=${this.month}&lang=${lang}`
     },
 
     previewPDFOverallReport (item) {
       let lang = this.$route.query.lang || this.resource.lang
+      let month = this.$route.query.month
       window.open(
-        `/best/reports/pdf/preview/overall?user=${item.user_id}&customer=${item.customer_id}&month=${item.month}&lang=${lang}`,
+        `/best/reports/pdf/preview/overall?user=${item.user_id}&customer=${item.customer_id}&month=${month}&lang=${lang}`,
         '_blank'
       )
     },

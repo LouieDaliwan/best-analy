@@ -143,7 +143,6 @@ class ReportService extends Service implements ReportServiceInterface
      */
     public function getOverallReportFromUser(User $user, Customer $customer)
     {
-        // dd('test');
         $model = $this->model->whereUserId($user->getKey())->whereCustomerId($customer->getKey());
 
         $model = $model->where('month', $this->request()->get('month') ?: date('m-Y'));

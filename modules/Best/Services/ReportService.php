@@ -225,7 +225,8 @@ class ReportService extends Service implements ReportServiceInterface
         return [
             'report:financial' => $financialReportPath ? Report::encodeToBase64(storage_path($financialReportPath->pathname)) : null,
             'customer' => new CustomerResource($customer),
-            'profit_and_loss' => ProfitAndLossStatement::getReport($customer)
+            'profit_and_loss' => ProfitAndLossStatement::getReport($customer),
+            'date' => date('Y-m-d'),
         ];
 
     }

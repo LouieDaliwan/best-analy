@@ -59,6 +59,7 @@ class FormulaFinancialRatioService extends Service implements FormulaFinancialRa
             'customer:type' => $customer->metadata['type'] ?? null,
             'cover:date' => date(settings('formal:date', 'Y-m-d')),
             'month:formatted' => date('M Y'),
+            'date' => date('Y-m-d'),
 
             //analysis
             'analysis:financial' => $this->getFinancialAnalysisData($customer),

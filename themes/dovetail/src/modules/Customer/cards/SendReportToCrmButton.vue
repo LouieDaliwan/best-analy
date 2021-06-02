@@ -37,7 +37,7 @@
 import $api from '@/modules/Customer/routes/api'
 
 export default {
-  props: ['customer', 'user', 'type', 'month'],
+  props: ['customer', 'user', 'type'],
 
   data: () => ({
     isSending: false,
@@ -78,7 +78,7 @@ export default {
       return new Promise((resolve, reject) => {
         let customer = this.customer
         let user = this.user
-        let month = this.month
+        // let month = this.month
         axios.get(
           `/api/v1/reports/overall/customer/${customer}/user/${user}`, {
              params: month

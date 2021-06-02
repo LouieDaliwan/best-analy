@@ -33,7 +33,6 @@
               class="mt-4"
               :customer="resource.data.customer.id"
               :user="resource.data.report.user_id"
-              :month="month"
             ></send-report-to-crm-button>
 
             <send-financial-data-to-crm-button
@@ -79,7 +78,6 @@ export default {
 
   data: () => ({
     api: $api,
-    month: '',
 
     resource: {
       lang: window.localStorage.getItem('report:lang') || 'en',
@@ -99,6 +97,7 @@ export default {
       let customer = this.$route.params.id
       let user = this.$route.query.user_id || $auth.getId()
       let month = this.$route.query.month
+
       axios.get($api.overall(customer, user), {
         params: month
       }).then(response => {
@@ -112,7 +111,6 @@ export default {
       let lang = this.$route.query.lang || this.resource.lang
       let query = Object.assign({}, this.$route.query, { lang: lang})
       let month = this.$route.query.month
-      this.month = month;
 
       this.$router.replace({query}).catch(err => {})
       this.url = `/best/preview/reports/overall?user_id=${id}&customer_id=${customerId}&month=${month}&lang=${lang}`

@@ -11,7 +11,7 @@
           </a>
         </div>
         <can code="reports.comment">
-          <add-overall-comment :month.sync="resource.data.report.month"></add-overall-comment>
+          <add-overall-comment v-if="resource.data.report" :month.sync="resource.data.report.month"></add-overall-comment>
         </can>
       </template>
 
@@ -33,6 +33,7 @@
               class="mt-4"
               :customer="resource.data.customer.id"
               :user="resource.data.report.user_id"
+              :month="resource.data.report.month"
             ></send-report-to-crm-button>
 
             <send-financial-data-to-crm-button
@@ -98,6 +99,9 @@ export default {
       let customer = this.$route.params.id
       let user = this.$route.query.user_id || $auth.getId()
       let month = this.$route.query.month
+
+      // this.resource.data.report.month = month
+
       console.log(this.$route.query.month);
       console.log(month);
       console.log('getReportData');

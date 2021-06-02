@@ -94,10 +94,13 @@ export default {
 
   methods: {
     getReportData () {
+
       let customer = this.$route.params.id
       let user = this.$route.query.user_id || $auth.getId()
       let month = this.$route.query.month
-
+      console.log(this.$route.query.month);
+      console.log(month);
+      console.log('getReportData');
       axios.get($api.overall(customer, user), {
         params: month
       }).then(response => {
@@ -111,6 +114,9 @@ export default {
       let lang = this.$route.query.lang || this.resource.lang
       let query = Object.assign({}, this.$route.query, { lang: lang})
       let month = this.$route.query.month
+      console.log('get report');
+      console.log(this.$route.query.month);
+      console.log(month);
 
       this.$router.replace({query}).catch(err => {})
       this.url = `/best/preview/reports/overall?user_id=${id}&customer_id=${customerId}&month=${month}&lang=${lang}`
@@ -119,6 +125,7 @@ export default {
     previewPDFOverallReport (item) {
       let lang = this.$route.query.lang || this.resource.lang
       let month = this.$route.query.month
+
       window.open(
         `/best/reports/pdf/preview/overall?user=${item.user_id}&customer=${item.customer_id}&month=${month}&lang=${lang}`,
         '_blank'

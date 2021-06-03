@@ -37,7 +37,7 @@
             ></send-report-to-crm-button>
 
             <send-financial-data-to-crm-button
-              v-if="resource.data.report && isInEnglish"
+              v-if="resource.data.customer.is_fs_has_no_zero_value && isInEnglish"
               class="mt-4"
               :customer="resource.data.customer.id"
               :user="resource.data.report.user_id"
@@ -98,17 +98,14 @@ export default {
 
       let customer = this.$route.params.id
       let user = this.$route.query.user_id || $auth.getId()
-      let month = this.$route.query.month
 
-      // this.resource.data.report.month = month
-
-      console.log(this.$route.query.month);
-      console.log(month);
-      console.log('getReportData');
+      if(typeof  this.$route.query.month === "undefined" ) {
+        var month = null;
+      } else {
+        var month = this.$route.query.month;
+      }
       axios.get($api.overall(customer, user, month)).then(response => {
         this.resource.data = response.data
-        console.log(response.data)
-        console.log(this.resource.data);
       })
     },
 
@@ -117,10 +114,12 @@ export default {
       let customerId = this.$route.params.id
       let lang = this.$route.query.lang || this.resource.lang
       let query = Object.assign({}, this.$route.query, { lang: lang})
-      let month = this.$route.query.month
-      console.log('get report');
-      console.log(this.$route.query.month);
-      console.log(month);
+
+      if(typeof  this.$route.query.month === "undefined" ){
+         var month = null;
+      } else {
+         var month = this.$route.query.month;
+      }
 
       this.$router.replace({query}).catch(err => {})
       this.url = `/best/preview/reports/overall?user_id=${id}&customer_id=${customerId}&month=${month}&lang=${lang}`
@@ -128,7 +127,12 @@ export default {
 
     previewPDFOverallReport (item) {
       let lang = this.$route.query.lang || this.resource.lang
-      let month = this.$route.query.month
+
+      if(typeof  this.$route.query.month === "undefined" ){
+         var month = null;
+      } else {
+         var month = this.$route.query.month;
+      }
 
       window.open(
         `/best/reports/pdf/preview/overall?user=${item.user_id}&customer=${item.customer_id}&month=${month}&lang=${lang}`,

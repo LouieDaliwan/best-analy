@@ -145,7 +145,9 @@ class ReportService extends Service implements ReportServiceInterface
     {
         $model = $this->model->whereUserId($user->getKey())->whereCustomerId($customer->getKey());
 
-        $model = $model->where('month', $this->request()->get('month') ?: date('m-Y'));
+        $date = $this->request()->get('month') != 'null'  ?  $this->request()->get('month') : date('m-Y');
+
+        $model = $model->where('month', $date);
 
         if (! $model->exists()) {
             return response()->json(['message' => 'Not found.'], 404);

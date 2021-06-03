@@ -16,7 +16,7 @@
           exact
           large
           text
-          v-if="allReportPresent"
+          v-if="financialReportHasValue"
           class="mr-3"
           >
           <v-icon small left>mdi-table-eye</v-icon>
@@ -193,6 +193,10 @@ export default {
     allReportPresent () {
       return this.resources.data.length == 4
     },
+
+    financialReportHasValue() {
+       return this.resource.data.is_fs_has_no_zero_value;
+    }
   },
 
   data: () => ({
@@ -253,7 +257,6 @@ export default {
     },
 
     previewOverallReport () {
-      console.log(this.resources.options.month);
       this.$router.push({ name: 'reports.overall', query: {
         type: 'overall',
         user_id: $auth.getId(),

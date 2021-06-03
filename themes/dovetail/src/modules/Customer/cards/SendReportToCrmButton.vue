@@ -37,7 +37,7 @@
 import $api from '@/modules/Customer/routes/api'
 
 export default {
-  props: ['customer', 'user', 'type'],
+  props: ['customer', 'user', 'type', 'month'],
 
   data: () => ({
     isSending: false,
@@ -78,11 +78,10 @@ export default {
       return new Promise((resolve, reject) => {
         let customer = this.customer
         let user = this.user
-        // let month = this.month
+        var month = this.month
+
         axios.get(
-          `/api/v1/reports/overall/customer/${customer}/user/${user}`, {
-             params: month
-          }
+          `/api/v1/reports/overall/customer/${customer}/user/${user}?month=${month}`
         ).then(response => {
           resolve(response)
         }).catch(err => {
@@ -180,6 +179,7 @@ export default {
       this.getReportData().then(response => {
         this.resource.data = response.data
 
+        console.log(response.data);
         if (! this.resource.data.customer) {
           this.$store.dispatch('snackbar/show', { text: 'No report data found.'});
 

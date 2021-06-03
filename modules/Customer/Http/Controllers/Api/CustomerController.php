@@ -63,13 +63,9 @@ class CustomerController extends ApiController
      */
     public function update(CustomerRequest $request, $id)
     {
+        $this->service()->update($id, $this->service()->checkFinancialStatementMetadata($request->all()));
 
-        return response()->json(
-            $this->service()->update(
-                    $id, $this->service()->checkFinancialStatementMetadata($request->all()
-                )
-            )
-        );
+        return  response()->json($this->service()->find($id));
     }
 
     /**

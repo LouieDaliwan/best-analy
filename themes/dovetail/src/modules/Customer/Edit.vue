@@ -73,7 +73,7 @@
             </validation-provider>
             <div class="mt-3 text-right">
               <send-financial-data-to-crm-button
-                v-if="resource.data.is_fs_has_no_zero_value"
+                v-if="isFinancialStatementHasValue"
                 :customer="resource.data.id"
                 :user="resource.data.user_id"
               ></send-financial-data-to-crm-button>
@@ -435,6 +435,7 @@ export default {
   },
 
   data: (vm) => ({
+    isFinancialStatementHasValue: false,
     resource: new Company,
     loading: true,
     tabsModel: 1,
@@ -664,7 +665,6 @@ export default {
     },
 
     submit (e) {
-      console.log(this.resource.data);
       this.load()
       e.preventDefault()
 
@@ -673,9 +673,8 @@ export default {
         this.parseResourceData(this.resource.data),
       ).then(response => {
         this.resource.isPrestine = true
-        console.log('response');
-        console.log(response.data);
-          this.showSuccessbox({
+        this.isFinancialStatementHasValue = response.data.is_fs_has_no_zero_value;
+        this.showSuccessbox({
           text: trans('Company updated successfully'),
           buttons: {
             show: {
@@ -714,6 +713,7 @@ export default {
         this.resource.data = response.data.data
         this.resource.metadata = _.merge({}, this.resource.metadata, this.resource.data.metadata)
         this.resource.data.financials = this.resource.metadata
+        this.isFinancialStatementHasValue = response.data.data.is_fs_has_no_zero_value;
       }).finally(() => {
         this.load(false)
         this.resource.isPrestine = true

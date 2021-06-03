@@ -66,7 +66,6 @@ class Customer extends Model
     {
         return $this->hasMany(Report::class);
     }
-
     /**
      * Retrieve the overall report for the customer if available.
      *

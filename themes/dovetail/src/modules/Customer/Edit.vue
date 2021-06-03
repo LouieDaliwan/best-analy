@@ -72,6 +72,20 @@
               </div>
             </validation-provider>
             <div class="mt-3 text-right">
+              <v-btn
+                :block="$vuetify.breakpoint.smAndDown"
+                @click="previewRatiosReport"
+                color="primary"
+                exact
+                large
+                text
+                v-if="isFinancialStatementHasValue"
+                class="mr-3"
+              >
+              <v-icon small left>mdi-table-eye</v-icon>
+                {{ __('Financial Analysis Report') }}
+              </v-btn>
+
               <send-financial-data-to-crm-button
                 v-if="isFinancialStatementHasValue"
                 :customer="resource.data.id"
@@ -385,6 +399,7 @@ import Company from './Models/Company'
 import SendFinancialDataToCrmButton from './cards/SendFinancialDataToCrmButton'
 import SkeletonEditCompany from './cards/SkeletonEditCompany'
 import SkeletonEditFinancial from './cards/SkeletonEditFinancial'
+import $auth from '@/core/Auth/auth'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -702,6 +717,13 @@ export default {
           })
         }
       }).finally(() => { this.load(false) })
+    },
+
+    previewRatiosReport () {
+      this.$router.push({ name: 'reports.ratios', query: {
+        type: 'ratios',
+        user_id: $auth.getId(),
+      }, params: { id: this.$route.params.id } })
     },
 
     getResource () {

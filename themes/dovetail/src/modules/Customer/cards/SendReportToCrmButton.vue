@@ -45,8 +45,8 @@ export default {
     checklist: [
       { message: '', name: trans('Sending Overall Scores'), icon: 'mdi-cube-send', status: 'pending' },
       { message: '', name: trans('Sending Overall Document'), icon: 'mdi-file-send', status: 'pending' },
-      { message: '', name: trans('Sending Financial Scores'), icon: 'mdi-cube-send', status: 'pending' },
-      { message: '', name: trans('Sending Financial Document'), icon: 'mdi-file-send', status: 'pending' },
+      // { message: '', name: trans('Sending Financial Scores'), icon: 'mdi-cube-send', status: 'pending' },
+      // { message: '', name: trans('Sending Financial Document'), icon: 'mdi-file-send', status: 'pending' },
     ],
     dialog: false,
     sendBothScoresAndFile: false,
@@ -281,9 +281,9 @@ export default {
         }).finally(() => {
           this.isSending = false;
 
-          if (this.sendAll) {
-            this.sendFinancialScores();
-          }
+          // if (this.sendAll) {
+          //   this.sendFinancialScores();
+          // }
         })
       });
     },
@@ -380,9 +380,9 @@ export default {
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
           this.checklist[2].status = 'error';
         }).finally(() => {
-          if (this.sendAll) {
-            this.sendFinancialDocument();
-          }
+          // if (this.sendAll) {
+          //   this.sendFinancialDocument();
+          // }
         })
       }).catch(err => {
         console.log('err', err)

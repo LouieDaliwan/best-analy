@@ -14,9 +14,12 @@ class SurveyRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->container->make(
-            SurveyServiceInterface::class
-        )->authorize($this->survey);
+
+        return true;
+
+        // return $this->container->make(
+        //     SurveyServiceInterface::class
+        // )->authorize($this->survey);
     }
 
     /**

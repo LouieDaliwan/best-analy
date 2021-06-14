@@ -127,7 +127,7 @@
                 <can code="customers.survey">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <span v-on="on"><send-report-to-crm-button :customer="item.id" :user="item.user_id" :month="null"></send-report-to-crm-button></span>
+                      <span v-on="on"><send-report-to-crm-button type="overall-report-dashboard" :customer="item.id" :user="item.user_id" :month="null"></send-report-to-crm-button></span>
                     </template>
                     <span>{{ trans('Send All Score Reports for this month to CRM') }}</span>
                   </v-tooltip>

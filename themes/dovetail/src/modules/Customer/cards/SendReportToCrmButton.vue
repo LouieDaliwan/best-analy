@@ -28,6 +28,11 @@
       </v-card>
     </v-dialog>
   </div>
+
+  <v-btn v-else-if="isOverallDashboard" @click="sendAllScoresAndDocuments" icon>
+    <v-icon small>mdi-send</v-icon>
+  </v-btn>
+
   <v-btn v-else @click="sendToCrm" icon>
     <v-icon small>mdi-send</v-icon>
   </v-btn>
@@ -58,6 +63,10 @@ export default {
   computed: {
     isOverall () {
       return this.type == 'overall'
+    },
+
+    isOverallDashboard() {
+      return this.type == 'overall-report-dashboard'
     },
   },
 

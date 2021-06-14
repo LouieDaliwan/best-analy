@@ -295,6 +295,7 @@ export default {
           this.resources.options = Object.assign(this.resources.options, response.data.meta, params)
           this.resources.loading = false
           this.$router.push({query: Object.assign({}, this.$route.query, params)}).catch(err => {})
+          console.log(this.resources);
         })
         .catch(err => {
           this.errorDialog({

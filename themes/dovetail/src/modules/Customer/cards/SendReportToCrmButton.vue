@@ -31,6 +31,31 @@
 
   <v-btn v-else-if="isOverallDashboard" @click="sendAllScoresAndDocuments" icon>
     <v-icon small>mdi-send</v-icon>
+
+     <v-dialog max-width="420" v-model="dialog" persistent>
+      <v-card>
+        <v-list>
+          <v-list-item v-for="(item, i) in checklist" :key="i" :title="item.message">
+            <v-list-item-content>
+              <v-list-item-title v-text="item.name"></v-list-item-title>
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-icon v-if="item.status == 'pending'" small left>mdi-checkbox-blank-circle-outline</v-icon>
+              <v-progress-circular v-else-if="item.status == 'sending'" indeterminate width="2" size="12"></v-progress-circular>
+              <v-icon v-else-if="item.status == 'done'" small left color="success">mdi-check</v-icon>
+              <div v-else-if="item.status == 'error'">
+                <v-icon small left color="error">mdi-alert-circle</v-icon>
+              </div>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn depressed @click="dialog = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-btn>
 
   <v-btn v-else @click="sendToCrm" icon>
@@ -104,7 +129,7 @@ export default {
       let report = this.resource.data.report.value || {}
       let _elements = {}
 
-      if (this.isOverall) {
+      if (this.isOverall || this.isOverallDashboard) {
         let elements = _.map(report.indices, function (v, k) {
           return v.elements
         })

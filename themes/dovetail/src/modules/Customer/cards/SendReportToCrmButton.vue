@@ -33,12 +33,20 @@
     <v-icon small>mdi-send</v-icon>
 
      <v-dialog max-width="420" v-model="dialog" persistent>
+
       <v-card>
-        <v-list>
-          <v-list-item v-for="(item, i) in checklist" :key="i" :title="item.message">
+        <v-list class="d-flex flex-md-wrap">
+          <v-list-item v-for="(item, i) in checklist" :key="i" :title="item.message" two-line>
             <v-list-item-content>
               <v-list-item-title v-text="item.name"></v-list-item-title>
+
+              <div v-if="item.status == 'error'">
+                <v-list-item-subtitle class="align-self-start">
+                  <span v-text="item.message" class="red--text"></span>
+                </v-list-item-subtitle>
+              </div>
             </v-list-item-content>
+
             <v-list-item-action>
               <v-icon v-if="item.status == 'pending'" small left>mdi-checkbox-blank-circle-outline</v-icon>
               <v-progress-circular v-else-if="item.status == 'sending'" indeterminate width="2" size="12"></v-progress-circular>
@@ -53,15 +61,87 @@
           <v-spacer></v-spacer>
           <v-btn depressed @click="dialog = false">Close</v-btn>
         </v-card-actions>
+
+        <v-spacer></v-spacer>
+
+        <v-container v-if="error_trigger" class="container py-6 px-auto">
+          <v-row align="center" justify="center">
+            <v-btn large depressed @click="dialogInfoClick">What Happened?</v-btn>
+          </v-row>
+        </v-container>
+
+        <v-spacer></v-spacer>
+
       </v-card>
+
+
     </v-dialog>
 
+
+    <v-dialog v-model="dialogInfo" width="800">
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">What Happened?</span>
+        </v-card-title>
+        <v-card-text>
+          <p class="text-justify">
+            <b>What happened:</b>
+              The Overall Score and Document of Hanzo Restaurant Company failed to send from the BEST application (SME) to KFED's CRM.
+            </p>
+
+            <v-spacer></v-spacer>
+
+            <p class="text-justify">
+              <b>How it happened:</b>
+                The CRM refused to receive the data from BEST. The exact response is Approved Site Visit with this Id does not exist.
+            </p>
+
+            <v-spacer></v-spacer>
+
+            <p class="text-justify">
+                <b>Why it happened:</b>
+            </p>
+
+            <v-spacer></v-spacer>
+            <p class="text-justify">
+                <b> These are the possible reasons why there is an error when sending data from BEST application (SME) to CRM: </b>
+                The company no longer exists on the CRM. It could be deleted, modified, or updated.
+                If the company is listed in CRM, the company ID recorded in BEST and CRM may be different.
+                The company's status on the CRM is not on Approved Site Visit which is, perhaps, closed to receive data from BEST.
+            </p>
+
+
+            <v-spacer></v-spacer>
+
+            <p>
+              <b>How to proceed:</b>
+                Please check the following on the CRM:
+            </p>
+
+            <v-spacer></v-spacer>
+
+            <p>
+              <b>Check if the ID exists.</b>
+                  Try to send overall scores
+                  If it exists and fails to proceed,  try to update the company into the BEST app under Find Company
+                    Search the Hanzo Restaurant and click start
+                      Try to send overall scores.
+            </p>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+           <v-btn depressed @click="dialogInfo = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-btn>
 
   <v-btn v-else @click="sendToCrm" icon>
     <v-icon small>mdi-send</v-icon>
   </v-btn>
 </template>
+
+
 
 <script>
 import $api from '@/modules/Customer/routes/api'
@@ -78,7 +158,9 @@ export default {
       // { message: '', name: trans('Sending Financial Scores'), icon: 'mdi-cube-send', status: 'pending' },
       // { message: '', name: trans('Sending Financial Document'), icon: 'mdi-file-send', status: 'pending' },
     ],
+    error_trigger: false,
     dialog: false,
+    dialogInfo: false,
     sendBothScoresAndFile: false,
     resource: {
       data: {}
@@ -213,7 +295,6 @@ export default {
       this.getReportData().then(response => {
         this.resource.data = response.data
 
-        console.log(response.data);
         if (! this.resource.data.customer) {
           this.$store.dispatch('snackbar/show', { text: 'No report data found.'});
 
@@ -246,6 +327,8 @@ export default {
           } else {
             this.checklist[0].status = 'error';
             this.checklist[0].message = response.data.Message;
+            this.error_trigger = true;
+
             // this.$store.dispatch('dialog/error', {
             //   show: true,
             //   width: 400,
@@ -260,6 +343,8 @@ export default {
           }
         }).catch(err => {
           this.checklist[0].status = 'error';
+          this.checklist[0].message = err.message;
+          this.error_trigger = true;
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
         }).finally(() => {
           this.isSending = false;
@@ -301,6 +386,7 @@ export default {
           } else {
             this.checklist[1].status = 'error';
             this.checklist[1].message = response.data.Message;
+            this.error_trigger = true;
             // this.$store.dispatch('dialog/error', {
             //   show: true,
             //   width: 400,
@@ -311,6 +397,9 @@ export default {
           }
         }).catch(err => {
           this.checklist[1].status = 'error';
+          this.checklist[1].message = err.message;
+          this.error_trigger = true;
+
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
         }).finally(() => {
           this.isSending = false;
@@ -467,6 +556,10 @@ export default {
         })
       })
     },
+
+    dialogInfoClick() {
+        this.dialogInfo = true;
+    }
   }
 }
 </script>

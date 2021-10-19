@@ -390,7 +390,7 @@ export default {
     },
 
     destroyResource (item) {
-      item.loading = true
+      item.loading = true,
       axios.delete($api.destroy(item.id))
         .then(response => {
           item.active = false

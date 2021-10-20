@@ -31,10 +31,19 @@
         <v-container v-if="error_trigger" class="container py-6 px-auto">
           <v-row align="center" justify="center">
             <v-btn
-              large  color="primary"
+              large
+              color="primary"
               dark
               text
-              @click="dialogInfoClick">What Happened?
+              block
+              @click="dialogInfoClick">
+              What Happened?
+              <v-icon
+                dark
+                right
+                >
+                mdi-cancel
+              </v-icon>
             </v-btn>
           </v-row>
         </v-container>
@@ -144,7 +153,12 @@
               large  color="primary"
               dark
               text
-              @click="dialogInfoClick">What Happened?
+              block
+              @click="dialogInfoClick">
+              <v-icon class="ma-2" small>
+                mdi-help-circle-outline
+              </v-icon>
+              What Happened?
             </v-btn>
           </v-row>
         </v-container>
@@ -157,56 +171,25 @@
     </v-dialog>
 
 
-    <v-dialog v-model="dialogInfo" width="800">
-      <v-card>
-        <v-card-title>
-          <span class="text-h5">What Happened?</span>
-        </v-card-title>
+    <v-dialog v-model="dialogInfo" width="800" persistent>
+      <v-card class="pa-6">
         <v-card-text>
-          <p class="text-justify">
-            <b>What happened:</b>
-              The Overall Score and Document of Hanzo Restaurant Company failed to send from the BEST application (SME) to KFED's CRM.
-            </p>
-
-            <v-spacer></v-spacer>
-
-            <p class="text-justify">
-              <b>How it happened:</b>
-                The CRM refused to receive the data from BEST. The exact response is Approved Site Visit with this Id does not exist.
-            </p>
-
-            <v-spacer></v-spacer>
-
-            <p class="text-justify">
-                <b>Why it happened:</b>
-            </p>
-
-            <v-spacer></v-spacer>
-            <p class="text-justify">
-                <b> These are the possible reasons why there is an error when sending data from BEST application (SME) to CRM: </b>
-                The company no longer exists on the CRM. It could be deleted, modified, or updated.
-                If the company is listed in CRM, the company ID recorded in BEST and CRM may be different.
-                The company's status on the CRM is not on Approved Site Visit which is, perhaps, closed to receive data from BEST.
-            </p>
-
-
-            <v-spacer></v-spacer>
-
-            <p>
-              <b>How to proceed:</b>
-                Please check the following on the CRM:
-            </p>
-
-            <v-spacer></v-spacer>
-
-            <ol></ol>
-            <p>
-              <b>Check if the ID exists.</b>
-                  Try to send overall scores
-                  If it exists and fails to proceed,  try to update the company into the BEST app under Find Company
-                    Search the Hanzo Restaurant and click start
-                      Try to send overall scores.
-            </p>
+          <h3>What happened?</h3>
+          <p>There is an error when sending data from BEST application (SME) to CRM.</p>
+          <h3>Why it happened?</h3>
+          <p class="mb-0">These are the possible reasons:</p>
+          <ul class="mb-4">
+            <li>The company may have no longer existed on the CRM. It could have been deleted, modified, or updated.</li>
+            <li>If the company is listed in CRM, the company ID recorded in BEST and CRM may have been different.</li>
+            <li>The company's status on the CRM is not on <strong>Approved Site Visit</strong> which makes it, perhaps, closed to receive data from BEST.</li>
+          </ul>
+          <h3 class="mb-2">What can be done?</h3>
+          <ul class="mb-4">
+            <li>Check if the company you are trying to send the data to is <strong>listed</strong> on the CRM. You may want to contact the person responsible for the CRM about it. Once confirmed, try to send the data again. </li>
+            <li>If the company is listed on the CRM but still failed to send the data, perhaps the company’s <strong>status</strong> on the CRM is not Approved Site Visit, which prevents the CRM from receiving the data. To change its status, you may want to contact the person who handles the CRM records.</li>
+            <li>If the company is listed on the CRM and has an Approved Site Visit status but still failed to send the data, perhaps the ID in BEST and CRM do not match. To update the company ID in BEST, go to <strong>Find Company</strong>, search the company by entering the <strong>file number</strong>, then click <strong>Start</strong>. Once updated, try to send the data again.</li>
+            <li>You may want to contact <strong>analytics@ssagroup.com</strong> if the steps mentioned above fail to work.</li>
+          </ul>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>

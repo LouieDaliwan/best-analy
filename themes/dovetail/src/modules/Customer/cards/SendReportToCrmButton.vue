@@ -23,10 +23,84 @@
         </v-list>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn depressed @click="dialog = false">Close</v-btn>
+          <v-btn depressed @click="dialogClose">Close</v-btn>
+        </v-card-actions>
+
+        <v-spacer></v-spacer>
+
+        <v-container v-if="error_trigger" class="container py-6 px-auto">
+          <v-row align="center" justify="center">
+            <v-btn
+              large  color="primary"
+              dark
+              text
+              @click="dialogInfoClick">What Happened?
+            </v-btn>
+          </v-row>
+        </v-container>
+
+      </v-card>
+
+    </v-dialog>
+
+      <v-dialog v-model="dialogInfo" width="800">
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">What Happened?</span>
+        </v-card-title>
+        <v-card-text>
+          <p class="text-justify">
+            <b>What happened:</b>
+              The Overall Score and Document of Hanzo Restaurant Company failed to send from the BEST application (SME) to KFED's CRM.
+            </p>
+
+            <v-spacer></v-spacer>
+
+            <p class="text-justify">
+              <b>How it happened:</b>
+                The CRM refused to receive the data from BEST. The exact response is Approved Site Visit with this Id does not exist.
+            </p>
+
+            <v-spacer></v-spacer>
+
+            <p class="text-justify">
+                <b>Why it happened:</b>
+            </p>
+
+            <v-spacer></v-spacer>
+            <p class="text-justify">
+                <b> These are the possible reasons why there is an error when sending data from BEST application (SME) to CRM: </b>
+                The company no longer exists on the CRM. It could be deleted, modified, or updated.
+                If the company is listed in CRM, the company ID recorded in BEST and CRM may be different.
+                The company's status on the CRM is not on Approved Site Visit which is, perhaps, closed to receive data from BEST.
+            </p>
+
+
+            <v-spacer></v-spacer>
+
+            <p>
+              <b>How to proceed:</b>
+                Please check the following on the CRM:
+            </p>
+
+            <v-spacer></v-spacer>
+
+            <ol></ol>
+            <p>
+              <b>Check if the ID exists.</b>
+                  Try to send overall scores
+                  If it exists and fails to proceed,  try to update the company into the BEST app under Find Company
+                    Search the Hanzo Restaurant and click start
+                      Try to send overall scores.
+            </p>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+           <v-btn depressed @click="dialogInfo = false">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+
   </div>
 
   <v-btn v-else-if="isOverallDashboard" @click="sendAllScoresAndDocuments" icon>
@@ -59,14 +133,19 @@
         </v-list>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn depressed @click="dialog = false">Close</v-btn>
+          <v-btn depressed @click="dialogClose">Close</v-btn>
         </v-card-actions>
 
         <v-spacer></v-spacer>
 
         <v-container v-if="error_trigger" class="container py-6 px-auto">
           <v-row align="center" justify="center">
-            <v-btn large depressed @click="dialogInfoClick">What Happened?</v-btn>
+            <v-btn
+              large  color="primary"
+              dark
+              text
+              @click="dialogInfoClick">What Happened?
+            </v-btn>
           </v-row>
         </v-container>
 
@@ -120,6 +199,7 @@
 
             <v-spacer></v-spacer>
 
+            <ol></ol>
             <p>
               <b>Check if the ID exists.</b>
                   Try to send overall scores
@@ -559,6 +639,11 @@ export default {
 
     dialogInfoClick() {
         this.dialogInfo = true;
+    },
+
+    dialogClose() {
+        this.dialog = false;
+        this.error_trigger = false;
     }
   }
 }

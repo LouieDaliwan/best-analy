@@ -44,6 +44,10 @@ class SettingService extends Service implements SettingServiceInterface
      */
     public function getAllTranslationKeys()
     {
+
+        //cache on this.
+
+        //
         $data = [
             'Edit Financial Management' => collect(
                 config('ksrecommendation.fmpi.list')

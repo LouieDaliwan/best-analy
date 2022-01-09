@@ -17,8 +17,6 @@ class KSRRecommendationSeeder extends Seeder
         $data = $this->getListRecommendations();
 
         foreach ($this->keys as $key) {
-            // dd($data[$key]);
-
             KSRRecommendation::firstOrCreate([
                 'name' =>  $key,
                 'metadata' => $data[$key],

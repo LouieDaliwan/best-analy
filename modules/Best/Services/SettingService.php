@@ -3,11 +3,13 @@
 namespace Best\Services;
 
 use Best\Models\Best;
-use Best\Pro\KeyStrategicRecommendationComments;
-use Core\Application\Service\Service;
-use Illuminate\Http\Request;
 use Setting\Models\Setting;
+use Illuminate\Http\Request;
+use Best\Models\KSRRecommendation;
+use Core\Application\Service\Service;
+use Illuminate\Support\Facades\Cache;
 use Spatie\TranslationLoader\LanguageLine;
+use Best\Pro\KeyStrategicRecommendationComments;
 
 class SettingService extends Service implements SettingServiceInterface
 {
@@ -44,14 +46,16 @@ class SettingService extends Service implements SettingServiceInterface
      */
     public function getAllTranslationKeys()
     {
-
-        //cache on this.
-
-        //
+    
+        $ksrLists = Cache::rememberForever('ksrData', function () {
+            return KSRRecommendation::get(['name', 'metadata'])
+            ->keyBy('name')
+            ->toArray();
+        });
+        
         $data = [
             'Edit Financial Management' => collect(
-                config('ksrecommendation.fmpi.list')
-                // KeyStrategicRecommendationComments::fmpiRecommendations()
+                $ksrLists['fmpi']['metadata']
             )->map(function ($d) {
                 return [
                     'en' => collect($d)->values()->shift(),
@@ -59,8 +63,7 @@ class SettingService extends Service implements SettingServiceInterface
                 ];
             })->toArray(),
             'Edit Human Resource' => collect(
-                config('ksrecommendation.hrpi.list')
-                // KeyStrategicRecommendationComments::hrpiRecommendations()
+                $ksrLists['hrpi']['metadata']
             )->map(function ($d) {
                 return [
                     'en' => collect($d)->values()->shift(),
@@ -68,8 +71,7 @@ class SettingService extends Service implements SettingServiceInterface
                 ];
             })->toArray(),
             'Edit Business Sustainability' => collect(
-                config('ksrecommendation.bspi.list')
-                // KeyStrategicRecommendationComments::bspiRecommendations()
+                $ksrLists['bspi']['metadata']
             )->map(function ($d) {
                 return [
                     'en' => collect($d)->values()->shift(),
@@ -77,8 +79,7 @@ class SettingService extends Service implements SettingServiceInterface
                 ];
             })->toArray(),
             'Edit Productivity Management' => collect(
-                config('ksrecommendation.pmpi.list')
-                // KeyStrategicRecommendationComments::pmpiRecommendations()
+                $ksrLists['pmpi']['metadata']
             )->map(function ($d) {
                 return [
                     'en' => collect($d)->values()->shift(),

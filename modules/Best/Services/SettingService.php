@@ -48,10 +48,11 @@ class SettingService extends Service implements SettingServiceInterface
     {
 
         $ksrLists = Cache::rememberForever('ksrData', function () {
-            $ksrLists = KSRRecommendation::get(['name', 'metadata'])
+            return KSRRecommendation::get(['name', 'metadata'])
             ->keyBy('name')
             ->toArray();
         });
+
 
         $data = [
             'Edit Financial Management' => collect(

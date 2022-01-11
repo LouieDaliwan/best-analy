@@ -3,6 +3,7 @@
 namespace Best\Pro;
 use Illuminate\Support\Str;
 use Best\Pro\PredictionScoreCard;
+use Illuminate\Support\Facades\Cache;
 
 abstract class KeyStrategicRecommendationComments
 {
@@ -67,16 +68,20 @@ abstract class KeyStrategicRecommendationComments
 
             $reco = $list[$score];
 
-            $keyword = self::parseKeyword(key($reco));
+            $keyword = self::parseKeyword(array_key_first($reco));
+
+            $isPriority = $reco[array_key_last($reco)] == true ? '*' : ''; //get the key value of key priority
 
             if (array_key_exists('Empty', $temp_categories_recom[$keyword])) {
                 unset($temp_categories_recom[$keyword]['Empty']);
             }
 
-            if (!empty($temp_categories_recom[$keyword])) {
-                in_array(array_values($reco)[0], $temp_categories_recom[$keyword]) ? : $temp_categories_recom[$keyword][] = array_values($reco)[0];
+            $comment = $isPriority .''. array_values($reco)[0];
+
+            if (! empty($temp_categories_recom[$keyword])) {
+                in_array(array_values($reco)[0], $temp_categories_recom[$keyword]) ? : $temp_categories_recom[$keyword][] = $comment;
             } else {
-                $temp_categories_recom[$keyword][] = array_values($reco)[0];
+                $temp_categories_recom[$keyword][] = $comment;
             }
 
             $count++;
@@ -118,7 +123,12 @@ abstract class KeyStrategicRecommendationComments
      */
     public static function solutionRecommendations($index)
     {
-        return config('ksrecommendation.'. $index .'.list');
+        $list = Cache::get('ksrData');
+
+        return $list[$index]['metadata'];
+
+        //backup for this -- Louie Angelo Daliwan
+        // return config('ksrecommendation.'. $index .'.list');
     }
 
     /**

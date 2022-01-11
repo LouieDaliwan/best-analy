@@ -46,13 +46,13 @@ class SettingService extends Service implements SettingServiceInterface
      */
     public function getAllTranslationKeys()
     {
-        
+
         $ksrLists = Cache::rememberForever('ksrData', function () {
-            return KSRRecommendation::get(['name', 'metadata'])
+            $ksrLists = KSRRecommendation::get(['name', 'metadata'])
             ->keyBy('name')
             ->toArray();
         });
-        
+
         $data = [
             'Edit Financial Management' => collect(
                 $ksrLists['fmpi']['metadata']
@@ -131,7 +131,7 @@ class SettingService extends Service implements SettingServiceInterface
                     'ar' => $values['ar'] ?? $key ?? null
                 ],
             ]);
-            
+
             isset($ksrTempArr[$values['name']]) ? : $ksrTempArr[$values['name']] = [];
 
 
@@ -151,6 +151,8 @@ class SettingService extends Service implements SettingServiceInterface
                 'metadata' => $ksrTempArr[$key]
             ]);
         }
+
+        $this->getAllTranslationKeys();
     }
 
     /**

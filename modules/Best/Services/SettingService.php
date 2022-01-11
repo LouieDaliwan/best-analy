@@ -46,7 +46,7 @@ class SettingService extends Service implements SettingServiceInterface
      */
     public function getAllTranslationKeys()
     {
-    
+        
         $ksrLists = Cache::rememberForever('ksrData', function () {
             return KSRRecommendation::get(['name', 'metadata'])
             ->keyBy('name')
@@ -56,44 +56,55 @@ class SettingService extends Service implements SettingServiceInterface
         $data = [
             'Edit Financial Management' => collect(
                 $ksrLists['fmpi']['metadata']
-            )->map(function ($d) {
+            )->map(function ($item, $key) {
                 return [
-                    'en' => collect($d)->values()->shift(),
-                    'ar' => __(collect($d)->values()->shift(), [], 'ar')
+                    'idKey' => $key,
+                    'name' => 'fmpi',
+                    'key' => collect($item)->keys()->shift(),
+                    'en' => collect($item)->values()->shift(),
+                    'ar' => __(collect($item)->values()->shift(), [], 'ar'),
+                    'priority' => $item['priority'],
                 ];
             })->toArray(),
+
             'Edit Human Resource' => collect(
                 $ksrLists['hrpi']['metadata']
-            )->map(function ($d) {
-                return [
-                    'en' => collect($d)->values()->shift(),
-                    'ar' => __(collect($d)->values()->shift(), [], 'ar')
-                ];
+            )->map(function ($item, $key) {
+                    return [
+                        'idKey' => $key,
+                        'name' => 'hrpi',
+                        'key' => collect($item)->keys()->shift(),
+                        'en' => collect($item)->values()->shift(),
+                        'ar' => __(collect($item)->values()->shift(), [], 'ar'),
+                        'priority' => $item['priority'],
+                    ];
             })->toArray(),
+
             'Edit Business Sustainability' => collect(
                 $ksrLists['bspi']['metadata']
-            )->map(function ($d) {
+            )->map(function ($item, $key) {
                 return [
-                    'en' => collect($d)->values()->shift(),
-                    'ar' => __(collect($d)->values()->shift(), [], 'ar')
+                    'idKey' => $key,
+                    'name' => 'bspi',
+                    'key' => collect($item)->keys()->shift(),
+                    'en' => collect($item)->values()->shift(),
+                    'ar' => __(collect($item)->values()->shift(), [], 'ar'),
+                    'priority' => $item['priority'],
                 ];
             })->toArray(),
+
             'Edit Productivity Management' => collect(
                 $ksrLists['pmpi']['metadata']
-            )->map(function ($d) {
+            )->map(function ($item, $key) {
                 return [
-                    'en' => collect($d)->values()->shift(),
-                    'ar' => __(collect($d)->values()->shift(), [], 'ar')
+                    'idKey' => $key,
+                    'name' => 'pmpi',
+                    'key' => collect($item)->keys()->shift(),
+                    'en' => collect($item)->values()->shift(),
+                    'ar' => __(collect($item)->values()->shift(), [], 'ar'),
+                    'priority' => $item['priority'],
                 ];
             })->toArray(),
-            // 'Others' => collect(
-            //     KeyStrategicRecommendationComments::otherRecommendations()
-            // )->map(function ($d) {
-            //     return [
-            //         'en' => collect($d)->values()->shift(),
-            //         'ar' => __(collect($d)->values()->shift(), [], 'ar')
-            //     ];
-            // })->toArray(),
         ];
 
         return $data;
@@ -107,7 +118,9 @@ class SettingService extends Service implements SettingServiceInterface
      */
     public function saveTranslationKeys($attributes)
     {
-        foreach ($attributes['translations'] as $key => $locales) {
+        $ksrTempArr = [];
+
+        foreach ($attributes['translations'] as $key => $values) {
             LanguageLine::updateOrCreate([
                 'group' => '*',
                 'key' => $key ?? null,
@@ -115,8 +128,27 @@ class SettingService extends Service implements SettingServiceInterface
                 'group' => '*',
                 'text' => [
                     'en' => $key ?? null,
-                    'ar' => $locales['ar'] ?? $key ?? null,
+                    'ar' => $values['ar'] ?? $key ?? null
                 ],
+            ]);
+            
+            isset($ksrTempArr[$values['name']]) ? : $ksrTempArr[$values['name']] = [];
+
+
+            isset($ksrTempArr[$values['name']][$values['idkey']]) ? : $ksrTempArr[$values['name']][$values['idkey']] = [
+                $values['key'] => $key,
+                'priority' => isset($values['priority']) ? true : false,
+            ];
+        }
+
+        Cache::forget('krsData');
+
+        foreach ($ksrTempArr as $key => $value) {
+            KSRRecommendation::updateOrCreate([
+                'name' => $key,
+            ], [
+                'name' => $key,
+                'metadata' => $ksrTempArr[$key]
             ]);
         }
     }

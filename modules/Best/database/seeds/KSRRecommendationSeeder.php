@@ -38,7 +38,7 @@ class KSRRecommendationSeeder extends Seeder
 
             foreach ($dataValue as $idKey => $list) {
 
-                isset($dataValue[$idKey]['priority']) ? : $dataValue[$idKey]['priority'] = '0';
+                isset($dataValue[$idKey]['priority']) ? : $dataValue[$idKey]['priority'] = false;
 
                 $lists[$key][$idKey] = $dataValue[$idKey];
 

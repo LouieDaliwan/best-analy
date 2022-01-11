@@ -1,6 +1,6 @@
 <template>
   <admin>
-    <metatag :title="__('Summary of Recommendation')"></metatag>
+    <metatag :title="__('Summary of Test')"></metatag>
 
     <template v-slot:appbar>
       <v-container class="py-0 px-0">
@@ -68,11 +68,11 @@
 
             <div v-show="isFinishedFetchingResource" class="mb-3">
               <div v-for="(items, head) in resource.data" :key="head">
-                <div class="mb-3">
+              <div class="mb-3">
                   <h3 class="mb-3" v-html="head"></h3>
-                  <div v-for="item in items">
+                  <div v-for="(item, itemKey) in items" :key="itemKey">
                     <v-row>
-                      <v-col cols="12" md="6">
+                      <v-col cols="12" md="4">
                         <p class="mb-0">{{ item.en }}</p>
                       </v-col>
                       <v-col cols="12" md="6">
@@ -88,6 +88,17 @@
                           >
                         </v-text-field>
                       </v-col>
+                      <v-col cols="12" md="2">
+                        <v-checkbox
+                          v-model="item.priority"
+                          label="Priority"
+                          :name="`translations[${item.en}][priority]`"
+                          :value="item.priority"
+                        ></v-checkbox>
+                      </v-col>
+                      <input type="text" :name="`translations[${item.en}][key]`"  :value="item.key" hidden>
+                      <input type="text" :name="`translations[${item.en}][name]`"  :value="item.name" hidden>
+                      <input type="text" :name="`translations[${item.en}][idkey]`"  :value="item.idKey" hidden>
                     </v-row>
                   </div>
                 </div>
@@ -273,6 +284,7 @@ export default {
       axios.get(
         $api.translation()
       ).then(response => {
+        console.log(response.data)
         this.resource.data = response.data
       }).finally(() => {
         this.load(false)

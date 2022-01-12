@@ -46,7 +46,6 @@ class SettingService extends Service implements SettingServiceInterface
      */
     public function getAllTranslationKeys()
     {
-
         $ksrLists = Cache::rememberForever('ksrData', function () {
             return KSRRecommendation::get(['name', 'metadata'])
             ->keyBy('name')
@@ -121,6 +120,8 @@ class SettingService extends Service implements SettingServiceInterface
     {
         $ksrTempArr = [];
 
+        Cache::put('ksrData', 'value', 0);
+
         foreach ($attributes['translations'] as $key => $values) {
             LanguageLine::updateOrCreate([
                 'group' => '*',
@@ -142,7 +143,7 @@ class SettingService extends Service implements SettingServiceInterface
             ];
         }
 
-        Cache::forget('krsData');
+
 
         foreach ($ksrTempArr as $key => $value) {
             KSRRecommendation::updateOrCreate([

@@ -1,57 +1,63 @@
 export default [
   {
-    code: 'indices',
-    name: 'indices',
+    code: "indices",
+    name: "indices",
     meta: {
-      title: 'Index',
-      icon: 'mdi-credit-card-outline',
+      title: "Index",
+      icon: "mdi-credit-card-outline",
       authenticatable: true,
       sort: 5,
-      permission: 'indices.index',
-      children: ['indices.index', 'indices.create', 'indices.edit', 'indices.trashed', 'indices.settings'],
+      permission: "indices.index",
+      children: [
+        "indices.index",
+        "indices.create",
+        "indices.edit",
+        "indices.trashed",
+        "indices.settings"
+      ]
     },
     children: [
       {
-        code: 'indices.index',
-        name: 'indices.index',
+        code: "indices.index",
+        name: "indices.index",
         meta: {
-          title: 'All Indices',
+          title: "All Indices",
           authenticatable: true,
           sort: 5,
-          permission: 'indices.index',
-          children: ['indices.index', 'indices.edit'],
-        },
+          permission: "indices.index",
+          children: ["indices.index", "indices.edit"]
+        }
       },
       {
-        code: 'indices.create',
-        name: 'indices.create',
+        code: "indices.create",
+        name: "indices.create",
         meta: {
-          title: 'Add Index',
+          title: "Add Index",
           authenticatable: true,
           sort: 6,
-          permission: 'indices.create',
-        },
+          permission: "indices.create"
+        }
       },
       {
-        code: 'indices.trashed',
-        name: 'indices.trashed',
+        code: "indices.trashed",
+        name: "indices.trashed",
         meta: {
-          title: 'Trashed Indices',
+          title: "Trashed Indices",
           authenticatable: true,
           sort: 5,
-          permission: 'indices.trashed',
-        },
+          permission: "indices.trashed"
+        }
       },
       {
-        code: 'indices.settings',
-        name: 'indices.settings',
+        code: "indices.settings",
+        name: "indices.settings",
         meta: {
-          title: 'Settings',
+          title: "Translations",
           authenticatable: true,
           sort: 7,
-          permission: 'indices.settings',
-        },
-      },
-    ],
+          permission: "indices.settings"
+        }
+      }
+    ]
   }
-]
+];

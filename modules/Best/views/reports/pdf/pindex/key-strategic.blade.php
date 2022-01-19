@@ -2,9 +2,9 @@
 <section class="strategic mt-2">
   <div class="row">
     <div class="col-md-12">
-      <div>
-        <h4 class="mb-3 dt-secondary">@lang('Key Strategic Recommendations')</h4>
-        <h5><span style="color:#F48B3C">*</span> Denotes Immediate intervention</h5>
+      <div class="mb-3">
+        <h4 class="mb-0 dt-secondary">@lang('Key Strategic Recommendations')</h4>
+        <p><span style="color:#F48B3C">*</span> Denotes Immediate intervention</p>
       </div>
     </div>
   </div>

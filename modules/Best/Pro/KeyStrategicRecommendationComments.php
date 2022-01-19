@@ -76,7 +76,7 @@ abstract class KeyStrategicRecommendationComments
                 unset($temp_categories_recom[$keyword]['Empty']);
             }
             
-            $comment = '<p style="padding-bottom: 0px">'. $isPriority .''. array_values($reco)[0] . '</p>';
+            $comment = $isPriority .''. array_values($reco)[0];
 
             if (! empty($temp_categories_recom[$keyword])) {
                 in_array(array_values($reco)[0], $temp_categories_recom[$keyword]) ? : $temp_categories_recom[$keyword][] = $comment;

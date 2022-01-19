@@ -4,7 +4,7 @@
     <div class="col-md-12">
       <div class="mb-3">
         <h1 class="mb-0 dt-secondary">@lang('Key Strategic Recommendations')</h1>
-        <p><span style="color:#F48B3C">*</span> Denotes Immediate intervention</p>
+        <p><span style="color:#F48B3C">*</span> Denotes immediate intervention</p>
       </div>
     </div>
   </div>

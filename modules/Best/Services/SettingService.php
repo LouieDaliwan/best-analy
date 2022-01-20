@@ -143,8 +143,6 @@ class SettingService extends Service implements SettingServiceInterface
             ];
         }
 
-
-
         foreach ($ksrTempArr as $key => $value) {
             KSRRecommendation::updateOrCreate([
                 'name' => $key,

@@ -57,7 +57,6 @@ abstract class KeyStrategicRecommendationComments
 
         $count = 1;
 
-
         /*
         * @return array PredictionScoreCard::get()
         */
@@ -83,7 +82,7 @@ abstract class KeyStrategicRecommendationComments
                 unset($temp_categories_recom[$keyword]['Empty']);
             }
 
-            //todo optimize this. -- @author Louie Daliwan
+            //TODO optimize this. -- @author Louie Daliwan
             if (! empty($temp_categories_recom[$keyword])) {
                 if ($priority) {
                     $c = $priority_count++;

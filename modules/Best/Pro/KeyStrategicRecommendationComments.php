@@ -70,7 +70,7 @@ abstract class KeyStrategicRecommendationComments
 
             $keyword = self::parseKeyword(array_key_first($reco));
 
-            $isPriority = $reco[array_key_last($reco)] == true ? '<span style="color: #F48B3C">*</span>' : ''; //get the key value of key priority
+            $isPriority = $reco[array_key_last($reco)] == true ? '<span style="color: #F48B3C">* </span>' : ''; //get the key value of key priority
 
             if (array_key_exists('Empty', $temp_categories_recom[$keyword])) {
                 unset($temp_categories_recom[$keyword]['Empty']);

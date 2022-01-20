@@ -3,7 +3,7 @@ export default [
     code: "indices",
     name: "indices",
     meta: {
-      title: "Index",
+      title: "Component",
       icon: "mdi-credit-card-outline",
       authenticatable: true,
       sort: 5,
@@ -21,7 +21,7 @@ export default [
         code: "indices.index",
         name: "indices.index",
         meta: {
-          title: "All Indices",
+          title: "All Components",
           authenticatable: true,
           sort: 5,
           permission: "indices.index",
@@ -32,7 +32,7 @@ export default [
         code: "indices.create",
         name: "indices.create",
         meta: {
-          title: "Add Index",
+          title: "Add Component",
           authenticatable: true,
           sort: 6,
           permission: "indices.create"
@@ -42,7 +42,7 @@ export default [
         code: "indices.trashed",
         name: "indices.trashed",
         meta: {
-          title: "Trashed Indices",
+          title: "Trashed Components",
           authenticatable: true,
           sort: 5,
           permission: "indices.trashed"

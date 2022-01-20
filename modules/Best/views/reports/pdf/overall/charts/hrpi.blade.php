@@ -1,29 +1,29 @@
-<div style="height: 10px;"></div>
+<!-- <div style="height: 10px;"></div> -->
 <table width="100%">
   <tr>
-    <td>
+    <td class="p-2">
       <h4 class="dt-secondary mb-0">@lang($data['indices']['HRPI']['pindex']) {{ __('Performance Index') }}</h4>
     </td>
-    <td>
-      <h4 class="mb-0 dt-secondary">
+    <td class="p-2">
+      <h4 class="mb-0 dt-secondary text-right">
         {{ $data['indices']['HRPI']['overall:total'] }}%
       </h4>
     </td>
   </tr>
 </table>
-<div class="border-top my-3"></div>
-<table>
+<div class="border-top mb-3"></div>
+<!-- <table>
   <tr>
     <td>
       <p class="mb-0">@lang($data['indices']['HRPI']['overall:comment:overall'])</p>
     </td>
     <td>
-      <div class="mr-3" style="width: 650px; height: 180px;">
-        <canvas id="overall-hrpi" style="width: 650px; height: 180px;"></canvas>
-      </div>
+      <div class="mr-3" style="width: 650px; height: 180px;"> -->
+        <canvas id="overall-hrpi" width="400px" height="200px" style="margin: auto;"></canvas>
+      <!-- </div>
     </td>
   </tr>
-</table>
+</table> -->
 
 <script>
   $(document).ready(function() {
@@ -59,7 +59,31 @@
         ],
       },
       options: {
-        animation: false,
+        events: false,
+        tooltips: {
+            enabled: false
+        },
+        hover: {
+            animationDuration: 0
+        },
+        animation: {
+          duration: 1,
+          onComplete: function () {
+              var chartInstance = this.chart,
+                  ctx = chartInstance.ctx;
+              ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'bottom';
+
+              this.data.datasets.forEach(function (dataset, i) {
+                  var meta = chartInstance.controller.getDatasetMeta(i);
+                  meta.data.forEach(function (bar, index) {
+                      var data = dataset.data[index] + '%';
+                      ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                  });
+              });
+          }
+        },
         cornerRadius: 20,
         responsive: true,
         tooltips: {
@@ -73,7 +97,7 @@
         },
         layout: {
           padding: {
-            right: 20
+            top: 30
           }
         },
         legend: {
@@ -95,7 +119,7 @@
               beginAtZero: true,
               fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',
-              fontSize: 10,
+              fontSize: 9,
             },
           }],
           maxBarThickness: 5,

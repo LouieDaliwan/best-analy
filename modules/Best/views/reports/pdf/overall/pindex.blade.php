@@ -1,7 +1,22 @@
-<section class="overall-indices">
-  @include('best::reports.pdf.overall.charts.fmpi')
-  @include('best::reports.pdf.overall.charts.bspi')
-  @include('best::reports.pdf.overall.charts.pmpi')
-  @include('best::reports.pdf.overall.charts.hrpi')
+
+      <td colspan="50%">
+        @include('best::reports.pdf.overall.charts.fmpi')
+      </td>
+    </tr>
+    <tr>
+      <td colspan="50%">
+        @include('best::reports.pdf.overall.charts.bspi')
+      </td>
+      <td colspan="50%">
+        @include('best::reports.pdf.overall.charts.pmpi')
+      </td>
+    </tr>
+    <tr>
+      <td colspan="50%">
+        @include('best::reports.pdf.overall.charts.hrpi')
+      </td>
+    </tr>
+  </table>
+
   @include('best::reports.pdf.overall.charts.enablers')
 </section>

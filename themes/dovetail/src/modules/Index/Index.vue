@@ -1,20 +1,31 @@
 <template>
   <admin>
-    <metatag :title="trans('All Index')"></metatag>
+    <metatag :title="trans('All Component')"></metatag>
 
     <page-header>
       <template v-slot:utilities>
-        <router-link tag="a" class="dt-link text--decoration-none mr-4" exact :to="{name: 'indices.trashed'}">
+        <router-link
+          tag="a"
+          class="dt-link text--decoration-none mr-4"
+          exact
+          :to="{ name: 'indices.trashed' }"
+        >
           <v-icon small left>mdi-delete-outline</v-icon>
-          {{ trans('Trashed Index') }}
+          {{ trans("Trashed Component") }}
         </router-link>
       </template>
 
       <template v-slot:action>
         <can code="indices.create">
-          <v-btn :block="$vuetify.breakpoint.smAndDown" large color="primary" exact :to="{ name: 'indices.create' }">
+          <v-btn
+            :block="$vuetify.breakpoint.smAndDown"
+            large
+            color="primary"
+            exact
+            :to="{ name: 'indices.create' }"
+          >
             <v-icon small left>mdi-credit-card-plus-outline</v-icon>
-            {{ trans('Add Index') }}
+            {{ trans("Add Component") }}
           </v-btn>
         </can>
       </template>
@@ -30,7 +41,7 @@
           trashable
           @update:search="search"
           @update:trash="bulkTrashResource"
-          >
+        >
         </toolbar-menu>
         <v-slide-y-reverse-transition mode="out-in">
           <v-data-table
@@ -45,13 +56,16 @@
             color="primary"
             item-key="id"
             v-model="resources.selected"
-            >
+          >
             <template v-slot:progress><span></span></template>
 
             <template v-slot:loading>
               <v-slide-y-transition mode="out-in">
                 <div>
-                  <div v-for="(j,i) in resources.options.itemsPerPage" :key="i">
+                  <div
+                    v-for="(j, i) in resources.options.itemsPerPage"
+                    :key="i"
+                  >
                     <skeleton-table></skeleton-table>
                   </div>
                 </div>
@@ -61,7 +75,9 @@
             <!-- Icon and Name -->
             <template v-slot:item.name="{ item }">
               <div class="d-flex align-center">
-                <v-avatar class="mr-6" size="32" tile><v-img :src="item.icon"></v-img></v-avatar>
+                <v-avatar class="mr-6" size="32" tile
+                  ><v-img :src="item.icon"></v-img
+                ></v-avatar>
                 <span class="text-no-wrap">{{ trans(item.name) }}</span>
               </div>
             </template>
@@ -69,9 +85,15 @@
 
             <!-- Description -->
             <template v-slot:item.description="{ item }">
-              <v-tooltip bottom transition="scroll-y-transition" max-width="300">
+              <v-tooltip
+                bottom
+                transition="scroll-y-transition"
+                max-width="300"
+              >
                 <template v-slot:activator="{ on }">
-                  <span v-on="on" class="text--ellipsis-1">{{ trans(item.description) }}</span>
+                  <span v-on="on" class="text--ellipsis-1">{{
+                    trans(item.description)
+                  }}</span>
                 </template>
                 <span>{{ trans(item.description) }}</span>
               </v-tooltip>
@@ -80,7 +102,9 @@
 
             <!-- Modified -->
             <template v-slot:item.updated_at="{ item }">
-              <span class="text-no-wrap" :title="item.updated_at">{{ trans(item.modified) }}</span>
+              <span class="text-no-wrap" :title="item.updated_at">{{
+                trans(item.modified)
+              }}</span>
             </template>
             <!-- Modified -->
 
@@ -91,11 +115,15 @@
                 <can code="indices.edit">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn :to="{name: 'indices.edit', params: {id: item.id}}" icon v-on="on">
+                      <v-btn
+                        :to="{ name: 'indices.edit', params: { id: item.id } }"
+                        icon
+                        v-on="on"
+                      >
                         <v-icon small>mdi-pencil-outline</v-icon>
                       </v-btn>
                     </template>
-                    <span>{{ trans('Edit this index') }}</span>
+                    <span>{{ trans("Edit this component") }}</span>
                   </v-tooltip>
                 </can>
                 <!-- Edit -->
@@ -104,11 +132,15 @@
                 <can code="indices.destroy">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn @click="askUserToDestroyIndex(item)" icon v-on="on">
+                      <v-btn
+                        @click="askUserToDestroyComponent(item)"
+                        icon
+                        v-on="on"
+                      >
                         <v-icon small>mdi-delete-outline</v-icon>
                       </v-btn>
                     </template>
-                    <span>{{ trans('Move to trash') }}</span>
+                    <span>{{ trans("Move to trash") }}</span>
                   </v-tooltip>
                 </can>
                 <!-- Move to Trash -->
@@ -123,20 +155,13 @@
 
     <!-- Empty state -->
     <div v-if="resourcesIsEmpty">
-      <toolbar-menu
-        :items.sync="tabletoolbar"
-        @update:search="search"
-        >
+      <toolbar-menu :items.sync="tabletoolbar" @update:search="search">
       </toolbar-menu>
       <empty-state>
         <template v-slot:actions>
-          <v-btn
-            large
-            color="primary"
-            exact
-            :to="{name: 'indices.create'}">
+          <v-btn large color="primary" exact :to="{ name: 'indices.create' }">
             <v-icon small left>mdi-account-plus-outline</v-icon>
-            {{ trans('Add Index') }}
+            {{ trans("Add Component") }}
           </v-btn>
         </template>
       </empty-state>
@@ -146,32 +171,32 @@
 </template>
 
 <script>
-import $api from './routes/api'
-import man from '@/components/Icons/ManThrowingAwayPaperIcon.vue'
-import { mapActions } from 'vuex'
+import $api from "./routes/api";
+import man from "@/components/Icons/ManThrowingAwayPaperIcon.vue";
+import { mapActions } from "vuex";
 
 export default {
   computed: {
-    resourcesIsNotEmpty () {
-      return !this.resourcesIsEmpty
+    resourcesIsNotEmpty() {
+      return !this.resourcesIsEmpty;
     },
 
-    resourcesIsEmpty () {
-      return window._.isEmpty(this.resources.data) && !this.resources.loading
+    resourcesIsEmpty() {
+      return window._.isEmpty(this.resources.data) && !this.resources.loading;
     },
 
-    options: function () {
+    options: function() {
       return {
         per_page: this.resources.options.itemsPerPage,
         page: this.resources.options.page,
         sort: this.resources.options.sortBy[0] || undefined,
-        order: this.resources.options.sortDesc[0] || false ? 'desc' : 'asc',
-      }
+        order: this.resources.options.sortDesc[0] || false ? "desc" : "asc"
+      };
     },
 
-    selected: function () {
-      return this.resources.selected.map((item) => (item.id) )
-    },
+    selected: function() {
+      return this.resources.selected.map(item => item.id);
+    }
   },
 
   data: () => ({
@@ -185,19 +210,44 @@ export default {
         pageCount: 0,
         itemsPerPage: 10,
         sortDesc: [],
-        sortBy: [],
+        sortBy: []
       },
       meta: {},
       modes: {
-        bulkedit: false,
+        bulkedit: false
       },
       selected: [],
       headers: [
-        { text: trans('Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
-        { text: trans('Weightage'), align: 'center', value: 'metadata[weightage]', class: 'text-no-wrap' },
-        { text: trans('Description'), align: 'left', value: 'description', class: 'text-no-wrap' },
-        { text: trans('Last Modified'), value: 'updated_at', class: 'text-no-wrap' },
-        { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
+        {
+          text: trans("Name"),
+          align: "left",
+          value: "name",
+          class: "text-no-wrap"
+        },
+        {
+          text: trans("Weightage"),
+          align: "center",
+          value: "metadata[weightage]",
+          class: "text-no-wrap"
+        },
+        {
+          text: trans("Description"),
+          align: "left",
+          value: "description",
+          class: "text-no-wrap"
+        },
+        {
+          text: trans("Last Modified"),
+          value: "updated_at",
+          class: "text-no-wrap"
+        },
+        {
+          text: trans("Actions"),
+          align: "center",
+          value: "action",
+          sortable: false,
+          class: "muted--text text-no-wrap"
+        }
       ],
       data: []
     },
@@ -209,158 +259,177 @@ export default {
       listGridView: false,
       toggleBulkEdit: false,
       toggleTrash: false,
-      verticaldiv: false,
-    },
+      verticaldiv: false
+    }
   }),
 
-  mounted: function () {
-    this.changeOptionsFromRouterQueries()
+  mounted: function() {
+    this.changeOptionsFromRouterQueries();
   },
 
   methods: {
     ...mapActions({
-      errorDialog: 'dialog/error',
-      loadDialog: 'dialog/loading',
-      showDialog: 'dialog/show',
-      hideDialog: 'dialog/hide',
-      showSnackbar: 'snackbar/show',
+      errorDialog: "dialog/error",
+      loadDialog: "dialog/loading",
+      showDialog: "dialog/show",
+      hideDialog: "dialog/hide",
+      showSnackbar: "snackbar/show"
     }),
 
-    changeOptionsFromRouterQueries () {
-      this.options.per_page = this.$route.query.per_page
-      this.options.page = parseInt(this.$route.query.page)
-      this.options.search = this.$route.query.search
-      this.resources.search = this.options.search
-      this.tabletoolbar.search = this.options.search
+    changeOptionsFromRouterQueries() {
+      this.options.per_page = this.$route.query.per_page;
+      this.options.page = parseInt(this.$route.query.page);
+      this.options.search = this.$route.query.search;
+      this.resources.search = this.options.search;
+      this.tabletoolbar.search = this.options.search;
     },
 
-    optionsChanged (options) {
-      this.getPaginatedData(this.options)
+    optionsChanged(options) {
+      this.getPaginatedData(this.options);
     },
 
-    getPaginatedData: function (params = null, caller = null) {
-      params = Object.assign(params ? params : this.$route.query, { search: this.resources.search })
-      this.resources.loading = true
-      axios.get(this.api.list(), { params })
+    getPaginatedData: function(params = null, caller = null) {
+      params = Object.assign(params ? params : this.$route.query, {
+        search: this.resources.search
+      });
+      this.resources.loading = true;
+      axios
+        .get(this.api.list(), { params })
         .then(response => {
-          this.resources = Object.assign({}, this.resources, response.data)
-          this.resources.options = Object.assign(this.resources.options, response.data.meta, params)
-          this.resources.loading = false
-          this.$router.push({query: Object.assign({}, this.$route.query, params)}).catch(err => {})
+          this.resources = Object.assign({}, this.resources, response.data);
+          this.resources.options = Object.assign(
+            this.resources.options,
+            response.data.meta,
+            params
+          );
+          this.resources.loading = false;
+          this.$router
+            .push({ query: Object.assign({}, this.$route.query, params) })
+            .catch(err => {});
         })
         .catch(err => {
           this.errorDialog({
             width: 400,
             buttons: { cancel: { show: false } },
-            title: trans('Whoops! An error occured'),
-            text: err.response.data.message,
-          })
+            title: trans("Whoops! An error occured"),
+            text: err.response.data.message
+          });
         })
         .finally(() => {
-          this.resources.data.map(function (data) {
-            return Object.assign(data, {loading: false})
-          })
-        })
+          this.resources.data.map(function(data) {
+            return Object.assign(data, { loading: false });
+          });
+        });
     },
 
-    search: _.debounce(function (event) {
-      this.resources.search = event.srcElement.value || ''
-      this.tabletoolbar.isSearching = false
+    search: _.debounce(function(event) {
+      this.resources.search = event.srcElement.value || "";
+      this.tabletoolbar.isSearching = false;
       if (this.resources.searching) {
-        this.getPaginatedData(this.options, 'search')
-        this.resources.searching = false
+        this.getPaginatedData(this.options, "search");
+        this.resources.searching = false;
       }
     }, 200),
 
-    focusSearchBar () {
-      this.$refs['tablesearch'].focus()
+    focusSearchBar() {
+      this.$refs["tablesearch"].focus();
     },
 
-    bulkTrashResource () {
-      let selected = this.selected
-      axios.delete($api.destroy(null), { data: { id: selected } })
+    bulkTrashResource() {
+      let selected = this.selected;
+      axios
+        .delete($api.destroy(null), { data: { id: selected } })
         .then(response => {
-          this.getPaginatedData(null, 'bulkTrashResource')
-          this.tabletoolbar.toggleTrash = false
-          this.tabletoolbar.toggleBulkEdit = false
-          this.hideDialog()
+          this.getPaginatedData(null, "bulkTrashResource");
+          this.tabletoolbar.toggleTrash = false;
+          this.tabletoolbar.toggleBulkEdit = false;
+          this.hideDialog();
           this.showSnackbar({
-            text: trans_choice('Index successfully moved to trash', this.tabletoolbar.bulkCount)
-          })
+            text: trans_choice(
+              "Component successfully moved to trash",
+              this.tabletoolbar.bulkCount
+            )
+          });
         })
         .catch(err => {
           this.errorDialog({
             width: 400,
             buttons: { cancel: { show: false } },
-            title: trans('Whoops! An error occured'),
-            text: err.response.data.message,
-          })
-        })
+            title: trans("Whoops! An error occured"),
+            text: err.response.data.message
+          });
+        });
     },
 
-    askUserToDestroyIndex (item) {
+    askUserToDestroyComponent(item) {
       this.showDialog({
-        color: 'warning',
+        color: "warning",
         illustration: man,
         illustrationWidth: 200,
         illustrationHeight: 160,
-        width: '420',
-        title: 'You are about to move to trash the selected index.',
-        text: ['Some data related to index will still remain.', trans('Are you sure you want to move :name to Trash?', {name: item.name})],
+        width: "420",
+        title: "You are about to move to trash the selected index.",
+        text: [
+          "Some data related to index will still remain.",
+          trans("Are you sure you want to move :name to Trash?", {
+            name: item.name
+          })
+        ],
         buttons: {
-          cancel: { show: true, color: 'link' },
+          cancel: { show: true, color: "link" },
           action: {
-            text: 'Move to Trash',
-            color: 'warning',
-            callback: (dialog) => {
-              this.loadDialog(true)
-              this.destroyResource(item)
+            text: "Move to Trash",
+            color: "warning",
+            callback: dialog => {
+              this.loadDialog(true);
+              this.destroyResource(item);
             }
           }
         }
-      })
+      });
     },
 
-    destroyResource (item) {
-      item.loading = true
-      axios.delete($api.destroy(item.id))
+    destroyResource(item) {
+      item.loading = true;
+      axios
+        .delete($api.destroy(item.id))
         .then(response => {
-          item.active = false
-          this.getPaginatedData(null, 'destroyResource')
+          item.active = false;
+          this.getPaginatedData(null, "destroyResource");
           this.showSnackbar({
-            text: trans_choice('Index successfully moved to trash', 1)
-          })
-          this.hideDialog()
+            text: trans_choice("Component successfully moved to trash", 1)
+          });
+          this.hideDialog();
         })
         .catch(err => {
           this.errorDialog({
             width: 400,
             buttons: { cancel: { show: false } },
-            title: trans('Whoops! An error occured'),
-            text: err.response.data.message,
-          })
+            title: trans("Whoops! An error occured"),
+            text: err.response.data.message
+          });
         })
         .finally(() => {
-          item.active = false
-          item.loading = false
-        })
-    },
+          item.active = false;
+          item.loading = false;
+        });
+    }
   },
 
   watch: {
-    'resources.search': function (val) {
-      this.resources.searching = true
+    "resources.search": function(val) {
+      this.resources.searching = true;
     },
 
-    'resources.selected': function (val) {
-      this.tabletoolbar.bulkCount = val.length
+    "resources.selected": function(val) {
+      this.tabletoolbar.bulkCount = val.length;
     },
 
-    'tabletoolbar.toggleBulkEdit': function (val) {
+    "tabletoolbar.toggleBulkEdit": function(val) {
       if (!val) {
-        this.resources.selected = []
+        this.resources.selected = [];
       }
     }
-  },
-}
+  }
+};
 </script>

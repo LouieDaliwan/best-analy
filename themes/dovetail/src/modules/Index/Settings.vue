@@ -116,7 +116,16 @@
                       >
                         <v-row>
                           <v-col cols="12" md="5">
-                            <p class="mb-0">{{ item.en }}</p>
+                            <v-text-field
+                              :dense="isDense"
+                              :disabled="isLoading"
+                              :label="trans('English')"
+                              class="dt-text-field"
+                              outlined
+                              hide-details
+                              v-model="item.en"
+                            >
+                            </v-text-field>
                           </v-col>
                           <v-col cols="12" md="5">
                             <v-text-field

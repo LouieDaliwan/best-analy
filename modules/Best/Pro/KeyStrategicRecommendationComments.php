@@ -57,6 +57,7 @@ abstract class KeyStrategicRecommendationComments
 
         $count = 1;
 
+
         /*
         * @return array PredictionScoreCard::get()
         */
@@ -66,23 +67,44 @@ abstract class KeyStrategicRecommendationComments
                 continue;
             }
 
+            $priority_count = 0;
+
             $reco = $list[$score];
 
             $keyword = self::parseKeyword(array_key_first($reco));
 
-            $isPriority = $reco[array_key_last($reco)] == true ? '<span style="color: #F48B3C">* </span>' : ''; //get the key value of key priority
+            $priority = $reco[array_key_last($reco)];
+
+            $addPriorityAsterisk = $priority == true ? '<span style="color: #F48B3C">* </span>' : ''; //get the value of the asterissk
+
+            $comment = $addPriorityAsterisk .''. array_values($reco)[0];
 
             if (array_key_exists('Empty', $temp_categories_recom[$keyword])) {
                 unset($temp_categories_recom[$keyword]['Empty']);
             }
-            
-            $comment = $isPriority .''. array_values($reco)[0];
 
+            //todo optimize this. -- @author Louie Daliwan
             if (! empty($temp_categories_recom[$keyword])) {
-                in_array(array_values($reco)[0], $temp_categories_recom[$keyword]) ? : $temp_categories_recom[$keyword][] = $comment;
+                if ($priority) {
+                    $c = $priority_count++;
+                    in_array(array_values($reco)[0], $temp_categories_recom[$keyword]) ? : $temp_categories_recom[$keyword]['priority'. $c] = $comment;
+
+                } else {
+                    in_array(array_values($reco)[0], $temp_categories_recom[$keyword]) ? : $temp_categories_recom[$keyword][] = $comment;
+                }
+
             } else {
-                $temp_categories_recom[$keyword][] = $comment;
+                if ($priority) {
+                    $c = $priority_count ++;
+
+                    $temp_categories_recom[$keyword]['priority'. $c] = $comment;
+
+                } else {
+                    $temp_categories_recom[$keyword][] = $comment;
+                }
             }
+
+            sort($temp_categories_recom[$keyword]);
 
             $count++;
 

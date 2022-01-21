@@ -15,8 +15,11 @@
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title class="text--text font-weight-bold title">
-            <span class="mb-2">{{ __("SME") }}</span> <br />
-            {{ __("Analytics") }}
+            <template v-for="(item, i) in appTitle">
+              <div :key="i">{{ __(item) }}</div>
+            </template>
+            <!-- <span class="mb-2">{{ __("SME") }}</span> <br />
+            {{ __("Analytics") }} -->
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -205,6 +208,9 @@ export default {
       get() {
         return this.sidebar.model;
       }
+    },
+    appTitle() {
+      return app.title.split(" ");
     }
   },
 

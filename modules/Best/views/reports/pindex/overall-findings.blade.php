@@ -81,7 +81,7 @@
         }
       },
     })
-    var overallFindings = parseInt('{!! $data['overall:total'] !!}').toFixed(0);
+    var overallFindings = parseInt('{!! round($data['overall:total']) !!}').toFixed(0);
     var myChart = new Chart(document.getElementById('overall-{{ $data['taxonomy']['id'] }}'), {
     type: 'doughnut',
     data: {

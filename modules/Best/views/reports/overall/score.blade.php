@@ -18,7 +18,7 @@
             @if($data['overall:percentage'] == 0)
               NO DATA
             @else
-              {{ $data['overall:percentage'] }}
+              {{ round($data['overall:percentage']) }}
             @endif
           </span>
         </div>

@@ -145,7 +145,7 @@
               this.data.datasets.forEach(function (dataset, i) {
                   var meta = chartInstance.controller.getDatasetMeta(i);
                   meta.data.forEach(function (bar, index) {
-                      var data = dataset.data[index] + '%';
+                      var data = Math.round(dataset.data[index]) + '%';
                       ctx.fillText(data, bar._model.x, bar._model.y - 5);
                   });
               });

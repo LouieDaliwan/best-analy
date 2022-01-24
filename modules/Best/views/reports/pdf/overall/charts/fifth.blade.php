@@ -3,32 +3,22 @@
 <table width="100%">
   <tr>
     <td class="p-2">
-      <h4 class="dt-secondary mb-0">@lang($data['indices']['HRPI']['pindex']) {{ __('Performance Index') }}</h4>
+      <h4 class="dt-secondary mb-0">Fifth module</h4>
     </td>
     <td class="p-2">
       <h4 class="mb-0 dt-secondary text-right">
-        {{ $data['indices']['HRPI']['overall:total'] }}%
+        0%
       </h4>
     </td>
   </tr>
 </table>
 <div class="border-top mb-3"></div>
-<!-- <table>
-  <tr>
-    <td>
-      <p class="mb-0">@lang($data['indices']['HRPI']['overall:comment:overall'])</p>
-    </td>
-    <td>
-      <div class="mr-3" style="width: 650px; height: 180px;"> -->
-        <canvas id="overall-hrpi" width="400px" height="75px" style="margin: auto;"></canvas>
-      <!-- </div>
-    </td>
-  </tr>
-</table> -->
+
+<canvas id="overall-fifth" width="400px" height="75px" style="margin: auto;"></canvas>
 
 <script>
   $(document).ready(function() {
-    var ctx = document.getElementById("overall-hrpi").getContext('2d');
+    var ctx = document.getElementById("overall-fifth").getContext('2d');
     var chartColors = {
       primary:           'rgba(22, 123, 195, 1)',
       primaryLighten1:   'rgba(22, 123, 195, 0.8)',

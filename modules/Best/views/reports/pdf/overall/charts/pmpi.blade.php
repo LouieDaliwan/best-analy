@@ -16,7 +16,7 @@
   <tr>
     <td>
       <div class="mr-3" style="width: 500px; height: 150px;"> -->
-        <canvas id="overall-pmpi" width="400px" height="200px" style="margin: auto;"></canvas>
+        <canvas id="overall-pmpi" width="400px" height="150px" style="margin: auto;"></canvas>
       <!-- </div>
     </td>
     <td>
@@ -76,7 +76,7 @@
               this.data.datasets.forEach(function (dataset, i) {
                   var meta = chartInstance.controller.getDatasetMeta(i);
                   meta.data.forEach(function (bar, index) {
-                      var data = dataset.data[index] + '%';
+                      var data = Math.round(dataset.data[index]) + '%';
                       ctx.fillText(data, bar._model.x, bar._model.y - 5);
                   });
               });

@@ -99,22 +99,10 @@
                         </v-col>
                       </v-row>
                       <div
-                        v-if="
-                          items.filter(item =>
-                            item.en.toLowerCase().includes(search.toLowerCase())
-                          ).length === 0
-                        "
-                        class="text-center muted--text"
-                      >
-                        No items to show
-                      </div>
-                      <div
-                        v-for="(item, i) in items.filter(item =>
-                          item.en.toLowerCase().includes(search.toLowerCase())
-                        )"
+                        v-for="(item, i) in items"
                         :key="i"
                       >
-                        <v-row>
+                        <v-row :class="{'d-none': !onSearch(item.en) }">
                           <v-col cols="12" md="5">
                             <v-text-field
                               :dense="isDense"
@@ -399,6 +387,10 @@ export default {
           this.load(false);
           this.resource.isPrestine = true;
         });
+    },
+
+    onSearch(string) {
+      return string.toLowerCase().includes(this.search.toLowerCase())
     }
   },
 

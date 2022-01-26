@@ -11,12 +11,10 @@
   </td>
 </tr>
 <tr>
-  <td colspan="100%">
+  <td colspan="50%">
     @include('best::reports.pdf.overall.charts.hrpi')
   </td>
-</tr>
-<tr>
-  <td colspan="100%">
+  <td colspan="50%">
     @include('best::reports.pdf.overall.charts.fifth')
   </td>
 </tr>

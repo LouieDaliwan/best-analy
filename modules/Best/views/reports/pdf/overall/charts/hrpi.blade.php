@@ -20,7 +20,7 @@
     </td>
     <td>
       <div class="mr-3" style="width: 650px; height: 180px;"> -->
-        <canvas id="overall-hrpi" width="400px" height="75px" style="margin: auto;"></canvas>
+        <canvas id="overall-hrpi" width="400px" height="200px" style="margin: auto;"></canvas>
       <!-- </div>
     </td>
   </tr>

@@ -14,7 +14,7 @@
 </table>
 <div class="border-top mb-3"></div>
 
-<canvas id="overall-fifth" width="400px" height="75px" style="margin: auto;"></canvas>
+<canvas id="overall-fifth" width="400px" height="200px" style="margin: auto;"></canvas>
 
 <script>
   $(document).ready(function() {

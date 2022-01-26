@@ -66,7 +66,7 @@
       labels: {!! json_encode(collect($data['key:enablers']['chart']['labels'])->values()->toArray()) !!},
       datasets: [
         {
-          data: {!! json_encode(collect($data['key:enablers']['chart']['dataset'])->values()->toArray()) !!},
+          data: {!! json_encode(collect($data['key:enablers']['chart']['dataset'])->pluck('value')->values()->toArray()) !!},
           backgroundColor: '#555da6',
           label: "ORG. AVG",
         },

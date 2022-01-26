@@ -14,6 +14,8 @@ class KSRRecommendationSeeder extends Seeder
      */
     public function run()
     {
+        KSRRecommendation::query()->truncate();
+
         $data = $this->getListRecommendations();
 
         foreach ($this->keys as $key) {

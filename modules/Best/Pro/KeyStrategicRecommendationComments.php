@@ -85,13 +85,13 @@ abstract class KeyStrategicRecommendationComments
             //TODO optimize this. -- @author Louie Daliwan
             if (! empty($temp_categories_recom[$keyword])) {
                 if ($priority) {
-                    $c = $priority_count++;
-                    in_array(array_values($reco)[0], $temp_categories_recom[$keyword]) ? : $temp_categories_recom[$keyword]['priority'. $c] = $comment;
-
+                    if (! in_array($comment ,$temp_categories_recom[$keyword])) {
+                        $c = $priority_count++;
+                        in_array(array_values($reco)[0], $temp_categories_recom[$keyword]) ? : $temp_categories_recom[$keyword]['priority'. $c] = $comment;
+                    }
                 } else {
                     in_array(array_values($reco)[0], $temp_categories_recom[$keyword]) ? : $temp_categories_recom[$keyword][] = $comment;
                 }
-
             } else {
                 if ($priority) {
                     $c = $priority_count ++;

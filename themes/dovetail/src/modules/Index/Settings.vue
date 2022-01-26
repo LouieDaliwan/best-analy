@@ -102,7 +102,7 @@
                         v-for="(item, i) in items"
                         :key="i"
                       >
-                        <v-row :class="{'d-none': !onSearch(item.en) }">
+                        <v-row :class="{'d-none': !onSearch(item.slug) }">
                           <v-col cols="12" md="5">
                             <v-text-field
                               :dense="isDense"
@@ -364,13 +364,12 @@ export default {
             for (const index of Object.keys(this.resource.data[key])) {
               newArray.push(this.resource.data[key][index]);
             }
-            newArray = newArray.sort(function(a, b) {
-              if (a.en < b.en) {
-                return -1;
-              }
-              if (a.en > b.en) {
-                return 1;
-              }
+            newArray = newArray.map( item => ({
+              ...item,
+              slug: item.en
+            })).sort(function(a, b) {
+              if (a.en < b.en) return -1;
+              if (a.en > b.en) return 1;
               return 0;
             });
 

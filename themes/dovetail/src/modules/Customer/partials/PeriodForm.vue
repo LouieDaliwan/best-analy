@@ -242,6 +242,8 @@ export default {
         labour_expense,
         general_management_cost,
         depreciation,
+        interest_on_loans_or_hires,
+        taxation,
         company_tax
       } = this.resource.data;
 
@@ -257,7 +259,11 @@ export default {
         parseFloat(non_operating_expense);
 
       this.resource.data.net_profit =
-        operating_profit - parseFloat(depreciation) - parseFloat(company_tax);
+        operating_profit -
+        parseFloat(depreciation) -
+        parseFloat(interest_on_loans_or_hires) -
+        parseFloat(taxation) -
+        parseFloat(company_tax);
     },
 
     async submit() {

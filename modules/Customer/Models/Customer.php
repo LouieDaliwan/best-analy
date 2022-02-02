@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Index\Models\Index;
 use Laravel\Scout\Searchable;
+use Customer\Models\Detail;
+use Customer\Models\FinancialStatement;
 
 class Customer extends Model
 {
@@ -119,4 +121,25 @@ class Customer extends Model
             'Revenue' => ''
         ];
     }
+
+    /**
+     * Retrieve customer Details
+     *
+     * @return \Customer\Models\Detail
+     */
+    public function detail()
+    {
+        return $this->hasOne(Detail::class, 'customer_id', 'id');
+    }
+
+    /**
+     * Retrieve customer Financial Statements
+     *
+     * @return \Customer\Models\FinancialStatement
+     */
+    public function statements()
+    {
+        return $this->hasMany(FinancialStatement::class, 'customer_id', 'id');
+    }
+
 }

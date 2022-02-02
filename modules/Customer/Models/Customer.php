@@ -3,15 +3,16 @@
 namespace Customer\Models;
 
 use Best\Models\Report;
-use Best\Pro\Financial\ProfitAndLossStatement;
-use Core\Models\Accessors\CommonAttributes;
-use Core\Models\Relations\BelongsToUser;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Index\Models\Index;
-use Laravel\Scout\Searchable;
 use Customer\Models\Detail;
+use Laravel\Scout\Searchable;
+use Customer\Models\ApplicantDetail;
 use Customer\Models\FinancialStatement;
+use Illuminate\Database\Eloquent\Model;
+use Core\Models\Relations\BelongsToUser;
+use Core\Models\Accessors\CommonAttributes;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Best\Pro\Financial\ProfitAndLossStatement;
 
 class Customer extends Model
 {
@@ -142,4 +143,13 @@ class Customer extends Model
         return $this->hasMany(FinancialStatement::class, 'customer_id', 'id');
     }
 
+    /**
+     * Retrieve customer Applicant Detail
+     *
+     * @return \Customer\Models\ApplicantDetail
+     */
+    public function applicant()
+    {
+        return $this->hasOne(ApplicantDetail::class, 'customer_id', 'id');
+    }
 }

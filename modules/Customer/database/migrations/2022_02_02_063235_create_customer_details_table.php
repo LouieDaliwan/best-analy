@@ -15,7 +15,6 @@ class CreateCustomerDetailsTable extends Migration
     {
         Schema::create('customer_details', function (Blueprint $table) {
             $table->bigIncrements('customer_id')->unsigned()->index();
-            $table->string('period')->index();
             $table->longText('metadata')->nullable();
             $table->timestamps();
         });

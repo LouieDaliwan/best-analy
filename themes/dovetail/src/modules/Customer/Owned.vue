@@ -57,21 +57,27 @@
               </v-slide-y-transition>
             </template>
 
-            <!-- Name with edit page -->
+            <!-- Name -->
             <template v-slot:item.name="{ item }">
-              <can code="customers.edit">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <span class="mt-1" v-on="on"><router-link tag="a" exact :to="{name: 'companies.edit', params: { id: item.id }}" v-text="item.name" class="text-no-wrap text--decoration-none"></router-link></span>
-                  </template>
-                  <span>{{ trans('Edit Company Information') }}</span>
-                </v-tooltip>
-                <template v-slot:unpermitted>
-                  <span v-text="item.name"></span>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <span class="mt-1" v-on="on"
+                    ><router-link
+                      tag="a"
+                      exact
+                      :to="{
+                        name: 'companies.dashboard',
+                        params: { id: item.id },
+                      }"
+                      v-text="item.name"
+                      class="text-no-wrap text--decoration-none"
+                    ></router-link
+                  ></span>
                 </template>
-              </can>
+                <span>{{ trans("Company Dashboard") }}</span>
+              </v-tooltip>
             </template>
-            <!-- Name with edit page -->
+            <!-- Name -->
 
             <!-- File No. -->
             <template v-slot:item.filenumber="{ item }">

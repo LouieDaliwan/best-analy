@@ -62,6 +62,17 @@ export default [
         },
       },
       {
+        path: ':id/dashboard',
+        name: 'companies.dashboard',
+        component: () => import('../Dashboard.vue'),
+        meta: {
+          title: 'Loading',
+          sort: 8,
+          authenticatable: true,
+          permission: 'customers.index',
+        },
+      },
+      {
         path: ':id/edit',
         name: 'companies.edit',
         component: () => import('../Edit.vue'),

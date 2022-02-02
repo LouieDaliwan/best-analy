@@ -67,15 +67,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-}
 
-.text {
   &-red input {
-    color: red !important;
+    color: $error;
   }
 
   &-green input {
-    color: green !important;
+    color: $success;
   }
 }
 
@@ -83,9 +81,9 @@
   position: relative;
 
   &::before {
+    color: $error;
     content: '*';
-    color: red;
-    position: absolute;
     left: 0;
+    position: absolute;
   }
 }

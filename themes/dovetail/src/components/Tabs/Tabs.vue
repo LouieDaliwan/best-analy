@@ -1,7 +1,8 @@
 <template>
   <v-tabs v-model="tab" :vertical="isDesktop" class="dt-tabs" background-color="transparent">
-    <v-tab key="tab-0">{{ trans('Company Information') }}</v-tab>
-    <v-tab key="tab-1">{{ trans('Financial Statements') }}</v-tab>
+    <v-tab key="tab-0">{{ trans('Project Information') }}</v-tab>
+    <v-tab key="tab-1">{{ trans('Applicant Information') }}</v-tab>
+    <v-tab key="tab-2">{{ trans('Financial Statements') }}</v-tab>
     <slot name="item"></slot>
   </v-tabs>
 </template>

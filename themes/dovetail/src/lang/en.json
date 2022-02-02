@@ -37,5 +37,6 @@
   "Restore Selected Item": "No Item Selected | Restore Selected Item | Restore Selected Items",
   "Permanently delete the selected item": "Permanently delete the selected item | Permanently delete the selected items",
   "Are you sure you want to permanently delete the selected item?": "Are you sure you want to permanently delete the selected item? | Are you sure you want to permanently delete the selected items?",
-  "Please select the type of survey evaluation that you would like to do for :name": "Please select the type of survey evaluation that you would like to do for {name}"
+  "Please select the type of survey evaluation that you would like to do for :name": "Please select the type of survey evaluation that you would like to do for {name}",
+  ":name's Dashboard": "{name}'s Dashboard"
 }

@@ -1,0 +1,166 @@
+<template>
+  <v-card>
+    <v-card-text class="pa-7">
+      <h3 class="mb-5" v-text="trans('General Information')"></h3>
+      <v-divider></v-divider>
+      <template v-for="(item, i) in dataset">
+        <div :key="i">
+          <h4 class="my-5 d-flex align-center">
+            <span v-text="trans(item.title)"></span>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon :to="item.to" exact small v-bind="attrs" v-on="on"
+                  ><v-icon small class="ml-2 incomplete--text"
+                    >mdi-pencil</v-icon
+                  ></v-btn
+                >
+              </template>
+              <span v-text="trans(`Edit ${item.title}`)"></span>
+            </v-tooltip>
+          </h4>
+          <v-row no-gutters>
+            <template v-for="(col, j) in gen2Col(item.details)">
+              <v-col cols="12" sm="6" :key="i + '-' + j">
+                <div
+                  class="mb-5"
+                  v-for="(detail, k) in col"
+                  :key="i + '-' + j + '-' + k"
+                >
+                  <label
+                    for=""
+                    class="incomplete--text"
+                    v-text="trans(detail.label)"
+                  ></label>
+                  <div v-text="detail.value || '-'"></div>
+                </div>
+              </v-col>
+            </template>
+          </v-row>
+        </div>
+      </template>
+    </v-card-text>
+  </v-card>
+</template>
+
+<script>
+export default {
+  props: ["value"],
+
+  computed: {
+    dataset: {
+      get() {
+        return [
+          {
+            title: "Company Information",
+            to: {
+              name: "companies.edit",
+              params: { id: this.value.id },
+            },
+            details: [
+              {
+                label: "Name",
+                value: this.value.name,
+              },
+              {
+                label: "Address",
+                value: this.value.metadata.address,
+              },
+              {
+                label: "Staff Strength",
+                value: this.value.metadata.staffstrength,
+              },
+              {
+                label: "Email",
+                value: this.value.metadata.email,
+              },
+              {
+                label: "Website",
+                value: this.value.metadata.website,
+              },
+              {
+                label: "Industry",
+                value: this.value.metadata.industry,
+              },
+            ],
+          },
+          {
+            title: "Business Details",
+            details: [
+              {
+                label: "Project Name",
+                value: "Chocolate",
+              },
+              {
+                label: "Business Status",
+                value: "Soft Opening",
+              },
+              {
+                label: "Industry Sector",
+                value: "Tourism",
+              },
+              {
+                label: "Business Size",
+                value: "SME",
+              },
+              {
+                label: "Project Location",
+                value: "Dubai",
+              },
+              {
+                label: "Funding Program",
+                value: "Bedaya",
+              },
+              {
+                label: "Project Type",
+                value: "Industrial",
+              },
+            ],
+          },
+          {
+            title: "Applicant Details",
+            details: [
+              {
+                label: "Applicant Name",
+                value: "Chocolate",
+              },
+              {
+                label: "Email Address",
+                value: "Chocolate",
+              },
+              {
+                label: "Designation",
+                value: "Chocolate",
+              },
+              {
+                label: "Mobile Number",
+                value: "Chocolate",
+              },
+              {
+                label: "Contact Person",
+                value: "Chocolate",
+              },
+              {
+                label: "Mobile Number",
+                value: "Chocolate",
+              },
+            ],
+          },
+        ];
+      },
+    },
+  },
+
+  methods: {
+    gen2Col(array) {
+      array = [...array];
+
+      const len = array.length,
+        colLen = len / 2,
+        rem = len % 2,
+        newColIndex = rem ? colLen + 1 : colLen;
+
+      return [array.splice(0, newColIndex), array];
+    },
+  },
+};
+</script>

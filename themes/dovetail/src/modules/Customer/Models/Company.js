@@ -1,5 +1,5 @@
 class Company {
-  constructor () {
+  constructor() {
     this.loading = false
     this.isPrestine = true
     this.isValid = true
@@ -1114,13 +1114,16 @@ class Company {
       description: '',
       metadata: {
         type: '',
+        applicant: {
+          name: ''
+        }
       },
       financials: this.metadataOrig,
       reports: [],
     }
   }
 
-  calculateThreeYears ( data, exclude = '' ) {
+  calculateThreeYears(data, exclude = '') {
     let totalPerYear = {
       Year1: 0,
       Year2: 0,
@@ -1129,12 +1132,12 @@ class Company {
 
     const itemsToAdd = this.itemsToAdd()
 
-    for( const row in data ) {
-      if( data[row] ) {
-        for ( const column in data[row] ) {
-          const value = data[row][column] !== '' ? parseInt( data[row][column] ) : 0
-          if( data[row][column] ) {
-            if( itemsToAdd.includes( row ) )
+    for (const row in data) {
+      if (data[row]) {
+        for (const column in data[row]) {
+          const value = data[row][column] !== '' ? parseInt(data[row][column]) : 0
+          if (data[row][column]) {
+            if (itemsToAdd.includes(row))
               totalPerYear[column] += value
             else
               totalPerYear[column] -= value
@@ -1146,7 +1149,7 @@ class Company {
     return totalPerYear
   }
 
-  compulsoryItems () {
+  compulsoryItems() {
     return [
       'Sales',
       'Raw Materials (direct & indirect)',
@@ -1163,13 +1166,13 @@ class Company {
     ]
   }
 
-  itemsToAdd () {
+  itemsToAdd() {
     return [
       'Sales',
       'Closing Stocks',
       'Profit from Fixed Assets Sale',
-			'Profit from Foreign Exchange',
-			'Other Income',
+      'Profit from Foreign Exchange',
+      'Other Income',
       'Cash',
       'Trade Receivables',
       'Inventories',
@@ -1177,9 +1180,9 @@ class Company {
       'Fixed Assets',
     ]
   }
-  
-  checkIfCompulsoryItems ( text ) {
-    return this.compulsoryItems().includes( text )
+
+  checkIfCompulsoryItems(text) {
+    return this.compulsoryItems().includes(text)
   }
 }
 

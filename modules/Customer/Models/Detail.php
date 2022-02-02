@@ -11,6 +11,9 @@ class Detail extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'metadata' => 'array',
+    ];
 
     public function customer()
     {

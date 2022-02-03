@@ -14,7 +14,8 @@ class CreateCustomerApplicantDetailsTable extends Migration
     public function up()
     {
         Schema::create('customer_applicant_details', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('customer_id')->index();
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

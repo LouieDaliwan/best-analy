@@ -34,6 +34,9 @@ class CustomerResource extends JsonResource
             'created' => $this->created,
             'deleted' => $this->deleted,
             'modified' => $this->modified,
+            'statements' => $this->statements()->latest()->get(),
+            'applicant' => $this->applicant,
+            'details' => $this->detail,
             'indices' => Index::all()->map(function ($index) use ($request) {
                 $attributes = [
                     'customer_id' => $this->getKey(),

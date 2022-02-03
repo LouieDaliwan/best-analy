@@ -31,6 +31,13 @@ class Customer extends Model
         'is_fs_has_no_zero_value' => 'boolean',
     ];
 
+
+    // protected $with = [
+    //     'detail',
+    //     'statements ',
+    //     'applicant'
+    // ];
+
     protected $primaryKey = 'id';
 
     /**

@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Customer\Models\Customer;
 use Customer\Models\Detail;
 use Customer\Models\FinancialStatement;
-use CUstomer\Models\ApplicantDetail;
+use Customer\Models\ApplicantDetail;
 
 class CustomerDetailsSeeder extends Seeder
 {
@@ -24,22 +24,20 @@ class CustomerDetailsSeeder extends Seeder
 
         foreach ($customers as $customer) {
 
-            $customer_metadata = $customer['metadata'];
-
-            if (is_null($customer_metadata)) {
+            if (is_null($customer['metadata'])) {
                 continue;
             }
 
-            $this->customerDetail($customer_metadata);
+            $this->customerDetail($customer);
 
-            $this->customerApplicantDetail($customer_metadata);
+            $this->customerApplicantDetail($customer);
 
-            $this->customerFinancialStatement($customer_metadata);
+            $this->customerFinancialStatement($customer);
         }
     }
 
 
-    protected function customerDetail($metadata)
+    protected function customerDetail($customer)
     {
         $temp_array = [
             'project_name' => '',
@@ -53,33 +51,40 @@ class CustomerDetailsSeeder extends Seeder
             'business_size' => '',
             'description' => '',
         ];
+
+
+        $customer->detail()->updateOrCreate([
+            'metadata' => $temp_array
+        ]);
     }
 
-    protected function customerApplicantDetail($metadata)
+    protected function customerApplicantDetail($customer)
     {
+        $metadata = $customer['metadata'];
+
         $temp_arr = [
-            'email' => $metadata['email'],
-            'address' => $metadata['address'],
-            'website' => $metadata['website'],
-            'staffstrength' => $metadata['staffstrength'],
-            'industry' => $metadata['industry'],
-            'FileNo' => $metadata['FileNo'],
-            'FundingRequestNo' => $metadata['FundingRequestNo'],
-            'SiteVisitDate' => $metadata['SiteVisiDate'],
-            'BusinessCounselorName' => $metadata['BusinessCounselorName'],
-            'PeeBusinessCounselorName' => $metadata['PeeBusinessCounselorName'],
-            'mobile_no' => '',
-            'contact_person' => '',
-            'designation' => '',
+            'email' => $metadata['email'] ?? null,
+            'address' => $metadata['address'] ?? null,
+            'website' => $metadata['website'] ?? null,
+            'staffstrength' => $metadata['staffstrength'] ?? null,
+            'industry' => $metadata['industry'] ?? null,
+            'FileNo' => $metadata['FileNo'] ?? null,
+            'FundingRequestNo' => $metadata['FundingRequestNo'] ?? null,
+            'SiteVisitDate' => $metadata['SiteVisitDate'] ?? null,
+            'BusinessCounselorName' => $metadata['BusinessCounselorName'] ?? null,
+            'PeeBusinessCounselorName' => $metadata['PeeBusinessCounselorName'] ?? null,
+            'mobile_no' =>  null,
+            'contact_person' => null,
+            'designation' => null,
         ];
 
-        $metadata->applicant->updateOrCreate([
+        $customer->applicant()->updateOrCreate([
             'metadata' => $temp_arr,
         ]);
     }
 
-    protected function customerFinancialStatement($metadata)
+    protected function customerFinancialStatement($customer)
     {
-
+        
     }
 }

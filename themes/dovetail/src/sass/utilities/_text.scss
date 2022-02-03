@@ -69,11 +69,11 @@
   }
 
   &-red input {
-    color: $error;
+    color: $error !important;
   }
 
   &-green input {
-    color: $success;
+    color: $success !important;
   }
 }
 
@@ -82,7 +82,7 @@
 
   &::before {
     color: $error;
-    content: '*';
+    content: "*";
     left: 0;
     position: absolute;
   }

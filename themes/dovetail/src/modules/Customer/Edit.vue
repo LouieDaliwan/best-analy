@@ -82,7 +82,7 @@
           <template v-slot:title>
             {{
               trans("Edit :name", {
-                name: `${resource.data.name}'s Input Data`,
+                name: `${resource.data.name}'s Input Data`
               })
             }}
           </template>
@@ -201,13 +201,13 @@ export default {
     SkeletonEditCompany,
     SkeletonEditFinancial,
     SendFinancialDataToCrmButton,
-    TotalRow: () => import("./partials/TotalRow"),
+    TotalRow: () => import("./partials/TotalRow")
   },
 
   computed: {
     ...mapGetters({
       isDense: "settings/fieldIsDense",
-      shortkeyCtrlIsPressed: "shortkey/ctrlIsPressed",
+      shortkeyCtrlIsPressed: "shortkey/ctrlIsPressed"
     }),
     isDesktop() {
       return this.$vuetify.breakpoint.mdAndUp;
@@ -232,74 +232,14 @@ export default {
     },
     isFinishedFetchingResource() {
       return !this.loading;
-    },
+    }
   },
 
-  data: (vm) => ({
+  data: vm => ({
     isFinancialStatementHasValue: false,
     resource: new Company(),
     loading: true,
-    tabsModel: 1,
-    costOfGoodSold: {
-      Year1: 0,
-      Year2: 0,
-      Year3: 0,
-    },
-    totalProductionCost: {
-      Year1: 0,
-      Year2: 0,
-      Year3: 0,
-    },
-    totalGeneralMgmtCost: {
-      Year1: 0,
-      Year2: 0,
-      Year3: 0,
-    },
-    totalPurchases: {
-      Year1: 0,
-      Year2: 0,
-      Year3: 0,
-    },
-    valueAdded: {
-      Year1: 0,
-      Year2: 0,
-      Year3: 0,
-    },
-    totalLabourExpenses: {
-      Year1: 0,
-      Year2: 0,
-      Year3: 0,
-    },
-    totalDepreciation: {
-      Year1: 0,
-      Year2: 0,
-      Year3: 0,
-    },
-    totalNonOperatingExpenses: {
-      Year1: 0,
-      Year2: 0,
-      Year3: 0,
-    },
-    totalTaxes: {
-      Year1: 0,
-      Year2: 0,
-      Year3: 0,
-    },
-    totalInterest: {
-      Year1: 0,
-      Year2: 0,
-      Year3: 0,
-    },
-    financialTotal: {
-      Year1: 0,
-      Year2: 0,
-      Year3: 0,
-    },
-    balanceTotal: {
-      Year1: 0,
-      Year2: 0,
-      Year3: 0,
-    },
+    tabsModel: 1
   }),
 
   methods: {
@@ -314,7 +254,7 @@ export default {
       showDialog: "dialog/show",
       showErrorbox: "errorbox/show",
       showSnackbar: "snackbar/show",
-      showSuccessbox: "successbox/show",
+      showSuccessbox: "successbox/show"
     }),
 
     askUserBeforeNavigatingAway(next) {
@@ -330,74 +270,17 @@ export default {
             text: trans("Go Back"),
             callback: () => {
               this.hideDialog();
-            },
+            }
           },
           action: {
             text: trans("Discard"),
             callback: () => {
               next();
               this.hideDialog();
-            },
-          },
-        },
+            }
+          }
+        }
       });
-    },
-
-    ct(i) {
-      // checkIfTotalIsNext
-      switch (i) {
-        case "Closing Stocks":
-          return {
-            title: "Cost of Good Sold",
-            total: this.costOfGoodSold,
-          };
-        case "Direct Employee Cost":
-          return {
-            title: "Total Production Cost",
-            total: this.totalProductionCost,
-          };
-        case "Other Administrative Costs":
-          return {
-            title: "Total General Management Cost",
-            total: this.totalGeneralMgmtCost,
-          };
-        case "Total General Management Cost":
-          return {
-            title: "Total Purchase of Goods and Services",
-            total: this.totalPurchases,
-          };
-        case "Total Purchase of Goods and Services":
-          return {
-            title: "Value Added",
-            total: this.valueAdded,
-          };
-        case "Other Labour Expenses":
-          return {
-            title: "Total Labour Expenses",
-            total: this.totalLabourExpenses,
-          };
-        case "Others (Depreciation)":
-          return {
-            title: "Total Depreciation",
-            total: this.totalDepreciation,
-          };
-        case "Others (Non-Operating Costs)":
-          return {
-            title: "Net Non-Operating Expenses",
-            total: this.totalNonOperatingExpenses,
-          };
-        case "Others (excluding Income Tax)":
-          return {
-            title: "Total Taxes",
-            total: this.totalTaxes,
-          };
-        case "Others (Interest on Loan/Hires)":
-          return {
-            title: "Total Interest on Loans/Hires",
-            total: this.totalInterest,
-          };
-      }
-      return false;
     },
 
     askUserToDiscardUnsavedChanges() {
@@ -413,16 +296,16 @@ export default {
             text: trans("Cancel"),
             callback: () => {
               this.hideDialog();
-            },
+            }
           },
           action: {
             text: trans("Discard"),
             callback: () => {
               this.hideDialog();
               this.$router.replace({ name: "companies.owned" });
-            },
-          },
-        },
+            }
+          }
+        }
       });
     },
 
@@ -464,7 +347,7 @@ export default {
         window.scrollTo({
           top: 0,
           left: 0,
-          behavior: "smooth",
+          behavior: "smooth"
         });
       }
     },
@@ -478,7 +361,7 @@ export default {
           $api.update(this.resource.data.id),
           this.parseResourceData(this.resource.data)
         )
-        .then((response) => {
+        .then(response => {
           this.resource.isPrestine = true;
           this.isFinancialStatementHasValue =
             response.data.is_fs_has_no_zero_value;
@@ -489,21 +372,21 @@ export default {
                 code: "customers.show",
                 to: {
                   name: "companies.show",
-                  params: { id: this.resource.data.id },
+                  params: { id: this.resource.data.id }
                 },
                 icon: "mdi-briefcase-search-outline",
-                text: trans("Go to Survey Page"),
+                text: trans("Go to Survey Page")
               },
               create: {
                 code: "crm.search",
                 to: { name: "companies.find" },
                 icon: "mdi-file-document-box-search-outline",
-                text: trans("Find Another Company"),
-              },
-            },
+                text: trans("Find Another Company")
+              }
+            }
           });
         })
-        .catch((err) => {
+        .catch(err => {
           if (
             err.response &&
             err.response.status == Response.HTTP_UNPROCESSABLE_ENTITY
@@ -513,7 +396,7 @@ export default {
             this.$refs["updateform"].setErrors(err.response.data.errors);
             this.showErrorbox({
               text: trans(err.response.data.message),
-              errors: err.response.data.errors,
+              errors: err.response.data.errors
             });
           }
         })
@@ -527,9 +410,9 @@ export default {
         name: "reports.ratios",
         query: {
           type: "ratios",
-          user_id: $auth.getId(),
+          user_id: $auth.getId()
         },
-        params: { id: this.$route.params.id },
+        params: { id: this.$route.params.id }
       });
     },
 
@@ -538,183 +421,28 @@ export default {
       this.resource.isPrestine = false;
       axios
         .get($api.show(this.$route.params.id))
-        .then((response) => {
+        .then(response => {
           const metadata = this.resource.data.metadata;
           this.resource.data = response.data.data;
           this.resource.data.metadata.applicant =
             this.resource.data.metadata.applicant || metadata;
-          this.resource.metadata = _.merge(
+          this.resource.data.metadata = _.merge(
             metadata,
-            this.resource.metadata,
             this.resource.data.metadata
           );
-          this.resource.data.financials = this.resource.metadata;
+          this.resource.data.financials = this.resource.data.metadata;
           this.isFinancialStatementHasValue =
             response.data.data.is_fs_has_no_zero_value;
         })
         .finally(() => {
           this.load(false);
           this.resource.isPrestine = true;
-          console.log(this.resource);
         });
     },
 
     activateTab() {
       this.tabsModel = parseInt(this.$route.query.tab || 0);
-    },
-
-    calculateTotals() {
-      const financialsFPS = this.resource.data.financials["fps-qa1"];
-
-      this.costOfGoodSold = this.multiplyToNegative(
-        this.resource.calculateThreeYears({
-          "Opening Stocks": financialsFPS["Opening Stocks"],
-          "Raw Materials (direct & indirect)":
-            financialsFPS["Raw Materials (direct & indirect)"],
-          "Closing Stocks": financialsFPS["Closing Stocks"],
-        })
-      );
-
-      this.totalProductionCost = this.multiplyToNegative(
-        this.resource.calculateThreeYears({
-          "Cargo and Handling": financialsFPS["Cargo and Handling"],
-          "Part-time/Temporary Labour":
-            financialsFPS["Part-time/Temporary Labour"],
-          "Insurance (not including employee's insurance)":
-            financialsFPS["Insurance (not including employee's insurance)"],
-          Transportation: financialsFPS["Transportation"],
-          Utilities: financialsFPS["Utilities"],
-          "Maintenance (Building, Plant, and Machinery)":
-            financialsFPS["Maintenance (Building, Plant, and Machinery)"],
-          "Lease of Plant and Machinery":
-            financialsFPS["Lease of Plant and Machinery"],
-          "Direct Employee Cost": financialsFPS["Direct Employee Cost"],
-        })
-      );
-
-      this.totalGeneralMgmtCost = this.multiplyToNegative(
-        this.resource.calculateThreeYears({
-          "Stationery Supplies and Printing":
-            financialsFPS["Stationery Supplies and Printing"],
-          Rental: financialsFPS["Rental"],
-          "Insurance (not including employee's insurance) ":
-            financialsFPS["Insurance (not including employee's insurance) "],
-          "Transportation ": financialsFPS["Transportation "],
-          "Company Car/Bus etc.": financialsFPS["Company Car/Bus etc."],
-          Advertising: financialsFPS["Advertising"],
-          Entertainment: financialsFPS["Entertainment"],
-          "Food and Drinks": financialsFPS["Food and Drinks"],
-          "Telephone and Fax": financialsFPS["Telephone and Fax"],
-          "Mail and Courier": financialsFPS["Mail and Courier"],
-          "Maintenance (Office Equipment)":
-            financialsFPS["Maintenance (Office Equipment)"],
-          Travel: financialsFPS["Travel"],
-          "Audit, Secretarial, and Professional Costs":
-            financialsFPS["Audit, Secretarial, and Professional Costs"],
-          "Newspapers and Magazines": financialsFPS["Newspapers and Magazines"],
-          "Stamp Duty, Filing and Legal":
-            financialsFPS["Stamp Duty, Filing and Legal"],
-          "Bank charges": financialsFPS["Bank charges"],
-          "Other Administrative Costs":
-            financialsFPS["Other Administrative Costs"],
-        })
-      );
-
-      this.totalPurchases = this.multiplyToNegative(
-        this.resource.calculateThreeYears({
-          "Cost of Good Sold": this.costOfGoodSold,
-          "Total Production Cost": this.totalProductionCost,
-          "Total General Management Cost": this.totalGeneralMgmtCost,
-        })
-      );
-
-      this.valueAdded = this.resource.calculateThreeYears({
-        Sales: financialsFPS["Sales"],
-        "Total Purchases": this.totalPurchases,
-      });
-
-      this.totalLabourExpenses = this.multiplyToNegative(
-        this.resource.calculateThreeYears({
-          "Employee Compensation": financialsFPS["Employee Compensation"],
-          Bonuses: financialsFPS["Bonuses"],
-          "Provident Fund": financialsFPS["Provident Fund"],
-          "Employee Welfare": financialsFPS["Employee Welfare"],
-          "Medical Costs": financialsFPS["Medical Costs"],
-          "Employee Training": financialsFPS["Employee Training"],
-          "Director's Salary": financialsFPS["Director's Salary"],
-          "Employee Insurance": financialsFPS["Employee Insurance"],
-          "Other Labour Expenses": financialsFPS["Other Labour Expenses"],
-        })
-      );
-
-      this.totalDepreciation = this.multiplyToNegative(
-        this.resource.calculateThreeYears({
-          Buildings: financialsFPS["Buildings"],
-          "Plant, Machinery & Equipment":
-            financialsFPS["Plant, Machinery & Equipment"],
-          "Others (Depreciation)": financialsFPS["Others (Depreciation)"],
-        })
-      );
-
-      this.totalNonOperatingExpenses = this.multiplyToNegative(
-        this.resource.calculateThreeYears({
-          "Profit from Fixed Assets Sale":
-            financialsFPS["Profit from Fixed Assets Sale"],
-          "Profit from Foreign Exchange":
-            financialsFPS["Profit from Foreign Exchange"],
-          "Other Income": financialsFPS["Other Income"],
-          "Bad Debts": financialsFPS["Bad Debts"],
-          Donations: financialsFPS["Donations"],
-          "Foreign Exchange Loss": financialsFPS["Foreign Exchange Loss"],
-          "Loss on Fixed Assets Sale":
-            financialsFPS["Loss on Fixed Assets Sale"],
-          "Others (Non-Operating Costs)":
-            financialsFPS["Others (Non-Operating Costs)"],
-        })
-      );
-
-      this.totalTaxes = this.multiplyToNegative(
-        this.resource.calculateThreeYears({
-          "Tax on Property": financialsFPS["Tax on Property"],
-          "Duties (Customs & Excise)":
-            financialsFPS["Duties (Customs & Excise)"],
-          "Levy on Foreign Workers": financialsFPS["Levy on Foreign Workers"],
-          "Others (excluding Income Tax)":
-            financialsFPS["Others (excluding Income Tax)"],
-        })
-      );
-
-      this.totalInterest = this.multiplyToNegative(
-        this.resource.calculateThreeYears({
-          "Interest & Charges by Bank":
-            financialsFPS["Interest & Charges by Bank"],
-          "Interest on Loan": financialsFPS["Interest on Loan"],
-          "Interest on Hire Purchase":
-            financialsFPS["Interest on Hire Purchase"],
-          "Others (Interest on Loan/Hires)":
-            financialsFPS["Others (Interest on Loan/Hires)"],
-        })
-      );
-
-      this.financialTotal = this.resource.calculateThreeYears(financialsFPS);
-      this.balanceTotal = this.formatBalanceTotal(
-        this.resource.calculateThreeYears(
-          this.resource.data.financials["balance-sheet"]
-        )
-      );
-    },
-
-    multiplyToNegative(data) {
-      Object.keys(data).forEach((key) => (data[key] *= -1));
-      return data;
-    },
-
-    formatBalanceTotal(data) {
-      Object.keys(data).forEach((key) => {
-        if (data[key] === 0) data[key] = "Balanced!";
-      });
-      return data;
-    },
+    }
   },
 
   mounted() {
@@ -729,14 +457,12 @@ export default {
         this.resource.isPrestine = false;
         this.resource.hasErrors = this.$refs.updateform.flags.invalid;
 
-        this.calculateTotals();
-
         if (!this.resource.hasErrors) {
           this.hideAlertbox();
         }
       },
-      deep: true,
-    },
-  },
+      deep: true
+    }
+  }
 };
 </script>

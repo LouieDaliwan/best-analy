@@ -2,7 +2,7 @@
   <v-form @submit.prevent="submit" ref="form">
     <input type="hidden" name="customer_id" :value="$route.params.id" />
     <h3 class="d-flex align-center mb-3">
-      Income Statement
+      Period
       <v-spacer></v-spacer>
       <template v-if="resource.data.id">
         <v-switch
@@ -19,7 +19,7 @@
     </h3>
 
     <validation-provider
-      vid="metadata[description]"
+      vid="description"
       :name="trans('Description')"
       v-slot="{ errors }"
       v-if="edit"
@@ -30,6 +30,7 @@
         name="description"
         outlined
         v-model="resource.data.description"
+        hide-details
       ></v-text-field>
     </validation-provider>
 
@@ -37,12 +38,38 @@
       Period
     </h4>
 
+    <v-divider class="my-10"></v-divider>
+
+    <h3>Financial Statement</h3>
+
+    <v-card flat height="50"></v-card>
+
+    <v-row>
+      <v-col cols="6" v-text="'Net Profit'" class="text-right font-weight-bold">
+      </v-col>
+      <v-col cols="6">
+        <v-text-field
+          class="text-right dt-text-field"
+          :class="resource.data.net_profit > 0 ? 'text-green' : 'text-red'"
+          :color="resource.data.net_profit > 0 ? 'green' : 'red'"
+          dense
+          name="net_profit"
+          readonly
+          v-if="edit"
+          v-model="resource.data.net_profit"
+        ></v-text-field>
+        <div v-else v-text="resource.data.net_profit" class="text-right"></div
+      ></v-col>
+    </v-row>
+
     <period-input
       :edit="edit"
       label="Sales"
       name="sales"
       v-model="resource.data.sales"
     ></period-input>
+
+    <v-card flat height="50"></v-card>
 
     <period-input
       :edit="edit"
@@ -90,6 +117,8 @@
       ></v-col>
     </v-row>
 
+    <v-card flat height="50"></v-card>
+
     <period-input
       :edit="edit"
       label="Production Cost"
@@ -111,7 +140,7 @@
       v-model="resource.data.labour_expense"
     ></period-input>
 
-    <v-divider></v-divider>
+    <v-card flat height="50"></v-card>
 
     <period-input
       :edit="edit"
@@ -155,7 +184,7 @@
       ></v-col>
     </v-row>
 
-    <v-divider></v-divider>
+    <v-card flat height="50"></v-card>
 
     <period-input
       :edit="edit"
@@ -185,26 +214,107 @@
       v-model="resource.data.company_tax"
     ></period-input>
 
-    <v-divider></v-divider>
+    <v-divider class="my-10"></v-divider>
+
+    <h3>Balance Sheet</h3>
+
+    <v-card flat height="50"></v-card>
 
     <v-row>
-      <v-col cols="6" v-text="'Net Profit'" class="text-right font-weight-bold">
+      <v-col
+        cols="6"
+        v-text="'Balance checked!'"
+        class="text-right font-weight-bold"
+      >
       </v-col>
       <v-col cols="6">
         <v-text-field
-          class="text-right"
+          class="text-right dt-text-field"
+          :class="!resource.data.balance ? 'text-green' : 'text-red'"
+          :color="!resource.data.balance ? 'green' : 'red'"
           dense
-          hide-details
-          name="net_profit"
+          name="balance"
           readonly
           v-if="edit"
-          v-model="resource.data.net_profit"
+          :value="resource.data.balance || 'Balance!'"
         ></v-text-field>
-        <div v-else v-text="resource.data.net_profit" class="text-right"></div
+        <div v-else v-text="resource.data.balance" class="text-right"></div
       ></v-col>
     </v-row>
 
-    <div class="text-right mt-5">
+    <period-input
+      :edit="edit"
+      label="Cash"
+      name="cash"
+      v-model="resource.data.cash"
+    ></period-input>
+
+    <period-input
+      :edit="edit"
+      label="Trade Receivables"
+      name="trade_receivables"
+      v-model="resource.data.trade_receivables"
+    ></period-input>
+
+    <period-input
+      :edit="edit"
+      label="Inventories"
+      name="inventories"
+      v-model="resource.data.inventories"
+    ></period-input>
+
+    <period-input
+      :edit="edit"
+      label="Other CA"
+      name="other_CA"
+      v-model="resource.data.other_CA"
+    ></period-input>
+
+    <period-input
+      :edit="edit"
+      label="Fixed Assets"
+      name="fixed_assets"
+      v-model="resource.data.fixed_assets"
+    ></period-input>
+
+    <v-card flat height="50"></v-card>
+
+    <period-input
+      :edit="edit"
+      label="Trade Payables"
+      name="trade_payables"
+      v-model="resource.data.trade_payables"
+    ></period-input>
+
+    <period-input
+      :edit="edit"
+      label="Other CL"
+      name="other_CL"
+      v-model="resource.data.other_CL"
+    ></period-input>
+
+    <period-input
+      :edit="edit"
+      label="Stockholders Equity"
+      name="stockholders_equity"
+      v-model="resource.data.stockholders_equity"
+    ></period-input>
+
+    <period-input
+      :edit="edit"
+      label="Other NCL"
+      name="other_NCL"
+      v-model="resource.data.other_NCL"
+    ></period-input>
+
+    <period-input
+      :edit="edit"
+      label="Common Shares Outstanding"
+      name="common_shares_outstanding"
+      v-model="resource.data.common_shares_outstanding"
+    ></period-input>
+
+    <div class="text-right mt-5" v-if="edit">
       <v-btn type="submit" large color="primary">Save</v-btn>
     </div>
   </v-form>
@@ -227,33 +337,32 @@ export default {
 
   methods: {
     costOfGoodSold() {
-      let {
+      const {
         raw_materials,
         opening_stocks,
         closing_stocks
       } = this.resource.data;
 
       this.resource.data.cost_of_good_sold =
-        parseFloat(raw_materials) +
-        parseFloat(opening_stocks) -
-        parseFloat(closing_stocks);
+        this.sum([raw_materials, opening_stocks]) - parseFloat(closing_stocks);
     },
 
     totalDepreciation() {
-      let {
+      const {
         buildings,
         plant_machinery_and_equipment,
         others
       } = this.resource.data;
 
-      this.resource.data.depreciation =
-        parseFloat(buildings) +
-        parseFloat(plant_machinery_and_equipment) +
-        parseFloat(others);
+      this.resource.data.depreciation = this.sum([
+        buildings,
+        plant_machinery_and_equipment,
+        others
+      ]);
     },
 
     netProfit() {
-      let {
+      const {
         sales,
         cost_of_good_sold,
         non_operating_expense,
@@ -266,23 +375,61 @@ export default {
         company_tax
       } = this.resource.data;
 
-      const operating_expense =
-        parseFloat(production_cost) +
-        parseFloat(labour_expense) +
-        parseFloat(general_management_cost);
+      const operating_expense = this.sum([
+        production_cost,
+        labour_expense,
+        general_management_cost
+      ]);
 
       const operating_profit =
         parseFloat(sales) -
-        parseFloat(cost_of_good_sold) -
-        operating_expense -
-        parseFloat(non_operating_expense);
+        this.sum([cost_of_good_sold, operating_expense, non_operating_expense]);
 
       this.resource.data.net_profit =
         operating_profit -
-        parseFloat(depreciation) -
-        parseFloat(interest_on_loans_or_hires) -
-        parseFloat(taxation) -
-        parseFloat(company_tax);
+        this.sum([
+          depreciation,
+          interest_on_loans_or_hires,
+          taxation,
+          company_tax
+        ]);
+    },
+
+    balance() {
+      const {
+        cash,
+        trade_receivables,
+        inventories,
+        other_CA,
+        fixed_assets,
+        trade_payables,
+        other_CL,
+        stockholders_equity,
+        other_NCL,
+        common_shares_outstanding
+      } = this.resource.data;
+
+      const total_assets = this.sum([
+        cash,
+        trade_receivables,
+        inventories,
+        other_CA,
+        fixed_assets
+      ]);
+
+      const total_liabilities = this.sum([
+        trade_payables,
+        other_CL,
+        stockholders_equity,
+        other_NCL,
+        common_shares_outstanding
+      ]);
+
+      this.resource.data.balance = total_assets - total_liabilities;
+    },
+
+    sum(items) {
+      return items.reduce((total, item) => total + parseFloat(item), 0);
     },
 
     async submit() {
@@ -310,10 +457,11 @@ export default {
       deep: true
     },
     "resource.data": {
-      handler(value) {
+      handler() {
         this.costOfGoodSold();
         this.totalDepreciation();
         this.netProfit();
+        this.balance();
       },
       deep: true
     }

@@ -54,7 +54,7 @@
           :label="trans('Applicant Email')"
           autofocus
           class="dt-text-field"
-          name="metadata[applicant][number]"
+          name="metadata[applicant][email]"
           outlined
           prepend-inner-icon="mdi-email-outline"
           v-model="dataset.metadata.applicant.email"
@@ -136,8 +136,8 @@ export default {
       },
       set(val) {
         this.$emit("input", val);
-      },
-    },
-  },
+      }
+    }
+  }
 };
 </script>

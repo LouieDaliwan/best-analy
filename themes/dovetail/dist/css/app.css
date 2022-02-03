@@ -302,11 +302,11 @@ pre {
 }
 
 .text-red input {
-  color: #e63757;
+  color: #e63757 !important;
 }
 
 .text-green input {
-  color: #009688;
+  color: #009688 !important;
 }
 
 .compulsory {

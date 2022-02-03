@@ -11,7 +11,7 @@
           :dense="isDense"
           :disabled="isLoading"
           :error-messages="errors"
-          :label="trans('Company Name')"
+          :label="trans('Project Name')"
           autofocus
           class="dt-text-field"
           name="name"
@@ -22,115 +22,16 @@
         </v-text-field>
       </validation-provider>
 
-      <!-- <validation-provider
-                          vid="metadata[email]"
-                          :name="trans('Email')"
-                          rules="email"
-                          v-slot="{ errors }"
-                        >
-                          <v-text-field
-                            :dense="isDense"
-                            :disabled="isLoading"
-                            :error-messages="errors"
-                            :label="trans('Company Email')"
-                            autofocus
-                            class="dt-text-field"
-                            name="metadata[email]"
-                            outlined
-                            prepend-inner-icon="mdi-email-outline"
-                            v-model="dataset.metadata['email']"
-                          >
-                          </v-text-field>
-                        </validation-provider>
-
-                        <validation-provider
-                          vid="metadata[address]"
-                          :name="trans('Company Address')"
-                          v-slot="{ errors }"
-                        >
-                          <v-text-field
-                            :dense="isDense"
-                            :disabled="isLoading"
-                            :error-messages="errors"
-                            :label="trans('Company Address')"
-                            autofocus
-                            class="dt-text-field"
-                            name="metadata[address]"
-                            outlined
-                            prepend-inner-icon="mdi-map-marker"
-                            v-model="dataset.metadata['address']"
-                          >
-                          </v-text-field>
-                        </validation-provider>
-
-                        <validation-provider
-                          vid="metadata[website]"
-                          :name="trans('Website')"
-                          v-slot="{ errors }"
-                        >
-                          <v-text-field
-                            :dense="isDense"
-                            :disabled="isLoading"
-                            :error-messages="errors"
-                            :label="trans('Website')"
-                            autofocus
-                            class="dt-text-field"
-                            name="metadata[website]"
-                            outlined
-                            prepend-inner-icon="mdi-earth"
-                            v-model="dataset.metadata['website']"
-                          >
-                          </v-text-field>
-                        </validation-provider>
-
-                        <validation-provider
-                          vid="metadata[staffstrength]"
-                          :name="trans('Staff Strength')"
-                          v-slot="{ errors }"
-                        >
-                          <v-text-field
-                            :dense="isDense"
-                            :disabled="isLoading"
-                            :error-messages="errors"
-                            :label="trans('Staff Strength')"
-                            autofocus
-                            class="dt-text-field"
-                            name="metadata[staffstrength]"
-                            outlined
-                            type="number"
-                            v-model="dataset.metadata['staffstrength']"
-                          >
-                          </v-text-field>
-                        </validation-provider>
-
-                        <validation-provider
-                          vid="metadata[industry]"
-                          :name="trans('Industry')"
-                          v-slot="{ errors }"
-                        >
-                          <v-text-field
-                            :dense="isDense"
-                            :disabled="isLoading"
-                            :error-messages="errors"
-                            :label="trans('Industry')"
-                            class="dt-text-field"
-                            name="metadata[industry]"
-                            outlined
-                            v-model="dataset.metadata['industry']"
-                          >
-                          </v-text-field>
-                        </validation-provider> -->
-
       <validation-provider
         vid="metadata[location]"
-        :name="trans('Company Location')"
+        :name="trans('Project Location')"
         v-slot="{ errors }"
       >
         <v-text-field
           :dense="isDense"
           :disabled="isLoading"
           :error-messages="errors"
-          :label="trans('Company Location')"
+          :label="trans('Project Location')"
           class="dt-text-field"
           name="metadata[location]"
           outlined
@@ -140,19 +41,55 @@
       </validation-provider>
 
       <validation-provider
-        vid="metadata[status]"
-        :name="trans('Business Status')"
+        vid="metadata[trade_name_english]"
+        :name="trans('Trade Name (English)')"
         v-slot="{ errors }"
       >
         <v-text-field
           :dense="isDense"
           :disabled="isLoading"
           :error-messages="errors"
-          :label="trans('Business Status')"
+          :label="trans('Trade Name (English)')"
           class="dt-text-field"
-          name="metadata[status]"
+          name="metadata[trade_name_english]"
           outlined
-          v-model="dataset.metadata['status']"
+          v-model="dataset.metadata['trade_name_english']"
+        >
+        </v-text-field>
+      </validation-provider>
+
+      <validation-provider
+        vid="metadata[trade_name_arabic]"
+        :name="trans('Trade Name (Arabic)')"
+        v-slot="{ errors }"
+      >
+        <v-text-field
+          :dense="isDense"
+          :disabled="isLoading"
+          :error-messages="errors"
+          :label="trans('Trade Name (Arabic)')"
+          class="dt-text-field"
+          name="metadata[trade_name_arabic]"
+          outlined
+          v-model="dataset.metadata['trade_name_arabic']"
+        >
+        </v-text-field>
+      </validation-provider>
+
+      <validation-provider
+        vid="metadata[license_no]"
+        :name="trans('License No.')"
+        v-slot="{ errors }"
+      >
+        <v-text-field
+          :dense="isDense"
+          :disabled="isLoading"
+          :error-messages="errors"
+          :label="trans('License No.')"
+          class="dt-text-field"
+          name="metadata[license_no]"
+          outlined
+          v-model="dataset.metadata['license_no']"
         >
         </v-text-field>
       </validation-provider>
@@ -261,8 +198,8 @@ export default {
       },
       set(val) {
         this.$emit("input", val);
-      },
-    },
-  },
+      }
+    }
+  }
 };
 </script>

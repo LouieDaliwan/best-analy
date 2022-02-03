@@ -1,5 +1,6 @@
 <template>
-  <v-form @submit.prevent="submit">
+  <v-form @submit.prevent="submit" ref="form">
+    <input type="hidden" name="customer_id" :value="$route.params.id" />
     <h3 class="d-flex align-center mb-3">
       Income Statement
       <v-spacer></v-spacer>
@@ -24,9 +25,10 @@
       v-if="edit"
     >
       <v-text-field
-        outlined
-        label="Description"
         dense
+        label="Description"
+        name="description"
+        outlined
         v-model="resource.data.description"
       ></v-text-field>
     </validation-provider>
@@ -38,24 +40,28 @@
     <period-input
       :edit="edit"
       label="Sales"
+      name="sales"
       v-model="resource.data.sales"
     ></period-input>
 
     <period-input
       :edit="edit"
       label="Raw Materials"
+      name="raw_materials"
       v-model="resource.data.raw_materials"
     ></period-input>
 
     <period-input
       :edit="edit"
       label="Opening Stocks"
+      name="opening_stocks"
       v-model="resource.data.opening_stocks"
     ></period-input>
 
     <period-input
       :edit="edit"
       label="Closing Stocks"
+      name="closing_stocks"
       v-model="resource.data.closing_stocks"
     ></period-input>
 
@@ -68,17 +74,18 @@
       </v-col>
       <v-col cols="6">
         <v-text-field
-          v-if="edit"
+          class="text-right"
           dense
           hide-details
-          v-model="resource.data.cost_of_good_sold"
-          class="text-right"
+          name="cost_of_good_sold"
           readonly
+          v-if="edit"
+          v-model="resource.data.cost_of_good_sold"
         ></v-text-field>
         <div
+          class="text-right"
           v-else
           v-text="resource.data.cost_of_good_sold"
-          class="text-right"
         ></div
       ></v-col>
     </v-row>
@@ -86,18 +93,21 @@
     <period-input
       :edit="edit"
       label="Production Cost"
+      name="production_cost"
       v-model="resource.data.production_cost"
     ></period-input>
 
     <period-input
       :edit="edit"
       label="Genereral Management Cost"
+      name="general_management_cost"
       v-model="resource.data.general_management_cost"
     ></period-input>
 
     <period-input
       :edit="edit"
       label="Labour Expense"
+      name="labour_expense"
       v-model="resource.data.labour_expense"
     ></period-input>
 
@@ -106,18 +116,21 @@
     <period-input
       :edit="edit"
       label="Buildings"
+      name="buildings"
       v-model="resource.data.buildings"
     ></period-input>
 
     <period-input
       :edit="edit"
       label="Plant, Machinery & Equipment"
+      name="plant_machinery_and_equipment"
       v-model="resource.data.plant_machinery_and_equipment"
     ></period-input>
 
     <period-input
       :edit="edit"
       label="Others"
+      name="others"
       v-model="resource.data.others"
     ></period-input>
 
@@ -130,12 +143,13 @@
       </v-col>
       <v-col cols="6">
         <v-text-field
-          v-if="edit"
+          class="text-right"
           dense
           hide-details
-          v-model="resource.data.depreciation"
-          class="text-right"
+          name="depreciation"
           readonly
+          v-if="edit"
+          v-model="resource.data.depreciation"
         ></v-text-field>
         <div v-else v-text="resource.data.depreciation" class="text-right"></div
       ></v-col>
@@ -146,24 +160,28 @@
     <period-input
       :edit="edit"
       label="Non Operating Expense"
+      name="non_operating_expense"
       v-model="resource.data.non_operating_expense"
     ></period-input>
 
     <period-input
       :edit="edit"
       label="Taxation"
+      name="taxation"
       v-model="resource.data.taxation"
     ></period-input>
 
     <period-input
       :edit="edit"
       label="Interest on Loans/Hires"
+      name="interest_on_loans_or_hires"
       v-model="resource.data.interest_on_loans_or_hires"
     ></period-input>
 
     <period-input
       :edit="edit"
       label="Company Tax"
+      name="company_tax"
       v-model="resource.data.company_tax"
     ></period-input>
 
@@ -174,12 +192,13 @@
       </v-col>
       <v-col cols="6">
         <v-text-field
-          v-if="edit"
+          class="text-right"
           dense
           hide-details
-          v-model="resource.data.net_profit"
-          class="text-right"
+          name="net_profit"
           readonly
+          v-if="edit"
+          v-model="resource.data.net_profit"
         ></v-text-field>
         <div v-else v-text="resource.data.net_profit" class="text-right"></div
       ></v-col>
@@ -268,7 +287,10 @@ export default {
 
     async submit() {
       try {
-        axios.post("/api/v1/financial/save", this.resource.data);
+        axios.post(
+          "/api/v1/financial/save",
+          this.resource.parseData(this.$refs.form.$el)
+        );
       } catch (err) {
         console.log(err);
       }

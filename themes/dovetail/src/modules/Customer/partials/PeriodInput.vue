@@ -3,14 +3,15 @@
     <v-col cols="6" v-text="label"> </v-col>
     <v-col cols="6">
       <v-text-field
-        v-if="edit"
-        outlined
+        :name="name"
+        class="text-right"
         dense
         hide-details
-        v-model="dataset"
-        class="text-right"
-        type="number"
+        outlined
         step="0.01"
+        type="number"
+        v-if="edit"
+        v-model="dataset"
       ></v-text-field>
       <div v-else v-text="dataset" class="text-right"></div
     ></v-col>
@@ -19,7 +20,7 @@
 
 <script>
 export default {
-  props: ["label", "value", "edit"],
+  props: ["label", "value", "edit", "name"],
 
   computed: {
     dataset: {

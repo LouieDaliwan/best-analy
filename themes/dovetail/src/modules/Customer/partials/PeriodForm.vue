@@ -228,12 +228,12 @@
       >
       </v-col>
       <v-col cols="6">
+        <input type="hidden" name="balance" :value="resource.data.balance"/>
         <v-text-field
           class="text-right dt-text-field"
           :class="!resource.data.balance ? 'text-green' : 'text-red'"
           :color="!resource.data.balance ? 'green' : 'red'"
           dense
-          name="balance"
           readonly
           v-if="edit"
           :value="resource.data.balance || 'Balance!'"

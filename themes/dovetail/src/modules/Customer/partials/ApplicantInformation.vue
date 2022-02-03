@@ -16,7 +16,7 @@
           name="metadata[applicant][name]"
           outlined
           prepend-inner-icon="mdi-account"
-          v-model="dataset.metadata.applicant.name"
+          v-model="dataset.applicant.metadata.name"
         >
         </v-text-field>
       </validation-provider>
@@ -36,7 +36,7 @@
           name="metadata[applicant][number]"
           outlined
           prepend-inner-icon="mdi-phone"
-          v-model="dataset.metadata.applicant.number"
+          v-model="dataset.applicant.metadata.number"
         >
         </v-text-field>
       </validation-provider>
@@ -57,7 +57,7 @@
           name="metadata[applicant][email]"
           outlined
           prepend-inner-icon="mdi-email-outline"
-          v-model="dataset.metadata.applicant.email"
+          v-model="dataset.applicant.metadata.email"
         >
         </v-text-field>
       </validation-provider>
@@ -77,7 +77,7 @@
           name="metadata[applicant][contact]"
           outlined
           prepend-inner-icon="mdi-account"
-          v-model="dataset.metadata.applicant.contact"
+          v-model="dataset.applicant.metadata.contact"
         >
         </v-text-field>
       </validation-provider>
@@ -97,7 +97,7 @@
           name="metadata[applicant][designation]"
           outlined
           prepend-inner-icon="mdi-account"
-          v-model="dataset.metadata.applicant.designation"
+          v-model="dataset.applicant.metadata.designation"
         >
         </v-text-field>
       </validation-provider>
@@ -117,7 +117,7 @@
           name="metadata[applicant][number]"
           outlined
           prepend-inner-icon="mdi-phone"
-          v-model="dataset.metadata.applicant.number"
+          v-model="dataset.applicant.metadata.number"
         >
         </v-text-field>
       </validation-provider>

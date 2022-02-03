@@ -11,12 +11,14 @@ class FinancialStatement extends Model
 
     protected $guarded = [];
 
+    protected $primaryKey = 'customer_id';
+
     protected $casts = [
         'metadata' => 'array',
     ];
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'id', 'customer_id');
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
 }

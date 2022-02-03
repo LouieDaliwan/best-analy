@@ -40,16 +40,16 @@ class CustomerDetailsSeeder extends Seeder
     protected function customerDetail($customer)
     {
         $temp_array = [
-            'project_name' => '',
-            'project_location' => '',
-            'project_type' => '',
-            'trade_name_en' => '',
-            'trade_name_ar' => '',
-            'license_no' => '',
-            'funding_program' => '',
-            'industry_sector' => '',
-            'business_size' => '',
-            'description' => '',
+            'project_name' => 'test project name',
+            'project_location' => 'test project location',
+            'project_type' => 'test project type',
+            'trade_name_en' => 'english',
+            'trade_name_ar' => 'arabic',
+            'license_no' => 'license',
+            'funding_program' => 'funding',
+            'industry_sector' => 'industry',
+            'business_size' => 'business size',
+            'description' => 'test description',
         ];
 
 
@@ -73,9 +73,10 @@ class CustomerDetailsSeeder extends Seeder
             'SiteVisitDate' => $metadata['SiteVisitDate'] ?? null,
             'BusinessCounselorName' => $metadata['BusinessCounselorName'] ?? null,
             'PeeBusinessCounselorName' => $metadata['PeeBusinessCounselorName'] ?? null,
-            'mobile_no' =>  null,
+            'number' =>  null,
             'contact_person' => null,
             'designation' => null,
+            'name' => null,
         ];
 
         $customer->applicant()->updateOrCreate([

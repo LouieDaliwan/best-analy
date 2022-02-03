@@ -32,12 +32,6 @@ class Customer extends Model
     ];
 
 
-    // protected $with = [
-    //     'detail',
-    //     'statements ',
-    //     'applicant'
-    // ];
-
     protected $primaryKey = 'id';
 
     /**

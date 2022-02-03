@@ -243,4 +243,36 @@ class CustomerService extends Service implements CustomerServiceInterface
         $attributes['is_fs_has_no_zero_value'] = $count_values !=  0 ? true : false;
         return $attributes;
     }
+
+
+    /**
+     * Save the details of Customer/Company
+     *
+     * @param array $attributes
+     * @param int   $id
+     */
+    public function updateDetails($id, $attributes)
+    {
+        $customer = $this->model->find($id);
+
+        $this->saveCustomerDetail($customer, $attributes);
+
+        $customer->applicant()->updateOrCreate(
+            ['customer_id' => $id],
+            ['metadata' => $attributes['metadata']['applicant']]
+        );
+
+        $customer->detail()->updateOrCreate(
+            ['customer_id' => $id],
+            ['metadata' => $attributes['metadata']['project']]
+        );
+    }
+
+    protected function saveCustomerDetail($customer, $attributes)
+    {
+        $customer->name = $attributes['name'];
+        $customer->code = $attributes['code'];
+        $customer->refnum = $attributes['refnum'];
+        $customer->save();
+    }
 }

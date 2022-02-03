@@ -90,7 +90,7 @@ export default {
 
     setPeriod(index) {
       if (index === 0) this.period = {};
-      else this.period = this.resources.data[index];
+      else this.period = this.resources.data[index + 1];
     }
   },
 

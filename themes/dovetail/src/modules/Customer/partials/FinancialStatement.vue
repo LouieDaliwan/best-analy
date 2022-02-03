@@ -3,7 +3,7 @@
     <v-card-text>
       <v-row>
         <v-col cols="12" md="3">
-          <v-sheet elevation="2">
+          <v-card>
             <v-list>
               <v-subheader class="d-flex"
                 ><h3>Periods</h3>
@@ -35,7 +35,7 @@
                 </v-list-item>
               </v-list-item-group>
             </v-list>
-          </v-sheet>
+          </v-card>
         </v-col>
         <v-col cols="12" md="9">
           <period-form v-model="period"></period-form>

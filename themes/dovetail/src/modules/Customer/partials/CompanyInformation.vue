@@ -132,14 +132,14 @@
 
       <validation-provider
         vid="metadata[type]"
-        :name="trans('Company Type')"
+        :name="trans('Project Type')"
         v-slot="{ errors }"
       >
         <v-text-field
           :dense="isDense"
           :disabled="isLoading"
           :error-messages="errors"
-          :label="trans('Company Type')"
+          :label="trans('Project Type')"
           class="dt-text-field"
           name="metadata[type]"
           outlined

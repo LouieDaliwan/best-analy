@@ -8,6 +8,7 @@ use Customer\Models\ApplicantDetail;
 
 class CustomerDetailsSeeder extends Seeder
 {
+    protected $years = ['Year1', 'Year2', 'Year3'];
     /**
      * Run the database seeds.
      *
@@ -37,7 +38,7 @@ class CustomerDetailsSeeder extends Seeder
     }
 
 
-    protected function customerDetail($customer)
+    protected function customerDetail($customer) : void
     {
         $temp_array = [
             'project_name' => 'test project name',
@@ -57,7 +58,7 @@ class CustomerDetailsSeeder extends Seeder
         ]);
     }
 
-    protected function customerApplicantDetail($customer)
+    protected function customerApplicantDetail($customer) : void
     {
         $metadata = $customer['metadata'];
 
@@ -83,29 +84,73 @@ class CustomerDetailsSeeder extends Seeder
         ]);
     }
 
-    protected function customerFinancialStatement($customer)
+    protected function customerFinancialStatement($customer) : void
     {
-        // dd($customer['metadata']['fps-qa1']);
+        $customer_metadata = $customer['metadata']['fps-qa1'];
 
-        $temp_arr = $this->parseOldMetadata($customer['metadata']['fps-qa1']);
+        foreach ($this->years as $year) {
 
-        $customer->statements()->updateOrCreate([
-            'metadata' => $temp_arr
-        ]);
+            $result = $this->getResultMetaData($customer_metadata, $year);
+
+            $customer->statements()->updateOrCreate(
+                ['period' => $year,],
+                [
+                    'customer_id' => $customer->id,
+                    'period' => $year,
+                    'metadata' => $result
+                ]
+            );
+        }
     }
 
-    protected function parseOldMetadata($metadata)
+    protected function getResultMetaData(array $metadata, string $year) : array
     {
-       dd($metadata);
+        $temp_meta_arr = [];
 
         $arr_metadata = $this->getNewMetadata();
-    }
 
+        foreach ($arr_metadata as $arr_meta_key => $arr_meta_value) {
+
+            if (empty($arr_meta_value)) {
+                isset($temp_meta_arr[$arr_meta_key]) ? : $temp_meta_arr[$arr_meta_key] = (int) $metadata[$arr_meta_key][$year];
+            }
+
+            if (is_array($arr_meta_value) && !empty($arr_meta_value)) {
+
+                foreach ($arr_meta_value as $parent_key => $parent_value) {
+
+                    if (is_array($parent_value)) {
+
+                        foreach ($parent_value as $child_value) {
+                            isset($temp_meta_arr[$arr_meta_key]) ? : $temp_meta_arr[$arr_meta_key] = 0;
+
+                            $temp_meta_arr[$arr_meta_key] += (int) $metadata[$child_value][$year];
+                        }
+
+                    } else {
+                        isset($temp_meta_arr[$arr_meta_key]) ? : $temp_meta_arr[$arr_meta_key] = 0;
+
+                        if (!isset($metadata[$parent_value])) {
+                            continue;
+                        }
+
+                        $temp_meta_arr[$arr_meta_key] += (int) $metadata[$parent_value][$year];
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return $temp_meta_arr;
+    }
 
     protected function getNewMetadata()
     {
         return [
-                'Sales' => [],
+                //'Sales' => [],
                 'Purchase of goods and services' => [
                     'Raw Materials (direct & indirect)',
                     'Opening Stocks',
@@ -114,7 +159,7 @@ class CustomerDetailsSeeder extends Seeder
                 'Production Costs' => [
                     'Cargo and Handling',
                     'Part-time/Temporary Labour',
-                    "Insurance (not including employee's insurance",
+                    "Insurance (not including employee's insurance)",
                     'Transportation',
                     'Utilities',
                     "Maintenance (Building, Plant, and Machinery)",
@@ -152,7 +197,7 @@ class CustomerDetailsSeeder extends Seeder
                     "Other Labour Expenses",
                 ],
                 "Depreciation" => [
-                    "Building",
+                    "Buildings",
                     "Plant, Machinery & Equipment",
                     "Others (Depreciation)"
                 ],

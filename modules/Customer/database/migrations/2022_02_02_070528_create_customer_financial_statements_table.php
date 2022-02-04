@@ -14,7 +14,8 @@ class CreateCustomerFinancialStatementsTable extends Migration
     public function up()
     {
         Schema::create('customer_financial_statements', function (Blueprint $table) {
-            $table->bigIncrements('customer_id')->unsigned()->index();
+            $table->bigIncrements('id');
+            $table->bigInteger('customer_id')->unsigned()->index();
             $table->string('period')->index();
             $table->longText('metadata')->nullable();
             $table->timestamps();

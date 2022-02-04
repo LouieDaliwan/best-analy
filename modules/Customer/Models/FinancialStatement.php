@@ -11,8 +11,6 @@ class FinancialStatement extends Model
 
     protected $guarded = [];
 
-    protected $primaryKey = 'customer_id';
-
     protected $casts = [
         'metadata' => 'array',
     ];

@@ -24,7 +24,7 @@
                   <v-list-item-content>
                     <v-list-item-subtitle>
                       {{ i + 1 }} -
-                      {{ item.description }}
+                      {{ item.period }}
                     </v-list-item-subtitle>
                   </v-list-item-content>
                   <v-list-item-action>

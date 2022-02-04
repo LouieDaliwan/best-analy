@@ -52,7 +52,6 @@ class CustomerDetailsSeeder extends Seeder
             'description' => 'test description',
         ];
 
-
         $customer->detail()->updateOrCreate([
             'metadata' => $temp_array
         ]);
@@ -86,6 +85,115 @@ class CustomerDetailsSeeder extends Seeder
 
     protected function customerFinancialStatement($customer)
     {
-        
+        // dd($customer['metadata']['fps-qa1']);
+
+        $temp_arr = $this->parseOldMetadata($customer['metadata']['fps-qa1']);
+
+        $customer->statements()->updateOrCreate([
+            'metadata' => $temp_arr
+        ]);
+    }
+
+    protected function parseOldMetadata($metadata)
+    {
+       dd($metadata);
+
+        $arr_metadata = $this->getNewMetadata();
+    }
+
+
+    protected function getNewMetadata()
+    {
+        return [
+                'Sales' => [],
+                'Purchase of goods and services' => [
+                    'Raw Materials (direct & indirect)',
+                    'Opening Stocks',
+                    'Closing Stocks',
+                ],
+                'Production Costs' => [
+                    'Cargo and Handling',
+                    'Part-time/Temporary Labour',
+                    "Insurance (not including employee's insurance",
+                    'Transportation',
+                    'Utilities',
+                    "Maintenance (Building, Plant, and Machinery)",
+                    'Lease of Plant and Machinery',
+                    'Direct Employee Cost'
+                ],
+                'General Management Costs' => [
+                    'Stationery Supplies and Printing',
+                    'Rental',
+                    "Insurance (not including employee's insurance)",
+                    "Transportation",
+                    'Company Car/Bus etc.',
+                    "Advertising",
+                    "Entertainment",
+                    "Food and Drinks",
+                    "Telephone and Fax",
+                    "Mail and Courier",
+                    "Maintenance (Office Equipment)",
+                    "Travel",
+                    "Audit, Secretarial, and Professional Costs",
+                    "Newspapers and Magazines",
+                    "Stamp Duty, Filing and Legal",
+                    "Bank charges",
+                    "Other Administrative Costs",
+                ],
+                "Labour Expenses" => [
+                    'Employee Compensation',
+                    "Bonuses",
+                    "Provident Fund",
+                    "Employee Welfare",
+                    "Medical Costs",
+                    "Employee Training",
+                    "Director's Salary",
+                    "Employee Insurance",
+                    "Other Labour Expenses",
+                ],
+                "Depreciation" => [
+                    "Building",
+                    "Plant, Machinery & Equipment",
+                    "Others (Depreciation)"
+                ],
+                "Non-Operating Expenses(Non-Operating Expense Less Income)" => [
+                    "Non-Operating Income" => [
+                        'Profit from Fixed Assets Sale',
+                        'Profit from Foreign Exchange',
+                        'Other Income',
+                    ],
+                    "Non-Operating Costs" => [
+                        'Bad Debts',
+                        'Donations',
+                        'Foreign Exchange Loss',
+                        'Loss on Fixed Assets Sale',
+                        'Others (Non-Operating Costs)',
+                    ],
+                ],
+                "Taxation" => [
+                    'Tax on Property',
+                    'Duties (Customs & Excise)',
+                    'Levy on Foreign Workers',
+                    'Others (excluding Income Tax)',
+                ],
+                "Ebit" => [
+                    'Profit or (Loss) Before Interest and Income Tax'
+                ],
+                'Interest On Loan/Hires' => [
+                    'Interest & Charges by Bank',
+                    'Interest on Loan',
+                    'Interest on Hire Purchase',
+                    'Others (Interest on Loan/Hires)',
+                ],
+                'Operating Profit/(Loss)[EBT]' => [
+                    'Profit or (Loss) Before Income Tax'
+                ],
+                'Company Tax' => [
+                    'Tax on Company'
+                ],
+                'Net Operating Profit/(Loss)' =>[
+                    'Profit or (Loss) After Income Tax'
+                ]
+            ];
     }
 }

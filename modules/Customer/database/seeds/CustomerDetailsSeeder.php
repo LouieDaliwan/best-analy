@@ -40,21 +40,19 @@ class CustomerDetailsSeeder extends Seeder
 
     protected function customerDetail($customer) : void
     {
-        $temp_array = [
-            'project_name' => 'test project name',
-            'project_location' => 'test project location',
-            'project_type' => 'test project type',
-            'trade_name_en' => 'english',
-            'trade_name_ar' => 'arabic',
-            'license_no' => 'license',
-            'funding_program' => 'funding',
-            'industry_sector' => 'industry',
-            'business_size' => 'business size',
-            'description' => 'test description',
-        ];
-
         $customer->detail()->updateOrCreate([
-            'metadata' => $temp_array
+            'metadata' => [
+                'project_name' => $customer['name'],
+                'project_location' => null,
+                'project_type' => null,
+                'trade_name_en' => null,
+                'trade_name_ar' => null,
+                'license_no' => null,
+                'funding_program' => null,
+                'industry_sector' => null,
+                'business_size' => null,
+                'description' => null,
+            ]
         ]);
     }
 
@@ -62,25 +60,23 @@ class CustomerDetailsSeeder extends Seeder
     {
         $metadata = $customer['metadata'];
 
-        $temp_arr = [
-            'email' => $metadata['email'] ?? null,
-            'address' => $metadata['address'] ?? null,
-            'website' => $metadata['website'] ?? null,
-            'staffstrength' => $metadata['staffstrength'] ?? null,
-            'industry' => $metadata['industry'] ?? null,
-            'FileNo' => $metadata['FileNo'] ?? null,
-            'FundingRequestNo' => $metadata['FundingRequestNo'] ?? null,
-            'SiteVisitDate' => $metadata['SiteVisitDate'] ?? null,
-            'BusinessCounselorName' => $metadata['BusinessCounselorName'] ?? null,
-            'PeeBusinessCounselorName' => $metadata['PeeBusinessCounselorName'] ?? null,
-            'number' =>  null,
-            'contact_person' => null,
-            'designation' => null,
-            'name' => null,
-        ];
-
         $customer->applicant()->updateOrCreate([
-            'metadata' => $temp_arr,
+            'metadata' => [
+                'email' => $metadata['email'] ?? null,
+                'address' => $metadata['address'] ?? null,
+                'website' => $metadata['website'] ?? null,
+                'staffstrength' => $metadata['staffstrength'] ?? null,
+                'industry' => $metadata['industry'] ?? null,
+                'FileNo' => $metadata['FileNo'] ?? null,
+                'FundingRequestNo' => $metadata['FundingRequestNo'] ?? null,
+                'SiteVisitDate' => $metadata['SiteVisitDate'] ?? null,
+                'BusinessCounselorName' => $metadata['BusinessCounselorName'] ?? null,
+                'PeeBusinessCounselorName' => $metadata['PeeBusinessCounselorName'] ?? null,
+                'number' =>  null,
+                'contact_person' => null,
+                'designation' => null,
+                'name' => null,
+            ],
         ]);
     }
 
@@ -107,7 +103,7 @@ class CustomerDetailsSeeder extends Seeder
     {
         $temp_meta_arr = [];
 
-        $arr_metadata = $this->getNewMetadata();
+        $arr_metadata = collect($this->getNewMetadata());
 
         foreach ($arr_metadata as $arr_meta_key => $arr_meta_value) {
 
@@ -122,6 +118,7 @@ class CustomerDetailsSeeder extends Seeder
                     if (is_array($parent_value)) {
 
                         foreach ($parent_value as $child_value) {
+
                             isset($temp_meta_arr[$arr_meta_key]) ? : $temp_meta_arr[$arr_meta_key] = 0;
 
                             $temp_meta_arr[$arr_meta_key] += (int) $metadata[$child_value][$year];
@@ -131,7 +128,9 @@ class CustomerDetailsSeeder extends Seeder
                         isset($temp_meta_arr[$arr_meta_key]) ? : $temp_meta_arr[$arr_meta_key] = 0;
 
                         if (!isset($metadata[$parent_value])) {
+
                             continue;
+
                         }
 
                         $temp_meta_arr[$arr_meta_key] += (int) $metadata[$parent_value][$year];
@@ -150,7 +149,7 @@ class CustomerDetailsSeeder extends Seeder
     protected function getNewMetadata()
     {
         return [
-                //'Sales' => [],
+                'Sales' => [],
                 'Purchase of goods and services' => [
                     'Raw Materials (direct & indirect)',
                     'Opening Stocks',

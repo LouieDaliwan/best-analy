@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use Customer\Models\Customer;
 use Customer\Models\Detail;
-use Customer\Models\FinancialStatement;
+use Customer\Models\Customer;
+use Illuminate\Database\Seeder;
+use Customer\Models\BalanceSheet;
 use Customer\Models\ApplicantDetail;
+use Customer\Models\FinancialStatement;
 
 class CustomerDetailsSeeder extends Seeder
 {
@@ -20,6 +21,7 @@ class CustomerDetailsSeeder extends Seeder
         Detail::query()->truncate();
         FinancialStatement::query()->truncate();
         ApplicantDetail::query()->truncate();
+        BalanceSheet::query()->truncate();
 
         $customers = Customer::get();
 
@@ -34,9 +36,32 @@ class CustomerDetailsSeeder extends Seeder
             $this->customerApplicantDetail($customer);
 
             $this->customerFinancialStatement($customer);
+
+            $this->customerBalanceSheets($customer);
         }
     }
 
+    protected function customerBalanceSheets($customer) : void
+    {
+        $data = $customer['metadata']['balance-sheet'];
+
+        $metadata = [];
+
+        foreach ($data as $key => $datum) {
+            foreach ($datum as $year => $value) {
+                isset($metadata[$year]) ? : $metadata[$year] = [];
+                $metadata[$year][$key] = $value;
+            }
+        }
+
+        foreach ($metadata as $year => $value) {
+            $customer->sheets()->updateOrCreate([
+                'period' => $year,
+                'customer_id' => $customer->id,
+                'metadata' => $value
+            ]);
+        }
+    }
 
     protected function customerDetail($customer) : void
     {
@@ -103,7 +128,7 @@ class CustomerDetailsSeeder extends Seeder
     {
         $temp_meta_arr = [];
 
-        $arr_metadata = collect($this->getNewMetadata());
+        $arr_metadata = $this->getNewMetadata();
 
         foreach ($arr_metadata as $arr_meta_key => $arr_meta_value) {
 
@@ -128,13 +153,10 @@ class CustomerDetailsSeeder extends Seeder
                         isset($temp_meta_arr[$arr_meta_key]) ? : $temp_meta_arr[$arr_meta_key] = 0;
 
                         if (!isset($metadata[$parent_value])) {
-
                             continue;
-
                         }
 
                         $temp_meta_arr[$arr_meta_key] += (int) $metadata[$parent_value][$year];
-
                     }
 
                 }

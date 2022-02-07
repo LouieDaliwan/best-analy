@@ -6,6 +6,7 @@ use Best\Models\Report;
 use Index\Models\Index;
 use Customer\Models\Detail;
 use Laravel\Scout\Searchable;
+use Customer\Models\BalanceSheet;
 use Customer\Models\ApplicantDetail;
 use Customer\Models\FinancialStatement;
 use Illuminate\Database\Eloquent\Model;
@@ -152,5 +153,15 @@ class Customer extends Model
     public function applicant()
     {
         return $this->hasOne(ApplicantDetail::class, 'customer_id', 'id');
+    }
+
+    /**
+     * Retrieve customer Balance Sheets
+     *
+     * @return \Customer\Models\ApplicantDetail
+     */
+    public function sheets()
+    {
+        return $this->hasMany(BalanceSheet::class, 'customer_id', 'id');
     }
 }

@@ -35,7 +35,6 @@ use Index\Models\Index;
                 'deleted' => $this->deleted,
                 'modified' => $this->modified,
                 'statements' => $this->statements,
-                'sheets' => $this->sheets,
                 'applicant' => $this->applicant,
                 'details' => $this->detail,
                 'indices' => Index::all()->map(function ($index) use ($request) {

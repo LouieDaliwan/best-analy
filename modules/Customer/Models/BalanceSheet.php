@@ -15,9 +15,9 @@ class BalanceSheet extends Model
         'metadata' => 'array',
     ];
 
-    protected $hidden = [
-        'metadata'
-    ];
+    // protected $hidden = [
+    //     'metadata'
+    // ];
 
     public function customer()
     {

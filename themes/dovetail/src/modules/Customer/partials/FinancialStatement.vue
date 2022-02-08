@@ -20,7 +20,7 @@
                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
-                <v-list-item v-for="(item, i) in resources.data" :key="i">
+                <v-list-item v-for="(item, i) in dataset.statements" :key="i">
                   <v-list-item-content>
                     <v-list-item-subtitle>
                       {{ i + 1 }} -
@@ -38,7 +38,7 @@
           </v-card>
         </v-col>
         <v-col cols="12" md="9">
-          <period-form v-model="period"></period-form>
+          <period-form v-model="period" @update="update"></period-form>
         </v-col>
       </v-row>
     </v-card-text>
@@ -46,56 +46,48 @@
 </template>
 
 <script>
-import Resources from "@/core/Models/Resources";
-
 export default {
+  props: ["value"],
+
   components: {
     PeriodForm: () => import("./PeriodForm.vue")
   },
 
-  data: () => ({
-    resources: new Resources(),
-    period: {}
-  }),
-
-  methods: {
-    getResources() {
-      this.resources.data = [
-        {
-          id: 1,
-          description: "Q1 2018",
-          sales: "15000",
-          raw: "7600"
-        },
-        {
-          id: 2,
-          description: "Q2 2018",
-          sales: "2500",
-          raw: "1500"
-        },
-        {
-          id: 3,
-          description: "Q3 2018",
-          sales: "12000",
-          raw: "5100"
-        },
-        {
-          id: 4,
-          description: "Q4 2018",
-          sales: "50000",
-          raw: "16099"
-        }
-      ];
-    },
-
-    setPeriod(index) {
-      if (index === 0) this.period = {};
-      else this.period = this.resources.data[index - 1];
+  computed: {
+    dataset: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit("input", value);
+      }
     }
   },
 
-  mounted() {
-    this.getResources();
+  data: () => ({
+    period: null
+  }),
+
+  methods: {
+    setPeriod(index) {
+      if (index === 0) this.period = {};
+      else {
+        let statement = this.dataset.statements[index - 1];
+        let sheet = this.dataset.sheets[index - 1];
+
+        this.period = {
+          id: this.dataset.id,
+          statement_id: statement[index - 1].id,
+          sheet_id: sheet[index - 1].id,
+          statements: { ...statements.metadata },
+          sheets: { ...sheet[index - 1].metadata }
+        };
+      }
+    },
+
+    update() {
+      this.$emit("update");
+    }
   }
 };
 </script>

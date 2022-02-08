@@ -164,6 +164,7 @@
                       v-model="resource.data"
                       :isDense="isDense"
                       :isLoading="isLoading"
+                      @update="update"
                     ></financial-statement>
                   </v-tab-item>
                 </template>
@@ -442,6 +443,9 @@ export default {
 
     activateTab() {
       this.tabsModel = parseInt(this.$route.query.tab || 0);
+    },
+    update() {
+      this.resource.isPrestine = false;
     }
   },
 

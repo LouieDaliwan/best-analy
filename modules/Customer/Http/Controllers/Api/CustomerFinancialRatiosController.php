@@ -17,7 +17,6 @@ class CustomerFinancialRatiosController extends ApiController
      */
     public function __invoke(Request $request, Customer $customer, CustomerServiceInterface $service)
     {
-        dd($customer);
         return $service->financialRatios($customer);
     }
 }

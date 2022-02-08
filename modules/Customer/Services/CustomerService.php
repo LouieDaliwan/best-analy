@@ -287,8 +287,8 @@ class CustomerService extends Service implements CustomerServiceInterface
         $customer->save();
     }
 
-    public function financialRatios($attributes)
+    public function financialRatios($customer)
     {
-        dd($attributes);
+        return $customer->computeFinancialRatios();
     }
 }

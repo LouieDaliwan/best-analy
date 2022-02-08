@@ -12,7 +12,8 @@ class FinancialStatement extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'metadata' => 'array',
+        'metadataStatements' => 'array',
+        'metadataSheets' => 'array',
     ];
 
     public function customer()

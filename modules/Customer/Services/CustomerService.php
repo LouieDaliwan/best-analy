@@ -266,6 +266,17 @@ class CustomerService extends Service implements CustomerServiceInterface
             ['customer_id' => $id],
             ['metadata' => $attributes['metadata']['project']]
         );
+
+        $customer->statements()->updateOrCreate(
+            [
+                'customer' => $id,
+                'period' => $attributes['metadata']['year'],
+            ],
+            [
+                'metadataStatements' => $attributes['metadata']['statements'],
+                'metadataSheets' => $attributes['metadata']['sheets']
+            ]
+        );
     }
 
     protected function saveCustomerDetail($customer, $attributes)

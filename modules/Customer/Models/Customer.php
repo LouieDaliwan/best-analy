@@ -154,14 +154,4 @@ class Customer extends Model
     {
         return $this->hasOne(ApplicantDetail::class, 'customer_id', 'id');
     }
-
-    /**
-     * Retrieve customer Balance Sheets
-     *
-     * @return \Customer\Models\ApplicantDetail
-     */
-    public function sheets()
-    {
-        return $this->hasMany(BalanceSheet::class, 'customer_id', 'id');
-    }
 }

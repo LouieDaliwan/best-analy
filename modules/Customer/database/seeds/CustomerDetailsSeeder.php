@@ -3,7 +3,6 @@
 use Customer\Models\Detail;
 use Customer\Models\Customer;
 use Illuminate\Database\Seeder;
-use Customer\Models\BalanceSheet;
 use Customer\Models\ApplicantDetail;
 use Customer\Models\FinancialStatement;
 
@@ -21,7 +20,6 @@ class CustomerDetailsSeeder extends Seeder
         Detail::query()->truncate();
         FinancialStatement::query()->truncate();
         ApplicantDetail::query()->truncate();
-        BalanceSheet::query()->truncate();
 
         $customers = Customer::get();
 
@@ -55,10 +53,14 @@ class CustomerDetailsSeeder extends Seeder
         }
 
         foreach ($metadata as $year => $value) {
-            $customer->sheets()->updateOrCreate([
+            $customer->statements()->updateOrCreate([
                 'period' => $year,
                 'customer_id' => $customer->id,
-                'metadata' => $value
+            ],
+            [
+                'period' => $year,
+                'customer_id' => $customer->id,
+                'metadataSheets' => $value
             ]);
         }
     }
@@ -114,11 +116,14 @@ class CustomerDetailsSeeder extends Seeder
             $result = $this->getResultMetaData($customer_metadata, $year);
 
             $customer->statements()->updateOrCreate(
-                ['period' => $year,],
+                [
+                    'period' => $year,
+                    'customer_id' => $year,
+                ],
                 [
                     'customer_id' => $customer->id,
                     'period' => $year,
-                    'metadata' => $result
+                    'metadataStatements' => $result
                 ]
             );
         }
@@ -172,10 +177,10 @@ class CustomerDetailsSeeder extends Seeder
     {
         return [
                 'Sales' => [],
-                'Purchase of goods and services' => [
-                    'Raw Materials (direct & indirect)',
+                'Raw Materials (direct & indirect)' => [],
+                'Change Inventory' => [
                     'Opening Stocks',
-                    'Closing Stocks',
+                    'Closing Stocks'
                 ],
                 'Production Costs' => [
                     'Cargo and Handling',
@@ -242,18 +247,18 @@ class CustomerDetailsSeeder extends Seeder
                     'Levy on Foreign Workers',
                     'Others (excluding Income Tax)',
                 ],
-                "Ebit" => [
-                    'Profit or (Loss) Before Interest and Income Tax'
-                ],
+                // "Ebit" => [
+                //     'Profit or (Loss) Before Interest and Income Tax'
+                // ],
                 'Interest On Loan/Hires' => [
                     'Interest & Charges by Bank',
                     'Interest on Loan',
                     'Interest on Hire Purchase',
                     'Others (Interest on Loan/Hires)',
                 ],
-                'Operating Profit/(Loss)[EBT]' => [
-                    'Profit or (Loss) Before Income Tax'
-                ],
+                // 'Operating Profit/(Loss)[EBT]' => [
+                //     'Profit or (Loss) Before Income Tax'
+                // ],
                 'Company Tax' => [
                     'Tax on Company'
                 ],

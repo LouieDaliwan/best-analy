@@ -72,16 +72,7 @@ export default {
     setPeriod(index) {
       if (index === 0) this.period = {};
       else {
-        let statement = this.dataset.statements[index - 1];
-        let sheet = this.dataset.sheets[index - 1];
-
-        this.period = {
-          id: this.dataset.id,
-          statement_id: statement[index - 1].id,
-          sheet_id: sheet[index - 1].id,
-          statements: { ...statements.metadata },
-          sheets: { ...sheet[index - 1].metadata }
-        };
+        this.period = this.dataset.statements[index - 1];
       }
     },
 

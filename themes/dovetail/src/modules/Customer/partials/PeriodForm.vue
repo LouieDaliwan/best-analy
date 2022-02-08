@@ -5,6 +5,11 @@
       Period
       <v-spacer></v-spacer>
       <template v-if="resource.data.id">
+        <input
+          type="hidden"
+          name="metadata[statement][id]"
+          :value="resource.data.id"
+        />
         <v-switch
           :label="`${edit ? 'Edit' : 'View'}`"
           class="mt-0"
@@ -27,14 +32,14 @@
       <v-text-field
         dense
         label="Description"
-        name="metadata[statements][description]"
+        name="metadata[statement][metadataStatements][description]"
         outlined
         v-model="resource.data.description"
         hide-details
       ></v-text-field>
       <input
         type="hidden"
-        name="metadata[sheets][description]"
+        name="metadata[statement][metadataSheets][description]"
         :value="resource.data.description"
       />
     </validation-provider>
@@ -47,14 +52,8 @@
 
     <h3>Financial Statement</h3>
 
-    <input
-      type="hidden"
-      name="metadata[statements][id]"
-      :value="resource.data.sheet_id"
-    />
-
     <div
-      v-for="(item, i) in Object.keys(resource.data.statements)"
+      v-for="(item, i) in Object.keys(resource.data.metadataStatements)"
       :key="i + 'a'"
     >
       <template v-if="item === 'Net Operating Profit/(Loss)'">
@@ -69,18 +68,22 @@
             <v-text-field
               class="text-right dt-text-field"
               :class="
-                resource.data.statements[item] > 0 ? 'text-green' : 'text-red'
+                resource.data.metadataStatements[item] > 0
+                  ? 'text-green'
+                  : 'text-red'
               "
-              :color="resource.data.statements[item] > 0 ? 'green' : 'red'"
+              :color="
+                resource.data.metadataStatements[item] > 0 ? 'green' : 'red'
+              "
               dense
-              :name="`metadata[statements][${item}]`"
+              :name="`metadata[statement][metadataStatements][${item}]`"
               readonly
               v-if="edit"
-              v-model="resource.data.statements[item]"
+              v-model="resource.data.metadataStatements[item]"
             ></v-text-field>
             <div
               v-else
-              v-text="resource.data.statements[item]"
+              v-text="resource.data.metadataStatements[item]"
               class="text-right"
             ></div
           ></v-col>
@@ -98,14 +101,14 @@
             <v-text-field
               class="text-right dt-text-field"
               dense
-              :name="`metadata[statements][${item}]`"
+              :name="`metadata[statement][metadataStatements][${item}]`"
               readonly
               v-if="edit"
-              v-model="resource.data.statements[item]"
+              v-model="resource.data.metadataStatements[item]"
             ></v-text-field>
             <div
               v-else
-              v-text="resource.data.statements[item]"
+              v-text="resource.data.metadataStatements[item]"
               class="text-right"
             ></div
           ></v-col>
@@ -115,8 +118,8 @@
         <period-input
           :edit="edit"
           :label="item"
-          :name="`metadata[statements][${item}]`"
-          v-model="resource.data.statements[item]"
+          :name="`metadata[statement][metadataStatements][${item}]`"
+          v-model="resource.data.metadataStatements[item]"
         ></period-input>
       </template>
     </div>
@@ -129,13 +132,10 @@
 
     <v-card flat height="50"></v-card>
 
-    <input
-      type="hidden"
-      name="metadata[sheets][id]"
-      :value="resource.data.sheet_id"
-    />
-
-    <div v-for="(item, i) in Object.keys(resource.data.sheets)" :key="i">
+    <div
+      v-for="(item, i) in Object.keys(resource.data.metadataSheets)"
+      :key="i"
+    >
       <template v-if="item === 'Balance'">
         <v-row>
           <v-col
@@ -146,10 +146,12 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              :class="!resource.data.sheets[item] ? 'text-green' : 'text-red'"
-              :color="!resource.data.sheets[item] ? 'green' : 'red'"
-              :name="`metadata[sheets][${item}]`"
-              :value="resource.data.sheets[item] || 'Balance!'"
+              :class="
+                !resource.data.metadataSheets[item] ? 'text-green' : 'text-red'
+              "
+              :color="!resource.data.metadataSheets[item] ? 'green' : 'red'"
+              :name="`metadata[statement][metadataSheets][${item}]`"
+              :value="resource.data.metadataSheets[item] || 'Balance!'"
               class="text-right dt-text-field"
               dense
               readonly
@@ -157,7 +159,7 @@
             ></v-text-field>
             <div
               v-else
-              v-text="resource.data.sheets[item]"
+              v-text="resource.data.metadataSheets[item]"
               class="text-right"
             ></div
           ></v-col>
@@ -167,15 +169,15 @@
         <period-input
           :edit="edit"
           :label="item"
-          :name="`metadata[sheets][${item}]`"
-          v-model="resource.data.sheets[item]"
+          :name="`metadata[statement][metadataSheets][${item}]`"
+          v-model="resource.data.metadataSheets[item]"
         ></period-input>
       </template>
     </div>
 
-    <div class="text-right mt-5" v-if="edit">
+    <!-- <div class="text-right mt-5" v-if="edit">
       <v-btn type="submit" large color="primary">Save</v-btn>
-    </div>
+    </div> -->
   </div>
   <!-- </v-form> -->
 </template>
@@ -197,7 +199,7 @@ export default {
 
   methods: {
     costOfGoodSold() {
-      let data = this.resource.data.statements;
+      let data = this.resource.data.metadataStatements;
 
       data["Cost of Good Sold"] =
         this.sum([data["Raw Materials"], data["Opening Stocks"]]) -
@@ -205,7 +207,7 @@ export default {
     },
 
     netProfit() {
-      let data = this.resource.data.statements;
+      let data = this.resource.data.metadataStatements;
 
       const operating_expense = this.sum([
         data["Production Cost"],
@@ -232,25 +234,26 @@ export default {
     },
 
     balance() {
-      const sheets = this.resource.data.sheets;
+      const metadataSheets = this.resource.data.metadataSheets;
 
       const total_assets = this.sum([
-        sheets.Cash,
-        sheets["Trade Receivables"],
-        sheets.Inventories,
-        sheets["Other CA"],
-        sheets["Fixed Assets"]
+        metadataSheets.Cash,
+        metadataSheets["Trade Receivables"],
+        metadataSheets.Inventories,
+        metadataSheets["Other CA"],
+        metadataSheets["Fixed Assets"]
       ]);
 
       const total_liabilities = this.sum([
-        sheets["Trade Payables"],
-        sheets["Other CL"],
-        sheets["Stockholders' Equity"],
-        sheets["Other NCL"],
-        sheets["Common Shares Outstanding"]
+        metadataSheets["Trade Payables"],
+        metadataSheets["Other CL"],
+        metadataSheets["Stockholders' Equity"],
+        metadataSheets["Other NCL"],
+        metadataSheets["Common Shares Outstanding"]
       ]);
 
-      this.resource.data.sheets.Balance = total_assets - total_liabilities;
+      this.resource.data.metadataSheets.Balance =
+        total_assets - total_liabilities;
     },
 
     sum(items) {
@@ -273,6 +276,8 @@ export default {
     value: {
       handler(value) {
         this.resource = new Financial();
+
+        console.log(value);
 
         if (!value.id) return (this.edit = true);
 

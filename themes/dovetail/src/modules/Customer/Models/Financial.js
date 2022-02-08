@@ -7,7 +7,7 @@ export default class extends Resource {
     this.data = {
       description: "",
 
-      sheets: {
+      metadataSheets: {
         Balance: 0,
         Cash: 0,
         "Common Shares Outstanding": 0,
@@ -21,7 +21,7 @@ export default class extends Resource {
         "Trade Receivables": 0
       },
 
-      statements: {
+      metadataStatements: {
         "Net Operating Profit/(Loss)": 0,
         Sales: 0,
         "Raw Materials": 0,

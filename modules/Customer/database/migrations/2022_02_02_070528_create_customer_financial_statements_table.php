@@ -17,7 +17,8 @@ class CreateCustomerFinancialStatementsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('customer_id')->unsigned()->index();
             $table->string('period')->index();
-            $table->longText('metadata')->nullable();
+            $table->longText('metadataStatements')->nullable();
+            $table->longText('metadataSheets')->nullable();
             $table->timestamps();
         });
     }

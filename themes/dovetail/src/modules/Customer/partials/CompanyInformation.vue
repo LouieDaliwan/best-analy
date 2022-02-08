@@ -135,17 +135,19 @@
         :name="trans('Project Type')"
         v-slot="{ errors }"
       >
-        <v-text-field
+        <v-select
           :dense="isDense"
           :disabled="isLoading"
           :error-messages="errors"
+          :items="['Industrial', 'Non Industrial']"
           :label="trans('Project Type')"
+          append-icon="mdi-chevron-down"
+          background-color="selects"
           class="dt-text-field"
           name="metadata[project][project_type]"
           outlined
           v-model="dataset.details.metadata['project_type']"
-        >
-        </v-text-field>
+        ></v-select>
       </validation-provider>
 
       <validation-provider
@@ -153,17 +155,19 @@
         :name="trans('Business Size')"
         v-slot="{ errors }"
       >
-        <v-text-field
+        <v-select
           :dense="isDense"
           :disabled="isLoading"
           :error-messages="errors"
+          :items="['SME', 'mSME']"
           :label="trans('Business Size')"
+          append-icon="mdi-chevron-down"
+          background-color="selects"
           class="dt-text-field"
           name="metadata[project][business_size]"
           outlined
           v-model="dataset.details.metadata['business_size']"
-        >
-        </v-text-field>
+        ></v-select>
       </validation-provider>
 
       <validation-provider

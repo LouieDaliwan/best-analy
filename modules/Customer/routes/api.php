@@ -2,9 +2,11 @@
 
 Route::prefix('v1')->middleware(['auth:api', 'json.force', 'auth.permissions'])->group(function () {
     Route::get('customers/{customer}/reports', 'Api\GetCustomerReportsList')->name('customers.reports');
+    Route::get('customer/{customer}/financial-ratios', 'Api\CustomerFinancialRatiosController')->name('customers.financialRatios');
     Route::softDeletes('customers', 'Api\CustomerController');
     Route::ownedResource('customers', 'Api\CustomerController@owned');
     Route::apiResource('customers', 'Api\CustomerController');
+
 });
 
 Route::prefix('v1')->middleware(['auth:api', 'json.force'])->group(function () {

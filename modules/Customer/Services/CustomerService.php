@@ -286,4 +286,9 @@ class CustomerService extends Service implements CustomerServiceInterface
         $customer->refnum = $attributes['refnum'];
         $customer->save();
     }
+
+    public function financialRatios($attributes)
+    {
+        dd($attributes);
+    }
 }

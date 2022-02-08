@@ -53,6 +53,11 @@ export default {
         .finally(() => {
           this.resource.fetch(false);
         });
+
+      axios.get($api.financialRatio(this.$route.params.id))
+      .then(({data}) => {
+          console.log(data);
+      });
     },
   },
 

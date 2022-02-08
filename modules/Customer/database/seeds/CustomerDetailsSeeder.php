@@ -56,6 +56,10 @@ class CustomerDetailsSeeder extends Seeder
             $customer->statements()->updateOrCreate([
                 'period' => $year,
                 'customer_id' => $customer->id,
+            ],
+            [
+                'period' => $year,
+                'customer_id' => $customer->id,
                 'metadataSheets' => $value
             ]);
         }
@@ -112,7 +116,10 @@ class CustomerDetailsSeeder extends Seeder
             $result = $this->getResultMetaData($customer_metadata, $year);
 
             $customer->statements()->updateOrCreate(
-                ['period' => $year,],
+                [
+                    'period' => $year,
+                    'customer_id' => $year,
+                ],
                 [
                     'customer_id' => $customer->id,
                     'period' => $year,

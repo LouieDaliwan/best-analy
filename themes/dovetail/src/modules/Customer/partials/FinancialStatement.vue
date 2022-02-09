@@ -65,7 +65,7 @@ export default {
   },
 
   data: () => ({
-    period: null
+      period: null
   }),
 
   methods: {

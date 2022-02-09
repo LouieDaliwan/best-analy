@@ -201,9 +201,10 @@ export default {
     costOfGoodSold() {
       let data = this.resource.data.metadataStatements;
 
-      data["Cost of Good Sold"] =
-        this.sum([data["Raw Materials"], data["Opening Stocks"]]) -
-        parseFloat(data["Closing Stocks"]);
+      data["Cost of Good Sold"] = this.sum([
+        data["Raw Materials"],
+        data["Change Inventory"]
+      ]);
     },
 
     netProfit() {

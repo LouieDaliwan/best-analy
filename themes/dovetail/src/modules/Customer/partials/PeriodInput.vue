@@ -1,6 +1,24 @@
 <template>
   <v-row>
-    <v-col cols="6" v-text="label"> </v-col>
+    <v-col cols="6">
+      <span v-text="label"></span>
+
+      <v-menu v-if="tooltip[label]">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-bind="attrs" v-on="on" icon small>
+            <v-icon small>mdi-information-outline</v-icon>
+          </v-btn>
+        </template>
+        <v-list dense>
+          <v-list-item
+            v-for="(item, i) in tooltip[label]"
+            v-text="item"
+            :key="i"
+          >
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-col>
     <v-col cols="6">
       <v-text-field
         :name="name"
@@ -31,6 +49,74 @@ export default {
         this.$emit("input", value);
       }
     }
-  }
+  },
+
+  data: () => ({
+    tooltip: {
+      "Production Costs": [
+        "Cargo & Handling",
+        "Part-time labour",
+        "Insurance",
+        "Transportation",
+        "Utilities",
+        "Maintenance",
+        "Other Production Costs"
+      ],
+      "General Management Costs": [
+        "Stationery Supplies and Printing",
+        "Rental",
+        "Insurance (not including employees' insurance)",
+        "Transportation",
+        "Company Car/Bus etc.",
+        "Advertising",
+        "Entertainment",
+        "Food and Drinks",
+        "Telephone and Fax",
+        "Mail and Courier",
+        "Maintenance (Office Equipment)",
+        "Travel",
+        "Audit, Secretarial and Professional Costs",
+        "Newspaper and Magazines",
+        "Stamp Duty, Filing and Legal",
+        "Bank charges",
+        "Other Administrative Costs"
+      ],
+      "Labour Expenses": [
+        "Employee Compensation",
+        "Bonuses",
+        "Provident Fund",
+        "Employee Welfare",
+        "Medical Costs",
+        "Employee Training",
+        "Director's Salary",
+        "Employee Insurance",
+        "Others"
+      ],
+      Depreciation: ["Buildings", "Plant, Machinery & Equipment", "Others"],
+      "Non-Operating Expenses(Non-Operating Expense Less Income)": [
+        "Non-Operating Income",
+        "- Profit from Fixed Assets Sale",
+        "- Profit from Foreign Exchange",
+        "- Other Income",
+        "Non-Operating Costs",
+        "- Bad Debts",
+        "- Foreign Exchange Loss",
+        "- Loss on Fixed Assets Sale",
+        "- Others"
+      ],
+      Taxation: [
+        "Tax on Property",
+        "Duties (Customs & Excise)",
+        "Levy on Foreign Workers",
+        "Others (excluding Income Tax)"
+      ],
+      "Interest On Loan/Hires": [
+        "Interest & Charges by Bank",
+        "Interest on Loan",
+        "Interest on Hire Purchase",
+        "Others"
+      ]
+    }
+  })
 };
 </script>

@@ -203,8 +203,6 @@ export default {
 
       data["Cost of Good Sold"] =
         this.sum([data["Raw Materials (direct & indirect)"], data["Change Inventory"]]);
-        // this.sum([data["Raw Materials (direct & indirect)"], data["Opening Stocks"]]) -
-        // parseFloat(data["Closing Stocks"]);
     },
 
     netProfit() {

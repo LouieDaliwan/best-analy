@@ -32,19 +32,19 @@
       <v-text-field
         dense
         label="Description"
-        name="metadata[statement][metadataStatements][description]"
+        name="metadata[statement][metadataStatements][period]"
         outlined
         v-model="resource.data.description"
         hide-details
       ></v-text-field>
       <input
         type="hidden"
-        name="metadata[statement][metadataSheets][description]"
+        name="metadata[statement][metadataSheets][period]"
         :value="resource.data.description"
       />
     </validation-provider>
 
-    <h4 class="mb-3 primary--text" v-else v-text="resource.data.description">
+    <h4 class="mb-3 primary--text" v-else v-text="resource.data.period">
       Period
     </h4>
 
@@ -202,8 +202,9 @@ export default {
       let data = this.resource.data.metadataStatements;
 
       data["Cost of Good Sold"] =
-        this.sum([data["Raw Materials"], data["Opening Stocks"]]) -
-        parseFloat(data["Closing Stocks"]);
+        this.sum([data["Raw Materials (direct & indirect)"], data["Change Inventory"]]);
+        // this.sum([data["Raw Materials (direct & indirect)"], data["Opening Stocks"]]) -
+        // parseFloat(data["Closing Stocks"]);
     },
 
     netProfit() {

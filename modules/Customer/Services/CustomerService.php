@@ -5,6 +5,7 @@ namespace Customer\Services;
 use Best\Models\Report;
 use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
+use Customer\Jobs\ComputeFinancialRatio;
 use Customer\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -267,16 +268,22 @@ class CustomerService extends Service implements CustomerServiceInterface
             ['metadata' => $attributes['metadata']['project']]
         );
 
-        $customer->statements()->updateOrCreate(
-            [
-                'customer' => $id,
-                'period' => $attributes['metadata']['year'],
-            ],
-            [
-                'metadataStatements' => $attributes['metadata']['statements'],
-                'metadataSheets' => $attributes['metadata']['sheets']
-            ]
-        );
+        $statements = $attributes['metadata']['statements'];
+
+        if ( isset($statements['metadataStatements']) && isset($statements['metadataSheets'])) {
+            $customer->statements()->updateOrCreate(
+                [
+                    'customer' => $id,
+                    'period' => $attributes['metadata']['year'],
+                ],
+                [
+                    'metadataStatements' => $attributes['metadata']['statements'],
+                    'metadataSheets' => $attributes['metadata']['sheets']
+                ]
+            );
+
+            dispatch(new ComputeFinancialRatio($customer));
+        }
     }
 
     protected function saveCustomerDetail($customer, $attributes)

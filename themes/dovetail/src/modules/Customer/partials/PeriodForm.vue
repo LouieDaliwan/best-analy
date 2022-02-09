@@ -277,14 +277,11 @@ export default {
       handler(value) {
         this.resource = new Financial();
 
-        console.log(value);
-
         if (!value.id) return (this.edit = true);
 
         this.resource.data = { ...this.resource.data, ...value };
         this.edit = false;
-      },
-      deep: true
+      }
     },
     "resource.data": {
       handler() {

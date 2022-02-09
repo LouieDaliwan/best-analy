@@ -39,6 +39,10 @@ export default {
     return `/api/v1/reports/overall/customer/${customer}/user/${user}?month=${month}`
   },
 
+  financialRatio: function(customer) {
+    return `/api/v1/customer/${customer}/financial-ratios`
+  },
+
   indices: {
     list: function () {
       return '/api/v1/indices'

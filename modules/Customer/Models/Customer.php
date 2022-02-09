@@ -154,4 +154,9 @@ class Customer extends Model
     {
         return $this->hasOne(ApplicantDetail::class, 'customer_id', 'id');
     }
+
+    public function computeFinancialRatios()
+    {
+        dd($this->statements()->latest()->take(3)->get(['metadataStatements', 'metadataSheets'])->toArray());
+    }
 }

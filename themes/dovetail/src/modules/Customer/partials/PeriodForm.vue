@@ -166,6 +166,7 @@
         </v-row>
       </template>
       <template v-else>
+
         <period-input
           :edit="edit"
           :label="item"

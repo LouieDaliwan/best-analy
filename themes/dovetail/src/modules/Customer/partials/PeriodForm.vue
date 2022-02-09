@@ -166,7 +166,6 @@
         </v-row>
       </template>
       <template v-else>
-
         <period-input
           :edit="edit"
           :label="item"
@@ -202,8 +201,10 @@ export default {
     costOfGoodSold() {
       let data = this.resource.data.metadataStatements;
 
-      data["Cost of Good Sold"] =
-        this.sum([data["Raw Materials (direct & indirect)"], data["Change Inventory"]]);
+      data["Cost of Good Sold"] = this.sum([
+        data["Raw Materials (direct & indirect)"],
+        data["Change Inventory"]
+      ]);
     },
 
     netProfit() {

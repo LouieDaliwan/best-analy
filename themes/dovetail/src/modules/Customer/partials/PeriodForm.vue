@@ -34,13 +34,13 @@
         label="Description"
         name="metadata[statement][metadataStatements][period]"
         outlined
-        v-model="resource.data.description"
+        v-model="resource.data.period"
         hide-details
       ></v-text-field>
       <input
         type="hidden"
         name="metadata[statement][metadataSheets][period]"
-        :value="resource.data.description"
+        :value="resource.data.period"
       />
     </validation-provider>
 

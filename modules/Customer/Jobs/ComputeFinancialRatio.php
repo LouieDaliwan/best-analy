@@ -32,6 +32,7 @@ class ComputeFinancialRatio implements ShouldQueue
      */
     public function handle()
     {
-        dd($this->customer);
+        $statements = $this->customer->statements()->latest()->take(3)->get(['metadataStatements', 'metadataSheets'])->toArray();
+        dd($statements);
     }
 }

@@ -258,6 +258,7 @@ class CustomerService extends Service implements CustomerServiceInterface
 
         $this->saveCustomerDetail($customer, $attributes);
 
+        //TODO optimize --Louie Daliwan
         $customer->applicant()->updateOrCreate(
             ['customer_id' => $id],
             ['metadata' => $attributes['metadata']['applicant']]
@@ -268,22 +269,24 @@ class CustomerService extends Service implements CustomerServiceInterface
             ['metadata' => $attributes['metadata']['project']]
         );
 
-        $statements = $attributes['metadata']['statements'];
+        $statements = $attributes['metadata']['statement'];
 
-        if ( isset($statements['metadataStatements']) && isset($statements['metadataSheets'])) {
+        if ( isset($statements['metadataStatements']) && isset($statements['metadataSheets']) ) {
+
             $customer->statements()->updateOrCreate(
                 [
-                    'customer' => $id,
-                    'period' => $attributes['metadata']['year'],
+                    'customer_id' => $id,
+                    'period' => $statements['metadataStatements']['period'],
                 ],
                 [
-                    'metadataStatements' => $attributes['metadata']['statements'],
-                    'metadataSheets' => $attributes['metadata']['sheets']
+                    'metadataStatements' => $statements['metadataStatements'],
+                    'metadataSheets' => $statements['metadataSheets']
                 ]
             );
 
             dispatch(new ComputeFinancialRatio($customer));
         }
+        //TODO optimize --Louie Daliwan
     }
 
     protected function saveCustomerDetail($customer, $attributes)

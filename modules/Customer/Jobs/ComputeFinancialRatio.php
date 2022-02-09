@@ -32,7 +32,43 @@ class ComputeFinancialRatio implements ShouldQueue
      */
     public function handle()
     {
-        $statements = $this->customer->statements()->latest()->take(3)->get(['metadataStatements', 'metadataSheets'])->toArray();
-        dd($statements);
+        $statements = $this->customer->statements()
+        ->latest()
+        ->take(3)
+        ->get(['metadataStatements', 'metadataSheets'])->toArray();
+
+        $sheets = collect([]);
+        $info_statements = collect([]);
+
+        foreach ($statements as $key => $value) {
+            $sheets->push($value['metadataSheets']);
+            $info_statements->push($value['metadataStatements']);
+        }
+
+        return  [
+            'sheetTotalResults' => $this->computeValues($sheets->toArray()),
+            'statementTotalResults' => $this->computeValues($info_statements->toArray()),
+        ];
+    }
+
+    protected function computeValues($attributes)
+    {
+        $results = [];
+
+        foreach ($attributes as $key => $value) {
+
+            foreach($value as $childKey => $childValue) {
+
+                if ($childKey == 'period' or $childKey == 'Balance') {
+                    continue;
+                }
+
+                isset($results[$childKey]) ? : $results[$childKey] = 0;
+                $results[$childKey] += (int) $value[$childKey] ?? '0';
+
+            }
+        }
+
+        return $results;
     }
 }

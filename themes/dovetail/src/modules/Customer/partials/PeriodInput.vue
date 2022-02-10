@@ -92,7 +92,6 @@ export default {
         "Employee Insurance",
         "Others"
       ],
-      Depreciation: ["Buildings", "Plant, Machinery & Equipment", "Others"],
       "Non-Operating Expenses(Non-Operating Expense Less Income)": [
         "Non-Operating Income",
         "- Profit from Fixed Assets Sale",

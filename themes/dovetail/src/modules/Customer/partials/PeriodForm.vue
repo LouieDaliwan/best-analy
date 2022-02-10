@@ -89,7 +89,9 @@
           ></v-col>
         </v-row>
       </template>
-      <template v-else-if="['Cost of Good Sold'].includes(item)">
+      <template
+        v-else-if="['Depreciation', 'Cost of Good Sold'].includes(item)"
+      >
         <v-row>
           <v-col
             cols="6"
@@ -207,6 +209,16 @@ export default {
       ]);
     },
 
+    depreciation() {
+      let data = this.resource.data.metadataStatements;
+
+      data["Depreciation"] = this.sum([
+        data["Buildings"],
+        data["Plant, Machinery & Equipment"],
+        data["Others (Depreciation)"]
+      ]);
+    },
+
     netProfit() {
       let data = this.resource.data.metadataStatements;
 
@@ -287,6 +299,7 @@ export default {
     "resource.data": {
       handler() {
         this.costOfGoodSold();
+        this.depreciation();
         this.netProfit();
         this.balance();
         this.$emit("update");

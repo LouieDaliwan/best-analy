@@ -222,11 +222,9 @@ class CustomerDetailsSeeder extends Seeder
                     "Employee Insurance",
                     "Other Labour Expenses",
                 ],
-                "Depreciation" => [
-                    "Buildings",
-                    "Plant, Machinery & Equipment",
-                    "Others (Depreciation)"
-                ],
+                "Buildings" => [],
+                "Plant, Machinery & Equipment" => [],
+                "Others (Depreciation)" => [],
                 "Non-Operating Expenses(Non-Operating Expense Less Income)" => [
                     "Non-Operating Income" => [
                         'Profit from Fixed Assets Sale',

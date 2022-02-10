@@ -45,12 +45,9 @@ class ComputeFinancialRatio implements ShouldQueue
             $info_statements->push($value['metadataStatements']);
         }
 
-        dd($info_statements->toArray());
+        $sheetResults =  $this->computeValues($sheets->toArray());
 
-        return  [
-            'sheetTotalResults' => $this->computeValues($sheets->toArray()),
-            'statementTotalResults' => $this->computeValues($info_statements->toArray()),
-        ];
+        $infoStatementResults  = $this->computeValues($info_statements->toArray());
     }
 
     protected function computeValues($attributes)

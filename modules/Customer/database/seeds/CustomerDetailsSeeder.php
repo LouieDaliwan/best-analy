@@ -138,7 +138,18 @@ class CustomerDetailsSeeder extends Seeder
         foreach ($arr_metadata as $arr_meta_key => $arr_meta_value) {
 
             if (empty($arr_meta_value)) {
+
+                if(!isset($metadata[$arr_meta_key])) {
+                    $temp_meta_arr[$arr_meta_key] = 0;
+                    continue;
+                }
+
                 isset($temp_meta_arr[$arr_meta_key]) ? : $temp_meta_arr[$arr_meta_key] = (int) $metadata[$arr_meta_key][$year];
+
+
+                if (collect(['Buildings', 'Plant, Machinery & Equipment', 'Others (Depreciation)'])->intersect([$arr_meta_key])->isNotEmpty()) {
+                    $temp_meta_arr['Depreciation'] += (int) $metadata[$arr_meta_key][$year];
+                }
             }
 
             if (is_array($arr_meta_value) && !empty($arr_meta_value)) {
@@ -222,6 +233,7 @@ class CustomerDetailsSeeder extends Seeder
                     "Employee Insurance",
                     "Other Labour Expenses",
                 ],
+                "Depreciation" => [],
                 "Buildings" => [],
                 "Plant, Machinery & Equipment" => [],
                 "Others (Depreciation)" => [],

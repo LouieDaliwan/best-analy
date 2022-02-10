@@ -273,10 +273,20 @@ class CustomerService extends Service implements CustomerServiceInterface
 
         if ( isset($statements['metadataStatements']) && isset($statements['metadataSheets']) ) {
 
+            $period = $statements['metadataStatements']['period'];
+            $statement_id = $statements['id'];
+
+            unset(
+                $statements['metadataStatements']['period'],
+                $statements['metadataSheets']['period'],
+                $statements['metadataSheets']['Balance']
+            );
+
             $customer->statements()->updateOrCreate(
                 [
                     'customer_id' => $id,
-                    'period' => $statements['metadataStatements']['period'],
+                    'id' => $statement_id,
+                    'period' => $period,
                 ],
                 [
                     'metadataStatements' => $statements['metadataStatements'],

@@ -45,6 +45,7 @@ class ComputeFinancialRatio implements ShouldQueue
             $info_statements->push($value['metadataStatements']);
         }
 
+
         return  [
             'sheetTotalResults' => $this->computeValues($sheets->toArray()),
             'statementTotalResults' => $this->computeValues($info_statements->toArray()),
@@ -59,7 +60,7 @@ class ComputeFinancialRatio implements ShouldQueue
 
             foreach($value as $childKey => $childValue) {
 
-                if ($childKey == 'period' or $childKey == 'Balance') {
+                if (collect(['period', 'Balance'])->intersect([$childKey])->isNotEmpty()) {
                     continue;
                 }
 

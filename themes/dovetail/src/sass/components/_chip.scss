@@ -1,9 +1,9 @@
 .dovetail-app {
   .theme--light {
     .v-chip {
-      &:not(.v-chip--active) {
-        background: var(--workspace-bg) !important;
-      }
+      // &:not(.v-chip--active) {
+      //   background: var(--workspace-bg) !important;
+      // }
     }
   }
 }

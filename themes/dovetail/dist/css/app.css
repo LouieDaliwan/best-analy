@@ -469,10 +469,6 @@ pre {
   color: var(--text);
 }
 
-.dovetail-app .theme--light .v-chip:not(.v-chip--active) {
-  background: var(--workspace-bg) !important;
-}
-
 .dt-chip {
   -webkit-box-align: center;
           align-items: center;

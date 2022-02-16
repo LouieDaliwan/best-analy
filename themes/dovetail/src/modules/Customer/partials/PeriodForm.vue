@@ -2,7 +2,7 @@
   <div>
     <!-- <v-form @submit.prevent="submit" ref="form"> -->
     <h3 class="d-flex align-center mb-3">
-      Period
+      Financial Period
       <v-spacer></v-spacer>
       <template v-if="resource.data.id">
         <input
@@ -45,7 +45,7 @@
     </validation-provider>
 
     <h4 class="mb-3 primary--text" v-else v-text="resource.data.period">
-      Period
+      Financial Period
     </h4>
 
     <v-divider class="my-10"></v-divider>
@@ -83,7 +83,11 @@
             ></v-text-field>
             <div
               v-else
-              v-text="resource.data.metadataStatements[item]"
+              v-text="
+                parseFloat(
+                  resource.data.metadataStatements[item] || 0
+                ).toLocaleString()
+              "
               class="text-right"
             ></div
           ></v-col>
@@ -110,7 +114,11 @@
             ></v-text-field>
             <div
               v-else
-              v-text="resource.data.metadataStatements[item]"
+              v-text="
+                parseFloat(
+                  resource.data.metadataStatements[item] || 0
+                ).toLocaleString()
+              "
               class="text-right"
             ></div
           ></v-col>
@@ -161,7 +169,11 @@
             ></v-text-field>
             <div
               v-else
-              v-text="resource.data.metadataSheets[item]"
+              v-text="
+                parseFloat(
+                  resource.data.metadataSheets[item] || 0
+                ).toLocaleString()
+              "
               class="text-right"
             ></div
           ></v-col>

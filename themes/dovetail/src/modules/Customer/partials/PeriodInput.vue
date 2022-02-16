@@ -10,11 +10,17 @@
           </v-btn>
         </template>
         <v-list dense>
-          <v-list-item
-            v-for="(item, i) in tooltip[label]"
-            v-text="item"
-            :key="i"
+          <v-subheader
+            >{{ trans(label) }} may include the following items:</v-subheader
           >
+          <v-list-item v-for="(item, i) in tooltip[label]" :key="i">
+            <v-list-item-icon>
+              <v-icon>mdi-circle-small</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="item"></v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -31,7 +37,11 @@
         v-if="edit"
         v-model="dataset"
       ></v-text-field>
-      <div v-else v-text="dataset" class="text-right"></div
+      <div
+        v-else
+        v-text="parseFloat(dataset || 0).toLocaleString()"
+        class="text-right"
+      ></div
     ></v-col>
   </v-row>
 </template>

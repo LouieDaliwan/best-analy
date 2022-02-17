@@ -262,9 +262,9 @@ class CustomerDetailsSeeder extends Seeder
                 //     'Levy on Foreign Workers',
                 //     'Others (excluding Income Tax)',
                 // ],
-                // "Ebit" => [
-                //     'Profit or (Loss) Before Interest and Income Tax'
-                // ],
+                "Ebit" => [
+                    'Profit or (Loss) Before Interest and Income Tax'
+                ],
                 'Interest On Loan/Hires' => [
                     'Interest & Charges by Bank',
                     'Interest on Loan',

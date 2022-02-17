@@ -162,12 +162,13 @@
           </small>
         </div>
         <!-- <v-btn icon @click="$store.dispatch('theme/toggle', {vm: vuetify, dark: !dark})"> -->
-        <v-btn
+        <!-- <v-btn
           icon
           @click="$store.dispatch('theme/toggle', { vm: vuetify, dark: !dark })"
         >
           <v-icon color="white">mdi-invert-colors</v-icon>
-        </v-btn>
+        </v-btn> -->
+        <theme-changer></theme-changer>
       </div>
     </template>
     <!-- Sidebar Footer -->

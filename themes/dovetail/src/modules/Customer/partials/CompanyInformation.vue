@@ -144,10 +144,14 @@
           append-icon="mdi-chevron-down"
           background-color="selects"
           class="dt-text-field"
-          name="metadata[project][project_type]"
           outlined
           v-model="dataset.details.metadata['project_type']"
         ></v-select>
+        <input
+          type="hidden"
+          name="metadata[project][project_type]"
+          :value="dataset.details.metadata['project_type']"
+        />
       </validation-provider>
 
       <validation-provider
@@ -168,6 +172,11 @@
           outlined
           v-model="dataset.details.metadata['business_size']"
         ></v-select>
+        <input
+          type="hidden"
+          name="metadata[project][business_size]"
+          v-model="dataset.details.metadata['business_size']"
+        />
       </validation-provider>
 
       <validation-provider

@@ -5,18 +5,25 @@
     :width="width || dialog.width"
     scrollable
     v-model="show"
+  >
+    <v-card
+      :dark="dialog.dark"
+      :class="{ 'text-xs-center': dialog.alignment == 'center' }"
     >
-    <v-card :dark="dialog.dark" :class="{ 'text-xs-center': dialog.alignment == 'center' }">
       <v-card-text>
         <slot name="illustration">
-          <div class="text-center pa-3" :class="`${dialog.color}--text`">
-            <component :width="dialog.illustrationWidth" :height="dialog.illustrationHeight" :is="dialog.illustration"></component>
+          <div class="text-center pa-1" :class="`${dialog.color}--text`">
+            <component
+              :width="dialog.illustrationWidth"
+              :height="dialog.illustrationHeight"
+              :is="dialog.illustration"
+            ></component>
           </div>
         </slot>
         <v-card-title class="px-0">
           <slot name="title">{{ dialog.title }}</slot>
         </v-card-title>
-        <slot name="text"><p v-html="text"></p></slot>
+        <slot name="text"><div v-html="text"></div></slot>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -26,7 +33,7 @@
           :color="dialog.buttons.cancel.color"
           @click.native="dialog.buttons.cancel.callback"
           text
-          >
+        >
           {{ trans(dialog.buttons.cancel.text) }}
         </v-btn>
 
@@ -37,7 +44,7 @@
           @click.native="dialog.buttons.action.callback"
           text
           v-if="dialog.buttons.action.show"
-          >
+        >
           {{ trans(dialog.buttons.action.text) }}
         </v-btn>
       </v-card-actions>
@@ -46,40 +53,42 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'Dialogbox',
+  name: "Dialogbox",
 
-  props: ['width'],
+  props: ["width"],
 
   computed: {
     ...mapGetters({
-      dialog: 'dialog/dialog'
+      dialog: "dialog/dialog"
     }),
 
     show: {
-      get () {
-        return this.dialog.show
+      get() {
+        return this.dialog.show;
       },
-      set (val) {
-        this.$store.dispatch('dialog/prompt', { show: val })
-      },
+      set(val) {
+        this.$store.dispatch("dialog/prompt", { show: val });
+      }
     },
 
-    persistent () {
-      return _.clone(this.dialog.persistent)
+    persistent() {
+      return _.clone(this.dialog.persistent);
     },
 
-    text () {
+    text() {
       if (this.dialog.text instanceof Array) {
-        return this.dialog.text.map((text) => {
-          return '<p>'+this.trans(text)+'</p>'
-        }).join('')
+        return this.dialog.text
+          .map(text => {
+            return "<p>" + this.trans(text) + "</p>";
+          })
+          .join("");
       }
 
-      return this.dialog.text
-    },
-  },
-}
+      return this.dialog.text;
+    }
+  }
+};
 </script>

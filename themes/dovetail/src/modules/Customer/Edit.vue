@@ -423,15 +423,23 @@ export default {
       axios
         .get($api.show(this.$route.params.id))
         .then(response => {
-          const metadata = this.resource.data.metadata;
-          this.resource.data = response.data.data;
-          this.resource.data.metadata.applicant =
-            this.resource.data.metadata.applicant || metadata;
-          this.resource.data.metadata = _.merge(
-            metadata,
-            this.resource.data.metadata
+          const { applicant, metadata } = this.resource.data;
+
+          let data = response.data.data;
+
+          let tempApplicant = data.applicant || applicant;
+
+          tempApplicant.metadata = _.merge(
+            applicant.metadata,
+            tempApplicant.metadata
           );
-          this.resource.data.financials = this.resource.data.metadata;
+
+          data.applicant = tempApplicant;
+          data.metadata = _.merge(metadata, data.metadata);
+          data.financials = data.metadata;
+
+          this.resource.data = data;
+
           this.isFinancialStatementHasValue =
             response.data.data.is_fs_has_no_zero_value;
         })

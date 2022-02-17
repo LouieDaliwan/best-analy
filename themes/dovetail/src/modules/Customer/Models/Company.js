@@ -22,7 +22,13 @@ class Company {
           name: null,
           number: null,
           staffstrength: null,
-          website: null
+          website: null,
+          cooperation: {
+            Reachable: null,
+            Cooperating: null,
+            Involvement: null,
+            "Duration of Overdue (DPD)": null
+          }
         }
       },
       name: "",

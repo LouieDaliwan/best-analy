@@ -111,7 +111,7 @@ class ComputeFinancialRatio implements ShouldQueue
     {
         $statements = $this->customer->statements()
         ->latest()
-        ->take(3)
+        ->take(1)
         ->get(['metadataStatements', 'metadataSheets'])->toArray();
 
         $sheets = collect([]);

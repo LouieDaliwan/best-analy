@@ -146,10 +146,9 @@ class CustomerDetailsSeeder extends Seeder
 
                 isset($temp_meta_arr[$arr_meta_key]) ? : $temp_meta_arr[$arr_meta_key] = (int) $metadata[$arr_meta_key][$year];
 
-
-                if (collect(['Buildings', 'Plant, Machinery & Equipment', 'Others (Depreciation)'])->intersect([$arr_meta_key])->isNotEmpty()) {
-                    $temp_meta_arr['Depreciation'] += (int) $metadata[$arr_meta_key][$year];
-                }
+                // if (collect(['Buildings', 'Plant, Machinery & Equipment', 'Others (Depreciation)'])->intersect([$arr_meta_key])->isNotEmpty()) {
+                //     $temp_meta_arr['Depreciation'] += (int) $metadata[$arr_meta_key][$year];
+                // }
             }
 
             if (is_array($arr_meta_value) && !empty($arr_meta_value)) {
@@ -233,11 +232,16 @@ class CustomerDetailsSeeder extends Seeder
                     "Employee Insurance",
                     "Other Labour Expenses",
                 ],
-                "Depreciation" => [],
-                "Buildings" => [],
-                "Plant, Machinery & Equipment" => [],
-                "Others (Depreciation)" => [],
-                "Non-Operating Expenses(Non-Operating Expense Less Income)" => [
+                "Depreciation" => [
+                    "Buildings",
+                    "Plant, Machinery & Equipment",
+                    'Others (Depreciation)'
+                ],
+                'Marketing Costs' => [],
+                'Value Added' => [],
+                'Number of Staff' => [],
+                'Staff Salaries & Benefits' => [],
+                "Other Expense (less Other Income)" => [
                     "Non-Operating Income" => [
                         'Profit from Fixed Assets Sale',
                         'Profit from Foreign Exchange',
@@ -251,12 +255,13 @@ class CustomerDetailsSeeder extends Seeder
                         'Others (Non-Operating Costs)',
                     ],
                 ],
-                "Taxation" => [
-                    'Tax on Property',
-                    'Duties (Customs & Excise)',
-                    'Levy on Foreign Workers',
-                    'Others (excluding Income Tax)',
-                ],
+                // 'Company Tax' => [],
+                // "Taxation" => [
+                //     'Tax on Property',
+                //     'Duties (Customs & Excise)',
+                //     'Levy on Foreign Workers',
+                //     'Others (excluding Income Tax)',
+                // ],
                 // "Ebit" => [
                 //     'Profit or (Loss) Before Interest and Income Tax'
                 // ],
@@ -266,15 +271,15 @@ class CustomerDetailsSeeder extends Seeder
                     'Interest on Hire Purchase',
                     'Others (Interest on Loan/Hires)',
                 ],
-                // 'Operating Profit/(Loss)[EBT]' => [
-                //     'Profit or (Loss) Before Income Tax'
-                // ],
+                'Operating Profit/(Loss)[EBT]' => [
+                    'Profit or (Loss) Before Income Tax'
+                ],
                 'Company Tax' => [
                     'Tax on Company'
                 ],
-                'Net Operating Profit/(Loss)' =>[
-                    'Profit or (Loss) After Income Tax'
-                ]
+                // 'Net Operating Profit/(Loss)' =>[
+                //     'Profit or (Loss) After Income Tax'
+                // ]
             ];
     }
 }

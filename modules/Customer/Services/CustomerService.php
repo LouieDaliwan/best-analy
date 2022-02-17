@@ -269,10 +269,10 @@ class CustomerService extends Service implements CustomerServiceInterface
             ['metadata' => $attributes['metadata']['project']]
         );
 
-        $statements = $attributes['metadata']['statement'];
+        $statements = $attributes['metadata']['statement'] ?? null;
+
 
         if ( isset($statements['metadataStatements']) && isset($statements['metadataSheets']) ) {
-
             $period = $statements['metadataStatements']['period'];
             $statement_id = $statements['id'];
 

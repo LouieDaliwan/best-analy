@@ -64,44 +64,44 @@ export default {
       {
         label: "Breakeven Point",
         rate: "good",
-        score: 3.2,
+        score: 3.2
       },
       {
         label: "Working Capital",
         rate: "moderate",
-        score: 4.0,
+        score: 4.0
       },
       {
         label: "Net Profit Margin",
         rate: "good",
-        score: 3.2,
+        score: 3.2
       },
       {
         label: "Gross Profit Margin",
         rate: "excellent",
-        score: 5.05,
+        score: 5.05
       },
       {
-        label: "COPGS Margin",
+        label: "Raw Materials Margin",
         rate: "good",
-        score: 3.2,
+        score: 3.2
       },
       {
         label: "Current Ratio",
         rate: "moderate",
-        score: 4.0,
+        score: 4.0
       },
       {
-        label: "Long-Term Debt Ration",
+        label: "Debt Ration",
         rate: "good",
-        score: 3.2,
+        score: 3.2
       },
       {
         label: "Return of Investment",
         rate: "excellent",
-        score: 5.05,
-      },
-    ],
+        score: 5.05
+      }
+    ]
   }),
 
   methods: {
@@ -114,7 +114,7 @@ export default {
         newColIndex = rem ? colLen + 1 : colLen;
 
       return [array.splice(0, newColIndex), array];
-    },
-  },
+    }
+  }
 };
 </script>

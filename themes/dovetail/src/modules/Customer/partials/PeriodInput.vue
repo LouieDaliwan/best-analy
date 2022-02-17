@@ -102,7 +102,7 @@ export default {
         "Employee Insurance",
         "Others"
       ],
-      "Non-Operating Expenses(Non-Operating Expense Less Income)": [
+      "Other Expense (less Other Income)": [
         "Non-Operating Income",
         "- Profit from Fixed Assets Sale",
         "- Profit from Foreign Exchange",

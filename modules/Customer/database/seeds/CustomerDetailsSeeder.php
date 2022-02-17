@@ -188,10 +188,10 @@ class CustomerDetailsSeeder extends Seeder
         return [
                 'Sales' => [],
                 'Raw Materials (direct & indirect)' => [],
-                'Change Inventory' => [
-                    'Opening Stocks',
-                    'Closing Stocks'
-                ],
+                // 'Change Inventory' => [
+                //     'Opening Stocks',
+                //     'Closing Stocks'
+                // ],
                 'Production Costs' => [
                     'Cargo and Handling',
                     'Part-time/Temporary Labour',

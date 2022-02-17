@@ -25,7 +25,7 @@ export default class extends Resource {
         "Net Operating Profit/(Loss)": 0,
         Sales: 0,
         "Raw Materials": 0,
-        "Production Costs": 0,
+        "Direct Production Costs": 0,
         "Cost of Good Sold": 0,
         "Marketing Costs": 0,
         "General Management Costs": 0,

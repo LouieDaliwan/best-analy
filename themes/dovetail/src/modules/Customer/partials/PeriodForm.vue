@@ -95,7 +95,11 @@
       </template>
       <template
         v-else-if="
-          ['Operating Profit/(Loss)[EBT]', 'Cost of Good Sold'].includes(item)
+          [
+            'Value Added',
+            'Operating Profit/(Loss)[EBT]',
+            'Cost of Good Sold'
+          ].includes(item)
         "
       >
         <v-row>
@@ -219,7 +223,7 @@ export default {
 
       data["Cost of Good Sold"] = this.sum([
         data["Raw Materials"],
-        data["Production Costs"]
+        data["Direct Production Costs"]
       ]);
     },
 

@@ -63,7 +63,7 @@ export default {
 
   data: () => ({
     tooltip: {
-      "Production Costs": [
+      "Direct Production Costs": [
         "Cargo & Handling",
         "Part-time labour",
         "Insurance",
@@ -91,7 +91,7 @@ export default {
         "Bank charges",
         "Other Administrative Costs"
       ],
-      "Labour Expenses": [
+      "Staff Salaries & Benefits": [
         "Employee Compensation",
         "Bonuses",
         "Provident Fund",
@@ -125,7 +125,13 @@ export default {
         "Interest on Hire Purchase",
         "Others"
       ],
-      Depreciation: ["Buildings", "Plant, Machinery, & Equipment", "Others"]
+      Depreciation: ["Buildings", "Plant, Machinery, & Equipment", "Others"],
+      "Marketing Costs": [
+        "Newspaper Advertisement",
+        "Social Media",
+        "Marketing Agent Fees",
+        "Discount Coupons"
+      ]
     }
   })
 };

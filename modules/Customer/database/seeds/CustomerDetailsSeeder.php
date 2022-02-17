@@ -192,7 +192,7 @@ class CustomerDetailsSeeder extends Seeder
                 //     'Opening Stocks',
                 //     'Closing Stocks'
                 // ],
-                'Production Costs' => [
+                'Direct Production Costs' => [
                     'Cargo and Handling',
                     'Part-time/Temporary Labour',
                     "Insurance (not including employee's insurance)",

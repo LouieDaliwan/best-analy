@@ -153,6 +153,25 @@
           :value="dataset.details.metadata['project_type']"
         />
       </validation-provider>
+      </validation-provider>
+
+      <validation-provider
+        vid="metadata[project][investment_value]"
+        :name="trans('Investment Value')"
+        v-slot="{ errors }"
+      >
+        <v-text-field
+          :dense="isDense"
+          :disabled="isLoading"
+          :error-messages="errors"
+          :label="trans('Investment Value')"
+          class="dt-text-field"
+          name="metadata[project][investment_value]"
+          outlined
+          v-model="dataset.details.metadata['investment_value']"
+        >
+        </v-text-field>
+      </validation-provider>
 
       <validation-provider
         vid="metadata[project][business_size]"

@@ -192,7 +192,7 @@ class CustomerDetailsSeeder extends Seeder
                 //     'Opening Stocks',
                 //     'Closing Stocks'
                 // ],
-                'Production Costs' => [
+                'Direct Production Costs' => [
                     'Cargo and Handling',
                     'Part-time/Temporary Labour',
                     "Insurance (not including employee's insurance)",
@@ -262,9 +262,9 @@ class CustomerDetailsSeeder extends Seeder
                 //     'Levy on Foreign Workers',
                 //     'Others (excluding Income Tax)',
                 // ],
-                // "Ebit" => [
-                //     'Profit or (Loss) Before Interest and Income Tax'
-                // ],
+                "Ebit" => [
+                    'Profit or (Loss) Before Interest and Income Tax'
+                ],
                 'Interest On Loan/Hires' => [
                     'Interest & Charges by Bank',
                     'Interest on Loan',

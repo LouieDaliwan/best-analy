@@ -124,7 +124,8 @@ export default {
         "Interest on Loan",
         "Interest on Hire Purchase",
         "Others"
-      ]
+      ],
+      Depreciation: ["Buildings", "Plant, Machinery, & Equipment", "Others"]
     }
   })
 };

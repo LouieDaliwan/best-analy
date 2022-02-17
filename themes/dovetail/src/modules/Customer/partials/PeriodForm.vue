@@ -94,7 +94,9 @@
         </v-row>
       </template>
       <template
-        v-else-if="['Depreciation', 'Cost of Good Sold'].includes(item)"
+        v-else-if="
+          ['Operating Profit/(Loss)[EBT]', 'Cost of Good Sold'].includes(item)
+        "
       >
         <v-row>
           <v-col
@@ -216,46 +218,44 @@ export default {
       let data = this.resource.data.metadataStatements;
 
       data["Cost of Good Sold"] = this.sum([
-        data["Raw Materials (direct & indirect)"],
-        data["Change Inventory"]
+        data["Raw Materials"],
+        data["Production Costs"]
       ]);
     },
 
-    depreciation() {
-      let data = this.resource.data.metadataStatements;
+    // depreciation() {
+    //   let data = this.resource.data.metadataStatements;
 
-      data["Depreciation"] = this.sum([
-        data["Buildings"],
-        data["Plant, Machinery & Equipment"],
-        data["Others (Depreciation)"]
-      ]);
-    },
+    //   data["Depreciation"] = this.sum([
+    //     data["Buildings"],
+    //     data["Plant, Machinery & Equipment"],
+    //     data["Others (Depreciation)"]
+    //   ]);
+    // },
 
     netProfit() {
       let data = this.resource.data.metadataStatements;
 
-      const operating_expense = this.sum([
-        data["Production Cost"],
-        data["Labour Expenses"],
-        data["General Management Cost"]
-      ]);
-
-      const operating_profit =
-        parseFloat(data["Sales"]) -
+      data["Value Added"] =
+        data["Sales"] -
         this.sum([
           data["Cost of Good Sold"],
-          operating_expense,
-          data["Non-Operating Expenses(Non-Operating Expense Less Income)"]
+          data["Marketing Costs"],
+          data["General Management Costs"]
         ]);
 
       data["Net Operating Profit/(Loss)"] =
-        operating_profit -
+        data["Value Added"] -
         this.sum([
+          data["Staff Salaries & Benefits"],
           data["Depreciation"],
+          data["Other Expense (less Other Income)"],
           data["Interest On Loan/Hires"],
-          data["Taxation"],
           data["Company Tax"]
         ]);
+
+      data["Operating Profit/(Loss)[EBT]"] =
+        data["Net Operating Profit/(Loss)"];
     },
 
     balance() {
@@ -311,7 +311,7 @@ export default {
     "resource.data": {
       handler() {
         this.costOfGoodSold();
-        this.depreciation();
+        // this.depreciation();
         this.netProfit();
         this.balance();
         this.$emit("update");

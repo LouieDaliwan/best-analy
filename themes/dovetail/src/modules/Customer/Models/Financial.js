@@ -25,19 +25,18 @@ export default class extends Resource {
         "Net Operating Profit/(Loss)": 0,
         Sales: 0,
         "Raw Materials": 0,
-        "Change Inventory": 0,
-        "Cost of Good Sold": 0,
         "Production Costs": 0,
+        "Cost of Good Sold": 0,
+        "Marketing Costs": 0,
         "General Management Costs": 0,
-        "Labour Expenses": 0,
-        Buildings: 0,
-        "Plant, Machinery & Equipment": 0,
-        "Others (Depreciation)": 0,
+        "Value Added": 0,
+        "Number of Staff": 0,
+        "Staff Salaries & Benefits": 0,
         Depreciation: 0,
-        "Non-Operating Expenses(Non-Operating Expense Less Income)": 0,
-        Taxation: 0,
+        "Other Expense (less Other Income)": 0,
         "Interest On Loan/Hires": 0,
-        "Company Tax": 0
+        "Company Tax": 0,
+        "Operating Profit/(Loss)[EBT]": 0
       }
     };
   }

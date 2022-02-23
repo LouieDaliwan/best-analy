@@ -153,7 +153,6 @@
           :value="dataset.details.metadata['project_type']"
         />
       </validation-provider>
-      </validation-provider>
 
       <validation-provider
         vid="metadata[project][investment_value]"

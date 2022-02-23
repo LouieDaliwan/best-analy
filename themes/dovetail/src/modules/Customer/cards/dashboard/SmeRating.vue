@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-text class="pa-7">
-      <h3 class="mb-5" v-text="trans('SME Rating')"></h3>
+      <h3 class="mb-5" v-text="trans('SME Ratings Report')"></h3>
       <v-divider class="mb-5"></v-divider>
       <v-row no-gutters>
         <v-col cols="12" sm="6" class="mb-5">
@@ -56,21 +56,21 @@ export default {
     smeRatings: [
       {
         label: "Qualitative Score (Most Recent)",
-        score: null,
+        score: null
       },
       {
         label: "Financial Score",
-        score: null,
+        score: null
       },
       {
         label: "Applicant Score Cooperation",
-        score: null,
+        score: null
       },
       {
         label: "Best Score",
-        score: 5.05,
-      },
-    ],
-  }),
+        score: 5.05
+      }
+    ]
+  })
 };
 </script>

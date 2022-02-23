@@ -44,7 +44,7 @@ class ComputeFinancialRatio implements ShouldQueue
             'status' => '',
             'color_status' => '',
         ],
-        'cogs_margin' => [
+        'raw_materials_margin' => [
             'percentage' => 0,
             'results' => 0,
             'score' => 0,
@@ -109,54 +109,16 @@ class ComputeFinancialRatio implements ShouldQueue
      */
     public function handle()
     {
-        $statements = $this->customer->statements()
-        ->latest()
-        ->take(1)
-        ->get(['metadataStatements', 'metadataSheets'])->toArray();
+        $latestStatement = $this->customer->statements()
+        ->latest('period')
+        ->first();
 
-        $sheets = collect([]);
-        $info_statements = collect([]);
+        $this->computeProfitStatement($latestStatement->metadataStatements);
 
-        foreach ($statements as $key => $value) {
-            $sheets->push($value['metadataSheets']);
-            $info_statements->push($value['metadataStatements']);
-        }
-
-        $sheetResults =  $this->computeValues($sheets->toArray());
-
-        $infoStatementResults  = $this->computeValues($info_statements->toArray());
-
-        $this->computeProfitStatement($infoStatementResults);
-
-        $this->computeBalanceSheet($sheetResults);
+        $this->computeBalanceSheet($latestStatement->metadataSheets);
 
         $this->keyRatioAnalysisGetPercentage();
-    }
-    protected function computeValues($attributes)
-    {
-        $results = [];
 
-        foreach ($attributes as $key => $value) {
-
-            foreach($value as $childKey => $childValue) {
-
-                if (collect(['period', 'Balance'])->intersect([$childKey])->isNotEmpty()) {
-                    continue;
-                }
-
-                isset($results[$childKey]) ? : $results[$childKey] = 0;
-
-                if($results[$childKey] == 0) {
-                    $results[$childKey] += (int) $value[$childKey] ?? '0';
-                } else {
-                    $results[$childKey] -= (int) $value[$childKey] ?? '0';
-                }
-
-                $results[$childKey] = (int) $results[$childKey] > 0 ? (int) $results[$childKey] : abs((int) $results[$childKey]);
-            }
-        }
-
-        return $results;
     }
 
     protected function computeBalanceSheet($sheetResults)
@@ -168,6 +130,7 @@ class ComputeFinancialRatio implements ShouldQueue
         $balanceSheets['non_current_liabilities'] = 0;
 
         foreach ($sheetResults as $key => $value) {
+
             $key = str_replace([" ", "'"], "", strtolower($key));
 
             isset($balanceSheets[$key]) ? : $balanceSheets[$key] = $value;
@@ -198,9 +161,11 @@ class ComputeFinancialRatio implements ShouldQueue
         //TODO optimize --Louie Daliwan
         $profitStatement = [];
 
+        dd($infoStatement);
+
         $profitStatement['sales'] = $infoStatement['Sales'];
         $profitStatement['cost_goods'] = abs((
-            $infoStatement["Raw Materials (direct & indirect)"] + $infoStatement['Change Inventory']
+            $infoStatement["Raw Materials (direct & indirect)"] + $infoStatement['Production Costs']
         ));
 
         $profitStatement['operating_expenses'] = abs((

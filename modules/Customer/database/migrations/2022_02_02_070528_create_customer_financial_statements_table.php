@@ -19,6 +19,7 @@ class CreateCustomerFinancialStatementsTable extends Migration
             $table->string('period')->index();
             $table->longText('metadataStatements')->nullable();
             $table->longText('metadataSheets')->nullable();
+            $table->longText('metadataResults')->nullable();
             $table->timestamps();
         });
     }

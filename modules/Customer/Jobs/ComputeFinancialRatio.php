@@ -158,47 +158,7 @@ class ComputeFinancialRatio implements ShouldQueue
 
     protected function computeProfitStatement($infoStatement)
     {
-        //TODO optimize --Louie Daliwan
-        $profitStatement = [];
-
-        dd($infoStatement);
-
-        $profitStatement['sales'] = $infoStatement['Sales'];
-        $profitStatement['cost_goods'] = abs((
-            $infoStatement["Raw Materials (direct & indirect)"] + $infoStatement['Production Costs']
-        ));
-
-        $profitStatement['operating_expenses'] = abs((
-            $infoStatement['Production Costs'] +
-            $infoStatement['General Management Costs'] +
-            $infoStatement['Labour Expenses']
-        ));
-
-        $profitStatement['non_operating_expenses'] = abs((
-            $infoStatement['Non-Operating Expenses(Non-Operating Expense Less Income)'] +
-            $infoStatement['Interest On Loan/Hires']
-        ));
-
-        $profitStatement['operating_loss_or_profit'] = abs((
-            $profitStatement['sales'] -
-            $profitStatement['cost_goods'] -
-            $profitStatement['operating_expenses'] -
-            $profitStatement['non_operating_expenses']
-        ));
-
-        $profitStatement['depreciation'] = $infoStatement['Depreciation'];
-        $profitStatement['taxes'] = $infoStatement['Taxation'];
-        $profitStatement['net_loss_profit_after_taxes'] = abs((
-            $profitStatement['operating_loss_or_profit'] -
-            $profitStatement['depreciation'] -
-            $profitStatement['taxes']
-        ));
-
-        $profitStatement['gross_profit'] = abs(($profitStatement['sales'] - $profitStatement['cost_goods']));
-        $profitStatement['total_other_expenses'] = ($profitStatement['operating_expenses'] + $infoStatement['Non-Operating Expenses(Non-Operating Expense Less Income)'] + $profitStatement['taxes']);
-        $profitStatement['net_income_loss'] = abs(($profitStatement['gross_profit'] - $profitStatement['total_other_expenses']));
-
-        $this->overAllResults['profitStatements'] = $profitStatement;
+        
     }
 
     protected function keyRatioAnalysisGetPercentage()

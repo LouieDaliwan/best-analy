@@ -7,6 +7,7 @@ use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
 use Customer\Jobs\ComputeFinancialRatio;
 use Customer\Models\Customer;
+use Customer\Services\FinancialRatioInterface;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
@@ -273,28 +274,7 @@ class CustomerService extends Service implements CustomerServiceInterface
 
 
         if ( isset($statements['metadataStatements']) && isset($statements['metadataSheets']) ) {
-            $period = $statements['metadataStatements']['period'];
-            $statement_id = $statements['id'];
-
-            unset(
-                $statements['metadataStatements']['period'],
-                $statements['metadataSheets']['period'],
-                $statements['metadataSheets']['Balance']
-            );
-
-            $customer->statements()->updateOrCreate(
-                [
-                    'customer_id' => $id,
-                    'id' => $statement_id,
-                    'period' => $period,
-                ],
-                [
-                    'metadataStatements' => $statements['metadataStatements'],
-                    'metadataSheets' => $statements['metadataSheets']
-                ]
-            );
-
-            dispatch(new ComputeFinancialRatio($customer));
+            app(FinancialRatioInterface::class)->compute($customer, $statements, $id);
         }
         //TODO optimize --Louie Daliwan
     }

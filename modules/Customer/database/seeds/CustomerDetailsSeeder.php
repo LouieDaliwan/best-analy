@@ -132,6 +132,7 @@ class CustomerDetailsSeeder extends Seeder
     protected function getResultMetaData(array $metadata, string $year) : array
     {
         $temp_meta_arr = [];
+        $temp_meta_arr['Raw Materials'] = 0;
 
         $arr_metadata = $this->getNewMetadata();
 
@@ -174,8 +175,10 @@ class CustomerDetailsSeeder extends Seeder
                         $temp_meta_arr[$arr_meta_key] += (int) $metadata[$parent_value][$year];
                     }
 
+                    if ($arr_meta_key == 'Raw Materials (direct & indirect)') {
+                        $temp_meta_arr['Raw Materials'] += $temp_meta_arr['Raw Materials (direct & indirect)'];
+                    }
                 }
-
             }
 
         }

@@ -1,19 +1,12 @@
 <?php
 
-namespace Customer\Jobs;
+namespace Customer\Services;
 
 use Customer\Models\Customer;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Customer\Services\CustomerServiceInterface;
+use Customer\Services\FinancialRatioInterface;
 
-class ComputeFinancialRatio implements ShouldQueue
+class FinancialRatio implements FinancialRatioInterface
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     protected $customer;
 
     protected $overAllResults = [
@@ -90,38 +83,82 @@ class ComputeFinancialRatio implements ShouldQueue
             'color_status' => 0,
             'total_rating' => 0,
             'total_out_of' => 0,
-        ]
+        ],
+
+
     ];
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(Customer $customer)
+
+    public function compute(Customer $customer, $statements, $id)
     {
-        $this->customer = $customer;
+        $period = $statements['metadataStatements']['period'];
+        $statement_id = $statements['id'];
+
+        unset(
+            $statements['metadataStatements']['period'],
+            $statements['metadataSheets']['period'],
+            $statements['metadataSheets']['Balance']
+        );
+
+        $customer->statements()->updateOrCreate(
+            [
+                'customer_id' => $id,
+                'id' => $statement_id,
+                'period' => $period,
+            ],
+            [
+                'metadataStatements' => $statements['metadataStatements'],
+                'metadataSheets' => $statements['metadataSheets'],
+                'metadataResults' => array_merge(
+                    $this->computeProfitStatement($statements['metadataStatements']),
+                    $this->computeBalanceSheet($statements['metadataSheets'])
+                )
+            ]
+        );
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
+    protected function computeProfitStatement($infoStatement)
     {
-        $latestStatement = $this->customer->statements()
-        ->latest('period')
-        ->first();
+        //TODO optimize --Louie Daliwan
+        $profitStatement = [];
 
-        $this->computeProfitStatement($latestStatement->metadataStatements);
+        $profitStatement['sales'] = $infoStatement['Sales'];
+        $profitStatement['cost_goods'] = $infoStatement['Cost of Good Sold'];
 
-        $this->computeBalanceSheet($latestStatement->metadataSheets);
+        $profitStatement['operating_expenses'] = (
+            $infoStatement['Production Costs'] +
+            $infoStatement['General Management Costs'] +
+            $infoStatement['Labour Expenses']
+        );
 
-        $this->keyRatioAnalysisGetPercentage();
+        $profitStatement['non_operating_expenses'] = (
+            $infoStatement['Non-Operating Expenses(Non-Operating Expense Less Income)'] +
+            $infoStatement['Interest On Loan/Hires']
+        );
 
+        $profitStatement['operating_loss_or_profit'] = (
+            $profitStatement['sales'] -
+            $profitStatement['cost_goods'] -
+            $profitStatement['operating_expenses'] -
+            $profitStatement['non_operating_expenses']
+        );
+
+        $profitStatement['depreciation'] = $infoStatement['Depreciation'];
+        $profitStatement['taxes'] = $infoStatement['Taxation'];
+
+        $profitStatement['net_loss_profit_after_taxes'] =
+            $profitStatement['operating_loss_or_profit'] -
+            $profitStatement['depreciation'] -
+            $profitStatement['taxes'];
+
+        $profitStatement['gross_profit'] = $profitStatement['sales'] - $profitStatement['cost_goods'];
+        $profitStatement['total_other_expenses'] = $profitStatement['operating_expenses'] + $infoStatement['Non-Operating Expenses(Non-Operating Expense Less Income)'] + $profitStatement['taxes'];
+        $profitStatement['net_income_loss'] = $profitStatement['gross_profit'] - $profitStatement['total_other_expenses'];
+
+        $this->overAllResults['profitStatements'] = $profitStatement;
     }
 
-    protected function computeBalanceSheet($sheetResults)
+
+    protected function computeBalanceSheet($sheets)
     {
         $balanceSheets = [];
 
@@ -129,7 +166,7 @@ class ComputeFinancialRatio implements ShouldQueue
         $balanceSheets['current_liabilities'] = 0;
         $balanceSheets['non_current_liabilities'] = 0;
 
-        foreach ($sheetResults as $key => $value) {
+        foreach ($sheets as $key => $value) {
 
             $key = str_replace([" ", "'"], "", strtolower($key));
 
@@ -156,31 +193,8 @@ class ComputeFinancialRatio implements ShouldQueue
         $this->overAllResults['balanceSheets'] = $balanceSheets;
     }
 
-    protected function computeProfitStatement($infoStatement)
+    protected function computeRatioAnalysis($statements)
     {
-        
-    }
-
-    protected function keyRatioAnalysisGetPercentage()
-    {
-        $ratioAnalysis = $this->ratioAnalysis;
-
-        $resultsProfitStatements = $this->overAllResults['profitStatements'];
-        $resultsBalanceSheets = $this->overAllResults['balanceSheets'];
-
-        $ratioAnalysis['gross_profit_margin']['percentage'] = $resultsProfitStatements['sales'] > 0 ? ($resultsProfitStatements['gross_profit'] / $resultsProfitStatements['sales'])  * 100 : 0;
-        $ratioAnalysis['net_profit_margin']['percentage'] = $resultsProfitStatements['sales'] > 0 ? ($resultsProfitStatements['net_income_loss'] / $resultsProfitStatements['sales'])  * 100 : 0;
-        $ratioAnalysis['cogs_margin']['percentage'] = $resultsProfitStatements['cost_goods'] > 0 ? ($resultsProfitStatements['cost_goods'] / $resultsProfitStatements['sales'])  * 100 : 0;
-        $ratioAnalysis['breakeven_point'] = $resultsProfitStatements['total_other_expenses'] > 0 ? ($resultsProfitStatements['total_other_expenses'] / $ratioAnalysis['gross_profit_margin']['percentage']) * 100 : 0;
-
-        $ratioAnalysis['current_ratio_margin']['percentage'] = $resultsBalanceSheets['current_liabilities'] > 0 ? ($resultsBalanceSheets['current_assets'] / $resultsBalanceSheets['current_liabilities']) * 100 : 0;
-        $ratioAnalysis['working_capital'] = abs($resultsBalanceSheets['current_assets'] - $resultsBalanceSheets['current_liabilities']);
-
-        $totalShareLongTerm = $resultsBalanceSheets['total_long_term_liabilities'] + $resultsBalanceSheets['total_share_equity'];
-        $ratioAnalysis['long_term_ratio']['percentage'] = $totalShareLongTerm > 0 ? ($resultsBalanceSheets['total_long_term_liabilities'] / $totalShareLongTerm) * 100 : 0;
-
-        $ratioAnalysis['roi']['percentage'] = 0;
-
-        $this->ratioAnalysis = $ratioAnalysis;
+        $this->ratioAnalysis['gross_profit_margin']['percentage'] = (($statements['Sales'] - $statements['Cost of Good Sold']) / $statements['Cost of Good Sold']) * 100;
     }
 }

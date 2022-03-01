@@ -3,6 +3,9 @@
 namespace Customer\Providers;
 
 use Core\Providers\BaseServiceProvider;
+
+use Customer\Services\FinancialRatioInterface;
+use Customer\Services\FinancialRatio;
 use Customer\Services\CustomerService;
 use Customer\Services\CustomerServiceInterface;
 use Customer\Support\Crm\Contracts\CrmApiInterface;
@@ -29,6 +32,7 @@ class CustomerServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->bind(CustomerServiceInterface::class, CustomerService::class);
+        $this->app->bind(FinancialRatioInterface::class, FinancialRatio::class);
 
         $this->registerCrmBindings();
 

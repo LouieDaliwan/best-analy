@@ -1,8 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="{{ app()->getLocale() }}">
+
 <head>
   <title>{{ settings('app:fulltitle') }} @lang('Toolkit Report')</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
   {{-- Fonts --}}
   <link href="https://fonts.googleapis.com/css?family=Rubik:400,500&display=swap" rel="stylesheet">
@@ -22,7 +23,7 @@
 
   {{-- RTL --}}
   @if (app()->getLocale() == 'ar')
-    <style>{{ theme()->inlined(public_path('reports/css/rtl.css')) }}</style>
+  <style>{{ theme()->inlined(public_path('reports/css/rtl.css')) }}</style>
   @endif
 </head>
 
@@ -79,4 +80,5 @@
     {{-- Ratios --}}
   </main>
 </body>
+
 </html>

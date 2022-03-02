@@ -37,7 +37,7 @@ class FinancialRatio implements FinancialRatioInterface
             'status' => '',
             'color_status' => '',
         ],
-        'raw_materials_margin' => [
+        'operating_profit_margin' => [
             'percentage' => 0,
             'results' => 0,
             'score' => 0,
@@ -99,6 +99,10 @@ class FinancialRatio implements FinancialRatioInterface
             $statements['metadataSheets']['Balance']
         );
 
+        $this->computeProfitStatement($statements['metadataStatements']);
+
+        $this->computeBalanceSheet($statements['metadataSheets']);
+
         $customer->statements()->updateOrCreate(
             [
                 'customer_id' => $id,
@@ -108,10 +112,10 @@ class FinancialRatio implements FinancialRatioInterface
             [
                 'metadataStatements' => $statements['metadataStatements'],
                 'metadataSheets' => $statements['metadataSheets'],
-                'metadataResults' => array_merge(
-                    $this->computeProfitStatement($statements['metadataStatements']),
-                    $this->computeBalanceSheet($statements['metadataSheets'])
-                )
+                'metadataResults' => [
+                        'overAllResults' => $this->overAllResults,
+                        'ratioAnalysis' => $this->ratioAnalysis,
+                    ],
             ]
         );
     }
@@ -196,5 +200,6 @@ class FinancialRatio implements FinancialRatioInterface
     protected function computeRatioAnalysis($statements)
     {
         $this->ratioAnalysis['gross_profit_margin']['percentage'] = (($statements['Sales'] - $statements['Cost of Good Sold']) / $statements['Cost of Good Sold']) * 100;
+        $this->ratioAnalysis['operating_profit_margin']['percentage'] = (())
     }
 }

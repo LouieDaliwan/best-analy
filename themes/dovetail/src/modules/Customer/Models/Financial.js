@@ -23,6 +23,7 @@ export default class extends Resource {
 
       metadataStatements: {
         "Net Operating Profit/(Loss)": 0,
+        "Number of Staff": 0,
         Sales: 0,
         "Raw Materials": 0,
         "Direct Production Costs": 0,
@@ -30,7 +31,6 @@ export default class extends Resource {
         "Marketing Costs": 0,
         "General Management Costs": 0,
         "Value Added": 0,
-        "Number of Staff": 0,
         "Staff Salaries & Benefits": 0,
         Depreciation: 0,
         "Other Expense (less Other Income)": 0,

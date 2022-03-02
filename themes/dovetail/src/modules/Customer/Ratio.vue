@@ -80,6 +80,7 @@ export default {
         `/api/v1/reports/overall/customer/${customer}/user/${user}`
       ).then(response => {
         this.resource.data = response.data
+        console.log(this.resource.data)
       })
     },
 

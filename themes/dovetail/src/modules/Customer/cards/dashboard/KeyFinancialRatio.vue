@@ -9,20 +9,29 @@
         ></v-btn>
       </div>
       <v-divider class="mb-5"></v-divider>
-      <div class="mb-5">
-        <b><span v-text="trans('Sector')"></span>:</b>
-        <span v-text="trans('Non-industrial')"></span>
-      </div>
+      <v-row class="mb-5">
+        <v-col cols="12" sm="6">
+          <b><span v-text="trans('Sector')"></span>:</b>
+          <span v-text="trans('Non-industrial')"></span
+        ></v-col>
+        <v-col cols="12" sm="6" class="text-sm-right">
+          <b><span v-text="trans('Date')"></span>:</b>
+          <span v-text="trans('09 Mar 2022')"></span
+        ></v-col>
+      </v-row>
       <div class="mb-5">
         <ul class="pa-0" style="list-style: none">
           <template v-for="(item, i) in ratings">
             <li class="d-inline mr-3" :key="i">
               <v-icon
+                :color="item.color"
                 small
-                :class="`rate-${item.replace(' ', '-').toLowerCase()}--text`"
+                :class="
+                  `rate-${item.text.replace(' ', '-').toLowerCase()}--text`
+                "
                 >mdi-circle</v-icon
               >
-              <span v-text="trans(item)"></span>
+              <span v-text="trans(item.text)"></span>
             </li>
           </template>
         </ul>
@@ -59,47 +68,43 @@
 <script>
 export default {
   data: () => ({
-    ratings: ["Excellent", "Good", "Moderate", "Poor", "Very Poor"],
+    ratings: [
+      { text: "Excellent", color: "#40AF49" },
+      { text: "Good", color: "#9BCF44" },
+      { text: "Moderate", color: "#8A2B91" },
+      { text: "Poor", color: "#F9BE00" },
+      { text: "Very Poor", color: "#F20000" }
+    ],
     keyFinancialRatio: [
       {
-        label: "Breakeven Point",
+        label: "Gross Profit Margin",
         rate: "good",
         score: 3.2
-      },
-      {
-        label: "Working Capital",
-        rate: "moderate",
-        score: 4.0
       },
       {
         label: "Net Profit Margin",
-        rate: "good",
-        score: 3.2
-      },
-      {
-        label: "Gross Profit Margin",
-        rate: "excellent",
-        score: 5.05
-      },
-      {
-        label: "Raw Materials Margin",
-        rate: "good",
-        score: 3.2
-      },
-      {
-        label: "Current Ratio",
         rate: "moderate",
         score: 4.0
       },
       {
-        label: "Debt Ration",
+        label: "Return of Investment",
         rate: "good",
         score: 3.2
       },
       {
-        label: "Return of Investment",
+        label: "Raw Materials Margin",
         rate: "excellent",
         score: 5.05
+      },
+      {
+        label: "Current Ratio",
+        rate: "good",
+        score: 3.2
+      },
+      {
+        label: "Long-term Debt Ratio",
+        rate: "moderate",
+        score: 4.0
       }
     ]
   }),

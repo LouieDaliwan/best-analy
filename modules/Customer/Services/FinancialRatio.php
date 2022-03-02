@@ -225,6 +225,11 @@ class FinancialRatio implements FinancialRatioInterface
 
     protected function computeSolvency($sales, $profitStatement, $balanceSheets)
     {
-        
+        $solvency = $this->ratioAnalysis['solvency'];
+
+        $solvency['debt_to_equity_ratio'] = (int) $balanceSheets['total_liabilities'] / (int) $balanceSheets['stockholdersequity'];
+        $solvency['debt_ratio'] = (int) $balanceSheets['total_liabilities'] / (int) $balanceSheets['total_assets'];
+
+        $this->ratioAnalysis['solvency'] = $solvency;
     }
 }

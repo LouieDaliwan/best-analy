@@ -147,6 +147,10 @@ class ReportService extends Service implements ReportServiceInterface
 
         $date = $this->request()->get('month') != 'null'  ?  $this->request()->get('month') : date('m-Y');
 
+        if (is_null($date)) {
+            $date = date('m-Y');
+        }
+
         $model = $model->where('month', $date);
 
         if (! $model->exists()) {

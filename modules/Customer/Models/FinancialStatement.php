@@ -14,6 +14,7 @@ class FinancialStatement extends Model
     protected $casts = [
         'metadataStatements' => 'array',
         'metadataSheets' => 'array',
+        'metadataResults' => 'array',
     ];
 
     public function customer()

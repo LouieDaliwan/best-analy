@@ -9,6 +9,8 @@ class FinancialRatio implements FinancialRatioInterface
 {
     protected $customer;
 
+    protected $statements;
+
     protected $overAllResults = [
         'profitStatements' => [],
         'balanceSheets' => []
@@ -49,11 +51,40 @@ class FinancialRatio implements FinancialRatioInterface
         'additional_ratios' => [
             'raw_materials_margin' => 0,
             'roi' => 0,
+        ],
+        'dashboard' => [
+            'gross_profit' => [
+                'score' => 0,
+                'color' => '',
+            ],
+            'net_profit' => [
+                'score' => 0,
+                'color' => '',
+            ],
+            'roi' => [
+                'score' => 0,
+                'color' => '',
+            ],
+            'raw_materials' => [
+                'score' => 0,
+                'color' => '',
+            ],
+            'current_ratio' => [
+                'score' => 0,
+                'color' => '',
+            ],
+            'long_term_deb' =>[
+                'score' => 0,
+                'color' => '',
+            ]
         ]
     ];
 
     public function compute(Customer $customer, $statements, $id)
     {
+
+        $this->statements = $statements;
+        $this->customer = $customer;
 
         $period = $statements['metadataStatements']['period'];
         $statement_id = $statements['id'];
@@ -72,23 +103,23 @@ class FinancialRatio implements FinancialRatioInterface
         $this->computeBalanceSheet($statements['metadataSheets']);
 
         $this->computeRatioAnalysis($statements);
-        // dd($this->computeRatioAnalysis());
 
-        // $customer->statements()->updateOrCreate(
-        //     [
-        //         'customer_id' => $id,
-        //         'id' => $statement_id,
-        //         'period' => $period,
-        //     ],
-        //     [
-        //         'metadataStatements' => $statements['metadataStatements'],
-        //         'metadataSheets' => $statements['metadataSheets'],
-        //         'metadataResults' => [
-        //                 'overAllResults' => $this->overAllResults,
-        //                 'ratioAnalysis' => $this->ratioAnalysis,
-        //             ],
-        //     ]
-        // );
+
+        $customer->statements()->updateOrCreate(
+            [
+                'customer_id' => $id,
+                'id' => $statement_id,
+                'period' => $period,
+            ],
+            [
+                'metadataStatements' => $statements['metadataStatements'],
+                'metadataSheets' => $statements['metadataSheets'],
+                'metadataResults' => [
+                        'overAllResults' => $this->overAllResults,
+                        'ratioAnalysis' => $this->ratioAnalysis,
+                    ],
+            ]
+        );
     }
 
     protected function computeProfitStatement($infoStatement)
@@ -172,9 +203,18 @@ class FinancialRatio implements FinancialRatioInterface
         $sales = (int) $profitStatements['sales'];
 
         $this->computeProfitability($sales, $profitStatements, $balanceSheets);
+
         $this->computeLiquidity($sales, $balanceSheets);
+
         // $this->computeEfficiency($sales, $profitStatements, $balanceSheets); // pending
-        $this->computeSolvency($sales, $profitStatements, $balanceSheets);
+
+        $this->computeSolvency($balanceSheets);
+
+        $this->computeProductivity();
+
+        $this->computeAdditionalRatio();
+
+        $this->renderScoreResult();
 
 
     }
@@ -223,7 +263,7 @@ class FinancialRatio implements FinancialRatioInterface
         $this->ratioAnalysis['efficiency'] = $efficiency;
     }
 
-    protected function computeSolvency($sales, $profitStatement, $balanceSheets)
+    protected function computeSolvency($balanceSheets)
     {
         $solvency = $this->ratioAnalysis['solvency'];
 
@@ -231,5 +271,33 @@ class FinancialRatio implements FinancialRatioInterface
         $solvency['debt_ratio'] = (int) $balanceSheets['total_liabilities'] / (int) $balanceSheets['total_assets'];
 
         $this->ratioAnalysis['solvency'] = $solvency;
+    }
+
+    protected function computeProductivity()
+    {
+        $statements = $this->statements['metadataStatements'];
+
+        $valueAdded = (int) $statements['Value Added'];
+        $staffSalaries = (int) $statements['Staff Salaries & Benefits'];
+
+        $this->ratioAnalysis['productivity']['labour_cost_competitiveness'] = $staffSalaries != 0 ? $valueAdded / $staffSalaries : 0;
+    }
+
+    protected function computeAdditionalRatio()
+    {
+        $statements = $this->statements['metadataStatements'];
+
+        $investmentValue = $this->customer->detail->metadata['investment_value'];
+
+        $additionalRatio = $this->ratioAnalysis['additional_ratios'];
+        $additionalRatio['raw_materials_margin'] = (int) $statements['Raw Materials'] / (int) $statements['Sales'];
+        $additionalRatio['roi'] = $investmentValue != (null || 0) ? $statements['Net Operating Profit/(Loss)'] / $investmentValue : 0;
+
+        $this->ratioAnalysis['additional_ratios'] = $additionalRatio;
+    }
+
+    protected function renderScoreResult()
+    {
+        dd($this->ratioAnalysis);
     }
 }

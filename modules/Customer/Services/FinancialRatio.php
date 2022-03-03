@@ -16,73 +16,15 @@ class FinancialRatio implements FinancialRatioInterface
         'balanceSheets' => []
     ];
 
-    protected $ratioAnalysis = [
-        'profitability' => [
-            'net_profit_margin' => 0,
-            'gross_profit_margin' => 0,
-            'operating_profit_margin' => 0,
-            'return_on_assets' => 0,
-            'return_on_equity' => 0,
-            'earnings_per_share' => 0,
-            'operating_ratio' => 0,
-        ],
-        'liquidity' => [
-            'current_ratio' => 0,
-            'cash_ratio' => 0,
-            'working_capital' => 0,
-            'recommended_working_capital' => 0,
-            'working_capital_turnover' => 0,
-        ],
-        'efficiency' => [
-            'trade_receivable_turnover' => 0,
-            'avg_trade_receivable_turnover' => 0,
-            'trade_payable_turnover' => 0,
-            'avg_trade_payable_turnover' => 0,
-            'assets_turnover_ratio' => 0,
-            'inventory_turnover_ratio' => 0,
-        ],
-        'solvency' => [
-            'debt_to_equity_ratio' => 0,
-            'debt_ratio' => 0,
-        ],
-        'productivity' => [
-            'labour_cost_comptetitiveness' => 0,
-        ],
-        'additional_ratios' => [
-            'raw_materials_margin' => 0,
-            'roi' => 0,
-        ],
-        'dashboard' => [
-            'gross_profit' => [
-                'score' => 0,
-                'color' => '',
-            ],
-            'net_profit' => [
-                'score' => 0,
-                'color' => '',
-            ],
-            'roi' => [
-                'score' => 0,
-                'color' => '',
-            ],
-            'raw_materials' => [
-                'score' => 0,
-                'color' => '',
-            ],
-            'current_ratio' => [
-                'score' => 0,
-                'color' => '',
-            ],
-            'long_term_deb' =>[
-                'score' => 0,
-                'color' => '',
-            ]
-        ]
-    ];
+    protected $ratioAnalysis;
+
+    public function __construct()
+    {
+        $this->ratioAnalysis = config('fratio.format');
+    }
 
     public function compute(Customer $customer, $statements, $id)
     {
-
         $this->statements = $statements;
         $this->customer = $customer;
 
@@ -215,8 +157,6 @@ class FinancialRatio implements FinancialRatioInterface
         $this->computeAdditionalRatio();
 
         $this->renderScoreResult();
-
-
     }
 
     protected function computeProfitability($sales, $profitStatements, $balanceSheets)
@@ -224,9 +164,9 @@ class FinancialRatio implements FinancialRatioInterface
         //TODO optimize
         $profitability = $this->ratioAnalysis['profitability'];
 
-        $total_assets = (int) $balanceSheets['total_assets'];
-        $stock_holder = (int) $balanceSheets['stockholdersequity'];
-        $common_share = (int) $balanceSheets['commonsharesoutstanding'];
+        $total_assets = (float) $balanceSheets['total_assets'];
+        $stock_holder = (float) $balanceSheets['stockholdersequity'];
+        $common_share = (float) $balanceSheets['commonsharesoutstanding'];
 
         $profitability['gross_profit_margin'] = $sales != 0 ? (($sales - $profitStatements['cost_goods']) / $profitStatements['cost_goods']) * 100 : 0;
         $profitability['operating_profit_margin'] = $sales != 0 ? ($profitStatements['operating_loss_or_profit'] / $sales) * 100 : 0;
@@ -235,6 +175,10 @@ class FinancialRatio implements FinancialRatioInterface
         $profitability['return_on_equity'] = $stock_holder !=  0 ? ($profitStatements['net_loss_profit_after_taxes'] / $stock_holder) : 0;
         $profitability['earnings_per_share'] = $common_share != (null || 0) ? ($profitStatements['net_loss_profit_after_taxes'] / $common_share ) : 0;
         $profitability['operating_ratio'] = round($profitStatements['operating_expenses'] / $sales, 2). ':1' ?? "";
+
+
+        $this->ratioAnalysis['dashboard']['gross_margin']['score'] = $profitability['gross_profit_margin'];
+        $this->ratioAnalysis['dashboard']['net_margin']['score'] = $profitability['net_profit_margin'];
 
         $this->ratioAnalysis['profitability'] = $profitability;
     }
@@ -250,6 +194,9 @@ class FinancialRatio implements FinancialRatioInterface
         $liquidity['recommended_working_capital'] = ($balanceSheets['current_liabilities'] * 1.50) - $balanceSheets['current_liabilities'];
         $liquidity['working_capital_turnover'] = $sales / $liquidity['working_capital'];
 
+        $this->ratioAnalysis['dashboard']['current_ratio']['score'] = round($balanceSheets['cash'] / $balanceSheets['current_liabilities'], 2);
+        $this->ratioAnalysis['dashboard']['debt_ratio']['score'] = $balanceSheets['total_long_term_liabilities'] ?? 0;
+
         $this->ratioAnalysis['liquidity'] = $liquidity;
     }
 
@@ -259,7 +206,6 @@ class FinancialRatio implements FinancialRatioInterface
 
         // $efficiency['']
 
-
         $this->ratioAnalysis['efficiency'] = $efficiency;
     }
 
@@ -267,8 +213,8 @@ class FinancialRatio implements FinancialRatioInterface
     {
         $solvency = $this->ratioAnalysis['solvency'];
 
-        $solvency['debt_to_equity_ratio'] = (int) $balanceSheets['total_liabilities'] / (int) $balanceSheets['stockholdersequity'];
-        $solvency['debt_ratio'] = (int) $balanceSheets['total_liabilities'] / (int) $balanceSheets['total_assets'];
+        $solvency['debt_to_equity_ratio'] = (float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['stockholdersequity'];
+        $solvency['debt_ratio'] = (float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['total_assets'];
 
         $this->ratioAnalysis['solvency'] = $solvency;
     }
@@ -277,8 +223,8 @@ class FinancialRatio implements FinancialRatioInterface
     {
         $statements = $this->statements['metadataStatements'];
 
-        $valueAdded = (int) $statements['Value Added'];
-        $staffSalaries = (int) $statements['Staff Salaries & Benefits'];
+        $valueAdded = (float) $statements['Value Added'];
+        $staffSalaries = (float) $statements['Staff Salaries & Benefits'];
 
         $this->ratioAnalysis['productivity']['labour_cost_competitiveness'] = $staffSalaries != 0 ? $valueAdded / $staffSalaries : 0;
     }
@@ -290,14 +236,71 @@ class FinancialRatio implements FinancialRatioInterface
         $investmentValue = $this->customer->detail->metadata['investment_value'];
 
         $additionalRatio = $this->ratioAnalysis['additional_ratios'];
-        $additionalRatio['raw_materials_margin'] = (int) $statements['Raw Materials'] / (int) $statements['Sales'];
+        $additionalRatio['raw_materials_margin'] = (float) $statements['Raw Materials'] / (float) $statements['Sales'];
         $additionalRatio['roi'] = $investmentValue != (null || 0) ? $statements['Net Operating Profit/(Loss)'] / $investmentValue : 0;
+
+        $this->ratioAnalysis['dashboard']['raw_materials']['score'] = $additionalRatio['raw_materials_margin'];
+        $this->ratioAnalysis['dashboard']['roi']['score'] = $additionalRatio['roi'];
 
         $this->ratioAnalysis['additional_ratios'] = $additionalRatio;
     }
 
     protected function renderScoreResult()
     {
-        dd($this->ratioAnalysis);
+        $period = $this->statements['metadataStatements']['period'];
+        $projectType = $this->customer->detail->metadata['project_type'];
+
+        $this->ratioAnalysis['dashboard']['date'] = $period;
+        $this->ratioAnalysis['dashboard']['project_type'] = $projectType;
+
+        $projectType = strtolower(
+            str_replace(" ", "_", $this->customer->detail->metadata['project_type'])
+        );
+
+        $projectTypeValues = config("fratio.{$projectType}");
+
+        foreach ($projectTypeValues as $ratioKey => $ratioValue) {
+
+            $ratio = $this->ratioAnalysis['dashboard'][$ratioKey];
+
+            foreach ($ratioValue as $remarkPoint => $remark) {
+
+                $remarkPoint = (float) $remarkPoint;
+
+                if ($ratio['score'] <=  $remarkPoint || $ratio['score'] == 0) {
+                    $this->ratioAnalysis['dashboard'][$ratioKey]['color'] = $this->colorStatus($remark);
+                }
+
+                if($ratio['score'] >= $remarkPoint) {
+                    $this->ratioAnalysis['dashboard'][$ratioKey]['color'] = $this->colorStatus('Excellent');
+                }
+            }
+
+        }
+    }
+
+    protected function coLorStatus($remark)
+    {
+        switch ($remark) {
+            case "Very Poor" :
+                $color = '#F20000';
+                break;
+            case "Poor":
+                $color = '#F9BE00';
+                break;
+            case "Moderate":
+                $color = '#8A2B91';
+                break;
+            case "Good":
+                $color = '#9BCF44';
+                break;
+            case "Excellent":
+                $color = '#40AF49';
+                break;
+            default:
+                $color = '#F20000';
+        }
+
+        return $color;
     }
 }

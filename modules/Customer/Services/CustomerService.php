@@ -289,6 +289,9 @@ class CustomerService extends Service implements CustomerServiceInterface
 
     public function financialRatios($customer)
     {
-        return $customer->computeFinancialRatios();
+        //Todo optimize
+        $latestPeriod = $customer->statements()->latest('period')->first();
+
+        return $latestPeriod->metadataResults['ratioAnalysis']['dashboard'];
     }
 }

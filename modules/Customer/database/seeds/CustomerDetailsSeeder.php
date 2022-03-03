@@ -146,11 +146,7 @@ class CustomerDetailsSeeder extends Seeder
                     continue;
                 }
 
-                isset($temp_meta_arr[$arr_meta_key]) ? : $temp_meta_arr[$arr_meta_key] = (int) $metadata[$arr_meta_key][$year];
-
-                // if (collect(['Buildings', 'Plant, Machinery & Equipment', 'Others (Depreciation)'])->intersect([$arr_meta_key])->isNotEmpty()) {
-                //     $temp_meta_arr['Depreciation'] += (int) $metadata[$arr_meta_key][$year];
-                // }
+                isset($temp_meta_arr[$arr_meta_key]) ? : $temp_meta_arr[$arr_meta_key] = (float) $metadata[$arr_meta_key][$year];
             }
 
             if (is_array($arr_meta_value) && !empty($arr_meta_value)) {
@@ -163,7 +159,7 @@ class CustomerDetailsSeeder extends Seeder
 
                             isset($temp_meta_arr[$arr_meta_key]) ? : $temp_meta_arr[$arr_meta_key] = 0;
 
-                            $temp_meta_arr[$arr_meta_key] += (int) $metadata[$child_value][$year];
+                            $temp_meta_arr[$arr_meta_key] += (float) $metadata[$child_value][$year];
                         }
 
                     } else {
@@ -173,7 +169,7 @@ class CustomerDetailsSeeder extends Seeder
                             continue;
                         }
 
-                        $temp_meta_arr[$arr_meta_key] += (int) $metadata[$parent_value][$year];
+                        $temp_meta_arr[$arr_meta_key] += (float) $metadata[$parent_value][$year];
                     }
 
                     if ($arr_meta_key == 'Raw Materials (direct & indirect)') {
@@ -192,10 +188,6 @@ class CustomerDetailsSeeder extends Seeder
         return [
                 'Sales' => [],
                 'Raw Materials (direct & indirect)' => [],
-                // 'Change Inventory' => [
-                //     'Opening Stocks',
-                //     'Closing Stocks'
-                // ],
                 'Direct Production Costs' => [
                     'Cargo and Handling',
                     'Part-time/Temporary Labour',
@@ -259,13 +251,6 @@ class CustomerDetailsSeeder extends Seeder
                         'Others (Non-Operating Costs)',
                     ],
                 ],
-                // 'Company Tax' => [],
-                // "Taxation" => [
-                //     'Tax on Property',
-                //     'Duties (Customs & Excise)',
-                //     'Levy on Foreign Workers',
-                //     'Others (excluding Income Tax)',
-                // ],
                 "Ebit" => [
                     'Profit or (Loss) Before Interest and Income Tax'
                 ],
@@ -281,9 +266,6 @@ class CustomerDetailsSeeder extends Seeder
                 'Company Tax' => [
                     'Tax on Company'
                 ],
-                // 'Net Operating Profit/(Loss)' =>[
-                //     'Profit or (Loss) After Income Tax'
-                // ]
             ];
     }
 }

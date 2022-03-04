@@ -1,23 +1,32 @@
 <template>
   <v-card>
     <v-card-text class="pa-7">
-      <h3 class="mb-5" v-text="trans('General Information')"></h3>
+      <h3 class="my-5 d-flex align-center">
+        <span v-text="trans('General Information')"></span>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              icon
+              :to="{
+                name: 'companies.edit',
+                params: { id: value.id }
+              }"
+              exact
+              small
+              v-bind="attrs"
+              v-on="on"
+              ><v-icon small class="ml-2 incomplete--text"
+                >mdi-pencil</v-icon
+              ></v-btn
+            >
+          </template>
+          <span v-text="trans(`Edit General Information`)"></span>
+        </v-tooltip>
+      </h3>
       <v-divider></v-divider>
       <template v-for="(item, i) in dataset">
         <div :key="i">
-          <h4 class="my-5 d-flex align-center">
-            <span v-text="trans(item.title)"></span>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn icon :to="item.to" exact small v-bind="attrs" v-on="on"
-                  ><v-icon small class="ml-2 incomplete--text"
-                    >mdi-pencil</v-icon
-                  ></v-btn
-                >
-              </template>
-              <span v-text="trans(`Edit ${item.title}`)"></span>
-            </v-tooltip>
-          </h4>
+          <h4 class="my-5" v-text="trans(item.title)"></h4>
           <v-row no-gutters>
             <template v-for="(col, j) in gen2Col(item.details)">
               <v-col cols="12" sm="6" :key="i + '-' + j">
@@ -52,115 +61,115 @@ export default {
         return [
           {
             title: "Company Information",
-            to: {
-              name: "companies.edit",
-              params: { id: this.value.id },
-            },
             details: [
               {
                 label: "Name",
-                value: this.value.name,
+                value: this.value.name
               },
               {
                 label: "Address",
-                value: this.value.metadata.address,
+                value: this.value.metadata.address
               },
               {
                 label: "Staff Strength",
-                value: this.value.metadata.staffstrength,
+                value: this.value.metadata.staffstrength
               },
               {
                 label: "Email",
-                value: this.value.metadata.email,
+                value: this.value.metadata.email
               },
               {
                 label: "Website",
-                value: this.value.metadata.website,
+                value: this.value.metadata.website
               },
               {
                 label: "Industry",
-                value: this.value.metadata.industry,
-              },
-            ],
+                value: this.value.metadata.industry
+              }
+            ]
           },
           {
             title: "Business Details",
             details: [
               {
                 label: "Project Name",
-                value: "Chocolate",
+                value: "Chocolate"
               },
               {
                 label: "Business Status",
-                value: "Soft Opening",
+                value: "Soft Opening"
               },
               {
                 label: "Industry Sector",
-                value: "Tourism",
+                value: "Tourism"
               },
               {
                 label: "Business Size",
-                value: "SME",
+                value: "SME"
               },
               {
                 label: "Project Location",
-                value: "Dubai",
+                value: "Dubai"
               },
               {
                 label: "Funding Program",
-                value: "Bedaya",
+                value: "Bedaya"
               },
               {
                 label: "Project Type",
-                value: "Industrial",
-              },
-            ],
+                value: "Industrial"
+              }
+            ]
           },
           {
             title: "Applicant Details",
             details: [
               {
                 label: "Applicant Name",
-                value: "Chocolate",
+                value: this.value.applicant.metadata.name
               },
               {
                 label: "Email Address",
-                value: "Chocolate",
+                value: this.value.applicant.metadata.email
               },
               {
                 label: "Designation",
-                value: "Chocolate",
+                value: this.value.applicant.metadata.destination
               },
               {
                 label: "Mobile Number",
-                value: "Chocolate",
+                value: this.value.applicant.metadata.number
               },
               {
                 label: "Contact Person",
-                value: "Chocolate",
+                value: this.value.applicant.metadata.contact
               },
               {
                 label: "Mobile Number",
-                value: "Chocolate",
-              },
-            ],
-          },
+                value: this.value.applicant.metadata.number
+              }
+            ]
+          }
         ];
-      },
-    },
+      }
+    }
   },
 
   methods: {
     gen2Col(array) {
       array = [...array];
 
-      const len = array.length,
-        colLen = len / 2,
-        rem = len % 2,
-        newColIndex = rem ? colLen + 1 : colLen;
+      const len = array.length;
+      const colLen = len / 2;
+      const rem = len % 2;
+      const newColIndex = rem ? colLen + 1 : colLen;
 
       return [array.splice(0, newColIndex), array];
-    },
+    }
   },
+
+  mounted() {
+    console.log(this.value);
+  }
 };
 </script>

@@ -21,7 +21,7 @@
         </v-col>
         <v-col cols="12" md="7">
           <sme-rating v-model="resource.data" class="mb-5"></sme-rating>
-          <key-financial-ratio v-model="resource.data"></key-financial-ratio>
+          <key-financial-ratio v-model="keyFinRation"></key-financial-ratio>
         </v-col>
       </v-row>
     </template>
@@ -36,33 +36,32 @@ export default {
   components: {
     GeneralInformation: () => import("./cards/dashboard/GeneralInformation"),
     SmeRating: () => import("./cards/dashboard/SmeRating"),
-    KeyFinancialRatio: () => import("./cards/dashboard/KeyFinancialRatio"),
+    KeyFinancialRatio: () => import("./cards/dashboard/KeyFinancialRatio")
   },
 
   data: () => ({
     resource: new Resource(),
+    keyFinRation: {}
   }),
 
   methods: {
     getResource() {
-      axios
-        .get($api.show(this.$route.params.id))
-        .then((response) => {
-          this.resource.setData(response.data.data);
+      Promise.all([
+        axios.get($api.show(this.$route.params.id)),
+        axios.get($api.financialRatio(this.$route.params.id))
+      ])
+        .then(([res1, res2]) => {
+          this.resource.setData(res1.data.data);
+          this.keyFinRation = res2.data;
         })
         .finally(() => {
           this.resource.fetch(false);
         });
-
-      axios.get($api.financialRatio(this.$route.params.id))
-      .then(({data}) => {
-          console.log(data);
-      });
-    },
+    }
   },
 
   mounted() {
     this.getResource();
-  },
+  }
 };
 </script>

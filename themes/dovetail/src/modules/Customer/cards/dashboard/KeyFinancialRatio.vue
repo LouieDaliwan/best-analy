@@ -16,7 +16,7 @@
         ></v-col>
         <v-col cols="12" sm="6" class="text-sm-right">
           <b><span v-text="trans('Date')"></span>:</b>
-          <span v-text="trans('09 Mar 2022')"></span
+          <span v-text="trans(value.date)"></span
         ></v-col>
       </v-row>
       <div class="mb-5">
@@ -27,7 +27,7 @@
                 :color="item.color"
                 small
                 :class="
-                  `rate-${item.text.replace(' ', '-').toLowerCase()}--text`
+                  `score-${item.text.replace(' ', '-').toLowerCase()}--text`
                 "
                 >mdi-circle</v-icon
               >
@@ -51,7 +51,8 @@
                     <v-icon
                       small
                       class="ml-2"
-                      :class="`rate-${subitem.rate}--text`"
+                      :class="`score-${subitem.score}--text`"
+                      :color="subitem.color"
                       >mdi-circle</v-icon
                     >
                   </v-list-item-action>
@@ -67,7 +68,9 @@
 
 <script>
 export default {
-  data: () => ({
+  props: ["value"],
+
+  data: vm => ({
     ratings: [
       { text: "Excellent", color: "#40AF49" },
       { text: "Good", color: "#9BCF44" },
@@ -78,33 +81,27 @@ export default {
     keyFinancialRatio: [
       {
         label: "Gross Profit Margin",
-        rate: "good",
-        score: 3.2
+        ...vm.value.gross_margin
       },
       {
         label: "Net Profit Margin",
-        rate: "moderate",
-        score: 4.0
+        ...vm.value.net_margin
       },
       {
         label: "Return of Investment",
-        rate: "good",
-        score: 3.2
+        ...vm.value.roi
       },
       {
         label: "Raw Materials Margin",
-        rate: "excellent",
-        score: 5.05
+        ...vm.value.raw_materials
       },
       {
         label: "Current Ratio",
-        rate: "good",
-        score: 3.2
+        ...vm.value.current_ratio
       },
       {
         label: "Long-term Debt Ratio",
-        rate: "moderate",
-        score: 4.0
+        ...vm.value.debt_ratio
       }
     ]
   }),
@@ -113,10 +110,10 @@ export default {
     gen2Col(array) {
       array = [...array];
 
-      const len = array.length,
-        colLen = len / 2,
-        rem = len % 2,
-        newColIndex = rem ? colLen + 1 : colLen;
+      const len = array.length;
+      const colLen = len / 2;
+      const rem = len % 2;
+      const newColIndex = rem ? colLen + 1 : colLen;
 
       return [array.splice(0, newColIndex), array];
     }

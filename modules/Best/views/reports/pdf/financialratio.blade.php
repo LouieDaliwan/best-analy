@@ -87,7 +87,7 @@
       </div>
     </div>
     {{-- Ratios --}}
-    <?php else: ?>
+  <?php else: ?>
     {{-- Ratios --}}
     <div class="sheet">
       <div style="zoom: 0.7; line-height: 1;">

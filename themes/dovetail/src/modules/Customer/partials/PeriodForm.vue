@@ -247,7 +247,7 @@ export default {
         let result = undefined
         
         if(period.isValid()) 
-          result =  period.format('MMM Do YYYY')
+          result =  period.format('MMM YYYY')
 
         return result
           

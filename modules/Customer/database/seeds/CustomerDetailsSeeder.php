@@ -76,7 +76,7 @@ class CustomerDetailsSeeder extends Seeder
                 'trade_name_ar' => null,
                 'license_no' => null,
                 'funding_program' => null,
-                'investment_value' => null,
+                'investment_value' => 0,
                 'industry_sector' => null,
                 'business_size' => null,
                 'description' => null,

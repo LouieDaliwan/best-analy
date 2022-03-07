@@ -45,7 +45,6 @@ class FinancialRatio implements FinancialRatioInterface
 
         $this->computeRatioAnalysis($statements);
 
-
         $customer->statements()->updateOrCreate(
             [
                 'customer_id' => $id,
@@ -87,7 +86,7 @@ class FinancialRatio implements FinancialRatioInterface
             $profitStatement['cost_goods'] -
             $profitStatement['operating_expenses'] -
             $profitStatement['non_operating_expenses']
-        );
+        );  
 
         $profitStatement['depreciation'] = $infoStatement['Depreciation'];
         $profitStatement['taxes'] = $infoStatement['Company Tax'];

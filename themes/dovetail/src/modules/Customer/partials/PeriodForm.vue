@@ -29,19 +29,45 @@
       v-slot="{ errors }"
       v-if="edit"
     >
-      <v-text-field
+      <v-menu
+        ref="menu"
+        v-model="menu"
+        :close-on-content-click="false"
+        transition="scale-transition"
+        offset-y
+        min-width="auto"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            v-model="formattedDate"
+            label="Period Date"
+            prepend-icon="mdi-calendar"
+            readonly
+            name="metadata[statement][metadataStatements][period]"
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+          v-model="unFormattedDate"
+          no-title
+          scrollable
+        >
+        </v-date-picker>
+      </v-menu>
+      <!-- <v-text-field
         dense
         label="Description"
         name="metadata[statement][metadataStatements][period]"
         outlined
         v-model="resource.data.period"
         hide-details
-      ></v-text-field>
-      <input
+      ></v-text-field> -->
+      <!-- <input
         type="hidden"
         name="metadata[statement][metadataSheets][period]"
         :value="resource.data.period"
-      />
+      /> -->
     </validation-provider>
 
     <h4 class="mb-3 primary--text" v-else v-text="resource.data.period">
@@ -203,6 +229,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import Financial from "../Models/Financial";
 
 export default {
@@ -210,11 +237,44 @@ export default {
 
   components: {
     PeriodInput: () => import("./PeriodInput.vue")
+  },  
+
+  computed: {
+    formattedDate:  {
+      get () {
+        const period = moment(this.resource?.data?.period)
+
+        let result = undefined
+        
+        if(period.isValid()) 
+          result =  period.format('MMM Do YYYY')
+
+        return result
+          
+      },
+      set (val) {
+        this.resource.data.period = val
+      }
+    },
+    unFormattedDate:  {
+      get () {
+        const period = this.resource?.data?.period
+        
+        if(moment(period).isValid()) 
+          return period
+        else
+          return undefined
+      },
+      set (val) {
+        this.resource.data.period = val
+      }
+    },
   },
 
   data: () => ({
     resource: new Financial(),
-    edit: true
+    edit: true,
+    menu: false
   }),
 
   methods: {

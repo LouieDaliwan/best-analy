@@ -27,6 +27,8 @@
   @endif
 </head>
 
+<?php $single = false; ?>
+
 <body>
   <main>
     <div class="container">
@@ -52,32 +54,74 @@
           @include('best::reports.partials.disclaimer')
           @include('best::reports.partials.footer')
           <div class="text-right">
-            <div style="font-size: 12px;">{{ __('Page 1 of 2') }}</div>
+            <div style="font-size: 12px;">{{ __('Page 1 of <?= $single ? '2' : '3'; ?>') }}</div>
           </div>
         </div>
       </div>
     </div>
     {{-- Analysis --}}
 
-    {{-- Ratios --}}
-    <div class="container">
-      <div class="main-body">
-        <div class="main-content pb-3">
-          @include('best::reports.partials.header')
-        </div>
-        <div class="mt-2 border-bottom"></div>
-        <div class="main-content">
-          @include('best::reports.partials.organisation-profile')
-          @include('best::reports.table.index')
-          @include('best::reports.partials.disclaimer')
-          @include('best::reports.partials.footer')
-          <div class="text-right">
-            <div style="font-size: 12px;">{{ __('Page 2 of 2') }}</div>
+    <?php if($single): ?>
+      {{-- Ratios --}}
+      <div class="container">
+        <div class="main-body">
+          <div class="main-content pb-3">
+            @include('best::reports.partials.header')
+          </div>
+          <div class="mt-2 border-bottom"></div>
+          <div class="main-content">
+            @include('best::reports.partials.organisation-profile')
+            @include('best::reports.financials.singleyear', ['data' => $data['ratios:financial']])
+            @include('best::reports.partials.disclaimer')
+            @include('best::reports.partials.footer')
+            <div class="text-right">
+              <div style="font-size: 12px;">{{ __('Page 2 of 2') }}</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    {{-- Ratios --}}
+      {{-- Ratios --}}
+    <?php else: ?>
+      {{-- Ratios --}}
+      <div class="container">
+        <div class="main-body">
+          <div class="main-content pb-3">
+            @include('best::reports.partials.header')
+          </div>
+          <div class="mt-2 border-bottom"></div>
+          <div class="main-content">
+            @include('best::reports.partials.organisation-profile')
+            @include('best::reports.financials.ratio', ['data' => $data['ratios:financial']])
+            @include('best::reports.partials.disclaimer')
+            @include('best::reports.partials.footer')
+            <div class="text-right">
+              <div style="font-size: 12px;">{{ __('Page 2 of 3') }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{-- Ratios --}}
+
+      {{-- Indicators --}}
+      <div class="container">
+        <div class="main-body">
+          <div class="main-content pb-3">
+            @include('best::reports.partials.header')
+          </div>
+          <div class="mt-2 border-bottom"></div>
+          <div class="main-content">
+            @include('best::reports.partials.organisation-profile')
+            @include('best::reports.financials.indicators', ['data' => $data['indicators:productivity']])
+            @include('best::reports.partials.disclaimer')
+            @include('best::reports.partials.footer')
+            <div class="text-right">
+              <div style="font-size: 12px;">{{ __('Page 3 of 3') }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{-- Indicators --}}
+    <?php endif; ?>
   </main>
 </body>
 

@@ -1,6 +1,14 @@
 <div class="dt-divider" style="height: 50px;"></div>
 <h1 class="dt-primary">@lang('Productivity Indicators')</h1>
 
+<h3>@lang('PRODUCTIVITY ANALYSIS - LABOUR COST COMPETITIVENESS')</h3>
+<canvas height="100" id="productivity-analysis"></canvas>
+<ul>
+  <li>Overall labour cost competitiveness has seen a significant downward trend over the years.</li>
+  <li>Experienced a year on year decrease by -5.54% from the recent year to the previous year.</li>
+  <li>Records have also indicated that from Year 1 to Year 2, the per unit labour cost saw a significant year on year increase by -12.21%.</li>
+</ul>
+
 <style>
   td[colspan=3], td.colspan-text, .colspan-text {
     border-right: 1px solid #868e96 !important;
@@ -35,14 +43,6 @@
     @endforeach
   </tbody>
 </table>
-
-<h3>@lang('PRODUCTIVITY ANALYSIS - LABOUR COST COMPETITIVENESS')</h3>
-<canvas height="100" id="productivity-analysis"></canvas>
-<ul>
-  <li>Overall labour cost competitiveness has seen a significant downward trend over the years.</li>
-  <li>Experienced a year on year decrease by -5.54% from the recent year to the previous year.</li>
-  <li>Records have also indicated that from Year 1 to Year 2, the per unit labour cost saw a significant year on year increase by -12.21%.</li>
-</ul>
 
 <script>
 $(document).ready(function() {

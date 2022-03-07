@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-text class="pa-7">
-      <h3 class="my-5 d-flex align-center">
+      <h3 class="d-flex align-center">
         <span v-text="trans('General Information')"></span>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">

@@ -2,7 +2,7 @@
 <h1 class="dt-primary">@lang('Productivity Indicators')</h1>
 
 <h3>@lang('PRODUCTIVITY ANALYSIS - LABOUR COST COMPETITIVENESS')</h3>
-<canvas height="100" id="productivity-analysis"></canvas>
+<canvas height="100" width="100%" id="productivity-analysis"></canvas>
 <ul>
   <li>Overall labour cost competitiveness has seen a significant downward trend over the years.</li>
   <li>Experienced a year on year decrease by -5.54% from the recent year to the previous year.</li>
@@ -46,7 +46,8 @@
 
 <script>
 $(document).ready(function() {
-  var ctx = document.getElementById("productivity-analysis");
+  var ctx = document.getElementById("productivity-analysis").getContext('2d');
+
   var barChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -60,35 +61,40 @@ $(document).ready(function() {
       }]
     },
     options: {
-      tooltips: {
-        enabled: true,
-        mode: 'single',
-        callbacks: {
-          label: function(tooltipItems, data) {
-            return tooltipItems.yLabel+'%';
-          }
-        }
-      },
-      legend: {
-        display: false,
-      },
+      animation: false,
+      legend: false,
       scales: {
-        maxBarThickness: 3,
-        yAxes: [{
+        xAxes: [{
+          barPercentage: 0.2,
+          gridLines: {
+            display: false,
+          },
           ticks: {
-            // beginAtZero: true,
-            padding: 20,
+            beginAtZero: true,
+            fontColor: '#044b7f',
+            fontFamily: 'Rubik, sans-serif',
+            fontSize: 12,
+          },
+        }],
+        maxBarThickness: 5,
+        yAxes: [{
+          barPercentage: 0.1,
+          gridLines: {
+            display: false,
+          },
+          ticks: {
+            beginAtZero: true,
             maxTicksLimit: 5,
             fontColor: '#044b7f',
             fontFamily: 'Rubik, sans-serif',
             fontSize: 12,
-            // min: -100,
-            // max: 100,
-            callback: function(value){return value+ "%"}
+            callback: function(value){return value}
           }
         }]
       }
     },
   });
 });
+</script>
+
 </script>

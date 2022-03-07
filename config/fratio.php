@@ -68,91 +68,259 @@ return [
     ],
     'non_industrial' => [
         'gross_margin' =>[
-            '0.3'  => 'Very Poor',
-            '0.4'  => 'Poor',
-            '0.5'  => 'Moderate',
-            '0.65' => 'Good',
-            '0.8'  => 'Excellent'
+            'Very Poor' => [
+                0.3,
+                0.39
+            ],
+            'Poor' => [
+                0.4,
+                0.49,
+            ],
+            'Moderate' => [
+                0.5,
+                0.64
+            ],
+            'Good' => [
+                0.65,
+                0.79
+            ],
+            'Excellent' => [
+                0.8
+            ]
         ],
         'net_margin' => [
-            '0.05' => 'Very Poor',
-            '0.08' => 'Poor',
-            '0.15' => 'Moderate',
-            '0.2'  => 'Good',
-            '0.3'  => 'Excellent'
+            'Very Poor' => [
+                0.05,
+                0.079,
+            ],
+            'Poor' => [
+                0.8,
+                0.149,
+            ],
+            'Moderate' => [
+                0.15,
+                0.199
+            ],
+            'Good' => [
+                0.2,
+                0.29,
+            ],
+            'Excellent' => [
+                0.3,
+            ],
         ],
         'current_ratio' => [
-            '0.3'  => 'Very Poor',
-            '0.5'  => 'Poor',
-            '1'    => 'Moderate',
-            '1.5'  => 'Good',
-            '2'    => 'Excellent'
+            'Very Poor' => [
+                0.3,
+                0.499,
+            ],
+            'Poor' => [
+                0.5,
+                0.999,
+            ],
+            'Moderate' => [
+                1,
+                1.499
+            ],
+            'Good' => [
+                1.5,
+                1.999,
+            ],
+            'Excellent' => [
+                2,
+            ],
         ],
         'debt_ratio' => [
-            '0.8'  => 'Very Poor',
-            '0.6'  => 'Poor',
-            '0.5'  => 'Moderate',
-            '0.2'  => 'Good',
-            '0.05' => 'Excellent'
+            'Very Poor' => [
+                0.8,
+                0.611,
+            ],
+            'Poor' => [
+                0.6,
+                0.511,
+            ],
+            'Moderate' => [
+                0.5,
+                0.211
+            ],
+            'Good' => [
+                0.2,
+                0.051,
+            ],
+            'Excellent' => [
+                0.05,
+            ],
         ],
         'roi' => [
-            '0'    => 'Very Poor',
-            '0.05' => 'Poor',
-            '0.1'  => 'Moderate',
-            '0.15' => 'Good',
-            '0.25' => 'Excellent'
+            'Very Poor' => [
+                0,
+                0.0499,
+            ],
+            'Poor' => [
+                0.05,
+                0.099,
+            ],
+            'Moderate' => [
+                0.1,
+                0.1499
+            ],
+            'Good' => [
+                0.15,
+                0.249,
+            ],
+            'Excellent' => [
+                0.25,
+            ],
         ],
         'raw_materials' => [
-            '0.5'  => 'Very Poor',
-            '0.4'  => 'Poor',
-            '0.3'  => 'Moderate',
-            '0.25' => 'Good',
-            '0.2'  => 'Excellent'
+            'Very Poor' => [
+                0.5,
+                0.411,
+            ],
+            'Poor' => [
+                0.4,
+                0.311,
+            ],
+            'Moderate' => [
+                0.3,
+                0.2511
+            ],
+            'Good' => [
+                0.25,
+                0.211,
+            ],
+            'Excellent' => [
+                0.2,
+            ],
         ]
     ],
 
     'industrial' => [
         'gross_margin' =>[
-            '0.1'  => 'Very Poor',
-            '0.2'  => 'Poor',
-            '0.25' => 'Moderate',
-            '0.3'  => 'Good',
-            '0.4'  => 'Excellent'
+            'Very Poor' => [
+                0.1,
+                0.199,
+            ],
+            'Poor' => [
+                0.2,
+                0.2499,
+            ],
+            'Moderate' => [
+                0.25,
+                0.2999,
+            ],
+            'Good' => [
+                0.3,
+                0.399,
+            ],
+            'Excellent' => [
+                0.4,
+            ],
         ],
         'net_margin' => [
-            '0.03' => 'Very Poor',
-            '0.05' => 'Poor',
-            '0.07' => 'Moderate',
-            '0.1'  => 'Good',
-            '0.15' => 'Excellent'
+            'Very Poor' => [
+                0.03,
+                0.0499,
+            ],
+            'Poor' => [
+                0.05,
+                0.0699,
+            ],
+            'Moderate' => [
+                0.07,
+                0.0999,
+            ],
+            'Good' => [
+                0.1,
+                0.1499,
+            ],
+            'Excellent' => [
+                0.15,
+            ],
         ],
         'current_ratio' => [
-            '0.5'  => 'Very Poor',
-            '0.75' => 'Poor',
-            '1'    => 'Moderate',
-            '1.25' => 'Good',
-            '1.8'  => 'Excellent'
+            'Very Poor' => [
+                0.5,
+                0.7499,
+            ],
+            'Poor' => [
+                0.75,
+                0.999,
+            ],
+            'Moderate' => [
+                1,
+                1.2499
+            ],
+            'Good' => [
+                1.25,
+                1.799,
+            ],
+            'Excellent' => [
+                1.8,
+            ],
         ],
         'debt_ratio' => [
-            '0.8'  => 'Very Poor',
-            '0.6'  => 'Poor',
-            '0.5'  => 'Moderate',
-            '0.2'  => 'Good',
-            '0.05' => 'Excellent'
+            'Very Poor' => [
+                0.8,
+                0.611,
+            ],
+            'Poor' => [
+                0.6,
+                0.511,
+            ],
+            'Moderate' => [
+                0.5,
+                0.211
+            ],
+            'Good' => [
+                0.2,
+                0.0511,
+            ],
+            'Excellent' => [
+                0.05,
+            ],
         ],
         'roi' => [
-            '0'    => 'Very Poor',
-            '0.03' => 'Poor',
-            '0.06' => 'Moderate',
-            '0.1'  => 'Good',
-            '0.2'  => 'Excellent'
+            'Very Poor' => [
+                0,
+                0.0299,
+            ],
+            'Poor' => [
+                0.03,
+                0.0599,
+            ],
+            'Moderate' => [
+                0.06,
+                0.099
+            ],
+            'Good' => [
+                0.1,
+                0.199,
+            ],
+            'Excellent' => [
+                0.2,
+            ],
         ],
         'raw_materials' => [
-            '0.6'  => 'Very Poor',
-            '0.55' => 'Poor',
-            '0.45' => 'Moderate',
-            '0.35' => 'Good',
-            '0.3'  => 'Excellent'
+            'Very Poor' => [
+                0.6,
+                0.56,
+            ],
+            'Poor' => [
+                0.55,
+                0.46,
+            ],
+            'Moderate' => [
+                0.45,
+                0.36
+            ],
+            'Good' => [
+                0.35,
+                0.31,
+            ],
+            'Excellent' => [
+                0.3,
+            ],
         ],
     ],
 ];

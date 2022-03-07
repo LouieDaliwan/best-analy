@@ -45,6 +45,7 @@ class FinancialRatio implements FinancialRatioInterface
 
         $this->computeRatioAnalysis($statements);
 
+
         $customer->statements()->updateOrCreate(
             [
                 'customer_id' => $id,
@@ -86,7 +87,7 @@ class FinancialRatio implements FinancialRatioInterface
             $profitStatement['cost_goods'] -
             $profitStatement['operating_expenses'] -
             $profitStatement['non_operating_expenses']
-        );  
+        );
 
         $profitStatement['depreciation'] = $infoStatement['Depreciation'];
         $profitStatement['taxes'] = $infoStatement['Company Tax'];
@@ -214,6 +215,8 @@ class FinancialRatio implements FinancialRatioInterface
         $solvency['debt_to_equity_ratio'] = (float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['stockholdersequity'];
         $solvency['debt_ratio'] = (float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['total_assets'];
 
+        $this->ratioAnalysis['dashboard']['debt_ratio']['score'] = $solvency['debt_ratio'];
+
         $this->ratioAnalysis['solvency'] = $solvency;
     }
 
@@ -231,7 +234,7 @@ class FinancialRatio implements FinancialRatioInterface
     {
         $statements = $this->statements['metadataStatements'];
 
-        $investmentValue = $this->customer->detail->metadata['investment_value'];
+        $investmentValue = (int) $this->customer->detail->metadata['investment_value'];
 
         $additionalRatio = $this->ratioAnalysis['additional_ratios'];
         $additionalRatio['raw_materials_margin'] = (float) $statements['Raw Materials'] / (float) $statements['Sales'];
@@ -261,19 +264,27 @@ class FinancialRatio implements FinancialRatioInterface
 
             $ratio = $this->ratioAnalysis['dashboard'][$ratioKey];
 
-            foreach ($ratioValue as $remarkPoint => $remark) {
+            foreach ($ratioValue as $remark => $remarkPoints) {
 
-                $remarkPoint = (float) $remarkPoint;
+                $remarks = '';
 
-                if ($ratio['score'] <=  $remarkPoint || $ratio['score'] == 0) {
-                    $this->ratioAnalysis['dashboard'][$ratioKey]['color'] = $this->colorStatus($remark);
+                $remarkPoint1 = (float) $remarkPoints[0];
+                $remarkPoint2 = (float) isset($remarkPoints[1]) ? $remarkPoints[1] : 0;
+
+                if ($ratio['score'] >= $remarkPoint1 && $ratio['score'] <= $remarkPoint2) {
+                    $remarks = $remark;
                 }
 
-                if($ratio['score'] >= $remarkPoint) {
-                    $this->ratioAnalysis['dashboard'][$ratioKey]['color'] = $this->colorStatus('Excellent');
+                if ($remark == 'Very Poor' && $ratio['score'] < $remarkPoint1) {
+                    $remarks = 'Very Poor';
                 }
+
+                if ($ratio['score'] >= $remarkPoint1 && $remarkPoint2 == 0) {
+                    $remarks = $remark;
+                }
+
+                $this->ratioAnalysis['dashboard'][$ratioKey]['color'] = $this->colorStatus($remarks);
             }
-
         }
     }
 

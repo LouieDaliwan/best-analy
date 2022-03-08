@@ -2,7 +2,7 @@
 
 namespace Customer\Models\Attributes;
 
-class profitability
+class Profitability
 {
     public static function compute($profitability, $sales, $profitStatements, $balanceSheets)
     {

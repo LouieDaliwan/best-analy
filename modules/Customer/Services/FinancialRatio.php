@@ -66,13 +66,17 @@ class FinancialRatio implements FinancialRatioInterface
                     ],
             ]
         );
-    }
+
+        $efficiency = new Efficiency($customer);
+
+        $efficiency->compute();
+
+      }
 
     protected function computeProfitStatement($infoStatement)
     {
         $this->overAllResults['profitStatements'] = ProfitStatement::compute($infoStatement);
     }
-
 
     protected function computeBalanceSheet($sheets)
     {
@@ -82,6 +86,7 @@ class FinancialRatio implements FinancialRatioInterface
     protected function computeRatioAnalysis($customer)
     {
         $profitStatements = $this->overAllResults['profitStatements'];
+
         $balanceSheets = $this->overAllResults['balanceSheets'];
 
         $sales = (int) $profitStatements['sales'];
@@ -89,8 +94,6 @@ class FinancialRatio implements FinancialRatioInterface
         $this->computeProfitability($sales, $profitStatements, $balanceSheets);
 
         $this->computeLiquidity($sales, $balanceSheets);
-
-        $this->computeEfficiency($sales, $profitStatements, $balanceSheets, $customer); // pending
 
         $this->computeSolvency($balanceSheets);
 
@@ -116,17 +119,6 @@ class FinancialRatio implements FinancialRatioInterface
         $this->ratioAnalysis['liquidity'] = Liquidity::compute($this->ratioAnalysis['liquidity'], $sales, $balanceSheets);
 
         $this->ratioAnalysis['dashboard']['current_ratio']['score'] = round($balanceSheets['cash'] / $balanceSheets['current_liabilities'], 2);
-        $this->ratioAnalysis['dashboard']['debt_ratio']['score'] = $balanceSheets['total_long_term_liabilities'] ?? 0;
-    }
-
-    protected function computeEfficiency($sales, $profitStatement, $balanceSheets, $customer)
-    {
-        $this->ratioAnalysis['efficiency'] = Efficiency::compute(
-          $this->ratioAnalysis['efficiency'],
-          $sales,
-          $profitStatement,
-          $balanceSheets,
-          $customer);
     }
 
     protected function computeSolvency($balanceSheets)

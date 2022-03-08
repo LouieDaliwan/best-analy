@@ -38,7 +38,7 @@
         min-width="auto"
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-text-field
+          <!-- <v-text-field
             v-model="formattedDate"
             label="Period Date"
             prepend-icon="mdi-calendar"
@@ -46,14 +46,22 @@
             name="metadata[statement][metadataStatements][period]"
             v-bind="attrs"
             v-on="on"
+          ></v-text-field> -->
+          <v-text-field
+            dense
+            label="Description"
+            name="metadata[statement][metadataStatements][period]"
+            outlined
+            v-model="resource.data.period"
+            hide-details
           ></v-text-field>
         </template>
-        <v-date-picker
+        <!-- <v-date-picker
           v-model="unFormattedDate"
           no-title
           scrollable
         >
-        </v-date-picker>
+        </v-date-picker> -->
       </v-menu>
       <!-- <v-text-field
         dense
@@ -237,7 +245,7 @@ export default {
 
   components: {
     PeriodInput: () => import("./PeriodInput.vue")
-  },  
+  },
 
   computed: {
     formattedDate:  {
@@ -245,12 +253,12 @@ export default {
         const period = moment(this.resource?.data?.period)
 
         let result = undefined
-        
-        if(period.isValid()) 
+
+        if(period.isValid())
           result =  period.format('MMM YYYY')
 
         return result
-          
+
       },
       set (val) {
         this.resource.data.period = val
@@ -259,8 +267,8 @@ export default {
     unFormattedDate:  {
       get () {
         const period = this.resource?.data?.period
-        
-        if(moment(period).isValid()) 
+
+        if(moment(period).isValid())
           return period
         else
           return undefined

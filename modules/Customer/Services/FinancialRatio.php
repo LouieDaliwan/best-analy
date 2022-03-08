@@ -3,7 +3,12 @@
 namespace Customer\Services;
 
 use Customer\Models\Customer;
+use Customer\Models\Attributes\Liquidity;
+use Customer\Models\Attributes\Efficiency;
+use Customer\Models\Attributes\BalanceSheet;
+use Customer\Models\Attributes\Profitability;
 use Customer\Services\FinancialRatioInterface;
+use Customer\Models\Attributes\ProfitStatement;
 
 class FinancialRatio implements FinancialRatioInterface
 {
@@ -43,7 +48,7 @@ class FinancialRatio implements FinancialRatioInterface
 
         $this->computeBalanceSheet($statements['metadataSheets']);
 
-        $this->computeRatioAnalysis($statements);
+        $this->computeRatioAnalysis($customer);
 
 
         $customer->statements()->updateOrCreate(
@@ -65,78 +70,16 @@ class FinancialRatio implements FinancialRatioInterface
 
     protected function computeProfitStatement($infoStatement)
     {
-        //TODO optimize --Louie Daliwan
-        $profitStatement = [];
-
-        $profitStatement['sales'] = $infoStatement['Sales'];
-        $profitStatement['cost_goods'] = $infoStatement['Cost of Good Sold'];
-
-        $profitStatement['operating_expenses'] = (
-            $infoStatement['Marketing Costs'] +
-            $infoStatement['General Management Costs'] +
-            $infoStatement['Staff Salaries & Benefits']
-        );
-
-        $profitStatement['non_operating_expenses'] = (
-            $infoStatement['Other Expense (less Other Income)'] +
-            $infoStatement['Interest On Loan/Hires']
-        );
-
-        $profitStatement['operating_loss_or_profit'] = (
-            $profitStatement['sales'] -
-            $profitStatement['cost_goods'] -
-            $profitStatement['operating_expenses'] -
-            $profitStatement['non_operating_expenses']
-        );
-
-        $profitStatement['depreciation'] = $infoStatement['Depreciation'];
-        $profitStatement['taxes'] = $infoStatement['Company Tax'];
-
-        $profitStatement['net_loss_profit_after_taxes'] =
-            $profitStatement['operating_loss_or_profit'] -
-            $profitStatement['depreciation'] -
-            $profitStatement['taxes'];
-
-        $this->overAllResults['profitStatements'] = $profitStatement;
+        $this->overAllResults['profitStatements'] = ProfitStatement::compute($infoStatement);
     }
 
 
     protected function computeBalanceSheet($sheets)
     {
-        $balanceSheets = [];
-
-        $balanceSheets['current_assets'] = 0;
-        $balanceSheets['current_liabilities'] = 0;
-        $balanceSheets['non_current_liabilities'] = 0;
-
-        foreach ($sheets as $key => $value) {
-
-            $key = str_replace([" ", "'"], "", strtolower($key));
-
-            isset($balanceSheets[$key]) ? : $balanceSheets[$key] = $value;
-
-            if (collect(['cash', 'tradereceivables', 'inventories', 'otherca'])->intersect([$key])->isNotEmpty()) {
-                $balanceSheets['current_assets'] += $balanceSheets[$key];
-            }
-
-            if (collect(['tradepayables', 'othercl'])->intersect([$key])->isNotEmpty()) {
-                $balanceSheets['current_liabilities'] += $balanceSheets[$key];
-            }
-
-            if (collect(['stockholdersequity', 'otherncl', 'commonsharesoutstanding'])->intersect([$key])->isNotEmpty()) {
-                $balanceSheets['non_current_liabilities'] += $balanceSheets[$key];
-            }
-        }
-
-        $balanceSheets['total_assets'] = ($balanceSheets['current_assets'] + $balanceSheets['fixedassets']);
-        $balanceSheets['total_liabilities'] = ($balanceSheets['current_liabilities'] + $balanceSheets['non_current_liabilities']);
-        $balanceSheets['total_share_equity'] = ($balanceSheets['stockholdersequity'] + $balanceSheets['commonsharesoutstanding']);
-        $balanceSheets['total_long_term_liabilities'] = $balanceSheets['otherncl'];
-
-        $this->overAllResults['balanceSheets'] = $balanceSheets;
+        $this->overAllResults['balanceSheets'] = BalanceSheet::compute($sheets);
     }
 
-    protected function computeRatioAnalysis()
+    protected function computeRatioAnalysis($customer)
     {
         $profitStatements = $this->overAllResults['profitStatements'];
         $balanceSheets = $this->overAllResults['balanceSheets'];
@@ -147,7 +90,7 @@ class FinancialRatio implements FinancialRatioInterface
 
         $this->computeLiquidity($sales, $balanceSheets);
 
-        // $this->computeEfficiency($sales, $profitStatements, $balanceSheets); // pending
+        $this->computeEfficiency($sales, $profitStatements, $balanceSheets, $customer); // pending
 
         $this->computeSolvency($balanceSheets);
 
@@ -160,21 +103,7 @@ class FinancialRatio implements FinancialRatioInterface
 
     protected function computeProfitability($sales, $profitStatements, $balanceSheets)
     {
-        //TODO optimize
-        $profitability = $this->ratioAnalysis['profitability'];
-
-        $total_assets = (float) $balanceSheets['total_assets'];
-        $stock_holder = (float) $balanceSheets['stockholdersequity'];
-        $common_share = (float) $balanceSheets['commonsharesoutstanding'];
-
-        $profitability['gross_profit_margin'] = $sales != 0 ? (($sales - $profitStatements['cost_goods']) / $profitStatements['cost_goods']) * 100 : 0;
-        $profitability['operating_profit_margin'] = $sales != 0 ? ($profitStatements['operating_loss_or_profit'] / $sales) * 100 : 0;
-        $profitability['net_profit_margin'] = $sales != 0 ? ($profitStatements['net_loss_profit_after_taxes'] / $sales) * 100 : 0;
-        $profitability['return_on_assets'] = $total_assets != 0 ? ($profitStatements['net_loss_profit_after_taxes'] / $total_assets) : 0;
-        $profitability['return_on_equity'] = $stock_holder !=  0 ? ($profitStatements['net_loss_profit_after_taxes'] / $stock_holder) : 0;
-        $profitability['earnings_per_share'] = $common_share != (null || 0) ? ($profitStatements['net_loss_profit_after_taxes'] / $common_share ) : 0;
-        $profitability['operating_ratio'] = round($profitStatements['operating_expenses'] / $sales, 2). ':1' ?? "";
-
+        $profitability = Profitability::compute($this->ratioAnalysis['profitability'], $sales, $profitStatements, $balanceSheets);
 
         $this->ratioAnalysis['dashboard']['gross_margin']['score'] = $profitability['gross_profit_margin'];
         $this->ratioAnalysis['dashboard']['net_margin']['score'] = $profitability['net_profit_margin'];
@@ -184,28 +113,20 @@ class FinancialRatio implements FinancialRatioInterface
 
     protected function computeLiquidity($sales, $balanceSheets)
     {
-        //TODO optimize
-        $liquidity = $this->ratioAnalysis['liquidity'];
-
-        $liquidity['current_ratio'] = round($balanceSheets['current_assets'] / $balanceSheets['current_liabilities'], 2). ':1' ?? "";
-        $liquidity['cash_ratio'] = round($balanceSheets['cash'] / $balanceSheets['current_liabilities'], 2). ':1' ?? "";;
-        $liquidity['working_capital'] = $balanceSheets['current_assets'] - $balanceSheets['current_liabilities'];
-        $liquidity['recommended_working_capital'] = ($balanceSheets['current_liabilities'] * 1.50) - $balanceSheets['current_liabilities'];
-        $liquidity['working_capital_turnover'] = $sales / $liquidity['working_capital'];
+        $this->ratioAnalysis['liquidity'] = Liquidity::compute($this->ratioAnalysis['liquidity'], $sales, $balanceSheets);
 
         $this->ratioAnalysis['dashboard']['current_ratio']['score'] = round($balanceSheets['cash'] / $balanceSheets['current_liabilities'], 2);
         $this->ratioAnalysis['dashboard']['debt_ratio']['score'] = $balanceSheets['total_long_term_liabilities'] ?? 0;
-
-        $this->ratioAnalysis['liquidity'] = $liquidity;
     }
 
-    protected function computeEfficiency($sales, $profitStatement, $balanceSheets)
+    protected function computeEfficiency($sales, $profitStatement, $balanceSheets, $customer)
     {
-        $efficiency = $this->ratioAnalysis['efficiency'];
-
-        // $efficiency['']
-
-        $this->ratioAnalysis['efficiency'] = $efficiency;
+        $this->ratioAnalysis['efficiency'] = Efficiency::compute(
+          $this->ratioAnalysis['efficiency'],
+          $sales,
+          $profitStatement,
+          $balanceSheets,
+          $customer);
     }
 
     protected function computeSolvency($balanceSheets)
@@ -216,7 +137,6 @@ class FinancialRatio implements FinancialRatioInterface
         $solvency['debt_ratio'] = (float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['total_assets'];
 
         $this->ratioAnalysis['dashboard']['debt_ratio']['score'] = $solvency['debt_ratio'];
-
         $this->ratioAnalysis['solvency'] = $solvency;
     }
 

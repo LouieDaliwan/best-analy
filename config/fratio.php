@@ -21,8 +21,10 @@ return [
         'efficiency' => [
             'trade_receivable_turnover' => 0,
             'avg_trade_receivable_turnover' => 0,
+            'avg_trade_receivable_turnover_days' => 0,
             'trade_payable_turnover' => 0,
             'avg_trade_payable_turnover' => 0,
+            'avg_trade_payable_turnover_days' => 0,
             'assets_turnover_ratio' => 0,
             'inventory_turnover_ratio' => 0,
         ],

@@ -34,7 +34,6 @@ class FinancialRatio implements FinancialRatioInterface
         $this->customer = $customer;
 
         $period = $statements['metadataStatements']['period'];
-        // $statement_id = $statements['id'] ;
 
         unset(
             $statements['metadataStatements']['period'],
@@ -54,7 +53,6 @@ class FinancialRatio implements FinancialRatioInterface
         $customer->statements()->updateOrCreate(
             [
                 'customer_id' => $id,
-                // 'id' => $statement_id,
                 'period' => $period,
             ],
             [

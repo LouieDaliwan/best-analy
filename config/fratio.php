@@ -42,27 +42,27 @@ return [
         'dashboard' => [
             'gross_margin' => [
                 'score' => 0,
-                'color' => '',
+                'color' => '#F20000',
             ],
             'net_margin' => [
                 'score' => 0,
-                'color' => '',
+                'color' => '#F20000',
             ],
             'roi' => [
                 'score' => 0,
-                'color' => '',
+                'color' => '#F20000',
             ],
             'raw_materials' => [
                 'score' => 0,
-                'color' => '',
+                'color' => '#F20000',
             ],
             'current_ratio' => [
                 'score' => 0,
-                'color' => '',
+                'color' => '#F20000',
             ],
             'debt_ratio' =>[
                 'score' => 0,
-                'color' => '',
+                'color' => '#F20000',
             ],
             'project_type' => '',
             'date' => '',

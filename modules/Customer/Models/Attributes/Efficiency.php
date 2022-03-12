@@ -47,8 +47,12 @@ class Efficiency
         $profiStatement = $this->statement1['metadataResults']['overAllResults']['profitStatements'];
         $balanceSheets =  $this->statement1['metadataResults']['overAllResults']['balanceSheets'];
 
-        $this->statement1['metadataResults']['ratioAnalysis']['efficiency']['assets_turnover_ratio'] = ( (float) $profiStatement['sales'] / (float) $balanceSheets['total_assets']);
-        $this->statement1['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'] = ( (float) $profiStatement['cost_goods'] / (float) $balanceSheets['inventories']);
+        $this->statement1['metadataResults']['ratioAnalysis']['efficiency']['assets_turnover_ratio'] = (
+            (float) $profiStatement['sales'] / (float) $balanceSheets['total_assets']
+        );
+        $this->statement1['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'] = (
+            (float) $profiStatement['cost_goods'] / (float) $balanceSheets['inventories']
+        );
 
         $this->save($this->statement1);
     }
@@ -60,19 +64,29 @@ class Efficiency
 
         $balanceSheets1 =  $this->statement1['metadataResults']['overAllResults']['balanceSheets'];
 
+        $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['assets_turnover_ratio'] = (
+            (float) $profiStatement['sales'] / (float) $balanceSheets['total_assets']
+        );
+        $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'] = (
+            (float) $profiStatement['cost_goods'] / (float) $balanceSheets['inventories']
+        );
 
-        $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['assets_turnover_ratio'] = ( (float) $profiStatement['sales'] / (float) $balanceSheets['total_assets']);
-        $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'] = ( (float) $profiStatement['cost_goods'] / (float) $balanceSheets['inventories']);
+        $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover'] = (
+            (float) $balanceSheets1['tradereceivables'] + $balanceSheets['tradereceivables']
+        ) / 2;
+        $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['trade_receivable_turnover'] =
+        (float) $profiStatement['sales'] / (((float) $balanceSheets1['tradereceivables'] + $balanceSheets['tradereceivables']) / 2);
 
-        $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover'] = ((float) $balanceSheets1['tradereceivables'] + $balanceSheets['tradereceivables']) / 2;
-        $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['trade_receivable_turnover'] = (float) $profiStatement['sales'] / (((float) $balanceSheets1['tradereceivables'] + $balanceSheets['tradereceivables']) / 2);
         $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover_days']  = (
             365 / $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['trade_receivable_turnover']
         );
 
 
         $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover'] = ((float) $balanceSheets1['tradepayables'] + $balanceSheets['tradepayables']) / 2;
-        $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['trade_payable_turnover'] = (float) $profiStatement['cost_goods'] / (((float) $balanceSheets1['tradepayables'] + $balanceSheets['tradepayables']) / 2);
+
+        $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['trade_payable_turnover'] =
+        (float) $profiStatement['cost_goods'] / (((float) $balanceSheets1['tradepayables'] + $balanceSheets['tradepayables']) / 2);
+
         $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover_days']  = (
             365 / $this->statement2['metadataResults']['ratioAnalysis']['efficiency']['trade_payable_turnover']
         );

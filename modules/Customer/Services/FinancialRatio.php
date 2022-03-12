@@ -28,7 +28,7 @@ class FinancialRatio implements FinancialRatioInterface
         $this->ratioAnalysis = config('fratio.format');
     }
 
-    public function compute(Customer $customer, $statements, $id)
+    public function compute(Customer $customer, $statements, $id = null)
     {
         $this->statements = $statements;
         $this->customer = $customer;
@@ -48,7 +48,6 @@ class FinancialRatio implements FinancialRatioInterface
         $this->computeBalanceSheet($statements['metadataSheets']);
 
         $this->computeRatioAnalysis($customer);
-
 
         $customer->statements()->updateOrCreate(
             [
@@ -81,7 +80,7 @@ class FinancialRatio implements FinancialRatioInterface
         $this->overAllResults['balanceSheets'] = BalanceSheet::compute($sheets);
     }
 
-    protected function computeRatioAnalysis($customer)
+    protected function computeRatioAnalysis()
     {
         $profitStatements = $this->overAllResults['profitStatements'];
 
@@ -116,17 +115,22 @@ class FinancialRatio implements FinancialRatioInterface
     {
         $this->ratioAnalysis['liquidity'] = Liquidity::compute($this->ratioAnalysis['liquidity'], $sales, $balanceSheets);
 
-        $this->ratioAnalysis['dashboard']['current_ratio']['score'] = round($balanceSheets['cash'] / $balanceSheets['current_liabilities'], 2);
+        $this->ratioAnalysis['dashboard']['current_ratio']['score'] = $balanceSheets['current_liabilities'] != 0 ?
+         round($balanceSheets['cash'] / $balanceSheets['current_liabilities'], 2) : 0;
+
     }
 
     protected function computeSolvency($balanceSheets)
     {
         $solvency = $this->ratioAnalysis['solvency'];
 
-        $solvency['debt_to_equity_ratio'] = (float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['stockholdersequity'];
-        $solvency['debt_ratio'] = (float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['total_assets'];
+        $solvency['debt_to_equity_ratio'] = (float) $balanceSheets['stockholdersequity'] != 0  ?
+        ((float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['stockholdersequity']) : 0;
+
+        $solvency['debt_ratio'] = (float) $balanceSheets['total_assets'] != 0 ? ((float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['total_assets']) : 0;
 
         $this->ratioAnalysis['dashboard']['debt_ratio']['score'] = $solvency['debt_ratio'];
+
         $this->ratioAnalysis['solvency'] = $solvency;
     }
 
@@ -147,7 +151,8 @@ class FinancialRatio implements FinancialRatioInterface
         $investmentValue = (int) $this->customer->detail->metadata['investment_value'];
 
         $additionalRatio = $this->ratioAnalysis['additional_ratios'];
-        $additionalRatio['raw_materials_margin'] = (float) $statements['Raw Materials'] / (float) $statements['Sales'];
+        $additionalRatio['raw_materials_margin'] = (float) $statements['Sales'] != 0 ? (float) $statements['Raw Materials'] / (float) $statements['Sales'] : 0;
+
         $additionalRatio['roi'] = $investmentValue != (null || 0) ? $statements['Net Operating Profit/(Loss)'] / $investmentValue : 0;
 
         $this->ratioAnalysis['dashboard']['raw_materials']['score'] = $additionalRatio['raw_materials_margin'];
@@ -168,34 +173,38 @@ class FinancialRatio implements FinancialRatioInterface
             str_replace(" ", "_", $this->customer->detail->metadata['project_type'])
         );
 
-        $projectTypeValues = config("fratio.{$projectType}");
+        if ($projectType !=  "") {
 
-        foreach ($projectTypeValues as $ratioKey => $ratioValue) {
+            $projectTypeValues = config("fratio.{$projectType}");
 
-            $ratio = $this->ratioAnalysis['dashboard'][$ratioKey];
+            foreach ($projectTypeValues as $ratioKey => $ratioValue) {
 
-            foreach ($ratioValue as $remark => $remarkPoints) {
+                $ratio = $this->ratioAnalysis['dashboard'][$ratioKey];
 
-                $remarks = '';
+                foreach ($ratioValue as $remark => $remarkPoints) {
 
-                $remarkPoint1 = (float) $remarkPoints[0];
-                $remarkPoint2 = (float) isset($remarkPoints[1]) ? $remarkPoints[1] : 0;
+                    $remarks = '';
 
-                if ($ratio['score'] >= $remarkPoint1 && $ratio['score'] <= $remarkPoint2) {
-                    $remarks = $remark;
+                    $remarkPoint1 = (float) $remarkPoints[0];
+                    $remarkPoint2 = (float) isset($remarkPoints[1]) ? $remarkPoints[1] : 0;
+
+                    if ($ratio['score'] >= $remarkPoint1 && $ratio['score'] <= $remarkPoint2) {
+                        $remarks = $remark;
+                    }
+
+                    if ($remark == 'Very Poor' && $ratio['score'] < $remarkPoint1) {
+                        $remarks = 'Very Poor';
+                    }
+
+                    if ($ratio['score'] >= $remarkPoint1 && $remarkPoint2 == 0) {
+                        $remarks = $remark;
+                    }
+
+                    $this->ratioAnalysis['dashboard'][$ratioKey]['color'] = $this->colorStatus($remarks);
                 }
-
-                if ($remark == 'Very Poor' && $ratio['score'] < $remarkPoint1) {
-                    $remarks = 'Very Poor';
-                }
-
-                if ($ratio['score'] >= $remarkPoint1 && $remarkPoint2 == 0) {
-                    $remarks = $remark;
-                }
-
-                $this->ratioAnalysis['dashboard'][$ratioKey]['color'] = $this->colorStatus($remarks);
             }
         }
+
     }
 
     protected function coLorStatus($remark)

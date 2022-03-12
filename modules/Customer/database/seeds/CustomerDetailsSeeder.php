@@ -5,10 +5,16 @@ use Customer\Models\Customer;
 use Illuminate\Database\Seeder;
 use Customer\Models\ApplicantDetail;
 use Customer\Models\FinancialStatement;
+use Customer\Services\FinancialRatioInterface;
 
 class CustomerDetailsSeeder extends Seeder
 {
     protected $years = ['Year1', 'Year2', 'Year3'];
+
+    protected $statments = [
+        'metadataStatements' => [],
+        'metadataSheets' => [],
+    ];
     /**
      * Run the database seeds.
      *
@@ -34,34 +40,6 @@ class CustomerDetailsSeeder extends Seeder
             $this->customerApplicantDetail($customer);
 
             $this->customerFinancialStatement($customer);
-
-            $this->customerBalanceSheets($customer);
-        }
-    }
-
-    protected function customerBalanceSheets($customer) : void
-    {
-        $data = $customer['metadata']['balance-sheet'];
-
-        $metadata = [];
-
-        foreach ($data as $key => $datum) {
-            foreach ($datum as $year => $value) {
-                isset($metadata[$year]) ? : $metadata[$year] = [];
-                $metadata[$year][$key] = $value;
-            }
-        }
-
-        foreach ($metadata as $year => $value) {
-            $customer->statements()->updateOrCreate([
-                'period' => $year,
-                'customer_id' => $customer->id,
-            ],
-            [
-                'period' => $year,
-                'customer_id' => $customer->id,
-                'metadataSheets' => $value
-            ]);
         }
     }
 
@@ -112,9 +90,17 @@ class CustomerDetailsSeeder extends Seeder
     {
         $customer_metadata = $customer['metadata']['fps-qa1'];
 
+        $custome_bs = $customer['metadata']['balance-sheet'];;
+
         foreach ($this->years as $year) {
 
-            $result = $this->getResultMetaData($customer_metadata, $year);
+            $statements = [
+                'metadataStatements' => [],
+                'metadataSheets' => [],
+            ];
+
+            $statements['metadataStatements'] = $this->getResultMetaData($customer_metadata, $year);
+            $statements['metadataSheets'] = $this->customerBalanceSheets($custome_bs, $year);
 
             $customer->statements()->updateOrCreate(
                 [
@@ -124,15 +110,32 @@ class CustomerDetailsSeeder extends Seeder
                 [
                     'customer_id' => $customer->id,
                     'period' => $year,
-                    'metadataStatements' => $result
+                    'metadataStatements' => $statements['metadataStatements'],
+                    'metadataSheets' => $statements['metadataSheets'],
                 ]
             );
+
+            app(FinancialRatioInterface::class)->compute($customer, $statements);
         }
+    }
+
+    protected function customerBalanceSheets($customerBS, $year)
+    {
+        $metadata = [];
+
+        foreach ($customerBS as $key => $datum) {
+            isset($metadata[$key]) ? : $metadata[$key] = (float) $customerBS[$key][$year] ?? 0;
+        }
+
+        $metadata['Balance'] = 0;
+
+        return $metadata;
     }
 
     protected function getResultMetaData(array $metadata, string $year) : array
     {
         $temp_meta_arr = [];
+        $temp_meta_arr['period'] = $year;
         $temp_meta_arr['Raw Materials'] = 0;
 
         $arr_metadata = $this->getNewMetadata();
@@ -179,6 +182,8 @@ class CustomerDetailsSeeder extends Seeder
             }
 
         }
+
+        $temp_meta_arr['Cost of Good Sold'] = ($temp_meta_arr['Raw Materials']  + ($temp_meta_arr['Direct Production Costs']));
 
         return $temp_meta_arr;
     }

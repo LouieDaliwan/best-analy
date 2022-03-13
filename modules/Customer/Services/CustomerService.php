@@ -274,7 +274,7 @@ class CustomerService extends Service implements CustomerServiceInterface
 
 
         if ( isset($statements['metadataStatements']) && isset($statements['metadataSheets']) ) {
-            app(FinancialRatioInterface::class)->compute($customer, $statements, $id);
+            app(FinancialRatioInterface::class)->compute($customer, $statements);
         }
         //TODO optimize --Louie Daliwan
     }

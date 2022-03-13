@@ -28,7 +28,7 @@ class FinancialRatio implements FinancialRatioInterface
         $this->ratioAnalysis = config('fratio.format');
     }
 
-    public function compute(Customer $customer, $statements, $id = null)
+    public function compute(Customer $customer, $statements)
     {
         $this->statements = $statements;
         $this->customer = $customer;
@@ -51,7 +51,7 @@ class FinancialRatio implements FinancialRatioInterface
 
         $customer->statements()->updateOrCreate(
             [
-                'customer_id' => $id,
+                'customer_id' => $customer->id,
                 'period' => $period,
             ],
             [

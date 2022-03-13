@@ -4,32 +4,39 @@ namespace Customer\Models\Attributes;
 
 class Efficiency
 {
+    protected $customerStatements;
+
     protected $customer;
 
-    protected $statements;
-
-    protected $statement1;
-
-    protected $statement2;
-
-    protected $statement3;
+    protected $statements = [
+        'statement1' => [],
+        'statement2' => [],
+        'statement3' => [],
+    ];
 
     public function __construct($customer)
     {
         $this->customer = $customer;
 
-        $this->statements = $this->customer
-        ->statements()
+        $this->customerStatement = $customer->statements()
         ->latest('period')
         ->take(3)
         ->get()
         ->toArray();
 
-        $this->statement1 = $this->statements[2];
+        $this->fillStatement();
+    }
 
-        $this->statement2 = $this->statements[1];
+    protected function fillStatement()
+    {
+        $count = 3;
 
-        $this->statement3 = $this->statements[0];
+        foreach ($this->customerStatements as $customerStatement) {
+
+            $this->statements["statement{$count}"] = $customerStatement;
+
+            $count--;
+        }
     }
 
     public function compute() : void
@@ -44,8 +51,8 @@ class Efficiency
     protected function computePeriodOne()
     {
         //TODO optimize
-        $profiStatement = $this->statement1['metadataResults']['overAllResults']['profitStatements'];
-        $balanceSheets =  $this->statement1['metadataResults']['overAllResults']['balanceSheets'];
+        $profiStatement = $this->statement['']['metadataResults']['overAllResults']['profitStatements'];
+        $balanceSheets =  $this->statement1['']['metadataResults']['overAllResults']['balanceSheets'];
 
         $this->statement1['metadataResults']['ratioAnalysis']['efficiency']['assets_turnover_ratio'] = (
             (float) $profiStatement['sales'] / (float) $balanceSheets['total_assets']

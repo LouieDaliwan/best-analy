@@ -105,7 +105,7 @@ class CustomerDetailsSeeder extends Seeder
             $customer->statements()->updateOrCreate(
                 [
                     'period' => $year,
-                    'customer_id' => $year,
+                    'customer_id' => $customer->id,
                 ],
                 [
                     'customer_id' => $customer->id,

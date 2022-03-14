@@ -64,7 +64,7 @@ class FinancialRatio implements FinancialRatioInterface
             ]
         );
 
-        $efficiency = new Efficiency($customer);
+        $efficiency = new Efficiency($customer, $period);
 
         $efficiency->compute();
 

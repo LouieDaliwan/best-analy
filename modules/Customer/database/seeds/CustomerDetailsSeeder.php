@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Customer\Models\Detail;
 use Customer\Models\Customer;
 use Illuminate\Database\Seeder;
@@ -90,7 +91,7 @@ class CustomerDetailsSeeder extends Seeder
     {
         $customer_metadata = $customer['metadata']['fps-qa1'];
 
-        $custome_bs = $customer['metadata']['balance-sheet'];;
+        $custome_bs = $customer['metadata']['balance-sheet'];
 
         foreach ($this->years as $year) {
 
@@ -101,6 +102,7 @@ class CustomerDetailsSeeder extends Seeder
 
             $statements['metadataStatements'] = $this->getResultMetaData($customer_metadata, $year);
             $statements['metadataSheets'] = $this->customerBalanceSheets($custome_bs, $year);
+
 
             $customer->statements()->updateOrCreate(
                 [

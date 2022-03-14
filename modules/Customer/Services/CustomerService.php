@@ -7,6 +7,7 @@ use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
 use Customer\Jobs\ComputeFinancialRatio;
 use Customer\Models\Customer;
+use Customer\Models\FinancialStatement;
 use Customer\Services\FinancialRatioInterface;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -290,7 +291,7 @@ class CustomerService extends Service implements CustomerServiceInterface
     public function financialRatios($customer)
     {
         //Todo optimize
-        $latestPeriod = $customer->statements()->latest('period')->first();
+        $latestPeriod = FinancialStatement::where('customer_id', $customer->id)->orderBy('period', 'desc')->first();
 
         if (is_null($latestPeriod) || is_null($latestPeriod->metadataResults)) {
             return null;

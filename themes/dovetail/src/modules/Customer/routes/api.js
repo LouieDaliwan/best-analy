@@ -89,6 +89,9 @@ export default {
     },
     delete: function (id) {
       return `/api/v1/reports/${id}`
+    },
+    financialRatio: function(id, user) {
+      return `/api/v1/reports/financial-ratio/customers/${id}/users/${user}/financial-ratio`
     }
   },
 }

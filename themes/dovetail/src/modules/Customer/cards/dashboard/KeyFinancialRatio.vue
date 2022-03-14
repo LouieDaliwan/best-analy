@@ -3,7 +3,7 @@
     <v-card-text class="pa-7">
       <div class="d-flex align-center justify-space-between mb-3">
         <h3 v-text="trans('Key Financial Ratio')"></h3>
-        <v-btn text color="primary"
+        <v-btn text color="primary" @click="previewRatiosReport"
           ><v-icon class="primary--text" small>mdi-eye</v-icon
           ><span v-text="trans('View Financial Analysis Report')"></span
         ></v-btn>
@@ -67,6 +67,8 @@
 </template>
 
 <script>
+import $auth from "@/core/Auth/auth";
+
 export default {
   props: ["value"],
 
@@ -116,7 +118,18 @@ export default {
       const newColIndex = rem ? colLen + 1 : colLen;
 
       return [array.splice(0, newColIndex), array];
-    }
+    },
+
+    previewRatiosReport() {
+      this.$router.push({
+        name: "reports.ratios",
+        query: {
+          type: "ratios",
+          user_id: $auth.getId()
+        },
+        params: { id: this.$route.params.id }
+      });
+    },
   }
 };
 </script>

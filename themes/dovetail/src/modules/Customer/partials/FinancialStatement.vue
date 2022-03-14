@@ -78,7 +78,7 @@ export default {
 
     update() {
       this.$emit("update");
-    }
+    },
   }
 };
 </script>

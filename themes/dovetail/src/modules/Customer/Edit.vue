@@ -366,6 +366,9 @@ export default {
           this.resource.isPrestine = true;
           this.isFinancialStatementHasValue =
             response.data.is_fs_has_no_zero_value;
+
+          this.getResource();
+
           this.showSuccessbox({
             text: trans("Company updated successfully"),
             buttons: {

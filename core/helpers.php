@@ -233,3 +233,7 @@ if (! function_exists('widgets')) {
         return app('core.widget')->make($alias);
     }
 }
+
+function divide($dividend, $divisor) {
+    return ($dividend / $divisor);
+}

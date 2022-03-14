@@ -32,7 +32,7 @@ class CustomerDetailsSeeder extends Seeder
 
         foreach ($customers as $customer) {
 
-            if (is_null($customer['metadata'])) {
+            if (is_null($customer['metadata']) && $customer->id == 31) {
                 continue;
             }
 
@@ -40,7 +40,7 @@ class CustomerDetailsSeeder extends Seeder
 
             $this->customerApplicantDetail($customer);
 
-            $this->customerFinancialStatement($customer);
+            // $this->customerFinancialStatement($customer);
         }
     }
 

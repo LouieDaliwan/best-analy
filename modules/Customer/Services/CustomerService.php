@@ -292,7 +292,7 @@ class CustomerService extends Service implements CustomerServiceInterface
         //Todo optimize
         $latestPeriod = $customer->statements()->latest('period')->first();
 
-        if (is_null($latestPeriod->metadataResults)) {
+        if (is_null($latestPeriod) || is_null($latestPeriod->metadataResults)) {
             return null;
         }
 

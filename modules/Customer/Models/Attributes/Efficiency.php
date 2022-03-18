@@ -30,7 +30,6 @@ class Efficiency
     {
         $this->customerStatements = $this->customer
         ->statements()
-        ->orderBy('period')
         ->get()
         ->toArray();
 

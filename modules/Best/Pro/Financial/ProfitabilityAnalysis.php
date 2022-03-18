@@ -3,13 +3,14 @@
 namespace Best\Pro\Financial;
 
 use Customer\Models\Customer;
+use Customer\Models\FinancialStatement;
 use PhpOffice\PhpSpreadsheet\Chart\Chart;
-use PhpOffice\PhpSpreadsheet\Chart\DataSeries;
-use PhpOffice\PhpSpreadsheet\Chart\DataSeriesValues;
+use PhpOffice\PhpSpreadsheet\Chart\Title;
 use PhpOffice\PhpSpreadsheet\Chart\Layout;
 use PhpOffice\PhpSpreadsheet\Chart\Legend;
 use PhpOffice\PhpSpreadsheet\Chart\PlotArea;
-use PhpOffice\PhpSpreadsheet\Chart\Title;
+use PhpOffice\PhpSpreadsheet\Chart\DataSeries;
+use PhpOffice\PhpSpreadsheet\Chart\DataSeriesValues;
 
 /**
  * Analysis class for BEST formulas.
@@ -18,6 +19,17 @@ use PhpOffice\PhpSpreadsheet\Chart\Title;
  */
 abstract class ProfitabilityAnalysis extends AbstractAnalysis
 {
+
+    public static function getStatements($customer)
+    {
+        return FinancialStatement::where('customer_id', $customer->id)
+        ->orderBy('period', 'desc')
+        ->take(3)
+        ->get()
+        ->sortBy('period')
+        ->toArray();
+    }
+
     /**
      * Retrieve the report.
      *
@@ -26,61 +38,20 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
      */
     public static function getReport(Customer $customer)
     {
+        $statements = self::getStatements($customer);
+
         $spreadsheet = self::getSpreadsheet($customer);
 
-        $year1 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AC8')->getCalculatedValue();
-        $year2 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AI8')->getCalculatedValue();
-        $year3 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AO8')->getCalculatedValue();
+        $year1 = $statements[2]['period'];
+        $year2 = $statements[1]['period'];
+        $year3 = $statements[0]['period'] . ' (most recent)';
+
+        $labels = ['Gross Margin', 'Operating Margin',' Net Margin After Tax', 'ROA', 'ROE', 'Op. Ratio'];
 
         return [
             'chart' => [
-                'labels' => collect(
-                    $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('H18:Y18')
-                )->flatten()->reject(function ($cell) {
-                    return is_null($cell);
-                })->values()->toArray(),
-
-                'dataset' => [
-                    // Year 1.
-                    [
-                        'label' => $year1,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('H19:Y19')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#a2d5ac',
-                        'backgroundColor' => ['#a2d5ac', '#a2d5ac'],
-                    ],
-                    // Year 2.
-                    [
-                        'label' => $year2,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('H20:Y20')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return $cell;
-                        })->values()->toArray(),
-                        'bg' => '#3aada8',
-                        'backgroundColor' => ['#3aada8', '#3aada8'],
-                    ],
-                    // Year 3.
-                    [
-                        'label' => $year3,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('H21:Y21')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#557c83',
-                        'backgroundColor' => ['#557c83', '#557c83'],
-                    ],
-                ],
+                'labels' => $labels,
+                'dataset' => self::formatDataSet($statements),
             ],
             'comment' => [
                 self::getBF4Formula($spreadsheet),
@@ -91,6 +62,59 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
                 self::getBF9Formula($spreadsheet),
             ],
         ];
+    }
+
+    protected static function formatDataSet($statements)
+    {
+        $data = [];
+
+        $marginRatio = ['gross_profit_margin', 'operating_profit_margin', 'net_profit_margin', 'return_on_assets', 'return_on_equity', 'operating_ratio'];
+
+        //TODO insert the minimum score if one period only exist in statement.
+
+        foreach ($statements as $statement) {
+
+            $tempData = [];
+
+            $profitability = $statement['metadataResults']['ratioAnalysis']['profitability'];
+
+            foreach ($marginRatio as $item) {
+                $tempData[] = $item == 'operating_ratio' ? (int) str_replace(':1', "", $profitability[$item]) : $profitability[$item];;
+            }
+
+            $data[$statement['period']] = $tempData;
+        }
+
+        return self::dataSet($data);
+    }
+
+    protected static function dataSet($data)
+    {
+        $dataSet = [];
+
+        $color = ['#a2d5ac', '#3aada8', '#557c83'];
+
+        $count = 0;
+
+        foreach ($data as $period => $datum) {
+
+            $bgColor = $color[$count];
+
+            $isMostRecent = count($data) == ($count + 1) ? ' (most recent)' : '';
+
+            $year = "{$period}{$isMostRecent}";
+
+            $dataSet[] = [
+                'label' => $year,
+                'data' => $data[$period],
+                'bg' => $bgColor,
+                'backgroundColor' => [$bgColor, $bgColor],
+            ];
+
+            $count++;
+        }
+
+        return $dataSet;
     }
 
     /**

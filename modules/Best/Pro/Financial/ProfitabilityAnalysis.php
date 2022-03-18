@@ -49,12 +49,12 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
                 'dataset' => self::formatDataSet($statements),
             ],
             'comment' => [
-                self::getBF4Formula($spreadsheet, $statements),
-                self::getBF5Formula($spreadsheet, $statements),
-                self::getBF6Formula($spreadsheet, $statements),
-                self::getBF7Formula($spreadsheet, $statements),
-                self::getBF8Formula($spreadsheet, $statements),
-                self::getBF9Formula($spreadsheet, $statements),
+                self::getBF4Formula($statements),
+                self::getBF5Formula($statements),
+                self::getBF6Formula($statements),
+                self::getBF7Formula($statements),
+                self::getBF8Formula($statements),
+                self::getBF9Formula($statements),
             ],
         ];
     }
@@ -124,15 +124,17 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
      *
      * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
      * @param  \Customer\Models\FinancialStatement   $statements
+     * @param  string                                $key
      * @return array
      */
-    public static function getAI43Comment($spreadsheet, $statements)
+    public static function getAI43Comment($statements, $keyRatio = null)
     {
-        //Year1 Debt Ratio
-        return $statements[0]['metadataResults']
-        ['ratioAnalysis']['profitability']['gross_profit_margin'];
+        //Period First latest
+        if ($keyRatio == 'gross_profit') {
+            return $statements[0]['metadataResults']['ratioAnalysis']['profitability']['gross_profit_margin'];
+        }
 
-        // return $spreadsheet->getCell('AI43')->getCalculatedValue();
+        return $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
     }
 
     /**
@@ -143,16 +145,14 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
      *
      * @return array
      */
-    public static function getBF4Formula($spreadsheet, $statements) : array
+    public static function getBF4Formula($statements) : array
     {
         $comment = [];
 
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
-
-        $h19 = self::getAI43Comment($sp ,$statements);
-        $bd4 = self::getBD4Comment($sp, $statements);
-        $be4 = self::getBE4Comment($sp, $statements);
-        $bf4 = self::getBF4Comment($sp, $statements);
+        $h19 = self::getAI43Comment($statements, 'gross_profit');
+        $bd4 = self::getBD4Comment($statements);
+        $be4 = self::getBE4Comment($statements);
+        $bf4 = self::getBF4Comment($statements);
 
         if ($h19 == ("" || 0)) {
             $comment[] = $be4;
@@ -178,7 +178,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
      *
      * @return array
      */
-    public static function getBD4Comment($spreadsheet, $statements)
+    public static function getBD4Comment($statements)
     {
         $output = '';
         $bj4 = 0.3;
@@ -217,7 +217,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
      *
      * @return array
      */
-    public static function getBE4Comment($spreadsheet, $statements)
+    public static function getBE4Comment($statements)
     {
         $output = '';
 
@@ -264,7 +264,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
      *
      * @return array
      */
-    public static function getBF4Comment($spreadsheet, $statements)
+    public static function getBF4Comment($statements)
     {
         $output = '';
 
@@ -323,14 +323,14 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
      * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
      * @return array
      */
-    public static function getBF5Formula($spreadsheet, $statements)
+    public static function getBF5Formula($statements)
     {
         $comment = [];
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
-        $ai43 = self::getAI43Comment($sp, $statements);
-        $bc5 = self::getBC5Comment($sp);
-        $bd5 = self::getBD5Comment($sp);
-        $be5 = self::getBE5Comment($sp);
+        $ai43 = self::getAI43Comment($statements);
+        $bc5 = self::getBC5Comment($statements);
+        $bd5 = self::getBD5Comment($statements);
+        $be5 = self::getBE5Comment($statements);
+
         if ($ai43 == "") {
             $comment[] = $bd5;
         } else {
@@ -349,12 +349,12 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
      * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
      * @return array
      */
-    public static function getBC5Comment($spreadsheet)
+    public static function getBC5Comment($statements)
     {
         $output = '';
-        $k19 = $spreadsheet->getCell('K19')->getCalculatedValue();
-        $k21 = $spreadsheet->getCell('K20')->getCalculatedValue() ?: 0;
-        $bi5 = $spreadsheet->getCell('BI5')->getCalculatedValue() ?: 0;
+        $k19 = $statements[0]['metadataResults']['ratioAnalysis']['profitability']['operating_profit_margin'];
+        $k21 = $statements[2]['metadataResults']['ratioAnalysis']['profitability']['operating_profit_margin'];
+        $bi5 = 0.3;
 
         if ($k19 == "") {
             $output = "";
@@ -383,15 +383,16 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
      * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
      * @return array
      */
-    public static function getBD5Comment($spreadsheet)
+    public static function getBD5Comment($statements)
     {
         $output = '';
-        $bj5 = $spreadsheet->getCell('BJ5')->getCalculatedValue() ?: 0;
-        $k19 = $spreadsheet->getCell('K19')->getCalculatedValue();
-        $k20 = $spreadsheet->getCell('K20')->getCalculatedValue() ?: 0;
-        $k21 = $spreadsheet->getCell('K21')->getCalculatedValue() ?: 0;
+        $bj5 = 0.05;
+        $k19 = $statements[0]['metadataResults']['ratioAnalysis']['profitability']['operating_profit_margin'];
+        $k20 = $statements[1]['metadataResults']['ratioAnalysis']['profitability']['operating_profit_margin'];
+        $k21 = $statements[2]['metadataResults']['ratioAnalysis']['profitability']['operating_profit_margin'];
 
         $number1 = abs(round(($k21-$k20)*100, 2));
+
         if ($k19 == "" && ($k21-$k20) > 0) {
             if (($k21-$k20) > ($bj5)) {
                 $output = __("Overall operating profit margin reflected a significant increasing trend by :number1%.", ['number1' => $number1]);
@@ -423,16 +424,18 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
      * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
      * @return array
      */
-    public static function getBE5Comment($spreadsheet)
+    public static function getBE5Comment($statements)
     {
         $output = '';
-        $bk5 = $spreadsheet->getCell('BK5')->getCalculatedValue() ?: 0;
-        $k19 = $spreadsheet->getCell('K19')->getCalculatedValue() ?: 0;
-        $k20 = $spreadsheet->getCell('K20')->getCalculatedValue() ?: 0;
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
+
+        $bk5 = 0.05;
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
+        $k19 = $statements[0]['metadataResults']['ratioAnalysis']['profitability']['operating_profit_margin'];
+        $k20 = $statements[1]['metadataResults']['ratioAnalysis']['profitability']['operating_profit_margin'];
         $item1 = $d19;
         $item2 = $d20;
+
         $number1 = abs(round(($k20-$k19)*100, 2));
         if ($k20 > $k19) {
             if (($k20-$k19) > $bk5) {
@@ -469,21 +472,20 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         return $output;
     }
 
-
     /**
      * Retrieve BF6 formula.
      *
      * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
      * @return array
      */
-    public static function getBF6Formula($spreadsheet, $statements)
+    public static function getBF6Formula($statements)
     {
         $comment = [];
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
-        $ai43 = self::getAI43Comment($sp, $statements);
-        $bc6 = self::getBC6Comment($sp);
-        $bd6 = self::getBD6Comment($sp);
-        $be6 = self::getBE6Comment($sp);
+
+        $ai43 = self::getAI43Comment($statements);
+        $bc6 = self::getBC6Comment($statements);
+        $bd6 = self::getBD6Comment($statements);
+        $be6 = self::getBE6Comment($statements);
 
         if ($ai43 =="") {
             $comment[] = $bd6;
@@ -504,15 +506,15 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC6 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBC6Comment($spreadsheet)
+    public static function getBC6Comment($statements)
     {
         $output = '';
-        $bi6 = $spreadsheet->getCell('BI6')->getCalculatedValue() ?: 0;
-        $n19 = $spreadsheet->getCell('N19')->getCalculatedValue();
-        $n21 = $spreadsheet->getCell('N21')->getCalculatedValue() ?: 0;
+        $bi6 = 0.3;
+        $n19 = $statements[0]['metadataResults']['ratioAnalysis']['profitability']['net_profit_margin'];
+        $n21 = $statements[2]['metadataResults']['ratioAnalysis']['profitability']['net_profit_margin'];
 
         if ($n19 == "") {
             $output = "";
@@ -536,18 +538,19 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BD6 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBD6Comment($spreadsheet)
+    public static function getBD6Comment($statements)
     {
         $output = '';
-        $bj6 = $spreadsheet->getCell('BJ6')->getCalculatedValue() ?: 0;
-        $n19 = $spreadsheet->getCell('N19')->getCalculatedValue();
-        $n20 = $spreadsheet->getCell('N20')->getCalculatedValue() ?: 0;
-        $n21 = $spreadsheet->getCell('N21')->getCalculatedValue() ?: 0;
+        $bj6 = 0.03;
+        $n19 = $statements[0]['metadataResults']['ratioAnalysis']['profitability']['net_profit_margin'];
+        $n20 = $statements[1]['metadataResults']['ratioAnalysis']['profitability']['net_profit_margin'];
+        $n21 = $statements[2]['metadataResults']['ratioAnalysis']['profitability']['net_profit_margin'];
 
         $number1 = abs(round(($n21-$n20)*100, 2));
+
         if ($n19 == "" && ($n21-$n20) > 0) {
             if (($n21-$n20) > $bj6) {
                 $output = __("Overall net gross profit margin improved, reflecting a significant increasing trend by :number1%.");
@@ -576,17 +579,19 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BE6 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBE6Comment($spreadsheet)
+    public static function getBE6Comment($statements)
     {
         $output = '';
-        $n19 = $spreadsheet->getCell("N19")->getCalculatedValue() ?: 0;
-        $n20 = $spreadsheet->getCell("N20")->getCalculatedValue() ?: 0;
-        $bk6 = $spreadsheet->getCell('BK6')->getCalculatedValue() ?: 0;
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
+
+        $n19 = $statements[0]['metadataResults']['ratioAnalysis']['profitability']['net_profit_margin'];
+        $n20 = $statements[1]['metadataResults']['ratioAnalysis']['profitability']['net_profit_margin'];
+
+        $bk6 = 0.03;
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
 
         if ($n20>$n19) {
             if (($n20-$n19) > $bk6) {
@@ -641,14 +646,14 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
      * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
      * @return array
      */
-    public static function getBF7Formula($spreadsheet, $statements)
+    public static function getBF7Formula($statements)
     {
         $comment = [];
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
-        $ai43 = self::getAI43Comment($sp, $statements);
-        $bc7 = self::getBC7Comment($sp);
-        $bd7 = self::getBD7Comment($sp);
-        $be7 = self::getBE7Comment($sp);
+
+        $ai43 = self::getAI43Comment($statements);
+        $bc7 = self::getBC7Comment($statements);
+        $bd7 = self::getBD7Comment($statements);
+        $be7 = self::getBE7Comment($statements);
 
         if ($ai43 == "") {
             $comment[] = $bd7;
@@ -665,15 +670,15 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC7 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBC7Comment($spreadsheet)
+    public static function getBC7Comment($statements)
     {
         $output = '';
-        $bi7 = $spreadsheet->getCell('BI7')->getCalculatedValue() ?: 0;
-        $q19 = $spreadsheet->getCell('Q19')->getCalculatedValue();
-        $q21 = $spreadsheet->getCell('Q21')->getCalculatedValue() ?: 0;
+        $bi7 = 0.3;
+        $q19 = $statements[0]['metadataResults']['ratioAnalysis']['profitability']['return_on_assets'];
+        $q21 = $statements[2]['metadataResults']['ratioAnalysis']['profitability']['return_on_assets'];
 
         if ($q19 == "") {
             $output = "";
@@ -699,16 +704,17 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BD7 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBD7Comment($spreadsheet)
+    public static function getBD7Comment($statements)
     {
         $output = '';
-        $bj7 = $spreadsheet->getCell('BJ7')->getCalculatedValue() ?: 0;
-        $q19 = $spreadsheet->getCell('Q19')->getCalculatedValue() ?: 0;
-        $q20 = $spreadsheet->getCell('Q20')->getCalculatedValue() ?: 0;
-        $q21 = $spreadsheet->getCell('Q21')->getCalculatedValue() ?: 0;
+        $bj7 = 0.08;
+        $q19 = $statements[0]['metadataResults']['ratioAnalysis']['profitability']['return_on_assets'];
+        $q20 = $statements[1]['metadataResults']['ratioAnalysis']['profitability']['return_on_assets'];
+        $q21 = $statements[2]['metadataResults']['ratioAnalysis']['profitability']['return_on_assets'];
+
         $number1 = abs(round(($q21-$q20)*100, 2));
 
         if ($q19 == "" && ($q21-$q20) > 0) {
@@ -737,17 +743,18 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BE7 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBE7Comment($spreadsheet)
+    public static function getBE7Comment($statements)
     {
         $output = '';
-        $bk7 = $spreadsheet->getCell('BK7')->getCalculatedValue() ?: 0;
-        $q19 = $spreadsheet->getCell('Q19')->getCalculatedValue() ?: 0;
-        $q20 = $spreadsheet->getCell('Q20')->getCalculatedValue() ?: 0;
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
+        $bk7 = 0.08;
+        $q19 = $statements[0]['metadataResults']['ratioAnalysis']['profitability']['return_on_assets'];
+        $q20 = $statements[1]['metadataResults']['ratioAnalysis']['profitability']['return_on_assets'];
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
+
         $item1 = $d19;
         $item2 = $d20;
         $number1 = abs(round(($q20-$q19)*100, 2));
@@ -794,14 +801,14 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
      * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
      * @return array
      */
-    public static function getBF8Formula($spreadsheet, $statements)
+    public static function getBF8Formula($statements)
     {
         $comment = [];
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
-        $ai43 = self::getAI43Comment($sp, $statements);
-        $bc8 = self::getBC8Comment($sp);
-        $bd8 = self::getBD8Comment($sp);
-        $be8 = self::getBE8Comment($sp);
+
+        $ai43 = self::getAI43Comment($statements);
+        $bc8 = self::getBC8Comment($statements);
+        $bd8 = self::getBD8Comment($statements);
+        $be8 = self::getBE8Comment($statements);
 
         if ($ai43 == "") {
             $comment[] = $bd8;
@@ -822,15 +829,15 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC8 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBC8Comment($spreadsheet)
+    public static function getBC8Comment($statements)
     {
         $output = '';
-        $t19 = $spreadsheet->getCell('T19')->getCalculatedValue();
-        $t21 = $spreadsheet->getCell('T21')->getCalculatedValue() ?: 0;
-        $bi8 = $spreadsheet->getCell('BI8')->getCalculatedValue() ?: 0;
+        $t19 = $statements[0]['metadataResults']['ratioAnalysis']['profitability']['return_on_equity'];
+        $t21 = $statements[2]['metadataResults']['ratioAnalysis']['profitability']['return_on_equity'];
+        $bi8 = 0.3;
 
         if ($t19 == "") {
             $output = "";
@@ -856,16 +863,17 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BD8 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBD8Comment($spreadsheet)
+    public static function getBD8Comment($statements)
     {
         $output = '';
-        $t19 = $spreadsheet->getCell('T19')->getCalculatedValue();
-        $t20 = $spreadsheet->getCell('T20')->getCalculatedValue() ?: 0;
-        $t21 = $spreadsheet->getCell('T21')->getCalculatedValue() ?: 0;
-        $bj8 = $spreadsheet->getCell('BJ8')->getCalculatedValue() ?: 0;
+        $t19 = $statements[0]['metadataResults']['ratioAnalysis']['profitability']['return_on_equity'];
+        $t20 = $statements[1]['metadataResults']['ratioAnalysis']['profitability']['return_on_equity'];
+        $t21 = $statements[2]['metadataResults']['ratioAnalysis']['profitability']['return_on_equity'];
+        $bj8 = 0.08;
+
         if ($t19 == "" && ($t21-$t20) > 0) {
             if (($t21-$t20)>$bj8) {
                 $number1 = abs(round(($t21-$t20)*100, 2));
@@ -901,18 +909,19 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BE8 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBE8Comment($spreadsheet)
+    public static function getBE8Comment($statements)
     {
         $output = '';
 
-        $bk8 = $spreadsheet->getCell('BK8')->getCalculatedValue() ?: 0;
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
-        $t19 = $spreadsheet->getCell('T19')->getCalculatedValue() ?: 0;
-        $t20 = $spreadsheet->getCell('T20')->getCalculatedValue() ?: 0;
+        $t19 = $statements[0]['metadataResults']['ratioAnalysis']['profitability']['return_on_equity'];
+        $t20 = $statements[1]['metadataResults']['ratioAnalysis']['profitability']['return_on_equity'];
+        $bk8 = 0.08;
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
+
         $item1 = $d19;
         $item2 = $d20;
         $number1 = abs(round(($t20-$t19)*100, 2));
@@ -956,17 +965,17 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BF9 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBF9Formula($spreadsheet, $statements)
+    public static function getBF9Formula($statements)
     {
         $comment = [];
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
-        $ai43 = self::getAI43Comment($sp, $statements);
-        $bc9 = self::getBC9Comment($sp);
-        $bd9 = self::getBD9Comment($sp);
-        $be9 = self::getBE9Comment($sp);
+
+        $ai43 = self::getAI43Comment($statements);
+        $bc9 = self::getBC9Comment($statements);
+        $bd9 = self::getBD9Comment($statements);
+        $be9 = self::getBE9Comment($statements);
 
         if ($ai43 == "") {
             $comment[] = $bd9;
@@ -983,15 +992,16 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC4 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBC9Comment($spreadsheet)
+    public static function getBC9Comment($statements)
     {
         $output = '';
-        $w19 = $spreadsheet->getCell('W19')->getCalculatedValue();
-        $w21 = $spreadsheet->getCell('W21')->getCalculatedValue() ?: 0;
-        $bi9 = $spreadsheet->getCell('BI9')->getCalculatedValue() ?: 0;
+
+        $w19 = (int) str_replace(':1', "", $statements[0]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+        $w21 = (int) str_replace(':1', "", $statements[2]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+        $bi9 = 0.3;
 
         if ($w19 == "") {
             $output = "";
@@ -1017,16 +1027,17 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC4 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBD9Comment($spreadsheet)
+    public static function getBD9Comment($statements)
     {
         $output = '';
-        $bj9 = $spreadsheet->getCell('BJ9')->getCalculatedValue() ?: 0;
-        $w19 = $spreadsheet->getCell('W19')->getCalculatedValue();
-        $w20 = $spreadsheet->getCell('W20')->getCalculatedValue() ?: 0;
-        $w21 = $spreadsheet->getCell('W21')->getCalculatedValue() ?: 0;
+        $bj9 = 0.08;
+        $w19 = (int) str_replace(':1', "", $statements[0]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+        $w20 = (int) str_replace(':1', "", $statements[1]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+        $w21 = (int) str_replace(':1', "", $statements[2]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+
         $number1 = abs(round(($w21-$w20)*100, 2));
 
         if ($w19 == "" && ($w21-$w20)>0) {
@@ -1057,19 +1068,22 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC4 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBE9Comment($spreadsheet)
+    public static function getBE9Comment($statements)
     {
         $output = '';
-        $bk9 = $spreadsheet->getCell('BK9')->getCalculatedValue() ?: 0;
-        $w19 = $spreadsheet->getCell('W19')->getCalculatedValue() ?: 0;
-        $w20 = $spreadsheet->getCell('W20')->getCalculatedValue() ?: 0;
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
+        $bk9 = 0.08;
+
+        $w19 = (int) str_replace(':1', "", $statements[0]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+        $w20 = (int) str_replace(':1', "", $statements[1]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
         $item1 = $d19;
         $item2 = $d20;
+
         $number1 = abs(round(($w20-$w19)*100, 2));
 
         if ($w20>$w19) {

@@ -14,91 +14,104 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve the report.
      *
-     * @param  \Customer\Models\Customer $customer
+     * @param  \Customer\Models\FinancialStatement
+     * @param  \Customer\Models\Customer;
      * @return array
      */
-    public static function getReport(Customer $customer)
+    public static function getReport($statements, $customer)
     {
-        $spreadsheet = self::getSpreadsheet($customer);
-
-        $year1 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AC8')->getCalculatedValue();
-        $year2 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AI8')->getCalculatedValue();
-        $year3 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AO8')->getCalculatedValue();
+        $labels = ['Trade Receivables (days)', 'Trade Payable (days)', 'Asset Turnover', 'Inventory Turnover'];
 
         return [
             'charts' => [
-                'labels' => collect(
-                    $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('H42:W42')
-                )->flatten()->reject(function ($cell) {
-                    return is_null($cell);
-                })->values()->toArray(),
-
-                'dataset' => [
-                    // Year 1.
-                    [
-                        'label' => $year1,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('H43:W43')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#a2d5ac',
-                        'backgroundColor' => ['#a2d5ac', '#a2d5ac'],
-                    ],
-                    // Year 2.
-                    [
-                        'label' => $year2,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('H44:W44')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#3aada8',
-                        'backgroundColor' => ['#3aada8', '#3aada8'],
-                    ],
-                    // Year 3.
-                    [
-                        'label' => $year3,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('H45:W45')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#557c83',
-                        'backgroundColor' => ['#557c83', '#557c83'],
-                    ],
-                ],
+                'labels' => $labels,
+                'dataset' => self::formatDataset($statements),
             ],
 
             'comments' => [
-                self::getBF17Comment($spreadsheet),
-                self::getBF18Comment($spreadsheet),
-                self::getBF19Comment($spreadsheet),
-                self::getBF20Comment($spreadsheet),
+                self::getBF17Comment($statements, $customer),
+                self::getBF18Comment($statements),
+                self::getBF19Comment($statements),
+                self::getBF20Comment($statements),
             ],
         ];
+    }
+
+    protected static function formatDataset($statements)
+    {
+        $data = [];
+
+        $efficiency_items = [
+            'avg_trade_receivable_turnover_days',
+            'avg_trade_payable_turnover_days',
+            'assets_turnover_ratio',
+            'inventory_turnover_ratio',
+        ];
+
+        foreach ($statements as $statement) {
+
+            $tempData = [];
+
+            $efficiency = $statement['metadataResults']['ratioAnalysis']['efficiency'];
+
+            foreach ($efficiency_items as $item) {
+
+                $value = $efficiency[$item];
+
+                $tempData[] = round($value, 2);
+
+            }
+
+            $data[$statement['period']] = $tempData;
+        }
+
+        return self::dataSet($data);
+    }
+
+    protected static function dataSet($data)
+    {
+        $dataSet = [];
+
+        $color = ['#a2d5ac', '#3aada8', '#557c83'];
+
+        $count = 0;
+
+        foreach ($data as $period => $datum) {
+
+            $bgColor = $color[$count];
+
+            $isMostRecent = count($data) == ($count + 1) ? ' (most recent)' : '';
+
+            $year = "{$period}{$isMostRecent}";
+
+            $dataSet[] = [
+                'label' => $year,
+                'data' => $data[$period],
+                'bg' => $bgColor,
+                'backgroundColor' => [$bgColor, $bgColor],
+            ];
+
+            $count++;
+        }
+
+        return $dataSet;
     }
 
     /**
      * Retrieve BF17 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
+     * @param  \Customer\Models\Customer           $customer
      * @return array
      */
-    public static function getBF17Comment($spreadsheet)
+    public static function getBF17Comment($statements, $customer)
     {
         $comment = [];
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
-        $ai43 = self::getAI43Comment($sp);
-        $bc17 = self::getBC17Comment($sp);
-        $bd17 = self::getBD17Comment($sp);
-        $be17 = self::getBE17Comment($sp);
+
+        $ai43 = self::getAI43Comment($statements);
+        $bc17 = self::getBC17Comment($statements);
+        $bd17 = self::getBD17Comment($statements, $customer);
+        $be17 = self::getBE17Comment($statements);
 
         if ($ai43 == "") {
             $comment[] = $bd17;
@@ -128,29 +141,29 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve AI43 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getAI43Comment($spreadsheet)
+    public static function getAI43Comment($statements)
     {
-        return $spreadsheet->getCell('AI43')->getCalculatedValue();
+        return $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
     }
 
     /**
      * Retrieve BC17 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBC17Comment($spreadsheet)
+    public static function getBC17Comment($statements)
     {
         $output = '';
 
-        $h43 = $spreadsheet->getCell('H43')->getCalculatedValue();
-        $h45 = $spreadsheet->getCell('H45')->getCalculatedValue() ?: 0;
-        $bi17 = $spreadsheet->getCell('BI17')->getCalculatedValue() ?: 0;
+        $h43 = $statements[0]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover_days'];
+        $h45 = $statements[2]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover_days'];
+        $bi17 = 0.3;
 
-        if ($h43 == "") {
+        if ($h43 == 0) {
             $output = "";
         } else {
             if (($h45-$h43) / $h43 > 0) {
@@ -174,17 +187,17 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BD17 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBD17Comment($spreadsheet)
+    public static function getBD17Comment($statements, $customer)
     {
         $output = '';
-        $h43 = $spreadsheet->getCell('H43')->getCalculatedValue();
-        $h32 = $spreadsheet->getCell('H32')->getCalculatedValue();
-        $h44 = $spreadsheet->getCell('H44')->getCalculatedValue() ?: 1;
-        $h45 = $spreadsheet->getCell('H45')->getCalculatedValue() ?: 0;
-        $bj17 = $spreadsheet->getCell('BJ17')->getCalculatedValue() ?: 0;
+        $h43 = $statements[0]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover_days'];
+        $h44 = $statements[1]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover_days'];
+        $h45 = $statements[2]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover_days'];
+        $h32 = $customer->name; //to be check with jonathan
+        $bj17 = 10;
 
         if ($h43 == "" && (($h45-$h44)/$h44 > 0)) {
             if (($h45-$h44)/$h44 > ($bj17)) {
@@ -220,17 +233,17 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BE17 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBE17Comment($spreadsheet)
+    public static function getBE17Comment($statements)
     {
         $output = '';
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
-        $h43 = $spreadsheet->getCell('H43')->getCalculatedValue();
-        $h44 = $spreadsheet->getCell('H44')->getCalculatedValue() ?: 0;
-        $bk17 = $spreadsheet->getCell('BK17')->getCalculatedValue() ?: 0;
+        $h43 = $statements[0]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover_days'];
+        $h44 = $statements[1]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover_days'];
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
+        $bk17 = 10;
 
         if ($h43 == '') {
             $output = '';
@@ -287,17 +300,17 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BF18 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBF18Comment($spreadsheet)
+    public static function getBF18Comment($statements)
     {
         $comment = [];
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
-        $ai43 = self::getAI43Comment($sp);
-        $bc18 = self::getBC18Comment($sp);
-        $bd18 = self::getBD18Comment($sp);
-        $be18 = self::getBE18Comment($sp);
+
+        $ai43 = self::getAI43Comment($statements);
+        $bc18 = self::getBC18Comment($statements);
+        $bd18 = self::getBD18Comment($statements);
+        $be18 = self::getBE18Comment($statements);
 
         if ($ai43 == "") {
             $comment[] = $bd18;
@@ -327,16 +340,16 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC18 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBC18Comment($spreadsheet)
+    public static function getBC18Comment($statements)
     {
         $output = '';
-        $l43 = $spreadsheet->getCell('L43')->getCalculatedValue();
-        $bi18 = $spreadsheet->getCell('BI18')->getCalculatedValue() ?: 0;
-        $l43 = $spreadsheet->getCell('L43')->getCalculatedValue() ?: 1;
-        $l45 = $spreadsheet->getCell('L45')->getCalculatedValue() ?: 0;
+        $l43 = $statements[0]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover_days'];
+        $l45 = $statements[2]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover_days'];
+        $bi18 = 0.3;
+
 
         if ($l43 == '') {
             $output = '';
@@ -362,17 +375,17 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BD18 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBD18Comment($spreadsheet)
+    public static function getBD18Comment($statements)
     {
         $output = '';
 
-        $bj18 = $spreadsheet->getCell('BJ18')->getCalculatedValue();
-        $l43 = $spreadsheet->getCell('L43')->getCalculatedValue();
-        $l44 = $spreadsheet->getCell('L44')->getCalculatedValue() ?: 1;
-        $l45 = $spreadsheet->getCell('L45')->getCalculatedValue() ?: 0;
+        $bj18 = 10;
+        $l43 = $statements[0]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover_days'];
+        $l44 = $statements[1]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover_days'];
+        $l45 = $statements[2]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover_days'];
 
         if ($l43 == '' && (($l45-$l44) > 0)) {
             if (($l45-$l44) > $bj18) {
@@ -401,16 +414,16 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BE18 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBE18Comment($spreadsheet)
+    public static function getBE18Comment($statements)
     {
         $output = '';
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
-        $l43 = $spreadsheet->getCell('L43')->getCalculatedValue();
-        $l44 = $spreadsheet->getCell('L44')->getCalculatedValue() ?: 0;
+        $l43 = $statements[0]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover_days'];
+        $l44 = $statements[1]['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover_days'];
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
 
         if ($l43 == '') {
             $output = '';
@@ -467,17 +480,16 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BF19 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBF19Comment($spreadsheet)
+    public static function getBF19Comment($statements)
     {
         $comment = [];
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
-        $ai43 = self::getAI43Comment($sp);
-        $bc19 = self::getBC19Comment($sp);
-        $bd19 = self::getBD19Comment($sp);
-        $be19 = self::getBE19Comment($sp);
+        $ai43 = self::getAI43Comment($statements);
+        $bc19 = self::getBC19Comment($statements);
+        $bd19 = self::getBD19Comment($statements);
+        $be19 = self::getBE19Comment($statements);
 
         if ($ai43 == '') {
             $comment[] = '';
@@ -507,15 +519,16 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC19 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBC19Comment($spreadsheet)
+    public static function getBC19Comment($statements)
     {
         $output = '';
-        $p43 = $spreadsheet->getCell('P43')->getCalculatedValue();
-        $p45 = $spreadsheet->getCell('P45')->getCalculatedValue() ?: 0;
-        $bi19 = $spreadsheet->getCell('BI19')->getCalculatedValue() ?: 0;
+
+        $p43 = $statements[0]['metadataResults']['ratioAnalysis']['efficiency']['assets_turnover_ratio'];
+        $p45 = $statements[1]['metadataResults']['ratioAnalysis']['efficiency']['assets_turnover_ratio'];
+        $bi19 = 0.3;
 
         if ($p43 == "") {
             $output = "";
@@ -541,16 +554,16 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BD19 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBD19Comment($spreadsheet)
+    public static function getBD19Comment($statements)
     {
         $output = '';
-        $p43 = $spreadsheet->getCell('P43')->getCalculatedValue();
-        $p44 = $spreadsheet->getCell('P44')->getCalculatedValue() ?: 1;
-        $p45 = $spreadsheet->getCell('P45')->getCalculatedValue() ?: 0;
-        $bj19 = $spreadsheet->getCell('BJ19')->getCalculatedValue() ?: 0;
+        $p43 = $statements[0]['metadataResults']['ratioAnalysis']['efficiency']['assets_turnover_ratio'];
+        $p44 = $statements[1]['metadataResults']['ratioAnalysis']['efficiency']['assets_turnover_ratio'];
+        $p45 = $statements[2]['metadataResults']['ratioAnalysis']['efficiency']['assets_turnover_ratio'];
+        $bj19 = 5;
 
         if ($p43 == "" && (($p45-$p44) > 0)) {
             if (($p45-$p44) > ($bj19)) {
@@ -589,14 +602,14 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
      * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
      * @return array
      */
-    public static function getBE19Comment($spreadsheet)
+    public static function getBE19Comment($statements)
     {
         $output = '';
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
-        $p43 = $spreadsheet->getCell('P43')->getCalculatedValue();
-        $p44 = $spreadsheet->getCell('P44')->getCalculatedValue() ?: 0;
-        $bk19 = $spreadsheet->getCell('BK19')->getCalculatedValue() ?: 0;
+        $p43 = $statements[0]['metadataResults']['ratioAnalysis']['efficiency']['assets_turnover_ratio'];
+        $p44 = $statements[1]['metadataResults']['ratioAnalysis']['efficiency']['assets_turnover_ratio'];
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
+        $bk19 = 5;
 
         if ($p43 == '') {
             $output = '';
@@ -653,17 +666,16 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BF20 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBF20Comment($spreadsheet)
+    public static function getBF20Comment($statements)
     {
         $comment = [];
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
-        $ai43 = self::getAI43Comment($sp);
-        $bc20 = self::getBC20Comment($sp);
-        $bd20 = self::getBD20Comment($sp);
-        $be20 = self::getBE20Comment($sp);
+        $ai43 = self::getAI43Comment($statements);
+        $bc20 = self::getBC20Comment($statements);
+        $bd20 = self::getBD20Comment($statements);
+        $be20 = self::getBE20Comment($statements);
 
         if ($ai43 == '') {
             $comment[] = $bd20;
@@ -693,15 +705,15 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC20 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBC20Comment($spreadsheet)
+    public static function getBC20Comment($statements)
     {
         $output = '';
-        $bi20 = $spreadsheet->getCell('BI20')->getCalculatedValue() ?: 0;
-        $t43 = $spreadsheet->getCell('T43')->getCalculatedValue();
-        $t45 = $spreadsheet->getCell('T45')->getCalculatedValue() ?: 0;
+        $t43 = $statements[0]['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'];
+        $t45 = $statements[2]['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'];
+        $bi20 = 0.3;
 
         if ($t43 == '') {
             $output = '';
@@ -727,17 +739,18 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BD20 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBD20Comment($spreadsheet)
+    public static function getBD20Comment($statements)
     {
         $output = '';
-        $bj20 = $spreadsheet->getCell('BJ20')->getCalculatedValue() ?: 0;
-        $q32 = $spreadsheet->getCell('Q32')->getCalculatedValue();
-        $t43 = $spreadsheet->getCell('T43')->getCalculatedValue();
-        $t44 = $spreadsheet->getCell('T44')->getCalculatedValue() ?: 1;
-        $t45 = $spreadsheet->getCell('T45')->getCalculatedValue() ?: 0;
+
+        $t43 = $statements[0]['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'];
+        $t44 = $statements[1]['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'];
+        $t45 = $statements[2]['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'];
+        $bj20 = 5;
+        $q32 = ':: FINANCIAL ANALYSIS REPORT ::';
 
         if ($t43 == '' && (($t45-$t44) > 0)) {
             if (($t45-$t44) > $bj20) {
@@ -773,17 +786,18 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BE20 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBE20Comment($spreadsheet)
+    public static function getBE20Comment($statements)
     {
         $output = '';
-        $bk20 = $spreadsheet->getCell('bk20')->getCalculatedValue() ?: 0;
-        $d19 = $spreadsheet->getCell('d19')->getCalculatedValue() ?: 0;
-        $d20 = $spreadsheet->getCell('d20')->getCalculatedValue() ?: 0;
-        $t43 = $spreadsheet->getCell('t43')->getCalculatedValue();
-        $t44 = $spreadsheet->getCell('t44')->getCalculatedValue() ?: 0;
+        $t43 = $statements[0]['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'];
+        $t44 = $statements[1]['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'];
+        $bk20 = 5;
+
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
 
         if ($t43 == '') {
             $output = '';

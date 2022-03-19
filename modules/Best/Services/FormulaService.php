@@ -393,7 +393,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         return [
             'profitability' => ProfitabilityAnalysis::getReport($financialStatements),
             'liquidity' => LiquidityAnalysis::getReport($financialStatements, $customer),
-            'efficiency' => EfficiencyAnalysis::getReport($customer),
+            'efficiency' => EfficiencyAnalysis::getReport($financialStatements, $customer),
             'solvency' => SolvencyAnalysis::getReport($customer),
             'productivity' => ProductivityAnalysis::getReport($customer),
         ];

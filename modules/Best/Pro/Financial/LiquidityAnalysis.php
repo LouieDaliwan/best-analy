@@ -13,102 +13,106 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
 {
     /**
      * Retrieve the report.
-     *
-     * @param  \Customer\Models\Customer $customer
+     * @param   \Customer\Models\FinancialStatement $statements
+     * @param   \Customer\Models\Customer           $customer
      * @return array
      */
-    public static function getReport(Customer $customer)
+    public static function getReport($statements, $customer)
     {
-        $spreadsheet = self::getSpreadsheet($customer);
-
-        $year1 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AC8')->getCalculatedValue();
-        $year2 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AI8')->getCalculatedValue();
-        $year3 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AO8')->getCalculatedValue();
+        $labels = ['Current Ratio', 'Cash Ratio', 'Working K to Total Assets'];
 
         return [
             'chart' => [
-                'labels' => collect(
-                    $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI18:AU18')
-                )->flatten()->reject(function ($cell) {
-                    return is_null($cell);
-                })->values()->toArray(),
-
-                'dataset' => [
-                    // Year 1.
-                    [
-                        'label' => $year1,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI19:AU19')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#a2d5ac',
-                        'backgroundColor' => ['#a2d5ac', '#a2d5ac'],
-                    ],
-                    // Year 2.
-                    [
-                        'label' => $year2,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI20:AU20')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#3aada8',
-                        'backgroundColor' => ['#3aada8', '#3aada8'],
-                    ],
-                    // Year 3.
-                    [
-                        'label' => $year3,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI21:AU21')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#557c83',
-                        'backgroundColor' => ['#557c83', '#557c83'],
-                    ],
-                ],
+                'labels' => $labels,
+                'dataset' => self::formatDataSet($statements),
             ],
 
             'comment' => [
-                self::getBF12Formula($spreadsheet),
-                self::getBF13Formula($spreadsheet),
-                self::getBF14Formula($spreadsheet),
+                self::getBF12Formula($statements, $customer),
+                self::getBF13Formula($statements),
+                self::getBF14Formula($statements),
             ],
         ];
+    }
+
+    protected static function formatDataSet($statements)
+    {
+        $data = [];
+
+        $ratios = ['current_ratio', 'cash_ratio', 'working_capital_turnover'];
+
+        foreach ($statements as $statement) {
+
+            $tempData = [];
+
+            $liquidity = $statement['metadataResults']['ratioAnalysis']['liquidity'];
+
+            foreach ($ratios as $item) {
+                $value = $item == ('current_ratio' || 'cash_ratio' ) ? (float) str_replace(':1', "", $liquidity[$item]): $liquidity[$item];
+                $tempData[] = round($value, 2);
+            }
+
+            $data[$statement['period']] = $tempData;
+        }
+
+
+        return self::dataSet($data);
+    }
+
+    protected static function dataSet($data)
+    {
+        $dataSet = [];
+
+        $color = ['#a2d5ac', '#3aada8', '#557c83'];
+
+        $count = 0;
+
+        foreach ($data as $period => $datum) {
+
+            $bgColor = $color[$count];
+
+            $isMostRecent = count($data) == ($count + 1) ? ' (most recent)' : '';
+
+            $year = "{$period}{$isMostRecent}";
+
+            $dataSet[] = [
+                'label' => $year,
+                'data' => $data[$period],
+                'bg' => $bgColor,
+                'backgroundColor' => [$bgColor, $bgColor],
+            ];
+
+            $count++;
+        }
+
+        return $dataSet;
     }
 
     /**
      * Retrieve AI43 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getAI43Comment($spreadsheet)
+    public static function getAI43Comment($statements)
     {
-        return $spreadsheet->getCell('AI43')->getCalculatedValue();
+        return $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
     }
 
     /**
      * Retrieve BF12 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
+     * @param  \Customer\Models\Customer           $customer
      * @return array
      */
-    public static function getBF12Formula($spreadsheet)
+    public static function getBF12Formula($statements, $customer)
     {
         $comment = [];
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
-        $ai43 = self::getAI43Comment($sp);
-        $be12 = self::getBE12Comment($sp);
-        $bc12 = self::getBC12Comment($sp);
-        $bd12 = self::getBD12Comment($sp, $spreadsheet);
+        $ai43 = self::getAI43Comment($statements);
+        $be12 = self::getBE12Comment($statements);
+        $bc12 = self::getBC12Comment($statements);
+        $bd12 = self::getBD12Comment($statements, $customer);
 
         if ($ai43 == '') {
             $comment[] = $bd12;
@@ -138,17 +142,17 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BE12 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBE12Comment($spreadsheet)
+    public static function getBE12Comment($statements)
     {
         $output = '';
-        $ai19 = $spreadsheet->getCell('AI19')->getCalculatedValue() ?: 1;
-        $ai20 = $spreadsheet->getCell('AI20')->getCalculatedValue() ?: 0;
-        $bk12 = $spreadsheet->getCell('BK12')->getCalculatedValue() ?: 0;
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
+        $ai19 = (float) str_replace(":1", "", $statements[0]['metadataResults']['ratioAnalysis']['liquidity']['current_ratio']);
+        $ai20 = (float) str_replace(":1", "", $statements[1]['metadataResults']['ratioAnalysis']['liquidity']['current_ratio']);
+        $bk12 = 0.5;
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
 
         if (($ai20-$ai19) > 0) {
             if (($ai20-$ai19) > $bk12) {
@@ -197,15 +201,15 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC12 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBC12Comment($spreadsheet)
+    public static function getBC12Comment($statements)
     {
         $output = '';
-        $ai19 = $spreadsheet->getCell('AI19')->getCalculatedValue();
-        $ai21 = $spreadsheet->getCell('AI21')->getCalculatedValue() ?: 0;
-        $bi12 = $spreadsheet->getCell('BI12')->getCalculatedValue() ?: 0;
+        $ai19 = (float) str_replace(":1", "", $statements[0]['metadataResults']['ratioAnalysis']['liquidity']['current_ratio']);
+        $ai21 = (float) str_replace(":1", "", $statements[2]['metadataResults']['ratioAnalysis']['liquidity']['current_ratio']);
+        $bi12 = 0.3;
 
         if ($ai19 == "") {
             $output = "";
@@ -231,17 +235,18 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BD12 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
+     * @param  \Customer\Models\Customer           $customerData
      * @return array
      */
-    public static function getBD12Comment($spreadsheet, $main)
+    public static function getBD12Comment($statements, $customerData)
     {
         $output = '';
-        $customer = $main->getSheetByName('Customer')->getCell('B2')->getCalculatedValue();
-        $ai19 = $spreadsheet->getCell('AI19')->getCalculatedValue();
-        $ai20 = $spreadsheet->getCell('AI20')->getCalculatedValue() ?: 1;
-        $ai21 = $spreadsheet->getCell('AI21')->getCalculatedValue() ?: 0;
-        $bj12 = $spreadsheet->getCell('BJ12')->getCalculatedValue() ?: 0;
+        $customer = $customerData->name;
+        $ai19 = (float) str_replace(":1", "", $statements[0]['metadataResults']['ratioAnalysis']['liquidity']['current_ratio']);
+        $ai20 = (float) str_replace(":1", "", $statements[1]['metadataResults']['ratioAnalysis']['liquidity']['current_ratio']);
+        $ai21 = (float) str_replace(":1", "", $statements[2]['metadataResults']['ratioAnalysis']['liquidity']['current_ratio']);
+        $bj12 = 0.5;
 
         if ($ai19 == "" && ($ai21-$ai20) > 0) {
             if (($ai21-$ai20)>$bj12) {
@@ -284,18 +289,17 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BF13 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBF13Formula($spreadsheet)
+    public static function getBF13Formula($statements)
     {
         $comment = [];
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
 
-        $ai43 = self::getAI43Comment($sp);
-        $bc13 = self::getBC13Comment($sp);
-        $bd13 = self::getBD13Comment($sp);
-        $be13 = self::getBE13Comment($sp);
+        $ai43 = self::getAI43Comment($statements);
+        $bc13 = self::getBC13Comment($statements);
+        $bd13 = self::getBD13Comment($statements);
+        $be13 = self::getBE13Comment($statements);
 
         if ($ai43 == "") {
             $comment[] = $bd13;
@@ -325,15 +329,16 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC13 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBC13Comment($spreadsheet)
+    public static function getBC13Comment($statements)
     {
         $output = '';
-        $am19 = $spreadsheet->getCell('AM19')->getCalculatedValue();
-        $am21 = $spreadsheet->getCell('AM21')->getCalculatedValue() ?: 0;
-        $bi13 = $spreadsheet->getCell('BI13')->getCalculatedValue() ?: 0;
+        $am19 = (float) str_replace(":1", "", $statements[0]['metadataResults']['ratioAnalysis']['liquidity']['cash_ratio']);
+        $am21 = (float) str_replace(":1", "", $statements[2]['metadataResults']['ratioAnalysis']['liquidity']['cash_ratio']);
+
+        $bi13 = 0.3;
 
         if ($am19 == "") {
             $output = "";
@@ -359,16 +364,17 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BD13 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBD13Comment($spreadsheet)
+    public static function getBD13Comment($statements)
     {
         $output = '';
-        $am19 = $spreadsheet->getCell('AM19')->getCalculatedValue();
-        $am20 = $spreadsheet->getCell('AM20')->getCalculatedValue() ?: 1;
-        $am21 = $spreadsheet->getCell('AM21')->getCalculatedValue() ?: 0;
-        $bj13 = $spreadsheet->getCell('BJ13')->getCalculatedValue() ?: 0;
+        $am19 = (float) str_replace(":1", "", $statements[0]['metadataResults']['ratioAnalysis']['liquidity']['cash_ratio']);
+        $am20 = (float) str_replace(":1", "", $statements[1]['metadataResults']['ratioAnalysis']['liquidity']['cash_ratio']);
+        $am21 = (float) str_replace(":1", "", $statements[2]['metadataResults']['ratioAnalysis']['liquidity']['cash_ratio']);
+
+        $bj13 = 1;
 
         if ($am19 == "" && ($am21-$am20) > 0) {
             if (($am21-$am20) > $bj13) {
@@ -404,18 +410,19 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BE13 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBE13Comment($spreadsheet)
+    public static function getBE13Comment($statements)
     {
         $output = '';
 
-        $am19 = $spreadsheet->getCell('AM19')->getCalculatedValue() ?: 1;
-        $am20 = $spreadsheet->getCell('AM20')->getCalculatedValue() ?: 0;
-        $bk13 = $spreadsheet->getCell('BK13')->getCalculatedValue() ?: 0;
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
+        $am19 = (float) str_replace(":1", "", $statements[0]['metadataResults']['ratioAnalysis']['liquidity']['cash_ratio']);
+        $am20 = (float) str_replace(":1", "", $statements[1]['metadataResults']['ratioAnalysis']['liquidity']['cash_ratio']);
+
+        $bk13 = 0.5;
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
         $item1 = $d19;
         $item2 = $d20;
         $number1 = abs(round(($am20-$am19)/$am19*100, 2));
@@ -455,21 +462,20 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
         return $output;
     }
 
-
     /**
      * Retrieve BF14 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBF14Formula($spreadsheet)
+    public static function getBF14Formula($statements)
     {
         $comment = [];
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
-        $ai43 = self::getAI43Comment($sp);
-        $bc14 = self::getBC14Comment($sp);
-        $bd14 = self::getBD14Comment($sp);
-        $be14 = self::getBE14Comment($sp);
+
+        $ai43 = self::getAI43Comment($statements);
+        $bc14 = self::getBC14Comment($statements);
+        $bd14 = self::getBD14Comment($statements);
+        $be14 = self::getBE14Comment($statements);
 
         if ($ai43 == "") {
             $comment[] = $bd14;
@@ -490,15 +496,17 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC14 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $customer
      * @return array
      */
-    public static function getBC14Comment($spreadsheet)
+    public static function getBC14Comment($statements)
     {
         $output = '';
-        $aq19 = $spreadsheet->getCell('AQ19')->getCalculatedValue();
-        $aq21 = $spreadsheet->getCell('AQ21')->getCalculatedValue() ?: 0;
-        $bi14 = $spreadsheet->getCell('BI14')->getCalculatedValue() ?: 0;
+
+        $aq19 = (float) str_replace(":1", "", $statements[0]['metadataResults']['ratioAnalysis']['liquidity']['working_capital_turnover']);
+        $aq21 = (float) str_replace(":1", "", $statements[2]['metadataResults']['ratioAnalysis']['liquidity']['working_capital_turnover']);
+
+        $bi14 = 0.3;
 
         if($aq19 == "") {
             $output = "";
@@ -524,16 +532,16 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BD14 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBD14Comment($spreadsheet)
+    public static function getBD14Comment($statements)
     {
         $output = '';
-        $aq19 = $spreadsheet->getCell('AQ19')->getCalculatedValue();
-        $aq20 = $spreadsheet->getCell('AQ20')->getCalculatedValue() ?: 1;
-        $aq21 = $spreadsheet->getCell('AQ21')->getCalculatedValue() ?: 0;
-        $bj14 = $spreadsheet->getCell('BJ14')->getCalculatedValue() ?: 0;
+        $aq19 = (float) str_replace(":1", "", $statements[0]['metadataResults']['ratioAnalysis']['liquidity']['working_capital_turnover']);
+        $aq20 = (float) str_replace(":1", "", $statements[1]['metadataResults']['ratioAnalysis']['liquidity']['working_capital_turnover']);
+        $aq21 = (float) str_replace(":1", "", $statements[2]['metadataResults']['ratioAnalysis']['liquidity']['working_capital_turnover']);
+        $bj14 = 8;
 
         $number1 = abs(round(($aq21-$aq20)/$aq20*100, 2));
         if ($aq19 == "" && ($aq21-$aq20) > 0) {
@@ -564,19 +572,20 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BE14 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBE14Comment($spreadsheet)
+    public static function getBE14Comment($statements)
     {
         $output = '';
-        $aq19 = $spreadsheet->getCell('AQ19')->getCalculatedValue() ?: 1;
-        $aq20 = $spreadsheet->getCell('AQ20')->getCalculatedValue() ?: 0;
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
-        $n27 = $spreadsheet->getCell('N27')->getCalculatedValue() ?: 0;
-        $n28 = $spreadsheet->getCell('N28')->getCalculatedValue() ?: 0;
-        $bk14 = $spreadsheet->getCell('BK14')->getCalculatedValue() ?: 0;
+        $aq19 = (float) str_replace(":1", "", $statements[0]['metadataResults']['ratioAnalysis']['liquidity']['working_capital_turnover']);
+        $aq20 = (float) str_replace(":1", "", $statements[1]['metadataResults']['ratioAnalysis']['liquidity']['working_capital_turnover']);
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
+        $n27 = 0;
+        $n28 = 0;
+
+        $bk14 = 8;
 
         $item1 = $d19;
         $item2 = $d20;

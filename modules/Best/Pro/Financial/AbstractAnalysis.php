@@ -30,7 +30,7 @@ abstract class AbstractAnalysis implements Contracts\FinancialAnalysisReportInte
      * @param  \Customer\Models\Customer $customer
      * @return array
      */
-    abstract public static function getReport(Customer $customer);
+    // abstract public static function getReport(Customer $customer);
 
     /**
      * The destructor method.

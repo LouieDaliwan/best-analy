@@ -19,28 +19,14 @@ use PhpOffice\PhpSpreadsheet\Chart\DataSeriesValues;
  */
 abstract class ProfitabilityAnalysis extends AbstractAnalysis
 {
-    protected static function getStatements($customer)
-    {
-        return FinancialStatement::where('customer_id', $customer->id)
-        ->orderBy('period', 'desc')
-        ->take(3)
-        ->get()
-        ->sortBy('period')
-        ->toArray();
-    }
-
     /**
      * Retrieve the report.
      *
-     * @param  \Customer\Models\Customer $customer
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getReport(Customer $customer)
+    public static function getReport($statements)
     {
-        $statements = self::getStatements($customer);
-
-        $spreadsheet = self::getSpreadsheet($customer);
-
         $labels = ['Gross Margin', 'Operating Margin',' Net Margin After Tax', 'ROA', 'ROE', 'Op. Ratio'];
 
         return [
@@ -81,7 +67,9 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
             $profitability = $statement['metadataResults']['ratioAnalysis']['profitability'];
 
             foreach ($marginRatio as $item) {
-                $tempData[] = $item == 'operating_ratio' ? (int) str_replace(':1', "", $profitability[$item]) : $profitability[$item];;
+                $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): $profitability[$item];
+
+                $tempData[] = round($value * 100, 2);
             }
 
             $data[$statement['period']] = $tempData;
@@ -122,7 +110,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     /**
      * Retrieve AI43 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     *
      * @param  \Customer\Models\FinancialStatement   $statements
      * @param  string                                $key
      * @return array
@@ -331,7 +319,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         $bd5 = self::getBD5Comment($statements);
         $be5 = self::getBE5Comment($statements);
 
-        if ($ai43 == "") {
+        if ($ai43 == ("" || 0)) {
             $comment[] = $bd5;
         } else {
             $comment[] = $bc5;
@@ -487,7 +475,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         $bd6 = self::getBD6Comment($statements);
         $be6 = self::getBE6Comment($statements);
 
-        if ($ai43 =="") {
+        if ($ai43 == ("" || 0) ) {
             $comment[] = $bd6;
         } else {
             if ($bc6 == "") {
@@ -655,7 +643,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         $bd7 = self::getBD7Comment($statements);
         $be7 = self::getBE7Comment($statements);
 
-        if ($ai43 == "") {
+        if ($ai43 == ("" || 0)) {
             $comment[] = $bd7;
         } else {
             $comment[] = $bc7;
@@ -810,7 +798,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         $bd8 = self::getBD8Comment($statements);
         $be8 = self::getBE8Comment($statements);
 
-        if ($ai43 == "") {
+        if ($ai43 == ("" || 0)) {
             $comment[] = $bd8;
         } else {
             if ($bc8 == "") {
@@ -977,7 +965,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         $bd9 = self::getBD9Comment($statements);
         $be9 = self::getBE9Comment($statements);
 
-        if ($ai43 == "") {
+        if ($ai43 == ("" || 0)) {
             $comment[] = $bd9;
         } else {
             $comment[] = $bc9;
@@ -999,8 +987,8 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     {
         $output = '';
 
-        $w19 = (int) str_replace(':1', "", $statements[0]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
-        $w21 = (int) str_replace(':1', "", $statements[2]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+        $w19 = (float) str_replace(':1', "", $statements[0]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+        $w21 = (float) str_replace(':1', "", $statements[2]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
         $bi9 = 0.3;
 
         if ($w19 == "") {
@@ -1034,9 +1022,9 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     {
         $output = '';
         $bj9 = 0.08;
-        $w19 = (int) str_replace(':1', "", $statements[0]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
-        $w20 = (int) str_replace(':1', "", $statements[1]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
-        $w21 = (int) str_replace(':1', "", $statements[2]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+        $w19 = (float) str_replace(':1', "", $statements[0]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+        $w20 = (float) str_replace(':1', "", $statements[1]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+        $w21 = (float) str_replace(':1', "", $statements[2]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
 
         $number1 = abs(round(($w21-$w20)*100, 2));
 
@@ -1076,8 +1064,8 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         $output = '';
         $bk9 = 0.08;
 
-        $w19 = (int) str_replace(':1', "", $statements[0]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
-        $w20 = (int) str_replace(':1', "", $statements[1]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+        $w19 = (float) str_replace(':1', "", $statements[0]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
+        $w20 = (float) str_replace(':1', "", $statements[1]['metadataResults']['ratioAnalysis']['profitability']['operating_ratio']);
 
         $d19 = $statements[0]['period'];
         $d20 = $statements[1]['period'];

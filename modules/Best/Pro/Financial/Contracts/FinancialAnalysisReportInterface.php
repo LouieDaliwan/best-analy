@@ -12,5 +12,5 @@ interface FinancialAnalysisReportInterface
      * @param  \Customer\Models\Customer $customer
      * @return array
      */
-    public static function getReport(Customer $customer);
+    // public static function getReport(Customer $customer);
 }

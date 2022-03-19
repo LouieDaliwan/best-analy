@@ -142,7 +142,7 @@ class Customer extends Model
      */
     public function statements()
     {
-        return $this->hasMany(FinancialStatement::class, 'customer_id', 'id')->orderBy('period', 'desc');
+        return $this->hasMany(FinancialStatement::class, 'customer_id', 'id')->orderBy('period', 'asc');
     }
 
     /**

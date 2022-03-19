@@ -2,29 +2,30 @@
 
 namespace Best\Services;
 
-use Best\Models\Formula;
-use Best\Pro\Enablers\OverallOrganisationEnablerMetrics;
-use Best\Pro\Financial\EfficiencyAnalysis;
-use Best\Pro\Financial\FinancialRatios;
-use Best\Pro\Financial\LiquidityAnalysis;
-use Best\Pro\Financial\ProductivityAnalysis;
-use Best\Pro\Financial\ProductivityIndicators;
-use Best\Pro\Financial\ProfitabilityAnalysis;
-use Best\Pro\Financial\SolvencyAnalysis;
-use Best\Pro\KeyStrategicRecommendationComments;
-use Best\Pro\TrafficLight;
-use Core\Application\Service\Service;
-use Customer\Models\Customer;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Index\Models\Index;
-use Setting\Models\Setting;
-use Spatie\Browsershot\Browsershot;
-use Survey\Models\Survey;
-use User\Models\User;
-use Best\Pro\KeyEnablers;
 use Carbon\Carbon;
+use User\Models\User;
+use Index\Models\Index;
+use Best\Models\Formula;
+use Best\Pro\KeyEnablers;
+use Survey\Models\Survey;
+use Best\Pro\TrafficLight;
+use Illuminate\Support\Str;
+use Setting\Models\Setting;
+use Illuminate\Http\Request;
+use Customer\Models\Customer;
+use Spatie\Browsershot\Browsershot;
+use Illuminate\Support\Facades\Auth;
+use Core\Application\Service\Service;
+use Best\Pro\Financial\FinancialRatios;
+use Customer\Models\FinancialStatement;
+use Best\Pro\Financial\SolvencyAnalysis;
+use Best\Pro\Financial\LiquidityAnalysis;
+use Best\Pro\Financial\EfficiencyAnalysis;
+use Best\Pro\Financial\ProductivityAnalysis;
+use Best\Pro\Financial\ProfitabilityAnalysis;
+use Best\Pro\Financial\ProductivityIndicators;
+use Best\Pro\KeyStrategicRecommendationComments;
+use Best\Pro\Enablers\OverallOrganisationEnablerMetrics;
 
 class FormulaService extends Service implements FormulaServiceInterface
 {
@@ -219,7 +220,6 @@ class FormulaService extends Service implements FormulaServiceInterface
             $this->data['current:pindex'] = $this->data['indices'][$index->alias];
         }
 
-        // dd($this->data);
         return $this->data;
     }
 
@@ -383,9 +383,16 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function getFinancialAnalysisData(Customer $customer)
     {
+        $financialStatements = FinancialStatement::where('customer_id', $customer->id)
+        ->orderBy('period', 'desc')
+        ->take(3)
+        ->get()
+        ->sortBy('period')
+        ->toArray();
+
         return [
-            'profitability' => ProfitabilityAnalysis::getReport($customer),
-            'liquidity' => LiquidityAnalysis::getReport($customer),
+            'profitability' => ProfitabilityAnalysis::getReport($financialStatements),
+            'liquidity' => LiquidityAnalysis::getReport($financialStatements, $customer),
             'efficiency' => EfficiencyAnalysis::getReport($customer),
             'solvency' => SolvencyAnalysis::getReport($customer),
             'productivity' => ProductivityAnalysis::getReport($customer),

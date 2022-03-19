@@ -4,6 +4,7 @@ namespace Best\Pro\Financial;
 
 use Customer\Models\Customer;
 
+
 /**
  * Analysis class for BEST formulas.
  *
@@ -14,89 +15,92 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve the report.
      *
-     * @param  \Customer\Models\Customer $customer
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getReport(Customer $customer)
+    public static function getReport($statements, $customer)
     {
         $spreadsheet = self::getSpreadsheet($customer);
-
-        $year1 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AC8')->getCalculatedValue();
-        $year2 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AI8')->getCalculatedValue();
-        $year3 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AO8')->getCalculatedValue();
+        $labels = ['Debt to Equity Ratio', 'Debt Ratio'];
 
         return [
             'charts' => [
-                'labels' => collect(
-                    $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI42:AN42')
-                )->flatten()->reject(function ($cell) {
-                    return is_null($cell);
-                })->values()->toArray(),
-
-                'dataset' => [
-                    // Year 1.
-                    [
-                        'label' => $year1,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI43:AR43')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#a2d5ac',
-                        'backgroundColor' => ['#a2d5ac', '#a2d5ac'],
-                    ],
-                    // Year 2.
-                    [
-                        'label' => $year2,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI44:AR44')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#3aada8',
-                        'backgroundColor' => ['#3aada8', '#3aada8'],
-                    ],
-                    // Year 3.
-                    [
-                        'label' => $year3,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI45:AR45')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#557c83',
-                        'backgroundColor' => ['#557c83', '#557c83'],
-                    ],
-                ],
+                'labels' => $labels,
+                'dataset' => self::formatDataSet($statements),
             ],
 
             'comments' => [
-                self::getFirstComment($spreadsheet),
-                self::getSecondComment($spreadsheet),
+                self::getFirstComment($statements),
+                self::getSecondComment($statements, $spreadsheet),
             ],
         ];
+    }
+
+    protected static function formatDataSet($statements)
+    {
+        $data = [];
+
+        $ratios = ['debt_to_equity_ratio', 'debt_ratio'];
+
+        foreach ($statements as $statement) {
+
+            $tempData = [];
+
+            $solvency = $statement['metadataResults']['ratioAnalysis']['solvency'];
+
+            foreach ($ratios as $item) {
+                $value =  $solvency[$item];
+                $tempData[] = round($value, 2);
+            }
+
+            $data[$statement['period']] = $tempData;
+        }
+
+        return self::dataSet($data);
+    }
+
+    protected static function dataSet($data)
+    {
+        $dataSet = [];
+
+        $color = ['#a2d5ac', '#3aada8', '#557c83'];
+
+        $count = 0;
+
+        foreach ($data as $period => $datum) {
+
+            $bgColor = $color[$count];
+
+            $isMostRecent = count($data) == ($count + 1) ? ' (most recent)' : '';
+
+            $year = "{$period}{$isMostRecent}";
+
+            $dataSet[] = [
+                'label' => $year,
+                'data' => $data[$period],
+                'bg' => $bgColor,
+                'backgroundColor' => [$bgColor, $bgColor],
+            ];
+
+            $count++;
+        }
+
+        return $dataSet;
     }
 
     /**
      * Retrieve the first comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return string|array
      */
-    public static function getFirstComment($spreadsheet)
+    public static function getFirstComment($statements)
     {
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
 
-        $ai43 = $sp->getCell('AI43')->getCalculatedValue();
-        $bc24 = self::getBC24Comment($sp);
-        $bd24 = self::getBD24Comment($sp);
-        $be24 = self::getBE24Comment($sp);
+        $ai43 = $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
+        $bc24 = self::getBC24Comment($statements);
+        $bd24 = self::getBD24Comment($statements);
+        $be24 = self::getBE24Comment($statements);
         $comment = [];
 
         if ($ai43 == '') {
@@ -127,16 +131,16 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC24 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBC24Comment($spreadsheet)
+    public static function getBC24Comment($statements)
     {
         $output = null;
-        $ai43 = $spreadsheet->getCell('AI43')->getCalculatedValue();
-        $ai44 = $spreadsheet->getCell('AI44')->getCalculatedValue() ?: 0;
-        $ai45 = $spreadsheet->getCell('AI45')->getCalculatedValue() ?: 0;
-        $bj24 = $spreadsheet->getCell('BJ24')->getCalculatedValue() ?: 0;
+        $ai43 = $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_to_equity_ratio'];
+        $ai44 = $statements[1]['metadataResults']['ratioAnalysis']['solvency']['debt_to_equity_ratio'];
+        $ai45 = $statements[2]['metadataResults']['ratioAnalysis']['solvency']['debt_to_equity_ratio'];
+        $bj24 = 0.3;
 
         if ($ai45-$ai44 == 0) {
             $output = '';
@@ -176,16 +180,16 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BD24 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBD24Comment($spreadsheet)
+    public static function getBD24Comment($statements)
     {
         $output = '';
-        $ai43 = $spreadsheet->getCell('AI43')->getCalculatedValue();
-        $ai44 = $spreadsheet->getCell('AI44')->getCalculatedValue() ?: 0;
-        $ai45 = $spreadsheet->getCell('AI45')->getCalculatedValue() ?: 0;
-        $bj24 = $spreadsheet->getCell('BJ24')->getCalculatedValue() ?: 0;
+        $ai43 = $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_to_equity_ratio'];
+        $ai44 = $statements[1]['metadataResults']['ratioAnalysis']['solvency']['debt_to_equity_ratio'];
+        $ai45 = $statements[2]['metadataResults']['ratioAnalysis']['solvency']['debt_to_equity_ratio'];
+        $bj24 = 0.3;
 
         if (($ai45-$ai44) == 0) {
             $output = '';
@@ -225,15 +229,17 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BE24 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement
      * @return array
      */
-    public static function getBE24Comment($spreadsheet)
+    public static function getBE24Comment($statements)
     {
         $output = '';
-        $ai43 = $spreadsheet->getCell('AI43')->getCalculatedValue();
-        $ai44 = $spreadsheet->getCell('AI44')->getCalculatedValue() ?: 0;
-        $bk24 = $spreadsheet->getCell('BK24')->getCalculatedValue() ?: 0;
+        $ai43 = $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_to_equity_ratio'];
+        $ai44 = $statements[1]['metadataResults']['ratioAnalysis']['solvency']['debt_to_equity_ratio'];
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
+        $bk24 = 0.3;
 
         if ($ai43 == '') {
             $output = '';
@@ -243,8 +249,8 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
             } else {
                 if (($ai44-$ai43) < 0) {
                     if (($ai44-$ai43) < (-$bk24)) {
-                        $item1 = $spreadsheet->getCell('D19')->getCalculatedValue();
-                        $item1 = $spreadsheet->getCell('D20')->getCalculatedValue();
+                        $item1 = $d19;
+                        $item2 = $d20;
                         $number1 = abs(round(($ai44-$ai43)/$ai43*100, 2));
                         $output = __("Records have also indicated that from :item1 to :item2, debt to equity saw a significant year on year decrease by :number1%.", [
                             'item1' => $item1,
@@ -252,8 +258,8 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
                             'number1' => $number1,
                         ]);
                     } else {
-                        $item1 = $spreadsheet->getCell('D19')->getCalculatedValue();
-                        $item1 = $spreadsheet->getCell('D20')->getCalculatedValue();
+                        $item1 = $d19;
+                        $item2 = $d20;
                         $number1 = abs(round(($ai44-$ai43)/$ai43*100, 2));
                         $output = __("Records have also indicated that from :item1 to :item2, debt to equity saw a year on year decrease by :number1%.", [
                             'item1' => $item1,
@@ -264,8 +270,8 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
                 } else {
                     if (($ai44-$ai43) > 0) {
                         if (($ai44-$ai43) > $bk24) {
-                            $item1 = $spreadsheet->getCell('D19')->getCalculatedValue();
-                            $item2 = $spreadsheet->getCell('D20')->getCalculatedValue();
+                            $item1 = $d19;
+                            $item2 = $d20;
                             $number1 = abs(round(($ai44-$ai43)/$ai43*100, 2));
                             $output = __("Records have also indicated that from :item1 to :item2, debt to equity saw a significant year on year increase by :number1%.", [
                                 'item1' => $item1,
@@ -273,8 +279,8 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
                                 'number1' => $number1,
                             ]);
                         } else {
-                            $item1 = $spreadsheet->getCell('D19')->getCalculatedValue();
-                            $item2 = $spreadsheet->getCell('D20')->getCalculatedValue();
+                            $item1 = $d19;
+                            $item2 = $d20;
                             $number1 = abs(round(($ai44-$ai43)/$ai43*100, 2));
                             $output = __("Records have also indicated that from :item1 to :item2, debt to equity saw a year on year increase by :number1%.", [
                                 'item1' => $item1,
@@ -296,14 +302,14 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
      * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
      * @return string|array
      */
-    public static function getSecondComment($spreadsheet)
+    public static function getSecondComment($statements, $spreadsheet)
     {
         $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
         $bf25 = $sp->getCell('BF25')->getCalculatedValue();
         $ai43 = $sp->getCell('AI43')->getCalculatedValue();
-        $bc25 = self::getBC25Comment($sp);
-        $bd25 = self::getBD25Comment($sp);
-        $be25 = self::getBE25Comment($sp);
+        $bc25 = self::getBC25Comment($statements);
+        $bd25 = self::getBD25Comment($statements);
+        $be25 = self::getBE25Comment($statements);
         $comment = [];
 
         if ($ai43 == '') {
@@ -334,15 +340,15 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC25 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBC25Comment($spreadsheet)
+    public static function getBC25Comment($statements)
     {
         $output = '';
-        $an43 = $spreadsheet->getCell('AN43')->getCalculatedValue();
-        $an45 = $spreadsheet->getCell('AN45')->getCalculatedValue() ?: 0;
-        $bi25 = $spreadsheet->getCell('BI25')->getCalculatedValue() ?: 0;
+        $an43 = $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
+        $an45 = $statements[2]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
+        $bi25 = 0.3;
 
         if ($an43 == "") {
             $output = "";
@@ -368,16 +374,17 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BD25 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBD25Comment($spreadsheet)
+    public static function getBD25Comment($statements)
     {
         $output = '';
-        $an43 = $spreadsheet->getCell('AN43')->getCalculatedValue();
-        $an44 = $spreadsheet->getCell('AN44')->getCalculatedValue() ?: 1;
-        $an45 = $spreadsheet->getCell('AN45')->getCalculatedValue() ?: 0;
-        $bj25 = $spreadsheet->getCell('BJ25')->getCalculatedValue() ?: 0;
+
+        $an43 = $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
+        $an44 = $statements[1]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
+        $an45 = $statements[2]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
+        $bj25 = 0.3;
 
         if ($an43 == "" && (($an45-$an44)<0)) {
             if (($an45-$an44) < (-$bj25)) {
@@ -413,17 +420,17 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     /**
      * Retrieve BE25 formula.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getBE25Comment($spreadsheet)
+    public static function getBE25Comment($statements)
     {
         $output = '';
-        $ae43 = $spreadsheet->getCell('AE43')->getCalculatedValue() ?: 0;
-        $ae44 = $spreadsheet->getCell('AE44')->getCalculatedValue() ?: 0;
-        $an43 = $spreadsheet->getCell('AN43')->getCalculatedValue();
-        $an44 = $spreadsheet->getCell('AN44')->getCalculatedValue() ?: 0;
-        $bk25 = $spreadsheet->getCell('BK25')->getCalculatedValue() ?: 0;
+        $ae43 = $statements[0]['period'];
+        $ae44 = $statements[1]['period'];
+        $an43 = $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
+        $an44 = $statements[1]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
+        $bk25 = 0.3;
 
         if ($an43 == '') {
             $output = '';

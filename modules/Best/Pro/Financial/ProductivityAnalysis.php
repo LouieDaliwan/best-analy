@@ -14,89 +14,91 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
     /**
      * Retrieve the report.
      *
-     * @param  \Customer\Models\Customer $customer
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getReport(Customer $customer)
+    public static function getReport($statements)
     {
-        $spreadsheet = self::getSpreadsheet($customer);
-
-        $year1 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AC8')->getCalculatedValue();
-        $year2 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AI8')->getCalculatedValue();
-        $year3 = $spreadsheet->getSheetByName('FS_inputs')->getCell('AO8')->getCalculatedValue();
-
+        $labels = ['Labour Cost Competitiveness'];
         return [
             'charts' => [
-                'labels' => collect(
-                    $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI68:AI68')
-                )->flatten()->reject(function ($cell) {
-                    return is_null($cell);
-                })->values()->toArray(),
-
-                'dataset' => [
-                    // Year 1.
-                    [
-                        'label' => $year1,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI69:AI69')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#a2d5ac',
-                        'backgroundColor' => ['#a2d5ac', '#a2d5ac'],
-                    ],
-                    // Year 2.
-                    [
-                        'label' => $year2,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI70:AI70')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#3aada8',
-                        'backgroundColor' => ['#3aada8', '#3aada8'],
-                    ],
-                    // Year 3.
-                    [
-                        'label' => $year3,
-                        'data' => collect(
-                            $spreadsheet->getSheetByName('FinancialAnalysisReport')->rangeToArray('AI71:AI71')
-                        )->flatten()->reject(function ($cell) {
-                            return is_null($cell);
-                        })->map(function ($cell) {
-                            return str_replace('%', '', $cell);
-                        })->values()->toArray(),
-                        'bg' => '#557c83',
-                        'backgroundColor' => ['#557c83', '#557c83'],
-                    ],
-                ],
+                'labels' => $labels,
+                'dataset' => self::formatDataSet($statements)
             ],
 
             'comments' => [
-                self::getComment($spreadsheet),
+                self::getComment($statements),
                 // implode('||', self::getComment($spreadsheet)),
             ],
         ];
     }
 
+    protected static function formatDataSet($statements)
+    {
+        $data = [];
+
+        $productivity_items = ['labour_cost_competitiveness'];
+
+        foreach ($statements as $statement) {
+
+            $tempData = [];
+
+            $productivity = $statement['metadataResults']['ratioAnalysis']['productivity'];
+
+            foreach ($productivity_items as $item) {
+                $value = $productivity[$item];
+                $tempData[] = round($value, 2);
+            }
+
+            $data[$statement['period']] = $tempData;
+        }
+
+
+        return self::dataSet($data);
+    }
+
+    protected static function dataSet($data)
+    {
+        $dataSet = [];
+
+        $color = ['#a2d5ac', '#3aada8', '#557c83'];
+
+        $count = 0;
+
+        foreach ($data as $period => $datum) {
+
+            $bgColor = $color[$count];
+
+            $isMostRecent = count($data) == ($count + 1) ? ' (most recent)' : '';
+
+            $year = "{$period}{$isMostRecent}";
+
+            $dataSet[] = [
+                'label' => $year,
+                'data' => $data[$period],
+                'bg' => $bgColor,
+                'backgroundColor' => [$bgColor, $bgColor],
+            ];
+
+            $count++;
+        }
+
+        return $dataSet;
+    }
+
     /**
      * Retrieve comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return array
      */
-    public static function getComment($spreadsheet)
+    public static function getComment($statements)
     {
-        $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
+        $ai43 = $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
 
-        $ai43 = $sp->getCell('AI43')->getCalculatedValue();
-        $bc30 = self::getBC30Comment($sp);
-        $bd30 = self::getBD30Comment($sp);
-        $be30 = self::getBE30Comment($sp);
+        $bc30 = self::getBC30Comment($statements);
+        $bd30 = self::getBD30Comment($statements);
+        $be30 = self::getBE30Comment($statements);
         $comment = [];
 
         if ($ai43 == "") {
@@ -127,16 +129,16 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC30 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return string
      */
-    public static function getBC30Comment($spreadsheet)
+    public static function getBC30Comment($statements)
     {
         $output = '';
-        $ai69 = $spreadsheet->getCell('AI69')->getCalculatedValue();
-        $ai70 = $spreadsheet->getCell('AI70')->getCalculatedValue() ?: 1;
-        $ai71 = $spreadsheet->getCell('AI71')->getCalculatedValue() ?: 0;
-        $bj30 = $spreadsheet->getCell('BJ30')->getCalculatedValue() ?: 0;
+        $ai69 = $statements[0]['metadataResults']['ratioAnalysis']['productivity']['labour_cost_competitiveness'];
+        $ai70 = $statements[1]['metadataResults']['ratioAnalysis']['productivity']['labour_cost_competitiveness'];
+        $ai71 = $statements[2]['metadataResults']['ratioAnalysis']['productivity']['labour_cost_competitiveness'];
+        $bj30 = 0.5;
 
         if ($ai69 == '' && (($ai71 - $ai70) < 0)) {
             if (($ai71 - $ai70) < (-$bj30)) {
@@ -172,15 +174,15 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BC30 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return string
      */
-    public static function getBD30Comment($spreadsheet)
+    public static function getBD30Comment($statements)
     {
         $output = '';
-        $ai69 = $spreadsheet->getCell('AI69')->getCalculatedValue();
-        $ai71 = $spreadsheet->getCell('AI71')->getCalculatedValue() ?: 0;
-        $bi30 = $spreadsheet->getCell('BI30')->getCalculatedValue() ?: 0;
+        $ai69 = $statements[0]['metadataResults']['ratioAnalysis']['productivity']['labour_cost_competitiveness'];
+        $ai71 = $statements[2]['metadataResults']['ratioAnalysis']['productivity']['labour_cost_competitiveness'];
+        $bi30 = 0.3;
 
         if ($ai69 == '') {
             $output = '';
@@ -207,17 +209,17 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
     /**
      * Retrieve BE30 comment.
      *
-     * @param  \PhpOffice\PhpSpreadsheet\Spreadsheet $spreadsheet
+     * @param  \Customer\Models\FinancialStatement $statements
      * @return string
      */
-    public static function getBE30Comment($spreadsheet)
+    public static function getBE30Comment($statements)
     {
         $output = '';
-        $ai69 = $spreadsheet->getCell('AI69')->getCalculatedValue();
-        $ai70 = $spreadsheet->getCell('AI70')->getCalculatedValue() ?: 0;
-        $bk30 = $spreadsheet->getCell('BK30')->getCalculatedValue() ?: 0;
-        $d19 = $spreadsheet->getCell('D19')->getCalculatedValue() ?: 0;
-        $d20 = $spreadsheet->getCell('D20')->getCalculatedValue() ?: 0;
+        $ai69 = $statements[0]['metadataResults']['ratioAnalysis']['productivity']['labour_cost_competitiveness'];
+        $ai70 = $statements[1]['metadataResults']['ratioAnalysis']['productivity']['labour_cost_competitiveness'];
+        $bk30 = 0.3;
+        $d19 = $statements[0]['period'];
+        $d20 = $statements[1]['period'];
 
         if ($ai69 == '') {
             $output = '';

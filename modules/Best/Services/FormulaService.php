@@ -24,6 +24,7 @@ use Best\Pro\Financial\EfficiencyAnalysis;
 use Best\Pro\Financial\ProductivityAnalysis;
 use Best\Pro\Financial\ProfitabilityAnalysis;
 use Best\Pro\Financial\ProductivityIndicators;
+use Best\Pro\Financial\AdditionalRatioAnalysis;
 use Best\Pro\KeyStrategicRecommendationComments;
 use Best\Pro\Enablers\OverallOrganisationEnablerMetrics;
 
@@ -124,6 +125,14 @@ class FormulaService extends Service implements FormulaServiceInterface
             ->whereKey("overall:comment/".$customer->getKey().$monthkey)
             ->first()->value ?? null;
 
+
+        $financialStatements = FinancialStatement::where('customer_id', $customer->id)
+        ->orderBy('period', 'desc')
+        ->take(3)
+        ->get()
+        ->sortBy('period')
+        ->toArray();
+
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {
             $survey = $taxonomy->survey;
@@ -204,10 +213,10 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['cover:date'] = date(settings('formal:date', 'Y-m-d'));
 
         // Retrieve Financial Analysis data.
-        $this->data['analysis:financial'] = $this->getFinancialAnalysisData($customer);
+        $this->data['analysis:financial'] = $this->getFinancialAnalysisData($customer, $financialStatements);
 
         // Retrieve the Financial Ratios and Productivity Indicators.
-        $this->data['ratios:financial'] = $this->getFinancialRatios($customer);
+        $this->data['ratios:financial'] = $this->getFinancialRatios($customer, $financialStatements);
         $this->data['indicators:productivity'] = $this->getProductivityIndicators($customer);
 
         // User object.
@@ -220,6 +229,7 @@ class FormulaService extends Service implements FormulaServiceInterface
             $this->data['current:pindex'] = $this->data['indices'][$index->alias];
         }
 
+        // dd($this->data);
         return $this->data;
     }
 
@@ -379,24 +389,17 @@ class FormulaService extends Service implements FormulaServiceInterface
      * Retrieve the Financial Analysis data.
      *
      * @param  \Customer\Models\Customer $customer
+     * @param  \Customer\Models\FinancialStatement $financialStatements;
      * @return array
      */
-    public function getFinancialAnalysisData(Customer $customer)
+    public function getFinancialAnalysisData(Customer $customer, $financialStatements)
     {
-        $financialStatements = FinancialStatement::where('customer_id', $customer->id)
-        ->orderBy('period', 'desc')
-        ->take(3)
-        ->get()
-        ->sortBy('period')
-        ->toArray();
-
         return [
             'profitability' => ProfitabilityAnalysis::getReport($financialStatements),
             'liquidity' => LiquidityAnalysis::getReport($financialStatements, $customer),
             'efficiency' => EfficiencyAnalysis::getReport($financialStatements, $customer),
             'solvency' => SolvencyAnalysis::getReport($financialStatements, $customer),
             'productivity' => ProductivityAnalysis::getReport($financialStatements, $customer),
-            //additionalRatio will added tom
         ];
     }
 
@@ -406,9 +409,9 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  \Customer\Models\Customer $customer
      * @return array
      */
-    public function getFinancialRatios(Customer $customer)
+    public function getFinancialRatios(Customer $customer, $financialStatements)
     {
-        return FinancialRatios::getReport($customer);
+        return FinancialRatios::getReport($customer, $financialStatements);
     }
 
     /**

@@ -2,8 +2,10 @@
 
 namespace Best\Pro\Financial;
 
-use Best\Pro\Financial\Data\LiquidityData;
 use Customer\Models\Customer;
+use Best\Pro\Financial\Data\Efficiency;
+use Best\Pro\Financial\Data\LiquidityData;
+use Best\Pro\Financial\Data\EfficiencyData;
 use Best\Pro\Financial\Data\ProfitabilityData;
 
 abstract class FinancialRatios extends AbstractAnalysis
@@ -40,8 +42,8 @@ abstract class FinancialRatios extends AbstractAnalysis
             $profitabilityTitle => self::profitabilityData($financialStatements),
             // $liquidityTitle => $spreadsheet->rangeToArray('B39:E59'),
             $liquidityTitle => self::liquidityData($financialStatements),
-
-            $efficiencyTitle => $spreadsheet->rangeToArray('B61:E83'),
+            // $efficiencyTitle => $spreadsheet->rangeToArray('B61:E83'),
+            $efficiencyTitle => self::efficiencyData($financialStatements),
             $solvencyTitle => $spreadsheet->rangeToArray('B85:E93'),
             // $additionalTitle => '',
         ];
@@ -71,5 +73,12 @@ abstract class FinancialRatios extends AbstractAnalysis
         $liquidityData = new LiquidityData($financialStatements);
 
         return $liquidityData->getData();
+    }
+
+    protected static function efficiencyData($financialStatements)
+    {
+        $efficiencyData = new EfficiencyData($financialStatements);
+
+        return $efficiencyData->getData();
     }
 }

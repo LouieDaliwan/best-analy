@@ -66,8 +66,8 @@ class AdditionalRatioData
                         $temp_data[] = $financialStatement['metadataResults']['overAllResults']['profitStatements'][$list];
                     }
 
-                    if($list == 'debt_to_equity_ratio') {
-                        $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['solvency'][$list];
+                    if($list == 'raw_materials_margin') {
+                        $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['additional_ratios'][$list];
                     }
                 }
             }
@@ -82,7 +82,7 @@ class AdditionalRatioData
             'Return on Investment' => null,
             'Net (Loss)/Profits After Taxes' => 'net_loss_profit_after_taxes',
             'Investments' => 'investment_value',
-            'The Debt ratio is:' => 'debt_ratio'
+            'The Debt ratio is:' => 'roi'
         ];
 
         foreach($lists as $key => $list) {
@@ -109,8 +109,8 @@ class AdditionalRatioData
                         $temp_data[] = $this->customer->detail->metadata[$list];
                     }
 
-                    if($list == 'debt_ratio') {
-                        $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['solvency'][$list];
+                    if($list == 'roi') {
+                        $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['additional_ratios'][$list];
                     }
                 }
             }

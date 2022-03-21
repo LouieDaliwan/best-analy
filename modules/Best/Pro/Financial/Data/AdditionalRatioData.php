@@ -82,6 +82,7 @@ class AdditionalRatioData
             'Return on Investment' => null,
             'Net (Loss)/Profits After Taxes' => 'net_loss_profit_after_taxes',
             'Investments' => 'investment_value',
+            'The Debt ratio is:' => 'debt_ratio'
         ];
 
         foreach($lists as $key => $list) {
@@ -106,6 +107,10 @@ class AdditionalRatioData
 
                     if($list == 'investment_value') {
                         $temp_data[] = $this->customer->detail->metadata[$list];
+                    }
+
+                    if($list == 'debt_ratio') {
+                        $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['solvency'][$list];
                     }
                 }
             }

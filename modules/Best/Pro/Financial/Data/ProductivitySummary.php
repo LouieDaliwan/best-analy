@@ -43,7 +43,7 @@ class ProductivitySummary
 
     protected function getPeriod() : void
     {
-        $lists = [null, null, '0', '1', '2'];
+        $lists = [null, null, '2', '1', '0'];
 
         $temp_data = [];
 
@@ -62,7 +62,7 @@ class ProductivitySummary
 
     protected function getValueAdded() : void
     {
-        $lists = ['Value Added', null, '0', '1', '2'];
+        $lists = ['Value Added', null, '2', '1', '0'];
 
         $temp_data = [];
         foreach ($lists as $list) {
@@ -80,7 +80,7 @@ class ProductivitySummary
 
     protected function getNumberStaff() : void
     {
-        $lists = ['Number of employees', null, '0', '1', '2'];
+        $lists = ['Number of employees', null, '2', '1', '0'];
 
         $temp_data = [];
         foreach ($lists as $list) {
@@ -98,7 +98,7 @@ class ProductivitySummary
 
     protected function getSales() : void
     {
-        $lists = ['Sales', null, '0', '1', '2'];
+        $lists = ['Sales', null, '2', '1', '0'];
 
         $temp_data = [];
         foreach ($lists as $list) {
@@ -116,7 +116,7 @@ class ProductivitySummary
 
     protected function operatingTax()
     {
-        $lists = ['Operating Profit (before interest & tax)', null, '0', '1', '2'];
+        $lists = ['Operating Profit (before interest & tax)', null, '2', '1', '0'];
 
         $temp_data = [];
         foreach ($lists as $list) {
@@ -134,7 +134,7 @@ class ProductivitySummary
 
     protected function labourCost()
     {
-        $lists = ['Labour cost', null, '0', '1', '2'];
+        $lists = ['Labour cost', null, '2', '1', '0'];
 
         $temp_data = [];
         foreach ($lists as $list) {
@@ -152,7 +152,7 @@ class ProductivitySummary
 
     protected function fixedAssets()
     {
-        $lists = ['Fixed Assets at Net Book Value', null, '0', '1', '2'];
+        $lists = ['Fixed Assets at Net Book Value', null, '2', '1', '0'];
 
         $temp_data = [];
         foreach ($lists as $list) {

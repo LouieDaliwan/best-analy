@@ -2,6 +2,7 @@
 
 namespace Best\Pro\Financial;
 
+use Best\Pro\Financial\Data\ProductivitySummary;
 use Customer\Models\Customer;
 
 abstract class ProductivityIndicators extends AbstractAnalysis
@@ -36,8 +37,15 @@ abstract class ProductivityIndicators extends AbstractAnalysis
         $spreadsheet = $spreadsheet->getSheetByName('ProductivityIndicators');
 
         return [
-            'summary' => $spreadsheet->rangeToArray('B4:F12'),
+            'summary' => self::getSummary($financialStatements),
             'detail' => $spreadsheet->rangeToArray('B14:F42'),
         ];
+    }
+
+    protected static function getSummary($financialStatements)
+    {
+        $summary = new ProductivitySummary($financialStatements);
+
+        return $summary->getSummary();
     }
 }

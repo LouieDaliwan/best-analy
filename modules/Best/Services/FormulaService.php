@@ -224,12 +224,12 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['customer:type'] = $customer->metadata['type'] ?? null;
 
         $index = Index::find($attributes['taxonomy_id'] ?? false);
+
         if ($index) {
             $this->data['current:index'] = $this->data['indices'][$index->alias];
             $this->data['current:pindex'] = $this->data['indices'][$index->alias];
         }
 
-        // dd($this->data);
         return $this->data;
     }
 

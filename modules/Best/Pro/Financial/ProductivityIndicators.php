@@ -23,7 +23,7 @@ abstract class ProductivityIndicators extends AbstractAnalysis
      * @param  \Customer\Models\Customer $customer
      * @return array
      */
-    public static function getReportWithCustomer($customer)
+        public static function getReportWithCustomer($customer, $financialStatements)
     {
         $spreadsheet = self::getReport($customer);
 

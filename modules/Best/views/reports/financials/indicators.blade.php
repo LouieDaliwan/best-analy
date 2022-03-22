@@ -1,13 +1,44 @@
 <div class="dt-divider" style="height: 50px;"></div>
-<h1 class="dt-primary">@lang('Productivity Indicators')</h1>
+<section>
+  <div class="row">
+    <div class="col-md-12">
+      <div>
+        <h1 class="mb-3 dt-secondary">@lang('Productivity Analysis')</h1>
+      </div>
+    </div>
+  </div>
 
-<h3>@lang('PRODUCTIVITY ANALYSIS - LABOUR COST COMPETITIVENESS')</h3>
-<canvas height="100" id="productivity-analysis"></canvas>
-<ul>
-  <li>Overall labour cost competitiveness has seen a significant downward trend over the years.</li>
-  <li>Experienced a year on year decrease by -5.54% from the recent year to the previous year.</li>
-  <li>Records have also indicated that from Year 1 to Year 2, the per unit labour cost saw a significant year on year increase by -12.21%.</li>
-</ul>
+  <div class="row">
+    <div class="col-md-12 chart-analysis">
+      <div class="card mb-5">
+        <div class="card-body">
+          <canvas id="productivity"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 comment-analysis">
+      @foreach ($data['analysis:financial']['productivity']['comments'] as $comments)
+        <div class="row">
+          <div class="col-auto mt-1">
+            <span style="font-size: 17px;">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512; margin-bottom: 6px;" xml:space="preserve" width="17px" height="17px"><g><g>
+                <g>
+                  <path d="M508.875,248.458l-160-160c-3.063-3.042-7.615-3.969-11.625-2.313c-3.99,1.646-6.583,5.542-6.583,9.854v21.333    c0,2.833,1.125,5.542,3.125,7.542l109.792,109.792H10.667C4.771,234.667,0,239.437,0,245.333v21.333    c0,5.896,4.771,10.667,10.667,10.667h432.917L333.792,387.125c-2,2-3.125,4.708-3.125,7.542V416c0,4.313,2.594,8.208,6.583,9.854    c1.323,0.552,2.708,0.813,4.083,0.813c2.771,0,5.5-1.083,7.542-3.125l160-160C513.042,259.375,513.042,252.625,508.875,248.458z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#107E7D"/>
+                </g>
+              </g></g> </svg>
+            </span>
+             &nbsp;
+          </div>
+          <div class="col">
+            @foreach ($comments as $comment)
+              <p>{{ $comment }}</p>
+            @endforeach
+          </div>
+        </div>
+      @endforeach
+    </div>
+  </div>
+</section>
 
 <style>
   td[colspan=3], td.colspan-text, .colspan-text {
@@ -19,7 +50,7 @@
 </style>
 <table class="table table-indicator-main">
   <tbody>
-    @foreach ($data as $key => $d)
+    @foreach ($data['indicators:productivity'] as $key => $d)
       <tr class="title table-indicator">
         <td colspan="5">{{ __($key) }}</td>
       </tr>
@@ -46,37 +77,69 @@
 
 <script>
 $(document).ready(function() {
-  var ctx = document.getElementById("productivity-analysis");
+  var ctx = document.getElementById("productivity").getContext('2d');
+  var chartColors = {
+    primary:           'rgb(4, 75, 127, 1)',
+    primaryLighten1:   'rgb(4, 75, 127, 0.8)',
+    primaryLighten2:   'rgb(4, 75, 127, 0.5)',
+    muted:              'rgb(239, 244, 250)'
+  };
+  var dataset = {!! json_encode($data['analysis:financial']['productivity']['charts']['dataset']) !!}
+  dataset = dataset.map(function (item) {
+    var gradient = ctx.createLinearGradient(0, 0, 0, 200);
+        gradient.addColorStop(0, item.backgroundColor[0]);
+        gradient.addColorStop(1, item.backgroundColor[1]);
+
+    return Object.assign({}, item, {
+      backgroundColor: gradient,
+      hoverBackgroundColor: chartColors.primary
+    })
+  });
   var barChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Label 1'],
-      datasets: [{
-        label: 'My First Dataset',
-        data: [65, 59, 80, 81, 56, 55, 40],
-        fill: false,
-        backgroundColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }]
+      labels: {!! json_encode(collect(
+        $data['analysis:financial']['productivity']['charts']['labels'])->values()->toArray()
+      ) !!},
+      datasets: dataset,
     },
     options: {
-      tooltips: {
-        enabled: true,
-        mode: 'single',
-        callbacks: {
-          label: function(tooltipItems, data) {
-            return tooltipItems.yLabel+'%';
-          }
+      cornerRadius: 20,
+      legend: {
+        position: 'bottom',
+        display: true,
+        labels: {
+          usePointStyle: true,
+          padding: 50,
+          fontColor: '#044b7f',
+          fontFamily: 'Rubik, sans-serif',
+          fontSize: 15,
         }
       },
-      legend: {
-        display: false,
-      },
       scales: {
+        xAxes: [{
+          barPercentage: 0.1,
+          gridLines: {
+            zeroLineColor: chartColors.primaryLighten2,
+            display: false,
+            color: chartColors.muted,
+          },
+          ticks: {
+            fontColor: '#044b7f',
+            fontFamily: 'Rubik, sans-serif',
+            fontSize: 15,
+          },
+        }],
         maxBarThickness: 3,
         yAxes: [{
+          gridLines: {
+            zeroLineColor: chartColors.primaryLighten2,
+            display: true,
+            borderDash: [8, 4],
+            color: chartColors.muted,
+          },
           ticks: {
-            // beginAtZero: true,
+            beginAtZero: true,
             padding: 20,
             maxTicksLimit: 5,
             fontColor: '#044b7f',
@@ -84,7 +147,7 @@ $(document).ready(function() {
             fontSize: 12,
             // min: -100,
             // max: 100,
-            callback: function(value){return value+ "%"}
+            callback: function(value){return value}
           }
         }]
       }

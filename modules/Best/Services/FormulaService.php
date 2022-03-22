@@ -217,7 +217,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         // Retrieve the Financial Ratios and Productivity Indicators.
         $this->data['ratios:financial'] = $this->getFinancialRatios($customer, $financialStatements);
-        $this->data['indicators:productivity'] = $this->getProductivityIndicators($customer);
+        $this->data['indicators:productivity'] = $this->getProductivityIndicators($customer, $financialStatements);
 
         // User object.
         $this->data['report:user'] = $user->displayname;
@@ -420,9 +420,9 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  \Customer\Models\Customer $customer
      * @return array
      */
-    public function getProductivityIndicators($customer)
+    public function getProductivityIndicators($customer, $financialStatements)
     {
-        return ProductivityIndicators::getReportWithCustomer($customer);
+        return ProductivityIndicators::getReportWithCustomer($customer, $financialStatements);
     }
 
     /**

@@ -50,7 +50,6 @@
           @include('best::reports.analysis.liquidity')
           @include('best::reports.analysis.efficiency')
           @include('best::reports.analysis.solvency')
-          @include('best::reports.analysis.productivity')
           @include('best::reports.partials.disclaimer')
           @include('best::reports.partials.footer')
           <div class="text-right">
@@ -111,7 +110,7 @@
           <div class="mt-2 border-bottom"></div>
           <div class="main-content">
             @include('best::reports.partials.organisation-profile')
-            @include('best::reports.financials.indicators', ['data' => $data['indicators:productivity']])
+            @include('best::reports.financials.indicators')
             @include('best::reports.partials.disclaimer')
             @include('best::reports.partials.footer')
             <div class="text-right">

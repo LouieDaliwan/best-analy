@@ -254,10 +254,6 @@
 .PRODUCTIVITY-0:not(:nth-child(1)),
 .SOLVENCY-0:not(:nth-child(1)),
 .SOLVENCY-5:not(:nth-child(1)),
-.EFFICIENCY-0:not(:nth-child(1)),
-.EFFICIENCY-7:not(:nth-child(1)),
-.EFFICIENCY-14:not(:nth-child(1)),
-.EFFICIENCY-19:not(:nth-child(1)),
 .LIQUIDITY-12:not(:nth-child(1)),
 .PROFITABILITY-4:not(:nth-child(1)),
 .PROFITABILITY-10:not(:nth-child(1)),
@@ -279,7 +275,6 @@
 .EFFICIENCY-12,
 .EFFICIENCY-17,
 .EFFICIENCY-22,
-/* .LIQUIDITY-0, */
 .LIQUIDITY-5,
 .LIQUIDITY-12,
 .LIQUIDITY-19,

@@ -24,7 +24,7 @@ class LiquidityData
         $this->getCashRatio($this->financialStatements);
 
         $this->getWorkingCapital($this->financialStatements);
-        
+
         return $this->arr;
     }
 
@@ -122,7 +122,7 @@ class LiquidityData
             'Current Liabilities (CL)' => 'current_liabilities',
             'Recommended Current Ratio' => 1.50,
             'empty' => null,
-            'The Working Capital is' => 'working_capital',
+            'The Working Capital is:' => 'working_capital',
             'empty1' => null,
             'The Working Capital Turnover is:' => 'working_capital_turnover'
         ];

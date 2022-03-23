@@ -19,7 +19,7 @@
   display: none;
 }
 
-.PROFITABILITY-33 {
+.PROFITABILITY-41 {
   margin-bottom: 30px;
 }
 
@@ -113,7 +113,15 @@
 .PROFITABILITY-30:nth-child(4),
 .PROFITABILITY-31:nth-child(4),
 .PROFITABILITY-32:nth-child(4),
-.PROFITABILITY-33:nth-child(4) {
+.PROFITABILITY-33:nth-child(4),
+.PROFITABILITY-34:nth-child(4),
+.PROFITABILITY-35:nth-child(4),
+.PROFITABILITY-36:nth-child(4),
+.PROFITABILITY-37:nth-child(4),
+.PROFITABILITY-38:nth-child(4),
+.PROFITABILITY-39:nth-child(4),
+.PROFITABILITY-40:nth-child(4),
+.PROFITABILITY-41:nth-child(4) {
   border-right: 1px solid #868e96;
 }
 
@@ -207,7 +215,15 @@
 .PROFITABILITY-30:nth-child(1),
 .PROFITABILITY-31:nth-child(1),
 .PROFITABILITY-32:nth-child(1),
-.PROFITABILITY-33:nth-child(1) {
+.PROFITABILITY-33:nth-child(1),
+.PROFITABILITY-34:nth-child(1),
+.PROFITABILITY-35:nth-child(1),
+.PROFITABILITY-36:nth-child(1),
+.PROFITABILITY-37:nth-child(1),
+.PROFITABILITY-38:nth-child(1),
+.PROFITABILITY-39:nth-child(1),
+.PROFITABILITY-40:nth-child(1),
+.PROFITABILITY-41:nth-child(1) {
   border-left: 1px solid #868e96;
 }
 
@@ -222,12 +238,13 @@
 .LIQUIDITY-6:nth-child(1),
 .LIQUIDITY-12:nth-child(1),
 .LIQUIDITY-18:nth-child(1),
-.PROFITABILITY-4:nth-child(1),
-.PROFITABILITY-9:nth-child(1),
-.PROFITABILITY-14:nth-child(1),
-.PROFITABILITY-19:nth-child(1),
+.PROFITABILITY-0:nth-child(1),
+.PROFITABILITY-6:nth-child(1) ,
+.PROFITABILITY-12:nth-child(1),
+.PROFITABILITY-18:nth-child(1),
 .PROFITABILITY-24:nth-child(1),
-.PROFITABILITY-29:nth-child(1) {
+.PROFITABILITY-30:nth-child(1),
+.PROFITABILITY-36:nth-child(1) {
   font-weight: 500;
 }
 /*only first child is font-bold*/
@@ -243,11 +260,12 @@
 .LIQUIDITY-6:not(:nth-child(1)),
 .LIQUIDITY-12:not(:nth-child(1)),
 .PROFITABILITY-4:not(:nth-child(1)),
-.PROFITABILITY-9:not(:nth-child(1)),
-.PROFITABILITY-14:not(:nth-child(1)),
-.PROFITABILITY-19:not(:nth-child(1)),
-.PROFITABILITY-24:not(:nth-child(1)),
-.PROFITABILITY-29:not(:nth-child(1)) {
+.PROFITABILITY-10:not(:nth-child(1)),
+.PROFITABILITY-16:not(:nth-child(1)),
+.PROFITABILITY-22:not(:nth-child(1)),
+.PROFITABILITY-34:not(:nth-child(1))
+/* .PROFITABILITY-34:not(:nth-child(1)) */
+{
   background: #edf2f9;
 }
 /*with background color except first*/
@@ -266,13 +284,13 @@
 .LIQUIDITY-11,
 .LIQUIDITY-17,
 .LIQUIDITY-20,
-.PROFITABILITY-3,
-.PROFITABILITY-8,
-.PROFITABILITY-13,
-.PROFITABILITY-18,
-.PROFITABILITY-23,
+.PROFITABILITY-4,
+.PROFITABILITY-10,
+.PROFITABILITY-16,
+.PROFITABILITY-22,
 .PROFITABILITY-28,
-.PROFITABILITY-33 {
+.PROFITABILITY-34,
+.PROFITABILITY-41 {
   font-weight: 500;
   background: #edf2f9;
 }
@@ -314,9 +332,9 @@
 .PROFITABILITY-1:nth-child(3),
 .PROFITABILITY-1:nth-child(4),
 
-.PROFITABILITY-3:nth-child(2),
-.PROFITABILITY-3:nth-child(3),
-.PROFITABILITY-3:nth-child(4),
+.PROFITABILITY-2:nth-child(2),
+.PROFITABILITY-2:nth-child(3),
+.PROFITABILITY-2:nth-child(4),
 
 .PROFITABILITY-5:nth-child(2),
 .PROFITABILITY-5:nth-child(3),
@@ -326,13 +344,13 @@
 .PROFITABILITY-6:nth-child(3),
 .PROFITABILITY-6:nth-child(4),
 
+.PROFITABILITY-7:nth-child(2),
+.PROFITABILITY-7:nth-child(3),
+.PROFITABILITY-7:nth-child(4),
+
 .PROFITABILITY-8:nth-child(2),
 .PROFITABILITY-8:nth-child(3),
 .PROFITABILITY-8:nth-child(4),
-
-.PROFITABILITY-10:nth-child(2),
-.PROFITABILITY-10:nth-child(3),
-.PROFITABILITY-10:nth-child(4),
 
 .PROFITABILITY-11:nth-child(2),
 .PROFITABILITY-11:nth-child(3),
@@ -341,6 +359,10 @@
 .PROFITABILITY-13:nth-child(2),
 .PROFITABILITY-13:nth-child(3),
 .PROFITABILITY-13:nth-child(4),
+
+.PROFITABILITY-14:nth-child(2),
+.PROFITABILITY-14:nth-child(3),
+.PROFITABILITY-14:nth-child(4),
 
 .PROFITABILITY-15:nth-child(2),
 .PROFITABILITY-15:nth-child(3),
@@ -353,6 +375,10 @@
 .PROFITABILITY-18:nth-child(2),
 .PROFITABILITY-18:nth-child(3),
 .PROFITABILITY-18:nth-child(4),
+
+.PROFITABILITY-19:nth-child(2),
+.PROFITABILITY-19:nth-child(3),
+.PROFITABILITY-19:nth-child(4),
 
 .PROFITABILITY-20:nth-child(2),
 .PROFITABILITY-20:nth-child(3),
@@ -382,9 +408,17 @@
 .PROFITABILITY-31:nth-child(3),
 .PROFITABILITY-31:nth-child(4),
 
-.PROFITABILITY-33:nth-child(2),
-.PROFITABILITY-33:nth-child(3),
-.PROFITABILITY-33:nth-child(4),
+.PROFITABILITY-32:nth-child(2),
+.PROFITABILITY-32:nth-child(3),
+.PROFITABILITY-32:nth-child(4),
+
+.PROFITABILITY-37:nth-child(2),
+.PROFITABILITY-37:nth-child(3),
+.PROFITABILITY-37:nth-child(4),
+
+.PROFITABILITY-38:nth-child(2),
+.PROFITABILITY-38:nth-child(3),
+.PROFITABILITY-38:nth-child(4),
 
 .LIQUIDITY-1:nth-child(2),
 .LIQUIDITY-1:nth-child(3),
@@ -542,13 +576,15 @@
 .LIQUIDITY-11:not(:nth-child(1)),
 .LIQUIDITY-17:not(:nth-child(1)),
 .LIQUIDITY-20:not(:nth-child(1)),
-.PROFITABILITY-3:not(:nth-child(1)),
-.PROFITABILITY-8:not(:nth-child(1)),
-.PROFITABILITY-13:not(:nth-child(1)),
-.PROFITABILITY-18:not(:nth-child(1)),
-.PROFITABILITY-23:not(:nth-child(1)),
+.PROFITABILITY-4:not(:nth-child(1)),
+.PROFITABILITY-10:not(:nth-child(1)),
+.PROFITABILITY-16:not(:nth-child(1)),
+.PROFITABILITY-22:not(:nth-child(1)),
+/* .PROFITABILITY-23:not(:nth-child(1)), */
 .PROFITABILITY-28:not(:nth-child(1)),
-.PROFITABILITY-33:not(:nth-child(1)) {
+.PROFITABILITY-34:not(:nth-child(1)),
+.PROFITABILITY-41:not(:nth-child(1))
+ {
   border-top: 1px solid #868e96;
   border-right: 1px solid #868e96;
   border-bottom: 1px solid #868e96;
@@ -567,13 +603,13 @@
 .LIQUIDITY-11:nth-child(2),
 .LIQUIDITY-17:nth-child(2),
 .LIQUIDITY-20:nth-child(2),
-.PROFITABILITY-3:nth-child(2),
-.PROFITABILITY-8:nth-child(2),
-.PROFITABILITY-13:nth-child(2),
-.PROFITABILITY-18:nth-child(2),
-.PROFITABILITY-23:nth-child(2),
+.PROFITABILITY-4:nth-child(2),
+.PROFITABILITY-10:nth-child(2),
+.PROFITABILITY-16:nth-child(2),
+.PROFITABILITY-22:nth-child(2),
 .PROFITABILITY-28:nth-child(2),
-.PROFITABILITY-33:nth-child(2) {
+.PROFITABILITY-34:nth-child(2),
+.PROFITABILITY-41:nth-child(2) {
   border-left: 1px solid #868e96;
 }
 
@@ -582,7 +618,7 @@
 .EFFICIENCY-22,
 .SOLVENCY-8,
 .PRODUCTIVITY-3,
-.PROFITABILITY-33 {
+.PROFITABILITY-41 {
   border-bottom: 1px solid #868e96;
 }
 /*last row on title*/
@@ -592,13 +628,14 @@
 }
 
 /*Hide empty tr*/
-.ratioPROFITABILITY-2,
-.ratioPROFITABILITY-7,
-.ratioPROFITABILITY-12,
-.ratioPROFITABILITY-17,
-.ratioPROFITABILITY-22,
+.ratioPROFITABILITY-3,
+.ratioPROFITABILITY-9,
+.ratioPROFITABILITY-15,
+.ratioPROFITABILITY-21,
 .ratioPROFITABILITY-27,
-.ratioPROFITABILITY-32,
+.ratioPROFITABILITY-33,
+.ratioPROFITABILITY-39,
+.ratioPROFITABILITY-40,
 .ratioLIQUIDITY-4,
 .ratioLIQUIDITY-3,
 .ratioLIQUIDITY-9,

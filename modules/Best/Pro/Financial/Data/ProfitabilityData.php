@@ -111,7 +111,6 @@ class ProfitabilityData
                     }
                 }
             }
-
             array_push($this->arr, $temp_data);
         }
     }

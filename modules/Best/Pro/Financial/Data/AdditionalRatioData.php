@@ -38,7 +38,7 @@ class AdditionalRatioData
             'Raw Materials Margin' => null,
             'Raw Materials' => 'Raw Materials',
             'Turnover (T)' => 'sales',
-            'The Debt to Equity ratio is:' => 'debt_to_equity_ratio',
+            'The Debt to Equity ratio is:' => 'raw_materials_margin',
             'empty' => null,
         ];
 

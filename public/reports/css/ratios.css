@@ -23,6 +23,15 @@
   margin-bottom: 30px;
 }
 
+.RATIOS-0:nth-child(4),
+.RATIOS-1:nth-child(4),
+.RATIOS-2:nth-child(4),
+.RATIOS-3:nth-child(4),
+.RATIOS-4:nth-child(4),
+.RATIOS-5:nth-child(4),
+.RATIOS-6:nth-child(4),
+.RATIOS-7:nth-child(4),
+.RATIOS-8:nth-child(4),
 .PRODUCTIVITY-0:nth-child(4),
 .PRODUCTIVITY-1:nth-child(4),
 .PRODUCTIVITY-2:nth-child(4),
@@ -125,6 +134,15 @@
   border-right: 1px solid #868e96;
 }
 
+.RATIOS-0:nth-child(1),
+.RATIOS-1:nth-child(1),
+.RATIOS-2:nth-child(1),
+.RATIOS-3:nth-child(1),
+.RATIOS-4:nth-child(1),
+.RATIOS-5:nth-child(1),
+.RATIOS-6:nth-child(1),
+.RATIOS-7:nth-child(1),
+.RATIOS-8:nth-child(1),
 .PRODUCTIVITY-0:nth-child(1),
 .PRODUCTIVITY-1:nth-child(1),
 .PRODUCTIVITY-2:nth-child(1),
@@ -228,6 +246,8 @@
 }
 
 /*only first child is font-bold*/
+.RATIOS-0:nth-child(0),
+.RATIOS-5:nth-child(0),
 .PRODUCTIVITY-0:nth-child(1),
 .SOLVENCY-0:nth-child(1),
 .SOLVENCY-5:nth-child(1),
@@ -254,6 +274,8 @@
 .PRODUCTIVITY-0:not(:nth-child(1)),
 /* .SOLVENCY-0:not(:nth-child(1)), */
 /* .SOLVENCY-5:not(:nth-child(1)), */
+.RATIOS-3:not(:nth-child(0)),
+.RATIOS-8:not(:nth-child(0)),
 .LIQUIDITY-12:not(:nth-child(1)),
 .PROFITABILITY-4:not(:nth-child(1)),
 .PROFITABILITY-10:not(:nth-child(1)),
@@ -289,6 +311,7 @@
   font-weight: 500;
   background: #edf2f9;
 }
+
 
 .LIQUIDITY-4,
 .LIQUIDITY-11,
@@ -541,6 +564,26 @@
 .SOLVENCY-8:nth-child(3),
 .SOLVENCY-8:nth-child(4),
 
+.RATIOS-1:nth-child(1),
+.RATIOS-1:nth-child(2),
+.RATIOS-1:nth-child(3),
+.RATIOS-1:nth-child(4),
+
+.RATIOS-2:nth-child(1),
+.RATIOS-2:nth-child(2),
+.RATIOS-2:nth-child(3),
+.RATIOS-2:nth-child(4),
+
+.RATIOS-6:nth-child(1),
+.RATIOS-6:nth-child(2),
+.RATIOS-6:nth-child(3),
+.RATIOS-6:nth-child(4),
+
+.RATIOS-7:nth-child(1),
+.RATIOS-7:nth-child(2),
+.RATIOS-7:nth-child(3),
+.RATIOS-7:nth-child(4),
+
 .summary-0:not(:nth-child(1)):not(:nth-child(2)),
 .summary-3:not(:nth-child(1)):not(:nth-child(2)),
 .summary-4:not(:nth-child(1)):not(:nth-child(2)),
@@ -559,6 +602,8 @@
  padding-right: 10px;
 }
 
+.RATIOS-3:not(:nth-child(1)),
+.RATIOS-8:not(:nth-child(1)),
 .PRODUCTIVITY-3:not(:nth-child(1)),
 .SOLVENCY-8:not(:nth-child(1)),
 .SOLVENCY-3:not(:nth-child(1)),
@@ -587,6 +632,8 @@
   border-bottom: 1px solid #868e96;
 }
 
+.RATIOS-3:nth-child(2),
+.RATIOS-8:nth-child(2),
 .PRODUCTIVITY-3:nth-child(2),
 .SOLVENCY-8:nth-child(2),
 .SOLVENCY-3:nth-child(2),
@@ -611,6 +658,7 @@
 }
 
 /*last row on title*/
+.RATIOS-8,
 .LIQUIDITY-21,
 .EFFICIENCY-22,
 .SOLVENCY-8,
@@ -642,7 +690,8 @@
 .EFFICIENCY-13,
 .EFFICIENCY-18,
 .SOLVENCY-4,
-.ratiodetail-26
+.ratiodetail-26,
+.RATIOS-4
 {
   display: none;
 }

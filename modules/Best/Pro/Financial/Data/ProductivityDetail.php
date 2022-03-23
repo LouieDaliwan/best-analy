@@ -35,6 +35,14 @@ class ProductivityDetail
 
         $this->getLCC();
 
+        $this->getLCE();
+
+        $this->getSDC();
+
+        $this->getCI();
+
+        $this->getCP();
+
         return $this->arr;
     }
 
@@ -64,7 +72,7 @@ class ProductivityDetail
 
                     $numberOfStaff = $this->financialStatements[$value]['metadataStatements']['Number of Staff'];
 
-                    $temp_data[] = $numberOfStaff != 0 ? ($valueAdded / $numberOfStaff) : 0;
+                    $temp_data[] = $numberOfStaff != 0 ? round(($valueAdded / $numberOfStaff), 2) : 0;
                 } else {
                     $temp_data[] = $value;
                 }
@@ -100,7 +108,7 @@ class ProductivityDetail
 
                     $numberOfStaff = $this->financialStatements[$value]['metadataStatements']['Number of Staff'];
 
-                    $temp_data[] = $numberOfStaff != 0 ? ($valueSales / $numberOfStaff) : 0;
+                    $temp_data[] = $numberOfStaff != 0 ? round(($valueSales / $numberOfStaff), 2) : 0;
                 } else {
                     $temp_data[] = $value;
                 }
@@ -136,7 +144,7 @@ class ProductivityDetail
 
                     $valueSales = $this->financialStatements[$value]['metadataStatements']['Sales'];
 
-                    $temp_data[] = $valueSales != 0 ? ($valueAdded / $valueSales) : 0;
+                    $temp_data[] = $valueSales != 0 ? round(($valueAdded / $valueSales), 2) : 0;
                 } else {
                     $temp_data[] = $value;
                 }
@@ -172,7 +180,7 @@ class ProductivityDetail
 
                     $valueSales = $this->financialStatements[$value]['metadataStatements']['Sales'];
 
-                    $temp_data[] = $valueSales != 0 ? ($operatingLoss / $valueSales) : 0;
+                    $temp_data[] = $valueSales != 0 ? round(($operatingLoss / $valueSales),2)  : 0;
                 } else {
                     $temp_data[] = $value;
                 }
@@ -208,7 +216,7 @@ class ProductivityDetail
 
                     $valueAdded = $this->financialStatements[$value]['metadataStatements']['Value Added'];
 
-                    $temp_data[] = $valueAdded != 0 ? ($operatingLoss / $valueAdded) : 0;
+                    $temp_data[] = $valueAdded != 0 ? round(($operatingLoss / $valueAdded), 2) : 0;
                 } else {
                     $temp_data[] = $value;
                 }
@@ -244,7 +252,7 @@ class ProductivityDetail
 
                     $valueAdded = $this->financialStatements[$value]['metadataStatements']['Value Added'];
 
-                    $temp_data[] = $laborCosts != 0 ? ($valueAdded / $valueAdded) : 0;
+                    $temp_data[] = $laborCosts != 0 ? round(($valueAdded / $valueAdded),2) : 0;
                 } else {
                     $temp_data[] = $value;
                 }
@@ -280,7 +288,7 @@ class ProductivityDetail
 
                     $laborCosts = $this->financialStatements[$value]['metadataStatements']['Staff Salaries & Benefits'];
 
-                    $temp_data[] = $numberOfStaff != 0 ? ($laborCosts / $numberOfStaff) : 0;
+                    $temp_data[] = $numberOfStaff != 0 ? round(($laborCosts / $numberOfStaff),2) : 0;
                 } else {
                     $temp_data[] = $value;
                 }
@@ -316,7 +324,7 @@ class ProductivityDetail
 
                     $cost_goods= $this->financialStatements[$value]['metadataResults']['overAllResults']['profitStatements']['cost_goods'];
 
-                    $temp_data[] = $cost_goods != 0 ? ($valueSales / $cost_goods) : 0;
+                    $temp_data[] = $cost_goods != 0 ? round(($valueSales / $cost_goods),2) : 0;
                 } else {
                     $temp_data[] = $value;
                 }
@@ -352,7 +360,7 @@ class ProductivityDetail
 
                     $cost_goods= $this->financialStatements[$value]['metadataResults']['overAllResults']['profitStatements']['cost_goods'];
 
-                    $temp_data[] = $numberOfStaff != 0 ? ($cost_goods / $numberOfStaff) : 0;
+                    $temp_data[] = $numberOfStaff != 0 ? round(($cost_goods / $numberOfStaff),2) : 0;
                 } else {
                     $temp_data[] = $value;
                 }
@@ -373,7 +381,6 @@ class ProductivityDetail
                 null,
                 null
             ],
-            [null, null, null, null, null]
         ];
 
         foreach ($lists as $values) {
@@ -388,7 +395,7 @@ class ProductivityDetail
 
                     $cost_goods= $this->financialStatements[$value]['metadataResults']['overAllResults']['profitStatements']['cost_goods'];
 
-                    $temp_data[] = $cost_goods != 0 ? ($valueAdded / $cost_goods) : 0;
+                    $temp_data[] = $cost_goods != 0 ? round(($valueAdded / $cost_goods),2) : 0;
                 } else {
                     $temp_data[] = $value;
                 }

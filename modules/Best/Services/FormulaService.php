@@ -230,6 +230,8 @@ class FormulaService extends Service implements FormulaServiceInterface
             $this->data['current:pindex'] = $this->data['indices'][$index->alias];
         }
 
+        // dd($financialStatements[0]);
+        // dd($this->data);
         return $this->data;
     }
 

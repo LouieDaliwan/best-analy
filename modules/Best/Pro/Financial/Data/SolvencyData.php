@@ -78,10 +78,9 @@ class SolvencyData
             $temp_data = [];
 
             if ($list == null) {
-                $item1 = $key == 'empty' ? null : $key;
 
                 for($i = 0; $i <= $this->statementsCount; $i++){
-                    $item = $i == 0 ? $item1 : null;
+                    $item = $i == 0 ? 'Debt Ratio' : null;
                     $temp_data[] = $item;
                 }
             } else {
@@ -92,7 +91,7 @@ class SolvencyData
                         $temp_data[] = $financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list];
                     }
 
-                    if($list == 'debt_to_equity_ratio') {
+                    if($list == 'debt_ratio') {
                         $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['solvency'][$list];
                     }
                 }

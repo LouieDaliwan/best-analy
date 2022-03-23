@@ -31,10 +31,11 @@ class SolvencyData
         $lists = [
             'Debt to Equity Ratio' => null,
             'Total Liabilities' => 'total_liabilities',
+            'Equity' => "Stockholders' Equity",
             'The Debt to Equity ratio is:' => 'debt_to_equity_ratio',
             'empty' => null,
         ];
-
+        
         foreach($lists as $key => $list) {
 
             $temp_data = [];
@@ -52,6 +53,10 @@ class SolvencyData
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'total_liabilities') {
                         $temp_data[] = $financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list];
+                    }
+
+                    if ($list == "Stockholders' Equity") {
+                        $temp_data[] = $financialStatement['metadataSheets'][$list];
                     }
 
                     if($list == 'debt_to_equity_ratio') {

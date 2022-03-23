@@ -252,8 +252,8 @@
 
 /*with background color except first*/
 .PRODUCTIVITY-0:not(:nth-child(1)),
-.SOLVENCY-0:not(:nth-child(1)),
-.SOLVENCY-5:not(:nth-child(1)),
+/* .SOLVENCY-0:not(:nth-child(1)), */
+/* .SOLVENCY-5:not(:nth-child(1)), */
 .LIQUIDITY-12:not(:nth-child(1)),
 .PROFITABILITY-4:not(:nth-child(1)),
 .PROFITABILITY-10:not(:nth-child(1)),
@@ -291,6 +291,7 @@
 }
 
 .LIQUIDITY-4,
+.LIQUIDITY-11,
 .LIQUIDITY-10 {
   font-weight: 500;
 }

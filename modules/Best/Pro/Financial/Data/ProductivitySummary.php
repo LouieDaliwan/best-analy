@@ -53,7 +53,9 @@ class ProductivitySummary
             }
 
             if($list != null){
-                $temp_data[] = $this->financialStatements[$list]['period'];
+                if(isset($this->financialStatements[$list])){
+                    $temp_data[] = $this->financialStatements[$list]['period'];
+                }
             }
         }
 
@@ -71,7 +73,9 @@ class ProductivitySummary
             }
 
             if($list != null && $list != 'Value Added'){
-                $temp_data[] = $this->financialStatements[$list]['metadataStatements']['Value Added'];
+                if(isset($this->financialStatements[$list])){
+                    $temp_data[] = $this->financialStatements[$list]['metadataStatements']['Value Added'];
+                }
             }
         }
 
@@ -89,7 +93,9 @@ class ProductivitySummary
             }
 
             if($list != null && $list != 'Number of employees'){
-                $temp_data[] = $this->financialStatements[$list]['metadataStatements']['Number of Staff'];
+                if(isset($this->financialStatements[$list])){
+                    $temp_data[] = $this->financialStatements[$list]['metadataStatements']['Number of Staff'];
+                }
             }
         }
 
@@ -107,7 +113,9 @@ class ProductivitySummary
             }
 
             if($list != null && $list != 'Sales'){
-                $temp_data[] = $this->financialStatements[$list]['metadataStatements']['Sales'];
+                if(isset($this->financialStatements[$list])){
+                    $temp_data[] = $this->financialStatements[$list]['metadataStatements']['Sales'];
+                }
             }
         }
 
@@ -125,7 +133,9 @@ class ProductivitySummary
             }
 
             if($list != null && $list != 'Operating Profit (before interest & tax)'){
-                $temp_data[] = $this->financialStatements[$list]['metadataResults']['overAllResults']['profitStatements']['operating_loss_or_profit'];
+                if(isset($this->financialStatements[$list])){
+                    $temp_data[] = $this->financialStatements[$list]['metadataResults']['overAllResults']['profitStatements']['operating_loss_or_profit'];
+                }
             }
         }
 
@@ -143,7 +153,9 @@ class ProductivitySummary
             }
 
             if($list != null && $list != 'Labour cost'){
-                $temp_data[] = $this->financialStatements[$list]['metadataStatements']['Staff Salaries & Benefits'];
+                if(isset($this->financialStatements[$list])){
+                    $temp_data[] = $this->financialStatements[$list]['metadataStatements']['Staff Salaries & Benefits'];
+                }
             }
         }
 
@@ -161,7 +173,9 @@ class ProductivitySummary
             }
 
             if($list != null && $list != 'Fixed Assets at Net Book Value'){
-                $temp_data[] = $this->financialStatements[$list]['metadataResults']['overAllResults']['profitStatements']['cost_goods'];
+                if(isset($this->financialStatements[$list])){
+                    $temp_data[] = $this->financialStatements[$list]['metadataResults']['overAllResults']['profitStatements']['cost_goods'];
+                }
             }
         }
 

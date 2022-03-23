@@ -74,7 +74,9 @@ class ProductivityDetail
 
                     $temp_data[] = $numberOfStaff != 0 ? round(($valueAdded / $numberOfStaff), 2) : 0;
                 } else {
-                    $temp_data[] = $value;
+                    if ($value == 'Labour Productivity' || $value == null) {
+                        $temp_data[] = $value;
+                    }
                 }
             }
 
@@ -110,7 +112,9 @@ class ProductivityDetail
 
                     $temp_data[] = $numberOfStaff != 0 ? round(($valueSales / $numberOfStaff), 2) : 0;
                 } else {
-                    $temp_data[] = $value;
+                    if ($value == 'Sales per Employee' || $value == null) {
+                        $temp_data[] = $value;
+                    }
                 }
             }
 
@@ -146,7 +150,9 @@ class ProductivityDetail
 
                     $temp_data[] = $valueSales != 0 ? round(($valueAdded / $valueSales), 2) : 0;
                 } else {
-                    $temp_data[] = $value;
+                    if ($value == 'Value Added-to-Sales ratio' || $value == null) {
+                        $temp_data[] = $value;
+                    }
                 }
             }
 
@@ -182,7 +188,9 @@ class ProductivityDetail
 
                     $temp_data[] = $valueSales != 0 ? round(($operatingLoss / $valueSales),2)  : 0;
                 } else {
-                    $temp_data[] = $value;
+                    if ($value == 'Profit Margin' || $value == null) {
+                        $temp_data[] = $value;
+                    }
                 }
             }
 
@@ -218,7 +226,9 @@ class ProductivityDetail
 
                     $temp_data[] = $valueAdded != 0 ? round(($operatingLoss / $valueAdded), 2) : 0;
                 } else {
-                    $temp_data[] = $value;
+                    if ($value == 'Profit-to-Value Added ratio' || $value == null) {
+                        $temp_data[] = $value;
+                    }
                 }
             }
 
@@ -254,7 +264,9 @@ class ProductivityDetail
 
                     $temp_data[] = $laborCosts != 0 ? round(($valueAdded / $valueAdded),2) : 0;
                 } else {
-                    $temp_data[] = $value;
+                    if ($value == 'Labour Cost Competitiveness' || $value == null) {
+                        $temp_data[] = $value;
+                    }
                 }
             }
 
@@ -290,7 +302,9 @@ class ProductivityDetail
 
                     $temp_data[] = $numberOfStaff != 0 ? round(($laborCosts / $numberOfStaff),2) : 0;
                 } else {
-                    $temp_data[] = $value;
+                    if ($value == 'Labour Cost per Employee' || $value == null) {
+                        $temp_data[] = $value;
+                    }
                 }
             }
 
@@ -326,7 +340,9 @@ class ProductivityDetail
 
                     $temp_data[] = $cost_goods != 0 ? round(($valueSales / $cost_goods),2) : 0;
                 } else {
-                    $temp_data[] = $value;
+                    if ($value == 'Sales per Dollar of Capital' || $value == null) {
+                        $temp_data[] = $value;
+                    }
                 }
             }
 
@@ -362,7 +378,9 @@ class ProductivityDetail
 
                     $temp_data[] = $numberOfStaff != 0 ? round(($cost_goods / $numberOfStaff),2) : 0;
                 } else {
-                    $temp_data[] = $value;
+                    if ($value == 'Capital Intensity' || $value == null) {
+                        $temp_data[] = $value;
+                    }
                 }
             }
 
@@ -397,7 +415,9 @@ class ProductivityDetail
 
                     $temp_data[] = $cost_goods != 0 ? round(($valueAdded / $cost_goods),2) : 0;
                 } else {
-                    $temp_data[] = $value;
+                    if ($value == 'Capital Productivity' || $value == null) {
+                        $temp_data[] = $value;
+                    }
                 }
             }
 

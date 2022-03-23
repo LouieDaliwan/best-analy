@@ -25,22 +25,11 @@ abstract class ProductivityIndicators extends AbstractAnalysis
      * @param  \Customer\Models\Customer $customer
      * @return array
      */
-        public static function getReportWithCustomer($customer, $financialStatements)
+    public static function getReportWithCustomer($customer, $financialStatements)
     {
-        $spreadsheet = self::getReport($customer);
-
-        // Set Customer Data.
-        $spreadsheet->getSheetByName('Customer')->setCellValue('B2', $customer->name);
-        $spreadsheet->getSheetByName('Customer')->setCellValue('B3', $customer->refnum);
-        $spreadsheet->getSheetByName('Customer')->setCellValue('B4', $customer->metadata['staffstrength'] ?? 0);
-        $spreadsheet->getSheetByName('Customer')->setCellValue('B5', $customer->metadata['industry'] ?? null);
-
-        $spreadsheet = $spreadsheet->getSheetByName('ProductivityIndicators');
-
         return [
             'summary' => self::getSummary($financialStatements),
             'detail' => self::getDetail($financialStatements),
-            // 'detail' => $spreadsheet->rangeToArray('B14:F42'),
         ];
     }
 

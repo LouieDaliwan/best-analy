@@ -110,9 +110,9 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
     {
         $comment = [];
         $ai43 = self::getAI43Comment($statements);
-        $be12 = self::getBE12Comment($statements);
-        $bc12 = self::getBC12Comment($statements);
-        $bd12 = self::getBD12Comment($statements, $customer);
+        $be12 = collect($statements)->count() == 2 ? self::getBE12Comment($statements) : "";
+        $bc12 = collect($statements)->count() == 3 ? self::getBC12Comment($statements) : "";
+        $bd12 = collect($statements)->count() == 3 ? self::getBD12Comment($statements, $customer) : "";
 
         if ($ai43 == '') {
             $comment[] = $bd12;
@@ -297,9 +297,9 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
         $comment = [];
 
         $ai43 = self::getAI43Comment($statements);
-        $bc13 = self::getBC13Comment($statements);
-        $bd13 = self::getBD13Comment($statements);
-        $be13 = self::getBE13Comment($statements);
+        $bc13 = collect($statements)->count() == 3 ? self::getBC13Comment($statements) : "";
+        $bd13 = collect($statements)->count() == 3 ? self::getBD13Comment($statements) : "";
+        $be13 = collect($statements)->count() == 2 ? self::getBE13Comment($statements) : "";
 
         if ($ai43 == "") {
             $comment[] = $bd13;
@@ -473,9 +473,9 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
         $comment = [];
 
         $ai43 = self::getAI43Comment($statements);
-        $bc14 = self::getBC14Comment($statements);
-        $bd14 = self::getBD14Comment($statements);
-        $be14 = self::getBE14Comment($statements);
+        $bc14 = collect($statements)->count() == 3 ? self::getBC14Comment($statements) : "";
+        $bd14 = collect($statements)->count() == 3 ? self::getBD14Comment($statements) : "";
+        $be14 = collect($statements)->count() == 2 ? self::getBE14Comment($statements) : "";
 
         if ($ai43 == "") {
             $comment[] = $bd14;

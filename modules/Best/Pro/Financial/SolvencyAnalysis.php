@@ -98,9 +98,9 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     {
 
         $ai43 = $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
-        $bc24 = self::getBC24Comment($statements);
-        $bd24 = self::getBD24Comment($statements);
-        $be24 = self::getBE24Comment($statements);
+        $bc24 = collect($statements)->count() == 3 ? self::getBC24Comment($statements) : "";
+        $bd24 = collect($statements)->count() == 3 ? self::getBD24Comment($statements) : "";
+        $be24 = collect($statements)->count() == 2 ? self::getBE24Comment($statements) : "";
         $comment = [];
 
         if ($ai43 == '') {
@@ -307,9 +307,9 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
         $sp = $spreadsheet->getSheetByName('FinancialAnalysisReport');
         $bf25 = $sp->getCell('BF25')->getCalculatedValue();
         $ai43 = $sp->getCell('AI43')->getCalculatedValue();
-        $bc25 = self::getBC25Comment($statements);
-        $bd25 = self::getBD25Comment($statements);
-        $be25 = self::getBE25Comment($statements);
+        $bc25 = collect($statements)->count() == 3 ? self::getBC25Comment($statements) : "";
+        $bd25 = collect($statements)->count() == 3 ? self::getBD25Comment($statements) : "";
+        $be25 = collect($statements)->count() == 2 ? self::getBE25Comment($statements) : "";
         $comment = [];
 
         if ($ai43 == '') {

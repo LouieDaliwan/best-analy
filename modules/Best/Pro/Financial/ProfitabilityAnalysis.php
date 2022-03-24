@@ -137,10 +137,11 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     {
         $comment = [];
 
+
         $h19 = self::getAI43Comment($statements, 'gross_profit');
-        $bd4 = self::getBD4Comment($statements);
-        $be4 = self::getBE4Comment($statements);
-        $bf4 = self::getBF4Comment($statements);
+        $bd4 = collect($statements)->count() == 3 ?self::getBD4Comment($statements) : "";
+        $be4 = collect($statements)->count() == 3 ?self::getBE4Comment($statements) : "";
+        $bf4 = collect($statements)->count() == 2 ?self::getBF4Comment($statements) : "";
 
         if ($h19 == ("" || 0)) {
             $comment[] = $be4;
@@ -315,9 +316,9 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     {
         $comment = [];
         $ai43 = self::getAI43Comment($statements);
-        $bc5 = self::getBC5Comment($statements);
-        $bd5 = self::getBD5Comment($statements);
-        $be5 = self::getBE5Comment($statements);
+        $bc5 = collect($statements)->count() == 3 ? self::getBC5Comment($statements) : "";
+        $bd5 = collect($statements)->count() == 3 ? self::getBD5Comment($statements) : "";
+        $be5 = collect($statements)->count() == 2 ? self::getBE5Comment($statements) : "";
 
         if ($ai43 == ("" || 0)) {
             $comment[] = $bd5;
@@ -471,9 +472,9 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         $comment = [];
 
         $ai43 = self::getAI43Comment($statements);
-        $bc6 = self::getBC6Comment($statements);
-        $bd6 = self::getBD6Comment($statements);
-        $be6 = self::getBE6Comment($statements);
+        $bc6 = collect($statements)->count() == 3 ? self::getBC6Comment($statements) : "";
+        $bd6 = collect($statements)->count() == 3 ? self::getBD6Comment($statements) : "";
+        $be6 = collect($statements)->count() == 2 ? self::getBE6Comment($statements) : "";
 
         if ($ai43 == ("" || 0) ) {
             $comment[] = $bd6;
@@ -639,9 +640,9 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         $comment = [];
 
         $ai43 = self::getAI43Comment($statements);
-        $bc7 = self::getBC7Comment($statements);
-        $bd7 = self::getBD7Comment($statements);
-        $be7 = self::getBE7Comment($statements);
+        $bc7 =  collect($statements)->count() == 3 ? self::getBC7Comment($statements) : "";
+        $bd7 =  collect($statements)->count() == 3 ? self::getBD7Comment($statements) : "";
+        $be7 =  collect($statements)->count() == 2 ? self::getBE7Comment($statements) : "";
 
         if ($ai43 == ("" || 0)) {
             $comment[] = $bd7;
@@ -794,9 +795,9 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         $comment = [];
 
         $ai43 = self::getAI43Comment($statements);
-        $bc8 = self::getBC8Comment($statements);
-        $bd8 = self::getBD8Comment($statements);
-        $be8 = self::getBE8Comment($statements);
+        $bc8 = collect($statements)->count() == 3 ? self::getBC8Comment($statements) : "";
+        $bd8 = collect($statements)->count() == 3 ? self::getBD8Comment($statements) : "";
+        $be8 = collect($statements)->count() == 2 ? self::getBE8Comment($statements) : "";
 
         if ($ai43 == ("" || 0)) {
             $comment[] = $bd8;
@@ -961,9 +962,9 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         $comment = [];
 
         $ai43 = self::getAI43Comment($statements);
-        $bc9 = self::getBC9Comment($statements);
-        $bd9 = self::getBD9Comment($statements);
-        $be9 = self::getBE9Comment($statements);
+        $bc9 = collect($statements)->count() == 3 ? self::getBC9Comment($statements) : "";
+        $bd9 = collect($statements)->count() == 3 ? self::getBD9Comment($statements) : "";
+        $be9 = collect($statements)->count() == 2 ? self::getBE9Comment($statements) : "";
 
         if ($ai43 == ("" || 0)) {
             $comment[] = $bd9;

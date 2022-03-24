@@ -51,7 +51,7 @@ class Efficiency
                 }
 
                 if (count($this->customerStatements) == 1) {
-                    $this->statements['statement1'] = $this->customerStatements[$index];
+                    $this->statements['statement1'] = $this->customerStatements[$firstIndex];
                 }
 
                 if (count($this->customerStatements) == 2) {

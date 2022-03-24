@@ -109,9 +109,9 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
         $comment = [];
 
         $ai43 = self::getAI43Comment($statements);
-        $bc17 = self::getBC17Comment($statements);
-        $bd17 = self::getBD17Comment($statements, $customer);
-        $be17 = self::getBE17Comment($statements);
+        $bc17 = collect($statements)->count() == 3  ? self::getBC17Comment($statements) : "";
+        $bd17 = collect($statements)->count() == 3  ? self::getBD17Comment($statements, $customer) : "";
+        $be17 = collect($statements)->count() == 2  ? self::getBE17Comment($statements) : "";
 
         if ($ai43 == "") {
             $comment[] = $bd17;
@@ -308,9 +308,9 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
         $comment = [];
 
         $ai43 = self::getAI43Comment($statements);
-        $bc18 = self::getBC18Comment($statements);
-        $bd18 = self::getBD18Comment($statements);
-        $be18 = self::getBE18Comment($statements);
+        $bc18 = collect($statements)->count() == 3 ? self::getBC18Comment($statements) : "";
+        $bd18 = collect($statements)->count() == 3 ? self::getBD18Comment($statements) : "";
+        $be18 = collect($statements)->count() == 2 ? self::getBE18Comment($statements) : "";
 
         if ($ai43 == "") {
             $comment[] = $bd18;
@@ -487,9 +487,9 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     {
         $comment = [];
         $ai43 = self::getAI43Comment($statements);
-        $bc19 = self::getBC19Comment($statements);
-        $bd19 = self::getBD19Comment($statements);
-        $be19 = self::getBE19Comment($statements);
+        $bc19 = collect($statements)->count() == 3  ? self::getBC19Comment($statements) : "";
+        $bd19 = collect($statements)->count() == 3  ? self::getBD19Comment($statements) : "";
+        $be19 = collect($statements)->count() == 2  ? self::getBE19Comment($statements) : "";
 
         if ($ai43 == '') {
             $comment[] = '';
@@ -673,9 +673,9 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
     {
         $comment = [];
         $ai43 = self::getAI43Comment($statements);
-        $bc20 = self::getBC20Comment($statements);
-        $bd20 = self::getBD20Comment($statements);
-        $be20 = self::getBE20Comment($statements);
+        $bc20 = collect($statements)->count() == 3 ? self::getBC20Comment($statements) : "";
+        $bd20 = collect($statements)->count() == 3 ? self::getBD20Comment($statements) : "";
+        $be20 = collect($statements)->count() == 2 ? self::getBE20Comment($statements) : "";
 
         if ($ai43 == '') {
             $comment[] = $bd20;

@@ -96,9 +96,9 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
     {
         $ai43 = $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
 
-        $bc30 = self::getBC30Comment($statements);
-        $bd30 = self::getBD30Comment($statements);
-        $be30 = self::getBE30Comment($statements);
+        $bc30 = collect($statements)->count() == 3 ? self::getBC30Comment($statements) : "";
+        $bd30 = collect($statements)->count() == 3 ? self::getBD30Comment($statements) : "";
+        $be30 = collect($statements)->count() == 2 ? self::getBE30Comment($statements) : "";
         $comment = [];
 
         if ($ai43 == "") {

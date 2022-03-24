@@ -74,7 +74,7 @@ class ProductivityDetail
 
                     $temp_data[] = $numberOfStaff != 0 ? round(($valueAdded / $numberOfStaff), 2) : 0;
                 } else {
-                    if ($value == 'Labour Productivity' || $value == null) {
+                    if ($value == 'Labour Productivity' || $value == null || $value == "This measures the efficiency & effectiveness of employees in generating value added (VA)") {
                         $temp_data[] = $value;
                     }
                 }
@@ -112,7 +112,7 @@ class ProductivityDetail
 
                     $temp_data[] = $numberOfStaff != 0 ? round(($valueSales / $numberOfStaff), 2) : 0;
                 } else {
-                    if ($value == 'Sales per Employee' || $value == null) {
+                    if ($value == 'Sales per Employee' || $value == null || $value == "This measures the efficiency & effectiveness of organisation's marketing strategy") {
                         $temp_data[] = $value;
                     }
                 }
@@ -150,7 +150,7 @@ class ProductivityDetail
 
                     $temp_data[] = $valueSales != 0 ? round(($valueAdded / $valueSales), 2) : 0;
                 } else {
-                    if ($value == 'Value Added-to-Sales ratio' || $value == null) {
+                    if ($value == 'Value Added-to-Sales ratio' || $value == null  || $value == "This measures the proportion of sales created by the organisation over & above purchased materials and services") {
                         $temp_data[] = $value;
                     }
                 }
@@ -188,7 +188,7 @@ class ProductivityDetail
 
                     $temp_data[] = $valueSales != 0 ? round(($operatingLoss / $valueSales),2)  : 0;
                 } else {
-                    if ($value == 'Profit Margin' || $value == null) {
+                    if ($value == 'Profit Margin' || $value == null || $value == "This measures the proportion of sales after deducting all costs") {
                         $temp_data[] = $value;
                     }
                 }
@@ -226,7 +226,7 @@ class ProductivityDetail
 
                     $temp_data[] = $valueAdded != 0 ? round(($operatingLoss / $valueAdded), 2) : 0;
                 } else {
-                    if ($value == 'Profit-to-Value Added ratio' || $value == null) {
+                    if ($value == 'Profit-to-Value Added ratio' || $value == null || $value == "This indicates the portion of operating profit allocated to the capital providers as a proportion of VA") {
                         $temp_data[] = $value;
                     }
                 }
@@ -264,7 +264,7 @@ class ProductivityDetail
 
                     $temp_data[] = $laborCosts != 0 ? round(($valueAdded / $valueAdded),2) : 0;
                 } else {
-                    if ($value == 'Labour Cost Competitiveness' || $value == null) {
+                    if ($value == 'Labour Cost Competitiveness' || $value == null || $value == "This measures the efficiency & effectiveness of the organisation in terms of its labour cost") {
                         $temp_data[] = $value;
                     }
                 }
@@ -302,7 +302,7 @@ class ProductivityDetail
 
                     $temp_data[] = $numberOfStaff != 0 ? round(($laborCosts / $numberOfStaff),2) : 0;
                 } else {
-                    if ($value == 'Labour Cost per Employee' || $value == null) {
+                    if ($value == 'Labour Cost per Employee' || $value == null || $value == "This indicates average remuneration per employee") {
                         $temp_data[] = $value;
                     }
                 }
@@ -340,7 +340,7 @@ class ProductivityDetail
 
                     $temp_data[] = $cost_goods != 0 ? round(($valueSales / $cost_goods),2) : 0;
                 } else {
-                    if ($value == 'Sales per Dollar of Capital' || $value == null) {
+                    if ($value == 'Sales per Dollar of Capital' || $value == null || $value == "This measures the efficiency & effectiveness of fixed assets in the generation of sales") {
                         $temp_data[] = $value;
                     }
                 }
@@ -378,7 +378,7 @@ class ProductivityDetail
 
                     $temp_data[] = $numberOfStaff != 0 ? round(($cost_goods / $numberOfStaff),2) : 0;
                 } else {
-                    if ($value == 'Capital Intensity' || $value == null) {
+                    if ($value == 'Capital Intensity' || $value == null || $value == "This indicates the extent to which organisation is capital intensive") {
                         $temp_data[] = $value;
                     }
                 }
@@ -415,7 +415,7 @@ class ProductivityDetail
 
                     $temp_data[] = $cost_goods != 0 ? round(($valueAdded / $cost_goods),2) : 0;
                 } else {
-                    if ($value == 'Capital Productivity' || $value == null) {
+                    if ($value == 'Capital Productivity' || $value == null || $value == "This measures the efficiency & effectiveness of fixed assets in the generation of VA") {
                         $temp_data[] = $value;
                     }
                 }

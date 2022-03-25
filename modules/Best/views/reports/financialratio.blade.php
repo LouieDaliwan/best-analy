@@ -27,8 +27,6 @@
   @endif
 </head>
 
-<?php $single = false; ?>
-
 <body>
   <main>
     <div class="container">
@@ -53,14 +51,14 @@
           @include('best::reports.partials.disclaimer')
           @include('best::reports.partials.footer')
           <div class="text-right">
-            <div style="font-size: 12px;">{{ __('Page 1 of <?= $single ? '2' : '3'; ?>') }}</div>
+            <div style="font-size: 12px;">{{ __('Page 1 of <?= $data['is_single'] ? '2' : '3'; ?>') }}</div>
           </div>
         </div>
       </div>
     </div>
     {{-- Analysis --}}
 
-    <?php if($single): ?>
+    <?php if($data['is_single']): ?>
       {{-- Ratios --}}
       <div class="container">
         <div class="main-body">

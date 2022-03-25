@@ -230,6 +230,8 @@ class FormulaService extends Service implements FormulaServiceInterface
             $this->data['current:pindex'] = $this->data['indices'][$index->alias];
         }
 
+        $this->data['is_single'] = collect($financialStatements)->count() > 1 ? true : false;
+
         return $this->data;
     }
 

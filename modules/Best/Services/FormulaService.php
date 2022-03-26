@@ -28,6 +28,7 @@ use Best\Pro\Financial\AdditionalRatioAnalysis;
 use Best\Pro\KeyStrategicRecommendationComments;
 use Best\Pro\Enablers\OverallOrganisationEnablerMetrics;
 use Best\Pro\Financial\SingleYear\GrossMarginAnalysis;
+use Best\Pro\Financial\SingleYear\NetMarginAnalysis;
 
 class FormulaService extends Service implements FormulaServiceInterface
 {
@@ -400,7 +401,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         if (collect($financialStatements)->count() == 1) {
                 return [
                     'gross_ratio' => GrossMarginAnalysis::getReport($financialStatements),
-                    'operating_margin' => '',
+                    'net_margin' => NetMarginAnalysis::getReport($financialStatements),
                     'net_margin' => '',
                     'roa' => '',
                     'roe' => '',
@@ -415,7 +416,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'productivity' => ProductivityAnalysis::getReport($financialStatements, $customer),
             ];
 
-        // }
+        }
         
     }
 

@@ -188,19 +188,25 @@ class FinancialRatio implements FinancialRatioInterface
                     $remarkPoint1 = (float) $remarkPoints[0];
                     $remarkPoint2 = (float) isset($remarkPoints[1]) ? $remarkPoints[1] : 0;
 
-                    if ($ratio['score'] >= $remarkPoint1 && $ratio['score'] <= $remarkPoint2) {
+                    $score = round((float) $ratio['score'], 2); 
+
+                    if ($ratio['score'] >= $remarkPoint1 && $score <= $remarkPoint2) {
                         $remarks = $remark;
+                        $this->ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;
                     }
 
-                    if ($remark == 'Very Poor' && $ratio['score'] < $remarkPoint1) {
+                    if ($remark == 'Very Poor' && $score < $remarkPoint1) {                       
                         $remarks = 'Very Poor';
+                        $this->ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;
                     }
 
-                    if ($ratio['score'] >= $remarkPoint1 && $remarkPoint2 == 0) {
+                    if ($score >= $remarkPoint1 && $remarkPoint2 == 0) {
                         $remarks = $remark;
+                        $this->ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;
                     }
 
                     $this->ratioAnalysis['dashboard'][$ratioKey]['color'] = $this->colorStatus($remarks);
+                    
                 }
             }
         }

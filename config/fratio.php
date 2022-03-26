@@ -43,26 +43,32 @@ return [
             'gross_margin' => [
                 'score' => 0,
                 'color' => '#F20000',
+                'remarks' => 'Very Poor',
             ],
             'net_margin' => [
                 'score' => 0,
                 'color' => '#F20000',
+                'remarks' => 'Very Poor',
             ],
             'roi' => [
                 'score' => 0,
                 'color' => '#F20000',
+                'remarks' => 'Very Poor',
             ],
             'raw_materials' => [
                 'score' => 0,
                 'color' => '#F20000',
+                'remarks' => 'Very Poor',
             ],
             'current_ratio' => [
                 'score' => 0,
                 'color' => '#F20000',
+                'remarks' => 'Very Poor',
             ],
             'debt_ratio' =>[
                 'score' => 0,
                 'color' => '#F20000',
+                'remarks' => 'Very Poor',
             ],
             'project_type' => '',
             'date' => '',

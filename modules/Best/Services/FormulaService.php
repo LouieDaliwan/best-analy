@@ -24,13 +24,14 @@ use Best\Pro\Financial\EfficiencyAnalysis;
 use Best\Pro\Financial\ProductivityAnalysis;
 use Best\Pro\Financial\ProfitabilityAnalysis;
 use Best\Pro\Financial\ProductivityIndicators;
-use Best\Pro\Financial\AdditionalRatioAnalysis;
 use Best\Pro\KeyStrategicRecommendationComments;
 use Best\Pro\Enablers\OverallOrganisationEnablerMetrics;
 use Best\Pro\Financial\SingleYear\CurrentRatioAnalysis;
 use Best\Pro\Financial\SingleYear\DebtRatioAnalysis;
 use Best\Pro\Financial\SingleYear\GrossMarginAnalysis;
 use Best\Pro\Financial\SingleYear\NetMarginAnalysis;
+use Best\Pro\Financial\SingleYear\RawMaterialAnalysis;
+use Best\Pro\Financial\SingleYear\ROIAnalysis;
 
 class FormulaService extends Service implements FormulaServiceInterface
 {
@@ -406,8 +407,8 @@ class FormulaService extends Service implements FormulaServiceInterface
                     'net_margin' => NetMarginAnalysis::getReport($financialStatements),
                     'current_ratio' => CurrentRatioAnalysis::getReport($financialStatements),
                     'debt_ratio' => DebtRatioAnalysis::getReport($financialStatements),
-                    'roi' => '',
-                    'op_ratio' => '',
+                    'roi' => ROIAnalysis::getReport($financialStatements),
+                    'op_ratio' => RawMaterialAnalysis::getReport($financialStatements),
                 ];                       
         } else {
             return [

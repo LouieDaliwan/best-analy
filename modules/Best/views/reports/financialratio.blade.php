@@ -43,13 +43,17 @@
         </div>
         <div class="mt-2 border-bottom"></div>
         <div class="main-content">
-          @include('best::reports.partials.organisation-profile')
-          @include('best::reports.analysis.profitability')
-          @include('best::reports.analysis.liquidity')
-          @include('best::reports.analysis.efficiency')
-          @include('best::reports.analysis.solvency')
+          @if($data['is_single'])
+            
+          @else
+            @include('best::reports.partials.organisation-profile')
+            @include('best::reports.analysis.profitability')
+            @include('best::reports.analysis.liquidity')
+            @include('best::reports.analysis.efficiency')
+            @include('best::reports.analysis.solvency')
+          @endif 
           @include('best::reports.partials.disclaimer')
-          @include('best::reports.partials.footer')
+            @include('best::reports.partials.footer') 
           <div class="text-right">
             <div style="font-size: 12px;">{{ __('Page 1 of <?= $data['is_single'] ? '2' : '3'; ?>') }}</div>
           </div>

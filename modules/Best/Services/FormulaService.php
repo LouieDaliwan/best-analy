@@ -27,6 +27,7 @@ use Best\Pro\Financial\ProductivityIndicators;
 use Best\Pro\Financial\AdditionalRatioAnalysis;
 use Best\Pro\KeyStrategicRecommendationComments;
 use Best\Pro\Enablers\OverallOrganisationEnablerMetrics;
+use Best\Pro\Financial\SingleYear\GrossMarginAnalysis;
 
 class FormulaService extends Service implements FormulaServiceInterface
 {
@@ -396,13 +397,26 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function getFinancialAnalysisData(Customer $customer, $financialStatements)
     {
-        return [
-            'profitability' => ProfitabilityAnalysis::getReport($financialStatements),
-            'liquidity' => LiquidityAnalysis::getReport($financialStatements, $customer),
-            'efficiency' => EfficiencyAnalysis::getReport($financialStatements, $customer),
-            'solvency' => SolvencyAnalysis::getReport($financialStatements, $customer),
-            'productivity' => ProductivityAnalysis::getReport($financialStatements, $customer),
-        ];
+        if (collect($financialStatements)->count() == 1) {
+                return [
+                    'gross_ratio' => GrossMarginAnalysis::getReport($financialStatements),
+                    'operating_margin' => '',
+                    'net_margin' => '',
+                    'roa' => '',
+                    'roe' => '',
+                    'op_ratio' => '',
+                ];                       
+        } else {
+            return [
+                'profitability' => ProfitabilityAnalysis::getReport($financialStatements),
+                'liquidity' => LiquidityAnalysis::getReport($financialStatements, $customer),
+                'efficiency' => EfficiencyAnalysis::getReport($financialStatements, $customer),
+                'solvency' => SolvencyAnalysis::getReport($financialStatements, $customer),
+                'productivity' => ProductivityAnalysis::getReport($financialStatements, $customer),
+            ];
+
+        // }
+        
     }
 
     /**

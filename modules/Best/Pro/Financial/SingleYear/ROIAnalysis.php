@@ -2,12 +2,12 @@
 
 namespace Best\Pro\Financial\SingleYear;
 
-class NetMarginAnalysis
+class ROIAnalysis
 {
     public static function getReport($financialStatements)
     {
 
-        $labels = ['Net Margin after Tax'];
+        $labels = ['ROI'];
         
         return [
             'chart' => [
@@ -24,13 +24,13 @@ class NetMarginAnalysis
     {
         $data = [];
 
-        $marginRatio = ['net_profit_margin'];
+        $marginRatio = ['roi'];
 
         foreach ($financialStatements as $statement) {
 
             $tempData = [];
 
-            $profitability = $statement['metadataResults']['ratioAnalysis']['profitability'];
+            $profitability = $statement['metadataResults']['ratioAnalysis']['additional_ratios'];
 
             foreach ($marginRatio as $item) {
                 $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): (float) $profitability[$item];
@@ -47,11 +47,11 @@ class NetMarginAnalysis
     protected static function getComment($financialStatements)
     {
         $comments = [
-            'Very Poor' => "Business sustainability is in a very serious situation, requiring immediate improvements to remain viable",
-            'Poor' => 'Given the very slim margin, business may risk slipping into losses. Aggressive business development required to improve business sustainability',
-            'Moderate' => 'While margin remains within respectable level, business should explore reducing operational costs through comprehensive review of operations.',
-            'Good' => 'Safe levels achieved by business to push performance to a higher level through better technology adoption.',
-            'Excellent' => 'Continue to enhance IT systems to ensure continued efforts go towards enhancing values, reshaping business goals'
+            'Very Poor' => "Business should review the key purpose of the investment and explore alternative strategies to mitigate and revive the gains from the investment.",
+            'Poor' => 'Revist the business plan to review prior sales estimates and marketing drivers',
+            'Moderate' => 'A review of business strategy is recommended to explore operational improvements and technology adoption into business operations.',
+            'Good' => 'Healthy investment likely to lead better future for business',
+            'Excellent' => 'Firm position to continue expansionary strategies'
         ];
 
         

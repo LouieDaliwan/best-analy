@@ -2,12 +2,13 @@
 
 namespace Best\Pro\Financial\SingleYear;
 
-class NetMarginAnalysis
+
+class CurrentRatioAnalysis
 {
     public static function getReport($financialStatements)
     {
 
-        $labels = ['Net Margin after Tax'];
+        $labels = ['Current Ratio'];
         
         return [
             'chart' => [
@@ -24,13 +25,13 @@ class NetMarginAnalysis
     {
         $data = [];
 
-        $marginRatio = ['net_profit_margin'];
+        $marginRatio = ['current_ratio'];
 
         foreach ($financialStatements as $statement) {
 
             $tempData = [];
 
-            $profitability = $statement['metadataResults']['ratioAnalysis']['profitability'];
+            $profitability = $statement['metadataResults']['ratioAnalysis']['liquidity'];
 
             foreach ($marginRatio as $item) {
                 $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): (float) $profitability[$item];
@@ -47,11 +48,11 @@ class NetMarginAnalysis
     protected static function getComment($financialStatements)
     {
         $comments = [
-            'Very Poor' => "Business sustainability is in a very serious situation, requiring immediate improvements to remain viable",
-            'Poor' => 'Given the very slim margin, business may risk slipping into losses. Aggressive business development required to improve business sustainability',
-            'Moderate' => 'While margin remains within respectable level, business should explore reducing operational costs through comprehensive review of operations.',
-            'Good' => 'Safe levels achieved by business to push performance to a higher level through better technology adoption.',
-            'Excellent' => 'Continue to enhance IT systems to ensure continued efforts go towards enhancing values, reshaping business goals'
+            'Very Poor' => "Business may be in a critically difficult situation to be able to meet its short term financial obligations and will need to source for additional liquidity",
+            'Poor' => 'A review of asset management while reducing short-term liabilities will be necessary to bring the business out of potential payment defaults.',
+            'Moderate' => 'While asset to liquidity remains within the fence, efforts should go towards improving short term credits and risk analysis.',
+            'Good' => 'Heatlhy net profit levels to be retained for now while exploring greater automation to further streamline the work process',
+            'Excellent' => 'Continue to monitor and keep indicators monitored 24/7'
         ];
 
         

@@ -32,7 +32,7 @@ class GrossMarginAnalysis
             $profitability = $statement['metadataResults']['ratioAnalysis']['profitability'];
 
             foreach ($marginRatio as $item) {
-                $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): $profitability[$item];
+                $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): (float) $profitability[$item];
 
                 $tempData[] = round($value * 100, 2);
             }

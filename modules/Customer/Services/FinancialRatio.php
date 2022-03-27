@@ -125,9 +125,12 @@ class FinancialRatio implements FinancialRatioInterface
         $solvency = $this->ratioAnalysis['solvency'];
 
         $solvency['debt_to_equity_ratio'] = (float) $balanceSheets['stockholdersequity'] != 0  ?
-        ((float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['stockholdersequity']) : 0;
+        round( ((float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['stockholdersequity']), 2) : 0;
 
-        $solvency['debt_ratio'] = (float) $balanceSheets['total_assets'] != 0 ? ((float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['total_assets']) : 0;
+        $solvency['debt_ratio'] = (float) $balanceSheets['total_assets'] != 0 ? round(
+                ((float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['total_assets']), 2
+            ) 
+            : 0;
 
         $this->ratioAnalysis['dashboard']['debt_ratio']['score'] = $solvency['debt_ratio'];
 
@@ -141,7 +144,7 @@ class FinancialRatio implements FinancialRatioInterface
         $valueAdded = (float) $statements['Value Added'];
         $staffSalaries = (float) $statements['Staff Salaries & Benefits'];
 
-        $this->ratioAnalysis['productivity']['labour_cost_competitiveness'] = $staffSalaries != 0 ? $valueAdded / $staffSalaries : 0;
+        $this->ratioAnalysis['productivity']['labour_cost_competitiveness'] = $staffSalaries != 0 ? round($valueAdded / $staffSalaries, 2) : 0;
     }
 
     protected function computeAdditionalRatio()
@@ -151,9 +154,9 @@ class FinancialRatio implements FinancialRatioInterface
         $investmentValue = (int) $this->customer->detail->metadata['investment_value'];
 
         $additionalRatio = $this->ratioAnalysis['additional_ratios'];
-        $additionalRatio['raw_materials_margin'] = (float) $statements['Sales'] != 0 ? (float) $statements['Raw Materials'] / (float) $statements['Sales'] : 0;
+        $additionalRatio['raw_materials_margin'] = (float) $statements['Sales'] != 0 ? round((float) $statements['Raw Materials'] / (float) $statements['Sales'], 2) : 0;
 
-        $additionalRatio['roi'] = $investmentValue != (null || 0) ? $statements['Net Operating Profit/(Loss)'] / $investmentValue : 0;
+        $additionalRatio['roi'] = $investmentValue != (null || 0) ? round($statements['Net Operating Profit/(Loss)'] / $investmentValue, 2) : 0;
 
         $this->ratioAnalysis['dashboard']['raw_materials']['score'] = $additionalRatio['raw_materials_margin'];
         $this->ratioAnalysis['dashboard']['roi']['score'] = $additionalRatio['roi'];

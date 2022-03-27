@@ -13,12 +13,17 @@
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
   <script src="{{ asset('reports/js/radius.js') }}"></script>
-
+  
   {{-- Theme CSS --}}
   <style>{{ theme()->inlined(public_path('reports/css/report.css')) }}</style>
   <style>{{ theme()->inlined(public_path('reports/css/theme.min.css')) }}</style>
-  <style>{{ theme()->inlined(public_path('reports/css/ratios.css')) }}</style>
-  <style>{{ theme()->inlined(public_path('reports/css/indicators.css')) }}</style>
+  @if($data['financialStatementCount'] == 3) 
+    <style>{{ theme()->inlined(public_path('reports/css/ratios.css')) }}</style>
+    <style>{{ theme()->inlined(public_path('reports/css/indicators.css')) }}</style>
+  @elseif($data['financialStatementCount'] == 2)
+    <style>{{ theme()->inlined(public_path('reports/css/ratios2.css')) }}</style>
+    <style>{{ theme()->inlined(public_path('reports/css/indicators2.css')) }}</style>
+    @endif
   <style>{{ theme()->inlined(public_path('reports/css/ratio-cover.css')) }}</style>
 
   {{-- RTL --}}

@@ -1,12 +1,12 @@
 <div class="py-1 px-2 mb-2" style="background-color: rgba(0,0,0,0.3); font-weight: bold">@lang('Current Ratio Score')</div>
 
-<div class="mb-3 w-100" style="height: 450px;">
-  <div style="width: 500px; height: 450px;">
-    <canvas id="current_ratio" style="width: 500px; height: 450px;"></canvas>
+<div class="mb-3 w-100" style="height: 445px;">
+  <div style="width: 500px; height: 445px;">
+    <canvas id="current_ratio" style="width: 500px; height: 445px;"></canvas>
   </div>
 </div>
 
-<p class="mb-5" style="text-indent: 40px; font-size: 20px; line-height: 1.5;">
+<p class="mb-3" style="text-indent: 20px; font-size: 18px; line-height: 1.5;">
   @if (app()->getLocale() == 'ar')
         <span style="font-size: 17px;">
           <svg width="17px" height="17px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">

@@ -46,6 +46,9 @@ class RawMaterialAnalysis
 
     protected static function getComment($financialStatements)
     {
+        $projectType = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks'];
+
         $comments = [
             'Very Poor' => "Critical consideration to review existing suppliers and partners, widen the group of suppliers available and/or negotiate for a significant reduction in costs to ensure a healthy and sustainable business operations.",
             'Poor' => 'Strengthen partnership with existing supply partners to gain better price and improved margin',
@@ -55,7 +58,7 @@ class RawMaterialAnalysis
         ];
 
         
-        return $comments[$financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks']];
+        return "{$remarks} Raw Materials Margin by {$projectType} standards ".$comments[$remarks];
 
     }
 

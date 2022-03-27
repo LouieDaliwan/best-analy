@@ -47,6 +47,9 @@ class CurrentRatioAnalysis
 
     protected static function getComment($financialStatements)
     {
+        $projectType = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks'];
+
         $comments = [
             'Very Poor' => "Business may be in a critically difficult situation to be able to meet its short term financial obligations and will need to source for additional liquidity",
             'Poor' => 'A review of asset management while reducing short-term liabilities will be necessary to bring the business out of potential payment defaults.',
@@ -56,7 +59,7 @@ class CurrentRatioAnalysis
         ];
 
         
-        return $comments[$financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks']];
+        return "{$remarks} Current Ratio by {$projectType} standards ". $comments[$remarks];
     }
 
     protected static function dataSet($data)

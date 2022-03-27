@@ -46,6 +46,9 @@ class NetMarginAnalysis
 
     protected static function getComment($financialStatements)
     {
+        $projectType = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks'];
+        
         $comments = [
             'Very Poor' => "Business sustainability is in a very serious situation, requiring immediate improvements to remain viable",
             'Poor' => 'Given the very slim margin, business may risk slipping into losses. Aggressive business development required to improve business sustainability',
@@ -55,7 +58,7 @@ class NetMarginAnalysis
         ];
 
         
-        return $comments[$financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks']];
+        return "{$remarks} Net Margin by {$projectType} standards " . $comments[$remarks];
     }
 
     protected static function dataSet($data)

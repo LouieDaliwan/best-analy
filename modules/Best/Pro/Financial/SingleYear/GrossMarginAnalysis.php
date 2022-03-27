@@ -45,6 +45,9 @@ class GrossMarginAnalysis
 
     protected static function getComment($financialStatements)
     {
+        $projectType = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks'];
+
         $comments = [
             'Very Poor' => "Immediate focus would be to re-strategise the production process and choice of raw materials suppliers to ensure a healthier gross profit margin",
             'Poor' => 'Serious consideration to seek alternative suppliers to significantly improve profitability',
@@ -54,7 +57,7 @@ class GrossMarginAnalysis
         ];
 
         
-        return $comments[$financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks']];
+        return "{$remarks} Gross  Margin by {$projectType} standards " . $comments[$remarks];
     }
 
     protected static function dataSet($data)

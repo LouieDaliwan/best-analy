@@ -237,6 +237,8 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         $this->data['is_single'] = collect($financialStatements)->count() > 1 ? true : false;
 
+        dd($this->data);
+
         return $this->data;
     }
 

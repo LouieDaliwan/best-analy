@@ -16,7 +16,7 @@ class CurrentRatioAnalysis
                 'dataset' => self::formatDataSet($financialStatements),
             ],
             'comment' => [
-                self::getComment($financialStatements),
+                self::getComment($financialStatements[0]),
             ],
         ];
     }
@@ -56,7 +56,7 @@ class CurrentRatioAnalysis
         ];
 
         
-        return $comments[$financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['Excellent']];
+        return $comments[$financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks']];
     }
 
     protected static function dataSet($data)

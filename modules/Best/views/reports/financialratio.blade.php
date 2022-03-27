@@ -51,17 +51,23 @@
             @include('best::reports.analysis.singleperiod.debtratio')
             @include('best::reports.analysis.singleperiod.roi')
             @include('best::reports.analysis.singleperiod.rawmaterials')
+            <div class="text-right">
+              <div style="font-size: 12px;">{{ __('Page 1 of 1') }}</div>
+            </div>
+            @include('best::reports.partials.disclaimer')
+            @include('best::reports.partials.footer') 
           @else  
             @include('best::reports.analysis.profitability')
             @include('best::reports.analysis.liquidity')
             @include('best::reports.analysis.efficiency')
             @include('best::reports.analysis.solvency')
-          @endif 
-          @include('best::reports.partials.disclaimer')
+
+            @include('best::reports.partials.disclaimer')
             @include('best::reports.partials.footer') 
           <div class="text-right">
-            <div style="font-size: 12px;">{{ __('Page 1 of <?= $data['is_single'] ? '2' : '3'; ?>') }}</div>
+            <div style="font-size: 12px;">{{ __('Page 1 of 3') }}</div>
           </div>
+          @endif 
         </div>
       </div>
     </div>
@@ -69,7 +75,7 @@
 
     <?php if($data['is_single']): ?>
       {{-- Ratios --}}
-      <div class="container">
+      {{-- <div class="container">
         <div class="main-body">
           <div class="main-content pb-3">
             @include('best::reports.partials.header')
@@ -85,7 +91,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
       {{-- Ratios --}}
     <?php else: ?>
       {{-- Ratios --}}

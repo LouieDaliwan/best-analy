@@ -95,13 +95,13 @@ export default {
     },
 
     previewPDFOverallReport (item) {
+      console.log(item);
       let filename = "Financial Analysis Report"
       let lang = this.$route.query.lang || this.resource.lang
       window.open(`/best/reports/pdf/preview?report_id=${item.id}&type=financialratio&lang=${lang}&filename=${filename}`, '_blank')
     },
 
     sendToCrm (item) {
-      console.log(this.resource.data)
       let data = {
         Id: this.resource.data.token,
         FileNo: this.resource.data.refnum,
@@ -118,15 +118,6 @@ export default {
 
     downloadReport () {
       window.location.href = `/reports/${this.$route.params.report}/download`
-      // axios.get(
-      //   `/api/v1/reports/${this.$route.params.report}/download`
-      // ).then(response => {
-      //   let blob = new Blob([response.data], { type: 'application/pdf' })
-      //   let link = document.createElement('a')
-      //   link.href = window.URL.createObjectURL(blob)
-      //   link.download = `Report.pdf`
-      //   link.click()
-      // })
     },
 
     setIframeHeight () {

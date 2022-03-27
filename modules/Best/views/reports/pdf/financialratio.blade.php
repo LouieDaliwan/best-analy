@@ -45,49 +45,36 @@
     @include('best::reports.pdf.ratio.cover')
   </div>
 
-  <?php $single = false; ?>
-
   {{-- Analysis --}}
   <div class="sheet">
     <div style="zoom: 0.76; line-height: 1;">
       @include('best::reports.pdf.partials.header')
       <div class="my-2 border-bottom"></div>
       @include('best::reports.pdf.partials.organisation-profile')
-      @include('best::reports.pdf.analysis.profitability')
-      @include('best::reports.pdf.analysis.liquidity')
+      @if($data['is_single'])
+        @include('best::reports.pdf.financials.singleyear')
+        <div class="text-right">
+          <div style="font-size: 12px;">{{ __('Page 1 of 1') }}</div>
+        </div>
+        @include('best::reports.partials.disclaimer')
+        @include('best::reports.partials.footer') 
+      @else
+        @include('best::reports.pdf.analysis.profitability')
+        @include('best::reports.pdf.analysis.liquidity')
 
-      @include('best::reports.pdf.analysis.efficiency')
-      @include('best::reports.pdf.analysis.solvency')
-      @include('best::reports.pdf.analysis.productivity')
+        @include('best::reports.pdf.analysis.efficiency')
+        @include('best::reports.pdf.analysis.solvency')
+        @include('best::reports.pdf.analysis.productivity')
     </div>
     @include('best::reports.pdf.partials.disclaimer')
     @include('best::reports.pdf.partials.footer')
     <div class="text-right">
       <div style="font-size: 12px;">{{ __('Page 1 of 3') }}</div>
     </div>
+    @endif
   </div>
 
-  <?php if($single): ?>
-    {{-- Ratios --}}
-    <div class="container">
-      <div class="main-body">
-        <div class="main-content pb-3">
-          @include('best::reports.pdf.partials.header')
-        </div>
-        <div class="mt-2 border-bottom"></div>
-        <div class="main-content">
-          @include('best::reports.pdf.partials.organisation-profile')
-          @include('best::reports.pdf.financials.singleyear', ['data' => $data['ratios:financial']])
-          @include('best::reports.pdf.partials.disclaimer')
-          @include('best::reports.pdf.partials.footer')
-          <div class="text-right">
-            <div style="font-size: 12px;">{{ __('Page 2 of 2') }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    {{-- Ratios --}}
-  <?php else: ?>
+  @if(!$data['is_single'])
     {{-- Ratios --}}
     <div class="sheet">
       <div style="zoom: 0.7; line-height: 1;">
@@ -119,6 +106,6 @@
       </div>
     </div>
     {{-- Indicators --}}
-  <?php endif; ?>
+  @endif
 </body>
 </html>

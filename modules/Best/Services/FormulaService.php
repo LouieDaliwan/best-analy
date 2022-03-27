@@ -235,9 +235,7 @@ class FormulaService extends Service implements FormulaServiceInterface
             $this->data['current:pindex'] = $this->data['indices'][$index->alias];
         }
 
-        $this->data['is_single'] = collect($financialStatements)->count() > 1 ? true : false;
-
-        dd($this->data);
+        $this->data['is_single'] = collect($financialStatements)->count() < 2 ? true : false;
 
         return $this->data;
     }
@@ -410,7 +408,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                     'current_ratio' => CurrentRatioAnalysis::getReport($financialStatements),
                     'debt_ratio' => DebtRatioAnalysis::getReport($financialStatements),
                     'roi' => ROIAnalysis::getReport($financialStatements),
-                    'op_ratio' => RawMaterialAnalysis::getReport($financialStatements),
+                    'raw_materials' => RawMaterialAnalysis::getReport($financialStatements),
                 ];                       
         } else {
             return [

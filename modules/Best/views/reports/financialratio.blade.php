@@ -43,10 +43,15 @@
         </div>
         <div class="mt-2 border-bottom"></div>
         <div class="main-content">
-          @if($data['is_single'])
-            
-          @else
-            @include('best::reports.partials.organisation-profile')
+          @include('best::reports.partials.organisation-profile')
+          @if($data['is_single'] == true)
+            @include('best::reports.analysis.singleperiod.gross')
+            @include('best::reports.analysis.singleperiod.netmargin')
+            @include('best::reports.analysis.singleperiod.currentratio')
+            @include('best::reports.analysis.singleperiod.debtratio')
+            @include('best::reports.analysis.singleperiod.roi')
+            @include('best::reports.analysis.singleperiod.rawmaterials')
+          @else  
             @include('best::reports.analysis.profitability')
             @include('best::reports.analysis.liquidity')
             @include('best::reports.analysis.efficiency')

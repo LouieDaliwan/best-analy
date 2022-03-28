@@ -38,7 +38,7 @@
           </v-card>
         </v-col>
         <v-col cols="12" md="9">
-          <period-form v-model="period" @update="update"></period-form>
+          <period-form v-model="period" :newPeriod="newPeriod" @update="update"></period-form>
         </v-col>
       </v-row>
     </v-card-text>
@@ -65,13 +65,16 @@ export default {
   },
 
   data: () => ({
-    period: null
+    period: null,
+    newPeriod: null,
   }),
 
   methods: {
     setPeriod(index) {
-      if (index === 0) this.period = {};
-      else {
+      if (index === 0) {
+        this.period = {};
+        this.newPeriod = { setMethod: 'add' };
+      } else {
         this.period = this.dataset.statements[index - 1];
       }
     },

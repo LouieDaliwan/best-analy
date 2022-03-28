@@ -323,6 +323,7 @@ export default {
       let data = _.clone(item);
       let formData = new FormData(this.$refs["updateform-form"].$el);
 
+      console.log(formData);
       formData.append("_method", "put");
 
       data = formData;
@@ -356,7 +357,7 @@ export default {
     submit(e) {
       this.load();
       e.preventDefault();
-
+      // console.log(this.resource.data);
       axios
         .post(
           $api.update(this.resource.data.id),

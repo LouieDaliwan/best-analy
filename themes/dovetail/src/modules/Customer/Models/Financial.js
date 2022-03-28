@@ -7,6 +7,7 @@ export default class extends Resource {
     this.data = {
       description: "",
 
+      setMethod: 'add',
       metadataSheets: {
         Balance: 0,
         Cash: 0,
@@ -37,7 +38,7 @@ export default class extends Resource {
         "Interest On Loan/Hires": 0,
         "Company Tax": 0,
         "Operating Profit/(Loss)[EBT]": 0
-      }
+      },
     };
   }
 }

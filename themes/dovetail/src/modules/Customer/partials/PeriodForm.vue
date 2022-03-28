@@ -22,7 +22,7 @@
         <span class="grey--text text--darken-2">Add</span>
       </template>
     </h3>
-
+    <input type="hidden" name="metadata[setMethod]" :value="resource.data.setMethod" />
     <validation-provider
       vid="description"
       :name="trans('Description')"
@@ -228,12 +228,7 @@
         ></period-input>
       </template>
     </div>
-
-    <!-- <div class="text-right mt-5" v-if="edit">
-      <v-btn type="submit" large color="primary">Save</v-btn>
-    </div> -->
   </div>
-  <!-- </v-form> -->
 </template>
 
 <script>
@@ -241,7 +236,7 @@ import moment from 'moment'
 import Financial from "../Models/Financial";
 
 export default {
-  props: ["value"],
+  props: ["value", "newPeriod"],
 
   components: {
     PeriodInput: () => import("./PeriodInput.vue")
@@ -370,14 +365,23 @@ export default {
   },
 
   watch: {
+    edit(value){
+      this.resource.data.setMethod = null;
+    },
     value: {
       handler(value) {
+
         this.resource = new Financial();
 
         if (!value.id) return (this.edit = true);
 
         this.resource.data = { ...this.resource.data, ...value };
         this.edit = false;
+      }
+    },
+    newPeriod(val) {
+      if(val.setMethod === 'add') {
+        this.resource.data.setMethod = 'add';
       }
     },
     "resource.data": {

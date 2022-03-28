@@ -13,9 +13,14 @@
   {{-- Theme CSS --}}
   <style>{{ theme()->inlined(public_path('reports/css/basic.css')) }}</style>
   <style>{{ theme()->inlined(public_path('reports/css/theme.min.css')) }}</style>
-  <style>{{ theme()->inlined(public_path('reports/css/ratios.css')) }}</style>
-  <style>{{ theme()->inlined(public_path('reports/css/indicators.css')) }}</style>
-
+  @if($data['financialStatementCount'] == 3) 
+    <style>{{ theme()->inlined(public_path('reports/css/pdf/ratios.css')) }}</style>
+    <style>{{ theme()->inlined(public_path('reports/css/pdf/ndicators.css')) }}</style>
+  @elseif($data['financialStatementCount'] == 2)
+    <style>{{ theme()->inlined(public_path('reports/css/pdf/ratios2.css')) }}</style>
+    <style>{{ theme()->inlined(public_path('reports/css/pdf/indicators2.css')) }}</style>
+  @endif
+  
   {{-- RTL --}}
   @if (app()->getLocale() == 'ar')
     <style>{{ theme()->inlined(public_path('reports/css/rtlpdf.css')) }}</style>
@@ -61,7 +66,6 @@
       @else
         @include('best::reports.pdf.analysis.profitability')
         @include('best::reports.pdf.analysis.liquidity')
-
         @include('best::reports.pdf.analysis.efficiency')
         @include('best::reports.pdf.analysis.solvency')
         @include('best::reports.pdf.analysis.productivity')
@@ -89,6 +93,20 @@
         <div style="font-size: 12px;">{{ __('Page 2 of 3') }}</div>
       </div>
     </div>
+
+    <div class="sheet">
+      <div style="zoom: 0.7; line-height: 1;">
+        @include('best::reports.pdf.partials.header')
+        <div class="my-2 border-bottom"></div>
+        @include('best::reports.pdf.partials.organisation-profile')
+        @include('best::reports.pdf.financials.secratios', ['data' => $data['ratios:financial']])
+      </div>
+      @include('best::reports.pdf.partials.disclaimer')
+      @include('best::reports.pdf.partials.footer')
+      <div class="text-right">
+        <div style="font-size: 12px;">{{ __('Page 3 of 4') }}</div>
+      </div>
+    </div>
     {{-- Ratios --}}
 
     {{-- Indicators --}}
@@ -102,7 +120,7 @@
       @include('best::reports.pdf.partials.disclaimer')
       @include('best::reports.pdf.partials.footer')
       <div class="text-right">
-        <div style="font-size: 12px;">{{ __('Page 3 of 3') }}</div>
+        <div style="font-size: 12px;">{{ __('Page 4 of 4') }}</div>
       </div>
     </div>
     {{-- Indicators --}}

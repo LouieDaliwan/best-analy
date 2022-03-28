@@ -23,7 +23,7 @@
   @elseif($data['financialStatementCount'] == 2)
     <style>{{ theme()->inlined(public_path('reports/css/ratios2.css')) }}</style>
     <style>{{ theme()->inlined(public_path('reports/css/indicators2.css')) }}</style>
-    @endif
+  @endif
   <style>{{ theme()->inlined(public_path('reports/css/ratio-cover.css')) }}</style>
 
   {{-- RTL --}}

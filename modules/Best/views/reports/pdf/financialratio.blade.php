@@ -81,7 +81,7 @@
   @if(!$data['is_single'])
     {{-- Ratios --}}
     <div class="sheet">
-      <div style="zoom: 0.7; line-height: 1;">
+      <div style="zoom: 0.83; line-height: 1;">
         @include('best::reports.pdf.partials.header')
         <div class="my-2 border-bottom"></div>
         @include('best::reports.pdf.partials.organisation-profile')
@@ -101,8 +101,11 @@
         @include('best::reports.pdf.partials.organisation-profile')
         @include('best::reports.pdf.financials.secratios', ['data' => $data['ratios:financial']])
       </div>
-      @include('best::reports.pdf.partials.disclaimer')
-      @include('best::reports.pdf.partials.footer')
+      {{-- TODO optimize Louie Daliwan --}}
+      <div style="margin-top: 380px;"> 
+        @include('best::reports.pdf.partials.disclaimer')
+        @include('best::reports.pdf.partials.footer')
+      </div>
       <div class="text-right">
         <div style="font-size: 12px;">{{ __('Page 3 of 4') }}</div>
       </div>

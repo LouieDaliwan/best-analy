@@ -77,7 +77,6 @@
 $(document).ready(function() {
   var ctx = document.getElementById("liquidity").getContext('2d');
   var dataset = {!! json_encode($data['analysis:financial']['liquidity']['chart']['dataset']) !!}
-  console.log(dataset)
 
   var barChart = new Chart(ctx, {
     type: 'bar',

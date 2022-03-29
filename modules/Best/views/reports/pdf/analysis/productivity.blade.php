@@ -77,8 +77,7 @@
 $(document).ready(function() {
   var ctx = document.getElementById("productivity").getContext('2d');
   var dataset = {!! json_encode($data['analysis:financial']['productivity']['charts']['dataset']) !!}
-  console.log(dataset)
-
+  
   var barChart = new Chart(ctx, {
     type: 'bar',
     data: {

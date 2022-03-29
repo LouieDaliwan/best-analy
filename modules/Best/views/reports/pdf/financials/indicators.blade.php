@@ -1,37 +1,56 @@
-{{-- <div class="dt-divider" style="height: 50px;"></div> --}}
-<h1 class="dt-primary">@lang('Productivity Indicators')</h1>
+<section class="mt-3">
+  <h1 class="dt-primary">@lang('Productivity Indicators')</h1>
 
-<h3>@lang('PRODUCTIVITY ANALYSIS - LABOUR COST COMPETITIVENESS')</h3>
-<canvas height="100" id="productivity-analysis"></canvas>
-<ul>
-  <li>Overall labour cost competitiveness has seen a significant downward trend over the years.</li>
-  <li>Experienced a year on year decrease by -5.54% from the recent year to the previous year.</li>
-  <li>Records have also indicated that from Year 1 to Year 2, the per unit labour cost saw a significant year on year increase by -12.21%.</li>
-</ul>
-<style>
-  td[colspan=3], td.colspan-text, .colspan-text {
-    border-right: 1px solid #868e96 !important;
-  }
-  .empty-1:empty {
-    display: none;
-  }
-</style>
-<table width="600">
-  <tbody>
+  <table width="100%">
+    
     <tr>
+      <td valign="top" width="50%">
+        <div class="chart-analysis">
+          <div class="mr-3" style="width: 700px; height: 200px;">
+            <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>
+          </div>
+        </div>
+
+        {{-- label --}}
+        <div style="height: 20px;"></div>
+        <table class="indiLabels" width="50%">
+          <tr>
+            @foreach ($data['analysis:financial']['productivity']['charts']['dataset'] as $resource)
+              <td>
+                <span class="circular p-2" style="background: {{ $resource['bg'] }};"></span>
+                &nbsp;
+                <span>{{ $resource['label'] }}</span>
+              </td>
+            @endforeach
+          </tr>
+        </table>
+        {{-- label --}}
+
+        <div class="col-md-12 comment-analysis">
+          @foreach ($data['analysis:financial']['productivity']['comments'] as $comments)
+            <div class="row">
+              <div class="col">
+                @foreach ($comments as $comment)
+                  <p>{{ $comment }}</p>
+                @endforeach
+              </div>
+            </div>
+          @endforeach
+        </div>
+      </td>
       <td>
         <table class="table table-indicator-main">
           <tbody>
-            @foreach ($data as $key => $d)
+            @foreach ($data['indicators:productivity'] as $key => $d)
               <tr class="title table-indicator">
                 <td colspan="5">{{ __($key) }}</td>
               </tr>
               @foreach ($d as $i => $vs)
                 <tr class="ratio{{ $key }}-{{ $i }}">
-                  @php
+                  {{-- @php
                   $l = 0;
-                  @endphp
-                  @foreach ($vs as $j => $v)
+                  @endphp --}}
+                  {{-- @foreach ($vs as $j => $v)
                     @if (strpos($v, 'This measures') !== false || strpos($v, 'This indicates') !== false)
                       @php
                       $l = 1;
@@ -40,7 +59,7 @@
                     @else
                       <td class="{{ empty($v) ? "empty-$l" : null }} {{ $key }}-{{ $i }}">{{ __($v) }}</td>
                     @endif
-                  @endforeach
+                  @endforeach --}}
                 </tr>
               @endforeach
             @endforeach
@@ -48,54 +67,61 @@
         </table>
       </td>
     </tr>
-  </tbody>
-</table>
+  </table>
+</section>
+
+<style>
+  .indiLabels tr td {
+     padding-left: 25%;
+     text-align: left;
+  }
+</style>
 
 <script>
 $(document).ready(function() {
-  var ctx = document.getElementById("productivity-analysis");
-  var barChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Label 1'],
-      datasets: [{
-        label: 'My First Dataset',
-        data: [65, 59, 80, 81, 56, 55, 40],
-        fill: false,
-        backgroundColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }]
-    },
-    options: {
-      tooltips: {
-        enabled: true,
-        mode: 'single',
-        callbacks: {
-          label: function(tooltipItems, data) {
-            return tooltipItems.yLabel+'%';
-          }
+    var ctx = document.getElementById("productivityIndicators").getContext('2d');
+    var dataset = {!! json_encode($data['analysis:financial']['productivity']['charts']['dataset']) !!}
+    var barChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: {!! json_encode(collect(
+          $data['analysis:financial']['productivity']['charts']['labels'])->values()->toArray()
+        ) !!},
+        datasets: dataset,
+      },
+      options: {
+        animation: false,
+        legend: false,
+        scales: {
+          xAxes: [{
+            barPercentage: 0.2,
+            gridLines: {
+              display: false,
+            },
+            ticks: {
+              beginAtZero: true,
+              fontColor: '#044b7f',
+              fontFamily: 'Rubik, sans-serif',
+              fontSize: 12,
+            },
+          }],
+          maxBarThickness: 5,
+          yAxes: [{
+            barPercentage: 0.1,
+            gridLines: {
+              display: false,
+            },
+            ticks: {
+              beginAtZero: true,
+              maxTicksLimit: 5,
+              fontColor: '#044b7f',
+              fontFamily: 'Rubik, sans-serif',
+              fontSize: 12,
+              callback: function(value){return value}
+            }
+          }]
         }
       },
-      legend: {
-        display: false,
-      },
-      scales: {
-        maxBarThickness: 3,
-        yAxes: [{
-          ticks: {
-            // beginAtZero: true,
-            padding: 20,
-            maxTicksLimit: 5,
-            fontColor: '#044b7f',
-            fontFamily: 'Rubik, sans-serif',
-            fontSize: 12,
-            // min: -100,
-            // max: 100,
-            callback: function(value){return value+ "%"}
-          }
-        }]
-      }
-    },
+    });
   });
-});
 </script>

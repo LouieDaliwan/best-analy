@@ -15,7 +15,7 @@
   <style>{{ theme()->inlined(public_path('reports/css/theme.min.css')) }}</style>
   @if($data['financialStatementCount'] == 3) 
     <style>{{ theme()->inlined(public_path('reports/css/pdf/ratios.css')) }}</style>
-    <style>{{ theme()->inlined(public_path('reports/css/pdf/ndicators.css')) }}</style>
+    <style>{{ theme()->inlined(public_path('reports/css/pdf/indicators.css')) }}</style>
   @elseif($data['financialStatementCount'] == 2)
     <style>{{ theme()->inlined(public_path('reports/css/pdf/ratios2.css')) }}</style>
     <style>{{ theme()->inlined(public_path('reports/css/pdf/indicators2.css')) }}</style>
@@ -118,7 +118,7 @@
         @include('best::reports.pdf.partials.header')
         <div class="my-2 border-bottom"></div>
         @include('best::reports.pdf.partials.organisation-profile')
-        @include('best::reports.pdf.financials.indicators', ['data' => $data['indicators:productivity']])
+        @include('best::reports.pdf.financials.indicators')
       </div>
       @include('best::reports.pdf.partials.disclaimer')
       @include('best::reports.pdf.partials.footer')

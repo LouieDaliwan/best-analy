@@ -1,254 +1,253 @@
 .title.table-indicator, .ratiosummary-1, .ratiosummary-2 {
-    display: none;
-  }
-  
-  .table-indicator-main tr th,
-  .table-indicator-main tr td {
-    width: 25%;
-    text-align: center !important;
-  }
-  
-  .ratiosummary-3 .summary-3:nth-child(1) {
-    border-top: 1px solid #868e96;
-  }
-  
-  .title:not(:nth-child(1)) {
-    background: #95aac9;
-    font-weight: 500;
-    color: #ffffff;
-  }
-  
-  /*.indicators td {
-    width: 25%;
-  }*/
-  
-  .indicators .title {
-    display: none;
-  }
-  
-  .detail-0,
-  .detail-1,
-  .detail-6,
-  .detail-7,
-  .detail-12,
-  .detail-13,
-  .detail-18,
-  .detail-19,
-  .detail-24,
-  .detail-25,
-  
-  .summary-3,
-  .summary-5,
-  .summary-7 {
-    background: #edf2f9;
-  }
-  
-  /*hide td empty on all 2nd column*/
-  .detail-0:nth-child(2),
-  .detail-1:nth-child(2),
-  .detail-2:nth-child(2),
-  .detail-3:nth-child(2),
-  .detail-4:nth-child(2),
-  .detail-5:nth-child(2),
-  .detail-6:nth-child(2),
-  .detail-7:nth-child(2),
-  .detail-8:nth-child(2),
-  .detail-9:nth-child(2),
-  .detail-10:nth-child(2),
-  .detail-11:nth-child(2),
-  .detail-12:nth-child(2),
-  .detail-13:nth-child(2),
-  .detail-14:nth-child(2),
-  .detail-15:nth-child(2),
-  .detail-16:nth-child(2),
-  .detail-17:nth-child(2),
-  .detail-18:nth-child(2),
-  .detail-19:nth-child(2),
-  .detail-20:nth-child(2),
-  .detail-21:nth-child(2),
-  .detail-22:nth-child(2),
-  .detail-23:nth-child(2),
-  .detail-24:nth-child(2),
-  .detail-25:nth-child(2),
-  .detail-26:nth-child(2),
-  .detail-27:nth-child(2),
-  .detail-28:nth-child(2),
-  .summary-0:nth-child(2),
-  .summary-1:nth-child(2),
-  .summary-2:nth-child(2),
-  .summary-3:nth-child(2),
-  .summary-4:nth-child(2),
-  .summary-5:nth-child(2),
-  .summary-6:nth-child(2),
-  .summary-7:nth-child(2),
-  .summary-8:nth-child(2) {
-    display: none;
-  }
-  /*hide td empty on all 2nd column*/
-  
-  .detail-1:not(:nth-child(1)) {
-    /*width: 100%;*/
-    border-collapse: collapse;
-  }
-  
-  .detail-0:nth-child(1),
-  .detail-1:nth-child(1),
-  .detail-2:nth-child(1),
-  .detail-3:nth-child(1),
-  .detail-4:nth-child(1),
-  .detail-5:nth-child(1),
-  .detail-6:nth-child(1),
-  .detail-7:nth-child(1),
-  .detail-8:nth-child(1),
-  .detail-9:nth-child(1),
-  .detail-10:nth-child(1),
-  .detail-11:nth-child(1),
-  .detail-12:nth-child(1),
-  .detail-13:nth-child(1),
-  .detail-14:nth-child(1),
-  .detail-15:nth-child(1),
-  .detail-16:nth-child(1),
-  .detail-17:nth-child(1),
-  .detail-18:nth-child(1),
-  .detail-19:nth-child(1),
-  .detail-20:nth-child(1),
-  .detail-21:nth-child(1),
-  .detail-22:nth-child(1),
-  .detail-23:nth-child(1),
-  .detail-24:nth-child(1),
-  .detail-25:nth-child(1),
-  .detail-26:nth-child(1),
-  .detail-27:nth-child(1),
-  .detail-28:nth-child(1),
-  .summary-3:nth-child(1),
-  .summary-4:nth-child(1),
-  .summary-5:nth-child(1),
-  .summary-6:nth-child(1),
-  .summary-7:nth-child(1),
-  .summary-8:nth-child(1) {
-    border-left: 1px solid #868e96;
-  }
-  
-  .detail-0:nth-child(4),
-  .detail-1:nth-child(4),
-  .detail-2:nth-child(4),
-  .detail-3:nth-child(4),
-  .detail-4:nth-child(4),
-  .detail-5:nth-child(4),
-  .detail-6:nth-child(4),
-  .detail-7:nth-child(4),
-  .detail-8:nth-child(4),
-  .detail-9:nth-child(4),
-  .detail-10:nth-child(4),
-  .detail-11:nth-child(4),
-  .detail-12:nth-child(4),
-  .detail-13:nth-child(4),
-  .detail-14:nth-child(4),
-  .detail-15:nth-child(4),
-  .detail-16:nth-child(4),
-  .detail-17:nth-child(4),
-  .detail-18:nth-child(4),
-  .detail-19:nth-child(4),
-  .detail-20:nth-child(4),
-  .detail-21:nth-child(4),
-  .detail-22:nth-child(4),
-  .detail-23:nth-child(4),
-  .detail-24:nth-child(4),
-  .detail-25:nth-child(4),
-  .detail-26:nth-child(4),
-  .detail-27:nth-child(4),
-  .detail-28:nth-child(4),
-  .summary-3:nth-child(4),
-  .summary-4:nth-child(4),
-  .summary-5:nth-child(4),
-  .summary-6:nth-child(4),
-  .summary-7:nth-child(4),
-  .summary-8:nth-child(4) {
-    border-right: 1px solid #868e96;
-  }
-  
-  .detail-0:not(:nth-child(1)),
-  .detail-1:not(:nth-child(1)),
-  .detail-2:not(:nth-child(1)),
-  .detail-3:not(:nth-child(1)),
-  .detail-4:not(:nth-child(1)),
-  .detail-5:not(:nth-child(1)),
-  .detail-6:not(:nth-child(1)),
-  .detail-7:not(:nth-child(1)),
-  .detail-8:not(:nth-child(1)),
-  .detail-9:not(:nth-child(1)),
-  .detail-10:not(:nth-child(1)),
-  .detail-11:not(:nth-child(1)),
-  .detail-12:not(:nth-child(1)),
-  .detail-13:not(:nth-child(1)),
-  .detail-14:not(:nth-child(1)),
-  .detail-15:not(:nth-child(1)),
-  .detail-16:not(:nth-child(1)),
-  .detail-17:not(:nth-child(1)),
-  .detail-18:not(:nth-child(1)),
-  .detail-19:not(:nth-child(1)),
-  .detail-20:not(:nth-child(1)),
-  .detail-21:not(:nth-child(1)),
-  .detail-22:not(:nth-child(1)),
-  .detail-23:not(:nth-child(1)),
-  .detail-24:not(:nth-child(1)),
-  .detail-25:not(:nth-child(1)),
-  .detail-26:not(:nth-child(1)),
-  .detail-27:not(:nth-child(1)),
-  .detail-28:not(:nth-child(1)) {
-    text-align: center;
-  }
-  
-  .summary-0:not(:nth-child(1)):not(:nth-child(2)) {
-    font-weight: 500;
-    border-bottom: 1px solid #868e96;
-  }
-  
-  /*only first child is font-bold*/
-  .detail-0:nth-child(1),
-  .detail-3:nth-child(1),
-  .detail-6:nth-child(1),
-  .detail-9:nth-child(1),
-  .detail-12:nth-child(1),
-  .detail-15:nth-child(1),
-  .detail-18:nth-child(1),
-  .detail-21:nth-child(1),
-  .detail-24:nth-child(1),
-  .detail-27:nth-child(1),
-  .summary-3:nth-child(1),
-  .summary-4:nth-child(1),
-  .summary-5:nth-child(1),
-  .summary-6:nth-child(1),
-  .summary-7:nth-child(1),
-  .summary-8:nth-child(1) {
-    font-weight: 500;
-  }
-  /*only first child is font-bold*/
-  
-  /*last row on title*/
-  .detail-28,
-  .summary-8 {
-    border-bottom: 1px solid #868e96;
-  }
-  /*last row on title*/
-  
-  /*first row on title*/
-  .summary-3 {
-    border-top: 1px solid #868e96;
-  }
-  /*first row on title*/
-  
-  /*Hide empty tr*/
-  .ratiodetail-2,
-  .ratiodetail-5,
-  .ratiodetail-8,
-  .ratiodetail-11,
-  .ratiodetail-14,
-  .ratiodetail-17,
-  .ratiodetail-20,
-  .ratiodetail-23
-  {
-    display: none;
-  }
-  /*Hide empty tr*/
-  
+  display: none;
+}
+
+.table-indicator-main tr th,
+.table-indicator-main tr td {
+  width: 25%;
+  text-align: center !important;
+}
+
+.ratiosummary-3 .summary-3:nth-child(1) {
+  border-top: 1px solid #868e96;
+}
+
+.title:not(:nth-child(1)) {
+  background: #95aac9;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/*.indicators td {
+  width: 25%;
+}*/
+
+.indicators .title {
+  display: none;
+}
+
+.detail-0,
+.detail-1,
+.detail-6,
+.detail-7,
+.detail-12,
+.detail-13,
+.detail-18,
+.detail-19,
+.detail-24,
+.detail-25,
+
+.summary-3,
+.summary-5,
+.summary-7 {
+  background: #edf2f9;
+}
+
+/*hide td empty on all 2nd column*/
+.detail-0:nth-child(2),
+.detail-1:nth-child(2),
+.detail-2:nth-child(2),
+.detail-3:nth-child(2),
+.detail-4:nth-child(2),
+.detail-5:nth-child(2),
+.detail-6:nth-child(2),
+.detail-7:nth-child(2),
+.detail-8:nth-child(2),
+.detail-9:nth-child(2),
+.detail-10:nth-child(2),
+.detail-11:nth-child(2),
+.detail-12:nth-child(2),
+.detail-13:nth-child(2),
+.detail-14:nth-child(2),
+.detail-15:nth-child(2),
+.detail-16:nth-child(2),
+.detail-17:nth-child(2),
+.detail-18:nth-child(2),
+.detail-19:nth-child(2),
+.detail-20:nth-child(2),
+.detail-21:nth-child(2),
+.detail-22:nth-child(2),
+.detail-23:nth-child(2),
+.detail-24:nth-child(2),
+.detail-25:nth-child(2),
+.detail-26:nth-child(2),
+.detail-27:nth-child(2),
+.detail-28:nth-child(2),
+.summary-0:nth-child(2),
+.summary-1:nth-child(2),
+.summary-2:nth-child(2),
+.summary-3:nth-child(2),
+.summary-4:nth-child(2),
+.summary-5:nth-child(2),
+.summary-6:nth-child(2),
+.summary-7:nth-child(2),
+.summary-8:nth-child(2) {
+  display: none;
+}
+/*hide td empty on all 2nd column*/
+
+.detail-1:not(:nth-child(1)) {
+  /*width: 100%;*/
+  border-collapse: collapse;
+}
+
+.detail-0:nth-child(1),
+.detail-1:nth-child(1),
+.detail-2:nth-child(1),
+.detail-3:nth-child(1),
+.detail-4:nth-child(1),
+.detail-5:nth-child(1),
+.detail-6:nth-child(1),
+.detail-7:nth-child(1),
+.detail-8:nth-child(1),
+.detail-9:nth-child(1),
+.detail-10:nth-child(1),
+.detail-11:nth-child(1),
+.detail-12:nth-child(1),
+.detail-13:nth-child(1),
+.detail-14:nth-child(1),
+.detail-15:nth-child(1),
+.detail-16:nth-child(1),
+.detail-17:nth-child(1),
+.detail-18:nth-child(1),
+.detail-19:nth-child(1),
+.detail-20:nth-child(1),
+.detail-21:nth-child(1),
+.detail-22:nth-child(1),
+.detail-23:nth-child(1),
+.detail-24:nth-child(1),
+.detail-25:nth-child(1),
+.detail-26:nth-child(1),
+.detail-27:nth-child(1),
+.detail-28:nth-child(1),
+.summary-3:nth-child(1),
+.summary-4:nth-child(1),
+.summary-5:nth-child(1),
+.summary-6:nth-child(1),
+.summary-7:nth-child(1),
+.summary-8:nth-child(1) {
+  border-left: 1px solid #868e96;
+}
+
+.detail-0:nth-child(4),
+.detail-1:nth-child(4),
+.detail-2:nth-child(4),
+.detail-3:nth-child(4),
+.detail-4:nth-child(4),
+.detail-5:nth-child(4),
+.detail-6:nth-child(4),
+.detail-7:nth-child(4),
+.detail-8:nth-child(4),
+.detail-9:nth-child(4),
+.detail-10:nth-child(4),
+.detail-11:nth-child(4),
+.detail-12:nth-child(4),
+.detail-13:nth-child(4),
+.detail-14:nth-child(4),
+.detail-15:nth-child(4),
+.detail-16:nth-child(4),
+.detail-17:nth-child(4),
+.detail-18:nth-child(4),
+.detail-19:nth-child(4),
+.detail-20:nth-child(4),
+.detail-21:nth-child(4),
+.detail-22:nth-child(4),
+.detail-23:nth-child(4),
+.detail-24:nth-child(4),
+.detail-25:nth-child(4),
+.detail-26:nth-child(4),
+.detail-27:nth-child(4),
+.detail-28:nth-child(4),
+.summary-3:nth-child(4),
+.summary-4:nth-child(4),
+.summary-5:nth-child(4),
+.summary-6:nth-child(4),
+.summary-7:nth-child(4),
+.summary-8:nth-child(4) {
+  border-right: 1px solid #868e96;
+}
+
+.detail-0:not(:nth-child(1)),
+.detail-1:not(:nth-child(1)),
+.detail-2:not(:nth-child(1)),
+.detail-3:not(:nth-child(1)),
+.detail-4:not(:nth-child(1)),
+.detail-5:not(:nth-child(1)),
+.detail-6:not(:nth-child(1)),
+.detail-7:not(:nth-child(1)),
+.detail-8:not(:nth-child(1)),
+.detail-9:not(:nth-child(1)),
+.detail-10:not(:nth-child(1)),
+.detail-11:not(:nth-child(1)),
+.detail-12:not(:nth-child(1)),
+.detail-13:not(:nth-child(1)),
+.detail-14:not(:nth-child(1)),
+.detail-15:not(:nth-child(1)),
+.detail-16:not(:nth-child(1)),
+.detail-17:not(:nth-child(1)),
+.detail-18:not(:nth-child(1)),
+.detail-19:not(:nth-child(1)),
+.detail-20:not(:nth-child(1)),
+.detail-21:not(:nth-child(1)),
+.detail-22:not(:nth-child(1)),
+.detail-23:not(:nth-child(1)),
+.detail-24:not(:nth-child(1)),
+.detail-25:not(:nth-child(1)),
+.detail-26:not(:nth-child(1)),
+.detail-27:not(:nth-child(1)),
+.detail-28:not(:nth-child(1)) {
+  text-align: center;
+}
+
+.summary-0:not(:nth-child(1)):not(:nth-child(2)) {
+  font-weight: 500;
+  border-bottom: 1px solid #868e96;
+}
+
+/*only first child is font-bold*/
+.detail-0:nth-child(1),
+.detail-3:nth-child(1),
+.detail-6:nth-child(1),
+.detail-9:nth-child(1),
+.detail-12:nth-child(1),
+.detail-15:nth-child(1),
+.detail-18:nth-child(1),
+.detail-21:nth-child(1),
+.detail-24:nth-child(1),
+.detail-27:nth-child(1),
+.summary-3:nth-child(1),
+.summary-4:nth-child(1),
+.summary-5:nth-child(1),
+.summary-6:nth-child(1),
+.summary-7:nth-child(1),
+.summary-8:nth-child(1) {
+  font-weight: 500;
+}
+/*only first child is font-bold*/
+
+/*last row on title*/
+.detail-28,
+.summary-8 {
+  border-bottom: 1px solid #868e96;
+}
+/*last row on title*/
+
+/*first row on title*/
+.summary-3 {
+  border-top: 1px solid #868e96;
+}
+/*first row on title*/
+
+/*Hide empty tr*/
+.ratiodetail-2,
+.ratiodetail-5,
+.ratiodetail-8,
+.ratiodetail-11,
+.ratiodetail-14,
+.ratiodetail-17,
+.ratiodetail-20,
+.ratiodetail-23
+{
+  display: none;
+}
+/*Hide empty tr*/

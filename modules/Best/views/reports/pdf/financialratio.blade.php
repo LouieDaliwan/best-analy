@@ -120,8 +120,10 @@
         @include('best::reports.pdf.partials.organisation-profile')
         @include('best::reports.pdf.financials.indicators')
       </div>
+      <div style="margin-top: 335px;"> 
       @include('best::reports.pdf.partials.disclaimer')
       @include('best::reports.pdf.partials.footer')
+      </div>
       <div class="text-right">
         <div style="font-size: 12px;">{{ __('Page 4 of 4') }}</div>
       </div>

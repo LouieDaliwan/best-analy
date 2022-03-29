@@ -38,7 +38,7 @@
           </div>
         </td>
         <td valign="top" width="50%">
-          <h1 class="dt-primary">@lang('Productivity Indicators')</h1>
+          <h1 class="dt-primary">@lang('VA Indicators')</h1>
           <table class="table table-indicator-main">
             <tbody>
               @foreach ($data['indicators:productivity'] as $key => $d) 

@@ -29,12 +29,14 @@ class CustomerRequest extends FormRequest
     public function rules()
     {
         //validation for period
+
+        $customer = Customer::find($this->route('customer'));
+
+
         if (! empty($this->request->get('metadata')['statement'])){
 
             if($this->request->get('metadata')['setMethod'] == 'add') {
                 $period = $this->request->get('metadata')['statement']['metadataStatements']['period'];
-
-                $customer = Customer::find($this->route('customer'));
 
                 $periods = collect($customer->statements()->get('period')->toArray())
                 ->flatten()->flip()->keys();
@@ -43,8 +45,13 @@ class CustomerRequest extends FormRequest
                     throw new Exception('The financial period already exists.');
                 }
 
+            }            
+        }
+
+        if ($customer->statements()->count() < 1) {
+            if ($this->request->get('metadata')['project']['investment_value'] == "0") {
+                throw new Exception('Investment Value must have a value');
             }
-            
         }
 
         if ($this->request->get('metadata')['project']['project_type'] == null) {

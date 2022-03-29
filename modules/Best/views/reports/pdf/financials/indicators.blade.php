@@ -1,72 +1,71 @@
 <section class="mt-3">
-  <h1 class="dt-primary">@lang('Productivity Indicators')</h1>
-
   <table width="100%">
-    
-    <tr>
-      <td valign="top" width="50%">
-        <div class="chart-analysis">
-          <div class="mr-3" style="width: 700px; height: 200px;">
-            <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>
-          </div>
-        </div>
-
-        {{-- label --}}
-        <div style="height: 20px;"></div>
-        <table class="indiLabels" width="50%">
-          <tr>
-            @foreach ($data['analysis:financial']['productivity']['charts']['dataset'] as $resource)
-              <td>
-                <span class="circular p-2" style="background: {{ $resource['bg'] }};"></span>
-                &nbsp;
-                <span>{{ $resource['label'] }}</span>
-              </td>
-            @endforeach
-          </tr>
-        </table>
-        {{-- label --}}
-
-        <div class="col-md-12 comment-analysis">
-          @foreach ($data['analysis:financial']['productivity']['comments'] as $comments)
-            <div class="row">
-              <div class="col">
-                @foreach ($comments as $comment)
-                  <p>{{ $comment }}</p>
-                @endforeach
-              </div>
+    <tbody>  
+      <tr>
+        <td valign="top" width="50%">
+          <h1 class="dt-primary">@lang('Productivity Indicators')</h1>
+          <div class="chart-analysis">
+            <div class="mr-3" style="width: 700px; height: 200px;">
+              <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>
             </div>
-          @endforeach
-        </div>
-      </td>
-      <td>
-        <table class="table table-indicator-main">
-          <tbody>
-            @foreach ($data['indicators:productivity'] as $key => $d)
-              <tr class="title table-indicator">
-                <td colspan="5">{{ __($key) }}</td>
-              </tr>
-              @foreach ($d as $i => $vs)
-                <tr class="ratio{{ $key }}-{{ $i }}">
-                  {{-- @php
-                  $l = 0;
-                  @endphp --}}
-                  {{-- @foreach ($vs as $j => $v)
-                    @if (strpos($v, 'This measures') !== false || strpos($v, 'This indicates') !== false)
-                      @php
-                      $l = 1;
-                      @endphp
-                      <td style="border-right: 1px solid #868e96 !important;" colspan="3" class="colspan-text {{ empty($v) ? 'empty' : null }} {{ $key }}-{{ $i }}">{{ __($v) }}</td>
-                    @else
-                      <td class="{{ empty($v) ? "empty-$l" : null }} {{ $key }}-{{ $i }}">{{ __($v) }}</td>
-                    @endif
-                  @endforeach --}}
-                </tr>
+          </div>
+
+          {{-- label --}}
+          <div style="height: 20px;"></div>
+          <table class="indiLabels" width="50%">
+            <tr>
+              @foreach ($data['analysis:financial']['productivity']['charts']['dataset'] as $resource)
+                <td>
+                  <span class="circular p-2" style="background: {{ $resource['bg'] }};"></span>
+                  &nbsp;
+                  <span>{{ $resource['label'] }}</span>
+                </td>
               @endforeach
+            </tr>
+          </table>
+          {{-- label --}}
+
+          <div class="col-md-12 comment-analysis">
+            @foreach ($data['analysis:financial']['productivity']['comments'] as $comments)
+              <div class="row">
+                <div class="col">
+                  @foreach ($comments as $comment)
+                    <p>{{ $comment }}</p>
+                  @endforeach
+                </div>
+              </div>
             @endforeach
-          </tbody>
-        </table>
-      </td>
-    </tr>
+          </div>
+        </td>
+        <td valign="top" width="50%">
+          <h1 class="dt-primary">@lang('Productivity Indicators')</h1>
+          <table class="table table-indicator-main">
+            <tbody>
+              @foreach ($data['indicators:productivity'] as $key => $d) 
+                <tr class="title table-indicator">
+                  <td colspan="5">{{ __($key) }}</td>
+                </tr>
+                @foreach ($d as $i => $vs)
+                  @if($key == 'summary')
+                    <tr class="ratio{{ $key }}-{{ $i }}">
+                      @php
+                      $l = 0;
+                      @endphp
+                      @foreach ($vs as $j => $v)
+                          <td class="{{ empty($v) ? "empty-$l" : null }} {{ $key }}-{{ $i }}">{{ __($v) }}</td>
+                      @endforeach
+                    </tr>
+                  @endif
+                @endforeach
+              @endforeach
+            </tbody>
+          </table>
+        </td>
+      </tr>     
+      <tr>
+        @include('best::reports.pdf.financials.indicators.list')
+      </tr>
+    </tbody>
   </table>
 </section>
 
@@ -74,6 +73,13 @@
   .indiLabels tr td {
      padding-left: 25%;
      text-align: left;
+  }
+
+  td[colspan=3], td.colspan-text, .colspan-text {
+    border-right: 1px solid #868e96 !important;
+  }
+  .empty-1:empty {
+    display: none;
   }
 </style>
 

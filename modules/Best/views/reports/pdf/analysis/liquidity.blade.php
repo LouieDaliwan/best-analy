@@ -77,27 +77,14 @@
 $(document).ready(function() {
   var ctx = document.getElementById("liquidity").getContext('2d');
   var dataset = {!! json_encode($data['analysis:financial']['liquidity']['chart']['dataset']) !!}
-
+  
   var barChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: {!! json_encode(collect(
         $data['analysis:financial']['liquidity']['chart']['labels'])->values()->toArray()
       ) !!},
-      datasets: [
-        {
-          data: dataset[0]['data'],
-          backgroundColor: '#a2d5ac',
-        },
-        {
-          data: dataset[1]['data'],
-          backgroundColor: '#3aada8',
-        },
-        {
-          data: dataset[2]['data'],
-          backgroundColor: '#557c83',
-        },
-      ],
+      datasets: dataset
     },
     options: {
       animation: false,

@@ -75,9 +75,9 @@
 
 <script>
 $(document).ready(function() {
+  console.log('before dataset');
   var ctx = document.getElementById("profitability").getContext('2d');
   var dataset = {!! json_encode($data['analysis:financial']['profitability']['chart']['dataset']) !!}
-  console.log(dataset)
 
   var barChart = new Chart(ctx, {
     type: 'bar',
@@ -90,20 +90,7 @@ $(document).ready(function() {
         "ROE",
         "Op. Ratio",
       ],
-      datasets: [
-        {
-          data: dataset[0]['data'],
-          backgroundColor: '#a2d5ac',
-        },
-        {
-          data: dataset[1]['data'],
-          backgroundColor: '#3aada8',
-        },
-        {
-          data: dataset[2]['data'],
-          backgroundColor: '#557c83',
-        },
-      ],
+      datasets: dataset
     },
     options: {
       animation: false,

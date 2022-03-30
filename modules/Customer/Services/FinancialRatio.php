@@ -10,6 +10,7 @@ use Customer\Models\Attributes\BalanceSheet;
 use Customer\Models\Attributes\Profitability;
 use Customer\Services\FinancialRatioInterface;
 use Customer\Models\Attributes\ProfitStatement;
+use Customer\Models\Attributes\Rendering;
 use Customer\Models\Attributes\Solvency;
 
 class FinancialRatio implements FinancialRatioInterface
@@ -156,78 +157,6 @@ class FinancialRatio implements FinancialRatioInterface
 
     protected function renderScoreResult()
     {
-        $period = $this->statements['metadataStatements']['period'];
-        $projectType = $this->customer->detail->metadata['project_type'];
-
-        $this->ratioAnalysis['dashboard']['date'] = $period;
-        $this->ratioAnalysis['dashboard']['project_type'] = $projectType;
-
-        $projectType = strtolower(
-            str_replace(" ", "_", $this->customer->detail->metadata['project_type'])
-        );
-
-        if ($projectType !=  "") {
-
-            $projectTypeValues = config("fratio.{$projectType}");
-
-            foreach ($projectTypeValues as $ratioKey => $ratioValue) {
-
-                $ratio = $this->ratioAnalysis['dashboard'][$ratioKey];
-
-                foreach ($ratioValue as $remark => $remarkPoints) {
-
-                    $remarks = '';
-
-                    $remarkPoint1 = (float) $remarkPoints[0];
-                    $remarkPoint2 = (float) isset($remarkPoints[1]) ? $remarkPoints[1] : 0;
-
-                    $score = round((float) $ratio['score'], 2); 
-
-                    if ($ratio['score'] >= $remarkPoint1 && $score <= $remarkPoint2) {
-                        $remarks = $remark;
-                        $this->ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;
-                    }
-
-                    if ($remark == 'Very Poor' && $score < $remarkPoint1) {                       
-                        $remarks = 'Very Poor';
-                        $this->ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;
-                    }
-
-                    if ($score >= $remarkPoint1 && $remarkPoint2 == 0) {
-                        $remarks = $remark;
-                        $this->ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;
-                    }
-
-                    $this->ratioAnalysis['dashboard'][$ratioKey]['color'] = $this->colorStatus($remarks);
-                    
-                }
-            }
-        }
-
-    }
-
-    protected function coLorStatus($remark)
-    {
-        switch ($remark) {
-            case "Very Poor" :
-                $color = '#F20000';
-                break;
-            case "Poor":
-                $color = '#F9BE00';
-                break;
-            case "Moderate":
-                $color = '#8A2B91';
-                break;
-            case "Good":
-                $color = '#9BCF44';
-                break;
-            case "Excellent":
-                $color = '#40AF49';
-                break;
-            default:
-                $color = '#F20000';
-        }
-
-        return $color;
+        $this->ratioAnalysis['dashboard'] = Rendering::results($this->ratioAnalysis, $this->statements, $this->customer);
     }
 }

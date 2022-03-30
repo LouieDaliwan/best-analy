@@ -19,7 +19,7 @@
         ></v-switch>
       </template>
       <template v-else>
-        <span class="grey--text text--darken-2">Add</span>
+        <span class="grey--text text--darken-2">Add </span>
       </template>
     </h3>
     <input type="hidden" name="metadata[setMethod]" :value="resource.data.setMethod" />

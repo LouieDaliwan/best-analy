@@ -11,7 +11,7 @@
         </template>
         <v-list dense>
           <v-subheader
-            >{{ trans(label) }} may include the following items:</v-subheader
+            >{{ trans(label) }} may include the following items: </v-subheader
           >
           <v-list-item v-for="(item, i) in tooltip[label]" :key="i">
             <v-list-item-icon>

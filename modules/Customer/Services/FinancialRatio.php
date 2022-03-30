@@ -2,6 +2,7 @@
 
 namespace Customer\Services;
 
+use Customer\Models\Attributes\AdditionalRatio;
 use Customer\Models\Customer;
 use Customer\Models\Attributes\Liquidity;
 use Customer\Models\Attributes\Efficiency;
@@ -9,6 +10,7 @@ use Customer\Models\Attributes\BalanceSheet;
 use Customer\Models\Attributes\Profitability;
 use Customer\Services\FinancialRatioInterface;
 use Customer\Models\Attributes\ProfitStatement;
+use Customer\Models\Attributes\Solvency;
 
 class FinancialRatio implements FinancialRatioInterface
 {
@@ -117,20 +119,11 @@ class FinancialRatio implements FinancialRatioInterface
 
         $this->ratioAnalysis['dashboard']['current_ratio']['score'] = $balanceSheets['current_liabilities'] != 0 ?
          round($balanceSheets['cash'] / $balanceSheets['current_liabilities'], 2) : 0;
-
     }
 
     protected function computeSolvency($balanceSheets)
     {
-        $solvency = $this->ratioAnalysis['solvency'];
-
-        $solvency['debt_to_equity_ratio'] = (float) $balanceSheets['stockholdersequity'] != 0  ?
-        round( ((float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['stockholdersequity']), 2) : 0;
-
-        $solvency['debt_ratio'] = (float) $balanceSheets['total_assets'] != 0 ? round(
-                ((float) $balanceSheets['total_liabilities'] / (float) $balanceSheets['total_assets']), 2
-            ) 
-            : 0;
+        $solvency = Solvency::compute($this->ratioAnalysis['solvency'], $balanceSheets);
 
         $this->ratioAnalysis['dashboard']['debt_ratio']['score'] = $solvency['debt_ratio'];
 
@@ -149,14 +142,11 @@ class FinancialRatio implements FinancialRatioInterface
 
     protected function computeAdditionalRatio()
     {
-        $statements = $this->statements['metadataStatements'];
-
-        $investmentValue = (int) $this->customer->detail->metadata['investment_value'];
-
-        $additionalRatio = $this->ratioAnalysis['additional_ratios'];
-        $additionalRatio['raw_materials_margin'] = (float) $statements['Sales'] != 0 ? round((float) $statements['Raw Materials'] / (float) $statements['Sales'], 2) : 0;
-
-        $additionalRatio['roi'] = $investmentValue != (null || 0) ? round($statements['Net Operating Profit/(Loss)'] / $investmentValue, 2) : 0;
+        $additionalRatio = AdditionalRatio::compute(
+            $this->ratioAnalysis['additional_ratios'],
+            $this->customer,
+            $this->statements
+        );
 
         $this->ratioAnalysis['dashboard']['raw_materials']['score'] = $additionalRatio['raw_materials_margin'];
         $this->ratioAnalysis['dashboard']['roi']['score'] = $additionalRatio['roi'];

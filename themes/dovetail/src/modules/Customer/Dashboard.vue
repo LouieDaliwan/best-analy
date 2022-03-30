@@ -13,7 +13,7 @@
         ></span>
       </template>
     </page-header>
-    <template v-if="resource.isFetching"> </template>
+    <template v-if="resource.isFetching"></template>
     <template v-else>
       <v-row>
         <v-col cols="12" md="5">

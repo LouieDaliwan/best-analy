@@ -28,20 +28,20 @@ class CustomerDetailsSeeder extends Seeder
         FinancialStatement::query()->truncate();
         ApplicantDetail::query()->truncate();
 
-        $customers = Customer::get();
+        // $customers = Customer::get();
 
-        foreach ($customers as $customer) {
+        // foreach ($customers as $customer) {
 
-            if (is_null($customer['metadata']) && $customer->id == 31) {
-                continue;
-            }
+            // if (is_null($customer['metadata']) && $customer->id == 31) {
+                // continue;
+            // }
 
-            $this->customerDetail($customer);
+            // $this->customerDetail($customer);
 
-            $this->customerApplicantDetail($customer);
+            // $this->customerApplicantDetail($customer);
 
             // $this->customerFinancialStatement($customer);
-        }
+        // }
     }
 
     protected function customerDetail($customer) : void

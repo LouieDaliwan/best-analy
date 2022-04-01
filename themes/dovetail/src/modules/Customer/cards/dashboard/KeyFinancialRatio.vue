@@ -47,6 +47,12 @@
                       v-text="trans(subitem.label)"
                     ></v-list-item-subtitle>
                   </v-list-item-content>
+                  <v-list-item-action-text
+                    small
+                    class="ml-2"
+                  >
+                    {{subitem.score}} 
+                  </v-list-item-action-text>
                   <v-list-item-action>
                     <v-icon
                       small

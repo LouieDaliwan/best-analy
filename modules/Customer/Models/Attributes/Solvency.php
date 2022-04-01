@@ -14,6 +14,6 @@ class Solvency {
             ) 
             : 0;
 
-        return $solvency
+        return $solvency;
     }
 }

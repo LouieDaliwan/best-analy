@@ -136,8 +136,9 @@
           <div v-for="(fields, f) in resource.data['fields:grouped']" :key="f">
              <v-card :key="f">
                <fifth-criteria-one v-if="f === 'Business Expansion'"></fifth-criteria-one>
-               
                <fifth-criteria-sec v-if="f !== 'Business Expansion' && f !== 'Marketing Strategies' && f  !== 'Capacity Utilisation' && f !== 'Endorsement, Certification & Standards'"></fifth-criteria-sec>
+               <fifth-criteria-three v-if="f === 'Endorsement, Certification & Standards'"></fifth-criteria-three>
+
                 <v-card-text class="text-center" :key="f">
                 <v-row justify="center">
                   <!-- group -->
@@ -169,7 +170,7 @@
                     <v-item-group v-model="field.selected" active-class="primary" class="mb-4">
                       <v-container :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
                         <v-row justify="space-around" no-gutters>
-                          <v-col :id="`scrollto-${field.id+'-'+(i+1)}`" v-for="(rate, c) in rates" :key="c">
+                          <v-col :id="`scrollto-${field.id+'-'+(i+1)}`" v-for="(rate, c) in getRates(f)" :key="c">
                             <v-tooltip bottom>
                               <template v-slot:activator="{ on }">
                                 <v-item v-slot:default="{ active, toggle }">
@@ -272,6 +273,38 @@ export default {
       { number: '5', text: 'Processes practised effectively by most' },
       { number: 'N/A', text: 'Not Applicable' },
     ],
+
+    sdmiRatesOne: [
+      { number: '1', text: 'Strongly Disagree' },
+      { number: '2', text: 'Disagree' },
+      { number: '3', text: 'Moderately Agree' },
+      { number: '4', text: 'Agree' },
+      { number: '5', text: 'Strongly Agree' },
+    ],
+
+    sdmiRatesTwo: [
+      { number: '<10%', text: '<10%' },
+      { number: '10% - 25%', text: '10% - 25%' },
+      { number: '>25% - 50%', text: '>25% - 50%' },
+      { number: '>50% - 75%', text: '>50% - 75%' },
+      { number: '>75% - 100%', text: '>75% - 100%' },
+    ],
+
+    sdmiRatesThree: [
+      { number: '0', text: 'I am not aware of any industry standards or certifications required	' },
+      { number: '0', text: 'There are no industry standards required in my business	' },
+      { number: '1', text: 'Minimum standards required by the authorities are met	' },
+      { number: '2', text: 'Critical certifications and standards are acquired to maintain high standards in the business	' },
+      { number: '4', text: 'Certifications and Standards acquired over and above requirements to drive business growth & innovation	' },
+    ],
+
+    sdmiRatesFour: [
+      { number: '1', text: 'Least Satisfied' },
+      { number: '2', text: '' },
+      { number: '3', text: '' },
+      { number: '4', text: '' },
+      { number: '5', text: 'Very Satisfied' },
+    ],
     answers: [],
     resource: new Survey,
     auth: $auth.getUser(),
@@ -286,6 +319,23 @@ export default {
       showSnackbar: 'snackbar/show',
       loadDialog: 'dialog/loading',
     }),
+
+    getRates(value) {
+      
+      if(value === 'Business Expansion' || value === 'Marketing Strategies') {
+        return this.sdmiRatesOne;
+      }
+      
+      if(value === 'Capacity Utilisation') {
+        return this.sdmiRatesTwo;
+      }
+
+      if(value === 'Endorsement, Certification & Standards') {
+        return this.sdmiRatesThree;
+      }
+
+      return this.sdmiRatesFour;
+    },
 
     submit: _.debounce(function (event) {
       let data = new FormData(this.$refs['survey-submission-form'])

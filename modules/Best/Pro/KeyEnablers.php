@@ -79,7 +79,12 @@ class KeyEnablers
     protected static function getValue($code, $index, $key)
     {
         $keyScoreValue = config("modules.best.scores.key_enablers_score.{$code}.{$key}");
-        return round((($index->sum('results')/($index->count() ?: 1))/$keyScoreValue) * 100);
+
+        if($index->isNotEmpty()) {
+            return round((($index->sum('results')/($index->count() ?: 1))/$keyScoreValue) * 100);
+        }
+
+        return 0;
     }
 
      /**

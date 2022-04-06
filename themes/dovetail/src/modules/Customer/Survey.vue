@@ -202,32 +202,32 @@
               </v-card-text>
              </v-card>
           </div>
-        </div>
-    
-          <template v-for="(answer, a) in answers">
-            <input type="hidden" :name="`fields[${a}][id]`" :value="answer.item.id" >
-            <input type="hidden" :name="`fields[${a}][submission][results]`" :value="answer.answer.number">
-            <input type="hidden" :name="`fields[${a}][submission][submissible_id]`" :value="answer.item.id">
-            <input type="hidden" :name="`fields[${a}][submission][submissible_type]`" value="Survey\Models\Field">
-            <input type="hidden" :name="`fields[${a}][submission][user_id]`" :value="auth.id">
-            <input type="hidden" :name="`fields[${a}][submission][customer_id]`" :value="companyId">
-          </template>
+          <v-card>
+            <template v-for="(answer, a) in answers">
+              <input type="hidden" :name="`fields[${a}][id]`" :value="answer.item.id" >
+              <input type="hidden" :name="`fields[${a}][submission][results]`" :value="answer.answer.number">
+              <input type="hidden" :name="`fields[${a}][submission][submissible_id]`" :value="answer.item.id">
+              <input type="hidden" :name="`fields[${a}][submission][submissible_type]`" value="Survey\Models\Field">
+              <input type="hidden" :name="`fields[${a}][submission][user_id]`" :value="auth.id">
+              <input type="hidden" :name="`fields[${a}][submission][customer_id]`" :value="companyId">
+            </template>
 
-          <!-- Submit -->
-          <v-card-text class="text-center">
-            <v-btn
-              :disabled="progress < 100 || submitting"
-              @click="submit();submitting = true"
-              color="primary"
-              x-large
-              :loading="submitting"
-              >
-              {{ trans('Submit') }}
-              <v-icon right>mdi-arrow-right</v-icon>
-            </v-btn>
-          </v-card-text>
-          <!-- Submit -->
-        </v-card>
+            <!-- Submit -->
+            <v-card-text class="text-center">
+              <v-btn
+                :disabled="progress < 100 || submitting"
+                @click="submit();submitting = true"
+                color="primary"
+                x-large
+                :loading="submitting"
+                >
+                {{ trans('Submit') }}
+                <v-icon right>mdi-arrow-right</v-icon>
+              </v-btn>
+            </v-card-text>
+            <!-- Submit -->
+          </v-card>
+        </div>          
       </template>
     </form>
 

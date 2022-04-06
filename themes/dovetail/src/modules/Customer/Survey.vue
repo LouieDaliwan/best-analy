@@ -132,73 +132,77 @@
           <!-- Submit -->
         </v-card>
 
-        <v-card v-if="taxonomy_item == 'sdmi'">
-          <criteria></criteria>
-          <template v-for="(fields, f) in resource.data['fields:grouped']">
-            
-            <v-card-text class="text-center" :key="f">
-              <v-row justify="center">
-                <!-- group -->
-                <v-col cols="12" md="10">
-                  <p :class="$vuetify.breakpoint.smAndUp ? 'headline py-4' : 'subtitle-2'" class="mb-0 font-weight-bold">
-                    {{ trans(f) }}
-                  </p>
-                  <p v-html="fields[0].metadata.group_arabic"></p>
-                </v-col>
-                <!-- group -->
+        <div v-if="taxonomy_item == 'sdmi'">
+          <div v-for="(fields, f) in resource.data['fields:grouped']" :key="f">
+             <v-card :key="f">
+               <fifth-criteria-one v-if="f === 'Business Expansion'"></fifth-criteria-one>
+               
+               <fifth-criteria-sec v-if="f !== 'Business Expansion' && f !== 'Marketing Strategies' && f  !== 'Capacity Utilisation' && f !== 'Endorsement, Certification & Standards'"></fifth-criteria-sec>
+                <v-card-text class="text-center" :key="f">
+                <v-row justify="center">
+                  <!-- group -->
+                  <v-col cols="12" md="10">
+                    <p :class="$vuetify.breakpoint.smAndUp ? 'headline py-4' : 'subtitle-2'" class="mb-0 font-weight-bold">
+                      {{ trans(f) }}
+                    </p>
+                    <p v-html="fields[0].metadata.group_arabic"></p>
+                  </v-col>
+                  <!-- group -->
 
-                <!-- fields -->
-                <v-col cols="12" md="10" v-for="(field, i) in fields" :key="i">
-                  <v-row>
-                    <v-col cols="12" md="auto" :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
-                      <span
-                        :class="$vuetify.breakpoint.smAndUp ? 'display-1' : 'title'"
-                        class="text--text muted--text font-weight-bold"
-                        v-html="field.sort"
-                      ></span>
-                    </v-col>
-                    <v-col :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
-                      <p :class="$vuetify.breakpoint.smAndUp ? 'title' : null">{{ trans(field.title) }}</p>
-                      <p class="rtl-text" :class="$vuetify.breakpoint.smAndUp ? 'title' : null">{{ trans(field.metadata.title_arabic) }}</p>
-                    </v-col>
-                  </v-row>
+                  <!-- fields -->
+                  <v-col cols="12" md="10" v-for="(field, i) in fields" :key="i">
+                    <v-row>
+                      <v-col cols="12" md="auto" :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
+                        <span
+                          :class="$vuetify.breakpoint.smAndUp ? 'display-1' : 'title'"
+                          class="text--text muted--text font-weight-bold"
+                          v-html="field.sort"
+                        ></span>
+                      </v-col>
+                      <v-col :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
+                        <p :class="$vuetify.breakpoint.smAndUp ? 'title' : null">{{ trans(field.title) }}</p>
+                        <p class="rtl-text" :class="$vuetify.breakpoint.smAndUp ? 'title' : null">{{ trans(field.metadata.title_arabic) }}</p>
+                      </v-col>
+                    </v-row>
 
-                  <!-- choices -->
-                  <v-item-group v-model="field.selected" active-class="primary" class="mb-4">
-                    <v-container :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
-                      <v-row justify="space-around" no-gutters>
-                        <v-col :id="`scrollto-${field.id+'-'+(i+1)}`" v-for="(rate, c) in rates" :key="c">
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on }">
-                              <v-item v-slot:default="{ active, toggle }">
-                                <div
-                                  :color="active ? 'primary' : null"
-                                  @click="choose(field, rate);toggle()"
-                                  class="dt-chip"
-                                  v-on="$vuetify.breakpoint.smAndUp ? on : null"
-                                  v-ripple
-                                  v-scroll-to="{ el: `#scrollto-${field.id+'-'+(parseInt(i)+1)}`, duration: 700 }"
-                                  >
-                                  <span :class="active ? 'white--text' : 'muted--text'">
-                                    {{ rate.number }}
-                                  </span>
-                                </div>
-                              </v-item>
-                            </template>
-                            <span>{{ rate.text }}</span>
-                          </v-tooltip>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-item-group>
-                  <!-- choices -->
+                    <!-- choices -->
+                    <v-item-group v-model="field.selected" active-class="primary" class="mb-4">
+                      <v-container :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
+                        <v-row justify="space-around" no-gutters>
+                          <v-col :id="`scrollto-${field.id+'-'+(i+1)}`" v-for="(rate, c) in rates" :key="c">
+                            <v-tooltip bottom>
+                              <template v-slot:activator="{ on }">
+                                <v-item v-slot:default="{ active, toggle }">
+                                  <div
+                                    :color="active ? 'primary' : null"
+                                    @click="choose(field, rate);toggle()"
+                                    class="dt-chip"
+                                    v-on="$vuetify.breakpoint.smAndUp ? on : null"
+                                    v-ripple
+                                    v-scroll-to="{ el: `#scrollto-${field.id+'-'+(parseInt(i)+1)}`, duration: 700 }"
+                                    >
+                                    <span :class="active ? 'white--text' : 'muted--text'">
+                                      {{ rate.number }}
+                                    </span>
+                                  </div>
+                                </v-item>
+                              </template>
+                              <span>{{ rate.text }}</span>
+                            </v-tooltip>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </v-item-group>
+                    <!-- choices -->
 
-                </v-col>
-                <!-- fields -->
-              </v-row>
-            </v-card-text>
-          </template>
-
+                  </v-col>
+                  <!-- fields -->
+                </v-row>
+              </v-card-text>
+             </v-card>
+          </div>
+        </div>
+    
           <template v-for="(answer, a) in answers">
             <input type="hidden" :name="`fields[${a}][id]`" :value="answer.item.id" >
             <input type="hidden" :name="`fields[${a}][submission][results]`" :value="answer.answer.number">
@@ -222,7 +226,6 @@
             </v-btn>
           </v-card-text>
           <!-- Submit -->
-        </v-card>
         </v-card>
       </template>
     </form>

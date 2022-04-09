@@ -1,6 +1,10 @@
 <?php
   $cols = [];
-  
+
+  $statements_count = $data['financialStatementCount'];
+  $data = $data['ratios:financial'];
+
+
   array_push($cols, array_merge(array_slice($data, 0, 2), array_slice($data, 4,1), array_slice($data, 3, 1)));
   
   array_push($cols, array_merge(array_slice($data, 0,1), array_slice($data, 2, 1),array_slice($data, 5, 1)));  
@@ -14,23 +18,25 @@
       <div class="resp-table-cell">
           <div class="child-table">
             @foreach($col as $key => $d)
-            {{-- title title1{{ $key }}" --}}
               @if($key != '')
-              <div class="child-resp-table-row">
+              <div class="child-resp-table-row title title1{{ $key }}" style="margin-top: 20px;">
                 <span class="child-table-cell" style="padding-top: 10px; padding-left: 5px;">
                     <h3> {{ __($key) }}</h6>
                 </span>
-                <span class="child-table-cell" style="border: solid 1px;"></span>
-                <span class="child-table-cell" style="border: solid 1px;"></span>
-                <span class="child-table-cell" style="border: solid 1px;"></span>
+                <span class="child-table-cell"></span>
+                <span class="child-table-cell"></span>
+                
+                @if($statements_count == 3)
+                <span class="child-table-cell"></span>
+                @endif
+
               </div>
               @endif
               @foreach($d as $i => $vs)
               {{-- ratio{{ $key }}-{{ $i }} --}}
-              <div class="child-resp-table-row2 ">
+              <div class="child-resp-table-row2">
                 @foreach ($vs as $v)
-                {{-- {{ $key }}-{{ $i }} --}}
-                  <span  class="child-table-cell">{{ __($v) }}</span>
+                  <span  class="child-table-cell {{ $key }}-{{ $i }}">{{ __($v) }}</span>
                 @endforeach
               </div>
               @endforeach
@@ -41,11 +47,11 @@
   </div>
 </div>
 
-
 <style>
   #resp-table {
     width: 100%;
     display: table;
+    padding: 1em;
   }
 
   #resp-table-row {
@@ -53,8 +59,8 @@
   }
 
   .resp-table-cell {
-    valign: top;
-    width: 50%;
+    /* valign: top; */
+    /* width: 50%; */
     display: table-cell;
   }
 
@@ -76,9 +82,6 @@
     display: table-cell;
   }
 </style>
-
-
-<?php dd('test'); ?>
 
 {{-- <table>
   <tr>

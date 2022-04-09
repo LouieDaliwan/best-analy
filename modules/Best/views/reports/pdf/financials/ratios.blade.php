@@ -3,7 +3,7 @@
   
   array_push($cols, array_merge(array_slice($data, 0, 2), array_slice($data, 4,1), array_slice($data, 3, 1)));
   
-  array_push($cols, array_merge(array_slice($data, 2, 1),array_slice($data, 5, 1)));  
+  array_push($cols, array_merge(array_slice($data, 0,1), array_slice($data, 2, 1),array_slice($data, 5, 1)));  
 ?>
 
 <h1 class="dt-primary">@lang('Financial Analysis')</h1>
@@ -14,15 +14,23 @@
       <div class="resp-table-cell">
           <div class="child-table">
             @foreach($col as $key => $d)
-              <div class="child-resp-table-row title title1{{ $key }}">
-                <span class="child-table-cell">
-                    <h6> {{ __($key) }}</h6>
+            {{-- title title1{{ $key }}" --}}
+              @if($key != '')
+              <div class="child-resp-table-row">
+                <span class="child-table-cell" style="padding-top: 10px; padding-left: 5px;">
+                    <h3> {{ __($key) }}</h6>
                 </span>
+                <span class="child-table-cell" style="border: solid 1px;"></span>
+                <span class="child-table-cell" style="border: solid 1px;"></span>
+                <span class="child-table-cell" style="border: solid 1px;"></span>
               </div>
+              @endif
               @foreach($d as $i => $vs)
-              <div class="child-resp-table-row ratio{{ $key }}-{{ $i }}">
+              {{-- ratio{{ $key }}-{{ $i }} --}}
+              <div class="child-resp-table-row2 ">
                 @foreach ($vs as $v)
-                  <span  class="child-table-cell {{ $key }}-{{ $i }}">{{ __($v) }}</span>
+                {{-- {{ $key }}-{{ $i }} --}}
+                  <span  class="child-table-cell">{{ __($v) }}</span>
                 @endforeach
               </div>
               @endforeach
@@ -56,6 +64,11 @@
   }
 
   .child-resp-table-row{
+    display: table-row-group;
+    background-color: #95aac9 !important;
+  }
+
+  .child-resp-table-row2{
     display: table-row-group;
   }
 

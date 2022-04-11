@@ -21,6 +21,7 @@ class CreateCustomerFinancialStatementsTable extends Migration
             $table->longText('metadataSheets')->nullable();
             $table->longText('metadataResults')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

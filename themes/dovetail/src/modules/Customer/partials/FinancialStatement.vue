@@ -28,7 +28,7 @@
                     </v-list-item-subtitle>
                   </v-list-item-content>
                   <v-list-item-action>
-                    <v-btn icon small color="error"
+                    <v-btn icon small color="error" @click.prevent="deleteStatement(item)"
                       ><v-icon small>mdi-delete</v-icon></v-btn
                     >
                   </v-list-item-action>
@@ -46,6 +46,9 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import $api from '../routes/api'
+import man from '@/components/Icons/ManThrowingAwayPaperIcon.vue'
 export default {
   props: ["value"],
 
@@ -70,6 +73,15 @@ export default {
   }),
 
   methods: {
+
+    ...mapActions({
+      errorDialog: 'dialog/error',
+      loadDialog: 'dialog/loading',
+      showDialog: 'dialog/show',
+      hideDialog: 'dialog/hide',
+      showSnackbar: 'snackbar/show',
+    }),
+
     setPeriod(index) {
       if (index === 0) {
         this.period = {};
@@ -81,6 +93,54 @@ export default {
 
     update() {
       this.$emit("update");
+    },
+
+    deleteStatement(item) {
+      this.showDialog({
+        color: 'warning',
+        illustration: man,
+        illustrationWidth: 200,
+        illustrationHeight: 160,
+        width: '420',
+        title: 'You are about to move the statement into trash',
+        text: ['The statement will removed and will not be recovered', trans('Are you sure you want to move :name to Trash?', {name: item.period})],
+        buttons: {
+          cancel: { show: true, color: 'link' },
+          action: {
+            text: 'Move to Trash',
+            color: 'warning',
+            callback: (dialog) => {
+              this.loadDialog(true)
+              this.destroyResource(item)
+            }
+          }
+        }
+      })
+
+      this.$emit("updateStatementLists");
+    },
+
+    destroyResource (item) {
+      item.loading = true
+      axios.delete($api.financialRatioDelete(item))
+        .then(response => {
+          this.showSnackbar({
+            text: trans_choice('Statement successfully removed', 1)
+          })
+          this.hideDialog();
+          this.$emit("updateStatementLists");
+        })
+        .catch(err => {
+          this.errorDialog({
+            width: 400,
+            buttons: { cancel: { show: false } },
+            title: trans('Whoops! An error occured'),
+            text: err.response.data.message,
+          })
+        })
+        .finally(() => {
+          console.log('finally');
+        })
     },
   }
 };

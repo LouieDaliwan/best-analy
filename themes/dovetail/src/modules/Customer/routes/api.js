@@ -43,6 +43,10 @@ export default {
     return `/api/v1/customer/${customer}/financial-ratios`
   },
 
+  financialRatioDelete: function(item) {
+    return `/api/v1/customers/${item.customer_id}/ratios/${item.id}/delete`
+  },
+
   indices: {
     list: function () {
       return '/api/v1/indices'

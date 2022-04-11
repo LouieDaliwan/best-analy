@@ -165,6 +165,7 @@
                       :isDense="isDense"
                       :isLoading="isLoading"
                       @update="update"
+                      @updateStatementLists="updateStatementLists"
                     ></financial-statement>
                   </v-tab-item>
                 </template>
@@ -458,6 +459,10 @@ export default {
     },
     update() {
       this.resource.isPrestine = false;
+    },
+
+    updateStatementLists() {
+      this.getResource();
     }
   },
 

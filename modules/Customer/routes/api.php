@@ -6,7 +6,7 @@ Route::prefix('v1')->middleware(['auth:api', 'json.force', 'auth.permissions'])-
     Route::softDeletes('customers', 'Api\CustomerController');
     Route::ownedResource('customers', 'Api\CustomerController@owned');
     Route::apiResource('customers', 'Api\CustomerController');
-    Route::softDeletes('customers/{customer}/ratios/{ratio}', 'Api\CustomerStatementsController@destroy');
+    Route::delete('customers/{customer}/ratios/{ratio}/delete', 'Api\CustomerStatementsController@destroy');
 
 });
 

@@ -4,9 +4,12 @@ namespace Customer\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Customer\Models\Customer;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FinancialStatement extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'customer_financial_statements';
 
     protected $guarded = [];

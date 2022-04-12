@@ -35,7 +35,7 @@ class CustomerRequest extends FormRequest
 
         if (! empty($this->request->get('metadata')['statement'])){
 
-            if($this->request->get('metadata')['setMethod'] == 'add') {
+            if($this->request->get('metadata')['setMethod'] == 'add' && isset($this->request->get('metadata')['statement']['metadataStatements'])) {
                 $period = $this->request->get('metadata')['statement']['metadataStatements']['period'];
 
                 $periods = collect($customer->statements()->get('period')->toArray())

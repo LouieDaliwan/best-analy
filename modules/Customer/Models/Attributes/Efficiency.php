@@ -120,15 +120,18 @@ class Efficiency
             $this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'] = divide((float) $profiStatement['cost_goods'], (float) $balanceSheets['inventories']);
         }
 
-        $this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover'] = round(((float) $balanceSheets1['tradereceivables'] + $balanceSheets['tradereceivables']) / 2, 2);
-        $this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['trade_receivable_turnover'] = round((float) $profiStatement['sales'] / (((float) $balanceSheets1['tradereceivables'] + $balanceSheets['tradereceivables']) / 2), 2);
+        $totalReceivables = ((float) $balanceSheets1['tradereceivables'] + (float) $balanceSheets['tradereceivables']);
+
+        $this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover'] = round($totalReceivables / 2, 2);
+        $this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['trade_receivable_turnover'] = $totalReceivables != 0 ? round((float) $profiStatement['sales'] / ($totalReceivables / 2), 2) : 0;
 
         if($this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['trade_receivable_turnover'] != 0){
             $this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover_days']  = round((365 / $this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['trade_receivable_turnover']), 2);
         }
 
-        $this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover'] = round(((float) $balanceSheets1['tradepayables'] + $balanceSheets['tradepayables']) / 2, 2);
-        $this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['trade_payable_turnover'] = round((float) $profiStatement['cost_goods'] / (((float) $balanceSheets1['tradepayables'] + $balanceSheets['tradepayables']) / 2), 2);
+        $tradePayableResults = ((float) $balanceSheets1['tradepayables'] + $balanceSheets['tradepayables']);
+        $this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover'] = round( $tradePayableResults / 2, 2);
+        $this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['trade_payable_turnover'] = $tradePayableResults != 0 ? round((float) $profiStatement['cost_goods'] / ($tradePayableResults / 2), 2) : 0;
 
         if($this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['trade_payable_turnover'] != 0) {
             $this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover_days']  = round((365 / $this->statements['statement2']['metadataResults']['ratioAnalysis']['efficiency']['trade_payable_turnover']), 2);
@@ -150,8 +153,11 @@ class Efficiency
             $this->statements['statement3']['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'] = divide((float) $profiStatement['cost_goods'], (float) $balanceSheets['inventories']);
         }
 
-        $this->statements['statement3']['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover'] = round(((float) $balanceSheets2['tradereceivables'] + $balanceSheets['tradereceivables']) / 2, 2);
-        $this->statements['statement3']['metadataResults']['ratioAnalysis']['efficiency']['trade_receivable_turnover'] = round((float) $profiStatement['sales'] / (((float) $balanceSheets2['tradereceivables'] + $balanceSheets['tradereceivables']) / 2), 2);
+
+        $totalReceivables = (float) $balanceSheets2['tradereceivables'] + (float) $balanceSheets['tradereceivables'];
+
+        $this->statements['statement3']['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover'] = round($totalReceivables / 2, 2);
+        $this->statements['statement3']['metadataResults']['ratioAnalysis']['efficiency']['trade_receivable_turnover'] = $totalReceivables != 0 ? round((float) $profiStatement['sales'] / ($totalReceivables / 2), 2) : 0;
 
         if ($this->statements['statement3']['metadataResults']['ratioAnalysis']['efficiency']['trade_receivable_turnover'] != 0) {
             $this->statements['statement3']['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_receivable_turnover_days']  = round((
@@ -159,8 +165,10 @@ class Efficiency
             ), 2);
         }
 
-        $this->statements['statement3']['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover'] = round(((float) $balanceSheets2['tradepayables'] + $balanceSheets['tradepayables']) / 2, 2);
-        $this->statements['statement3']['metadataResults']['ratioAnalysis']['efficiency']['trade_payable_turnover'] = round((float) $profiStatement['cost_goods'] / (((float) $balanceSheets2['tradepayables'] + $balanceSheets['tradepayables']) / 2), 2);
+        $tradePayableResults = ((float) $balanceSheets2['tradepayables'] + (float) $balanceSheets['tradepayables']);
+
+        $this->statements['statement3']['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover'] = round($tradePayableResults / 2, 2);
+        $this->statements['statement3']['metadataResults']['ratioAnalysis']['efficiency']['trade_payable_turnover'] = $tradePayableResults != 0 ? round((float) $profiStatement['cost_goods'] / ($tradePayableResults / 2), 2) : 0;
 
         if ($this->statements['statement3']['metadataResults']['ratioAnalysis']['efficiency']['trade_payable_turnover'] != 0) {
             $this->statements['statement3']['metadataResults']['ratioAnalysis']['efficiency']['avg_trade_payable_turnover_days']  = round((

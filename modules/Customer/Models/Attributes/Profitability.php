@@ -22,7 +22,7 @@ class Profitability
 
         $profitability['earnings_per_share'] = $common_share != (null || 0) ? round(($profitStatements['net_loss_profit_after_taxes'] / $common_share ), 2) : 0;
 
-        $profitability['operating_ratio'] = $profitStatements['operating_expenses'] != 0 ? round($profitStatements['operating_expenses'] / $sales, 2). ':1' : 0;
+        $profitability['operating_ratio'] = $sales != 0 ? round($profitStatements['operating_expenses'] / $sales, 2). ':1' : 0;
 
 
         return $profitability;

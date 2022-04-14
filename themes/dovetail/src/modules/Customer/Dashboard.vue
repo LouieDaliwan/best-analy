@@ -20,6 +20,7 @@
           <general-information v-model="resource.data"></general-information>
         </v-col>
         <v-col cols="12" md="7">
+          <!-- TODO seperated Object for overall -->
           <sme-rating v-model="resource.data" class="mb-5"></sme-rating>
           <key-financial-ratio v-model="keyFinRation"></key-financial-ratio>
         </v-col>
@@ -41,7 +42,7 @@ export default {
 
   data: () => ({
     resource: new Resource(),
-    keyFinRation: {}
+    keyFinRation: {},
   }),
 
   methods: {
@@ -53,6 +54,8 @@ export default {
         .then(([res1, res2]) => {
           this.resource.setData(res1.data.data);
           this.keyFinRation = res2.data;
+          console.log('dashboard');
+          console.log(this.keyFinRation);
         })
         .finally(() => {
           this.resource.fetch(false);
@@ -60,7 +63,7 @@ export default {
     }
   },
 
-  mounted() {
+  created() {
     this.getResource();
   }
 };

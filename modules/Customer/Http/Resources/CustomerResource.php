@@ -5,6 +5,7 @@ namespace Customer\Http\Resources;
 use Best\Models\Report;
 use Best\Services\FormulaServiceInterface;
 use Customer\Http\Resources\ReportResource;
+use Customer\Models\Attributes\RatingGraph;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Index\Http\Resources\IndexResource;
 use Index\Models\Index;
@@ -51,6 +52,7 @@ use Index\Models\Index;
                         'is:finished' => ! is_null($report),
                     ]);
                 })->toArray(),
+                'ratings' => RatingGraph::getRatings($this),
             ]));
 
             if ($only = $request->get('only')) {

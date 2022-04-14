@@ -261,16 +261,20 @@ class CustomerService extends Service implements CustomerServiceInterface
         $this->saveCustomerDetail($customer, $attributes);
 
         //TODO optimize --Louie Daliwan
-        $customer->applicant()->updateOrCreate(
-            ['customer_id' => $id],
-            ['metadata' => $attributes['metadata']['applicant']]
-        );
-
-        $customer->detail()->updateOrCreate(
-            ['customer_id' => $id],
-            ['metadata' => $attributes['metadata']['project']]
-        );
-
+        if (isset($attributes['metadata']['applicant'])) {
+            $customer->applicant()->updateOrCreate(
+                ['customer_id' => $id],
+                ['metadata' => $attributes['metadata']['applicant']]
+            );
+        }
+        
+        if(isset($attributes['metadata']['project'])) {
+            $customer->detail()->updateOrCreate(
+                ['customer_id' => $id],
+                ['metadata' => $attributes['metadata']['project']]
+            );
+        }
+        
         $statements = $attributes['metadata']['statement'] ?? null;
 
         if ( isset($statements['metadataStatements']) && isset($statements['metadataSheets']) && $statements['metadataStatements']['period'] != null) {
@@ -293,7 +297,11 @@ class CustomerService extends Service implements CustomerServiceInterface
         $latestPeriod = FinancialStatement::where('customer_id', $customer->id)->orderBy('period', 'desc')->first();
 
         if (is_null($latestPeriod) || is_null($latestPeriod->metadataResults)) {
-            return null;
+            $emptyDash = config('fratio')['format']['dashboard'];
+            
+            $emptyDash['date'] = 'empty';
+            
+            return $emptyDash;
         }
 
         return $latestPeriod->metadataResults['ratioAnalysis']['dashboard'];

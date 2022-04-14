@@ -61,9 +61,9 @@ class FinancialRatio implements FinancialRatioInterface
                 'metadataStatements' => $statements['metadataStatements'],
                 'metadataSheets' => $statements['metadataSheets'],
                 'metadataResults' => [
-                        'overAllResults' => $this->overAllResults,
-                        'ratioAnalysis' => $this->ratioAnalysis,
-                    ],
+                    'overAllResults' => $this->overAllResults,
+                    'ratioAnalysis' => $this->ratioAnalysis,
+                ],
             ]
         );
 

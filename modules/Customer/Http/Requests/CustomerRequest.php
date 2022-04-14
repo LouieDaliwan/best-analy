@@ -29,9 +29,7 @@ class CustomerRequest extends FormRequest
     public function rules()
     {
         //validation for period
-
         $customer = Customer::find($this->route('customer'));
-
 
         if (! empty($this->request->get('metadata')['statement'])){
 
@@ -52,10 +50,10 @@ class CustomerRequest extends FormRequest
             if ($this->request->get('metadata')['project']['investment_value'] == "0") {
                 throw new Exception('Investment Value must have a value');
             }
-        }
 
-        if ($this->request->get('metadata')['project']['project_type'] == null) {
-            throw new Exception('Project Type must have a value');
+            if ($this->request->get('metadata')['project']['project_type'] == null) {
+                throw new Exception('Project Type must have a value');
+            }
         }
 
         return $this->container->make(

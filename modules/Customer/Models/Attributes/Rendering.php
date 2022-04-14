@@ -35,6 +35,7 @@ class Rendering
 
                     if ($ratio['score'] >= $remarkPoint1 && $score <= $remarkPoint2) {
                         $remarks = $remark;
+                        $ratioAnalysis['dashboard'][$ratioKey]['color'] = self::colorStatus($remarks);
                         $ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;
                     }
 
@@ -45,15 +46,37 @@ class Rendering
 
                     if ($score >= $remarkPoint1 && $remarkPoint2 == 0) {
                         $remarks = $remark;
+                        $ratioAnalysis['dashboard'][$ratioKey]['color'] = self::colorStatus($remarks);
                         $ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;
                     }
-
-                    $ratioAnalysis['dashboard'][$ratioKey]['color'] = self::colorStatus($remarks);           
                 }
             }
         }
+
+        $ratioAnalysis['dashboard']['financial_score'] = self::computeFinancialScore($ratioAnalysis['dashboard']);
+        
         
         return $ratioAnalysis['dashboard'];
+    }
+
+    protected static function computeFinancialScore($dashboard)
+    {
+        $financial_score = 0.00;
+
+        $score_descriptor = config('fratio')['score_descriptor'];
+
+        foreach ($dashboard as $key => $value) {
+            
+            if(!is_array($value)){
+                continue;
+            }
+
+            $rating = (float) ($value['score'] * $score_descriptor[$value['remarks']]);
+
+            $financial_score += $rating;
+        }
+       
+        return $financial_score;
     }
 
 
@@ -62,24 +85,22 @@ class Rendering
     {
         switch ($remark) {
             case "Very Poor" :
-                $color = '#F20000';
+                return '#F20000';
                 break;
             case "Poor":
-                $color = '#F9BE00';
+                return '#F9BE00';
                 break;
             case "Moderate":
-                $color = '#8A2B91';
+                return '#8A2B91';
                 break;
             case "Good":
-                $color = '#9BCF44';
+                return '#9BCF44';
                 break;
             case "Excellent":
-                $color = '#40AF49';
+                return '#40AF49';
                 break;
             default:
-                $color = '#F20000';
+                return '#F20000';
         }
-
-        return $color;
     }
 }

@@ -55,34 +55,17 @@
 import Chart from "chart.js/auto";
 
 export default {
-  data: () => ({
-    smeRatings: [
-      {
-        label: "BSPI",
-        score: 3.2
-      },
-      {
-        label: "FMPI",
-        score: 4.0
-      },
-      {
-        label: "PMPI",
-        score: 4.0
-      },
-      {
-        label: "HRPI",
-        score: 4.5
-      },
-      {
-        label: "Financial Score",
-        score: 5.2
-      }
-    ]
-  }),
+  props: ["value"],
 
+  data() {
+    return {
+      smeRatings: [],    
+    }
+  }, 
+    
   methods: {
     initChart() {
-      const chartEl = this.$refs["chart-el"];
+      const chartEl = this.$refs["chart-Pcel"];
       const chart = new Chart(chartEl, {
         type: "line",
         data: {
@@ -104,10 +87,27 @@ export default {
           plugins: { legend: { display: false } }
         }
       });
+    },
+
+    convertToArrSME() {
+      var smeObject = [];
+      _.map(this.value.ratings.smeRatings, function(item,) {
+          const obj = {
+            'label' : item.label,
+            'score': parseFloat(JSON.stringify(item.score))
+          }
+
+          smeObject.push(obj);
+      });  
+
+      console.log('after');
+      console.log(smeObject);
+      this.smeRatings = smeObject;
     }
   },
 
   mounted() {
+    this.convertToArrSME();
     this.initChart();
   }
 };

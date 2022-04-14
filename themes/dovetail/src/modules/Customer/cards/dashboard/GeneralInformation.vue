@@ -167,9 +167,5 @@ export default {
       return [array.splice(0, newColIndex), array];
     }
   },
-
-  mounted() {
-    console.log(this.value);
-  }
 };
 </script>

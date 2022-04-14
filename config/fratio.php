@@ -1,6 +1,33 @@
 <?php
 
 return [
+    'ratings_format' => [
+        'smeRatings' => [
+            'bspi' => [
+                'label' => "BSPI",
+                'score' => 0,
+            ],
+            'fmpi' => [
+                'label' => "FMPI",
+                'score' => 0,
+            ],
+            'pmpi' => [
+                'label' => "PMPI",
+                'score' => 0,
+            ],
+            'hrpi' => [
+                'label' => "HRPI",
+                'score' => 0,
+            ],
+            'financial_score' => [
+                'label' => 'Financial Score',
+                'score' => 0
+            ],
+        ],
+        'overall_score' => 0.00,
+        'results' => 'incomplete'
+
+    ],
     'format' => [
         'profitability' => [
             'net_profit_margin' => 0,
@@ -72,6 +99,7 @@ return [
             ],
             'project_type' => '',
             'date' => '',
+            'financial_score' => 0,
         ],
     ],
     'non_industrial' => [
@@ -331,5 +359,13 @@ return [
             ],
         ],
     ],
+    'score_descriptor' => [
+        'N/A' => 0,
+        'Very Poor' => 1,
+        'Poor' => 2,
+        'Moderate' => 3,
+        'Good' => 4,
+        'Excellent' => 5, 
+    ]
 ];
 

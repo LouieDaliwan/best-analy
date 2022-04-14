@@ -3,7 +3,7 @@
     <v-card-text class="pa-7">
       <div class="d-flex align-center justify-space-between mb-3">
         <h3 v-text="trans('Key Financial Ratio')"></h3>
-        <v-btn text color="primary" @click="previewRatiosReport"
+        <v-btn v-if="!isEmpty" text color="primary" @click="previewRatiosReport" 
           ><v-icon class="primary--text" small>mdi-eye</v-icon
           ><span v-text="trans('View Financial Analysis Report')"></span
         ></v-btn>
@@ -111,7 +111,8 @@ export default {
         label: "Long-term Debt Ratio",
         ...vm.value.debt_ratio
       }
-    ]
+    ],
+    isEmpty: false,
   }),
 
   methods: {
@@ -136,6 +137,12 @@ export default {
         params: { id: this.$route.params.id }
       });
     },
-  }
+  },
+
+  mounted() {
+      if (this.value.date == 'empty') {
+        this.isEmpty = true;
+      }
+  },
 };
 </script>

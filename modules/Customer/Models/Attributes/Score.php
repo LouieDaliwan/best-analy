@@ -28,11 +28,14 @@ class Score {
 
     protected function getFinancialScore() : void
     {
-        $latestStatement = $this->customer->statements()->latest('period')->get();
+        $latestStatement = $this->customer->statements()->latest('period')->get()->toArray();
+        
+        if(count($latestStatement) > 0) {
+            
+            $financial_score = (float) $latestStatement[0]['metadataResults']['ratioAnalysis']['dashboard']['financial_score'];
 
-        if($latestStatement->isNotEmpty()) {
-            $this->format['smeRatings']['financial_scores']['score'] = (float) $latestStatement->metadataResults['dashboard']['financial_score'];
-            $this->format['overall_score'] += $latestStatement->metadataResults['dashboard']['financial_score'];
+            $this->format['smeRatings']['financial_scores']['score'] = $financial_score;
+            $this->format['overall_score'] += $financial_score;
         }        
     }
 }

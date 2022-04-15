@@ -34,15 +34,18 @@ class CustomerRequest extends FormRequest
         if (! empty($this->request->get('metadata')['statement'])){
 
             if($this->request->get('metadata')['setMethod'] == 'add' && isset($this->request->get('metadata')['statement']['metadataStatements'])) {
+
                 $period = $this->request->get('metadata')['statement']['metadataStatements']['period'];
+                
+                if (isset($customer->statements)) {
+                    $periods = collect($customer->statements()->get('period')->toArray())
+                    ->flatten()->flip()->keys();
 
-                $periods = collect($customer->statements()->get('period')->toArray())
-                ->flatten()->flip()->keys();
-
-                if($periods->intersect([$period])->count() > 0) {
-                    throw new Exception('The financial period already exists.');
+                    if ($periods->intersect([$period])->count() > 0) {
+                        throw new Exception('The financial period already exists.');
+                    }
                 }
-
+                
             }            
         }
 

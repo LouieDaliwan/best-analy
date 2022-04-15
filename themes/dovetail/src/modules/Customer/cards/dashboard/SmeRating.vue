@@ -7,14 +7,14 @@
       <v-row no-gutters class="my-5">
         <v-col cols="12" sm="6">
           <b><span v-text="trans('Score')"></span>:</b>
-          <span class="link--text" v-text="trans('Scores Incomplete')"></span>
+          <span class="link--text" v-text="trans(`${value.ratings.overall_score}`)"></span>
         </v-col>
         <v-col cols="12" sm="6" class="text-sm-right">
           <b><span v-text="trans('Results')"></span>:</b>
           <span
             class="muted--text light rounded-1 py-1 px-5"
             style="border-radius: 0.3125rem"
-            v-text="trans('Incomplete')"
+            v-text="trans(`${value.ratings.results}`)"
           ></span>
         </v-col>
       </v-row>
@@ -53,19 +53,37 @@
 
 <script>
 import Chart from "chart.js/auto";
-
 export default {
-  props: ["value"],
+  props:["value"],
 
-  data() {
-    return {
-      smeRatings: [],    
-    }
-  }, 
-    
+  data: () => ({
+    // smeRatings: [
+    //   {
+    //     label: "BSPI",
+    //     score: 3.2
+    //   },
+    //   {
+    //     label: "FMPI",
+    //     score: 4.0
+    //   },
+    //   {
+    //     label: "PMPI",
+    //     score: 4.0
+    //   },
+    //   {
+    //     label: "HRPI",
+    //     score: 4.5
+    //   },
+    //   {
+    //     label: "Financial Score",
+    //     score: 5.2
+    //   }
+    // ],
+    smeRatings: [],
+  }),
   methods: {
     initChart() {
-      const chartEl = this.$refs["chart-Pcel"];
+      const chartEl = this.$refs["chart-el"];
       const chart = new Chart(chartEl, {
         type: "line",
         data: {
@@ -91,24 +109,24 @@ export default {
 
     convertToArrSME() {
       var smeObject = [];
+      
       _.map(this.value.ratings.smeRatings, function(item,) {
           const obj = {
             'label' : item.label,
-            'score': parseFloat(JSON.stringify(item.score))
+            'score': JSON.stringify(item.score)
           }
-
+          
           smeObject.push(obj);
       });  
 
-      console.log('after');
-      console.log(smeObject);
-      this.smeRatings = smeObject;
+      this.smeRatings = smeObject; 
     }
   },
-
   mounted() {
+    console.log(this.value);
     this.convertToArrSME();
     this.initChart();
   }
 };
 </script>
+

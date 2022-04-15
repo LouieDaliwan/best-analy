@@ -32,9 +32,9 @@ class Score {
         
         if(count($latestStatement) > 0) {
             
-            $financial_score = (float) $latestStatement[0]['metadataResults']['ratioAnalysis']['dashboard']['financial_score'];
+            $financial_score = (float) round($latestStatement[0]['metadataResults']['ratioAnalysis']['dashboard']['financial_score'],2);
 
-            $this->format['smeRatings']['financial_scores']['score'] = $financial_score;
+            $this->format['smeRatings']['financial_score']['score'] = $financial_score;
             $this->format['overall_score'] += $financial_score;
         }        
     }

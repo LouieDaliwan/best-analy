@@ -33,17 +33,18 @@ class Rendering
                     $score = round((float) $ratio['score'], 2); 
                                     
                     if ($score >= $remarkPoint1 && $score <= $remarkPoint2) {
+                        
                         $remarks = $remark;
                         $ratioAnalysis['dashboard'][$ratioKey]['color'] = self::colorStatus($remarks);
                         $ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;
                     }
 
-                    if ($remark == 'Very Poor' && $score < $remarkPoint1) {                       
+                    if ($remark == 'Very Poor' && $score < $remarkPoint1 && collect(['raw_materials', 'debt_ratio'])->intersect([$ratioKey])->isEmpty()) {                       
                         $remarks = 'Very Poor';
                         $ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;
                     }
 
-                    if ($score >= $remarkPoint1 && $remarkPoint2 == 0) {
+                    if ($score >= $remarkPoint1 && $remarkPoint2 == 0 && collect(['raw_materials', 'debt_ratio'])->intersect([$ratioKey])->isEmpty()) {
                         $remarks = $remark;
                         $ratioAnalysis['dashboard'][$ratioKey]['color'] = self::colorStatus($remarks);
                         $ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;

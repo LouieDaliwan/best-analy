@@ -25,14 +25,13 @@ class Rendering
                 $ratio = $ratioAnalysis['dashboard'][$ratioKey];
 
                 foreach ($ratioValue as $remark => $remarkPoints) {
-
                     $remarks = '';
                     
                     $remarkPoint1 = (float) $remarkPoints[0];
                     $remarkPoint2 = (float) isset($remarkPoints[1]) ? $remarkPoints[1] : 0;
 
                     $score = round((float) $ratio['score'], 2); 
-
+                                    
                     if ($score >= $remarkPoint1 && $score <= $remarkPoint2) {
                         $remarks = $remark;
                         $ratioAnalysis['dashboard'][$ratioKey]['color'] = self::colorStatus($remarks);
@@ -48,6 +47,12 @@ class Rendering
                         $remarks = $remark;
                         $ratioAnalysis['dashboard'][$ratioKey]['color'] = self::colorStatus($remarks);
                         $ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;
+                    }
+                    
+                    if ($score <= $remarkPoint1 && $remark == 'Excellent' && collect(['raw_materials', 'debt_ratio'])->intersect([$ratioKey])->isNotEmpty()) {
+                        $remarks = $remark;
+                        $ratioAnalysis['dashboard'][$ratioKey]['color'] = self::colorStatus($remarks);
+                        $ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks; 
                     }
                 }
             }

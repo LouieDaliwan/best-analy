@@ -119,7 +119,7 @@ class FinancialRatio implements FinancialRatioInterface
         $this->ratioAnalysis['liquidity'] = Liquidity::compute($this->ratioAnalysis['liquidity'], $sales, $balanceSheets);
 
         $this->ratioAnalysis['dashboard']['current_ratio']['score'] = $balanceSheets['current_liabilities'] != 0 ?
-         round($balanceSheets['cash'] / $balanceSheets['current_liabilities'], 2) : 0;
+         round($balanceSheets['current_assets'] / $balanceSheets['current_liabilities'], 2) : 0;
     }
 
     protected function computeSolvency($balanceSheets)

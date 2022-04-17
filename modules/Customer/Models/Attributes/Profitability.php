@@ -10,7 +10,7 @@ class Profitability
         $stock_holder = (float) $balanceSheets['stockholdersequity'];
         $common_share = (float) $balanceSheets['commonsharesoutstanding'];
 
-        $profitability['gross_profit_margin'] = $sales != 0 ? round((($sales - $profitStatements['cost_goods']) / $profitStatements['cost_goods']) * 100, 2) : 0;
+        $profitability['gross_profit_margin'] = $sales != 0 ? round((((float) $sales - (float) $profitStatements['cost_goods']) / (float) $sales) * 100, 2) : 0;
         
         $profitability['operating_profit_margin'] = $sales != 0 ? round(($profitStatements['operating_loss_or_profit'] / $sales) * 100, 2) : 0;
 

@@ -33,7 +33,7 @@ class Rendering
 
                     $score = round((float) $ratio['score'], 2); 
 
-                    if ($ratio['score'] >= $remarkPoint1 && $score <= $remarkPoint2) {
+                    if ($score >= $remarkPoint1 && $score <= $remarkPoint2) {
                         $remarks = $remark;
                         $ratioAnalysis['dashboard'][$ratioKey]['color'] = self::colorStatus($remarks);
                         $ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;

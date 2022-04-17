@@ -25,7 +25,7 @@ return [
             ],
         ],
         'overall_score' => 0.00,
-        'results' => 'incomplete'
+        'results' => 'Incomplete'
 
     ],
     'format' => [
@@ -130,7 +130,7 @@ return [
                 0.079,
             ],
             'Poor' => [
-                0.8,
+                0.08,
                 0.149,
             ],
             'Moderate' => [

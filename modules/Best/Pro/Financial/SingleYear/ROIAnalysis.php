@@ -51,14 +51,14 @@ class ROIAnalysis
 
         $comments = [
             'Very Poor' => "Business should review the key purpose of the investment and explore alternative strategies to mitigate and revive the gains from the investment.",
-            'Poor' => 'Revist the business plan to review prior sales estimates and marketing drivers',
+            'Poor' => 'Revist the business plan to review prior sales estimates and marketing drivers.',
             'Moderate' => 'A review of business strategy is recommended to explore operational improvements and technology adoption into business operations.',
-            'Good' => 'Healthy investment likely to lead better future for business',
-            'Excellent' => 'Firm position to continue expansionary strategies'
+            'Good' => 'Healthy investment likely to lead better future for business.',
+            'Excellent' => 'Firm position to continue expansionary strategies.'
         ];
 
         
-        return "{$remarks} ROI by {$projectType} standards ".$comments[$remarks];
+        return "{$remarks} ROI by {$projectType} standards. ".$comments[$remarks];
     }
 
     protected static function dataSet($data)

@@ -51,15 +51,15 @@ class CurrentRatioAnalysis
         $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['current_ratio']['remarks'];
 
         $comments = [
-            'Very Poor' => "Business may be in a critically difficult situation to be able to meet its short term financial obligations and will need to source for additional liquidity",
+            'Very Poor' => "Business may be in a critically difficult situation to be able to meet its short term financial obligations and will need to source for additional liquidity.",
             'Poor' => 'A review of asset management while reducing short-term liabilities will be necessary to bring the business out of potential payment defaults.',
             'Moderate' => 'While asset to liquidity remains within the fence, efforts should go towards improving short term credits and risk analysis.',
-            'Good' => 'Heatlhy net profit levels to be retained for now while exploring greater automation to further streamline the work process',
-            'Excellent' => 'Continue to monitor and keep indicators monitored 24/7'
+            'Good' => 'Heatlhy net profit levels to be retained for now while exploring greater automation to further streamline the work process.',
+            'Excellent' => 'Continue to monitor and keep indicators monitored 24/7.'
         ];
 
         
-        return "{$remarks} Current Ratio by {$projectType} standards ". $comments[$remarks];
+        return "{$remarks} Current Ratio by {$projectType} standards. ". $comments[$remarks];
     }
 
     protected static function dataSet($data)

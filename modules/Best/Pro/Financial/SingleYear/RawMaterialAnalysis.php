@@ -51,14 +51,14 @@ class RawMaterialAnalysis
 
         $comments = [
             'Very Poor' => "Critical consideration to review existing suppliers and partners, widen the group of suppliers available and/or negotiate for a significant reduction in costs to ensure a healthy and sustainable business operations.",
-            'Poor' => 'Strengthen partnership with existing supply partners to gain better price and improved margin',
-            'Moderate' => 'While margin remains within modest levels, volatility in pricing due to external factors calls for a more cautious approach and risk diversification',
-            'Good' => 'Positive margins could help in finding appropriatemale partner for further explansion',
-            'Excellent' => 'Retain existing suppliers while continuing to monitor and reduce direct costs further optimising profits levels'
+            'Poor' => 'Strengthen partnership with existing supply partners to gain better price and improved margin.',
+            'Moderate' => 'While margin remains within modest levels, volatility in pricing due to external factors calls for a more cautious approach and risk diversification.',
+            'Good' => 'Positive margins could help in finding appropriatemale partner for further explansion.',
+            'Excellent' => 'Retain existing suppliers while continuing to monitor and reduce direct costs further optimising profits levels.'
         ];
 
         
-        return "{$remarks} Raw Materials Margin by {$projectType} standards ".$comments[$remarks];
+        return "{$remarks} Raw Materials Margin by {$projectType} standards. ".$comments[$remarks];
 
     }
 

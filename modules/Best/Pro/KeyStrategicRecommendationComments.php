@@ -62,7 +62,8 @@ abstract class KeyStrategicRecommendationComments
         */
         foreach (PredictionScoreCard::get($fields, $index, $month, $customerId, $userId) as $score) {
 
-            if (!isset($list[$score])) {
+
+            if (!isset($list[$score]) || $list == "") {
                 continue;
             }
 
@@ -146,6 +147,9 @@ abstract class KeyStrategicRecommendationComments
     {
         $list = Cache::get('ksrData');
 
+        if($index == 'sdmi') {
+            return "";
+        }
         return $list[$index]['metadata'];
 
         //backup for this -- Louie Angelo Daliwan

@@ -50,15 +50,15 @@ class NetMarginAnalysis
         $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['net_margin']['remarks'];
         
         $comments = [
-            'Very Poor' => "Business sustainability is in a very serious situation, requiring immediate improvements to remain viable",
-            'Poor' => 'Given the very slim margin, business may risk slipping into losses. Aggressive business development required to improve business sustainability',
+            'Very Poor' => "Business sustainability is in a very serious situation, requiring immediate improvements to remain viable.",
+            'Poor' => 'Given the very slim margin, business may risk slipping into losses. Aggressive business development required to improve business sustainability.',
             'Moderate' => 'While margin remains within respectable level, business should explore reducing operational costs through comprehensive review of operations.',
             'Good' => 'Safe levels achieved by business to push performance to a higher level through better technology adoption.',
-            'Excellent' => 'Continue to enhance IT systems to ensure continued efforts go towards enhancing values, reshaping business goals'
+            'Excellent' => 'Continue to enhance IT systems to ensure continued efforts go towards enhancing values, reshaping business goals.'
         ];
 
         
-        return "{$remarks} Net Margin by {$projectType} standards " . $comments[$remarks];
+        return "{$remarks} Net Margin by {$projectType} standards. " . $comments[$remarks];
     }
 
     protected static function dataSet($data)

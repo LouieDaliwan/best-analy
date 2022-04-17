@@ -9,6 +9,11 @@
   <script>{!! file_get_contents('http://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js') !!}</script> -->
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
+
+  <script type="text/javascript">
+    Chart.register(chartjs-plugin-annotation);
+  </script>
 
   {{-- Theme CSS --}}
   <style>{{ theme()->inlined(public_path('reports/css/basic.css')) }}</style>

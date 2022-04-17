@@ -113,7 +113,7 @@ $(document).ready(function() {
             // callback: function(value){return value}
           }
         }]
-      }
+      },
     },
   });
 });

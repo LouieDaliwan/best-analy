@@ -43,6 +43,8 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26",
     "chart.js": "^3.7.1",
+    "chartjs-lines-plugin": "^1.0.3",
+    "chartjs-plugin-annotation": "^1.4.0",
     "css-loader": "^3.4.2",
     "highlight.js": "^9.18.1",
     "laravel-mix-favicon": "^0.1.0",

@@ -47,7 +47,7 @@ class RawMaterialAnalysis
     protected static function getComment($financialStatements)
     {
         $projectType = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
-        $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks'];
+        $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['raw_materials']['remarks'];
 
         $comments = [
             'Very Poor' => "Critical consideration to review existing suppliers and partners, widen the group of suppliers available and/or negotiate for a significant reduction in costs to ensure a healthy and sustainable business operations.",

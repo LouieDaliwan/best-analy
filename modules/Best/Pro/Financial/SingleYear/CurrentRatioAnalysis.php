@@ -48,7 +48,7 @@ class CurrentRatioAnalysis
     protected static function getComment($financialStatements)
     {
         $projectType = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
-        $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks'];
+        $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['current_ratio']['remarks'];
 
         $comments = [
             'Very Poor' => "Business may be in a critically difficult situation to be able to meet its short term financial obligations and will need to source for additional liquidity",

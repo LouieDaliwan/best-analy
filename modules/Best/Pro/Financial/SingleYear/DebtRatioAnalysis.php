@@ -47,7 +47,7 @@ class DebtRatioAnalysis
     protected static function getComment($financialStatements)
     {
         $projectType = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
-        $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks'];
+        $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['debt_ratio']['remarks'];
 
         $comments = [
             'Very Poor' => "With a very heavy short and long-term financial burden, business may need to resort to bring in additional business partners while improving its asset proportion.",

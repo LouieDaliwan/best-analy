@@ -47,7 +47,7 @@ class ROIAnalysis
     protected static function getComment($financialStatements)
     {
         $projectType = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
-        $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks'];
+        $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['roi']['remarks'];
 
         $comments = [
             'Very Poor' => "Business should review the key purpose of the investment and explore alternative strategies to mitigate and revive the gains from the investment.",

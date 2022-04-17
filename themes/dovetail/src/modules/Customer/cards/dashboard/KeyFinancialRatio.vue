@@ -12,7 +12,7 @@
       <v-row class="mb-5">
         <v-col cols="12" sm="6">
           <b><span v-text="trans('Sector')"></span>:</b>
-          <span v-text="trans('Non-industrial')"></span
+          <span v-text="trans(value.project_type)"></span
         ></v-col>
         <v-col cols="12" sm="6" class="text-sm-right">
           <b><span v-text="trans('Date')"></span>:</b>

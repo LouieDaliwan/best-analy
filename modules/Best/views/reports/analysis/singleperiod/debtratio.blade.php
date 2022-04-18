@@ -109,6 +109,9 @@ $(document).ready(function() {
             // callback: function (value) {
             //   return (value / this.max * 100).toFixed(0) + '%'; // convert it to percentage
             // },
+            callback: function (value) {
+              return value + '%'; 
+            },
           }
         }]
       }

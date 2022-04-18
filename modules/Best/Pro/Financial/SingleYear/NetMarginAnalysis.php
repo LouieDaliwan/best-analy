@@ -7,8 +7,9 @@ class NetMarginAnalysis
     public static function getReport($financialStatements)
     {
         $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['profitability']['net_profit_margin'] * 100, 2);
         $goodScore = self::getBenchMarkScore($projectType);
-        $labels = [__('Net Margin after Tax'), __("Recommended Good Score ({$goodScore}%)")];        
+        $labels = [__("Net Margin after Tax ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")];        
 
         return [
             'chart' => [

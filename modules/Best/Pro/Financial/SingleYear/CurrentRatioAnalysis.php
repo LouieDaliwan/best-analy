@@ -8,9 +8,10 @@ class CurrentRatioAnalysis
     public static function getReport($financialStatements)
     {
         $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $score = round((float) str_replace(':1', "", $financialStatements[0]['metadataResults']['ratioAnalysis']['liquidity']['current_ratio']) * 100, 2);
         $goodScore = self::getBenchMarkScore($projectType);
 
-        $labels = [__('Current Ratio'), __("Recommended Good Score ({$goodScore}%)")];
+        $labels = [__("Current Ratio ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")];
         
         return [
             'chart' => [

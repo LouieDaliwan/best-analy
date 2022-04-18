@@ -8,9 +8,10 @@ class GrossMarginAnalysis
     {
 
         $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['profitability']['gross_profit_margin'] * 100, 2);
         $goodScore = self::getBenchMarkScore($projectType);
 
-        $labels = [__('Gross Profit Margin'), __("Recommended Good Score ({$goodScore}%)")];
+        $labels = [__("Gross Profit Margin ({$score}%) "), __("Recommended Good Score ({$goodScore}%)")];
         
         return [
             'chart' => [

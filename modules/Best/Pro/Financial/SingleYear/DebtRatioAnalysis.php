@@ -6,10 +6,11 @@ class DebtRatioAnalysis
 {
     public static function getReport($financialStatements)
     {
-        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'];
+        $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'] * 100, 2);  
         $goodScore = self::getBenchMarkScore($projectType);
 
-        $labels = [__('Debt Ratio'), __("Recommended Good Score ({$goodScore}%)")];
+        $labels = [__("Debt Ratio ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")];
         
         return [
             'chart' => [

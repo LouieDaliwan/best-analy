@@ -6,10 +6,11 @@ class RawMaterialAnalysis
 {
     public static function getReport($financialStatements)
     {
-        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'];
+        $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['additional_ratios']['raw_materials_margin'] * 100, 2); 
         $goodScore = self::getBenchMarkScore($projectType);
 
-        $labels = [__('Raw Materials Margin'), __("Recommended Good Score ({$goodScore}%)")];
+        $labels = [__("Raw Materials Margin ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")];
         
         return [
             'chart' => [

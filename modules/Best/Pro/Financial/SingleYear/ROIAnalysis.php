@@ -7,10 +7,11 @@ class ROIAnalysis
     public static function getReport($financialStatements)
     {
 
-        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'];
+        $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['additional_ratios']['roi'] * 100, 2); 
         $goodScore = self::getBenchMarkScore($projectType);
 
-        $labels = [__('ROI'), __("Recommended Good Score ({$goodScore}%)")];
+        $labels = [__("ROI ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")];
         
         return [
             'chart' => [

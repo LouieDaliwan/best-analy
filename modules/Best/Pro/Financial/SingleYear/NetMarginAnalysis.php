@@ -6,9 +6,10 @@ class NetMarginAnalysis
 {
     public static function getReport($financialStatements)
     {
+        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $goodScore = self::getBenchMarkScore($projectType);
+        $labels = [__('Net Margin after Tax'), __("Recommended Good Score ({$goodScore}%)")];        
 
-        $labels = ['Net Margin after Tax'];
-        
         return [
             'chart' => [
                 'labels' => $labels,
@@ -29,7 +30,7 @@ class NetMarginAnalysis
         foreach ($financialStatements as $statement) {
 
             $tempData = [];
-
+            $projectType = $statement['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
             $profitability = $statement['metadataResults']['ratioAnalysis']['profitability'];
 
             foreach ($marginRatio as $item) {
@@ -41,7 +42,7 @@ class NetMarginAnalysis
             $data[$statement['period']] = $tempData;
         }
 
-        return self::dataSet($data);
+        return self::dataSet($data, $projectType);
     }
 
     protected static function getComment($financialStatements)
@@ -57,36 +58,48 @@ class NetMarginAnalysis
             'Excellent' => 'Continue to enhance IT systems to ensure continued efforts go towards enhancing values, reshaping business goals.'
         ];
 
-        
+
         return "{$remarks} Net Margin by {$projectType} standards. " . $comments[$remarks];
     }
 
-    protected static function dataSet($data)
+    protected static function dataSet($data, $projectType)
     {
         $dataSet = [];
-
-        $color = ['#a2d5ac', '#3aada8', '#557c83'];
 
         $count = 0;
 
         foreach ($data as $period => $datum) {
 
-            $bgColor = $color[$count];
-
             $isMostRecent = count($data) == ($count + 1) ? ' (most recent)' : '';
 
             $year = "{$period}{$isMostRecent}";
 
+            $dataNumber = [
+                $data[$period],
+                self::getBenchMarkScore($projectType)
+            ];
+
             $dataSet[] = [
                 'label' => $year,
-                'data' => $data[$period],
-                'bg' => $bgColor,
-                'backgroundColor' => [$bgColor, $bgColor],
+                'data' => $dataNumber,
+                'backgroundColor' => ['#a2d5ac', '#468086'],
+                'borderColor' => ['#a2d5ac', '#468086'],
             ];
 
             $count++;
         }
 
         return $dataSet;
+    }
+
+
+    protected static function getBenchMarkScore($projectType)
+    {
+        $benchMarks = [
+            'industrial' => 10,
+            'non-industrial' => 20,
+        ];
+
+        return $benchMarks[strtolower($projectType)];
     }
 }

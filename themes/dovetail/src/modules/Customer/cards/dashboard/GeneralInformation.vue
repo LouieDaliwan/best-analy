@@ -93,31 +93,31 @@ export default {
             details: [
               {
                 label: "Project Name",
-                value: "Chocolate"
+                value: this.value.details.metadata.project_name,
               },
               {
                 label: "Business Status",
-                value: "Soft Opening"
+                value: this.value.details.metadata.description,
               },
               {
                 label: "Industry Sector",
-                value: "Tourism"
+                value: this.value.details.metadata.industry_sector,
               },
               {
                 label: "Business Size",
-                value: "SME"
+                value: this.value.details.metadata.business_size,
               },
               {
                 label: "Project Location",
-                value: "Dubai"
+                value: this.value.details.metadata.project_location,
               },
               {
                 label: "Funding Program",
-                value: "Bedaya"
+                value: this.value.details.metadata.funding_program,
               },
               {
                 label: "Project Type",
-                value: "Industrial"
+                value: this.value.details.metadata.project_type,
               }
             ]
           },

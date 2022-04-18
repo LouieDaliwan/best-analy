@@ -105,11 +105,11 @@ $(document).ready(function() {
             fontSize: 12,
             // min: -100,
             // max: 100,
-            min: 0,
-            max: this.max,// Your absolute max value
-            callback: function (value) {
-              return (value / this.max * 100).toFixed(0) + '%'; // convert it to percentage
-            },
+            // min: 0,
+            // max: this.max,// Your absolute max value
+            // callback: function (value) {
+            //   return (value / this.max * 100).toFixed(0) + '%'; // convert it to percentage
+            // },
             // callback: function(value){return value}
           }
         }]

@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- <v-form @submit.prevent="submit" ref="form"> -->
-    <h3 class="d-flex align-center mb-3">
-      Financial Period
+    <div class="d-flex align-center mb-3">
+      <h3>Financial Period</h3>
       <v-spacer></v-spacer>
       <template v-if="resource.data.id">
         <input
@@ -16,16 +16,17 @@
           color="primary"
           hide-details
           v-model="edit"
+          inset
         ></v-switch>
       </template>
       <template v-else>
-        <span class="grey--text text--darken-2">Add </span>
+        <!-- <span class="grey--text text--darken-2">Add</span> -->
       </template>
-    </h3>
+    </div>
     <input type="hidden" name="metadata[setMethod]" :value="resource.data.setMethod" />
     <validation-provider
       vid="description"
-      :name="trans('Description')"
+      :name="trans('Enter Financial Period')"
       v-slot="{ errors }"
       v-if="edit"
     >
@@ -49,7 +50,7 @@
           ></v-text-field> -->
           <v-text-field
             dense
-            label="Description"
+            label="Enter Financial Period"
             name="metadata[statement][metadataStatements][period]"
             outlined
             v-model="resource.data.period"
@@ -82,20 +83,20 @@
       Financial Period
     </h4>
 
-    <v-divider class="my-10"></v-divider>
+    <v-card flat height="40"></v-card>
 
-    <h3>Financial Statement</h3>
-
+    <h2 class="primary--text">Financial Statement</h2>
+    <v-card flat height="20"></v-card>
     <div
       v-for="(item, i) in Object.keys(resource.data.metadataStatements)"
       :key="i + 'a'"
-    >
+      >
       <template v-if="item === 'Net Operating Profit/(Loss)'">
         <v-row>
           <v-col
             cols="6"
             v-text="trans(item)"
-            class="text-right font-weight-bold"
+            class="font-weight-bold text-right"
           >
           </v-col>
           <v-col cols="6">
@@ -122,10 +123,12 @@
                   resource.data.metadataStatements[item] || 0
                 ).toLocaleString()
               "
-              class="text-right"
+              class="text-right font-weight-bold "
             ></div
           ></v-col>
         </v-row>
+        <v-divider v-if="edit" class="my-0 d-none"></v-divider>
+        <v-divider v-else class="my-0"></v-divider>
       </template>
       <template
         v-else-if="
@@ -135,12 +138,12 @@
             'Cost of Good Sold'
           ].includes(item)
         "
-      >
+        >
         <v-row>
           <v-col
             cols="6"
             v-text="trans(item)"
-            class="text-right font-weight-bold"
+            class="font-weight-bold text-right"
           >
           </v-col>
           <v-col cols="6">
@@ -159,10 +162,12 @@
                   resource.data.metadataStatements[item] || 0
                 ).toLocaleString()
               "
-              class="text-right"
+              class="text-right font-weight-bold "
             ></div
           ></v-col>
         </v-row>
+        <v-divider v-if="edit" class="my-0 d-none"></v-divider>
+        <v-divider v-else class="my-0"></v-divider>
       </template>
       <template v-else>
         <period-input
@@ -171,52 +176,48 @@
           :name="`metadata[statement][metadataStatements][${item}]`"
           v-model="resource.data.metadataStatements[item]"
         ></period-input>
+        <v-divider v-if="edit" class="my-0 d-none"></v-divider>
+        <v-divider v-else class="my-0"></v-divider>
       </template>
     </div>
 
     <v-card flat height="50"></v-card>
 
-    <v-divider class="my-10"></v-divider>
+    <!-- <v-divider class="my-10"></v-divider> -->
 
-    <h3>Balance Sheet</h3>
-
-    <v-card flat height="50"></v-card>
-
+    <h2 class="primary--text">Balance Sheet</h2>
+    <v-card flat height="20"></v-card>
     <div
       v-for="(item, i) in Object.keys(resource.data.metadataSheets)"
       :key="i"
-    >
+      >
       <template v-if="item === 'Balance'">
-        <v-row>
+        <v-row align="center" justify="center">
           <v-col
             cols="6"
-            v-text="'Balance checked!'"
-            class="text-right font-weight-bold"
+            v-text="'Balance checked'"
+            class="font-weight-bold"
           >
           </v-col>
-          <v-col cols="6">
-            <v-text-field
-              :class="
-                !resource.data.metadataSheets[item] ? 'text-green' : 'text-red'
-              "
-              :color="!resource.data.metadataSheets[item] ? 'green' : 'red'"
-              :name="`metadata[statement][metadataSheets][${item}]`"
-              :value="resource.data.metadataSheets[item] || 'Balance!'"
-              class="text-right dt-text-field"
-              dense
-              readonly
-              v-if="edit"
-            ></v-text-field>
-            <div
-              v-else
-              v-text="
-                parseFloat(
-                  resource.data.metadataSheets[item] || 0
-                ).toLocaleString()
-              "
-              class="text-right"
-            ></div
-          ></v-col>
+          <v-col cols="6" no-gutters>
+            <div v-if="edit" class="text-right">
+              <v-chip
+                class="px-10 text-right white--text"
+                :color="!resource.data.metadataSheets[item] ? 'green' : 'red'"
+                v-text="resource.data.metadataSheets[item] || 'Balanced'"
+                >
+              </v-chip>
+            </div>
+            <div v-else class="text-right m-0 p-0">
+              <v-chip
+                class="px-10 text-right white--text"
+                :color="!resource.data.metadataSheets[item] ? 'green' : 'red'"
+                v-text="resource.data.metadataSheets[item] || 'Balanced'"
+                >
+              </v-chip>
+            </div>
+          </v-col>
+
         </v-row>
       </template>
       <template v-else>
@@ -226,6 +227,8 @@
           :name="`metadata[statement][metadataSheets][${item}]`"
           v-model="resource.data.metadataSheets[item]"
         ></period-input>
+        <v-divider v-if="edit" class="my-0 d-none"></v-divider>
+        <v-divider v-else class="my-0" color="primary"></v-divider>
       </template>
     </div>
   </div>

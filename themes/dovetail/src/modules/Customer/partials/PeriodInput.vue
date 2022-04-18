@@ -10,17 +10,13 @@
           </v-btn>
         </template>
         <v-list dense>
-          <v-subheader
-            >{{ trans(label) }} may include the following items: </v-subheader
-          >
-          <v-list-item v-for="(item, i) in tooltip[label]" :key="i">
-            <v-list-item-icon>
-              <v-icon>mdi-circle-small</v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title v-text="item"></v-list-item-title>
-            </v-list-item-content>
+          <v-list-item>
+            <v-list-content>
+              <p class="font-weight-black mb-0">{{ trans(label) }} may include the following items:</p>
+              <ul class="mb-0" v-for="(item, i) in tooltip[label]" :key="i">
+                <li><p v-text="item" class="mb-0"></p></li>
+              </ul>
+            </v-list-content>
           </v-list-item>
         </v-list>
       </v-menu>

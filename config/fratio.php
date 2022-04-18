@@ -19,6 +19,10 @@ return [
                 'label' => "HRPI",
                 'score' => 0,
             ],
+            'sdmi' => [
+                'label' => "5th Module",
+                'score' => 0,
+            ],
             'financial_score' => [
                 'label' => 'Financial Score',
                 'score' => 0

@@ -50,29 +50,16 @@ $(document).ready(function() {
     muted:              'rgb(239, 244, 250)'
   };
   var dataset = {!! json_encode($data['analysis:financial']['debt_ratio']['chart']['dataset']) !!}
-  dataset = dataset.map(function (item) {
-    var gradient = ctx.createLinearGradient(0, 0, 0, 200);
-        gradient.addColorStop(0, item.backgroundColor[0]);
-        gradient.addColorStop(1, item.backgroundColor[1]);
-
-    return Object.assign({}, item, {
-      backgroundColor: gradient,
-      hoverBackgroundColor: chartColors.primary
-    })
-  });
+  var labels = {!!  json_encode(collect($data['analysis:financial']['debt_ratio']['chart']['labels'])->values()->toArray()); !!}
+  
   var barChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      {{-- labels: {!! json_encode(collect(
-        $data['analysis:financial']['debt_ratio']['chart']['labels'])->values()->toArray()
-      ) !!}, --}}
-      labels: [
-        ['{{ __("Debt Ratio") }}'],
-      ],
+      labels: labels,
       datasets: dataset,
     },
     options: {
-      cornerRadius: 20,
+      cornerRadius: 0,
       legend: {
         position: 'bottom',
         display: true,
@@ -87,7 +74,8 @@ $(document).ready(function() {
       },
       scales: {
         xAxes: [{
-          barPercentage: 0.3,
+          categoryPercentage: -0.3,
+          barPercentage: -0.3,
           gridLines: {
             zeroLineColor: chartColors.primaryLighten2,
             display: false,
@@ -116,7 +104,11 @@ $(document).ready(function() {
             fontSize: 12,
             // min: -100,
             // max: 100,
-            callback: function(value){return value}
+            min: 0,
+            max: this.max,// Your absolute max value
+            callback: function (value) {
+              return (value / this.max * 100).toFixed(0) + '%'; // convert it to percentage
+            },
           }
         }]
       }

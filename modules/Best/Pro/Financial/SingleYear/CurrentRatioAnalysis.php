@@ -7,8 +7,10 @@ class CurrentRatioAnalysis
 {
     public static function getReport($financialStatements)
     {
+        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $goodScore = self::getBenchMarkScore($projectType);
 
-        $labels = ['Current Ratio'];
+        $labels = [__('Current Ratio'), __("Recommended Good Score ({$goodScore}%)")];
         
         return [
             'chart' => [
@@ -32,6 +34,7 @@ class CurrentRatioAnalysis
             $tempData = [];
 
             $profitability = $statement['metadataResults']['ratioAnalysis']['liquidity'];
+            $projectType = $statement['metadataResults']['ratioAnalysis']['dashboard']['project_type'];
 
             foreach ($marginRatio as $item) {
                 $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): (float) $profitability[$item];
@@ -42,7 +45,7 @@ class CurrentRatioAnalysis
             $data[$statement['period']] = $tempData;
         }
 
-        return self::dataSet($data);
+        return self::dataSet($data, $projectType);
     }
 
     protected static function getComment($financialStatements)
@@ -62,7 +65,7 @@ class CurrentRatioAnalysis
         return "{$remarks} Current Ratio by {$projectType} standards. ". $comments[$remarks];
     }
 
-    protected static function dataSet($data)
+    protected static function dataSet($data, $projectType)
     {
         $dataSet = [];
 
@@ -72,22 +75,35 @@ class CurrentRatioAnalysis
 
         foreach ($data as $period => $datum) {
 
-            $bgColor = $color[$count];
-
             $isMostRecent = count($data) == ($count + 1) ? ' (most recent)' : '';
 
             $year = "{$period}{$isMostRecent}";
 
+            $dataNumber = [
+                $data[$period],
+                self::getBenchMarkScore($projectType)
+            ];
+
             $dataSet[] = [
                 'label' => $year,
-                'data' => $data[$period],
-                'bg' => $bgColor,
-                'backgroundColor' => [$bgColor, $bgColor],
+                'data' => $dataNumber,
+                'backgroundColor' => ['#a2d5ac', '#468086'],
+                'borderColor' => ['#a2d5ac', '#468086'],
             ];
 
             $count++;
         }
-
+        
         return $dataSet;
+    }
+
+    protected static function getBenchMarkScore($projectType)
+    {
+        $benchMarks = [
+            'industrial' => 125,
+            'non-industrial' => 150,
+        ];
+
+        return $benchMarks[strtolower($projectType)];
     }
 }

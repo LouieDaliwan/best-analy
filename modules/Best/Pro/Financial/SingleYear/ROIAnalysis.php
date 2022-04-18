@@ -7,7 +7,10 @@ class ROIAnalysis
     public static function getReport($financialStatements)
     {
 
-        $labels = ['ROI'];
+        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $goodScore = self::getBenchMarkScore($projectType);
+
+        $labels = [__('ROI'), __("Recommended Good Score ({$goodScore}%)")];
         
         return [
             'chart' => [
@@ -30,6 +33,7 @@ class ROIAnalysis
 
             $tempData = [];
 
+            $projectType = $statement['metadataResults']['ratioAnalysis']['dashboard']['project_type'];
             $profitability = $statement['metadataResults']['ratioAnalysis']['additional_ratios'];
 
             foreach ($marginRatio as $item) {
@@ -41,7 +45,7 @@ class ROIAnalysis
             $data[$statement['period']] = $tempData;
         }
 
-        return self::dataSet($data);
+        return self::dataSet($data, $projectType);
     }
 
     protected static function getComment($financialStatements)
@@ -61,7 +65,7 @@ class ROIAnalysis
         return "{$remarks} ROI by {$projectType} standards. ".$comments[$remarks];
     }
 
-    protected static function dataSet($data)
+    protected static function dataSet($data, $projectType)
     {
         $dataSet = [];
 
@@ -77,16 +81,32 @@ class ROIAnalysis
 
             $year = "{$period}{$isMostRecent}";
 
+            $dataNumber = [
+                $data[$period],
+                self::getBenchMarkScore($projectType)
+            ];
+
             $dataSet[] = [
                 'label' => $year,
-                'data' => $data[$period],
-                'bg' => $bgColor,
-                'backgroundColor' => [$bgColor, $bgColor],
+                'data' => $dataNumber,
+                'backgroundColor' => ['#a2d5ac', '#468086'],
+                'borderColor' => ['#a2d5ac', '#468086'],
             ];
 
             $count++;
         }
 
         return $dataSet;
+    }
+
+
+    protected static function getBenchMarkScore($projectType)
+    {
+        $benchMarks = [
+            'industrial' => 10,
+            'non-industrial' => 15,
+        ];
+
+        return $benchMarks[strtolower($projectType)];
     }
 }

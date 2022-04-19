@@ -42,12 +42,13 @@ class Score {
     protected function checkAllScores() : void
     {
         foreach ($this->format['smeRatings'] as $smeRating) {
-            if($smeRating['score'] == 0) {
+            if($smeRating['score'] == '-') {
                 $this->format['overall_score'] = self::INCOMPLETE;
                 break;
             } else {
                 $this->format['overall_score'] += $smeRating['score'];
             }
         }
+        
     }
 }

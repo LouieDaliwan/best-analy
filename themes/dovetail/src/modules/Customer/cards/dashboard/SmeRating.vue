@@ -28,7 +28,7 @@
               ></v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
-              <span v-text="item.score" v-if="item.score"></span>
+              <span v-text="`${item.score == 0 ? '-' : item.score }`" v-if="item.score"></span>
               <v-tooltip bottom v-else>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn small icon
@@ -57,28 +57,6 @@ export default {
   props:["value"],
 
   data: () => ({
-    // smeRatings: [
-    //   {
-    //     label: "BSPI",
-    //     score: 3.2
-    //   },
-    //   {
-    //     label: "FMPI",
-    //     score: 4.0
-    //   },
-    //   {
-    //     label: "PMPI",
-    //     score: 4.0
-    //   },
-    //   {
-    //     label: "HRPI",
-    //     score: 4.5
-    //   },
-    //   {
-    //     label: "Financial Score",
-    //     score: 5.2
-    //   }
-    // ],
     smeRatings: [],
   }),
   methods: {

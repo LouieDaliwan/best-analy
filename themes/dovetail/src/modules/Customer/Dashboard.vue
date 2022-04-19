@@ -22,7 +22,7 @@
         <v-col cols="12" md="7">
           <!-- TODO seperated Object for overall -->
           <sme-rating v-model="resource.data" class="mb-5"></sme-rating>
-          <key-financial-ratio v-model="keyFinRation"></key-financial-ratio>
+          <key-financial-ratio v-model="keyFinRation" :customer="resource.data"></key-financial-ratio>
         </v-col>
       </v-row>
     </template>
@@ -54,8 +54,6 @@ export default {
         .then(([res1, res2]) => {
           this.resource.setData(res1.data.data);
           this.keyFinRation = res2.data;
-          console.log('dashboard');
-          console.log(this.keyFinRation);
         })
         .finally(() => {
           this.resource.fetch(false);

@@ -7,13 +7,51 @@
           ><v-icon class="primary--text" small>mdi-eye</v-icon
           ><span v-text="trans('View Financial Analysis Report')"></span
         ></v-btn>
+        <v-btn
+          style="margin-right: 100px;"
+          icon
+          :to="{
+            name: 'companies.edit',
+            params: { id: customer.id },
+            query: { tab: 2 }
+          }"
+          exact
+          small
+          ><v-icon small class="ml-2 incomplete--text"
+            >mdi-pencil</v-icon
+          >
+          <span  v-text="trans(`Update Financial Statement`)"></span>
+          </v-btn
+        >
       </div>
       <v-divider class="mb-5"></v-divider>
       <v-row class="mb-5">
         <v-col cols="12" sm="6">
           <b><span v-text="trans('Sector')"></span>:</b>
-          <span v-text="trans(value.project_type)"></span
-        ></v-col>
+          <span v-text="trans(value.project_type)" v-if="value.project_type != ''"></span>
+          <v-tooltip bottom v-else>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              style="margin-left: 100px; top: -2px;"
+              icon
+              :to="{
+                name: 'companies.edit',
+                params: { id: customer.id },
+                query: { tab: 0 }
+              }"
+              exact
+              small
+              v-bind="attrs"
+              v-on="on"
+              ><v-icon small class="ml-2 incomplete--text"
+                >mdi-pencil</v-icon
+              >
+              <span  v-text="trans(`Update Company Information`)"></span>
+              </v-btn
+            >
+          </template> 
+        </v-tooltip>
+        </v-col>
         <v-col cols="12" sm="6" class="text-sm-right">
           <b><span v-text="trans('Date')"></span>:</b>
           <span v-text="trans(value.date)"></span
@@ -76,7 +114,7 @@
 import $auth from "@/core/Auth/auth";
 
 export default {
-  props: ["value"],
+  props: ["value", "customer"],
 
   data: vm => ({
     ratings: [

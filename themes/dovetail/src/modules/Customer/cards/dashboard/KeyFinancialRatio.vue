@@ -1,39 +1,34 @@
 <template>
   <v-card>
     <v-card-text class="pa-7">
-      <div class="d-flex align-center justify-space-between mb-3">
-        <h3 v-text="trans('Key Financial Ratio')"></h3>
-        <v-btn v-if="!isEmpty" text color="primary" @click="previewRatiosReport" 
+      <div class="d-flex align-center justify-space-between mb-5">
+        <h3 v-text="trans('Financial Statements')"></h3>
+        <v-btn v-if="!isEmpty" text color="primary" @click="previewRatiosReport"
           ><v-icon class="primary--text" small>mdi-eye</v-icon
-          ><span v-text="trans('View Financial Analysis Report')"></span
-        ></v-btn>
+          ><span v-text="trans('View Financial Analysis Report')"></span>
+        </v-btn>
         <v-btn v-if="value.date == 'empty'"
-          style="margin-right: 100px;"
-          icon
           :to="{
             name: 'companies.edit',
             params: { id: customer.id },
             query: { tab: 2 }
           }"
           exact
-          small
-          ><v-icon small class="ml-2 incomplete--text"
+          color="primary"
+          large
+          ><v-icon small class="mr-2 incomplete--text"
             >mdi-pencil</v-icon
           >
-          <span  v-text="trans(`Update Financial Statement`)"></span>
-          </v-btn
-        >
+          <span v-text="trans(`Update Financial Statement`)"></span>
+          </v-btn>
       </div>
       <v-divider class="mb-5"></v-divider>
       <v-row class="mb-5">
-        <v-col cols="12" sm="6">
-          <b><span v-text="trans('Sector')"></span>:</b>
+        <v-col v-if="value.project_type" cols="12" sm="6">
+          <strong><span v-text="trans('Sector')"></span>:</strong>
           <span v-text="trans(value.project_type)" v-if="value.project_type != ''"></span>
-          <v-tooltip bottom v-else>
-          <template v-slot:activator="{ on, attrs }">
+          <span v-else>
             <v-btn
-              style="margin-left: 100px; top: -2px;"
-              icon
               :to="{
                 name: 'companies.edit',
                 params: { id: customer.id },
@@ -41,23 +36,28 @@
               }"
               exact
               small
+              text
               v-bind="attrs"
               v-on="on"
-              ><v-icon small class="ml-2 incomplete--text"
-                >mdi-pencil</v-icon
-              >
-              <span  v-text="trans(`Update Company Information`)"></span>
-              </v-btn
-            >
-          </template> 
-        </v-tooltip>
+              ><span  v-text="trans(`Update Company Information`)"></span>
+              </v-btn>
+          </span>
         </v-col>
-        <v-col cols="12" sm="6" class="text-sm-right">
+        <v-col v-else cols="12">
+          <v-alert
+            dense
+            text
+            type="warning"
+            >
+            Inform user to update the <strong>Project Type</strong> in the Project Information.
+          </v-alert>
+        </v-col>
+        <v-col v-if="!value.date" cols="12" sm="6" class="text-sm-right">
           <b><span v-text="trans('Date')"></span>:</b>
-          <span v-text="trans(value.date)"></span
-        ></v-col>
+          <span v-text="trans(value.date)"></span>
+        </v-col>
       </v-row>
-      <div class="mb-5">
+      <div class="text-center mb-5">
         <ul class="pa-0" style="list-style: none">
           <template v-for="(item, i) in ratings">
             <li class="d-inline mr-3" :key="i">
@@ -88,7 +88,7 @@
                   <v-list-item-action-text
                     small
                     class="ml-2"
-                  >
+                    >
                     {{subitem.score}} 
                   </v-list-item-action-text>
                   <v-list-item-action>
@@ -178,9 +178,9 @@ export default {
   },
 
   mounted() {
-      if (this.value.date == 'empty') {
-        this.isEmpty = true;
-      }
+    if (this.value.date == 'empty') {
+      this.isEmpty = true;
+    }
   },
 };
 </script>

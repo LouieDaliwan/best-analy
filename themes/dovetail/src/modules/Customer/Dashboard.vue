@@ -17,18 +17,32 @@
     <template v-else>
       <v-row v-if="!keyFinRation.project_type">
         <v-col>
-          <v-card>
-            <v-card-text>
-              <p>Lorem ipsum</p>
-            </v-card-text>
-          </v-card>
+          <v-alert
+              type="warning"
+              text
+              icon="mdi-exclamation"
+              prominent
+
+              >
+              <v-row align="center">
+                <v-col class="grow">
+                  To do: This alert box informs the user to specify <strong>project type</strong> and input value to <strong>investment value</strong> in the project information as they affect computations in the financial statement.
+                </v-col>
+                <v-col class="shrink">
+                  <v-btn
+                    color="primary"
+                    large
+                    >Update Information</v-btn>
+                </v-col>
+              </v-row>
+            </v-alert>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" md="5">
+        <v-col cols="12" lg="4">
           <general-information v-model="resource.data"></general-information>
         </v-col>
-        <v-col cols="12" md="7">
+        <v-col cols="12" lg="8">
           <sme-rating v-model="resource.data" class="mb-5"></sme-rating>
           <key-financial-ratio v-model="keyFinRation" :customer="resource.data" class="mb-5"></key-financial-ratio>
           <latest-report></latest-report>
@@ -43,6 +57,8 @@ import Resource from "@/core/Models/Resource";
 import $api from "./routes/api";
 
 export default {
+  props: ["value"],
+
   components: {
     GeneralInformation: () => import("./cards/dashboard/GeneralInformation"),
     SmeRating: () => import("./cards/dashboard/SmeRating"),

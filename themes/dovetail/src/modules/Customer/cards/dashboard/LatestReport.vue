@@ -1,96 +1,100 @@
 <template>
-    <div>
+  <v-card>
+    <v-card-text class="pa-7">
+      <div class="d-flex align-center justify-space-between mb-5">
+        <h3 v-text="trans('Financial Statements')"></h3>
+      </div>
+      <v-divider class="mb-5"></v-divider>
         <div v-show="resourcesIsNotEmpty">
-            <v-card>
+          <v-card>
             <!-- <toolbar-menu :items.sync="tabletoolbar" @update:search="search">
             <template v-slot:filter>
                 <monthly-picker></monthly-picker>
             </template>
             </toolbar-menu> -->
             <v-slide-y-reverse-transition mode="out-in">
-            <v-data-table
-                :headers="resources.headers"
-                :items="resources.data"
-                :loading="resources.loading"
-                :mobile-breakpoint="NaN"
-                :options.sync="resources.options"
-                :server-items-length="resources.meta.total"
-                :show-select="tabletoolbar.toggleBulkEdit"
-                @update:options="optionsChanged"
-                color="primary"
-                item-key="id"
-                v-model="resources.selected"
-            >
-                <template v-slot:progress><span></span></template>
+              <v-data-table
+                  :headers="resources.headers"
+                  :items="resources.data"
+                  :loading="resources.loading"
+                  :mobile-breakpoint="NaN"
+                  :options.sync="resources.options"
+                  :server-items-length="resources.meta.total"
+                  :show-select="tabletoolbar.toggleBulkEdit"
+                  @update:options="optionsChanged"
+                  color="primary"
+                  item-key="id"
+                  v-model="resources.selected"
+                  >
+                  <template v-slot:progress><span></span></template>
 
-                <template v-slot:loading>
-                <v-slide-y-transition mode="out-in">
-                    <div>
-                    <div
-                        v-for="(j, i) in resources.options.itemsPerPage"
-                        :key="i"
-                    >
-                        <skeleton-table></skeleton-table>
-                    </div>
-                    </div>
-                </v-slide-y-transition>
-                </template>
+                  <template v-slot:loading>
+                  <v-slide-y-transition mode="out-in">
+                      <div>
+                      <div
+                          v-for="(j, i) in resources.options.itemsPerPage"
+                          :key="i"
+                      >
+                          <skeleton-table></skeleton-table>
+                      </div>
+                      </div>
+                  </v-slide-y-transition>
+                  </template>
 
-                <!-- Name -->
-                <template v-slot:item.key="{ item }">
-                <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                    <span class="mt-1" v-on="on"
-                        ><router-link
-                        tag="a"
-                        exact
-                        :to="goToShowPage(item)"
-                        v-text="item.key"
-                        class="text-no-wrap text--decoration-none"
-                        ></router-link
-                    ></span>
-                    </template>
-                    <span>{{ trans("View Preview Report") }}</span>
-                </v-tooltip>
-                </template>
-                <!-- Name -->
+                  <!-- Name -->
+                  <template v-slot:item.key="{ item }">
+                  <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                      <span class="mt-1" v-on="on"
+                          ><router-link
+                          tag="a"
+                          exact
+                          :to="goToShowPage(item)"
+                          v-text="item.key"
+                          class="text-no-wrap text--decoration-none"
+                          ></router-link
+                      ></span>
+                      </template>
+                      <span>{{ trans("View Preview Report") }}</span>
+                  </v-tooltip>
+                  </template>
+                  <!-- Name -->
 
-                <!-- Created -->
-                <template v-slot:item.created_at="{ item }">
-                <span class="text-no-wrap" :title="item.created_at">{{
-                    trans(item.created)
-                }}</span>
-                </template>
-                <!-- Created -->
+                  <!-- Created -->
+                  <template v-slot:item.created_at="{ item }">
+                  <span class="text-no-wrap" :title="item.created_at">{{
+                      trans(item.created)
+                  }}</span>
+                  </template>
+                  <!-- Created -->
 
-                <!-- Author -->
-                <template v-slot:item.user_id="{ item }">
-                <span class="text-no-wrap" v-text="item.author"></span>
-                </template>
-                <!-- Author -->
-            </v-data-table>
+                  <!-- Author -->
+                  <template v-slot:item.user_id="{ item }">
+                  <span class="text-no-wrap" v-text="item.author"></span>
+                  </template>
+                  <!-- Author -->
+              </v-data-table>
             </v-slide-y-reverse-transition>
-        </v-card>
+          </v-card>
         </div>
 
-        <!-- Empty state -->
+      <!-- Empty state -->
         <div v-if="resourcesIsEmpty">
-        <!-- <toolbar-menu :items.sync="tabletoolbar" @update:search="search">
-            <template v-slot:filter>
-            <monthly-picker></monthly-picker>
-            </template>
-        </toolbar-menu> -->
-        <empty-state>
-            <template v-slot:actions>
-            <v-btn large color="primary" exact :to="{ name: 'companies.show' }">
-                <v-icon small left>mdi-credit-card-outline</v-icon>
-                {{ trans("Back to Indices") }}
-            </v-btn>
-            </template>
-        </empty-state>
+          <v-card flat>
+            <v-card-text class="text-center">
+              <v-row justify="center" align="center">
+                <empty-icon class="muted--text"></empty-icon>
+              </v-row>
+              <h3 class="muted--text" v-text="trans('No reports available')"></h3>
+              <p class="muted--text mb-0" v-text="trans('Start by answering an SME rating survey.')"></p>
+            </v-card-text>
+          </v-card>
         </div>
         <!-- Empty state -->
-    </div>
+      </div>
+    </v-card-text>
+  </v-card>
+
 </template>
 
 <script>

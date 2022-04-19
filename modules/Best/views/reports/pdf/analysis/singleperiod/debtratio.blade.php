@@ -41,7 +41,6 @@
       muted:             'rgb(239, 244, 250)'
     };
     var dataset = {!! json_encode($data['analysis:financial']['debt_ratio']['chart']['dataset']) !!}
-    console.log(dataset)
 
     var barChart = new Chart(ctx, {
       type: 'bar',
@@ -87,7 +86,7 @@
         },
         scales: {
           xAxes: [{
-            barPercentage: 0.5,
+            barPercentage: 0.3,
             ticks: {
               fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',

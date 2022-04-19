@@ -29,9 +29,9 @@
           <general-information v-model="resource.data"></general-information>
         </v-col>
         <v-col cols="12" md="7">
-          <!-- TODO seperated Object for overall -->
           <sme-rating v-model="resource.data" class="mb-5"></sme-rating>
-          <key-financial-ratio v-model="keyFinRation" :customer="resource.data"></key-financial-ratio>
+          <key-financial-ratio v-model="keyFinRation" :customer="resource.data" class="mb-5"></key-financial-ratio>
+          <latest-report></latest-report>
         </v-col>
       </v-row>
     </template>
@@ -46,7 +46,8 @@ export default {
   components: {
     GeneralInformation: () => import("./cards/dashboard/GeneralInformation"),
     SmeRating: () => import("./cards/dashboard/SmeRating"),
-    KeyFinancialRatio: () => import("./cards/dashboard/KeyFinancialRatio")
+    KeyFinancialRatio: () => import("./cards/dashboard/KeyFinancialRatio"),
+    LatestReport: () => import("./cards/dashboard/LatestReport.vue")
   },
 
   data: () => ({

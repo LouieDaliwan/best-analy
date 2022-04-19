@@ -6,26 +6,38 @@ return [
             'bspi' => [
                 'label' => "BSPI",
                 'score' => 0,
+                'code' => 'business-sustainability',
+                'id' => 2,
             ],
             'fmpi' => [
                 'label' => "FMPI",
                 'score' => 0,
+                'code' => 'financial-management',
+                'id' => 1,
             ],
             'pmpi' => [
                 'label' => "PMPI",
                 'score' => 0,
+                'code' => 'productivity-management',
+                'id' => 3
             ],
             'hrpi' => [
                 'label' => "HRPI",
                 'score' => 0,
+                'code' => 'human-resource',
+                'id' => 4,
             ],
             'sdmi' => [
                 'label' => "5th Module",
                 'score' => 0,
+                'code' => 'sdmi',
+                'id' => 5
             ],
             'financial_score' => [
                 'label' => 'Financial Score',
-                'score' => 0
+                'score' => 0,
+                'code' => 'financial-score',
+                'id' => 'empty'
             ],
         ],
         'overall_score' => 0.00,

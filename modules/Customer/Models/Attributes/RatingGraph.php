@@ -9,7 +9,7 @@ class RatingGraph {
     public static function getRatings($customer)
     {
         $scores = new Score($customer, config('fratio')['ratings_format']);
-
+        
         return $scores->check();
     }
 }

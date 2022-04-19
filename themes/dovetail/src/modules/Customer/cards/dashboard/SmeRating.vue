@@ -22,10 +22,18 @@
         <template v-for="(item, i) in smeRatings">
           <v-list-item :class="{ 'table-row': i % 2 === 1 }" :key="i">
             <v-list-item-content>
-              <v-list-item-subtitle
-                :class="`${item.score ? 'primary' : 'incomplete'}--text`"
-                v-text="trans(item.label)"
-              ></v-list-item-subtitle>
+                <v-list-item-subtitle>
+                  
+                  <v-btn
+                  :style="setMargin(item)"
+                  icon
+                  :to="goToCompanySurveyPage(item)"
+                  exact
+                  small
+                  >
+                <span :class="`${item.score ? 'primary' : 'incomplete'}--text`" v-text="trans(item.label)"></span>
+                </v-btn>
+              </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
               <span v-text="`${item.score == 0 ? '-' : item.score }`" v-if="item.score"></span>
@@ -91,13 +99,43 @@ export default {
       _.map(this.value.ratings.smeRatings, function(item,) {
           const obj = {
             'label' : item.label,
-            'score': JSON.stringify(item.score)
+            'score': JSON.stringify(item.score),
+            'code' : item.code,
+            'id' : item.id
           }
           
           smeObject.push(obj);
       });  
 
       this.smeRatings = smeObject; 
+    },
+
+    goToCompanySurveyPage (index) {
+      
+      if(index.label == 'Financial Score' || index.label == '5th Module') {
+        return '';
+      }
+
+      const company = this.$route.params.id
+      return {
+        name: 'companies.survey', params: {
+          id: company,
+          taxonomy: index.code,
+          survey: index.id,
+        }
+      }
+    },
+
+    setMargin(item) {
+       if (item.label == '5th Module') {
+         return 'margin-left: 30px;'
+       }
+
+       if (item.label == 'Financial Score'){
+         return 'margin-left: 45px';
+       }
+
+       return 'margin-left: 10px';
     }
   },
   mounted() {

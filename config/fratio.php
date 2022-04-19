@@ -30,7 +30,6 @@ return [
         ],
         'overall_score' => 0.00,
         'results' => 'Incomplete'
-
     ],
     'format' => [
         'profitability' => [

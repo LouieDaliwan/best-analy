@@ -7,7 +7,7 @@
           ><v-icon class="primary--text" small>mdi-eye</v-icon
           ><span v-text="trans('View Financial Analysis Report')"></span
         ></v-btn>
-        <v-btn
+        <v-btn v-if="value.date == 'empty'"
           style="margin-right: 100px;"
           icon
           :to="{

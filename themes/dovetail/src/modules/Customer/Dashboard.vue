@@ -15,6 +15,15 @@
     </page-header>
     <template v-if="resource.isFetching"></template>
     <template v-else>
+      <v-row v-if="!keyFinRation.project_type">
+        <v-col>
+          <v-card>
+            <v-card-text>
+              <p>Lorem ipsum</p>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
       <v-row>
         <v-col cols="12" md="5">
           <general-information v-model="resource.data"></general-information>

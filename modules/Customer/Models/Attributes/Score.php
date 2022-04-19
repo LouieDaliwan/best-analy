@@ -36,6 +36,7 @@ class Score {
             $financial_score = (float) round($latestStatement[0]['metadataResults']['ratioAnalysis']['dashboard']['financial_score'],2);
 
             $this->format['smeRatings']['financial_score']['score'] = $financial_score;
+            $this->format['answered_index']++;
         }  
     }
 

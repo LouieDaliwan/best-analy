@@ -55,6 +55,12 @@ class Rendering
                         $ratioAnalysis['dashboard'][$ratioKey]['color'] = self::colorStatus($remarks);
                         $ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks; 
                     }
+
+                    if ($score > $remarkPoint2 && $remark == 'Very Poor' && collect(['raw_materials', 'debt_ratio'])->intersect([$ratioKey])->isNotEmpty()){
+                        $remarks = $remark;
+                        $ratioAnalysis['dashboard'][$ratioKey]['color'] = self::colorStatus($remarks);
+                        $ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks; 
+                    }
                 }
             }
         }

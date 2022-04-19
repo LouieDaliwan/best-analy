@@ -3,7 +3,12 @@
     <v-card-text class="pa-7">
       <h3 class="mb-5" v-text="trans('SME Ratings Report')"></h3>
       <v-divider class="mb-5"></v-divider>
-      <canvas ref="chart-el" width="400" height="200"></canvas>
+      <canvas ref="chart-el" width="400" height="200" v-if="value.ratings.answered_index != 0"></canvas>
+      <v-card v-else>
+        <v-card-text>
+          <p>Lorem ipsum</p>
+        </v-card-text>
+      </v-card>
       <v-row no-gutters class="my-5">
         <v-col cols="12" sm="6">
           <b><span v-text="trans('Score')"></span>:</b>

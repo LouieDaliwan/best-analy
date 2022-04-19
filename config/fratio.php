@@ -40,6 +40,7 @@ return [
                 'id' => 'empty'
             ],
         ],
+        'answered_index' => 0,
         'overall_score' => 0.00,
         'results' => 'Incomplete'
     ],

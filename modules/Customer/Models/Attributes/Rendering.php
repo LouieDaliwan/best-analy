@@ -77,7 +77,7 @@ class Rendering
                 continue;
             }
 
-            $rating = (float) ($value['score'] * $score_descriptor[$value['remarks']]);
+            $rating = $value['remarks'] != 'NA' ? (float) ($value['score'] * $score_descriptor[$value['remarks']]) : 0;
 
             $financial_score += $rating;
         }

@@ -41,6 +41,7 @@ class Rendering
 
                     if ($remark == 'Very Poor' && $score < $remarkPoint1 && collect(['raw_materials', 'debt_ratio'])->intersect([$ratioKey])->isEmpty()) {                       
                         $remarks = 'Very Poor';
+                        $ratioAnalysis['dashboard'][$ratioKey]['color'] = self::colorStatus($remarks);
                         $ratioAnalysis['dashboard'][$ratioKey]['remarks'] = $remarks;
                     }
 

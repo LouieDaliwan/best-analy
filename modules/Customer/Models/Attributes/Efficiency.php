@@ -79,10 +79,12 @@ class Efficiency
         }
 
         if($this->countFillItem == 2) {
+            $this->computePeriodOne();
             $this->computePeriodTwo();
         }
 
         if($this->countFillItem == 3) {
+            $this->computePeriodOne();
             $this->computePeriodTwo();
             $this->computePeriodThree();
         }

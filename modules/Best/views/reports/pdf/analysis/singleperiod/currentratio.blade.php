@@ -41,8 +41,8 @@
       muted:              'rgb(239, 244, 250)'
     };
     var dataset = {!! json_encode($data['analysis:financial']['current_ratio']['chart']['dataset']) !!}
-    console.log(dataset);
-
+    var labels = {!!  json_encode(collect($data['analysis:financial']['current_ratio']['chart']['labels'])->values()->toArray()); !!}
+    
     const annotation = {
       type: 'line',
       borderColor: 'black',
@@ -54,15 +54,8 @@
     var barChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: [
-          ['{{ __("Current Ratio") }}',  ],
-        ],
-        datasets: [
-          {
-            data: dataset[0]['data'],
-            backgroundColor: '#a2d5ac',
-          },
-        ],
+        labels: labels,
+        datasets: dataset,
       },
       options: {
         cornerRadius: 20,
@@ -120,4 +113,3 @@
     });
   });
 </script>
-

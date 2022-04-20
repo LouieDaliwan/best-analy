@@ -41,19 +41,13 @@
       muted:             'rgb(239, 244, 250)'
     };
     var dataset = {!! json_encode($data['analysis:financial']['debt_ratio']['chart']['dataset']) !!}
+    var labels = {!!  json_encode(collect($data['analysis:financial']['debt_ratio']['chart']['labels'])->values()->toArray()); !!}
 
     var barChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: [
-          ['{{ __("Debt Ratio") }}', ],
-        ],
-        datasets: [
-          {
-            data: dataset[0]['data'],
-            backgroundColor: '#a2d5ac',
-          },
-        ],
+        labels: labels,
+        datasets: dataset,
       },
       options: {
         cornerRadius: 20,

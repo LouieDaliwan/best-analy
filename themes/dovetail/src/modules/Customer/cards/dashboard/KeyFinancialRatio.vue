@@ -24,7 +24,7 @@
       </div>
       <v-divider class="mb-5"></v-divider>
       <v-row class="mb-5">
-        <v-col v-if="value.project_type" cols="12" sm="6">
+        <v-col v-if="customer.details.metadata.project_type" cols="12" sm="6">
           <strong><span v-text="trans('Sector')"></span>:</strong>
           <span v-text="trans(value.project_type)" v-if="value.project_type != ''"></span>
           <span v-else>
@@ -37,8 +37,6 @@
               exact
               small
               text
-              v-bind="attrs"
-              v-on="on"
               ><span  v-text="trans(`Update Company Information`)"></span>
               </v-btn>
           </span>
@@ -205,6 +203,7 @@ export default {
   },
 
   mounted() {
+    console.log(this.customer.details);
     if (this.value.date == 'empty') {
       this.isEmpty = true;
     }

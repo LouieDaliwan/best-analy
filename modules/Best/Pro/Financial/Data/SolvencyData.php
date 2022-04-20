@@ -52,11 +52,11 @@ class SolvencyData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'total_liabilities') {
-                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 2, ',','');
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 0, ',','');
                     }
 
                     if ($list == "Stockholders' Equity") {
-                        $temp_data[] = number_format($financialStatement['metadataSheets'][$list], 2, ',', '');
+                        $temp_data[] = number_format($financialStatement['metadataSheets'][$list], 0, ',', '');
                     }
 
                     if($list == 'debt_to_equity_ratio') {
@@ -93,7 +93,7 @@ class SolvencyData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'total_liabilities' || $list == 'total_assets') {
-                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 2, ',', '');
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 0, ',', '');
                     }
 
                     if($list == 'debt_ratio') {

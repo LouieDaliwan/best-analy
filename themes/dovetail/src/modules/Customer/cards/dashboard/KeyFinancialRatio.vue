@@ -41,7 +41,7 @@
               </v-btn>
           </span>
         </v-col>
-        <v-col v-if="customer.details.metadata.project_type" cols="12">
+        <v-col v-if="value.date == 'empty'" cols="12">
           <v-card flat>
               <v-card-text class="text-center">
                 <v-row justify="center" align="center">
@@ -52,7 +52,7 @@
               </v-card-text>
           </v-card>
         </v-col>
-        <v-col v-else cols="12">
+        <v-col v-if="!customer.details.metadata.project_type" cols="12">
           <v-alert
             dense
             text

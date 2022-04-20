@@ -73,20 +73,16 @@ class ROIAnalysis
     {
         $dataSet = [];
 
-        $color = ['#a2d5ac', '#3aada8', '#557c83'];
-
         $count = 0;
 
         foreach ($data as $period => $datum) {
-
-            $bgColor = $color[$count];
 
             $isMostRecent = count($data) == ($count + 1) ? ' (most recent)' : '';
 
             $year = "{$period}{$isMostRecent}";
 
             $dataNumber = [
-                $data[$period],
+                $data[$period][0],
                 self::getBenchMarkScore($projectType)
             ];
 

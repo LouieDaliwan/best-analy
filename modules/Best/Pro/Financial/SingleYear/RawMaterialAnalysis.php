@@ -82,7 +82,7 @@ class RawMaterialAnalysis
             $year = "{$period}{$isMostRecent}";
 
             $dataNumber = [
-                $data[$period],
+                $data[$period][0],
                 self::getBenchMarkScore($projectType)
             ];
 

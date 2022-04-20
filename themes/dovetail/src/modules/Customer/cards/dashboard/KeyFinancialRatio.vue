@@ -41,7 +41,7 @@
               </v-btn>
           </span>
         </v-col>
-        <v-col v-if="!value.date" cols="12">
+        <v-col v-if="customer.details.metadata.project_type" cols="12">
           <v-card flat>
               <v-card-text class="text-center">
                 <v-row justify="center" align="center">
@@ -79,7 +79,7 @@
 
           </v-alert>
         </v-col>
-        <v-col v-if="!value.date" cols="12" sm="6" class="text-sm-right">
+        <v-col v-if="value.date != 'empty'" cols="12" sm="6" class="text-sm-right">
           <b><span v-text="trans('Date')"></span>:</b>
           <span v-text="trans(value.date)"></span>
         </v-col>
@@ -94,7 +94,8 @@
                 :class="
                   `score-${item.text.replace(' ', '-').toLowerCase()}--text`
                 "
-                >mdi-circle</v-icon>
+                >mdi-circle</v-icon
+              >
               <span v-text="trans(item.text)"></span>
             </li>
           </template>

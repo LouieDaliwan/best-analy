@@ -59,7 +59,7 @@ class EfficiencyData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'sales') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['profitStatements'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, ',', '');
                     }
 
                     if($list == 'avg_trade_receivable_turnover' || $list == 'trade_receivable_turnover' || $list == 'avg_trade_receivable_turnover_days') {
@@ -100,7 +100,7 @@ class EfficiencyData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'cost_goods') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['profitStatements'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, ',', '');
                     }
 
                     if($list == 'avg_trade_payable_turnover' || $list == 'trade_payable_turnover' || $list == 'avg_trade_payable_turnover_days') {
@@ -139,11 +139,11 @@ class EfficiencyData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'sales') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['profitStatements'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, ',', '');
                     }
 
                     if($list == 'total_assets') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], '2', ',', '');
                     }
 
                     if($list == 'assets_turnover_ratio' ) {
@@ -181,11 +181,11 @@ class EfficiencyData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'cost_goods') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['profitStatements'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, ',', '');
                     }
 
                     if($list == 'inventories') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 2, ',', '');
                     }
 
                     if($list == 'inventory_turnover_ratio' ) {

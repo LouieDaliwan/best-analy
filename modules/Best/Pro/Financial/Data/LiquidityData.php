@@ -31,7 +31,7 @@ class LiquidityData
     protected function getCurrentRatio($financialStatements) : void
     {
         $lists = [
-            'Gross Profit (GP) Margin' => null,
+            'Current Ratio' => null,
             'Current Assets (CA)' => 'current_assets',
             'Current Liabilities (CL)' => 'current_liabilities',
             'empty' => null,

@@ -63,11 +63,11 @@ class ProfitabilityData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'sales' || $list == 'cost_goods') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['profitStatements'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, ',', '');
                     }
 
                     if($list == 'gross_profit_margin') {
-                        $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list];
+                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100;
                     }
                 }
             }
@@ -103,11 +103,11 @@ class ProfitabilityData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'operating_loss_or_profit' || $list == 'sales') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['profitStatements'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, ',', '');
                     }
 
                     if($list == 'operating_profit_margin') {
-                        $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list];
+                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100;
                     }
                 }
             }
@@ -142,11 +142,11 @@ class ProfitabilityData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'net_loss_profit_after_taxes' || $list == 'sales') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['profitStatements'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, ',', '');
                     }
 
                     if($list == 'net_profit_margin') {
-                        $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list];
+                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100;
                     }
                 }
             }
@@ -182,15 +182,15 @@ class ProfitabilityData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'net_loss_profit_after_taxes') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['profitStatements'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, ',', '');
                     }
 
                     if($list == 'total_assets') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 2, ',', '');
                     }
 
                     if($list == 'return_on_assets') {
-                        $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list];
+                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100;
                     }
                 }
             }
@@ -226,15 +226,15 @@ class ProfitabilityData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'net_loss_profit_after_taxes') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['profitStatements'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, ',', '');
                     }
 
                     if($list == 'stockholdersequity') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 2, ',', '');
                     }
 
                     if($list == 'return_on_equity') {
-                        $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list];
+                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100;
                     }
                 }
             }
@@ -270,15 +270,15 @@ class ProfitabilityData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'net_loss_profit_after_taxes') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['profitStatements'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, ',', '');
                     }
 
                     if($list == 'commonsharesoutstanding') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 2, ',', '');
                     }
 
                     if($list == 'earnings_per_share') {
-                        $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list], 2 , ',', '');
                     }
                 }
             }
@@ -314,11 +314,11 @@ class ProfitabilityData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'operating_expenses' || $list == 'sales') {
-                        $temp_data[] = $financialStatement['metadataResults']['overAllResults']['profitStatements'][$list];
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, ',', '');
                     }
 
                     if($list == 'operating_ratio') {
-                        $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list];
+                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100;
                     }
                 }
             }

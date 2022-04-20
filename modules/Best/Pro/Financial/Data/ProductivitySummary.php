@@ -174,7 +174,7 @@ class ProductivitySummary
 
             if($list != null && $list != 'Fixed Assets at Net Book Value'){
                 if(isset($this->financialStatements[$list])){
-                    $temp_data[] = $this->financialStatements[$list]['metadataResults']['overAllResults']['profitStatements']['cost_goods'];
+                    $temp_data[] = $this->financialStatements[$list]['metadataResults']['overAllResults']['balanceSheets']['fixedassets'];
                 }
             }
         }

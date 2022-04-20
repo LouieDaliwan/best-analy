@@ -63,7 +63,7 @@ class ProfitabilityData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'sales' || $list == 'cost_goods') {
-                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, '', ',');
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 0, '', ',');
                     }
 
                     if($list == 'gross_profit_margin') {
@@ -103,7 +103,7 @@ class ProfitabilityData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'operating_loss_or_profit' || $list == 'sales') {
-                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, '', ',');
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 0, '', ',');
                     }
 
                     if($list == 'operating_profit_margin') {
@@ -142,7 +142,7 @@ class ProfitabilityData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'net_loss_profit_after_taxes' || $list == 'sales') {
-                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 2, '', ',');
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 0, '', ',');
                     }
 
                     if($list == 'net_profit_margin') {

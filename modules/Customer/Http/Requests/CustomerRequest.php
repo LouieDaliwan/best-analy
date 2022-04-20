@@ -50,12 +50,13 @@ class CustomerRequest extends FormRequest
         }
 
         if ($customer->statements()->count() < 1) {
+
             if(!isset($this->request->get('metadata')['project'])) {
-                if($customer->details->metadata['project_type'] == null) {
+                if($customer->detail->metadata['project_type'] == null) {
                     throw new Exception('Project Type must have a value');
                 }            
     
-                if($customer->details->metadata['investment_value'] == null) {
+                if($customer->detail->metadata['investment_value'] == null) {
                     throw new Exception('Project Type must have a value');
                 }
             } else {

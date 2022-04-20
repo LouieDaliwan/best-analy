@@ -10,7 +10,10 @@ class RawMaterialAnalysis
         $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['additional_ratios']['raw_materials_margin'] * 100, 2); 
         $goodScore = self::getBenchMarkScore($projectType);
 
-        $labels = [__("Raw Materials Margin ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")];
+        $labels = [
+           'preview' => [__("Raw Materials Margin ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")],
+           'pdf' => ["{$score}%", "{$goodScore}%"],
+        ];
         
         return [
             'chart' => [

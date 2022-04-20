@@ -41,7 +41,7 @@
       muted:              'rgb(239, 244, 250)'
     };
     var dataset = {!! json_encode($data['analysis:financial']['raw_materials']['chart']['dataset']) !!}
-    var labels = {!!  json_encode(collect($data['analysis:financial']['raw_materials']['chart']['labels'])->values()->toArray()); !!}
+    var labels = {!!  json_encode(collect($data['analysis:financial']['raw_materials']['chart']['labels']['pdf'])->values()->toArray()); !!}
 
     var barChart = new Chart(ctx, {
       type: 'bar',

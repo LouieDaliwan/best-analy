@@ -10,7 +10,10 @@ class DebtRatioAnalysis
         $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'] * 100, 2);  
         $goodScore = self::getBenchMarkScore($projectType);
 
-        $labels = [__("Debt Ratio ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")];
+        $labels = [
+            'preview' => [__("Debt Ratio ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")],
+            'pdf' => ["{$score}%", "{$goodScore}%"],
+        ];
         
         return [
             'chart' => [

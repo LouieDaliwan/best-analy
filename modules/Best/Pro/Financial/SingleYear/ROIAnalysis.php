@@ -11,7 +11,10 @@ class ROIAnalysis
         $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['additional_ratios']['roi'] * 100, 2); 
         $goodScore = self::getBenchMarkScore($projectType);
 
-        $labels = [__("ROI ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")];
+        $labels = [
+           'preview' => [__("ROI ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")],
+           'pdf' => ["{$score}%", "{$goodScore}%"],
+        ];
         
         return [
             'chart' => [

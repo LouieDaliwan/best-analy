@@ -11,7 +11,10 @@ class GrossMarginAnalysis
         $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['profitability']['gross_profit_margin'] * 100, 2);
         $goodScore = self::getBenchMarkScore($projectType);
 
-        $labels = [__("Gross Profit Margin ({$score}%) "), __("Recommended Good Score ({$goodScore}%)")];
+        $labels = [
+           'preview' => [__("Gross Profit Margin ({$score}%) "), __("Recommended Good Score ({$goodScore}%)")],
+           'pdf' => ["{$score}%", "{$goodScore}%"],
+        ];
         
         return [
             'chart' => [

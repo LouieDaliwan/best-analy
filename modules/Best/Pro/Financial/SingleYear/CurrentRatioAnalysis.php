@@ -11,7 +11,10 @@ class CurrentRatioAnalysis
         $score = round((float) str_replace(':1', "", $financialStatements[0]['metadataResults']['ratioAnalysis']['liquidity']['current_ratio']) * 100, 2);
         $goodScore = self::getBenchMarkScore($projectType);
 
-        $labels = [__("Current Ratio ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")];
+        $labels = [
+            'preview' => [__("Current Ratio ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")],
+            'pdf' => ["{$score}%", "{$goodScore}%"],
+        ];
         
         return [
             'chart' => [
@@ -69,8 +72,6 @@ class CurrentRatioAnalysis
     protected static function dataSet($data, $projectType)
     {
         $dataSet = [];
-
-        $color = ['#a2d5ac', '#3aada8', '#557c83'];
 
         $count = 0;
 

@@ -262,7 +262,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
                     $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
                     $output = __("Overall current ratio has seen a significant decline by :number1% over the years.", ['number1' => $number1]);
                 } else {
-                    $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
+                    $number1 = $ai20 != 0 ? abs(round(($ai21-$ai20)/$ai20*100, 2)) : 0;
                     $output = __("Overall current ratio has seen a decline by :number1% over the years.", ['number1' => $number1]);
                 }
             } else {
@@ -273,7 +273,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
                         'number1' => $number1,
                     ]);
                 } else {
-                    $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
+                    $number1 = $ai20 != 0 ? abs(round(($ai21-$ai20)/$ai20*100, 2)) : 0;
                     $output = __(":customer experienced a year on year decrease by :number1% from the recent year to the previous year.", [
                         'customer' => $customer,
                         'number1' => $number1,
@@ -398,7 +398,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
                     $number1 = abs(round(($am21-$am20)/$am20*100, 2));
                     $output = __("Year on year increase of :number1% was recorded from the recent year to the previous year.", ['number1' => $number1]);
                 } else {
-                    $number1 = abs(round(($am21-$am20)/$am20*100, 2));
+                    $number1 = $am20 != 0 ? abs(round(($am21-$am20)/$am20*100, 2)) : 0;
                     $output = __("Year on year decrease by :number1% was recorded from the recent year to the previous year.", ['number1' => $number1]);
                 }
             }
@@ -543,7 +543,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
         $aq21 = (float) str_replace(":1", "", $statements[2]['metadataResults']['ratioAnalysis']['liquidity']['working_capital_turnover']);
         $bj14 = 8;
 
-        $number1 = abs(round(($aq21-$aq20)/$aq20*100, 2));
+        $number1 = $aq20 != 0 ? abs(round(($aq21-$aq20)/$aq20*100, 2)) : 0;
         if ($aq19 == "" && ($aq21-$aq20) > 0) {
             if (($aq21-$aq20) > $bj14) {
                 $output = __("Overall, the working capital turnover reflected a significant increasing trend by :number1%.", ['number1' => $number1]);

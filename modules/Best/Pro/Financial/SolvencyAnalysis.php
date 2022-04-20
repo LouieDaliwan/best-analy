@@ -408,7 +408,7 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
                     $number1 = abs(round(($an45-$an44)/$an44*100, 2));
                     $output = __("Recent year debt ratio has increased by :number1% from the previous year, potentially increasing the burden on assets.", ['number1' => $number1]);
                 } else {
-                    $number1 = abs(round(($an45-$an44)/$an44*100, 2));
+                    $number1 = $an44 != 0 ? abs(round(($an45-$an44)/$an44*100, 2)): 0;
                     $output = __("Recent year debt ratio decrease by :number1% from the previous year, potentially reducing burden on assets.", ['number1' => $number1]);
                 }
             }

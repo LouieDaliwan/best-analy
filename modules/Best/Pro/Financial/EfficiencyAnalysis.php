@@ -221,7 +221,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                     $number1 = abs(round(($h45-$h44)/$h44*100, 2));
                     $output = __("Experienced a year on year increase by :number1% from the recent year to the previous year.", ['number1' => $number1]);
                 } else {
-                    $number1 = abs(round(($h45-$h44)/$h44*100, 2));
+                    $number1 = $h44 != 0 ? abs(round(($h45-$h44)/$h44*100, 2)) : 0;
                     $output = __("Experienced a year on year decrease by :number1% from the recent year to the previous year.", ['number1' => $number1]);
                 }
             }
@@ -587,7 +587,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                     $number1 = abs(round(($p45-$p44)/$p44*100, 2));
                     $output = __("An increase of :number1% was recorded from the recent year to the previous year.", ['number1' => $number1]);
                 } else {
-                    $number1 = abs(round(($p45-$p44)/$p44*100, 2));
+                    $number1 = $p44 != 0 ? abs(round(($p45-$p44)/$p44*100, 2)) : 0;
                     $output = __(" decrease of :number1% was recorded from the recent year to the previous year.", ['number1' => $number1]);
                 }
             }
@@ -774,7 +774,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                     $number1 = abs(round(($t45-$t44)/$t44*100, 2));
                     $output = __("A :number1% increase was observed from the recent year to the previous year.", ['number1' => $number1]);
                 } else {
-                    $number1 = abs(round(($t45-$t44)/$t44*100, 2));
+                    $number1 = $t44 != 0 ? abs(round(($t45-$t44)/$t44*100, 2)) : 0;
                     $output = __("A :number1% decrease from the recent year to the previous year was observed.", ['number1' => $number1]);
                 }
             }

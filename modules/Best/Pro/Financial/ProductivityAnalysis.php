@@ -162,7 +162,7 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
                     $number1 = round(($ai71-$ai70)/$ai70*100, 2);
                     $output = __("Experienced a year on year increase by :number1% from the recent year to the previous year.", ['number1' => $number1]);
                 } else {
-                    $number1 = round(($ai71-$ai70)/$ai70*100, 2);
+                    $number1 = $ai70 != 0 ? round(($ai71-$ai70)/$ai70*100, 2): 0;
                     $output = __("Experienced a year on year decrease by :number1% from the recent year to the previous year.", ['number1' => $number1]);
                 }
             }

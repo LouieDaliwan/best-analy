@@ -15,7 +15,7 @@
     </page-header>
     <template v-if="resource.isFetching"></template>
     <template v-else>
-      <v-row v-if="!keyFinRation.project_type">
+      <v-row v-if="!resource.data.details.metadata.project_type">
         <v-col>
           <v-alert
               type="warning"
@@ -31,6 +31,11 @@
                   <v-btn
                     color="accent"
                     large
+                    :to="{
+                      name: 'companies.edit',
+                      params: { id: resource.data.id },
+                      query: { tab: 0 }
+                    }"
                     >Update Information</v-btn>
                 </v-col>
               </v-row>
@@ -79,6 +84,8 @@ export default {
         .then(([res1, res2]) => {
           this.resource.setData(res1.data.data);
           this.keyFinRation = res2.data;
+
+          console.log(this.resource);
         })
         .finally(() => {
           this.resource.fetch(false);

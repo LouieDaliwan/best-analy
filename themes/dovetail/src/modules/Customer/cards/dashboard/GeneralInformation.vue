@@ -37,7 +37,6 @@
           name: 'companies.edit',
           params: { id: value.id }
           }"
-        v-on="on"
         color="primary"
         ><v-icon small class="mx-2">mdi-pencil</v-icon>
           <span v-text="trans(`Update General Information`)"></span>

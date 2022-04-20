@@ -22,7 +22,6 @@
               text
               icon="mdi-exclamation"
               prominent
-
               >
               <v-row align="center">
                 <v-col class="grow">
@@ -30,7 +29,7 @@
                 </v-col>
                 <v-col class="shrink">
                   <v-btn
-                    color="primary"
+                    color="accent"
                     large
                     >Update Information</v-btn>
                 </v-col>

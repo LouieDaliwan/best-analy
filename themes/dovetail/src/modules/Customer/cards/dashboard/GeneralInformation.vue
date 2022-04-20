@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="sticky">
     <v-card-text class="pa-7">
       <!-- <h3 class="mb-5" v-text="trans('SME Ratings Report')"></h3> -->
       <div class="d-flex align-center justify-space-between mb-5">

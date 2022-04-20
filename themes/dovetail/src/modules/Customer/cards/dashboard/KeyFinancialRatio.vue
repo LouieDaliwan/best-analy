@@ -44,12 +44,39 @@
           </span>
         </v-col>
         <v-col v-else cols="12">
+          <v-card flat>
+            <v-card-text class="text-center">
+              <v-row justify="center" align="center">
+                <empty-icon class="muted--text"></empty-icon>
+              </v-row>
+              <h3 class="muted--text" v-text="trans('No scores to show')"></h3>
+              <p class="muted--text mb-0" v-text="trans('Start filling out the financial statement.')"></p>
+            </v-card-text>
+          </v-card>
           <v-alert
             dense
             text
+            shaped
             type="warning"
+            prominent
             >
-            Inform user to update the <strong>Project Type</strong> in the Project Information.
+            <v-row align="center">
+              <v-col class="grow">
+                Update the <strong>Project Type</strong> in the Project Information.
+              </v-col>
+              <v-col class="shrink">
+                <v-btn
+                  color="accent"
+                  large
+                  :to="{
+                    name: 'companies.edit',
+                    params: { id: customer.id },
+                    query: { tab: 0 }
+                  }"
+                  >Update</v-btn>
+              </v-col>
+            </v-row>
+
           </v-alert>
         </v-col>
         <v-col v-if="!value.date" cols="12" sm="6" class="text-sm-right">

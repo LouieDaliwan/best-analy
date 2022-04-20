@@ -54,16 +54,9 @@ $(document).ready(function() {
 
   var barChart = new Chart(ctx, {
     type: 'bar',
-    // data: {
-    //   // datasets: [{
-    //   labels: labels,
-    //   datasets: [90, 80],
-    //   // }]
-    // },
     data: {
       labels: labels,
-      // datasets: dataset,
-      // data: [90, 87],
+      datasets: dataset,
     },
     options: {
       cornerRadius: 0,

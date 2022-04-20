@@ -26,7 +26,7 @@
       <v-row class="mb-5">
         <v-col v-if="customer.details.metadata.project_type" cols="12" sm="6">
           <strong><span v-text="trans('Sector')"></span>:</strong>
-          <span v-text="trans(value.project_type)" v-if="value.project_type != ''"></span>
+          <span v-text="trans(customer.details.metadata.project_type)" v-if="customer.details.metadata.project_type"></span>
           <span v-else>
             <v-btn
               :to="{

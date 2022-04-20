@@ -67,7 +67,7 @@ class ProfitabilityData
                     }
 
                     if($list == 'gross_profit_margin') {
-                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100;
+                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100 . '%';
                     }
                 }
             }
@@ -107,7 +107,7 @@ class ProfitabilityData
                     }
 
                     if($list == 'operating_profit_margin') {
-                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100;
+                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100 . '%';
                     }
                 }
             }
@@ -146,7 +146,7 @@ class ProfitabilityData
                     }
 
                     if($list == 'net_profit_margin') {
-                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100;
+                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100 . '%';
                     }
                 }
             }
@@ -190,7 +190,7 @@ class ProfitabilityData
                     }
 
                     if($list == 'return_on_assets') {
-                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100;
+                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100 . '%';
                     }
                 }
             }
@@ -234,7 +234,7 @@ class ProfitabilityData
                     }
 
                     if($list == 'return_on_equity') {
-                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100;
+                        $temp_data[] = (float) $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100 . '%';
                     }
                 }
             }
@@ -278,7 +278,7 @@ class ProfitabilityData
                     }
 
                     if($list == 'earnings_per_share') {
-                        $temp_data[] = number_format($financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list], 0 , '', ',');
+                        $temp_data[] = $financialStatement['metadataResults']['ratioAnalysis']['profitability'][$list] * 100 . '%';
                     }
                 }
             }

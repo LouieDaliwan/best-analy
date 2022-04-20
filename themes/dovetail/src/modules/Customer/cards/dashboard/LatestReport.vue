@@ -2,7 +2,7 @@
   <v-card>
     <v-card-text class="pa-7">
       <div class="d-flex align-center justify-space-between mb-5">
-        <h3 v-text="trans('Financial Statements')"></h3>
+        <h3 v-text="trans('Reports List')"></h3>
       </div>
       <v-divider class="mb-5"></v-divider>
         <div v-show="resourcesIsNotEmpty">

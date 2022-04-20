@@ -41,7 +41,6 @@
                 <v-list-item-subtitle>
                   <v-btn
                   text
-                  :style="setMargin(item)"
                   :to="goToCompanySurveyPage(item)"
                   exact
                   small
@@ -140,21 +139,8 @@ export default {
         }
       }
     },
-
-    setMargin(item) {
-       if (item.label == '5th Module') {
-         // return 'margin-left: 30px;'
-       }
-
-       if (item.label == 'Financial Score'){
-         // return 'margin-left: 45px';
-       }
-
-       // return 'margin-left: 10px';
-    }
   },
   mounted() {
-    console.log(this.value);
     this.convertToArrSME();
     this.initChart();
   }

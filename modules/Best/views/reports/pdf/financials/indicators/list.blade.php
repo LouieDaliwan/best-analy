@@ -66,7 +66,7 @@
     }
 
     .eachIndicators {
-        background-color: #e5e3e3 !important;
+        /*background-color: #e5e3e3 !important;*/
     }
 
     #listTable td {
@@ -74,16 +74,16 @@
     }
 
     .row1 .otherRows{
-        background-color:  #dbd9d9; 
+        /*background-color:  #dbd9d9; */
     }
 
     
     .otherRows {        
-        padding: 0 !important;
+        /*padding: 0 !important;
         padding-top: 20px !important;
         text-align: center;
         vertical-align: top;
-        margin-top: 10px;
+        margin-top: 10px;*/
     }
 </style>
 
@@ -100,7 +100,7 @@
         <tr>
             @foreach($col as $items)
             <td>
-                <table width="100%" class="eachIndicators">
+                <table width="100%" class="eachIndicators" bordercolor="#edf2f9">
                     <tbody>
                         <?php $countItems = 1; ?>
                         @foreach($items as $item)
@@ -109,7 +109,7 @@
                             @foreach($item as $data)
                             @if($countItems == 1)
                                 @if($data != null && $count == 1)
-                                    <td class="row1" rowspan="2">{{ $data }}</td>    
+                                    <td bgcolor="#edf2f9" class="row1" rowspan="2">{{ $data }}</td>
                                 @else
                                     <td class="otherRows">{{ $data }}</td> 
                                 @endif
@@ -117,7 +117,7 @@
                             
                             @if($countItems == 2)
                                 @if($data != null && $count == 3)
-                                    <td colspan="4" class="description">{{$data}}</td> 
+                                    <td bgcolor="#edf2f9" colspan="4" class="description">{{$data}}</td>
                                 @endif
                             @endif
                             <?php $count++; ?>

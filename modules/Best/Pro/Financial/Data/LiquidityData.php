@@ -58,7 +58,7 @@ class LiquidityData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'current_assets' || $list == 'current_liabilities') {
-                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 0, ',', '');
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 0, '', ',');
                     }
 
                     if($list == 'current_ratio') {
@@ -101,7 +101,7 @@ class LiquidityData
 
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'cash' || $list == 'current_liabilities') {
-                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 0, ',', '');
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 0, '', ',');
                     }
 
                     if($list == 'cash_ratio') {
@@ -150,7 +150,7 @@ class LiquidityData
                 foreach ($financialStatements as $financialStatement) {
 
                     if($list == 'current_assets' || $list == 'current_liabilities') {
-                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 0, ',', '');
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 0, '', ',');
                     }
 
                     if($list == 'working_capital' || $list == 'working_capital_turnover') {

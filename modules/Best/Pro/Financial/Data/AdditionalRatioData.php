@@ -59,11 +59,11 @@ class AdditionalRatioData
                 foreach ($financialStatements as $financialStatement) {
 
                     if($list == 'Raw Materials') {
-                        $temp_data[] = number_format($financialStatement['metadataStatements'][$list], 0, ',', '');
+                        $temp_data[] = number_format($financialStatement['metadataStatements'][$list], 0, '', ',');
                     }
 
                     if($list == 'sales') {
-                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 0, ',', '');
+                        $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['profitStatements'][$list], 0, '', ',');
                     }
 
                     if($list == 'raw_materials_margin') {
@@ -106,7 +106,7 @@ class AdditionalRatioData
                     }
 
                     if($list == 'investment_value') {
-                        $temp_data[] = number_format($this->customer->detail->metadata[$list], 0, ',', '');
+                        $temp_data[] = number_format($this->customer->detail->metadata[$list], 0, '', ',');
                     }
 
                     if($list == 'roi') {

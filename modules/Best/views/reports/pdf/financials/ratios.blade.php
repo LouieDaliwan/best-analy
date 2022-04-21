@@ -19,15 +19,15 @@
           <div class="child-table">
             @foreach($col as $key => $d)
               @if($key != '')
-              <div class="child-resp-table-row title title1{{ $key }}" style="margin-top: 20px;">
-                <span class="child-table-cell" style="padding-top: 10px; padding-left: 5px;">
-                    <h3> {{ __($key) }}</h6>
+              <div class="child-resp-table-row title title1{{ $key }}">
+                <span class="child-table-cell">
+                  <h3 class="mb-0" style="padding: 5px; font-weight: regular;">{{ __($key) }}</h3>
                 </span>
-                <span class="child-table-cell"></span>
-                <span class="child-table-cell"></span>
+                <span style="padding: 5px;" class="child-table-cell"></span>
+                <span style="padding: 5px;" class="child-table-cell"></span>
                 
                 @if($statements_count == 3)
-                <span class="child-table-cell"></span>
+                <span style="padding: 5px;" class="child-table-cell"></span>
                 @endif
 
               </div>
@@ -36,7 +36,7 @@
               {{-- ratio{{ $key }}-{{ $i }} --}}
               <div class="child-resp-table-row2">
                 @foreach ($vs as $v)
-                  <span  class="child-table-cell {{ $key }}-{{ $i }}">{{ __($v) }}</span>
+                  <span style="padding: 5px;" class="child-table-cell {{ $key }}-{{ $i }}">{{ __($v) }}</span>
                 @endforeach
               </div>
               @endforeach
@@ -48,10 +48,26 @@
 </div>
 
 <style>
+  .EFFICIENCY-4,
+  .EFFICIENCY-11,
+  .LIQUIDITY-20 {
+    padding: 0 !important;
+  }
+
+  .child-table-cell -0 {
+    font-weight: bold;
+  }
+
+/*  .EFFICIENCY-5,
+  .EFFICIENCY-12,
+  .LIQUIDITY-21 {
+    border-top: 1px solid #edf2f9 !important;
+  }*/
+
   #resp-table {
     width: 100%;
     display: table;
-    padding: 1em;
+    /*padding: 1em;*/
   }
 
   #resp-table-row {
@@ -66,7 +82,11 @@
 
   .child-table {
     display:table;
-    margin-bttom: 20px;
+    /*margin-bttom: 20px;*/
+    display: table;
+    width: -webkit-fill-available;
+    width: 97%;
+    margin: 0 20px 0 0;
   }
 
   .child-resp-table-row{
@@ -80,6 +100,10 @@
 
   .child-table-cell{
     display: table-cell;
+  }
+
+  .bottom-right {
+    border-right: 1px solid #868e96;
   }
 </style>
 
@@ -107,3 +131,5 @@
     @endforeach
   </tr>
 </table> --}}
+
+

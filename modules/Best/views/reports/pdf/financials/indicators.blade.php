@@ -2,39 +2,46 @@
   <table width="100%">
     <tbody>  
       <tr>
+
+
         <td valign="top" width="50%">
           <h1 class="dt-primary">@lang('Productivity Indicators')</h1>
-          <div class="chart-analysis">
-            <div class="mr-3" style="width: 700px; height: 200px;">
-              <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>
-            </div>
-          </div>
 
-          {{-- label --}}
-          <div style="height: 20px;"></div>
-          <table class="indiLabels" width="50%">
-            <tr>
-              @foreach ($data['analysis:financial']['productivity']['charts']['dataset'] as $resource)
-                <td>
-                  <span class="circular p-2" style="background: {{ $resource['bg'] }};"></span>
-                  &nbsp;
-                  <span>{{ $resource['label'] }}</span>
-                </td>
-              @endforeach
-            </tr>
-          </table>
-          {{-- label --}}
 
-          <div class="col-md-12 comment-analysis">
-            @foreach ($data['analysis:financial']['productivity']['comments'] as $comments)
-              <div class="row">
-                <div class="col">
-                  @foreach ($comments as $comment)
-                    <p>{{ $comment }}</p>
-                  @endforeach
-                </div>
+          <div valign="middle" class="mt-5">
+            <div class="chart-analysis">
+              <div class="mr-3" style="width: 700px; height: 200px;">
+                <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>
               </div>
-            @endforeach
+            </div>
+
+            {{-- label --}}
+            <div style="height: 20px;"></div>
+            <table class="indiLabels" width="50%">
+              <tr>
+                @foreach ($data['analysis:financial']['productivity']['charts']['dataset'] as $resource)
+                  <td>
+                    <span class="circular p-2" style="background: {{ $resource['bg'] }};"></span>
+                    &nbsp;
+                    <span>{{ $resource['label'] }}</span>
+                  </td>
+                @endforeach
+              </tr>
+            </table>
+
+          {{-- label --}}
+
+            <div class="col-md-12 mt-3 comment-analysis">
+              @foreach ($data['analysis:financial']['productivity']['comments'] as $comments)
+                <div class="row">
+                  <div class="col">
+                    @foreach ($comments as $comment)
+                      <p>{{ $comment }}</p>
+                    @endforeach
+                  </div>
+                </div>
+              @endforeach
+            </div>
           </div>
         </td>
         <td valign="top" width="50%">

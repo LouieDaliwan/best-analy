@@ -92,7 +92,7 @@
         @include('best::reports.pdf.partials.organisation-profile')
         @include('best::reports.pdf.financials.ratios')
       </div>
-      <div style="margin-top: 495px;">
+      <div style="margin-top: 10px;">
       @include('best::reports.pdf.partials.disclaimer')
       @include('best::reports.pdf.partials.footer')
       </div>

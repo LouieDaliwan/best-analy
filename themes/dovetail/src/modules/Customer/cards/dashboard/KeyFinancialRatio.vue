@@ -76,9 +76,36 @@
                   >Update</v-btn>
               </v-col>
             </v-row>
-
           </v-alert>
         </v-col>
+        <!-- If no Investment Value -->
+        <!-- <v-col v-if="!customer.details.metadata.investment_value" cols="12">
+          <v-alert
+            dense
+            text
+            shaped
+            type="warning"
+            prominent
+            >
+            <v-row align="center">
+              <v-col class="grow">
+                Update the <strong>Investment Value</strong> in the Project Information.
+              </v-col>
+              <v-col class="shrink">
+                <v-btn
+                  color="accent"
+                  large
+                  :to="{
+                    name: 'companies.edit',
+                    params: { id: customer.id },
+                    query: { tab: 0 }
+                  }"
+                  >Update</v-btn>
+              </v-col>
+            </v-row>
+          </v-alert>
+        </v-col>
+        <!-- If no Investm -->ent Value -->
         <v-col v-if="value.date != 'empty'" cols="12" sm="6" class="text-sm-right">
           <b><span v-text="trans('Date')"></span>:</b>
           <span v-text="trans(value.date)"></span>

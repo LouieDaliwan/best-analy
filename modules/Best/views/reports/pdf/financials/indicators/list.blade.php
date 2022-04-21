@@ -100,8 +100,8 @@
         <tr>
             @foreach($col as $items)
             <td>
-                <table width="100%" class="eachIndicators" bordercolor="#edf2f9">
-                    <tbody>
+                <table width="100%" class="eachIndicators">
+                    <tbody style="border: 1px solid #868e96;">
                         <?php $countItems = 1; ?>
                         @foreach($items as $item)
                         <tr>
@@ -134,3 +134,6 @@
     </tbody>
 </table>
     
+<?php
+  dd();
+?>

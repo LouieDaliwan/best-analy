@@ -25,7 +25,7 @@
               >
               <v-row align="center">
                 <v-col class="grow">
-                  To do: This alert box informs the user to specify <strong>project type</strong> and input value to <strong>investment value</strong> in the project information as they affect computations in the financial statement.
+                  Update the <strong>Project Type</strong> in the Project Information.
                 </v-col>
                 <v-col class="shrink">
                   <v-btn
@@ -36,7 +36,7 @@
                       params: { id: resource.data.id },
                       query: { tab: 0 }
                     }"
-                    >Update Information</v-btn>
+                    >Update</v-btn>
                 </v-col>
               </v-row>
             </v-alert>

@@ -79,7 +79,7 @@
           </v-alert>
         </v-col>
         <!-- If no Investment Value -->
-        <!-- <v-col v-if="!customer.details.metadata.investment_value" cols="12">
+<!--         <v-col v-if="!customer.details.metadata.investment_value" cols="12">
           <v-alert
             dense
             text
@@ -104,8 +104,8 @@
               </v-col>
             </v-row>
           </v-alert>
-        </v-col>
-        <!-- If no Investm -->ent Value -->
+        </v-col> -->
+        <!-- If no Investment Value -->
         <v-col v-if="value.date != 'empty'" cols="12" sm="6" class="text-sm-right">
           <b><span v-text="trans('Date')"></span>:</b>
           <span v-text="trans(value.date)"></span>

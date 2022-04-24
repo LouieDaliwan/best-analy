@@ -54,19 +54,23 @@ class ROIAnalysis
 
     protected static function getComment($financialStatements)
     {
-        $projectType = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $projectType = str_replace(
+            ' ', 
+            '-',
+            $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']
+        );
+
         $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['roi']['remarks'];
 
         $comments = [
-            'Very Poor' => "Business should review the key purpose of the investment and explore alternative strategies to mitigate and revive the gains from the investment.",
-            'Poor' => 'Revist the business plan to review prior sales estimates and marketing drivers.',
-            'Moderate' => 'A review of business strategy is recommended to explore operational improvements and technology adoption into business operations.',
-            'Good' => 'Healthy investment likely to lead better future for business.',
-            'Excellent' => 'Firm position to continue expansionary strategies.'
+            'Very Poor' => "Business should review the key purpose of the investment and explore alternative strategies to mitigate and revive the gains from the investment",
+            'Poor' => 'Revist the business plan to review prior sales estimates and marketing drivers',
+            'Moderate' => 'A review of business strategy is recommended to explore operational improvements and technology adoption into business operations',
+            'Good' => 'Healthy investment likely to lead better future for business',
+            'Excellent' => 'Firm position to continue expansionary strategies'
         ];
 
-        
-        return "{$remarks} ROI by {$projectType} standards. ".$comments[$remarks];
+        return __("{$remarks} ROI by {$projectType} standards"). '. ' . __($comments[$remarks]);
     }
 
     protected static function dataSet($data, $projectType)

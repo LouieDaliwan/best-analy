@@ -53,18 +53,23 @@ class DebtRatioAnalysis
 
     protected static function getComment($financialStatements)
     {
-        $projectType = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $projectType = str_replace(
+            ' ', 
+            '-',
+            $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']
+        );
+        
         $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['debt_ratio']['remarks'];
 
         $comments = [
-            'Very Poor' => "With a very heavy short and long-term financial burden, business may need to resort to bring in additional business partners while improving its asset proportion.",
-            'Poor' => 'Rebalancing the books to strengthen the assets should be implemented to remain business viability while also attractingpotntial funding agencies.',
-            'Moderate' => 'While asset to liquidity remains within the fence, efforts should go towards improving short term credits and risk analysis.',
-            'Good' => 'Business is in a steadfast situation while keeping long term obligations within sufficient means.',
-            'Excellent' => 'Recommended to maintaindebt levels.'
+            'Very Poor' => "With a very heavy short and long-term financial burden, business may need to resort to bring in additional business partners while improving its asset proportion",
+            'Poor' => 'Rebalancing the books to strengthen the assets should be implemented to remain business viability while also attractingpotntial funding agencies',
+            'Moderate' => 'While asset to liquidity remains within the fence, efforts should go towards improving short term credits and risk analysis',
+            'Good' => 'Business is in a steadfast situation while keeping long term obligations within sufficient means',
+            'Excellent' => 'Recommended to maintaindebt levels'
         ];
-        
-        return "{$remarks} Debt Ratio by {$projectType} standards. " . $comments[$remarks];
+       
+        return __("{$remarks} Debt Ratio by {$projectType} standards"). '. ' . __($comments[$remarks]);
     }
 
     protected static function dataSet($data, $projectType)

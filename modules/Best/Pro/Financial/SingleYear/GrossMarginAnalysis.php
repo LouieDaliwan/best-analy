@@ -53,19 +53,25 @@ class GrossMarginAnalysis
 
     protected static function getComment($financialStatements)
     {
-        $projectType = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $projectType = str_replace(
+            ' ', 
+            '-',
+            $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']
+        ); 
+
         $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks'];
 
         $comments = [
-            'Very Poor' => "Immediate focus would be to re-strategise the production process and choice of raw materials suppliers to ensure a healthier gross profit margin.",
-            'Poor' => 'Serious consideration to seek alternative suppliers to significantly improve profitability.',
-            'Moderate' => 'Room to expand and explore several other suppliers to further reduce cost of goods sold.',
-            'Good' => 'To remain sustainable, good to explore additional suppliers to improve profitability.',
-            'Excellent' => 'To continue be cautious of potential cost increase due to external factors and changing economic situation.'
+            'Very Poor' => "Immediate focus would be to re-strategise the production process and choice of raw materials suppliers to ensure a healthier gross profit margin",
+            'Poor' => 'Serious consideration to seek alternative suppliers to significantly improve profitability',
+            'Moderate' => 'Room to expand and explore several other suppliers to further reduce cost of goods sold',
+            'Good' => 'To remain sustainable, good to explore additional suppliers to improve profitability',
+            'Excellent' => 'To continue be cautious of potential cost increase due to external factors and changing economic situation'
         ];
 
+        $statements = "{$remarks} Gross  Margin by {$projectType} standards";
         
-        return "{$remarks} Gross  Margin by {$projectType} standards. " . $comments[$remarks];
+        return __($statements). '. ' . __($comments[$remarks]);
     }
 
     protected static function dataSet($data, $projectType)

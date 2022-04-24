@@ -2,6 +2,8 @@
 
 namespace Customer\Models\Attributes;
 
+use Customer\Models\FinancialStatement;
+
 class Score {
 
     const INCOMPLETE = 'Incomplete';
@@ -30,11 +32,16 @@ class Score {
 
     protected function getFinancialScore() : void
     {
-        $latestStatement = $this->customer->statements()->latest('period')->get()->toArray();
-        
-        if(count($latestStatement) > 0) {       
-            $financial_score = (float) round($latestStatement[0]['metadataResults']['ratioAnalysis']['dashboard']['financial_score'],2);
+        $latestStatement = FinancialStatement::whereCustomerId($this->customer->id)
+        ->latest('period')
+        ->first()
+        ->toArray();
 
+                
+        if(count($latestStatement) > 0) {       
+            $financial_score = (float) round($latestStatement['metadataResults']['ratioAnalysis']['dashboard']['financial_score'],2);
+
+            
             $this->format['smeRatings']['financial_score']['score'] = $financial_score;
             $this->format['answered_index']++;
         }  

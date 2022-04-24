@@ -40,7 +40,7 @@ class CustomerDetailsSeeder extends Seeder
 
             $this->customerApplicantDetail($customer);
 
-            // $this->customerFinancialStatement($customer);
+            $this->customerFinancialStatement($customer);
         }
     }
 

@@ -235,5 +235,5 @@ if (! function_exists('widgets')) {
 }
 
 function divide($dividend, $divisor) {
-    return round(($dividend / $divisor), 2);
+    return round(($dividend / $divisor), 3);
 }

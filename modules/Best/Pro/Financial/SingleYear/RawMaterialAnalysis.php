@@ -6,7 +6,13 @@ class RawMaterialAnalysis
 {
     public static function getReport($financialStatements)
     {
-        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'];
+        $projectType = strtolower(
+            str_replace(
+            ' ', 
+            '-', 
+            $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'])
+        ); 
+
         $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['additional_ratios']['raw_materials_margin'] * 100, 2); 
         $goodScore = self::getBenchMarkScore($projectType);
 
@@ -18,7 +24,7 @@ class RawMaterialAnalysis
         return [
             'chart' => [
                 'labels' => $labels,
-                'dataset' => self::formatDataSet($financialStatements),
+                'dataset' => self::formatDataSet($financialStatements, $projectType),
             ],
             'comment' => [
                 self::getComment($financialStatements[0]),
@@ -26,7 +32,7 @@ class RawMaterialAnalysis
         ];
     }
 
-    protected static function formatDataSet($financialStatements)
+    protected static function formatDataSet($financialStatements, $projectType)
     {
         $data = [];
 
@@ -36,7 +42,6 @@ class RawMaterialAnalysis
 
             $tempData = [];
 
-            $projectType = $statement['metadataResults']['ratioAnalysis']['dashboard']['project_type'];
             $profitability = $statement['metadataResults']['ratioAnalysis']['additional_ratios'];
 
             foreach ($marginRatio as $item) {

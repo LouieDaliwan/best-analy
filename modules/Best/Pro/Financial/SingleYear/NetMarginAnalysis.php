@@ -6,9 +6,17 @@ class NetMarginAnalysis
 {
     public static function getReport($financialStatements)
     {
-        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $projectType = strtolower(
+            str_replace(
+            ' ', 
+            '-', 
+            $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'])
+        ); 
+
         $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['profitability']['net_profit_margin'] * 100, 2);
+        
         $goodScore = self::getBenchMarkScore($projectType);
+        
         $labels = [
             'preview' => [__("Net Margin after Tax ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")],
             'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
@@ -17,7 +25,7 @@ class NetMarginAnalysis
         return [
             'chart' => [
                 'labels' => $labels,
-                'dataset' => self::formatDataSet($financialStatements),
+                'dataset' => self::formatDataSet($financialStatements, $projectType),
             ],
             'comment' => [
                 self::getComment($financialStatements[0]),
@@ -25,7 +33,7 @@ class NetMarginAnalysis
         ];
     }
 
-    protected static function formatDataSet($financialStatements)
+    protected static function formatDataSet($financialStatements, $projectType)
     {
         $data = [];
 
@@ -34,7 +42,6 @@ class NetMarginAnalysis
         foreach ($financialStatements as $statement) {
 
             $tempData = [];
-            $projectType = $statement['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
             $profitability = $statement['metadataResults']['ratioAnalysis']['profitability'];
 
             foreach ($marginRatio as $item) {

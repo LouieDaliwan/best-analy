@@ -6,9 +6,16 @@ class GrossMarginAnalysis
 {
     public static function getReport($financialStatements)
     {
-
-        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $projectType = strtolower(
+            str_replace(
+            ' ', 
+            '-', 
+            $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'])
+        ); 
+        
         $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['profitability']['gross_profit_margin'] * 100, 2);
+        
+        
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
@@ -19,7 +26,7 @@ class GrossMarginAnalysis
         return [
             'chart' => [
                 'labels' => $labels,
-                'dataset' => self::formatDataSet($financialStatements),
+                'dataset' => self::formatDataSet($financialStatements, $projectType),
             ],
             'comment' => [
                 self::getComment($financialStatements[0]),
@@ -27,7 +34,7 @@ class GrossMarginAnalysis
         ];
     }
 
-    protected static function formatDataSet($financialStatements)
+    protected static function formatDataSet($financialStatements, $projectType)
     {
         $data = [];
 
@@ -36,7 +43,6 @@ class GrossMarginAnalysis
         foreach ($financialStatements as $statement) {
 
             $tempData = [];
-            $projectType = $statement['metadataResults']['ratioAnalysis']['dashboard']['project_type'];
             $profitability = $statement['metadataResults']['ratioAnalysis']['profitability'];
 
             foreach ($marginRatio as $item) {
@@ -47,7 +53,7 @@ class GrossMarginAnalysis
 
             $data[$statement['period']] = $tempData;
         }
-
+        
         return self::dataSet($data, $projectType);
     }
 
@@ -69,9 +75,7 @@ class GrossMarginAnalysis
             'Excellent' => 'To continue be cautious of potential cost increase due to external factors and changing economic situation'
         ];
 
-        $statements = "{$remarks} Gross  Margin by {$projectType} standards";
-        
-        return __($statements). '. ' . __($comments[$remarks]);
+        return __("{$remarks} Gross Margin by {$projectType} standards"). '. ' . __($comments[$remarks]);
     }
 
     protected static function dataSet($data, $projectType)

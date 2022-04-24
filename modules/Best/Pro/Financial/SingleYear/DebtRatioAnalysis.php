@@ -6,7 +6,13 @@ class DebtRatioAnalysis
 {
     public static function getReport($financialStatements)
     {
-        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'];
+        $projectType = strtolower(
+            str_replace(
+            ' ', 
+            '-', 
+            $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'])
+        ); 
+
         $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'] * 100, 2);  
         $goodScore = self::getBenchMarkScore($projectType);
 
@@ -18,7 +24,7 @@ class DebtRatioAnalysis
         return [
             'chart' => [
                 'labels' => $labels,
-                'dataset' => self::formatDataSet($financialStatements),
+                'dataset' => self::formatDataSet($financialStatements, $projectType),
             ],
             'comment' => [
                 self::getComment($financialStatements[0]),
@@ -26,7 +32,7 @@ class DebtRatioAnalysis
         ];
     }
 
-    protected static function formatDataSet($financialStatements)
+    protected static function formatDataSet($financialStatements, $projectType)
     {
         $data = [];
 
@@ -36,7 +42,6 @@ class DebtRatioAnalysis
 
             $tempData = [];
 
-            $projectType = $statement['metadataResults']['ratioAnalysis']['dashboard']['project_type'];
             $profitability = $statement['metadataResults']['ratioAnalysis']['solvency'];
 
             foreach ($marginRatio as $item) {

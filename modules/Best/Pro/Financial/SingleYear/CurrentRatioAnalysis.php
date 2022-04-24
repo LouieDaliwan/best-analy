@@ -7,7 +7,13 @@ class CurrentRatioAnalysis
 {
     public static function getReport($financialStatements)
     {
-        $projectType = $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type']; 
+        $projectType = strtolower(
+            str_replace(
+            ' ', 
+            '-', 
+            $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'])
+        ); 
+
         $score = round((float) str_replace(':1', "", $financialStatements[0]['metadataResults']['ratioAnalysis']['liquidity']['current_ratio']) * 100, 2);
         $goodScore = self::getBenchMarkScore($projectType);
 
@@ -19,7 +25,7 @@ class CurrentRatioAnalysis
         return [
             'chart' => [
                 'labels' => $labels,
-                'dataset' => self::formatDataSet($financialStatements),
+                'dataset' => self::formatDataSet($financialStatements, $projectType),
             ],
             'comment' => [
                 self::getComment($financialStatements[0]),
@@ -27,7 +33,7 @@ class CurrentRatioAnalysis
         ];
     }
 
-    protected static function formatDataSet($financialStatements)
+    protected static function formatDataSet($financialStatements, $projectType)
     {
         $data = [];
 
@@ -38,7 +44,6 @@ class CurrentRatioAnalysis
             $tempData = [];
 
             $profitability = $statement['metadataResults']['ratioAnalysis']['liquidity'];
-            $projectType = $statement['metadataResults']['ratioAnalysis']['dashboard']['project_type'];
 
             foreach ($marginRatio as $item) {
                 $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): (float) $profitability[$item];

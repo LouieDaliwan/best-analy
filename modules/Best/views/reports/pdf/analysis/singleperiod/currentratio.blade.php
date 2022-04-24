@@ -1,7 +1,7 @@
 <div class="mx-4 mb-5">
   <div class="py-2" style="font-weight: bold; border-bottom: 1px solid #f5f5f5;">@lang('Current Ratio Score')</div>
     <div class="mb-3 text-center">
-      <canvas height="360" width="400" id="current_ratio" style="margin: auto;" class="mt-5 mb-2"></canvas>
+      <canvas height="360" width="450" id="current_ratio" style="margin: auto;" class="mt-5 mb-2"></canvas>
     </div>
     <p class="mb-0 px-5" style="font-size: 12px; line-height: 1.5;">
       @if (app()->getLocale() == 'ar')

@@ -13,7 +13,7 @@ class CurrentRatioAnalysis
 
         $labels = [
             'preview' => [__("Current Ratio ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")],
-            'pdf' => ["{$score}%", "{$goodScore}%"],
+            'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
         ];
         
         return [

@@ -12,7 +12,7 @@ class RawMaterialAnalysis
 
         $labels = [
            'preview' => [__("Raw Materials Margin ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")],
-           'pdf' => ["{$score}%", "{$goodScore}%"],
+           'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
         ];
         
         return [

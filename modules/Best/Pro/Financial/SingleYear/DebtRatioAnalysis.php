@@ -12,7 +12,7 @@ class DebtRatioAnalysis
 
         $labels = [
             'preview' => [__("Debt Ratio ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")],
-            'pdf' => ["{$score}%", "{$goodScore}%"],
+            'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
         ];
         
         return [

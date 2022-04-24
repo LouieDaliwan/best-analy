@@ -13,7 +13,7 @@ class ROIAnalysis
 
         $labels = [
            'preview' => [__("ROI ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")],
-           'pdf' => ["{$score}%", "{$goodScore}%"],
+           'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
         ];
         
         return [

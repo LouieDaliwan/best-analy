@@ -13,8 +13,7 @@ class NetMarginAnalysis
             $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'])
         ); 
 
-        $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['profitability']['net_profit_margin'] * 100, 2);
-        
+        $score = $financialStatements[0]['metadataResults']['ratioAnalysis']['profitability']['net_profit_margin'] * 100;        
         $goodScore = self::getBenchMarkScore($projectType);
         
         $labels = [
@@ -47,8 +46,7 @@ class NetMarginAnalysis
             foreach ($marginRatio as $item) {
                 $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): (float) $profitability[$item];
 
-                $result =  $value * 100;
-                $tempData[] = round($result,3);
+                $tempData[] = round(($value * 100), 2);
             }
 
             $data[$statement['period']] = $tempData;

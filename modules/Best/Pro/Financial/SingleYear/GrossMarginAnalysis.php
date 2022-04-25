@@ -13,8 +13,8 @@ class GrossMarginAnalysis
             $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'])
         ); 
         
-        $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['profitability']['gross_profit_margin'] * 100, 2);
-        
+        $result = $financialStatements[0]['metadataResults']['ratioAnalysis']['profitability']['gross_profit_margin'] * 100;
+        $score = round($result, 2);
         
         $goodScore = self::getBenchMarkScore($projectType);
 

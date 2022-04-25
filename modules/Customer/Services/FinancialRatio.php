@@ -119,7 +119,7 @@ class FinancialRatio implements FinancialRatioInterface
         $this->ratioAnalysis['liquidity'] = Liquidity::compute($this->ratioAnalysis['liquidity'], $sales, $balanceSheets);
 
         $this->ratioAnalysis['dashboard']['current_ratio']['score'] = $balanceSheets['current_liabilities'] != 0 ?
-         round($balanceSheets['current_assets'] / $balanceSheets['current_liabilities'], 2) : 0;
+         round($balanceSheets['current_assets'] / $balanceSheets['current_liabilities'], 3) : 0;
     }
 
     protected function computeSolvency($balanceSheets)
@@ -138,7 +138,7 @@ class FinancialRatio implements FinancialRatioInterface
         $valueAdded = (float) $statements['Value Added'];
         $staffSalaries = (float) $statements['Staff Salaries & Benefits'];
 
-        $this->ratioAnalysis['productivity']['labour_cost_competitiveness'] = $staffSalaries != 0 ? round($valueAdded / $staffSalaries, 2) : 0;
+        $this->ratioAnalysis['productivity']['labour_cost_competitiveness'] = $staffSalaries != 0 ? round($valueAdded / $staffSalaries, 3) : 0;
     }
 
     protected function computeAdditionalRatio()

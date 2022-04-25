@@ -13,7 +13,9 @@ class RawMaterialAnalysis
             $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'])
         ); 
 
-        $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['additional_ratios']['raw_materials_margin'] * 100, 2); 
+        $result = $financialStatements[0]['metadataResults']['ratioAnalysis']['additional_ratios']['raw_materials_margin'] * 100;
+        $score = round($result, 3);
+
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
@@ -47,8 +49,7 @@ class RawMaterialAnalysis
             foreach ($marginRatio as $item) {
                 $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): (float) $profitability[$item];
 
-                $result =  $value * 100;
-                $tempData[] = round($result,3);
+                $tempData[] = round(($value * 100), 3);
             }
 
             $data[$statement['period']] = $tempData;

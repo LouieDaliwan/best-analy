@@ -13,7 +13,7 @@ class ROIAnalysis
             $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'])
         ); 
 
-        $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['additional_ratios']['roi'] * 100, 2); 
+        $score = round($financialStatements[0]['metadataResults']['ratioAnalysis']['additional_ratios']['roi'], 2); 
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
@@ -47,8 +47,7 @@ class ROIAnalysis
             foreach ($marginRatio as $item) {
                 $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): (float) $profitability[$item];
 
-                $result =  $value * 100;
-                $tempData[] = round($result,3);
+                $tempData[] = round($value, 2);
             }
 
             $data[$statement['period']] = $tempData;

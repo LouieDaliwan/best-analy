@@ -13,8 +13,7 @@ class CurrentRatioAnalysis
             '-', 
             $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'])
         ); 
-
-        $score = round((float) str_replace(':1', "", $financialStatements[0]['metadataResults']['ratioAnalysis']['liquidity']['current_ratio']) * 100, 2);
+        $score = round((float) str_replace(':1', "", $financialStatements[0]['metadataResults']['ratioAnalysis']['liquidity']['current_ratio']), 2);
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
@@ -48,8 +47,7 @@ class CurrentRatioAnalysis
             foreach ($marginRatio as $item) {
                 $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): (float) $profitability[$item];
 
-                $result =  $value * 100;
-                $tempData[] = round($result,3);
+                $tempData[] = round($value, 2);
             }
 
             $data[$statement['period']] = $tempData;
@@ -112,8 +110,8 @@ class CurrentRatioAnalysis
     protected static function getBenchMarkScore($projectType)
     {
         $benchMarks = [
-            'industrial' => 125,
-            'non-industrial' => 150,
+            'industrial' => 1.25,
+            'non-industrial' => 1.5,
         ];
 
         return $benchMarks[strtolower($projectType)];

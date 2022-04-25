@@ -133,7 +133,3 @@
         @endforeach
     </tbody>
 </table>
-    
-<?php
-  dd();
-?>

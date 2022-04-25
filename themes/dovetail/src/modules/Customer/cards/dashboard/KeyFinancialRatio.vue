@@ -52,7 +52,7 @@
               </v-card-text>
           </v-card>
         </v-col>
-        <v-col v-if="!customer.details.metadata.project_type" cols="12">
+        <v-col v-if="!customer.details.metadata.project_type || !customer.details.metadata.investment_value" cols="12">
           <v-alert
             dense
             text
@@ -62,7 +62,10 @@
             >
             <v-row align="center">
               <v-col class="grow">
-                Update the <strong>Project Type</strong> in the Project Information.
+                Update the <strong v-if="!customer.details.metadata.project_type">Project Type</strong>
+                <span v-if="!customer.details.metadata.investment_value"> and
+                <strong>Investment Value</strong></span>
+                in the Project Information.
               </v-col>
               <v-col class="shrink">
                 <v-btn
@@ -79,7 +82,7 @@
           </v-alert>
         </v-col>
         <!-- If no Investment Value -->
-<!--         <v-col v-if="!customer.details.metadata.investment_value" cols="12">
+        <!-- <v-col v-if="!customer.details.metadata.investment_value" cols="12">
           <v-alert
             dense
             text

@@ -10,16 +10,17 @@ export default class extends Resource {
       setMethod: 'add',
       metadataSheets: {
         Balance: 0,
+        "Current Asset": 0,
         Cash: 0,
-        "Common Shares Outstanding": 0,
-        "Fixed Assets": 0,
+        "Trade Receivables": 0,
         Inventories: 0,
-        "Other CA": 0,
-        "Other CL": 0,
-        "Other NCL": 0,
-        "Stockholders' Equity": 0,
+        "Other Current Assets": 0,
+        "Fixed Assets": 0,
         "Trade Payables": 0,
-        "Trade Receivables": 0
+        "Other Current Liablities": 0,
+        "Other Non-Current Liablities": 0,
+        "Stockholders' Equity": 0,
+        "Common Shares Outstanding": 0,
       },
 
       metadataStatements: {

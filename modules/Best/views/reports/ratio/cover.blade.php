@@ -39,7 +39,7 @@
 
     <div class="row justify-content-center">
       <div class="col-md-10">
-        <div class="row justify-content-between">
+        <div class="row justify-content-between align-items-end">
           <div class="col-md-6 col-sm-12">
             <h4 class="mb-0">@lang('Prepared for'):</h4>
             <h2 class="dt-primary mb-0">{{ $data['organisation:profile']['name'] }}</h2>
@@ -53,21 +53,24 @@
               <h4 class="mb-0">@lang('Site Visit Date'):</h4>
               <p>{{ $data['month:formatted'] }}</p>
             </div>
-
-            <div class="mt-5">
-              <cite>
-                <small>{{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}</small><br />
-                <small>{{ __('Powered by') }} {{ settings('app:author') }}</small>
-              </cite>
-            </div>
           </div>
           <div class="col-md-4 col-sm-12">
             <div>
               <h4 class="mb-0">@lang('Prepared by'):</h4>
               <div style="background: #12263f; height: 1px; margin-top: 40px;"></div>
-              <div class="text-center mt-2">{{ $data['report:user'] }}</div>
+              <p class="text-center mt-2">{{ $data['report:user'] }}</p>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="mt-5">
+          <cite>
+            <small>{{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}</small><br />
+            <small>{{ __('Powered by') }} {{ settings('app:author') }}</small>
+          </cite>
         </div>
       </div>
     </div>

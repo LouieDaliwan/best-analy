@@ -18,6 +18,7 @@
   {{-- Theme CSS --}}
   <style>{{ theme()->inlined(public_path('reports/css/basic.css')) }}</style>
   <style>{{ theme()->inlined(public_path('reports/css/theme.min.css')) }}</style>
+  <style>{{ theme()->inlined(public_path('reports/css/ratio-cover.css')) }}</style>
   @if($data['financialStatementCount'] == 3) 
     <style>{{ theme()->inlined(public_path('reports/css/pdf/ratios.css')) }}</style>
     <style>{{ theme()->inlined(public_path('reports/css/pdf/indicators.css')) }}</style>

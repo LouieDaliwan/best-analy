@@ -135,7 +135,7 @@
           [
             'Value Added',
             'Operating Profit/(Loss)[EBT]',
-            'Cost of Good Sold'
+            'Cost of Good Sold',
           ].includes(item)
         "
         >
@@ -221,6 +221,43 @@
         </v-row>
       </template>
       <template v-else>
+        <!-- <template
+          v-if="
+            [
+              'Current Asset',
+            ].includes(item)
+          "
+          >
+          <v-row>
+            <v-col
+              cols="6"
+              v-text="trans(item)"
+              class="font-weight-bold text-right"
+            >
+            </v-col>
+            <v-col cols="6">
+              <v-text-field
+                class="text-right dt-text-field"
+                dense
+                :name="`metadata[statement][metadataSheets][${item}]`"
+                readonly
+                v-if="edit"
+                v-model="resource.data.metadataSheets[item]"
+              ></v-text-field>
+              <div
+                v-else
+                v-text="
+                  parseFloat(
+                    resource.data.metadataSheets[item] || 0
+                  ).toLocaleString()
+                "
+                class="text-right font-weight-bold "
+              ></div
+            ></v-col>
+          </v-row>
+          <v-divider v-if="edit" class="my-0 d-none"></v-divider>
+          <v-divider v-else class="my-0"></v-divider>
+        </template> -->
         <period-input
           :edit="edit"
           :label="item"
@@ -335,15 +372,15 @@ export default {
         metadataSheets.Cash,
         metadataSheets["Trade Receivables"],
         metadataSheets.Inventories,
-        metadataSheets["Other CA"],
+        metadataSheets["Other Current Assets"],
         metadataSheets["Fixed Assets"]
       ]);
 
       const total_liabilities = this.sum([
         metadataSheets["Trade Payables"],
-        metadataSheets["Other CL"],
+        metadataSheets["Other Current Liablities"],
         metadataSheets["Stockholders' Equity"],
-        metadataSheets["Other NCL"],
+        metadataSheets["Other Non-Current Liablities"],
         metadataSheets["Common Shares Outstanding"]
       ]);
 

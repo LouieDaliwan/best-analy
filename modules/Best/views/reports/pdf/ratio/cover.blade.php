@@ -39,7 +39,7 @@
 
     <table width="100%">
       <tr>
-        <td valign="top">
+        <td valign="top" width="70%">
           <h4 class="mb-3">@lang('Prepared for'):</h4>
           <h2 class="mb-3 mb-0">{{ $data['organisation:profile']['name'] }}</h2>
           <p class="mb-0">{{ $data['cover:date'] }}</p>
@@ -55,6 +55,20 @@
             </div>
           @endif
 
+
+        </td>
+        <td valign="bottom" width="30%">
+          <div>
+            <h4 class="mb-0">@lang('Prepared by'):</h4>
+            <div style="background: #12263f; height: 1px; margin-top: 40px;"></div>
+            <p class="text-center mt-2">{{ $data['report:user'] ?? null }}</p>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <table width="100%">
+      <tr>
+        <td valign="top" width="70%">
           <div class="mt-5">
             <cite>
               <small>{{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}</small><br />
@@ -62,14 +76,15 @@
             </cite>
           </div>
         </td>
-        <td valign="top">
-          <div>
-            <h4 class="mb-0">@lang('Prepared by'):</h4>
-            <div style="background: #12263f; height: 1px; margin-top: 40px;"></div>
-            <div class="text-center mt-2">{{ $data['report:user'] ?? null }}</div>
-          </div>
-        </td>
       </tr>
     </table>
   </div>
 </section>
+
+<?php
+dd();
+?>
+
+<style type="text/css">
+
+</style>

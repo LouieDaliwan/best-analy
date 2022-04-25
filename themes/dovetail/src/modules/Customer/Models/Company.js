@@ -47,7 +47,8 @@ class Company {
           project_name: null,
           project_type: null,
           trade_name_ar: null,
-          trade_name_en: null
+          trade_name_en: null,
+          investment_value: null,
         }
       },
       metadata: {

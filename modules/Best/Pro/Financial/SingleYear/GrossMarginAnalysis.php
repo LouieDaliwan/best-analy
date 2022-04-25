@@ -48,7 +48,7 @@ class GrossMarginAnalysis
             foreach ($marginRatio as $item) {
                 $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): (float) $profitability[$item];
 
-                $tempData[] = round($value * 100, 2);
+                $tempData[] = $value;
             }
 
             $data[$statement['period']] = $tempData;

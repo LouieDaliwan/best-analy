@@ -16,11 +16,14 @@ export default class extends Resource {
         Inventories: 0,
         "Other Current Assets": 0,
         "Fixed Assets": 0,
+        "Current Liabilities": 0,
         "Trade Payables": 0,
         "Other Current Liablities": 0,
+        "Non-Current Liabilities": 0,
         "Other Non-Current Liablities": 0,
         "Stockholders' Equity": 0,
         "Common Shares Outstanding": 0,
+        
       },
 
       metadataStatements: {

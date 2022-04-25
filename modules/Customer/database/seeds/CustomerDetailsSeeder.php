@@ -24,9 +24,9 @@ class CustomerDetailsSeeder extends Seeder
     public function run()
     {
         //for develop only
-        Detail::query()->truncate();
+        // Detail::query()->truncate();
         FinancialStatement::query()->truncate();
-        ApplicantDetail::query()->truncate();
+        // ApplicantDetail::query()->truncate();
 
         $customers = Customer::get();
 
@@ -36,11 +36,11 @@ class CustomerDetailsSeeder extends Seeder
                 continue;
             }
 
-            $this->customerDetail($customer);
+            // $this->customerDetail($customer);
 
-            $this->customerApplicantDetail($customer);
+            // $this->customerApplicantDetail($customer);
 
-            $this->customerFinancialStatement($customer);
+            // $this->customerFinancialStatement($customer);
         }
     }
 

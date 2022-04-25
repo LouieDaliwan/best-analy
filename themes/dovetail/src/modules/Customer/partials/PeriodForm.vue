@@ -221,10 +221,13 @@
         </v-row>
       </template>
       <template v-else>
-        <!-- <template
+        <template
           v-if="
             [
               'Current Asset',
+              'Fixed Assets',
+              'Current Liabilities',
+              'Non-Current Liabilities'
             ].includes(item)
           "
           >
@@ -257,8 +260,15 @@
           </v-row>
           <v-divider v-if="edit" class="my-0 d-none"></v-divider>
           <v-divider v-else class="my-0"></v-divider>
-        </template> -->
+        </template>
         <period-input
+          v-if="!
+            [
+              'Current Asset',
+              'Current Liabilities',
+              'Non-Current Liabilities'
+            ].includes(item)
+          "
           :edit="edit"
           :label="item"
           :name="`metadata[statement][metadataSheets][${item}]`"
@@ -367,13 +377,31 @@ export default {
 
     balance() {
       const metadataSheets = this.resource.data.metadataSheets;
-
+      
       const total_assets = this.sum([
         metadataSheets.Cash,
         metadataSheets["Trade Receivables"],
         metadataSheets.Inventories,
         metadataSheets["Other Current Assets"],
         metadataSheets["Fixed Assets"]
+      ]);
+
+      metadataSheets["Current Asset"] = this.sum([
+        metadataSheets.Cash,
+        metadataSheets["Trade Receivables"],
+        metadataSheets.Inventories,
+        metadataSheets["Other Current Assets"],
+      ]);
+
+      metadataSheets["Current Liabilities"] = this.sum([
+        metadataSheets["Trade Payables"],
+        metadataSheets["Other Current Liablities"]
+      ]);
+
+      metadataSheets["Non-Current Liabilities"] = this.sum([
+        metadataSheets["Other Non-Current Liablities"],
+        metadataSheets["Stockholders' Equity"],
+        metadataSheets["Common Shares Outstanding"]
       ]);
 
       const total_liabilities = this.sum([

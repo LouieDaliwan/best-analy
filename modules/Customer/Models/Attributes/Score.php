@@ -34,12 +34,10 @@ class Score {
     {
         $latestStatement = FinancialStatement::whereCustomerId($this->customer->id)
         ->latest('period')
-        ->first()
-        ->toArray();
+        ->first() ?? null;
 
-                
-        if(count($latestStatement) > 0) {       
-            $financial_score = (float) round($latestStatement['metadataResults']['ratioAnalysis']['dashboard']['financial_score'],2);
+        if(! is_null($latestStatement)) {       
+            $financial_score = (float) round($latestStatement->toArray()['metadataResults']['ratioAnalysis']['dashboard']['financial_score'],2);
 
             
             $this->format['smeRatings']['financial_score']['score'] = $financial_score;

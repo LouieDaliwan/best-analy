@@ -18,7 +18,7 @@ class NetMarginAnalysis
         $goodScore = self::getBenchMarkScore($projectType);
         
         $labels = [
-            'preview' => [__("Net Margin after Tax ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")],
+            'preview' => [__("Net Margin after Tax ({$score}%)"), __("Recommended ({$goodScore}%)")],
             'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
         ];        
 
@@ -47,7 +47,8 @@ class NetMarginAnalysis
             foreach ($marginRatio as $item) {
                 $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): (float) $profitability[$item];
 
-                $tempData[] = $value;
+                $result =  $value * 100;
+                $tempData[] = round($result,3);
             }
 
             $data[$statement['period']] = $tempData;

@@ -18,7 +18,7 @@ class CurrentRatioAnalysis
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
-            'preview' => [__("Current Ratio ({$score}%)"), __("Recommended Good Score ({$goodScore}%)")],
+            'preview' => [__("Current Ratio ({$score}%)"), __("Recommended ({$goodScore}%)")],
             'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
         ];
         
@@ -48,7 +48,8 @@ class CurrentRatioAnalysis
             foreach ($marginRatio as $item) {
                 $value = $item == 'operating_ratio' ? (float) str_replace(':1', "", $profitability[$item]): (float) $profitability[$item];
 
-                $tempData[] = $value;
+                $result =  $value * 100;
+                $tempData[] = round($result,3);
             }
 
             $data[$statement['period']] = $tempData;

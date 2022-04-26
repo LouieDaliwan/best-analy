@@ -17,7 +17,7 @@ class CurrentRatioAnalysis
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
-            'preview' => [__("Current Ratio ({$score}%)"), __("Recommended ({$goodScore}%)")],
+            'preview' => ["({$score}%)", __("Recommended ({$goodScore}%)")],
             'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
         ];
         

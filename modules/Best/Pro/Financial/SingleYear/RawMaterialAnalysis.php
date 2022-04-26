@@ -19,7 +19,7 @@ class RawMaterialAnalysis
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
-           'preview' => [__("Raw Materials Margin ({$score}%)"), __("Recommended ({$goodScore}%)")],
+           'preview' => ["({$score}%)", __("Recommended ({$goodScore}%)")],
            'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
         ];
         

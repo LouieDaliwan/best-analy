@@ -17,7 +17,7 @@ class ROIAnalysis
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
-           'preview' => [__("ROI ({$score}%)"), __("Recommended ({$goodScore}%)")],
+           'preview' => ["({$score}%)", __("Recommended ({$goodScore}%)")],
            'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
         ];
         

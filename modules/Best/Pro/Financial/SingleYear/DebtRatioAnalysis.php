@@ -17,7 +17,7 @@ class DebtRatioAnalysis
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
-            'preview' => [__("Debt Ratio ({$score}%)"), __("Recommended ({$goodScore}%)")],
+            'preview' => ["Debt Ratio ({$score}%)", __("Recommended ({$goodScore}%)")],
             'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
         ];
         

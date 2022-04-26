@@ -17,7 +17,7 @@ class NetMarginAnalysis
         $goodScore = self::getBenchMarkScore($projectType);
         
         $labels = [
-            'preview' => [__("Net Margin after Tax ({$score}%)"), __("Recommended ({$goodScore}%)")],
+            'preview' => ["({$score}%)", __("Recommended ({$goodScore}%)")],
             'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
         ];        
 

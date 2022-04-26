@@ -19,7 +19,7 @@ class GrossMarginAnalysis
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
-           'preview' => [__("Gross Profit Margin ({$score}%) "), __("Recommended ({$goodScore}%)")],
+           'preview' => ["({$score}%)", __("Recommended ({$goodScore}%)")],
            'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
         ];
         

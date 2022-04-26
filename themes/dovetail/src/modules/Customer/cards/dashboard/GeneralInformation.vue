@@ -4,6 +4,40 @@
       <!-- <h3 class="mb-5" v-text="trans('SME Ratings Report')"></h3> -->
       <div class="d-flex align-center justify-space-between mb-5">
         <h3 v-text="trans('General Information')"></h3>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              :to="{
+                name: 'companies.edit',
+                params: { id: value.id }
+                }"
+              icon
+              large
+              v-on="on"
+              color="primary"
+            >
+              <v-icon small>mdi-pencil</v-icon>
+            </v-btn>
+          </template>
+          <span>{{ trans("Update Information") }}</span>
+        </v-tooltip>
+        <!-- <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              icon
+              large
+              :to="{
+                name: 'companies.edit',
+                params: { id: value.id }
+                }"
+              color="primary"
+              ><v-icon small class="mx-2">mdi-pencil</v-icon>
+                <span v-text="trans(`Update General Information`)"></span>
+              </v-btn>
+          </template>
+          <span>{{ trans("Update Information") }}</span>
+        </v-tooltip> -->
+
       </div>
       <v-divider></v-divider>
       <template v-for="(item, i) in dataset">
@@ -30,7 +64,7 @@
           </v-row>
         </div>
       </template>
-      <v-btn
+      <!-- <v-btn
         block
         large
         :to="{
@@ -40,7 +74,7 @@
         color="primary"
         ><v-icon small class="mx-2">mdi-pencil</v-icon>
           <span v-text="trans(`Update General Information`)"></span>
-        </v-btn>
+        </v-btn> -->
     </v-card-text>
   </v-card>
 </template>

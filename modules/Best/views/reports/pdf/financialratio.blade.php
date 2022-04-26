@@ -48,11 +48,18 @@
     h1, h2, h3, h4, h5, h6 {
       font-weight: 700;
     }
+    .cover-financial-report {
+      height: 1342px;
+    }
+    .waveWrapperInner {
+      background: #ffffff !important;
+    }
+
   </style>
 </head>
 
 <body class="A4 lang-{{ app()->getLocale() ?: 'en' }}">
-  <div class="sheet">
+  <div class="sheet cover-financial-report">
     @include('best::reports.pdf.ratio.cover')
   </div>
 

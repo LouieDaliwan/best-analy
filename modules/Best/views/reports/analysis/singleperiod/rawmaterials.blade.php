@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <h1 class="mb-3 dt-secondary">@lang('Raw Materials Score')</h1>
+        <h1 class="mb-3 dt-secondary">@lang('Raw Materials Margin')</h1>
       </div>
     </div>
   </div>

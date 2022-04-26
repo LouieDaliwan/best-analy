@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <h1 class="mb-3 dt-secondary">@lang('Net Margin Score')</h1>
+        <h1 class="mb-3 dt-secondary">@lang('Net Margin after Tax')</h1>
       </div>
     </div>
   </div>

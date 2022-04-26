@@ -1,4 +1,4 @@
-<section class="text-black ocean-radial">
+<section class="text-black ocean-radial cover-financial-report">
   {{-- <div class="ocean">
     <div class="wave"></div>
     <div class="wave"></div>
@@ -42,22 +42,19 @@
         <td valign="top" width="70%">
           <h4 class="mb-3">@lang('Prepared for'):</h4>
           <h2 class="mb-3 mb-0">{{ $data['organisation:profile']['name'] }}</h2>
-          <p class="mb-0">{{ $data['cover:date'] }}</p>
+          @if ($data['month:formatted'] ?? null)
+            <div class="mt-5">
+              <h4 class="mb-0 font-weight-normal">@lang('Site Visit Date'):</h4>
+              <p>{{ $data['month:formatted'] }}</p>
+            </div>
+          @endif
+          {{-- <p class="mb-0">{{ $data['month:formatted'] }}</p> --}}
           @if ($data['customer:counselor'] ?? null)
             <h4 class="mb-0 mt-3">@lang('Business Councelor'):</h4>
             <p class="mb-0">{{ $data['customer:counselor'] }}</p>
           @endif
-
-          @if ($data['month:formatted'] ?? null)
-            <div class="mt-5">
-              <h4 class="mb-0">@lang('Site Visit Date'):</h4>
-              <p>{{ $data['month:formatted'] }}</p>
-            </div>
-          @endif
-
-
         </td>
-        <td valign="bottom" width="30%">
+        <td valign="top" width="30%">
           <div>
             <h4 class="mb-0">@lang('Prepared by'):</h4>
             <div style="background: #12263f; height: 1px; margin-top: 40px;"></div>
@@ -76,10 +73,15 @@
             </cite>
           </div>
         </td>
+        <td valign="top" width="70%">
+          <div class="mt-5">
+            <cite>
+              <small class="text-white">Date:</small><br />
+              <small>{{ $data['month:formatted'] }}</p></small>
+            </cite>
+          </div>
+        </td>
       </tr>
     </table>
   </div>
 </section>
-<style type="text/css">
-
-</style>

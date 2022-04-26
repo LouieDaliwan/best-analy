@@ -1,5 +1,5 @@
 <div class="mx-4 mb-5">
-  <div class="py-2" style="font-weight: bold; border-bottom: 1px solid #f5f5f5;">@lang('Return of Investment Score')</div>
+  <div class="py-2" style="font-weight: bold; border-bottom: 1px solid #f5f5f5;">@lang('ROI')</div>
     <div class="mb-3 text-center">
       <canvas height="360" width="450" id="roi" style="margin: auto;" class="mt-5 mb-2"></canvas>
     </div>

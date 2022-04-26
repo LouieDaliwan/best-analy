@@ -39,12 +39,12 @@
 
     <div class="row justify-content-center">
       <div class="col-md-10">
-        <div class="row justify-content-between align-items-end">
+        <div class="row justify-content-between">
           <div class="col-md-6 col-sm-12">
             <h4 class="mb-0">@lang('Prepared for'):</h4>
             <h2 class="dt-primary mb-0">{{ $data['organisation:profile']['name'] }}</h2>
             {{-- <p class="mb-0">{{ $data['cover:date'] }}</p> --}}
-            <p class="mb-0">{{ $data['month:formatted'] }}</p>
+            {{-- <p class="mb-0">{{ $data['month:formatted'] }}</p> --}}
             @if ($data['customer:counselor'] ?? null)
               <h4 class="mb-0 mt-3">@lang('Business Councelor'):</h4>
               <p class="mb-0">{{ $data['customer:counselor'] }}</p>
@@ -67,11 +67,23 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-md-10">
-        <div class="mt-5">
-          <cite>
-            <small>{{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}</small><br />
-            <small>{{ __('Powered by') }} {{ settings('app:author') }}</small>
-          </cite>
+        <div class="row justify-content-between">
+          <div class="col-md-6 col-sm-12">
+            <div class="mt-5">
+              <cite>
+                <small>{{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}</small><br />
+                <small>{{ __('Powered by') }} {{ settings('app:author') }}</small>
+              </cite>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <div class="mt-5">
+              <cite>
+                <small></small><br />
+                <small>{{ $data['month:formatted'] }}</small>
+              </cite>
+            </div>
+          </div>
         </div>
       </div>
     </div>

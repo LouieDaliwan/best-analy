@@ -10,9 +10,6 @@
       <canvas class="mb-5" ref="chart-el" width="400" height="200" v-if="value.ratings.answered_index != 0"></canvas>
       <v-card v-else flat>
         <v-card-text class="text-center">
-          <v-row justify="center" align="center">
-            <empty-icon class="muted--text"></empty-icon>
-          </v-row>
           <h3 class="muted--text" v-text="trans('No scores to show')"></h3>
           <p class="muted--text mb-0" v-text="trans('Start by answering the SME rating surveys or filling out financial statement.')"></p>
         </v-card-text>

@@ -43,7 +43,8 @@
           <div class="col-md-6 col-sm-12">
             <h4 class="mb-0">@lang('Prepared for'):</h4>
             <h2 class="dt-primary mb-0">{{ $data['organisation:profile']['name'] }}</h2>
-            <p class="mb-0">{{ $data['cover:date'] }}</p>
+            {{-- <p class="mb-0">{{ $data['cover:date'] }}</p> --}}
+            <p class="mb-0">{{ $data['month:formatted'] }}</p>
             @if ($data['customer:counselor'] ?? null)
               <h4 class="mb-0 mt-3">@lang('Business Councelor'):</h4>
               <p class="mb-0">{{ $data['customer:counselor'] }}</p>

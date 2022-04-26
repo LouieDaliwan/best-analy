@@ -80,11 +80,6 @@
     </table>
   </div>
 </section>
-
-<?php
-dd();
-?>
-
 <style type="text/css">
 
 </style>

@@ -44,9 +44,9 @@
         <v-col v-if="value.date == 'empty'" cols="12">
           <v-card flat>
               <v-card-text class="text-center">
-                <v-row justify="center" align="center">
+               <!--  <v-row justify="center" align="center">
                   <empty-icon class="muted--text"></empty-icon>
-                </v-row>
+                </v-row> -->
                 <h3 class="muted--text" v-text="trans('No scores to show')"></h3>
                 <p class="muted--text mb-0" v-text="trans('Start filling out the financial statement.')"></p>
               </v-card-text>

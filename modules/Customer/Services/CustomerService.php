@@ -6,6 +6,7 @@ use Best\Models\Report;
 use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
 use Customer\Jobs\ComputeFinancialRatio;
+use Customer\Jobs\UpdateStatementsJob;
 use Customer\Models\Customer;
 use Customer\Models\FinancialStatement;
 use Customer\Services\FinancialRatioInterface;
@@ -260,7 +261,6 @@ class CustomerService extends Service implements CustomerServiceInterface
 
         $this->saveCustomerDetail($customer, $attributes);
 
-        //TODO optimize --Louie Daliwan
         if (isset($attributes['metadata']['applicant'])) {
             $customer->applicant()->updateOrCreate(
                 ['customer_id' => $id],
@@ -273,6 +273,8 @@ class CustomerService extends Service implements CustomerServiceInterface
                 ['customer_id' => $id],
                 ['metadata' => $attributes['metadata']['project']]
             );
+
+            dispatch(new UpdateStatementsJob($customer));
         }
         
         $statements = $attributes['metadata']['statement'] ?? null;
@@ -280,7 +282,6 @@ class CustomerService extends Service implements CustomerServiceInterface
         if ( isset($statements['metadataStatements']) && isset($statements['metadataSheets']) && $statements['metadataStatements']['period'] != null) {
             app(FinancialRatioInterface::class)->compute($customer, $statements);
         }
-        //TODO optimize --Louie Daliwan
     }
 
     protected function saveCustomerDetail($customer, $attributes)

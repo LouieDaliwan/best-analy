@@ -1,8 +1,29 @@
 <template>
   <v-row>
     <v-col cols="6">
-      <span v-text="label"></span>
+      <span v-text="label"
+      v-if="
+            [
+              'General Management Costs',
+              'Raw Materials',
+              'Depreciation',
+              'Interest On Loan/Hires',
+              'Company Tax',
+              'Cash',
+              'Trade Receivables',
+              'Inventories',
+              'Other Current Assets',
+              'Fixed Assets',
+              'Trade Payables',
+              'Other Current Liablities',
+              'Other Non-Current Liablities',
+              `Stockholders' Equity`,
+              'Common Shares Outstanding'
+            ].includes(label)"
+      ></span>
 
+      <span v-text="label + '*'" v-else></span>
+    
       <v-menu v-if="tooltip[label]">
         <template v-slot:activator="{ on, attrs }">
           <v-btn v-bind="attrs" v-on="on" icon small>

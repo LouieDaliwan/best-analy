@@ -93,6 +93,7 @@
         <tr>
             <td>
                 <h1 class="dt-primary">@lang('Productivity Indicators')</h1> 
+                <hr>
             </td>
                  
         </tr>
@@ -111,7 +112,7 @@
                                 @if($data != null && $count == 1)
                                     <td bgcolor="#edf2f9" class="row1" rowspan="2">{{ $data }}</td>
                                 @else
-                                    <td class="otherRows">{{ $data }}</td> 
+                                    <td class="otherRows">{{ $data }}</td>
                                 @endif
                             @endif
                             
@@ -133,3 +134,9 @@
         @endforeach
     </tbody>
 </table>
+
+<style>
+  .otherRows:nth-child(4) {
+    border-right: 1px solid #868e96;
+  }
+</style>

@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <!-- <v-form @submit.prevent="submit" ref="form"> -->
     <div class="d-flex align-center mb-3">
       <h3>Financial Period</h3>
@@ -86,6 +87,7 @@
     <v-card flat height="40"></v-card>
 
     <h2 class="primary--text">Financial Statement</h2>
+    <small><span class="red--text">*</span> Denotes compulsory items</small>
     <v-card flat height="20"></v-card>
     <div
       v-for="(item, i) in Object.keys(resource.data.metadataStatements)"

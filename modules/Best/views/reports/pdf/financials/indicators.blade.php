@@ -2,34 +2,45 @@
   <table width="100%">
     <tbody>  
       <tr>
-        <td valign="top" width="50%">
-          <h1 class="dt-primary">@lang('Productivity Indicators')</h1>
-          <div valign="middle" class="mt-5">
-            <div class="chart-analysis">
-              <div class="mr-3" style="width: 700px; height: 200px;">
-                <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>
+        <td class="p-3" width="50%">
+          <h1 class="dt-primary " style="border">@lang('Productivity Analysis')</h1>
+          <hr>
+        </td>
+        <td class="p-3" width="50%">
+          <h1 class="dt-primary">@lang('VA Indicators')</h1>
+          <hr>
+        </td>
+      </tr>
+      <tr>
+        <td valign="middle" width="50%" class="p-3" >
+          <div valign="middle" class="mt-3">
+            <div class="py-5">
+              <div class="chart-analysis">
+                <div class="mr-3" style="width: 700px; height: 200px;">
+                  <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>
+                </div>
               </div>
+              {{-- label --}}
+              <div style="height: 20px;"></div>
+              <table class="indiLabels" width="50%" align="center">
+                <tr>
+                  @foreach ($data['analysis:financial']['productivity']['charts']['dataset'] as $resource)
+                    <td>
+                      <span class="circular p-2" style="background: {{ $resource['bg'] }};"></span>
+                      &nbsp;
+                      <span>{{ $resource['label'] }}</span>
+                    </td>
+                  @endforeach
+                </tr>
+              </table>
             </div>
-            {{-- label --}}
-            <div style="height: 20px;"></div>
-            <table class="indiLabels" width="50%">
-              <tr>
-                @foreach ($data['analysis:financial']['productivity']['charts']['dataset'] as $resource)
-                  <td>
-                    <span class="circular p-2" style="background: {{ $resource['bg'] }};"></span>
-                    &nbsp;
-                    <span>{{ $resource['label'] }}</span>
-                  </td>
-                @endforeach
-              </tr>
-            </table>
           {{-- label --}}
             <div class="col-md-12 mt-3 comment-analysis">
               @foreach ($data['analysis:financial']['productivity']['comments'] as $comments)
                 <div class="row">
-                  <div class="col">
+                  <div class="col px-5">
                     @foreach ($comments as $comment)
-                      <p>{{ $comment }}</p>
+                      <p class="mb-1">{{ $comment }}</p>
                     @endforeach
                   </div>
                 </div>
@@ -37,11 +48,10 @@
             </div>
           </div>
         </td>
-        <td valign="top" width="50%">
-          <h1 class="dt-primary">@lang('VA Indicators')</h1>
+        <td valign="top" width="50%" class="p-3" >
           <table class="table table-indicator-main">
             <tbody>
-              @foreach ($data['indicators:productivity'] as $key => $d) 
+              @foreach ($data['indicators:productivity'] as $key => $d)
                 <tr class="title table-indicator">
                   <td colspan="5">{{ __($key) }}</td>
                 </tr>
@@ -61,7 +71,7 @@
             </tbody>
           </table>
         </td>
-      </tr>     
+      </tr>
       <tr>
         @include('best::reports.pdf.financials.indicators.list')
       </tr>
@@ -70,16 +80,20 @@
 </section>
 
 <style>
-  .indiLabels tr td {
+/*  .indiLabels tr td {
      padding-left: 25%;
-     text-align: left;
-  }
+     text-align: center;
+     width:  100%;
+  }*/
 
   td[colspan=3], td.colspan-text, .colspan-text {
     border-right: 1px solid #868e96 !important;
   }
   .empty-1:empty {
     display: none;
+  }
+  .table td, .table th {
+    border-top: none;
   }
 </style>
 
@@ -96,7 +110,24 @@ $(document).ready(function() {
         datasets: dataset,
       },
       options: {
-        animation: false,
+        animation: {
+          duration: 1,
+          onComplete: function () {
+              var chartInstance = this.chart,
+                  ctx = chartInstance.ctx;
+              ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'bottom';
+
+              this.data.datasets.forEach(function (dataset, i) {
+                  var meta = chartInstance.controller.getDatasetMeta(i);
+                  meta.data.forEach(function (bar, index) {
+                      var data = dataset.data[index] + '%';
+                      ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                  });
+              });
+          }
+        },
         legend: false,
         scales: {
           xAxes: [{

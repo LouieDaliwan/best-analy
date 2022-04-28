@@ -108,8 +108,8 @@ class FinancialRatio implements FinancialRatioInterface
     {
         $profitability = Profitability::compute($this->ratioAnalysis['profitability'], $sales, $profitStatements, $balanceSheets);
 
-        $this->ratioAnalysis['dashboard']['gross_margin']['score'] = $profitability['gross_profit_margin'];
-        $this->ratioAnalysis['dashboard']['net_margin']['score'] = $profitability['net_profit_margin'];
+        $this->ratioAnalysis['dashboard']['gross_margin']['score'] = $profitability['gross_profit_margin'] * 100;
+        $this->ratioAnalysis['dashboard']['net_margin']['score'] = round($profitability['net_profit_margin'] * 100, 2);
 
         $this->ratioAnalysis['profitability'] = $profitability;
     }
@@ -119,7 +119,7 @@ class FinancialRatio implements FinancialRatioInterface
         $this->ratioAnalysis['liquidity'] = Liquidity::compute($this->ratioAnalysis['liquidity'], $sales, $balanceSheets);
 
         $this->ratioAnalysis['dashboard']['current_ratio']['score'] = $balanceSheets['current_liabilities'] != 0 ?
-         round($balanceSheets['current_assets'] / $balanceSheets['current_liabilities'], 3) : 0;
+         round($balanceSheets['current_assets'] / $balanceSheets['current_liabilities'], 2) : 0;
     }
 
     protected function computeSolvency($balanceSheets)
@@ -149,8 +149,8 @@ class FinancialRatio implements FinancialRatioInterface
             $this->statements
         );
 
-        $this->ratioAnalysis['dashboard']['raw_materials']['score'] = $additionalRatio['raw_materials_margin'];
-        $this->ratioAnalysis['dashboard']['roi']['score'] = $additionalRatio['roi'];
+        $this->ratioAnalysis['dashboard']['raw_materials']['score'] = $additionalRatio['raw_materials_margin'] * 100;
+        $this->ratioAnalysis['dashboard']['roi']['score'] = round($additionalRatio['roi'], 2);
 
         $this->ratioAnalysis['additional_ratios'] = $additionalRatio;
     }

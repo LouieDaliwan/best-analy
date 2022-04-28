@@ -149,7 +149,7 @@ class FinancialRatio implements FinancialRatioInterface
             $this->statements
         );
 
-        $this->ratioAnalysis['dashboard']['raw_materials']['score'] = $additionalRatio['raw_materials_margin'] * 100;
+        $this->ratioAnalysis['dashboard']['raw_materials']['score'] = round(($additionalRatio['raw_materials_margin'] * 100), 2);
         $this->ratioAnalysis['dashboard']['roi']['score'] = round($additionalRatio['roi'], 2);
 
         $this->ratioAnalysis['additional_ratios'] = $additionalRatio;

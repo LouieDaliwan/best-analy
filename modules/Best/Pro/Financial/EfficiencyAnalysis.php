@@ -88,7 +88,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                 'label' => $year,
                 'data' => $data[$period],
                 'bg' => $bgColor,
-                'backgroundColor' => [$bgColor, $bgColor],
+                'backgroundColor' => [$bgColor, $bgColor, $bgColor, $bgColor, $bgColor, $bgColor],
             ];
 
             $count++;

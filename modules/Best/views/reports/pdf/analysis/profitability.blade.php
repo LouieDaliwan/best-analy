@@ -128,7 +128,3 @@ $(document).ready(function() {
   });
 });
 </script>
-
-<?php
-dd($data['analysis:financial']['profitability']['comment']);
-  ?>

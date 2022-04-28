@@ -11,7 +11,7 @@
       </template>
 
       <template v-slot:action>
-        <v-btn
+        <!-- <v-btn
           :block="$vuetify.breakpoint.smAndDown"
           @click="previewRatiosReport"
           color="primary"
@@ -22,7 +22,7 @@
         >
           <v-icon small left>mdi-table-eye</v-icon>
           {{ __("Financial Analysis Report") }}
-        </v-btn>
+        </v-btn> -->
 
         <v-btn
           :block="$vuetify.breakpoint.smAndDown"

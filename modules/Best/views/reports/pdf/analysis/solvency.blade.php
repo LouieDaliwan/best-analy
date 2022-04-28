@@ -89,7 +89,24 @@ $(document).ready(function() {
       datasets: dataset
     },
     options: {
-      animation: false,
+      animation: {
+        duration: 1,
+        onComplete: function () {
+            var chartInstance = this.chart,
+                ctx = chartInstance.ctx;
+            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+
+            this.data.datasets.forEach(function (dataset, i) {
+                var meta = chartInstance.controller.getDatasetMeta(i);
+                meta.data.forEach(function (bar, index) {
+                    var data = Math.round(dataset.data[index]) + '%';
+                    ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                });
+            });
+        }
+      },
       legend: false,
       scales: {
         xAxes: [{
@@ -111,12 +128,19 @@ $(document).ready(function() {
             display: false,
           },
           ticks: {
+            precision: 1,
             beginAtZero: true,
             maxTicksLimit: 5,
             fontColor: '#044b7f',
             fontFamily: 'Rubik, sans-serif',
             fontSize: 12,
-            callback: function(value){return value}
+            userCallback: function(label, index, labels) {
+                // when the floored value is the same as the value we have a whole number
+                if (Math.floor(label) === label) {
+                    return label;
+                }
+
+            },
           }
         }]
       }

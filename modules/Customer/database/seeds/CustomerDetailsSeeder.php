@@ -132,18 +132,21 @@ class CustomerDetailsSeeder extends Seeder
         $metadata['Other Non-Current Liablities'] = 0;
 
         foreach ($customerBS as $key => $datum) {
-            isset($metadata[$key]) ? : $metadata[$key] = (float) $customerBS[$key][$year] ?? 0;
-
+            
+            if(collect(['Other NCL', 'Other CL', 'Other CA', 'Other '])->intersect([$key])->isEmpty()){
+                isset($metadata[$key]) ? : $metadata[$key] = (float) $customerBS[$key][$year] ?? 0;
+            }
+        
             if($key == 'Other CA') {
                 $metadata['Other Current Assets'] =  $customerBS['Other CA'];
             }
 
             if ($key == 'Other CL') {
-                $metadata['Other Current Assets'] =  $customerBS['Other CL']; 
+                $metadata['Other Current Liabilities'] =  $customerBS['Other CL']; 
             }
 
             if ($key == 'Other NCL') {
-                $metadata['Other Non-Current Liabilities'] = $customerBS['Other NCL'];
+                $metadata['Other Non-Current Liablities'] = $customerBS['Other NCL'];
             }
 
             if (collect(['Cash', 'Trade Receivables', 'Inventories', 'Other CA'])->intersect([$key])->isNotEmpty()) {
@@ -166,7 +169,6 @@ class CustomerDetailsSeeder extends Seeder
     {
         $temp_meta_arr = [];
         $temp_meta_arr['period'] = $year;
-        $temp_meta_arr['Raw Materials'] = 0;
         $temp_meta_arr['Net Operating Profit/(Loss)'] = 0;
 
         $arr_metadata = $this->getNewMetadata();
@@ -205,18 +207,26 @@ class CustomerDetailsSeeder extends Seeder
 
                         $temp_meta_arr[$arr_meta_key] += (float) $metadata[$parent_value][$year];
                     }
-
-                    if ($arr_meta_key == 'Raw Materials (direct & indirect)') {
-                        $temp_meta_arr['Raw Materials'] += $temp_meta_arr['Raw Materials (direct & indirect)'];
-                    }
                 }
             }
 
+            if ($arr_meta_key == 'Raw Materials (direct & indirect)') {
+                isset($temp_meta_arr['Raw Materials']) ? : $temp_meta_arr['Raw Materials'] = 0;
+                $temp_meta_arr['Raw Materials'] += $temp_meta_arr['Raw Materials (direct & indirect)'];
+                
+                
+            }
+
+            if($arr_meta_key == 'Cost of Good Sold') {
+                $temp_meta_arr['Cost of Good'] = $temp_meta_arr['Raw Materials'] + $temp_meta_arr['Direct Production Costs'];
+            }
         }
 
-        $temp_meta_arr['Cost of Good Sold'] = ($temp_meta_arr['Raw Materials']  + ($temp_meta_arr['Direct Production Costs']));
+        
+        
         $temp_meta_arr['Net Operating Profit/(Loss)'] = $temp_meta_arr['Sales'] - $temp_meta_arr['Cost of Good Sold'];
 
+        unset($temp_meta_arr['Raw Materials (direct & indirect)']);
         return $temp_meta_arr;
     }
 
@@ -224,6 +234,7 @@ class CustomerDetailsSeeder extends Seeder
     {
         return [
                 'Sales' => [],
+                'Number of Staff' => [],
                 'Raw Materials (direct & indirect)' => [],
                 'Direct Production Costs' => [
                     'Cargo and Handling',
@@ -235,6 +246,8 @@ class CustomerDetailsSeeder extends Seeder
                     'Lease of Plant and Machinery',
                     'Direct Employee Cost'
                 ],
+                'Cost of Good Sold' => [],
+                'Marketing Costs' => [],
                 'General Management Costs' => [
                     'Stationery Supplies and Printing',
                     'Rental',
@@ -254,7 +267,9 @@ class CustomerDetailsSeeder extends Seeder
                     "Bank charges",
                     "Other Administrative Costs",
                 ],
-                "Labour Expenses" => [
+                'Value Added' => [],
+
+                "Staff Salaries & Benefits" => [
                     'Employee Compensation',
                     "Bonuses",
                     "Provident Fund",
@@ -270,10 +285,6 @@ class CustomerDetailsSeeder extends Seeder
                     "Plant, Machinery & Equipment",
                     'Others (Depreciation)'
                 ],
-                'Marketing Costs' => [],
-                'Value Added' => [],
-                'Number of Staff' => [],
-                'Staff Salaries & Benefits' => [],
                 "Other Expense (less Other Income)" => [
                     "Non-Operating Income" => [
                         'Profit from Fixed Assets Sale',
@@ -288,20 +299,21 @@ class CustomerDetailsSeeder extends Seeder
                         'Others (Non-Operating Costs)',
                     ],
                 ],
-                "Ebit" => [
-                    'Profit or (Loss) Before Interest and Income Tax'
-                ],
+                // "Ebit" => [
+                //     'Profit or (Loss) Before Interest and Income Tax'
+                // ],
                 'Interest On Loan/Hires' => [
                     'Interest & Charges by Bank',
                     'Interest on Loan',
                     'Interest on Hire Purchase',
                     'Others (Interest on Loan/Hires)',
                 ],
-                'Operating Profit/(Loss)[EBT]' => [
-                    'Profit or (Loss) Before Income Tax'
-                ],
+                
                 'Company Tax' => [
                     'Tax on Company'
+                ],
+                'Operating Profit/(Loss)[EBT]' => [
+                    // 'Profit or (Loss) Before Income Tax'
                 ],
             ];
     }

@@ -15,10 +15,11 @@ class CurrentRatioAnalysis
         ); 
         $score = round((float) str_replace(':1', "", $financialStatements[0]['metadataResults']['ratioAnalysis']['liquidity']['current_ratio']), 2);
         $goodScore = self::getBenchMarkScore($projectType);
+        $year = $financialStatements[0]['period'];
 
         $labels = [
-            'preview' => ["({$score}%)", __("Recommended ({$goodScore}%)")],
-            'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
+            'preview' => ["{$year} ({$score}%)", __("Recommended ({$goodScore}%)")],
+            'pdf' => ["{$year} ({$score}%)", "Recommended ({$goodScore}%)"],
         ];
         
         return [

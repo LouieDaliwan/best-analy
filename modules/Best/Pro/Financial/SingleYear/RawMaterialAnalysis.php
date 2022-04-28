@@ -15,12 +15,13 @@ class RawMaterialAnalysis
 
         $result = $financialStatements[0]['metadataResults']['ratioAnalysis']['additional_ratios']['raw_materials_margin'] * 100;
         $score = round($result, 3);
+        $year = $financialStatements[0]['period'];
 
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
-           'preview' => ["({$score}%)", __("Recommended ({$goodScore}%)")],
-           'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
+           'preview' => ["{$year} ({$score}%)", __("Recommended ({$goodScore}%)")],
+           'pdf' => ["{$year} ({$score}%)", "Recommended ({$goodScore}%)"],
         ];
         
         return [

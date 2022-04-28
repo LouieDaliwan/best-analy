@@ -15,10 +15,11 @@ class NetMarginAnalysis
 
         $score = $financialStatements[0]['metadataResults']['ratioAnalysis']['profitability']['net_profit_margin'] * 100;        
         $goodScore = self::getBenchMarkScore($projectType);
-        
+        $year = $financialStatements[0]['period'];
+
         $labels = [
-            'preview' => ["({$score}%)", __("Recommended ({$goodScore}%)")],
-            'pdf' => ["{$score}%", "Recommended ({$goodScore}%)"],
+            'preview' => ["{$year} ({$score}%)", __("Recommended ({$goodScore}%)")],
+            'pdf' => ["{$year} ({$score}%)", "Recommended ({$goodScore}%)"],
         ];        
 
         return [

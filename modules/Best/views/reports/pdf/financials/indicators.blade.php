@@ -2,19 +2,14 @@
   <table width="100%">
     <tbody>  
       <tr>
-
-
         <td valign="top" width="50%">
           <h1 class="dt-primary">@lang('Productivity Indicators')</h1>
-
-
           <div valign="middle" class="mt-5">
             <div class="chart-analysis">
               <div class="mr-3" style="width: 700px; height: 200px;">
                 <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>
               </div>
             </div>
-
             {{-- label --}}
             <div style="height: 20px;"></div>
             <table class="indiLabels" width="50%">
@@ -28,9 +23,7 @@
                 @endforeach
               </tr>
             </table>
-
           {{-- label --}}
-
             <div class="col-md-12 mt-3 comment-analysis">
               @foreach ($data['analysis:financial']['productivity']['comments'] as $comments)
                 <div class="row">

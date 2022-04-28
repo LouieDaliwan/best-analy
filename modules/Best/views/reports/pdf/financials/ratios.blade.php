@@ -9,43 +9,44 @@
   
   array_push($cols, array_merge(array_slice($data, 0,1), array_slice($data, 2, 1),array_slice($data, 5, 1)));  
 ?>
+<section class="mt-3">
+  <h1 class="dt-primary">@lang('Financial Analysis')</h1>
+  <div id="resp-table">
+    <div id="resp-table-row">
+      @foreach ($cols as $col)
+        <div class="resp-table-cell">
+            <div class="child-table">
+              @foreach($col as $key => $d)
+                @if($key != '')
+                <div class="child-resp-table-row title title1{{ $key }}">
+                  <span class="child-table-cell">
+                    <h3 class="mb-0" style="padding: 5px; font-weight: regular;">{{ __($key) }}</h3>
+                  </span>
+                  <span style="padding: 5px;" class="child-table-cell"></span>
+                  <span style="padding: 5px;" class="child-table-cell"></span>
 
-<h1 class="dt-primary">@lang('Financial Analysis')</h1>
+                  @if($statements_count == 3)
+                  <span style="padding: 5px;" class="child-table-cell"></span>
+                  @endif
 
-<div id="resp-table">
-  <div id="resp-table-row">
-    @foreach ($cols as $col)
-      <div class="resp-table-cell">
-          <div class="child-table">
-            @foreach($col as $key => $d)
-              @if($key != '')
-              <div class="child-resp-table-row title title1{{ $key }}">
-                <span class="child-table-cell">
-                  <h3 class="mb-0" style="padding: 5px; font-weight: regular;">{{ __($key) }}</h3>
-                </span>
-                <span style="padding: 5px;" class="child-table-cell"></span>
-                <span style="padding: 5px;" class="child-table-cell"></span>
-                
-                @if($statements_count == 3)
-                <span style="padding: 5px;" class="child-table-cell"></span>
+                </div>
                 @endif
-
-              </div>
-              @endif
-              @foreach($d as $i => $vs)
-              {{-- ratio{{ $key }}-{{ $i }} --}}
-              <div class="child-resp-table-row2">
-                @foreach ($vs as $v)
-                  <span style="padding: 5px;" class="child-table-cell {{ $key }}-{{ $i }}">{{ __($v) }}</span>
+                @foreach($d as $i => $vs)
+                {{-- ratio{{ $key }}-{{ $i }} --}}
+                <div class="child-resp-table-row2">
+                  @foreach ($vs as $v)
+                    <span style="padding: 5px;" class="child-table-cell {{ $key }}-{{ $i }}">{{ __($v) }}</span>
+                  @endforeach
+                </div>
                 @endforeach
-              </div>
               @endforeach
-            @endforeach
-          </div>
-      </div>
-    @endforeach
+            </div>
+        </div>
+      @endforeach
+    </div>
   </div>
-</div>
+</section>
+
 
 <style>
   .EFFICIENCY-4,

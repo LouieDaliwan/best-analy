@@ -40,7 +40,7 @@ class CustomerDetailsSeeder extends Seeder
 
             // $this->customerApplicantDetail($customer);
 
-            $this->customerFinancialStatement($customer);
+            // $this->customerFinancialStatement($customer);
         }
     }
 
@@ -124,12 +124,12 @@ class CustomerDetailsSeeder extends Seeder
     protected function customerBalanceSheets($customerBS, $year)
     {
         $metadata = [];
-        $metadata['Current Asset'] = 0;
-        $metadata['Current Liabilities'] = 0;
-        $metadata['Non-Current Liabilities'] = 0;
-        $metadata['Other Current Assets'] = 0;
-        $metadata['Other Current Liabilities'] = 0;
-        $metadata['Other Non-Current Liablities'] = 0;
+        // $metadata['Current Asset'] = 0;
+        // $metadata['Current Liabilities'] = 0;
+        // $metadata['Non-Current Liabilities'] = 0;
+        // $metadata['Other Current Assets'] = 0;
+        // $metadata['Other Current Liabilities'] = 0;
+        // $metadata['Other Non-Current Liablities'] = 0;
 
         foreach ($customerBS as $key => $datum) {
             
@@ -228,6 +228,25 @@ class CustomerDetailsSeeder extends Seeder
 
         unset($temp_meta_arr['Raw Materials (direct & indirect)']);
         return $temp_meta_arr;
+    }
+
+    protected function getBalanceSheet()
+    {
+        return [
+            'Current Asset' => 0,
+            'Cash' => 0,
+            'Trace Receivables' => 0,
+            'Inventories' => 0,
+            'Other Current Assets' => 0,
+            'Fixed Assets' => 0,
+            'Current Liabilities' => 0,
+            'Trade Payables' => 0,
+            'Other Current Liabilities' => 0,
+            'Non-Current Liabilities' => 0,
+            'Other Non-Current Liabilities' => 0,
+            "Stockholder's Equity" => 0,
+            'Common Shares Outstanding' => 0,
+        ];
     }
 
     protected function getNewMetadata()

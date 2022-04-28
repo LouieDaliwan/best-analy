@@ -66,6 +66,7 @@
             @include('best::reports.analysis.liquidity')
             @include('best::reports.analysis.efficiency')
             @include('best::reports.analysis.solvency')
+            @include('best::reports.analysis.productivity')
 
             @include('best::reports.partials.disclaimer')
             @include('best::reports.partials.footer') 

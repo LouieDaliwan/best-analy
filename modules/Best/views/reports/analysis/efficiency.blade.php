@@ -18,6 +18,7 @@
     </div>
     <div class="col-md-12 comment-analysis">
       @foreach ($data['analysis:financial']['efficiency']['comments'] as $comments)
+        @if ($comments[2] != '')
         <div class="row">
           <div class="col-auto mt-1">
             {{-- SVG arrow --}}
@@ -37,6 +38,7 @@
             @endforeach
           </div>
         </div>
+        @endif
       @endforeach
     </div>
   </div>

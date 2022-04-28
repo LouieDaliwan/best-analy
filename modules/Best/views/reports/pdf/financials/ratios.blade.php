@@ -20,13 +20,13 @@
                 @if($key != '')
                 <div class="child-resp-table-row title title1{{ $key }}">
                   <span class="child-table-cell">
-                    <h3 class="mb-0" style="padding: 3px; font-weight: regular;">{{ __($key) }}</h3>
+                    <h3 class="mb-0" style="padding: 4px; font-weight: regular;">{{ __($key) }}</h3>
                   </span>
-                  <span style="padding: 3px;" class="child-table-cell"></span>
-                  <span style="padding: 3px;" class="child-table-cell"></span>
+                  <span style="padding: 4px;" class="child-table-cell"></span>
+                  <span style="padding: 4px;" class="child-table-cell"></span>
 
                   @if($statements_count == 3)
-                  <span style="padding: 3 px;" class="child-table-cell"></span>
+                  <span style="padding: 4 px;" class="child-table-cell"></span>
                   @endif
 
                 </div>
@@ -35,7 +35,7 @@
                 {{-- ratio{{ $key }}-{{ $i }} --}}
                 <div class="child-resp-table-row2">
                   @foreach ($vs as $v)
-                    <span style="padding: 3px;" class="child-table-cell {{ $key }}-{{ $i }}">{{ __($v) }}</span>
+                    <span style="padding: 4px;" class="child-table-cell {{ $key }}-{{ $i }}">{{ __($v) }}</span>
                   @endforeach
                 </div>
                 @endforeach

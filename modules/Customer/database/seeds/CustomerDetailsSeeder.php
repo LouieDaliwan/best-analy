@@ -40,7 +40,7 @@ class CustomerDetailsSeeder extends Seeder
 
             // $this->customerApplicantDetail($customer);
 
-            // $this->customerFinancialStatement($customer);
+            $this->customerFinancialStatement($customer);
         }
     }
 
@@ -124,12 +124,40 @@ class CustomerDetailsSeeder extends Seeder
     protected function customerBalanceSheets($customerBS, $year)
     {
         $metadata = [];
+        $metadata['Current Asset'] = 0;
+        $metadata['Current Liabilities'] = 0;
+        $metadata['Non-Current Liabilities'] = 0;
+        $metadata['Other Current Assets'] = 0;
+        $metadata['Other Current Liabilities'] = 0;
+        $metadata['Other Non-Current Liablities'] = 0;
 
         foreach ($customerBS as $key => $datum) {
             isset($metadata[$key]) ? : $metadata[$key] = (float) $customerBS[$key][$year] ?? 0;
-        }
 
-        $metadata['Balance'] = 0;
+            if($key == 'Other CA') {
+                $metadata['Other Current Assets'] =  $customerBS['Other CA'];
+            }
+
+            if ($key == 'Other CL') {
+                $metadata['Other Current Assets'] =  $customerBS['Other CL']; 
+            }
+
+            if ($key == 'Other NCL') {
+                $metadata['Other Non-Current Liabilities'] = $customerBS['Other NCL'];
+            }
+
+            if (collect(['Cash', 'Trade Receivables', 'Inventories', 'Other CA'])->intersect([$key])->isNotEmpty()) {
+                $metadata['Current Asset'] += (float)$customerBS[$key];
+            }
+
+            if (collect(['Other CL', 'Trade Payables'])->intersect([$key])->isNotEmpty()) {
+                $metadata['Current Liabilities'] += (float) $customerBS[$key];
+            }
+
+            if (collect(['Other NCL', 'Common Shares Outstanding', "Stockholders' Equity"])->intersect([$key])->isNotEmpty()) {
+                $metadata['Non-Current Liabilities'] += (float) $customerBS[$key];
+            }            
+        }
 
         return $metadata;
     }
@@ -139,6 +167,7 @@ class CustomerDetailsSeeder extends Seeder
         $temp_meta_arr = [];
         $temp_meta_arr['period'] = $year;
         $temp_meta_arr['Raw Materials'] = 0;
+        $temp_meta_arr['Net Operating Profit/(Loss)'] = 0;
 
         $arr_metadata = $this->getNewMetadata();
 
@@ -186,6 +215,7 @@ class CustomerDetailsSeeder extends Seeder
         }
 
         $temp_meta_arr['Cost of Good Sold'] = ($temp_meta_arr['Raw Materials']  + ($temp_meta_arr['Direct Production Costs']));
+        $temp_meta_arr['Net Operating Profit/(Loss)'] = $temp_meta_arr['Sales'] - $temp_meta_arr['Cost of Good Sold'];
 
         return $temp_meta_arr;
     }

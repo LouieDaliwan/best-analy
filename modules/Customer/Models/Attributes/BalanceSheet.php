@@ -13,7 +13,7 @@ class BalanceSheet {
         $balanceSheets['non_current_liabilities'] = 0;
 
         foreach ($sheets as $key => $value) {
-
+            
             $key = str_replace([" ", "'", "-"], "", strtolower($key));
 
             isset($balanceSheets[$key]) ? : $balanceSheets[$key] = (float) $value;

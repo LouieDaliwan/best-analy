@@ -6,7 +6,7 @@
     <!-- TEST only -->
     <div v-shortkey.once="['ctrl', 'alt', '.']" @shortkey="saveDummyData"></div>
     <!-- TEST only -->
-
+  
     <form ref="survey-submission-form" @submit.prevent="submit">
 
       <page-header>
@@ -41,7 +41,7 @@
       </template>
 
       <template v-else>
-        <v-card>
+        <v-card v-if="taxonomy_item !== 'sdmi'">
           <criteria></criteria>
           <template v-for="(fields, f) in resource.data['fields:grouped']">
             <v-card-text class="text-center" :key="f">
@@ -131,6 +131,103 @@
           </v-card-text>
           <!-- Submit -->
         </v-card>
+
+        <div v-if="taxonomy_item == 'sdmi'">
+          <div v-for="(fields, f) in resource.data['fields:grouped']" :key="f">
+             <v-card :key="f">
+               <fifth-criteria-one v-if="f === 'Business Expansion'"></fifth-criteria-one>
+               <fifth-criteria-sec v-if="f !== 'Business Expansion' && f !== 'Marketing Strategies' && f  !== 'Capacity Utilisation' && f !== 'Endorsement, Certification & Standards'"></fifth-criteria-sec>
+               <fifth-criteria-three v-if="f === 'Endorsement, Certification & Standards'"></fifth-criteria-three>
+
+                <v-card-text class="text-center" :key="f">
+                <v-row justify="center">
+                  <!-- group -->
+                  <v-col cols="12" md="10">
+                    <p :class="$vuetify.breakpoint.smAndUp ? 'headline py-4' : 'subtitle-2'" class="mb-0 font-weight-bold">
+                      {{ trans(f) }}
+                    </p>
+                    <p v-html="fields[0].metadata.group_arabic"></p>
+                  </v-col>
+                  <!-- group -->
+
+                  <!-- fields -->
+                  <v-col cols="12" md="10" v-for="(field, i) in fields" :key="i">
+                    <v-row>
+                      <v-col cols="12" md="auto" :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
+                        <span
+                          :class="$vuetify.breakpoint.smAndUp ? 'display-1' : 'title'"
+                          class="text--text muted--text font-weight-bold"
+                          v-html="field.sort"
+                        ></span>
+                      </v-col>
+                      <v-col :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
+                        <p :class="$vuetify.breakpoint.smAndUp ? 'title' : null">{{ trans(field.title) }}</p>
+                        <p class="rtl-text" :class="$vuetify.breakpoint.smAndUp ? 'title' : null">{{ trans(field.metadata.title_arabic) }}</p>
+                      </v-col>
+                    </v-row>
+
+                    <!-- choices -->
+                    <v-item-group v-model="field.selected" active-class="primary" class="mb-4">
+                      <v-container :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
+                        <v-row justify="space-around" no-gutters>
+                          <v-col :id="`scrollto-${field.id+'-'+(i+1)}`" v-for="(rate, c) in getRates(f)" :key="c">
+                            <v-tooltip bottom>
+                              <template v-slot:activator="{ on }">
+                                <v-item v-slot:default="{ active, toggle }">
+                                  <div
+                                    :color="active ? 'primary' : null"
+                                    @click="choose(field, rate);toggle()"
+                                    class="dt-chip"
+                                    v-on="$vuetify.breakpoint.smAndUp ? on : null"
+                                    v-ripple
+                                    v-scroll-to="{ el: `#scrollto-${field.id+'-'+(parseInt(i)+1)}`, duration: 700 }"
+                                    >
+                                    <span :class="active ? 'white--text' : 'muted--text'">
+                                      {{ rate.number }}
+                                    </span>
+                                  </div>
+                                </v-item>
+                              </template>
+                              <span>{{ rate.text }}</span>
+                            </v-tooltip>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </v-item-group>
+                    <!-- choices -->
+
+                  </v-col>
+                  <!-- fields -->
+                </v-row>
+              </v-card-text>
+             </v-card>
+          </div>
+          <v-card>
+            <template v-for="(answer, a) in answers">
+              <input type="hidden" :name="`fields[${a}][id]`" :value="answer.item.id" >
+              <input type="hidden" :name="`fields[${a}][submission][results]`" :value="answer.answer.number">
+              <input type="hidden" :name="`fields[${a}][submission][submissible_id]`" :value="answer.item.id">
+              <input type="hidden" :name="`fields[${a}][submission][submissible_type]`" value="Survey\Models\Field">
+              <input type="hidden" :name="`fields[${a}][submission][user_id]`" :value="auth.id">
+              <input type="hidden" :name="`fields[${a}][submission][customer_id]`" :value="companyId">
+            </template>
+
+            <!-- Submit -->
+            <v-card-text class="text-center">
+              <v-btn
+                :disabled="progress < 100 || submitting"
+                @click="submit();submitting = true"
+                color="primary"
+                x-large
+                :loading="submitting"
+                >
+                {{ trans('Submit') }}
+                <v-icon right>mdi-arrow-right</v-icon>
+              </v-btn>
+            </v-card-text>
+            <!-- Submit -->
+          </v-card>
+        </div>          
       </template>
     </form>
 
@@ -166,6 +263,7 @@ export default {
   },
 
   data: () => ({
+    taxonomy_item: null,
     api: $api,
     rates: [
       { number: '1', text: 'No existing processes & practices' },
@@ -174,6 +272,38 @@ export default {
       { number: '4', text: 'Processes practised effectively by some' },
       { number: '5', text: 'Processes practised effectively by most' },
       { number: 'N/A', text: 'Not Applicable' },
+    ],
+
+    sdmiRatesOne: [
+      { number: '1', text: 'Strongly Disagree' },
+      { number: '2', text: 'Disagree' },
+      { number: '3', text: 'Moderately Agree' },
+      { number: '4', text: 'Agree' },
+      { number: '5', text: 'Strongly Agree' },
+    ],
+
+    sdmiRatesTwo: [
+      { number: '<10%', text: '<10%' },
+      { number: '10% - 25%', text: '10% - 25%' },
+      { number: '>25% - 50%', text: '>25% - 50%' },
+      { number: '>50% - 75%', text: '>50% - 75%' },
+      { number: '>75% - 100%', text: '>75% - 100%' },
+    ],
+
+    sdmiRatesThree: [
+      { number: '0', text: 'I am not aware of any industry standards or certifications required	' },
+      { number: '0', text: 'There are no industry standards required in my business	' },
+      { number: '1', text: 'Minimum standards required by the authorities are met	' },
+      { number: '2', text: 'Critical certifications and standards are acquired to maintain high standards in the business	' },
+      { number: '4', text: 'Certifications and Standards acquired over and above requirements to drive business growth & innovation	' },
+    ],
+
+    sdmiRatesFour: [
+      { number: '1', text: 'Least Satisfied' },
+      { number: '2', text: '' },
+      { number: '3', text: '' },
+      { number: '4', text: '' },
+      { number: '5', text: 'Very Satisfied' },
     ],
     answers: [],
     resource: new Survey,
@@ -189,6 +319,23 @@ export default {
       showSnackbar: 'snackbar/show',
       loadDialog: 'dialog/loading',
     }),
+
+    getRates(value) {
+      
+      if(value === 'Business Expansion' || value === 'Marketing Strategies') {
+        return this.sdmiRatesOne;
+      }
+      
+      if(value === 'Capacity Utilisation') {
+        return this.sdmiRatesTwo;
+      }
+
+      if(value === 'Endorsement, Certification & Standards') {
+        return this.sdmiRatesThree;
+      }
+
+      return this.sdmiRatesFour;
+    },
 
     submit: _.debounce(function (event) {
       let data = new FormData(this.$refs['survey-submission-form'])
@@ -312,6 +459,10 @@ export default {
 
   mounted () {
     this.getResource()
+
+    if (this.$route.params.taxonomy === 'strategy-development-and-management-index') {
+      this.taxonomy_item = 'sdmi'; 
+    }
   },
 
   watch: {

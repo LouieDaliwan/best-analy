@@ -40,7 +40,7 @@ class CustomerDetailsSeeder extends Seeder
 
             // $this->customerApplicantDetail($customer);
 
-            // $this->customerFinancialStatement($customer);
+            $this->customerFinancialStatement($customer);
         }
     }
 
@@ -124,41 +124,47 @@ class CustomerDetailsSeeder extends Seeder
     protected function customerBalanceSheets($customerBS, $year)
     {
         $metadata = [];
-        // $metadata['Current Asset'] = 0;
-        // $metadata['Current Liabilities'] = 0;
-        // $metadata['Non-Current Liabilities'] = 0;
-        // $metadata['Other Current Assets'] = 0;
-        // $metadata['Other Current Liabilities'] = 0;
-        // $metadata['Other Non-Current Liablities'] = 0;
+        $metadata['Current Asset'] = 0;
 
-        foreach ($customerBS as $key => $datum) {
+        foreach ($this->getBalanceSheet() as $key => $datum) {
             
-            if(collect(['Other NCL', 'Other CL', 'Other CA', 'Other '])->intersect([$key])->isEmpty()){
-                isset($metadata[$key]) ? : $metadata[$key] = (float) $customerBS[$key][$year] ?? 0;
+            if(collect(['Other Non-Current Liabilities', 'Other Current Liabilities', 'Other Current Assets', 'Current Asset'])->intersect([$key])->isEmpty()){
+                $value = isset($customerBS[$key]) ? (int) $customerBS[$key][$year] ?? 0 : 0;
+                
+                isset($metadata[$key]) ? : $metadata[$key] = $value;
             }
         
-            if($key == 'Other CA') {
-                $metadata['Other Current Assets'] =  $customerBS['Other CA'];
+            if($key == 'Other Current Assets') {
+                $metadata['Other Current Assets'] = (float) $customerBS['Other CA'][$year] ?? 0;
             }
 
-            if ($key == 'Other CL') {
-                $metadata['Other Current Liabilities'] =  $customerBS['Other CL']; 
+            if ($key == 'Other Current Liabilities') {
+                $metadata['Other Current Liabilities'] = (float) $customerBS['Other CL'][$year] ?? 0; 
             }
 
-            if ($key == 'Other NCL') {
-                $metadata['Other Non-Current Liablities'] = $customerBS['Other NCL'];
+            if ($key == 'Other Non-Current Liabilities') {
+                $metadata[$key] = (float) $customerBS['Other NCL'][$year] ?? 0;
             }
 
-            if (collect(['Cash', 'Trade Receivables', 'Inventories', 'Other CA'])->intersect([$key])->isNotEmpty()) {
-                $metadata['Current Asset'] += (float)$customerBS[$key];
+            if (collect(['Cash', 'Trade Receivables', 'Inventories', 'Other Current Assets'])->intersect([$key])->isNotEmpty()) {
+
+                $key = $key == 'Other Current Assets' ? 'Other CA' : $key;
+
+                $metadata['Current Asset'] += (int)$customerBS[$key][$year] ?? 0;
             }
 
-            if (collect(['Other CL', 'Trade Payables'])->intersect([$key])->isNotEmpty()) {
-                $metadata['Current Liabilities'] += (float) $customerBS[$key];
+            if (collect(['Other Current Liabilities', 'Trade Payables'])->intersect([$key])->isNotEmpty()) {
+                
+                $key = $key == 'Other Current Liabilities' ? 'Other CL' : $key;
+
+                $metadata['Current Liabilities'] += (float) $customerBS[$key][$year];
             }
 
-            if (collect(['Other NCL', 'Common Shares Outstanding', "Stockholders' Equity"])->intersect([$key])->isNotEmpty()) {
-                $metadata['Non-Current Liabilities'] += (float) $customerBS[$key];
+            if (collect(['Other Non-Current Liablities', 'Common Shares Outstanding', "Stockholders' Equity"])->intersect([$key])->isNotEmpty()) {
+
+                $key = $key == 'Other Non-Current Liablities' ? 'Other NCL' : $key;
+
+                $metadata['Non-Current Liabilities'] += (float) $customerBS[$key][$year];
             }            
         }
 
@@ -221,8 +227,7 @@ class CustomerDetailsSeeder extends Seeder
                 $temp_meta_arr['Cost of Good'] = $temp_meta_arr['Raw Materials'] + $temp_meta_arr['Direct Production Costs'];
             }
         }
-
-        
+ 
         
         $temp_meta_arr['Net Operating Profit/(Loss)'] = $temp_meta_arr['Sales'] - $temp_meta_arr['Cost of Good Sold'];
 
@@ -235,7 +240,7 @@ class CustomerDetailsSeeder extends Seeder
         return [
             'Current Asset' => 0,
             'Cash' => 0,
-            'Trace Receivables' => 0,
+            'Trade Receivables' => 0,
             'Inventories' => 0,
             'Other Current Assets' => 0,
             'Fixed Assets' => 0,
@@ -243,7 +248,7 @@ class CustomerDetailsSeeder extends Seeder
             'Trade Payables' => 0,
             'Other Current Liabilities' => 0,
             'Non-Current Liabilities' => 0,
-            'Other Non-Current Liabilities' => 0,
+            'Other Non-Current Liablities' => 0,
             "Stockholder's Equity" => 0,
             'Common Shares Outstanding' => 0,
         ];

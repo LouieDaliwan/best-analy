@@ -170,7 +170,7 @@
                     <v-item-group v-model="field.selected" active-class="primary" class="mb-4">
                       <v-container :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
                         <v-row justify="space-around" no-gutters>
-                          <v-col :id="`scrollto-${field.id+'-'+(i+1)}`" v-for="(rate, c) in getRates(f)" :key="c">
+                          <v-col :id="`scrollto-${field.id+'-'+(i+1)}`" v-for="(rate, c) in getRates(f, field)" :key="c">
                             <v-tooltip bottom>
                               <template v-slot:activator="{ on }">
                                 <v-item v-slot:default="{ active, toggle }">
@@ -291,11 +291,11 @@ export default {
     ],
 
     sdmiRatesThree: [
-      { number: '0', text: 'I am not aware of any industry standards or certifications required	' },
-      { number: '0', text: 'There are no industry standards required in my business	' },
-      { number: '1', text: 'Minimum standards required by the authorities are met	' },
-      { number: '2', text: 'Critical certifications and standards are acquired to maintain high standards in the business	' },
-      { number: '4', text: 'Certifications and Standards acquired over and above requirements to drive business growth & innovation	' },
+      { number: '1', text: 'Minimum standards required <br/> by the authorities are met' },
+      { number: '1', text: 'Critical certifications and standards <br/> are acquired to maintain <br/> high standards in the business	' },
+      { number: '3', text: 'Certifications and Standards <br/> acquired over and above <br/> requirements to drive <br/> business growth & innovation' },
+      { number: '5', text: 'I am not aware of any <br/> industry standards or <br/> certifications required' },
+      { number: 'NA', text: 'There are no industry standards <br/>required in my business' },
     ],
 
     sdmiRatesFour: [
@@ -304,6 +304,15 @@ export default {
       { number: '3', text: '' },
       { number: '4', text: '' },
       { number: '5', text: 'Very Satisfied' },
+    ],
+
+    extentServicesRates: [
+      { number: '<10%', text: '<10%' },
+      { number: '10% - 25%', text: '10% - 25%' },
+      { number: '>25% - 50%', text: '>25% - 50%' },
+      { number: '>50% - 75%', text: '>50% - 75%' },
+      { number: '>75% - 100%', text: '>75% - 100%' },
+      { number: 'N/A', text: 'NA'} 
     ],
     answers: [],
     resource: new Survey,
@@ -320,10 +329,14 @@ export default {
       loadDialog: 'dialog/loading',
     }),
 
-    getRates(value) {
-      
-      if(value === 'Business Expansion' || value === 'Marketing Strategies') {
+    getRates(value, field) {
+
+      if((value === 'Business Expansion' || value === 'Marketing Strategies') && field.title !== 'Extent products/or services are ready to be exported') {
         return this.sdmiRatesOne;
+      }
+
+      if(field.title === 'Extent products/or services are ready to be exported'){
+        return this.extentServicesRates;
       }
       
       if(value === 'Capacity Utilisation') {

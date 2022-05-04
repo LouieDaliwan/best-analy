@@ -21,11 +21,11 @@
   export default {
     data: () => ({
       rates: [
-        { number: '0', text: 'I am not aware of any <br/> industry standards or <br/> certifications required' },
-        { number: '0', text: 'There are no industry standards <br/>required in my business' },
         { number: '1', text: 'Minimum standards required <br/> by the authorities are met' },
-        { number: '2', text: 'Critical certifications and standards <br/> are acquired to maintain <br/> high standards in the business	' },
-        { number: '4', text: 'Certifications and Standards <br/> acquired over and above <br/> requirements to drive <br/> business growth & innovation' },
+        { number: '1', text: 'Critical certifications and standards <br/> are acquired to maintain <br/> high standards in the business	' },
+        { number: '3', text: 'Certifications and Standards <br/> acquired over and above <br/> requirements to drive <br/> business growth & innovation' },
+        { number: '5', text: 'I am not aware of any <br/> industry standards or <br/> certifications required' },
+        { number: 'NA', text: 'There are no industry standards <br/>required in my business' },
       ],
     })
   }

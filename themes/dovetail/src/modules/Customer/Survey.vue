@@ -109,6 +109,8 @@
 
           <template v-for="(answer, a) in answers">
             <input type="hidden" :name="`fields[${a}][id]`" :value="answer.item.id" >
+            <input type="hidden" :name="`fields[${a}][submission][taxonomy]`" :value="'sdmi'">
+            <input type="hidden" :name="`fields[${a}][submission][score]`" :value="answer.answer.number">
             <input type="hidden" :name="`fields[${a}][submission][results]`" :value="answer.answer.number">
             <input type="hidden" :name="`fields[${a}][submission][submissible_id]`" :value="answer.item.id">
             <input type="hidden" :name="`fields[${a}][submission][submissible_type]`" value="Survey\Models\Field">
@@ -203,8 +205,20 @@
              </v-card>
           </div>
           <v-card>
-            <template v-for="(answer, a) in answers">
+            <template v-if="taxonomy_item == 'sdmi'" v-for="(answer, a) in answers">
               <input type="hidden" :name="`fields[${a}][id]`" :value="answer.item.id" >
+              <input type="hidden" :name="`fields[${a}][submission][taxonomy]`" :value="'sdmi'">
+              <input type="hidden" :name="`fields[${a}][submission][score]`" :value="answer.answer.number">
+              <input type="hidden" :name="`fields[${a}][submission][results]`" :value="answer.answer.text">
+              <input type="hidden" :name="`fields[${a}][submission][submissible_id]`" :value="answer.item.id">
+              <input type="hidden" :name="`fields[${a}][submission][submissible_type]`" value="Survey\Models\Field">
+              <input type="hidden" :name="`fields[${a}][submission][user_id]`" :value="auth.id">
+              <input type="hidden" :name="`fields[${a}][submission][customer_id]`" :value="companyId">
+            </template>
+            <template v-else v-for="(answer, a) in answers">
+              <input type="hidden" :name="`fields[${a}][id]`" :value="answer.item.id" >
+              <input type="hidden" :name="`fields[${a}][submission][taxonomy]`" :value="'sdmi'">
+              <input type="hidden" :name="`fields[${a}][submission][score]`" :value="answer.answer.number">
               <input type="hidden" :name="`fields[${a}][submission][results]`" :value="answer.answer.number">
               <input type="hidden" :name="`fields[${a}][submission][submissible_id]`" :value="answer.item.id">
               <input type="hidden" :name="`fields[${a}][submission][submissible_type]`" value="Survey\Models\Field">

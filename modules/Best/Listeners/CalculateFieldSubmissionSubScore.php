@@ -36,13 +36,26 @@ class CalculateFieldSubmissionSubScore implements ShouldQueue
     public function handle($event)
     {
         $submission = $event->submission;
-        $wts = $submission->submissible->metadata['wts'] ?? 0;
-        $score = ScoreMatrix::SCORES_LIST[$submission->results];
-        $fieldTotal = $event->field->metadata['total'] ?? 1;
-        $submission->metadata = [
-            'subscore' => $subscore = $wts*$score,
-            'average' => number_format($subscore/$fieldTotal, 2),
-        ];
+
+        if($event->submission->taxonomy == 'sdmi') {
+            $fieldTotal = ScoreMatrix::SCORES_LIST['sdmi'];
+            
+            $result = $submission->score != 'N/A' ? number_format($submission->score/$fieldTotal, 2) : 'n';
+
+            $submission->metadata = [
+                'subscore' => 0,
+                'average' => $result,
+            ]; 
+        } else {
+            $wts = $submission->submissible->metadata['wts'] ?? 0;
+            $score = ScoreMatrix::SCORES_LIST[$submission->results];
+            $fieldTotal = $event->field->metadata['total'] ?? 1;
+            $submission->metadata = [
+                'subscore' => $subscore = $wts*$score,
+                'average' => number_format($subscore/$fieldTotal, 2),
+            ];
+        }
+        
         $submission->save();
     }
 }

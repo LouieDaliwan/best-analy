@@ -49,7 +49,7 @@ trait MorphManySubmissions
         $remarks = is_null($remarks ?? null)
             ? date('Y-m-d H:i:s')
             : date('Y-m-d H:i:s', strtotime(date('Y-m-d', strtotime($remarks))));
-        $monthkey = date('m-Y', strtotime($remarks));
+        $monthkey = date('m-Y', strtotime($remarks));     
         $submission = $this->submissions()->updateOrCreate([
             'monthkey' => $monthkey,
             'submissible_id' => $attributes['submissible_id'] ?? null,

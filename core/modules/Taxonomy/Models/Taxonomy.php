@@ -61,4 +61,9 @@ class Taxonomy extends Model
             $builder->where((new static)->typeKey, (new static)->getType());
         });
     }
+
+    public function SDMIIndex 
+    {
+        return $this->hasMany(SDMIIndex::class, 'id', 'taxonomy_id');
+    }
 }

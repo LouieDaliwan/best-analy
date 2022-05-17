@@ -10,8 +10,6 @@ use Customer\Services\FinancialRatioInterface;
 
 class CustomerDetailsSeeder extends Seeder
 {
-    protected $years = ['Year1', 'Year2', 'Year3'];
-
     protected $statments = [
         'metadataStatements' => [],
         'metadataSheets' => [],
@@ -93,16 +91,17 @@ class CustomerDetailsSeeder extends Seeder
 
         $custome_bs = $customer['metadata']['balance-sheet'];
 
-        foreach ($this->years as $year) {
+        $years = $customer['metadata']['years']['Years'];   
 
+        foreach ($years as $key => $year) {
+            logger($year. ' customer id '. $customer->id);
             $statements = [
                 'metadataStatements' => [],
                 'metadataSheets' => [],
             ];
 
-            $statements['metadataStatements'] = $this->getResultMetaData($customer_metadata, $year);
-            $statements['metadataSheets'] = $this->customerBalanceSheets($custome_bs, $year);
-
+            $statements['metadataStatements'] = $this->getResultMetaData($customer_metadata, $key);
+            $statements['metadataSheets'] = $this->customerBalanceSheets($custome_bs, $key);
 
             $customer->statements()->updateOrCreate(
                 [
@@ -111,13 +110,13 @@ class CustomerDetailsSeeder extends Seeder
                 ],
                 [
                     'customer_id' => $customer->id,
-                    'period' => $year,
+                    'period' =>  $year,
                     'metadataStatements' => $statements['metadataStatements'],
                     'metadataSheets' => $statements['metadataSheets'],
                 ]
             );
 
-            app(FinancialRatioInterface::class)->compute($customer, $statements);
+            app(FinancialRatioInterface::class)->compute($customer, $statements, $year);
         }
     }
 

@@ -34,9 +34,11 @@ class UpdateStatementsJob implements ShouldQueue
     public function handle()
     {
         $statements = $this->customer->statements;
+       
         
         foreach ($statements as $statement) {
-            app(FinancialRatioInterface::class)->compute($this->customer, $this->setArr($statement));   
+            
+            app(FinancialRatioInterface::class)->compute($this->customer, $this->setArr($statement), $statement->period);   
         }
     }
 

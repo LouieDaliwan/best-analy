@@ -31,13 +31,13 @@ class FinancialRatio implements FinancialRatioInterface
         $this->ratioAnalysis = config('fratio.format');
     }
 
-    public function compute(Customer $customer, $statements)
+    public function compute(Customer $customer, $statements, $year = null)
     {
         $this->statements = $statements;
         $this->customer = $customer;
 
         $period = $statements['metadataStatements']['period'];
-
+        
         unset(
             $statements['metadataStatements']['period'],
             $statements['metadataSheets']['period'],
@@ -55,7 +55,7 @@ class FinancialRatio implements FinancialRatioInterface
         $customer->statements()->updateOrCreate(
             [
                 'customer_id' => $customer->id,
-                'period' => $period,
+                'period' => $year,
             ],
             [
                 'metadataStatements' => $statements['metadataStatements'],
@@ -67,7 +67,7 @@ class FinancialRatio implements FinancialRatioInterface
             ]
         );
 
-        $efficiency = new Efficiency($customer, $period);
+        $efficiency = new Efficiency($customer, $period, $year);
 
         $efficiency->compute();
 

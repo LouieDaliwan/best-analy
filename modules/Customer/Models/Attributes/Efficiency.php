@@ -8,6 +8,8 @@ class Efficiency
 
     protected $customer;
 
+    protected $year;
+
     protected $statements = [
         'statement1' => [],
         'statement2' => [],
@@ -18,11 +20,13 @@ class Efficiency
 
     protected $period;
 
-    public function __construct($customer, $period)
+    public function __construct($customer, $period, $year = null)
     {
         $this->customer = $customer;
 
         $this->queryStatement($period);
+
+        $this->year = $year;
 
     }
 

@@ -59,7 +59,7 @@ trait MorphManySubmissions
             ['remarks' => $remarks, 'monthkey' => $monthkey], $attributes
         ));
         $this->fireModelEvent('submitted', false, $submission);
-
+        
         return $this;
     }
 }

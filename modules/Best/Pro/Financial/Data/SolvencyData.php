@@ -49,13 +49,12 @@ class SolvencyData
                 }
             } else {
                 $temp_data[] = $key;
-
                 foreach ($financialStatements as $financialStatement) {
                     if($list == 'total_liabilities') {
                         $temp_data[] = number_format($financialStatement['metadataResults']['overAllResults']['balanceSheets'][$list], 0, '',',');
                     }
 
-                    if ($list == "Stockholders' Equity") {
+                    if ($list == "Stockholder's Equity") {
                         $temp_data[] = number_format($financialStatement['metadataSheets'][$list], 0, '', ',');
                     }
 

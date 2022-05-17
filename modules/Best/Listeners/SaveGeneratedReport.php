@@ -61,32 +61,33 @@ class SaveGeneratedReport implements ShouldQueue
 
         $event->data = $data;
         // -------
+        if($taxonomy->alias != 'SDMI') {
+            $month = $event->data['monthkey'] ?? $event->data['month'] ?? date('m-Y');
+            $remarks = $event->data['month'] ?? date('Y-m-d H:i:s');
+            $this->service->updateOrCreate([
+                'month' => $month,
+                'customer_id' => $event->data['organisation:profile']['id'],
+                'form_id' => $event->data['survey:id'],
+                'user_id' => $event->data['user:id'],
+            ], [
+                'key' => trans($event->data['current:index']['pindex'].' Report'),
+                'value' => array_merge(['filepath' => $this->save($event)], $event->data),
+                'remarks' => $remarks,
+                'month' => date('m-Y', strtotime($remarks)),
+                'customer_id' => $event->data['organisation:profile']['id'],
+                'form_id' => $event->data['survey:id'],
+                'user_id' => $event->data['user:id'],
+            ]);
 
-        $month = $event->data['monthkey'] ?? $event->data['month'] ?? date('m-Y');
-        $remarks = $event->data['month'] ?? date('Y-m-d H:i:s');
-        $this->service->updateOrCreate([
-            'month' => $month,
-            'customer_id' => $event->data['organisation:profile']['id'],
-            'form_id' => $event->data['survey:id'],
-            'user_id' => $event->data['user:id'],
-        ], [
-            'key' => trans($event->data['current:index']['pindex'].' Report'),
-            'value' => array_merge(['filepath' => $this->save($event)], $event->data),
-            'remarks' => $remarks,
-            'month' => date('m-Y', strtotime($remarks)),
-            'customer_id' => $event->data['organisation:profile']['id'],
-            'form_id' => $event->data['survey:id'],
-            'user_id' => $event->data['user:id'],
-        ]);
+            $allFourReportsForTheMonth = $this->service
+                ->where('month', $month)
+                ->where('customer_id', $customer->getKey())->latest('updated_at')->get(); // 4 indices
 
-        $allFourReportsForTheMonth = $this->service
-            ->where('month', $month)
-            ->where('customer_id', $customer->getKey())->latest('updated_at')->get(); // 4 indices
-
-        if ($allFourReportsForTheMonth->count() == 4) {
-            // Then generate the Overall Report.
-            $this->generateOverallReport($allFourReportsForTheMonth);
-            $this->save($event, 'financialratio', 'Financial Analysis');
+            if ($allFourReportsForTheMonth->count() == 4) {
+                // Then generate the Overall Report.
+                $this->generateOverallReport($allFourReportsForTheMonth);
+                $this->save($event, 'financialratio', 'Financial Analysis');
+            }
         }
     }
 

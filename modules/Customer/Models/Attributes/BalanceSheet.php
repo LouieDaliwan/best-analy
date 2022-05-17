@@ -30,7 +30,7 @@ class BalanceSheet {
             //     $balanceSheets['non_current_liabilities'] += $balanceSheets[$key];
             // }
         }
-
+        
         $balanceSheets['current_assets'] = (float) $sheets['Current Asset'];
         $balanceSheets['current_liabilities'] = (float) $sheets['Current Liabilities'];
         $balanceSheets['non_current_liabilities'] = (float) $sheets['Non-Current Liabilities'];

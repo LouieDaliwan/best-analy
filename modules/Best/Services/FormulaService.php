@@ -140,6 +140,11 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {
+            
+            if($taxonomy->alias == 'SDMI') {
+                continue;
+            }
+
             $survey = $taxonomy->survey;
             $enablers = null;
             $this->reports = null;
@@ -229,8 +234,8 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['customer:type'] = $customer->metadata['type'] ?? null;
 
         $index = Index::find($attributes['taxonomy_id'] ?? false);
-
-        if ($index) {
+        
+        if ($index->alias != 'SDMI') {
             $this->data['current:index'] = $this->data['indices'][$index->alias];
             $this->data['current:pindex'] = $this->data['indices'][$index->alias];
         }

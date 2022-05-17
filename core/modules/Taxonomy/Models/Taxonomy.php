@@ -62,7 +62,7 @@ class Taxonomy extends Model
         });
     }
 
-    public function SDMIIndex 
+    public function SDMIIndex()
     {
         return $this->hasMany(SDMIIndex::class, 'id', 'taxonomy_id');
     }

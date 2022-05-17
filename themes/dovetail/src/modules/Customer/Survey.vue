@@ -81,7 +81,7 @@
                               <v-item v-slot:default="{ active, toggle }">
                                 <div
                                   :color="active ? 'primary' : null"
-                                  @click="choose(field, rate);toggle()"
+                                  @click="choose(field, rate, i);toggle()"
                                   class="dt-chip"
                                   v-on="$vuetify.breakpoint.smAndUp ? on : null"
                                   v-ripple
@@ -178,7 +178,7 @@
                                 <v-item v-slot:default="{ active, toggle }">
                                   <div
                                     :color="active ? 'primary' : null"
-                                    @click="choose(field, rate);toggle()"
+                                    @click="choose(field, rate, f);toggle()"
                                     class="dt-chip"
                                     v-on="$vuetify.breakpoint.smAndUp ? on : null"
                                     v-ripple
@@ -207,6 +207,7 @@
           <v-card>
             <template v-if="taxonomy_item == 'sdmi'" v-for="(answer, a) in answers">
               <input type="hidden" :name="`fields[${a}][id]`" :value="answer.item.id" >
+              <input type="hidden" :name="`fields[${a}][submission][fieldKey]`" :value="answer.keyField"> 
               <input type="hidden" :name="`fields[${a}][submission][taxonomy]`" :value="'sdmi'">
               <input type="hidden" :name="`fields[${a}][submission][score]`" :value="answer.answer.number">
               <input type="hidden" :name="`fields[${a}][submission][results]`" :value="answer.answer.text">
@@ -314,9 +315,9 @@ export default {
 
     sdmiRatesFour: [
       { number: '1', text: 'Least Satisfied' },
-      { number: '2', text: '' },
-      { number: '3', text: '' },
-      { number: '4', text: '' },
+      { number: '2', text: 'Least Satisfied' },
+      { number: '3', text: 'Satisfied' },
+      { number: '4', text: 'Satisfied' },
       { number: '5', text: 'Very Satisfied' },
     ],
 
@@ -383,7 +384,7 @@ export default {
       })
     }, 100),
 
-    choose (item, answer) {
+    choose (item, answer, keyField) {
       if (this.answers.filter(function (a) {
         return a.id == item.id
       }).length) {
@@ -394,7 +395,7 @@ export default {
         })
         return
       }
-      this.answers.push({id: item.id, item, answer})
+      this.answers.push({id: item.id, item, answer, keyField});
     },
 
     getResource () {

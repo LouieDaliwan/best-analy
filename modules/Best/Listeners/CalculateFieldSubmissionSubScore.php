@@ -40,8 +40,8 @@ class CalculateFieldSubmissionSubScore implements ShouldQueue
         if($event->submission->taxonomy == 'sdmi') {
             $fieldTotal = ScoreMatrix::SCORES_LIST['sdmi'];
             
-            $result = $submission->score != 'N/A' ? number_format($submission->score/$fieldTotal, 2) : 'n';
-
+            $result = $submission->score != 'N/A' ? number_format((int) $submission->score/$fieldTotal, 2) : 'n';
+            
             $submission->metadata = [
                 'subscore' => 0,
                 'average' => $result,

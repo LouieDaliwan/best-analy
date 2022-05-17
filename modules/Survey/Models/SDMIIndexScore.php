@@ -15,12 +15,12 @@ class SDMIIndexScore extends Model
         'metadata',
     ]; 
 
-    protected $cast = [
+    protected $casts = [
         'metadata' => 'array'
     ];
 
 
-    public function taxonomy 
+    public function taxonomy() 
     {
         return $this->belongTo(Taxonomy::class, 'taxonomy_id', 'id');
     }

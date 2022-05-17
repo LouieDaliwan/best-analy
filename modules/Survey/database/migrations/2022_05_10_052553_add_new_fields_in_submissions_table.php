@@ -16,6 +16,7 @@ class AddNewFieldsInSubmissionsTable extends Migration
         Schema::table('submissions', function (Blueprint $table) {
             $table->string('taxonomy')->index()->nullable();
             $table->string('score')->index()->nullable();
+            $table->string('fieldKey')->index()->nullable();
         });
     }
 
@@ -29,6 +30,7 @@ class AddNewFieldsInSubmissionsTable extends Migration
         Schema::table('submissions', function (Blueprint $table) {
             $table->dropColumn('taxonomy');
             $table->dropColumn('score');
+            $table->dropColumn('fieldKey');
         });
     }
 }

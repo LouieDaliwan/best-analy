@@ -128,7 +128,7 @@ class CustomerDetailsSeeder extends Seeder
 
         foreach ($this->getBalanceSheet() as $key => $datum) {
             
-            if(collect(['Other Non-Current Liabilities', 'Other Current Liabilities', 'Other Current Assets', 'Current Asset'])->intersect([$key])->isEmpty()){
+            if(collect(['Other Non-Current Liabilities', 'Other Current Liabilities', 'Other Current Assets', 'Current Asset', "Stockholder's Equity"])->intersect([$key])->isEmpty()){
                 $value = isset($customerBS[$key]) ? (int) $customerBS[$key][$year] ?? 0 : 0;
                 
                 isset($metadata[$key]) ? : $metadata[$key] = $value;
@@ -136,6 +136,10 @@ class CustomerDetailsSeeder extends Seeder
         
             if($key == 'Other Current Assets') {
                 $metadata['Other Current Assets'] = (float) $customerBS['Other CA'][$year] ?? 0;
+            }
+
+            if($key == "Stockholder's Equity") {
+                $metadata["Stockholder's Equity"] = (float) $customerBS["Stockholders' Equity"][$year] ?? 0;
             }
 
             if ($key == 'Other Current Liabilities') {
@@ -219,8 +223,6 @@ class CustomerDetailsSeeder extends Seeder
             if ($arr_meta_key == 'Raw Materials (direct & indirect)') {
                 isset($temp_meta_arr['Raw Materials']) ? : $temp_meta_arr['Raw Materials'] = 0;
                 $temp_meta_arr['Raw Materials'] += $temp_meta_arr['Raw Materials (direct & indirect)'];
-                
-                
             }
 
             if($arr_meta_key == 'Cost of Good Sold') {

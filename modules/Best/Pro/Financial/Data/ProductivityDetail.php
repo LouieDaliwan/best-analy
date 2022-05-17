@@ -262,7 +262,7 @@ class ProductivityDetail
 
                     $valueAdded = $this->financialStatements[$value]['metadataStatements']['Value Added'];
 
-                    $temp_data[] = $laborCosts != 0 ? round(($valueAdded / $valueAdded),2) : 0;
+                    $temp_data[] = $laborCosts != 0 ? round(($valueAdded / $laborCosts),2) : 0;
                 } else {
                     if ($value == 'Labour Cost Competitiveness' || $value == null || $value == "This measures the efficiency & effectiveness of the organisation in terms of its labour cost") {
                         $temp_data[] = $value;

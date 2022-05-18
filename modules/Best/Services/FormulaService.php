@@ -257,10 +257,9 @@ class FormulaService extends Service implements FormulaServiceInterface
     {
         $collect = collect($indices);
 
-        // $ratingGraph = RatingGraph::getRatings($customer);
-        // $financialScore = $ratingGraph['financial_score']['score'];
-
-        // $sdmiIndex = SDMI
+        $ratingGraph = RatingGraph::getRatings($customer);
+        $financialScore = $ratingGraph['smeRatings'][5]['score'];
+        $sdmiIndex = $customer->sdmiComputation()->where('month_key', $monthKey)->first();
 
         $exists_section_score_zero = $collect->map(function ($index) {
             return $index['subscore:score'] == 0;

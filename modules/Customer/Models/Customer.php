@@ -155,8 +155,8 @@ class Customer extends Model
         return $this->hasOne(ApplicantDetail::class, 'customer_id', 'id');
     }
 
-    public function computeFinancialRatios()
+    public function sdmiComputation()
     {
-        dd($this->statements()->latest()->take(3)->get(['metadataStatements', 'metadataSheets'])->toArray());
+        return $this->hasMany(SDMIIndexScore::class, 'customer_id', 'id');
     }
 }

@@ -100,10 +100,15 @@ class CalculateSDMIScore
 
         $this->getResult($variables);
 
-        $sdmiScore = SDMIIndexScore::updateOrCreate([
+        
+        
+
+        SDMIIndexScore::updateOrCreate([
+            'customer_id' => $event->attributes['fields'][0]['submission']['customer_id'],
             'taxonomy_id' => $event->survey->formable_id,
             'month_key' => $date,
         ],[
+            'customer_id' => $event->attributes['fields'][0]['submission']['customer_id'],
             'taxonomy_id' => $event->survey->formable_id,
             'month_key' => $date,
             'metadata' => $this->metadata,

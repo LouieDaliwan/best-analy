@@ -4,6 +4,10 @@ namespace Best\Pro;
 
 abstract class TrafficLight
 {
+    const FAILED = 'failed';
+    const CRITICAL = 'critical';
+    const CORRECTIVE_ACTION = 'corrective action';
+    const NORMAL = 'normal';
     const RED_LIGHT = 'red';
     const AMBER_LIGHT = 'amber';
     const GREEN_LIGHT = 'green';

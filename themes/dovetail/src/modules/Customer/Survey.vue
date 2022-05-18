@@ -345,7 +345,7 @@ export default {
     }),
 
     getRates(value, field) {
-
+      
       if((value === 'Business Expansion' || value === 'Marketing Strategies') && field.title !== 'Extent products/or services are ready to be exported') {
         return this.sdmiRatesOne;
       }
@@ -488,7 +488,7 @@ export default {
   mounted () {
     this.getResource()
 
-    if (this.$route.params.taxonomy === 'strategy-development-and-management-index') {
+    if (this.$route.params.taxonomy === '5th-module-strategy-development-and-management-index-(sdmi)') {
       this.taxonomy_item = 'sdmi'; 
     }
   },

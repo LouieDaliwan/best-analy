@@ -15,6 +15,7 @@ class CreateSmdiIndexScoresTable extends Migration
     {
         Schema::create('smdi_index_scores', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('customer_id')->index();
             $table->unsignedBigInteger('taxonomy_id')->index();
             $table->string('month_key')->index();
             $table->longText('metadata');

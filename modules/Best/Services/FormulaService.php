@@ -211,7 +211,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         }//end foreach
 
         // Retrieve Overall BEST Score.
-        $this->data['overall:score'] = $overallScore = $this->getOverallScore($this->data['indices'], $customer);
+        $this->data['overall:score'] = $overallScore = $this->getOverallScore($this->data['indices'], $customer, $monthkey);
         $this->data['overall:percentage'] = sprintf('%s%%', $overallScore*100);
         $this->data['overall:result'] = $result = $this->getOverallTrafficLightScore($overallScore);
         $this->data['overall:comment'] = $this->getOverallComment($result, $customer->name);
@@ -253,12 +253,14 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  array $indices
      * @return string
      */
-    public function getOverallScore($indices, $customer)
+    public function getOverallScore($indices, $customer, $monthKey)
     {
         $collect = collect($indices);
 
-        $ratingGraph = RatingGraph::getRatings($customer);
-        $financialScore = $ratingGraph['financial_score']['score'];
+        // $ratingGraph = RatingGraph::getRatings($customer);
+        // $financialScore = $ratingGraph['financial_score']['score'];
+
+        // $sdmiIndex = SDMI
 
         $exists_section_score_zero = $collect->map(function ($index) {
             return $index['subscore:score'] == 0;

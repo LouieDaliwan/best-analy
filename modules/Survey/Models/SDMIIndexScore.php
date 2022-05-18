@@ -2,7 +2,9 @@
 
 namespace Survey;
 
+use Customer\Models\Customer;
 use Illuminate\Database\Eloquent\Model;
+use Taxonomy\Models\Taxonomy;
 
 class SDMIIndexScore extends Model
 {
@@ -23,5 +25,10 @@ class SDMIIndexScore extends Model
     public function taxonomy() 
     {
         return $this->belongTo(Taxonomy::class, 'taxonomy_id', 'id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
 }

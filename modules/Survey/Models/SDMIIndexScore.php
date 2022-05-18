@@ -12,6 +12,7 @@ class SDMIIndexScore extends Model
 
 
     protected $fillable = [
+        'customer_id',
         'taxonomy_id',
         'month_key',
         'metadata',

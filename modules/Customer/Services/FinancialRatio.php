@@ -55,7 +55,7 @@ class FinancialRatio implements FinancialRatioInterface
         $customer->statements()->updateOrCreate(
             [
                 'customer_id' => $customer->id,
-                'period' => $year,
+                'period' => $year ?? $period,
             ],
             [
                 'metadataStatements' => $statements['metadataStatements'],

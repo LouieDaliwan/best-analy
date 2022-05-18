@@ -32,6 +32,7 @@ use Best\Pro\Financial\SingleYear\GrossMarginAnalysis;
 use Best\Pro\Financial\SingleYear\NetMarginAnalysis;
 use Best\Pro\Financial\SingleYear\RawMaterialAnalysis;
 use Best\Pro\Financial\SingleYear\ROIAnalysis;
+use Customer\Models\Attributes\RatingGraph;
 
 class FormulaService extends Service implements FormulaServiceInterface
 {
@@ -210,7 +211,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         }//end foreach
 
         // Retrieve Overall BEST Score.
-        $this->data['overall:score'] = $overallScore = $this->getOverallScore($this->data['indices']);
+        $this->data['overall:score'] = $overallScore = $this->getOverallScore($this->data['indices'], $customer);
         $this->data['overall:percentage'] = sprintf('%s%%', $overallScore*100);
         $this->data['overall:result'] = $result = $this->getOverallTrafficLightScore($overallScore);
         $this->data['overall:comment'] = $this->getOverallComment($result, $customer->name);
@@ -252,9 +253,12 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  array $indices
      * @return string
      */
-    public function getOverallScore($indices)
+    public function getOverallScore($indices, $customer)
     {
         $collect = collect($indices);
+
+        $ratingGraph = RatingGraph::getRatings($customer);
+        $financialScore = $ratingGraph['financial_score']['score'];
 
         $exists_section_score_zero = $collect->map(function ($index) {
             return $index['subscore:score'] == 0;

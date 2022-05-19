@@ -33,6 +33,7 @@ use Best\Pro\Financial\SingleYear\NetMarginAnalysis;
 use Best\Pro\Financial\SingleYear\RawMaterialAnalysis;
 use Best\Pro\Financial\SingleYear\ROIAnalysis;
 use Customer\Models\Attributes\RatingGraph;
+use Illuminate\Support\Facades\Cache;
 
 class FormulaService extends Service implements FormulaServiceInterface
 {
@@ -189,7 +190,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'customer:type' => $customer->metadata['type'] ?? null,
                 'subscore:score' => $totalSubscoreScore = $this->getTotalIndexSubscoreScore($survey, $attributes['customer_id'], $monthkey),
                 'subscore:total' => $totalSubscoreTotal = $this->getTotalIndexSubscoreTotal($survey, $attributes['customer_id'], $monthkey),
-                'overall:total' => $total = $this->getOverallTotalAverage($totalSubscoreScore, $totalSubscoreTotal),
+                'overall:total' => $total = $this->getOverallTotalAverage($totalSubscoreScore, $totalSubscoreTotal, $taxonomy->alias, $attributes['customer_id']),
                 $this->getIndexOverAllScoreKey($taxonomy) => $total,
                 'overall:comment' => $this->getOverallFindingsComment($taxonomy->alias, $customer->name, $total),
                 'overall:comment:overall' => $this->getOverallFindingsCommentOverall(
@@ -257,6 +258,19 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function getOverallScore($indices, $customer, $monthKey)
     {
+        $user = auth()->user()->id;
+
+        $keyName = "{$customer->id}-Overall-{$user}";
+        $sdmiName = "{$customer->id}-SDMI-{$user}";
+
+        if( cache($keyName)) {
+            Cache::forget($keyName);
+        }
+
+        if( cache($sdmiName)) {
+            Cache::forget($sdmiName);
+        }
+      
         $collect = collect($indices);
 
         $ratingGraph = RatingGraph::getRatings($customer);
@@ -265,13 +279,16 @@ class FormulaService extends Service implements FormulaServiceInterface
         
         $sdmiIndex = $customer->sdmiComputation()->where('month_key', $monthKey)->first();
 
-        $sdmiScore = $sdmiIndex->metadata['index'] * 0.2;
+        $sdmiScore = round(($sdmiIndex->metadata['index'] * 0.2), 2);
+
+        Cache::forever($sdmiName, $sdmiScore);
         
         $exists_section_score_zero = $collect->map(function ($index) {
             return $index['subscore:score'] == 0;
         })->contains(true);
 
         if ($exists_section_score_zero) {
+            Cache::forget($keyName);
             return 0;
         }
 
@@ -286,8 +303,9 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         })->sum(), 2);
         
+        $results = round(($totalOf4Index + $financialScore + $sdmiScore), 2);
          
-        return round(($totalOf4Index + $financialScore + $sdmiScore), 2);
+        return Cache::forever($keyName, $results);
     }
 
     /**
@@ -747,13 +765,20 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  integer $total
      * @return mixed
      */
-    public function getOverallTotalAverage($score, $total)
+    public function getOverallTotalAverage($score, $total, $taxonomy, $customerId)
     {
-        if ($score == 0) {
-            return 0;
-        }
+        $results = $score == 0 ? 0 :round(($score/$total)*100, 2);
 
-        return round(($score/$total)*100, 2);
+        $user = auth()->user()->id;
+        $keyName = "{$customerId}-{$taxonomy}-{$user}";
+
+        if( cache($keyName)) {
+            Cache::forget($keyName);
+        }
+        
+        Cache::forever($keyName, $results);
+
+        return $results;
     }
 
     /**

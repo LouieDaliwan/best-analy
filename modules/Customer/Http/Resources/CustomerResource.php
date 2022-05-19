@@ -50,8 +50,8 @@ use Survey\SDMIIndexScore;
                     if($index->alias == 'SDMI') {
                         $answeredSurvey = SDMIIndexScore::where('customer_id', $customer['id'])->where('month_key', $attributes['month'])->first();
                         $reportResult = [
-                            'report' => $answeredSurvey->count() >= 1 ? collect(['modified' => $answeredSurvey->updated_at->diffForHumans()]): null,
-                            'is:finished' => $answeredSurvey->count() >= 1 ? : false,
+                            'report' => $answeredSurvey != null ? collect(['modified' => $answeredSurvey->updated_at->diffForHumans()]): null,
+                            'is:finished' => $answeredSurvey != null ? : false,
                         ];
                     } else {
                         $reportResult = [

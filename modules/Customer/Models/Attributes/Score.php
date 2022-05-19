@@ -6,7 +6,7 @@ use Customer\Models\FinancialStatement;
 
 class Score {
 
-    const INCOMPLETE = 'Incomplete';
+    const COMPLETE = 'Complete';
     const SCORES_INCOMPLETE = 'Scores_Incomplete';
 
     protected $customer;
@@ -21,10 +21,19 @@ class Score {
 
     public function check()
     {
+        $user = auth()->user()->id;
+        
         $this->getFinancialScore();
+        
+        $this->format['smeRatings']['bspi']['score'] = cache("{$this->customer->id}-BSPI-{$user}") ?? 0;
+        $this->format['smeRatings']['fmpi']['score'] = cache("{$this->customer->id}-FMPI-{$user}") ?? 0;
+        $this->format['smeRatings']['pmpi']['score'] = cache("{$this->customer->id}-PMPI-{$user}") ?? 0;
+        $this->format['smeRatings']['hrpi']['score'] = cache("{$this->customer->id}-HRPI-{$user}") ?? 0;
+        $this->format['smeRatings']['sdmi']['score'] = cache("{$this->customer->id}-SDMI-{$user}") ?? 0;
+        $this->format['overall_score'] = cache("{$this->customer->id}-Overall-{$user}") ?? 0;
+        $this->format['results'] = cache("{$this->customer->id}-Overall-{$user}") ?  self::COMPLETE : self::SCORES_INCOMPLETE; 
 
-        $this->checkAllScores();
-
+        
         $this->format['smeRatings'] = array_values($this->format['smeRatings']);
 
         return $this->format;
@@ -43,18 +52,5 @@ class Score {
             $this->format['smeRatings']['financial_score']['score'] = $financial_score;
             $this->format['answered_index']++;
         }  
-    }
-
-    protected function checkAllScores() : void
-    {
-        foreach ($this->format['smeRatings'] as $smeRating) {
-            if($smeRating['score'] == '-') {
-                $this->format['overall_score'] = self::INCOMPLETE;
-                break;
-            } else {
-                $this->format['overall_score'] += $smeRating['score'];
-            }
-        }
-        
     }
 }

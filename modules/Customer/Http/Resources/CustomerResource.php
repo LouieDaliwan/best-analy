@@ -4,11 +4,13 @@ namespace Customer\Http\Resources;
 
 use Best\Models\Report;
 use Best\Services\FormulaServiceInterface;
+use Carbon\Carbon;
 use Customer\Http\Resources\ReportResource;
 use Customer\Models\Attributes\RatingGraph;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Index\Http\Resources\IndexResource;
 use Index\Models\Index;
+use Survey\SDMIIndexScore;
 
     class CustomerResource extends JsonResource
     {
@@ -38,19 +40,30 @@ use Index\Models\Index;
                 'statements' => $this->statements,
                 'applicant' => $this->applicant,
                 'details' => $this->detail,
-                'indices' => Index::all()->map(function ($index) use ($request) {
+                'indices' => Index::all()->map(function ($index) use ($request, $customer) {
                     $attributes = [
                         'customer_id' => $this->getKey(),
                         'taxonomy_id' => $index->getKey(),
                         'month' => $request->get('month') ?? date('m-Y'),
                     ];
-                    return array_merge(with(new IndexResource($index))->toArray($request), [
-                        'report' => new ReportResource($report = Report::where('month', $attributes['month'])
-                            ->whereCustomerId($this->getKey())
-                            ->whereFormId($index->survey->getKey())
-                            ->whereUserId(user()->getKey())->latest()->first()),
-                        'is:finished' => ! is_null($report),
-                    ]);
+
+                    if($index->alias == 'SDMI') {
+                        $answeredSurvey = SDMIIndexScore::where('customer_id', $customer['id'])->where('month_key', $attributes['month'])->first();
+                        $reportResult = [
+                            'report' => $answeredSurvey->count() >= 1 ? collect(['modified' => $answeredSurvey->updated_at->diffForHumans()]): null,
+                            'is:finished' => $answeredSurvey->count() >= 1 ? : false,
+                        ];
+                    } else {
+                        $reportResult = [
+                            'report' => new ReportResource($report = Report::where('month', $attributes['month'])
+                                ->whereCustomerId($this->getKey())
+                                ->whereFormId($index->survey->getKey())
+                                ->whereUserId(user()->getKey())->latest()->first()),
+                            'is:finished' => ! is_null($report),
+                        ];
+                    }
+                                        
+                    return array_merge(with(new IndexResource($index))->toArray($request), $reportResult);
                 })->toArray(),
                 'ratings' => RatingGraph::getRatings($this),
             ]));

@@ -275,7 +275,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         $ratingGraph = RatingGraph::getRatings($customer);
         
-        $financialScore = $ratingGraph['smeRatings'][5]['score'] * 0.3;
+        $financialScore = ($ratingGraph['smeRatings'][5]['score'] / 5) * 0.3;
         
         $sdmiIndex = $customer->sdmiComputation()->where('month_key', $monthKey)->first();
 

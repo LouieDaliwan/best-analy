@@ -275,6 +275,7 @@ class CustomerService extends Service implements CustomerServiceInterface
             );
 
             dispatch(new UpdateStatementsJob($customer));
+            //add new job? for update the computation of financial statement?
         }
         
         $statements = $attributes['metadata']['statement'] ?? null;

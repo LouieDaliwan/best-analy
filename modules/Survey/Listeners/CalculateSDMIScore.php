@@ -54,7 +54,7 @@ class CalculateSDMIScore
                 'count' => 0,
             ],
         ];
-        $date = Carbon::parse($event->attributes['remarks'])->format('M-y');
+        $date = Carbon::parse($event->attributes['remarks'])->format('m-Y');
         
         foreach($event->attributes['fields'] as $field) {
             if($field['submission']['fieldKey'] == 'Business Expansion') {

@@ -14,6 +14,7 @@ use Core\Models\Relations\BelongsToUser;
 use Core\Models\Accessors\CommonAttributes;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Best\Pro\Financial\ProfitAndLossStatement;
+use Survey\SDMIIndexScore;
 
 class Customer extends Model
 {

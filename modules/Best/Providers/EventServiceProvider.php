@@ -7,6 +7,7 @@ use Best\Listeners\CalculateFieldSubmissionSubScore;
 use Best\Listeners\ComputePerformanceIndexFromSurvey;
 use Best\Listeners\SaveGeneratedReport;
 use Core\Providers\EventServiceProvider as BaseEventServiceProvider;
+use Survey\Events\SDMISurvey;
 use Survey\Events\SurveyFinishedSubmitting;
 use Survey\Events\SurveySubmittedByUser;
 use Survey\Listeners\CalculateSDMIScore;
@@ -25,6 +26,8 @@ class EventServiceProvider extends BaseEventServiceProvider
         ],
         SurveyFinishedSubmitting::class => [
             SaveGeneratedReport::class,
+        ],
+        SDMISurvey::class => [
             CalculateSDMIScore::class
         ],
     ];

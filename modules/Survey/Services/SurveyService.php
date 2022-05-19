@@ -8,6 +8,7 @@ use Customer\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Spatie\TranslationLoader\LanguageLine;
+use Survey\Events\SDMISurvey;
 use Survey\Events\SurveyFinishedSubmitting;
 use Survey\Models\Survey;
 use User\Models\User;
@@ -212,11 +213,20 @@ class SurveyService extends Service implements SurveyServiceInterface
      * @return void
      */
     public function submit(Survey $survey, $attributes)
-    {
-        
+    {   
         foreach ($attributes['fields'] as $attribute) {
             $field = $survey->fields()->findOrFail($attribute['id']);
             $field->submit($attribute['submission'], $attributes['remarks'] ?? null);
+        }
+
+        /** Will optimize this @author LouieDaliwan*/
+        $taxonomy = !isset($attributes['fields'][0]['submission']['taxonomy']) ? null : $attributes['fields'][0]['submission']['taxonomy'];
+        
+        if($taxonomy == 'sdmi') {
+            event(new SDMISurvey(
+                $survey,
+                $attributes ?? []
+            ));
         }
 
         event(new SurveyFinishedSubmitting(

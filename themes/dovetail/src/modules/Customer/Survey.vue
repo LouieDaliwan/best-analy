@@ -109,7 +109,6 @@
 
           <template v-for="(answer, a) in answers">
             <input type="hidden" :name="`fields[${a}][id]`" :value="answer.item.id" >
-            <input type="hidden" :name="`fields[${a}][submission][taxonomy]`" :value="'sdmi'">
             <input type="hidden" :name="`fields[${a}][submission][score]`" :value="answer.answer.number">
             <input type="hidden" :name="`fields[${a}][submission][results]`" :value="answer.answer.number">
             <input type="hidden" :name="`fields[${a}][submission][submissible_id]`" :value="answer.item.id">
@@ -218,7 +217,6 @@
             </template>
             <template v-else v-for="(answer, a) in answers">
               <input type="hidden" :name="`fields[${a}][id]`" :value="answer.item.id" >
-              <input type="hidden" :name="`fields[${a}][submission][taxonomy]`" :value="'sdmi'">
               <input type="hidden" :name="`fields[${a}][submission][score]`" :value="answer.answer.number">
               <input type="hidden" :name="`fields[${a}][submission][results]`" :value="answer.answer.number">
               <input type="hidden" :name="`fields[${a}][submission][submissible_id]`" :value="answer.item.id">

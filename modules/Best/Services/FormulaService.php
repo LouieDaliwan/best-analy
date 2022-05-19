@@ -236,7 +236,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         $index = Index::find($attributes['taxonomy_id'] ?? false);
         
-        if ($index->alias != 'SDMI') {
+        if ($index) {
             $this->data['current:index'] = $this->data['indices'][$index->alias];
             $this->data['current:pindex'] = $this->data['indices'][$index->alias];
         }

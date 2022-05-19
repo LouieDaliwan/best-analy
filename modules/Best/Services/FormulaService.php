@@ -240,6 +240,8 @@ class FormulaService extends Service implements FormulaServiceInterface
             $this->data['current:index'] = $this->data['indices'][$index->alias];
             $this->data['current:pindex'] = $this->data['indices'][$index->alias];
         }
+        
+    
 
         $this->data['is_single'] = collect($financialStatements)->count() < 2 ? true : false;
         $this->data['financialStatementCount'] = collect($financialStatements)->count();
@@ -258,9 +260,13 @@ class FormulaService extends Service implements FormulaServiceInterface
         $collect = collect($indices);
 
         $ratingGraph = RatingGraph::getRatings($customer);
-        $financialScore = $ratingGraph['smeRatings'][5]['score'];
+        
+        $financialScore = $ratingGraph['smeRatings'][5]['score'] * 0.3;
+        
         $sdmiIndex = $customer->sdmiComputation()->where('month_key', $monthKey)->first();
 
+        $sdmiScore = $sdmiIndex->metadata['index'] * 0.2;
+        
         $exists_section_score_zero = $collect->map(function ($index) {
             return $index['subscore:score'] == 0;
         })->contains(true);
@@ -269,16 +275,19 @@ class FormulaService extends Service implements FormulaServiceInterface
             return 0;
         }
 
-        return round($collect->map(function ($index) {
+        $totalOf4Index = round($collect->map(function ($index) {
 
             if ($index['subscore:score'] == 0) {
                 return 0 * $index['pindex:weightage'];
             }
 
-            $avg = $index['subscore:score']/$index['subscore:total'];
+            $avg = $index['subscore:total'] != 0 ? $index['subscore:score']/$index['subscore:total'] : 0;
             return $avg*$index['pindex:weightage'];
 
         })->sum(), 2);
+        
+         
+        return round(($totalOf4Index + $financialScore + $sdmiScore), 2);
     }
 
     /**

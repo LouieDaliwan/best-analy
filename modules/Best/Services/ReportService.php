@@ -249,7 +249,6 @@ class ReportService extends Service implements ReportServiceInterface
 
         // $model = $model->whereRemarks($this->request()->get('month') ?: date('m-Y'));
 
-        dd($model);
         return [
             'report' => $model->first(),
             'customer' => new AllCustomerResource($customer),

@@ -17,9 +17,37 @@
     <style>{{ theme()->inlined(public_path('reports/css/rtlpdf.css')) }}</style>
   @endif
 
+  {{-- Chart --}}
+  <!-- <script>{{ theme()->inlined(public_path('reports/js/vendor.js')) }}</script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script> --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
+
+  <script type="text/javascript">
+    Chart.register(chartjs-plugin-annotation);
+  </script>
+
+  {{-- Theme CSS --}}
+  <style>{{ theme()->inlined(public_path('reports/css/basic.css')) }}</style>
+  <style>{{ theme()->inlined(public_path('reports/css/theme.min.css')) }}</style>
+  <style>{{ theme()->inlined(public_path('reports/css/ratio-cover.css')) }}</style>
+  @if($data['financialStatementCount'] == 3)
+    <style>{{ theme()->inlined(public_path('reports/css/pdf/ratios.css')) }}</style>
+    <style>{{ theme()->inlined(public_path('reports/css/pdf/indicators.css')) }}</style>
+  @elseif($data['financialStatementCount'] == 2)
+    <style>{{ theme()->inlined(public_path('reports/css/pdf/ratios2.css')) }}</style>
+    <style>{{ theme()->inlined(public_path('reports/css/pdf/indicators2.css')) }}</style>
+  @endif
+
+  {{-- RTL --}}
+  @if (app()->getLocale() == 'ar')
+    <style>{{ theme()->inlined(public_path('reports/css/rtlpdf.css')) }}</style>
+  @endif
+
   <style>
     html { background: #ffffff !important; }
-    @page { size: legal; margin: 0; }
+    @page { size: A4 ; margin: 0; }
     body { margin: 0; overflow: visible; float: none; background: #ffffff !important; }
     /*body.A4 { width: 210mm }*/
     div.sheet {
@@ -29,6 +57,7 @@
       position: relative;
       box-sizing: border-box;
       page-break-after: always;
+      border: 1px solid red;
     }
     h1, h2, h3, h4, h5, h6 {
       font-weight: 700;
@@ -50,10 +79,22 @@
     @include('best::reports.pdf.summary.what-is-in-report')
     @include('best::reports.pdf.summary.data-reliability-validity')
     @include('best::reports.pdf.summary.data-privacy')
-    @include('best::reports.pdf.partials.footer')
-    <div class="text-right" style="margin-top: -30px">
-      <div style="font-size: 12px;">{{ __('Page 1 of 7') }}</div>
-    </div>
+    <table width="100%">
+      <tr>
+        <td valign="bottom" width="50%">
+          @include('best::reports.pdf.partials.footer')
+        </td>
+        <td valign="bottom" width="50%" class="text-right">
+          <section>
+            <div class="row">
+              <div class="col-md-12">
+                <div style="font-size: 10px;">{{ __('Page 1 of 7') }}</div>
+              </div>
+            </div>
+          </section>
+        </td>
+      </tr>
+    </table>
   </div>
 
   {{-- overall --}}
@@ -64,10 +105,22 @@
     @include('best::reports.pdf.overall.score')
     @include('best::reports.pdf.overall.pindex')
     @include('best::reports.pdf.partials.disclaimer')
-    @include('best::reports.pdf.partials.footer')
-    <div class="text-right">
-      <div style="font-size: 12px;">{{ __('Page 2 of 7') }}</div>
-    </div>
+    <table width="100%">
+      <tr>
+        <td valign="bottom" width="50%">
+          @include('best::reports.pdf.partials.footer')
+        </td>
+        <td valign="bottom" width="50%" class="text-right">
+          <section>
+            <div class="row">
+              <div class="col-md-12">
+                <div style="font-size: 10px;">{{ __('Page 1 of 7') }}</div>
+              </div>
+            </div>
+          </section>
+        </td>
+      </tr>
+    </table>
   </div>
   {{-- overall --}}
 
@@ -78,10 +131,27 @@
       @include('best::reports.pdf.partials.organisation-profile')
       @include('best::reports.pdf.pindex.performance-index', ['data' => $index, 'orig' => $data['overall:enablers:orig']])
       @include('best::reports.pdf.partials.disclaimer')
-      @include('best::reports.pdf.partials.footer')
-    <div class="text-right">
-        <div style="font-size: 12px;">Page <span style="display: none;" class="text-white">-</span>{{ $index['page'] }}<span style="display: none;" class="text-white">-</span> of 7</div>
-      </div>
+      <table width="100%">
+        <tr>
+          <td valign="bottom" width="50%">
+            @include('best::reports.pdf.partials.footer')
+          </td>
+          <td valign="bottom" width="50%" class="text-right">
+            <section>
+              <div class="row">
+                <div class="col-md-12">
+                  <div style="font-size: 10px;">
+                    Page
+                    <span style="display: none;" class="text-white">-</span>
+                    {{ $index['page'] }}
+                    <span style="display: none;" class="text-white">-</span> of 7
+                  </div>
+                </div>
+              </div>
+            </section>
+          </td>
+        </tr>
+      </table>
     </div>
   @endforeach
 
@@ -94,11 +164,104 @@
       @include('best::reports.pdf.overall.comments')
     </div>
     @include('best::reports.pdf.partials.disclaimer')
-    @include('best::reports.pdf.partials.footer')
-    <div class="text-right">
-      <div style="font-size: 12px;">{{ __('Page 7 of 7') }}</div>
-    </div>
+    <table width="100%">
+      <tr>
+        <td valign="bottom" width="50%">
+          @include('best::reports.pdf.partials.footer')
+        </td>
+        <td valign="bottom" width="50%" class="text-right">
+          <section>
+            <div class="row">
+              <div class="col-md-12">
+                <div style="font-size: 10px;">{{ __('Page 7 of 7') }}</div>
+              </div>
+            </div>
+          </section>
+        </td>
+      </tr>
+    </table>
   </div>
   {{-- comments --}}
+
+  {{-- <div class="sheet cover-financial-report">
+    @include('best::reports.pdf.ratio.cover')
+  </div> --}}
+
+  {{-- Analysis --}}
+  <div class="sheet" style="line-height: 1.3;">
+    {{-- <div style="zoom: 0.76; line-height: 1;"> --}}
+      @include('best::reports.pdf.partials.header')
+      <div class="my-2 border-bottom"></div>
+      @include('best::reports.pdf.partials.organisation-profile')
+      @if($data['is_single'])
+        @include('best::reports.pdf.financials.singleyear')
+        @include('best::reports.pdf.partials.disclaimer')
+        <table width="100%">
+          <tr>
+            <td valign="bottom" width="50%">
+              @include('best::reports.pdf.partials.footer')
+            </td>
+            <td valign="bottom" width="50%" class="text-right">
+              <section>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div style="font-size: 10px;">{{ __('Page n of n') }}</div>
+                  </div>
+                </div>
+              </section>
+            </td>
+          </tr>
+        </table>
+      @else
+        @include('best::reports.pdf.analysis.profitability')
+        @include('best::reports.pdf.analysis.liquidity')
+        @include('best::reports.pdf.analysis.efficiency')
+        @include('best::reports.pdf.analysis.solvency')
+        @include('best::reports.pdf.analysis.productivity')
+    {{-- </div> --}}
+    @include('best::reports.pdf.partials.disclaimer')
+    @include('best::reports.pdf.partials.footer')
+    <div class="text-right">
+      <div style="font-size: 10px;">{{ __('Page 1 of 3') }}</div>
+    </div>
+    @endif
+  </div>
+
+  @if(!$data['is_single'])
+    {{-- Ratios --}}
+    <div class="sheet">
+      {{-- <div style="zoom: 0.83; line-height: 1;"> --}}
+        @include('best::reports.pdf.partials.header')
+        <div class="my-2 border-bottom"></div>
+        @include('best::reports.pdf.partials.organisation-profile')
+        @include('best::reports.pdf.financials.ratios')
+      {{-- </div> --}}
+      <div style="margin-top: 10px;">
+      @include('best::reports.pdf.partials.disclaimer')
+      @include('best::reports.pdf.partials.footer')
+      </div>
+      <div class="text-right">
+        <div style="font-size: 10px;">{{ __('Page 2 of 3') }}</div>
+      </div>
+    </div>
+
+    {{-- Indicators --}}
+    <div class="sheet">
+      {{-- <div style="zoom: 0.7; line-height: 1;"> --}}
+        @include('best::reports.pdf.partials.header')
+        <div class="my-2 border-bottom"></div>
+        @include('best::reports.pdf.partials.organisation-profile')
+        @include('best::reports.pdf.financials.indicators')
+      {{-- </div> --}}
+      <div style="margin-top: 105px;">
+      @include('best::reports.pdf.partials.disclaimer')
+      @include('best::reports.pdf.partials.footer')
+      </div>
+      <div class="text-right">
+        <div style="font-size: 10px;">{{ __('Page 3 of 3') }}</div>
+      </div>
+    </div>
+    {{-- Indicators --}}
+  @endif
 </body>
 </html>

@@ -26,7 +26,7 @@
           </div>
           <div style="height: 150px;"></div>
           <div class="text-center">
-            <h1 class="display-4">@lang("Business Excellence Survey Toolkit (BEST)")</h1>
+            <h1 class="display-4">@lang("SME Ratings")</h1>
             <h1 class="display-4">@lang('Financial Analysis Report')</h1>
             @if (isset($data['customer:type']))
               <h2 class="font-weight-normal">({{ __('Based on') }} {{ $data['customer:type'] }} {{ __('Financials') }})</h2>

@@ -1,20 +1,21 @@
+<div class="mx-4">
+  <!-- <div style="height: 10px;"></div> -->
+  <table width="100%">
+    <tr>
+      <td class="p-2">
+        <h4 class="dt-secondary mb-0">Fifth module</h4>
+      </td>
+      <td class="p-2">
+        <h4 class="mb-0 dt-secondary text-right">
+          0%
+        </h4>
+      </td>
+    </tr>
+  </table>
+  <div class="border-top mb-3"></div>
 
-<!-- <div style="height: 10px;"></div> -->
-<table width="100%">
-  <tr>
-    <td class="p-2">
-      <h4 class="dt-secondary mb-0">Fifth module</h4>
-    </td>
-    <td class="p-2">
-      <h4 class="mb-0 dt-secondary text-right">
-        0%
-      </h4>
-    </td>
-  </tr>
-</table>
-<div class="border-top mb-3"></div>
-
-<canvas id="overall-fifth" width="400px" height="200px" style="margin: auto;"></canvas>
+  <canvas id="overall-fifth" width="500px" height="200px" style="margin: auto;"></canvas>
+</div>
 
 <script>
   $(document).ready(function() {
@@ -33,13 +34,11 @@
       type: 'bar',
       data: {
         labels: [
-          ['{{ __("Manpower") }}', '{{ __("Planning") }}'],
-          ['{!! __("Recruitment &") !!}', '{{ __("Selection") }}'],
-          ['{!! __("Compensation &") !!}', '{{ __("Benefits") }}'],
-          ['{{ __("Performance") }}', '{{ __("Management") }}'],
-          ['{!! __("Learning &") !!}', '{!! __("Development") !!}'],
-          ['{!! __("Career & Talent") !!}', '{{ __("Management") }}'],
-          ['{!! __("Employee") !!}', '{!! __("Engagement &") !!}', '{!! __("Communication") !!}'],
+          ['{{ __("Business") }}', '{{ __("Expansion") }}'],
+          ['{!! __("Marketing") !!}', '{{ __("Strategies") }}'],
+          ['{!! __("Capacity") !!}', '{{ __("Utilisation") }}'],
+          ['{!! __("Endorsement &") !!}', '{!! __("Standard") !!}'],
+          ['{{ __("Location") }}', '{{ __("") }}'],
         ],
         datasets: [
           {
@@ -110,7 +109,7 @@
               beginAtZero: true,
               fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',
-              fontSize: 9,
+              fontSize: 8,
             },
           }],
           maxBarThickness: 5,

@@ -1,83 +1,85 @@
-<section class="mt-3">
-  <table width="100%">
-    <tbody>  
-      <tr>
-        <td class="p-3" width="50%">
-          <h1 class="dt-primary " style="border">@lang('Productivity Analysis')</h1>
-          <hr>
-        </td>
-        <td class="p-3" width="50%">
-          <h1 class="dt-primary">@lang('VA Indicators')</h1>
-          <hr>
-        </td>
-      </tr>
-      <tr>
-        <td valign="middle" width="50%" class="p-3" >
-          <div valign="middle" class="mt-3">
-            <div class="py-5">
-              <div class="chart-analysis">
-                <div class="mr-3" style="width: 700px; height: 200px;">
-                  <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>
-                </div>
-              </div>
-              {{-- label --}}
-              <div style="height: 20px;"></div>
-              <table class="indiLabels" width="50%" align="center">
-                <tr>
-                  @foreach ($data['analysis:financial']['productivity']['charts']['dataset'] as $resource)
-                    <td>
-                      <span class="circular p-2" style="background: {{ $resource['bg'] }};"></span>
-                      &nbsp;
-                      <span>{{ $resource['label'] }}</span>
-                    </td>
-                  @endforeach
-                </tr>
-              </table>
-            </div>
-          {{-- label --}}
-            <div class="col-md-12 mt-3 comment-analysis">
-              @foreach ($data['analysis:financial']['productivity']['comments'] as $comments)
-                <div class="row">
-                  <div class="col px-5">
-                    @foreach ($comments as $comment)
-                      <p class="mb-1">{{ $comment }}</p>
-                    @endforeach
+<div style="zoom: 0.76; line-height: 1;">
+  <section class="mt-3">
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td class="p-3" width="50%">
+            <h1 class="dt-primary " style="border">@lang('Productivity Analysis')</h1>
+            <hr>
+          </td>
+          <td class="p-3" width="50%">
+            <h1 class="dt-primary">@lang('VA Indicators')</h1>
+            <hr>
+          </td>
+        </tr>
+        <tr>
+          <td valign="middle" width="50%" class="p-3" >
+            <div valign="middle" class="mt-3">
+              <div class="py-5">
+                <div class="chart-analysis">
+                  <div class="mr-3" style="width: 700px; height: 200px;">
+                    <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>
                   </div>
                 </div>
-              @endforeach
-            </div>
-          </div>
-        </td>
-        <td valign="top" width="50%" class="p-3" >
-          <table class="table table-indicator-main">
-            <tbody>
-              @foreach ($data['indicators:productivity'] as $key => $d)
-                <tr class="title table-indicator">
-                  <td colspan="5">{{ __($key) }}</td>
-                </tr>
-                @foreach ($d as $i => $vs)
-                  @if($key == 'summary')
-                    <tr class="ratio{{ $key }}-{{ $i }}">
-                      @php
-                      $l = 0;
-                      @endphp
-                      @foreach ($vs as $j => $v)
-                          <td class="{{ empty($v) ? "empty-$l" : null }} {{ $key }}-{{ $i }}">{{ __($v) }}</td>
+                {{-- label --}}
+                <div style="height: 20px;"></div>
+                <table class="indiLabels" width="50%" align="center">
+                  <tr>
+                    @foreach ($data['analysis:financial']['productivity']['charts']['dataset'] as $resource)
+                      <td>
+                        <span class="circular p-2" style="background: {{ $resource['bg'] }};"></span>
+                        &nbsp;
+                        <span>{{ $resource['label'] }}</span>
+                      </td>
+                    @endforeach
+                  </tr>
+                </table>
+              </div>
+            {{-- label --}}
+              <div class="col-md-12 mt-3 comment-analysis">
+                @foreach ($data['analysis:financial']['productivity']['comments'] as $comments)
+                  <div class="row">
+                    <div class="col px-5">
+                      @foreach ($comments as $comment)
+                        <p class="mb-1">{{ $comment }}</p>
                       @endforeach
-                    </tr>
-                  @endif
+                    </div>
+                  </div>
                 @endforeach
-              @endforeach
-            </tbody>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        @include('best::reports.pdf.financials.indicators.list')
-      </tr>
-    </tbody>
-  </table>
-</section>
+              </div>
+            </div>
+          </td>
+          <td valign="top" width="50%" class="p-3" >
+            <table class="table table-indicator-main">
+              <tbody>
+                @foreach ($data['indicators:productivity'] as $key => $d)
+                  <tr class="title table-indicator">
+                    <td colspan="5">{{ __($key) }}</td>
+                  </tr>
+                  @foreach ($d as $i => $vs)
+                    @if($key == 'summary')
+                      <tr class="ratio{{ $key }}-{{ $i }}">
+                        @php
+                        $l = 0;
+                        @endphp
+                        @foreach ($vs as $j => $v)
+                            <td class="{{ empty($v) ? "empty-$l" : null }} {{ $key }}-{{ $i }}">{{ __($v) }}</td>
+                        @endforeach
+                      </tr>
+                    @endif
+                  @endforeach
+                @endforeach
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          @include('best::reports.pdf.financials.indicators.list')
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
 
 <style>
 /*  .indiLabels tr td {

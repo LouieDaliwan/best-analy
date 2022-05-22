@@ -11,10 +11,10 @@
         <div class="dt-divider" style="height: 50px;"></div>
         {{-- header --}}
           <div class="mb-4 text-center">
-            <img height="80" src="{{ theme()->logopath() }}">
+            <img height="120" src="{{ theme()->logopath() }}">
           </div>
           <div class="text-center">
-            <h1 class="display-4">@lang("Business Excellence Survey Toolkit (BEST)")</h1>
+            <h1 class="display-4">@lang("SME Ratings")</h1>
             <h1 class="display-4">@lang('Overall Report')</h1>
           </div>
         {{-- header --}}
@@ -38,6 +38,54 @@
     </div>
 
     <table width="100%">
+      <tr>
+        <td valign="top" width="70%">
+          <h4 class="mb-3">@lang('Prepared for'):</h4>
+          <h2 class="mb-3 mb-0">{{ $data['organisation:profile']['name'] }}</h2>
+          @if ($data['month:formatted'] ?? null)
+            <div class="mt-5">
+              <h4 class="mb-0 font-weight-normal">@lang('Site Visit Date'):</h4>
+              <p>{{ $data['month:formatted'] }}</p>
+            </div>
+          @endif
+          {{-- <p class="mb-0">{{ $data['month:formatted'] }}</p> --}}
+          @if ($data['customer:counselor'] ?? null)
+            <h4 class="mb-0 mt-3">@lang('Business Councelor'):</h4>
+            <p class="mb-0">{{ $data['customer:counselor'] }}</p>
+          @endif
+        </td>
+        <td valign="top" width="30%">
+          <div>
+            <h4 class="mb-0">@lang('Prepared by'):</h4>
+            <div style="background: #12263f; height: 1px; margin-top: 40px;"></div>
+            <p class="text-center mt-2">{{ $data['report:user'] ?? null }}</p>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <table width="100%">
+      <tr>
+        <td valign="top" width="70%">
+          <div class="mt-5">
+            <cite>
+              <small>{{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}</small><br />
+              <small>{{ __('Powered by') }} {{ settings('app:author') }}</small>
+            </cite>
+          </div>
+        </td>
+        <td valign="top" width="70%">
+          <div class="mt-5">
+            <cite>
+              <small class="text-white">Date:</small><br />
+              <small>Printed on: {{ $data['month:formatted'] }}</p></small>
+            </cite>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    {{-- <table width="100%">
       <tr>
         <td valign="top">
           <h4 class="mb-3">@lang('Prepared for'):</h4>
@@ -70,7 +118,7 @@
           </div>
         </td>
       </tr>
-    </table>
+    </table> --}}
   </div>
   {{-- <div style="height: 250px;"></div> --}}
 </section>

@@ -9,6 +9,7 @@
   
   array_push($cols, array_merge(array_slice($data, 0,1), array_slice($data, 2, 1),array_slice($data, 5, 1)));  
 ?>
+<div style="zoom: 0.76; line-height: 1;">
 <section class="mt-3">
   <h1 class="dt-primary">@lang('Financial Ratios')</h1>
   <div id="resp-table">
@@ -46,6 +47,7 @@
     </div>
   </div>
 </section>
+</div>
 
 <style>
   .EFFICIENCY-4,

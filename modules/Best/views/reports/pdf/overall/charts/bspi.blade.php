@@ -1,30 +1,32 @@
-<table width="100%">
-  <tr>
-    <td class="p-2">
-      <h4 class="dt-secondary mb-0">
-        @lang($data['indices']['BSPI']['pindex']) {{ __('Performance Index') }}
-      </h4>
-    </td>
-    <td class="p-2">
-      <h4 class="mb-0 dt-secondary text-right">
-        {{ $data['indices']['BSPI']['overall:total'] }}%
-      </h4>
-    </td>
-  </tr>
-</table>
-<div class="border-top mb-3"></div>
-<!-- <table>
-  <tr>
-    <td>
-      <p class="mb-0">@lang($data['indices']['BSPI']['overall:comment:overall'])</p>
-    </td>
-    <td> -->
-      <!-- <div class="mr-3" style="width: 500px; height: 150px;"> -->
-        <canvas id="overall-bspi" width="400px" height="150px" style="margin: auto;"></canvas>
-      <!-- </div> -->
-    <!-- </td>
-  </tr>
-</table> -->
+<div class="mx-4">
+  <table width="100%">
+    <tr>
+      <td class="p-2">
+        <h4 class="dt-secondary mb-0">
+          @lang($data['indices']['BSPI']['pindex']) {{ __('Performance Index') }}
+        </h4>
+      </td>
+      <td class="p-2">
+        <h4 class="mb-0 dt-secondary text-right">
+          {{ $data['indices']['BSPI']['overall:total'] }}%
+        </h4>
+      </td>
+    </tr>
+  </table>
+  <div class="border-top mb-3"></div>
+  <!-- <table>
+    <tr>
+      <td>
+        <p class="mb-0">@lang($data['indices']['BSPI']['overall:comment:overall'])</p>
+      </td>
+      <td> -->
+        <!-- <div class="mr-3" style="width: 500px; height: 150px;"> -->
+          <canvas id="overall-bspi" width="500px" height="200px" style="margin: auto;"></canvas>
+        <!-- </div> -->
+      <!-- </td>
+    </tr>
+  </table> -->
+</div>
 
 <script>
   $(document).ready(function() {

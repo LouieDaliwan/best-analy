@@ -3,17 +3,17 @@
   <h4 class="mb-1 dt-secondary">@lang('Key Enablers')</h4>
   <p>@lang($data['key:enablers:description'] ?? null)</p>
 
-  <div class="mb-3" style="width: 1000px; height: 140px;">
+  <div class="mb-3 text-center" style="width: 1000px; height: 140px; margin: auto;">
     <canvas id="key-enablers-{{ $data['pindex:code'] }}" style="width: 1000px; height: 140px;"></canvas>
   </div>
 
-  <table>
+  <table width="100%">
     <tr>
       <td>
-        <table>
+        <table width="100%">
           {{-- @foreach ($data['key:enablers']['data'] as $key => $enabler) --}}
           @foreach (collect($data['key:enablers']['data'])->chunk(2) as $chunk)
-            <tr>
+            <tr style="width: 50%;">
               @foreach ($chunk as $key => $enabler)
                 <td valign="top">
                   <h4>@lang($key)</h4>

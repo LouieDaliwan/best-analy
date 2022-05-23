@@ -1,9 +1,11 @@
 <div class="mx-4 mb-5">
-  <div class="py-2" style="font-weight: bold; border-bottom: 1px solid #f5f5f5;">@lang('Raw Materials Margin')</div>
-    <div class="mb-3 text-center">
-      <canvas height="360" width="450" id="raw_materials" style="margin: auto;" class="mt-5 mb-2"></canvas>
+  <h3 class="dt-BSPI py-2 text-center"style="border-bottom: 1px solid #f5f5f5;">{{ __('Raw Materials Margin') }}</h3>
+    <div style="zoom: 0.76;">
+      <div class="mb-3 text-center">
+        <canvas height="260" width="550" id="raw_materials" style="margin: auto;" class="mt-5 mb-2"></canvas>
+      </div>
     </div>
-    <p class="mb-0 px-5" style="font-size: 12px; line-height: 1.5;">
+    <p class="mb-0 text-center">
       @if (app()->getLocale() == 'ar')
         <span style="font-size: 17px;">
           <svg width="17px" height="17px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
@@ -80,7 +82,7 @@
         },
         scales: {
           xAxes: [{
-            barPercentage: 0.5,
+            barPercentage: 0.3,
             ticks: {
               fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',

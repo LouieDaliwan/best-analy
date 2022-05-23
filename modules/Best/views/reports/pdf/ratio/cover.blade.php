@@ -22,11 +22,11 @@
         <div class="dt-divider" style="height: 50px;"></div>
           {{-- header --}}
           <div class="mb-4 text-center">
-            <img height="80" src="{{ theme()->logopath() }}">
+            <img height="110" src="{{ theme()->logopath() }}">
           </div>
           <div style="height: 150px;"></div>
           <div class="text-center">
-            <h1 class="display-4 dt-BSPI">@lang("Business Excellence Survey Toolkit (BEST)")</h1>
+            <h1 class="display-4 dt-BSPI">@lang("SME Ratings")</h1>
             <h1 class="display-4 dt-BSPI">@lang('Financial Analysis Report')</h1>
             @if (isset($data['customer:type']))
               <h2 class="font-weight-normal">({{ __('Based on') }} {{ $data['customer:type'] }} {{ __('Financials') }})</h2>
@@ -77,7 +77,7 @@
           <div class="mt-5">
             <cite>
               <small class="text-white">Date:</small><br />
-              <small>{{ $data['month:formatted'] }}</p></small>
+              <small>Printed on: {{ $data['month:formatted'] }}</p></small>
             </cite>
           </div>
         </td>

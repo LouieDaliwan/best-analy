@@ -1,26 +1,28 @@
-<table width="100%">
-  <tr>
-    <td class="p-2">
-      <h4 class="dt-secondary mb-0">@lang($data['indices']['FMPI']['pindex']) {{ __('Performance Index') }}</h4>
-    </td>
-    <td class="p-2">
-      <h4 class="mb-0 dt-secondary text-right">
-        {{ $data['indices']['FMPI']['overall:total'] }}%
-      </h4>
-    </td>
-  </tr>
-</table>
-<div class="border-top mb-3"></div>
-<!-- <table>
-  <tr>
-    <td> -->
-        <canvas id="overall-fmpi" width="400px" height="200px" style="margin: auto;"></canvas>
-    <!-- </td>
-    <td>
-      <p class="mb-0 mr-3">@lang($data['indices']['FMPI']['overall:comment:overall'])</p>
-    </td>
-  </tr>
-</table> -->
+<div class="mx-4">
+  <table width="100%">
+    <tr>
+      <td class="p-2">
+        <h4 class="dt-secondary mb-0">@lang($data['indices']['FMPI']['pindex']) {{ __('Performance Index') }}</h4>
+      </td>
+      <td class="p-2">
+        <h4 class="mb-0 dt-secondary text-right">
+          {{ $data['indices']['FMPI']['overall:total'] }}%
+        </h4>
+      </td>
+    </tr>
+  </table>
+  <div class="border-top mb-3"></div>
+  <!-- <table>
+    <tr>
+      <td> -->
+          <canvas id="overall-fmpi" width="500px" height="200px" style="margin: auto;"></canvas>
+      <!-- </td>
+      <td>
+        <p class="mb-0 mr-3">@lang($data['indices']['FMPI']['overall:comment:overall'])</p>
+      </td>
+    </tr>
+  </table> -->
+</div>
 
 <script>
   $(document).ready(function() {

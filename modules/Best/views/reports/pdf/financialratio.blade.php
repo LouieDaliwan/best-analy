@@ -65,7 +65,7 @@
 
   {{-- Analysis --}}
   <div class="sheet">
-    <div style="zoom: 0.76; line-height: 1;">
+    <div style="zoom: 1; line-height: 1;">
       @include('best::reports.pdf.partials.header')
       <div class="my-2 border-bottom"></div>
       @include('best::reports.pdf.partials.organisation-profile')
@@ -94,7 +94,7 @@
   @if(!$data['is_single'])
     {{-- Ratios --}}
     <div class="sheet">
-      <div style="zoom: 0.83; line-height: 1;">
+      <div style="zoom: 1; line-height: 1;">
         @include('best::reports.pdf.partials.header')
         <div class="my-2 border-bottom"></div>
         @include('best::reports.pdf.partials.organisation-profile')

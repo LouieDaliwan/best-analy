@@ -8,7 +8,7 @@
     <p class="mb-1">@lang($comment)</p>
   @endforeach
 
-  <div class="mt-2" style="width: 1000px; height: 100px;">
+  <div class="mt-2 text-center" style="width: 1000px; height: 100px; margin: auto;">
     <canvas id="overall-enablers" style="width: 1000px; height: 100px;"></canvas>
   </div>
 

@@ -8,7 +8,7 @@
           <img height="80" src="{{ theme()->logo() }}">
         </div>
         <div class="text-center">
-          <h1 class="display-4">@lang("Business Excellence Survey Toolkit (BEST)")</h1>
+          <h1 class="display-4">@lang("SME Ratings")</h1>
         </div>
         {{-- header --}}
         <div class="dt-divider" style="height: 50px;"></div>

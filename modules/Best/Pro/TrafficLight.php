@@ -128,21 +128,26 @@ abstract class TrafficLight
     public static function getScoreLight($score)
     {
         $comment = '';
+        $result = '';
 
         if($score >= self::normal()) {
             $comment = self::NORMAL;
+            $result = 'green';
         }
 
         if($score >= 1 && $score  <= self::critical()) {
             $comment = self::CRITICAL;
+            $result = 'amber';
         }
 
         if($score >= 31 && $score <= self::correctiveAction()){
             $comment = self::CORRECTIVE_ACTION;
+            $result = 'amber';
         }
 
         if($score <= self::failed()){
             $comment = self::FAILED;
+            $result = 'red';
         }
 
         // if ($score > self::red()) {
@@ -155,7 +160,7 @@ abstract class TrafficLight
         //     $comment = self::RED_LIGHT;
         // }
 
-        return $comment;
+        return ['comment' => $comment, 'result' => $result];
     }
 
     /**

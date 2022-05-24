@@ -178,7 +178,7 @@
                                   <div
                                     :color="active ? 'primary' : null"
                                     @click="choose(field, rate, f);toggle()"
-                                    class="dt-chip"
+                                    :class="checkField(field)"
                                     v-on="$vuetify.breakpoint.smAndUp ? on : null"
                                     v-ripple
                                     v-scroll-to="{ el: `#scrollto-${field.id+'-'+(parseInt(i)+1)}`, duration: 700 }"
@@ -481,6 +481,16 @@ export default {
         this.submitting = false
       })
     },
+
+    checkField(field) {
+        let values = ['What is the current utilisation of your business capacity?', 'Extent products/or services are ready to be exported'];
+
+        if (values.includes(field.title)){
+           return 'dt-chip2';
+        } else {
+          return 'dt-chip'
+        }
+    }
   },
 
   mounted () {

@@ -469,15 +469,16 @@ pre {
   color: var(--text);
 }
 
-.dt-chip {
+.dt-chip,
+.dt-chip2 {
   -webkit-box-align: center;
-          align-items: center;
-  border-radius: 50%;
+  align-items: center;
+  border-radius: 100%;
   cursor: pointer;
   display: -webkit-inline-box;
   display: inline-flex;
   -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
   -webkit-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
 }
@@ -486,9 +487,17 @@ pre {
   .dt-chip {
     border: 2px solid var(--text-muted);
     -webkit-box-flex: 0;
-            flex: 0 0 55px;
+    flex: 0 0 55px;
     height: 55px;
     width: 55px;
+  }
+
+  .dt-chip2 {
+    border: 2px solid var(--text-muted);
+    -webkit-box-flex: 0;
+    flex: 0 0 55px;
+    height: 100px;
+    width: 100px;
   }
 }
 
@@ -496,9 +505,17 @@ pre {
   .dt-chip {
     border: 1px solid var(--text-muted);
     -webkit-box-flex: 0;
-            flex: 0 0 35px;
+    flex: 0 0 35px;
     height: 35px;
     width: 35px;
+  }
+
+  .dt-chip2 {
+    border: 1px solid var(--text-muted);
+    -webkit-box-flex: 0;
+    flex: 0 0 35px;
+    height: 100px;
+    width: 100px;
   }
 }
 

@@ -55,6 +55,47 @@ abstract class TrafficLight
         return self::grades()[self::GREEN_LIGHT];
     }
 
+
+    /**
+     * Retrieve the value of normal.
+     *
+     * @return float|mixed
+     */
+    public static function normal()
+    {
+        return self::grades()[self::NORMAL];
+    }
+
+    /**
+     * Retrieve the value of failed.
+     *
+     * @return float|mixed
+     */
+    public static function failed()
+    {
+        return self::grades()[self::FAILED];
+    }
+
+    /**
+     * Retrieve the value of Corrective Action.
+     *
+     * @return float|mixed
+     */
+    public static function correctiveAction()
+    {
+        return self::grades()[self::CORRECTIVE_ACTION];
+    }
+
+    /**
+     * Retrieve the value of Critical.
+     *
+     * @return float|mixed
+     */
+    public static function critical()
+    {
+        return self::grades()[self::CRITICAL];
+    }
+
     /**
      * Retrieve the traffic light value of the given score.
      *
@@ -88,15 +129,31 @@ abstract class TrafficLight
     {
         $comment = '';
 
-        if ($score > self::red()) {
-            if ($score > self::amber()) {
-                $comment = self::GREEN_LIGHT;
-            } else {
-                $comment = self::AMBER_LIGHT;
-            }
-        } else {
-            $comment = self::RED_LIGHT;
+        if($score >= self::normal()) {
+            $comment = self::NORMAL;
         }
+
+        if($score >= 1 && $score  <= self::critical()) {
+            $comment = self::CRITICAL;
+        }
+
+        if($score >= 31 && $score <= self::correctiveAction()){
+            $comment = self::CORRECTIVE_ACTION;
+        }
+
+        if($score <= self::failed()){
+            $comment = self::FAILED;
+        }
+
+        // if ($score > self::red()) {
+        //     if ($score > self::amber()) {
+        //         $comment = self::GREEN_LIGHT;
+        //     } else {
+        //         $comment = self::AMBER_LIGHT;
+        //     }
+        // } else {
+        //     $comment = self::RED_LIGHT;
+        // }
 
         return $comment;
     }

@@ -303,9 +303,11 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         })->sum(), 2);
         
-        $results = round(($totalOf4Index + $financialScore + $sdmiScore), 2);
-         
-        return Cache::forever($keyName, $results);
+        $results = round(($totalOf4Index + $financialScore + $sdmiScore), 1);
+
+        Cache::forever($keyName, $results);
+        
+        return cache($keyName);
     }
 
     /**

@@ -83,21 +83,18 @@ class CustomerService extends Service implements CustomerServiceInterface
      */
     public function saveFromCrm($attributes)
     {
-        $exist_customer = $this->checkCode(Str::slug($attributes['code']));
+        $customer = $this->checkCode(Str::slug($attributes['code']));
 
-        if ($exist_customer) {
-            $exist_customer->name = $attributes['name'];
-            $exist_customer->metadata = $this->updateMetadata($exist_customer, $attributes);
-            $exist_customer->refnum = $attributes['refnum'];
-            $exist_customer->status = $attributes['status'];
-            $exist_customer->token = $attributes['token'];
-            $exist_customer->save();
-
-            return $exist_customer;
-
+        if ($customer) {
+            $customer->name = $attributes['name'];
+            $customer->metadata = $this->updateMetadata($customer, $attributes);
+            $customer->refnum = $attributes['refnum'];
+            $customer->status = $attributes['status'];
+            $customer->token = $attributes['token'];
+            $customer->save();
         } else {
 
-            return Customer::firstOrCreate([
+            $customer = Customer::firstOrCreate([
                 'name' => $attributes['name'],
                 'metadata' => $attributes['metadata'],
                 'refnum' => $attributes['refnum'],
@@ -107,6 +104,51 @@ class CustomerService extends Service implements CustomerServiceInterface
                 'code' => $this->handleCode(Str::slug($attributes['code']))
             ]);
         }
+
+        $this->updateOtherDetails($customer, $attributes);
+
+        return $customer;
+    }
+
+
+    protected function updateOtherDetails($customer, $attributes) : void
+    {
+        //project detail
+        $customer->detail()->updateOrCreate([
+            'metadata' => [
+                'project_name' => $attributes['name'],
+                'project_location' => $attributes['metadata']['ProjectLocation'] ?? null,
+                'project_type' => $attributes['metadata']['ProjectType'] ?? null,
+                'trade_name_en' => $attributes['metadata']['TradeNameEnglish'] ?? null,
+                'trade_name_ar' => $attributes['metadata']['TradeNameArabic'] ?? null,
+                'license_no' => $attributes['metadata']['LicenseNo'] ?? null,
+                'funding_program' => null,
+                'investment_value' => 0,
+                'industry_sector' => $attributes['metadata']['Sector'] ?? null,
+                'business_size' => null,
+                'description' => null,
+            ]                
+        ]);
+
+        //applicant detail
+        $customer->applicant()->updateOrCreate([
+            'metadata' => [
+                'email' => $attributes['email'] ?? null,
+                'address' => $attributes['address'] ?? null,
+                'website' => $attributes['website'] ?? null,
+                'staffstrength' => $attributes['staffstrength'] ?? null,
+                'industry' => $attributes['industry'] ?? null,
+                'FileNo' => $attributes['metadata']['FileNo'] ?? null,
+                'FundingRequestNo' => $attributes['metadata']['FundingRequestNo'] ?? null,
+                'SiteVisitDate' => $attributes['metadata']['SiteVisitDate'] ?? null,
+                'BusinessCounselorName' => $attributes['metadata']['BusinessCounselorName'] ?? null,
+                'PeeBusinessCounselorName' => $attributes['metadata']['PeeBusinessCounselorName'] ?? null,
+                'number' =>  null,
+                'contact_person' => null,
+                'designation' => null,
+                'name' => null,
+            ],
+        ]);
     }
 
     /**

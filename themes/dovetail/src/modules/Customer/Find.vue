@@ -4,6 +4,7 @@
 
     <!-- TEST only -->
     <div v-shortkey.once="['ctrl', 'alt', '.']" @shortkey="saveDummyCompany"></div>
+    <!-- <v-btn @click.prevent="saveDummyCompany" color="primary">{{ trans('Dummy') }}</v-btn> -->
     <!-- TEST only -->
 
     <v-row>
@@ -196,7 +197,16 @@ export default {
           SiteVisitDate: new Date,
           BusinessCounselorName: Math.random(),
           PeeBusinessCounselorName: Math.random(),
-          Status: 'Visit Approved',
+          TradeNameEnglish: 'dummy english name',
+          TradeNameArabic: 'dummy arabic name',
+          ApplicantName: 'dummy arabic name',
+          ApplicantMobile: '099494922939',
+          ApplicantEmail: 'dummy@test.com',
+          Program: 'dummy program',
+          Sector: null,
+          LicenseNo: Math.random(),
+          ProjectLocation: null,
+          ProjectType: null,
         }, this.company.metadata),
       }
 
@@ -217,6 +227,16 @@ export default {
           SiteVisitDate: data.SiteVisitDate || null,
           BusinessCounselorName: data.BusinessCounselorName,
           PeeBusinessCounselorName: data.PeeBusinessCounselorName,
+          TradeNameEnglish: data.TradeNameEnglish,
+          TradeNameArabic: data.TradeNameArabic,
+          ApplicantName: data.ApplicantName,
+          ApplicantMobile: data.ApplicantMobile,
+          ApplicantEmail: data.ApplicantEmail,
+          Program: data.Program,
+          Sector: data.Sector,
+          LicenseNo: data.LicenseNo,
+          ProjectLocation: data.ProjectLocation,
+          ProjectType: data.ProjectType,
         }, this.company.metadata),
       }
 

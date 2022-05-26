@@ -23,7 +23,7 @@
       rates: [
         { number: '1', text: 'Least Satisfied' },
         { number: '2', text: '' },
-        { number: '3', text: 'Satisfied' },
+        { number: '3', text: '' },
         { number: '4', text: '' },
         { number: '5', text: 'Very Satisfied' },
       ],

@@ -497,12 +497,15 @@ export default {
     },
 
     checkField(field) {
-        let values = ['What is the current utilisation of your business capacity?', 'Extent products/or services are ready to be exported'];
+        let values = [
+          'What is the current utilisation of your business capacity?', 
+          'Extent products/or services are ready to be exported'
+        ];
 
         if (values.includes(field.title)){
            return 'dt-chip2';
         } else {
-          return 'dt-chip'
+           return 'dt-chip'
         }
     }
   },
@@ -510,7 +513,7 @@ export default {
   mounted () {
     this.getResource()
 
-    if (this.$route.params.taxonomy === '5th-module-strategy-development-and-management-index-(sdmi)') {
+    if (this.$route.params.taxonomy === 'strategy-development-and-management-index') {
       this.taxonomy_item = 'sdmi'; 
     }
   },

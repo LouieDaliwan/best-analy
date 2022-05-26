@@ -167,6 +167,22 @@ export default {
     saveDummyCompany () {
       let query = this.query || Math.random()
 
+      // let attributes = {
+      //   name: 'Dummy Company ' + Math.random(),
+      //   code: this.slugify('Dummy Company ' + Math.random()),
+      //   refnum: query,
+      //   status: 'Pending',
+      //   token: '09-09090909-090909-0909-dummy',
+      //   user_id: $auth.getId(),
+      //   metadata: Object.assign({
+      //     FileNo: query,
+      //     FundingRequestNo: query,
+      //     SiteVisitDate: new Date,
+      //     BusinessCounselorName: Math.random(),
+      //     PeeBusinessCounselorName: Math.random(),
+      //   }, this.company.metadata),
+      // }
+
       let attributes = {
         name: 'Dummy Company ' + Math.random(),
         code: this.slugify('Dummy Company ' + Math.random()),
@@ -180,6 +196,7 @@ export default {
           SiteVisitDate: new Date,
           BusinessCounselorName: Math.random(),
           PeeBusinessCounselorName: Math.random(),
+          Status: 'Visit Approved',
         }, this.company.metadata),
       }
 

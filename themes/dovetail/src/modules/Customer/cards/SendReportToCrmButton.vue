@@ -184,8 +184,10 @@ export default {
     isSending: false,
     sendAll: false,
     checklist: [
-      { message: '', name: trans('Sending Overall Scores'), icon: 'mdi-cube-send', status: 'pending' },
-      { message: '', name: trans('Sending Overall Document'), icon: 'mdi-file-send', status: 'pending' },
+      { message: '', name: trans('Sending Financial File By No'), icon: 'mdi-file-send', status: 'pending'},
+      { message: '', name: trans('Sending Update Visit Score'), icon: 'mdi-file-send', status: 'pending' },
+      { message: '', name: trans('Sending Overall Document'), icon: 'mdi-file-send', status: 'pending' }, 
+      // { message: '', name: trans('Sending Overall Scores'), icon: 'mdi-cube-send', status: 'pending' },
       // { message: '', name: trans('Sending Financial Scores'), icon: 'mdi-cube-send', status: 'pending' },
       // { message: '', name: trans('Sending Financial Document'), icon: 'mdi-file-send', status: 'pending' },
     ],
@@ -279,11 +281,7 @@ export default {
         _elements[l[i]] = c || 0;
       }
 
-      // _elements['Documentation'] = report['overall:enablers']['enablers']['Documentation'] || '';
-      // _elements['Talent'] = report['overall:enablers']['enablers']['Talent'] || '';
-      // _elements['Technology'] = report['overall:enablers']['enablers']['Technology'] || '';
       _elements['WorkflowProcesses'] = _elements['Workflow Processess'] || '';
-
 
       return _elements;
     },
@@ -332,23 +330,44 @@ export default {
           return false;
         }
 
-        let data = Object.assign(this.getOverallScore(), this.getElements(), {
-          Id: _.toUpper(this.resource.data.customer.token),
-          FileNo: this.resource.data.customer.filenumber,
-          Status: 100000006,
-          OverallScore: this.resource.data.report.value['overall:score'] * 100 || null,
+        let data = {
+        // Object.assign(this.getOverallScore(), this.getElements(), {
+          // Id: _.toUpper(this.resource.data.customer.token),
+          // Status: 100000006,
+          // OverallScore: this.resource.data.report.value['overall:score'] * 100 || null,
           // FileContentBase64: this.resource.data.report.fileContentBase64,
-          Comments: this.resource.data['overall:comment'] || 'No comment',
-          OverallComment: this.resource.data.report.value['overall:comment'] || null,
-          'Lessons Learnt': this.resource.data.report.value['overall:comment'] || null,
-        })
+          // Comments: this.resource.data['overall:comment'] || 'No comment',
+          // OverallComment: this.resource.data.report.value['overall:comment'] || null,
+          // 'Lessons Learnt': this.resource.data.report.value['overall:comment'] || null,
+          FileNo: this.resource.data.customer.filenumber,
+          YearOfFinancial: 0,
+          SubmissionDate: 0,
+          Revenue: 0,
+          CostofGoodsSold: 0,
+          OtherExpenses: 0,
+          OperatingLossProfit: 0,
+          Depreciation: 0,
+          NonOperatingExpenses: 0,
+          Taxes: 0,
+          NetLossProfits: 0,
+          Fixedassets: 0,
+          TotalLiabilities: 0,
+          StockholdersEquity: 0,
+          Marketing: 0,
+          Rent: 0,
+          Salaries: 0,
+          LicensingFees: 0,
+          VisaEmploymentFees: 0,
+        }
+      // )
 
         this.$store.dispatch('snackbar/show', { icon: 'mdi-spin mdi-loading', button: { show: false }, timeout: 0, text: 'Sending report to CRM. Establishing connection to CRM...'});
 
         console.log('Sending overall scores...', data);
 
         axios.post(
-          `/api/v1/crm/customers/save`, data
+          // `/api/v1/crm/customers/save`, data
+          $api.crm.sendAddFinancialsByFileNo(), data
         ).then(response => {
           this.$store.dispatch('snackbar/hide')
           this.checklist[0].status = 'done';
@@ -359,7 +378,6 @@ export default {
             this.checklist[0].status = 'error';
             this.checklist[0].message = response.data.Message;
             this.error_trigger = true;
-
             // this.$store.dispatch('dialog/error', {
             //   show: true,
             //   width: 400,
@@ -368,10 +386,6 @@ export default {
             //   text: response.data.Message,
             // })
           }
-
-          if (this.sendBothScoresAndFile) {
-            // this.sendDocumentToCrm();
-          }
         }).catch(err => {
           this.checklist[0].status = 'error';
           this.checklist[0].message = err.message;
@@ -379,19 +393,75 @@ export default {
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
         }).finally(() => {
           this.isSending = false;
-
-          if (this.sendAll) {
-            this.sendDocumentToCrm();
-          }
+          this.sendUpdateVisitToCrm();
         })
       }).catch(err => {
         console.log('err', err)
       })
     },
+    
+    sendUpdateVisitToCrm() {
+        this.isSending = true;
+        this.checklist[1].status = 'sending';
+
+        this.$store.dispatch('snackbar/show', { button: { show: false }, timeout: 0, text: 'Sending Update Visit Score to CRM. Please wait...'});
+
+        let data = {
+          Id: _.toUpper(this.resource.data.customer.token),
+          BSPI: 0,
+          FMPI: 0,
+          PMPI: 0,
+          HRPI: 0,  
+          FifthModule: 0,
+          FinancialPerformance: 0,
+          BreakevenPoint: 0,
+          WorkingCapital: 0,
+          NetProfitMargin: 0,
+          GrossProfitMargin: 0,
+          COGSMargin: 0,
+          CurrentRatio: 0,
+          LongTermDebtRatio: 0,
+          ReturnonInvestment: 0,
+          SMERating: 0,
+        }
+
+
+        axios.post(
+          $api.crm.sendUpdateVisit(), data
+        ).then(response => {
+          this.$store.dispatch('snackbar/hide')
+          this.checklist[1].status = 'done';
+
+          if (response.data.Code == 1) {
+            this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('File Successfully sent to CRM')})
+          } else {
+            this.checklist[1].status = 'error';
+            this.checklist[1].message = response.data.Message;
+            this.error_trigger = true;
+            
+            // this.$store.dispatch('dialog/error', {
+            //   show: true,
+            //   width: 400,
+            //   buttons: { cancel: { show: false } },
+            //   title: 'Returned a Code ' + response.data.Code,
+            //   text: response.data.Message,
+            // })
+          }
+        }).catch(err => {
+          this.checklist[1].status = 'error';
+          this.checklist[1].message = err.message;
+          this.error_trigger = true;
+
+          this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
+        }).finally(() => {
+          this.isSending = false;
+          this.sendDocumentToCrm();
+        })
+    },
 
     sendDocumentToCrm () {
       this.isSending = true;
-      this.checklist[1].status = 'sending';
+      this.checklist[2].status = 'sending';
 
       this.getReportData().then(response => {
         this.resource.data = response.data
@@ -415,8 +485,8 @@ export default {
           if (response.data.Code == 1) {
             this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('File Successfully sent to CRM')})
           } else {
-            this.checklist[1].status = 'error';
-            this.checklist[1].message = response.data.Message;
+            this.checklist[2].status = 'error';
+            this.checklist[2].message = response.data.Message;
             this.error_trigger = true;
             // this.$store.dispatch('dialog/error', {
             //   show: true,
@@ -427,8 +497,8 @@ export default {
             // })
           }
         }).catch(err => {
-          this.checklist[1].status = 'error';
-          this.checklist[1].message = err.message;
+          this.checklist[2].status = 'error';
+          this.checklist[2].message = err.message;
           this.error_trigger = true;
 
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
@@ -461,50 +531,50 @@ export default {
           return false;
         }
 
-        // let data = {
-        //   FileNo: this.resource.data.customer.filenumber,
-        //   YearofFinancial: this.resource.data.customer.metadata ? this.resource.data.customer.metadata.years.Years.Year3 : 'No year was set',
-        //   SubmissionDate: this.resource.data.profit_and_loss['Submission Date'],
-        //   Revenue: JSON.stringify(this.resource.data.profit_and_loss.Revenue),
-        //   CostofGoodsSold: JSON.stringify(this.resource.data.profit_and_loss.CostOfGoodsSold),
-        //   OtherExpenses: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses),
-        //   NonOperatingExpenses: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Non-Operating expenses (NOE)'] || {}),
-        //   OperatingLossProfit: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Operating (loss)/profit'] || {}),
-        //   Depreciation: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Depreciation'] || {}),
-        //   Taxes: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Taxes'] || {}),
-        //   NetLossProfits: this.resource.data.profit_and_loss.NetProfit.Year3,
-        //   FixedAssets: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets['Fixed Assets']),
-        //   TotalLiabilities: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets['Total Liabilities']),
-        //   StockholdersEquity: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets["Stockholder's Equity"]),
-        //   Marketing: JSON.stringify(this.resource.data.profit_and_loss.Marketing),
-        //   Rent: JSON.stringify(this.resource.data.profit_and_loss.Rent),
-        //   Salaries: JSON.stringify(this.resource.data.profit_and_loss.Salaries),
-        //   LicensingFees: JSON.stringify(this.resource.data.profit_and_loss['Licensing Fees']),
-        //   VisaEmploymentFees: JSON.stringify(this.resource.data.profit_and_loss['Visa / Employment Fees']),
-        // }
-
-
         let data = {
           FileNo: this.resource.data.customer.filenumber,
           YearofFinancial: this.resource.data.customer.metadata ? this.resource.data.customer.metadata.years.Years.Year3 : 'No year was set',
-          SubmissionDate: this.resource.data.profit_and_loss['Submission Date'] || this.resource.data.report.updated_at,
-          Revenue: parseInt(this.resource.data.profit_and_loss.Revenue.Year3 || 0),
-          CostofGoodsSold: parseInt(this.resource.data.profit_and_loss.CostOfGoodsSold.Year3 || 0),
-          OtherExpenses: parseInt(this.resource.data.profit_and_loss.OtherExpenses.Year3 || 0),
-          NonOperatingExpenses: parseInt(this.resource.data.profit_and_loss.OtherExpenses['Non-Operating expenses (NOE)'].Year3 || 0),
-          OperatingLossProfit: parseInt(this.resource.data.profit_and_loss.OtherExpenses['Operating (loss)/profit'].Year3 || 0),
-          Depreciation: parseInt(this.resource.data.profit_and_loss.OtherExpenses['Depreciation'].Year3 || 0),
-          Taxes: parseInt(this.resource.data.profit_and_loss.OtherExpenses['Taxes'].Year3 || 0),
-          NetLossProfits: parseInt(this.resource.data.profit_and_loss.NetProfit.Year3 || 0),
-          FixedAssets: parseInt(this.resource.data.profit_and_loss.FixedAssets['Fixed Assets'].Year3 || 0),
-          TotalLiabilities: parseInt(this.resource.data.profit_and_loss.FixedAssets['Total Liabilities'].Year3 || 0),
-          StockholdersEquity: parseInt(this.resource.data.profit_and_loss.FixedAssets["Stockholders' Equity"].Year3 || 0),
-          Marketing: parseInt(this.resource.data.profit_and_loss.Marketing.Year3 || 0),
-          Rent: parseInt(this.resource.data.profit_and_loss.Rent.Year3 || 0),
-          Salaries: parseInt(this.resource.data.profit_and_loss.Salaries.Year3 || 0),
-          LicensingFees: parseInt(this.resource.data.profit_and_loss['Licensing Fees'].Year3 || 0),
-          VisaEmploymentFees: parseInt(this.resource.data.profit_and_loss['Visa / Employment Fees'].Year3 || 0),
+          SubmissionDate: this.resource.data.profit_and_loss['Submission Date'],
+          Revenue: JSON.stringify(this.resource.data.profit_and_loss.Revenue),
+          CostofGoodsSold: JSON.stringify(this.resource.data.profit_and_loss.CostOfGoodsSold),
+          OtherExpenses: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses),
+          NonOperatingExpenses: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Non-Operating expenses (NOE)'] || {}),
+          OperatingLossProfit: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Operating (loss)/profit'] || {}),
+          Depreciation: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Depreciation'] || {}),
+          Taxes: JSON.stringify(this.resource.data.profit_and_loss.OtherExpenses['Taxes'] || {}),
+          NetLossProfits: this.resource.data.profit_and_loss.NetProfit.Year3,
+          FixedAssets: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets['Fixed Assets']),
+          TotalLiabilities: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets['Total Liabilities']),
+          StockholdersEquity: JSON.stringify(this.resource.data.profit_and_loss.FixedAssets["Stockholder's Equity"]),
+          Marketing: JSON.stringify(this.resource.data.profit_and_loss.Marketing),
+          Rent: JSON.stringify(this.resource.data.profit_and_loss.Rent),
+          Salaries: JSON.stringify(this.resource.data.profit_and_loss.Salaries),
+          LicensingFees: JSON.stringify(this.resource.data.profit_and_loss['Licensing Fees']),
+          VisaEmploymentFees: JSON.stringify(this.resource.data.profit_and_loss['Visa / Employment Fees']),
         }
+
+
+        // let data = {
+        //   FileNo: this.resource.data.customer.filenumber,
+        //   YearofFinancial: this.resource.data.customer.metadata ? this.resource.data.customer.metadata.years.Years.Year3 : 'No year was set',
+        //   SubmissionDate: this.resource.data.profit_and_loss['Submission Date'] || this.resource.data.report.updated_at,
+        //   Revenue: parseInt(this.resource.data.profit_and_loss.Revenue.Year3 || 0),
+        //   CostofGoodsSold: parseInt(this.resource.data.profit_and_loss.CostOfGoodsSold.Year3 || 0),
+        //   OtherExpenses: parseInt(this.resource.data.profit_and_loss.OtherExpenses.Year3 || 0),
+        //   NonOperatingExpenses: parseInt(this.resource.data.profit_and_loss.OtherExpenses['Non-Operating expenses (NOE)'].Year3 || 0),
+        //   OperatingLossProfit: parseInt(this.resource.data.profit_and_loss.OtherExpenses['Operating (loss)/profit'].Year3 || 0),
+        //   Depreciation: parseInt(this.resource.data.profit_and_loss.OtherExpenses['Depreciation'].Year3 || 0),
+        //   Taxes: parseInt(this.resource.data.profit_and_loss.OtherExpenses['Taxes'].Year3 || 0),
+        //   NetLossProfits: parseInt(this.resource.data.profit_and_loss.NetProfit.Year3 || 0),
+        //   FixedAssets: parseInt(this.resource.data.profit_and_loss.FixedAssets['Fixed Assets'].Year3 || 0),
+        //   TotalLiabilities: parseInt(this.resource.data.profit_and_loss.FixedAssets['Total Liabilities'].Year3 || 0),
+        //   StockholdersEquity: parseInt(this.resource.data.profit_and_loss.FixedAssets["Stockholders' Equity"].Year3 || 0),
+        //   Marketing: parseInt(this.resource.data.profit_and_loss.Marketing.Year3 || 0),
+        //   Rent: parseInt(this.resource.data.profit_and_loss.Rent.Year3 || 0),
+        //   Salaries: parseInt(this.resource.data.profit_and_loss.Salaries.Year3 || 0),
+        //   LicensingFees: parseInt(this.resource.data.profit_and_loss['Licensing Fees'].Year3 || 0),
+        //   VisaEmploymentFees: parseInt(this.resource.data.profit_and_loss['Visa / Employment Fees'].Year3 || 0),
+        // }
 
 
         console.log('Sending financial scores...', data);

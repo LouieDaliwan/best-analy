@@ -79,6 +79,12 @@ export default {
     sendFinancial: function () {
       return `/api/v1/crm/financial/send`
     },
+    sendUpdateVisit: function () {
+      return `/api/v1/crm/visit-update/send`
+    },
+    sendAddFinancialsByFileNo: function () {
+      return `/api/v1/crm/financial-file-no/send`
+    }
   },
 
   reports: {

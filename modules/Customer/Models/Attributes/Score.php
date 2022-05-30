@@ -13,10 +13,10 @@ class Score {
 
     protected $format;
 
-    public function __construct($customer, $format)
+    public function __construct($customer, $format = null)
     {
         $this->customer = $customer;
-        $this->format = $format;
+        $this->format = $format ?? config('fratio')['ratings_format'];
     }
 
     public function check()

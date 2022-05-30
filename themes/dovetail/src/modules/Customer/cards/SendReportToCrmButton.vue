@@ -408,23 +408,26 @@ export default {
 
         this.$store.dispatch('snackbar/show', { button: { show: false }, timeout: 0, text: 'Sending Update Visit Score to CRM. Please wait...'});
 
+        const scores = this.resource.data.scores;
+        const financial = this.resource.data.latestFinancial;
+
         let data = {
           Id: _.toUpper(this.resource.data.customer.token),
-          BSPI: 0,
-          FMPI: 0,
-          PMPI: 0,
-          HRPI: 0,  
-          FifthModule: 0,
-          FinancialPerformance: 0,
+          BSPI: scores.smeRatings[0]['score'],
+          FMPI: scores.smeRatings[1]['score'],
+          PMPI: scores.smeRatings[2]['score'],
+          HRPI: scores.smeRatings[3]['score'],  
+          FifthModule: scores.smeRatings[4]['score'],
+          FinancialPerformance: financial.metadataResults.ratioAnalysis.dashboard.financial_score,
+          WorkingCapital: financial.metadataResults.ratioAnalysis.liquidity.working_capital,
+          NetProfitMargin: financial.metadataResults.ratioAnalysis.profitability.net_profit_margin,
+          GrossProfitMargin: financial.metadataResults.ratioAnalysis.profitability.gross_profit_margin,
+          COGSMargin: financial.metadataResults.overAllResults.profitStatements.cost_goods,
+          CurrentRatio: financial.metadataResults.ratioAnalysis.dashboard.current_ratio.score,
+          LongTermDebtRatio: financial.metadataResults.ratioAnalysis.dashboard.debt_ratio.score,
+          ReturnonInvestment: financial.metadataResults.ratioAnalysis.dashboard.roi.score,
+          SMERating: scores.overall_score,
           BreakevenPoint: 0,
-          WorkingCapital: 0,
-          NetProfitMargin: 0,
-          GrossProfitMargin: 0,
-          COGSMargin: 0,
-          CurrentRatio: 0,
-          LongTermDebtRatio: 0,
-          ReturnonInvestment: 0,
-          SMERating: 0,
         }
 
 

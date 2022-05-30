@@ -29,7 +29,7 @@
                 </v-col>
                 <v-col class="shrink">
                   <v-btn
-                    color="accent"
+                    color="accent"s
                     large
                     :to="{
                       name: 'companies.edit',

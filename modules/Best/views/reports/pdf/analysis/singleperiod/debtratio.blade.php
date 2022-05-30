@@ -40,7 +40,7 @@
       primary:           'rgb(4, 75, 127, 1)',
       primaryLighten1:   'rgb(4, 75, 127, 0.8)',
       primaryLighten2:   'rgb(4, 75, 127, 0.5)',
-      muted:             'rgb(239, 244, 250)'
+      muted:              'rgb(239, 244, 250)'
     };
     var dataset = {!! json_encode($data['analysis:financial']['debt_ratio']['chart']['dataset']) !!}
     var labels = {!!  json_encode(collect($data['analysis:financial']['debt_ratio']['chart']['labels']['pdf'])->values()->toArray()); !!}
@@ -75,7 +75,18 @@
                 // ctx.fillText(data, model.x, y_pos);
               }
             });
-          }
+          },
+          horizontalLine: [{
+            "y": 82,
+            "style": "rgba(255, 0, 0, .4)",
+            "text": "max"
+          }, {
+            "y": 60,
+            "style": "#00ffff",
+          }, {
+            "y": 44,
+            "text": "min"
+          }]
         },
         legend: {
           display: false,
@@ -95,13 +106,14 @@
               beginAtZero: true,
               padding: 20,
               maxTicksLimit: 5,
+              // max: 100,
               fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',
               fontSize: 12,
               callback: function( value ){ return value + "%" },
             },
           }]
-        }
+        },
       },
     });
   });

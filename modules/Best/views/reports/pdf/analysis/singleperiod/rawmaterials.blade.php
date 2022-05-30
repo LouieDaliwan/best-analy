@@ -2,7 +2,9 @@
   <h3 class="dt-BSPI py-2 text-center"style="border-bottom: 1px solid #f5f5f5;">{{ __('Raw Materials Margin') }}</h3>
     <div style="zoom: 0.76;">
       <div class="mb-3 text-center">
-        <canvas height="260" width="550" id="raw_materials" style="margin: auto;" class="mt-5 mb-2"></canvas>
+        @if (app()->getLocale() == 'ar')
+          <canvas height="260" width="550" id="raw_materials" style="margin: auto;" class="mt-5 mb-2"></canvas>
+        @endif
       </div>
     </div>
     <p class="mb-0 text-center">
@@ -75,7 +77,18 @@
                 // ctx.fillText(data, model.x, y_pos);
               }
             });
-          }
+          },
+          horizontalLine: [{
+            "y": 82,
+            "style": "rgba(255, 0, 0, .4)",
+            "text": "max"
+          }, {
+            "y": 60,
+            "style": "#00ffff",
+          }, {
+            "y": 44,
+            "text": "min"
+          }]
         },
         legend: {
           display: false,
@@ -95,6 +108,7 @@
               beginAtZero: true,
               padding: 20,
               maxTicksLimit: 5,
+              // max: 100,
               fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',
               fontSize: 12,

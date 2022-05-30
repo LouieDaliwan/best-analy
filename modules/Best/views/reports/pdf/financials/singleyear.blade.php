@@ -11,7 +11,7 @@
     <td valign="top" width="50%">
       @include('best::reports.pdf.analysis.singleperiod.currentratio')
     </td>
-    <td valign="top" width="50%">
+    <td valign="top" width="50%"  >
       @include('best::reports.pdf.analysis.singleperiod.debtratio')
     </td>
   </tr>

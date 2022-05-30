@@ -44,14 +44,6 @@
     };
     var dataset = {!! json_encode($data['analysis:financial']['current_ratio']['chart']['dataset']) !!}
     var labels = {!!  json_encode(collect($data['analysis:financial']['current_ratio']['chart']['labels']['pdf'])->values()->toArray()); !!}
-    
-    const annotation = {
-      type: 'line',
-      borderColor: 'black',
-      borderWidth: 3,
-      scaleID: 'y',
-      value: 1
-    };
 
     var barChart = new Chart(ctx, {
       type: 'bar',
@@ -83,7 +75,18 @@
                 // ctx.fillText(data, model.x, y_pos);
               }
             });
-          }
+          },
+          horizontalLine: [{
+            "y": 82,
+            "style": "rgba(255, 0, 0, .4)",
+            "text": "max"
+          }, {
+            "y": 60,
+            "style": "#00ffff",
+          }, {
+            "y": 44,
+            "text": "min"
+          }]
         },
         legend: {
           display: false,
@@ -103,6 +106,7 @@
               beginAtZero: true,
               padding: 20,
               maxTicksLimit: 5,
+              // max: 100,
               fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',
               fontSize: 12,
@@ -110,7 +114,6 @@
             },
           }]
         },
-
       },
     });
   });

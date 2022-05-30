@@ -40,7 +40,7 @@
       primary:           'rgb(4, 75, 127, 1)',
       primaryLighten1:   'rgb(4, 75, 127, 0.8)',
       primaryLighten2:   'rgb(4, 75, 127, 0.5)',
-      muted:              'rgb(239, 244, 250)'
+      muted:             'rgb(239, 244, 250)'
     };
     var dataset = {!! json_encode($data['analysis:financial']['net_margin']['chart']['dataset']) !!}
     var labels = {!!  json_encode(collect($data['analysis:financial']['net_margin']['chart']['labels']['pdf'])->values()->toArray()); !!}
@@ -102,16 +102,6 @@
             },
           }]
         },
-        plugins: {
-          autocolors: false,
-          annotation: {
-            type: 'line',
-            borderColor: 'red',
-            borderWidth: 3,
-            scaleID: 'y-axis-0',
-            value: 20,
-          }
-        }
       },
     });
   });

@@ -30,6 +30,7 @@ use Survey\Models\Survey;
 use User\Models\User;
 use Illuminate\Support\Facades\File;
 use Barryvdh\Snappy\Facades\SnappyPdf;
+use Customer\Models\FinancialStatement;
 
 class ReportService extends Service implements ReportServiceInterface
 {
@@ -164,6 +165,8 @@ class ReportService extends Service implements ReportServiceInterface
 
         $financialReportPath = Library::where('name', "overall:financialratio:$remarks")->first();
 
+        $latestFS = FinancialStatement::whereCustomerId($customer->id)->latest('period')->first();
+
         return [
             'overall:report' => $path ? Report::encodeToBase64(storage_path($path->pathname)) : null,
             'report:financial' => $financialReportPath ? Report::encodeToBase64(storage_path($financialReportPath->pathname)) : null,
@@ -173,6 +176,7 @@ class ReportService extends Service implements ReportServiceInterface
             'overall:comment' => Setting::whereUserId($user->getKey())
                 ->whereKey("overall:comment/".$customer->getKey().$model->month)
                 ->first()->value ?? null,
+            'latestFinancial' => $latestFS
         ];
     }
 

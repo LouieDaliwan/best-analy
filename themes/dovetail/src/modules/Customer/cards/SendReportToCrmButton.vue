@@ -330,6 +330,8 @@ export default {
           return false;
         }
 
+        const financialStatement = this.resource.data.latestFinancial;
+
         let data = {
         // Object.assign(this.getOverallScore(), this.getElements(), {
           // Id: _.toUpper(this.resource.data.customer.token),
@@ -340,24 +342,24 @@ export default {
           // OverallComment: this.resource.data.report.value['overall:comment'] || null,
           // 'Lessons Learnt': this.resource.data.report.value['overall:comment'] || null,
           FileNo: this.resource.data.customer.filenumber,
-          YearOfFinancial: 0,
-          SubmissionDate: 0,
+          YearOfFinancial: financialStatement.period,
+          SubmissionDate: Date.now(),
           Revenue: 0,
-          CostofGoodsSold: 0,
-          OtherExpenses: 0,
-          OperatingLossProfit: 0,
-          Depreciation: 0,
-          NonOperatingExpenses: 0,
-          Taxes: 0,
-          NetLossProfits: 0,
-          Fixedassets: 0,
-          TotalLiabilities: 0,
-          StockholdersEquity: 0,
-          Marketing: 0,
           Rent: 0,
-          Salaries: 0,
           LicensingFees: 0,
           VisaEmploymentFees: 0,
+          CostofGoodsSold: financialStatement.metadataResults.overAllResults.profitStatements.cost_goods,
+          OtherExpenses: financialStatement.metadataStatements['Other Expense (less Other Income)'],
+          OperatingLossProfit: financialStatement.metadataResults.overAllResults.profitStatements.operating_loss_or_profit,
+          Depreciation: financialStatement.metadataStatements['Depreciation'],
+          NonOperatingExpenses: financialStatement.metadataResults.overAllResults.profitStatements.non_operating_expenses,
+          Taxes: financialStatement.metadataResults.overAllResults.profitStatements.taxes,
+          NetLossProfits: financialStatement.metadataResults.overAllResults.profitStatements.net_loss_profit_after_taxes,
+          Fixedassets: financialStatement.metadataResults.overAllResults.balanceSheets.fixedassets,
+          TotalLiabilities: financialStatement.metadataResults.overAllResults.balanceSheets.total_liabilities,
+          StockholdersEquity: financialStatement.metadataSheets["Stockholder's Equity"],
+          Marketing: financialStatement.metadataStatements['Marketing Costs'],
+          Salaries: financialStatement.metadataStatements['Staff Salaries & Benefits']
         }
       // )
 

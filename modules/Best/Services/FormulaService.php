@@ -115,6 +115,7 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function generate(Survey $survey, array $attributes, $taxonomy_name = null)
     {
+        dd($survey);
         $customer = Customer::find($attributes['customer_id']);
         $taxonomies = Index::all();
         $user = $this->auth()->user();
@@ -279,9 +280,11 @@ class FormulaService extends Service implements FormulaServiceInterface
         
         $financialScore = ($ratingGraph['smeRatings'][5]['score'] / 5) * 0.3;
         
-        $sdmiIndex = $customer->sdmiComputation()->where('month_key', $monthKey)->first();
+        $sdmi = $customer->sdmiComputation()->where('month_key', $monthKey)->first();
 
-        $sdmiScore = round(($sdmiIndex->metadata['index'] * 0.2), 2);
+        $sdmiIndex = $sdmi->metadata['index'] ?? 0;
+
+        $sdmiScore = round(($sdmiIndex * 0.2), 2);
 
         Cache::forever($sdmiName, $sdmiScore);
         

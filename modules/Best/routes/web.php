@@ -80,7 +80,7 @@ Route::get('best/preview/reports/overall', function (Request $request, FormulaSe
         'customer_id' => $customerId,
         'month' => $report->remarks ?? date('Y-m-d H:i:s'),
     ];
-
+    
     $survey = \Survey\Models\Survey::find($request->get('survey_id') ?: 1);
     $data = $service->generate($survey, $attributes);
     $data['month:formatted'] = date('M d, Y', strtotime($data['month'] ?? date('Y-m-d')));

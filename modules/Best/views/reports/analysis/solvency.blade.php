@@ -17,8 +17,8 @@
       </div>
     </div>
     <div class="col-md-12 comment-analysis">
-      @foreach ($data['analysis:financial']['solvency']['comments'] as $comments)
-        @if ($comments[2] != '')  
+      @foreach ($data['analysis:financial']['solvency']['comments'] as $key => $comments)
+        @if(! empty($data['analysis:financial']['solvency']['comments'][$key]))  
         <div class="row">
           <div class="col-auto mt-1">
             <span style="font-size: 17px;">

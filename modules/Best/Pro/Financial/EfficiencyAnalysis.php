@@ -29,10 +29,10 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
             ],
 
             'comments' => [
-                self::getBF17Comment($statements, $customer),
-                self::getBF18Comment($statements),
-                self::getBF19Comment($statements),
-                self::getBF20Comment($statements),
+                array_filter(self::getBF17Comment($statements, $customer)),
+                array_filter(self::getBF18Comment($statements)),
+                array_filter(self::getBF19Comment($statements)),
+                array_filter(self::getBF20Comment($statements)),
             ],
         ];
     }

@@ -30,8 +30,8 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
             ],
 
             'comments' => [
-                self::getFirstComment($statements),
-                self::getSecondComment($statements, $spreadsheet),
+                array_filter(self::getFirstComment($statements)),
+                array_filter(self::getSecondComment($statements, $spreadsheet)),
             ],
         ];
     }

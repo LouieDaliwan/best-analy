@@ -27,7 +27,7 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
             ],
 
             'comments' => [
-                self::getComment($statements),
+                array_filter(self::getComment($statements)),
                 // implode('||', self::getComment($spreadsheet)),
             ],
         ];

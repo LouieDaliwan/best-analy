@@ -34,13 +34,13 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
                 'labels' => $labels,
                 'dataset' => self::formatDataSet($statements),
             ],
-            'comment' => [
-                self::getBF4Formula($statements),
-                self::getBF5Formula($statements),
-                self::getBF6Formula($statements),
-                self::getBF7Formula($statements),
-                self::getBF8Formula($statements),
-                self::getBF9Formula($statements),
+            'comments' => [
+                array_filter(self::getBF4Formula($statements)),
+                array_filter(self::getBF5Formula($statements)),
+                array_filter(self::getBF6Formula($statements)),
+                array_filter(self::getBF7Formula($statements)),
+                array_filter(self::getBF8Formula($statements)),
+                array_filter(self::getBF9Formula($statements)),
             ],
         ];
     }

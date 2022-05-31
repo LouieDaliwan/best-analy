@@ -27,10 +27,10 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
                 'dataset' => self::formatDataSet($statements),
             ],
 
-            'comment' => [
-                self::getBF12Formula($statements, $customer),
-                self::getBF13Formula($statements),
-                self::getBF14Formula($statements),
+            'comments' => [
+                array_filter(self::getBF12Formula($statements, $customer)),
+                array_filter(self::getBF13Formula($statements)),
+                array_filter(self::getBF14Formula($statements)),
             ],
         ];
     }

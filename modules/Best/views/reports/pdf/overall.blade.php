@@ -88,7 +88,12 @@
           <section>
             <div class="row">
               <div class="col-md-12">
-                <div style="font-size: 10px;">{{ __('Page 1 of 7') }}</div>
+                <div style="font-size: 10px;">
+                {{ __('Page 1 of') }}
+                <?php if($data['is_single']): ?> {{ __('8') }}
+                <?php else: ?> {{ __('10') }}
+                <?php endif; ?>
+              </div>
               </div>
             </div>
           </section>
@@ -114,7 +119,12 @@
           <section>
             <div class="row">
               <div class="col-md-12">
-                <div style="font-size: 10px;">{{ __('Page 1 of 7') }}</div>
+                <div style="font-size: 10px;">
+                  {{ __('Page 2 of') }}
+                  <?php if($data['is_single']): ?> {{ __('8') }}
+                  <?php else: ?> {{ __('10') }}
+                  <?php endif; ?>
+                </div>
               </div>
             </div>
           </section>
@@ -144,7 +154,10 @@
                     Page
                     <span style="display: none;" class="text-white">-</span>
                     {{ $index['page'] }}
-                    <span style="display: none;" class="text-white">-</span> of 7
+                    <span style="display: none;" class="text-white">-</span> of
+                    <?php if($data['is_single']): ?> {{ __('8') }}
+                    <?php else: ?> {{ __('10') }}
+                    <?php endif; ?>
                   </div>
                 </div>
               </div>
@@ -173,7 +186,12 @@
           <section>
             <div class="row">
               <div class="col-md-12">
-                <div style="font-size: 10px;">{{ __('Page 7 of 7') }}</div>
+                <div style="font-size: 10px;">
+                  {{ __('Page 7 of') }}
+                  <?php if($data['is_single']): ?> {{ __('8') }}
+                  <?php else: ?> {{ __('10') }}
+                  <?php endif; ?>
+                </div>
               </div>
             </div>
           </section>
@@ -205,7 +223,12 @@
               <section>
                 <div class="row">
                   <div class="col-md-12">
-                    <div style="font-size: 10px;">{{ __('Page n of n') }}</div>
+                    <div style="font-size: 10px;">
+                      {{ __('Page 8 of') }}
+                      <?php if($data['is_single']): ?> {{ __('8') }}
+                      <?php else: ?> {{ __('10') }}
+                      <?php endif; ?>
+                    </div>
                   </div>
                 </div>
               </section>
@@ -222,7 +245,12 @@
     @include('best::reports.pdf.partials.disclaimer')
     @include('best::reports.pdf.partials.footer')
     <div class="text-right">
-      <div style="font-size: 10px;">{{ __('Page 1 of 3') }}</div>
+      <div style="font-size: 10px;">
+        {{ __('Page 8 of') }}
+        <?php if($data['is_single']): ?> {{ __('8') }}
+        <?php else: ?> {{ __('10') }}
+        <?php endif; ?>
+      </div>
     </div>
     @endif
   </div>
@@ -241,7 +269,7 @@
       @include('best::reports.pdf.partials.footer')
       </div>
       <div class="text-right">
-        <div style="font-size: 10px;">{{ __('Page 2 of 3') }}</div>
+        <div style="font-size: 10px;">{{ __('Page 9 of 10') }}</div>
       </div>
     </div>
 
@@ -258,7 +286,9 @@
       @include('best::reports.pdf.partials.footer')
       </div>
       <div class="text-right">
-        <div style="font-size: 10px;">{{ __('Page 3 of 3') }}</div>
+        <div style="font-size: 10px;">
+          {{ __('Page 10 of 10') }}
+        </div>
       </div>
     </div>
     {{-- Indicators --}}

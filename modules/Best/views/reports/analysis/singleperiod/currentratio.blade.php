@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="col-md-12 comment-analysis">
-      <div class="row">
+      <div class="row" style="word-break: break-all;">
         <div class="col-auto mt-1">
           {{-- SVG arrow --}}
           <span style="font-size: 17px;">

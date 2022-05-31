@@ -1,4 +1,8 @@
+@if(app()->getLocale() == 'ar')
+<div class="mx-4 mb-5" style="width: 500px; word-break: break-all;">
+@else:
 <div class="mx-4 mb-5">
+@endif
   <h3 class="dt-BSPI py-2 text-center"style="border-bottom: 1px solid #f5f5f5;">{{ __('Current Ratio') }}</h3>
     <div style="zoom: 0.76;">
       <div class="mb-3 text-center">

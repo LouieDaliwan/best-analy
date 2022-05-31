@@ -115,7 +115,6 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function generate(Survey $survey, array $attributes, $taxonomy_name = null)
     {
-        dd($survey);
         $customer = Customer::find($attributes['customer_id']);
         $taxonomies = Index::all();
         $user = $this->auth()->user();

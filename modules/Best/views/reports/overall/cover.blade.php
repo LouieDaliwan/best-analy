@@ -52,17 +52,9 @@
               <h4 class="mb-0 mt-3">@lang('Business Councelor'):</h4>
               <p class="mb-0">{{ $data['customer:counselor'] }}</p>
             @endif
-
             <div class="mt-5">
               <h4 class="mb-0">@lang('Site Visit Date'):</h4>
               <p>{{ $data['month:formatted'] }}</p>
-            </div>
-
-            <div class="mt-5">
-              <cite>
-                <small>{{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}</small><br />
-                <small>{{ __('Powered by') }} {{ settings('app:author') }}</small>
-              </cite>
             </div>
           </div>
           <div class="col-md-4 col-sm-12">
@@ -75,6 +67,25 @@
         </div>
       </div>
     </div>
+
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="row justify-content-between align-items-end">
+          <div class="col-md-6 col-sm-12">
+            <cite>
+              <small>{{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}</small><br />
+              <small>{{ __('Powered by') }} {{ settings('app:author') }}</small>
+            </cite>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <cite>
+              <small>Printed on: {{ $data['month:formatted'] }}</small>
+            </cite>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
   <div style="height: 250px;"></div>
 </section>

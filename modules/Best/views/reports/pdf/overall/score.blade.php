@@ -62,7 +62,7 @@
         @include('best::reports.pdf.overall.charts.fmpi')
       </td>
     </tr>
-    {{-- <tr>
+    <tr>
       <td valign="top" width="49%">
         @include('best::reports.pdf.overall.charts.bspi')
       </td>
@@ -70,7 +70,7 @@
       <td valign="top" width="49%">
         @include('best::reports.pdf.overall.charts.pmpi')
       </td>
-    </tr> --}}
+    </tr>
     <tr>
       <td valign="top" width="49%">
         @include('best::reports.pdf.overall.charts.hrpi')

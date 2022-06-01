@@ -51,7 +51,7 @@
       <td>
         <div class="mr-3" style="margin: auto;">
           {{-- <canvas id="overall-bspi" width="200px" height="200px" style="margin: auto;"></canvas> --}}
-          <canvas id="overall-bspi" width="500px" height="200px"></canvas>
+          <canvas id="overall-pmpi" width="500px" height="200px"></canvas>
         </div>
       </td>
     </tr>

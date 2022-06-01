@@ -3,6 +3,7 @@
 namespace Customer\Services;
 
 use Best\Models\Report;
+use Carbon\Carbon;
 use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
 use Customer\Jobs\ComputeFinancialRatio;
@@ -10,10 +11,12 @@ use Customer\Jobs\UpdateStatementsJob;
 use Customer\Models\Customer;
 use Customer\Models\FinancialStatement;
 use Customer\Services\FinancialRatioInterface;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Survey\SDMIIndexScore;
 
 class CustomerService extends Service implements CustomerServiceInterface
 {
@@ -250,7 +253,7 @@ class CustomerService extends Service implements CustomerServiceInterface
         $model = $model->paginate($this->getPerPage());
 
         $sorted = $this->sortAndOrder($model);
-
+        
         return new LengthAwarePaginator($sorted, $model->total(), $model->perPage());
     }
 
@@ -349,5 +352,16 @@ class CustomerService extends Service implements CustomerServiceInterface
         }
 
         return $latestPeriod->metadataResults['ratioAnalysis']['dashboard'];
+    }
+
+    public function getSdmiScore($customer)
+    {
+        $monthVar = explode('-', $this->request()->get('month') ?? '');
+        
+        $month = $this->request()->get('month') ?  $monthVar[0]: date('m');
+
+        $year = $this->request()->get('month') ? $monthVar[1] : date('Y');
+
+        return SDMIIndexScore::whereCustomerId($customer->id)->where('month_key', "{$month}-{$year}")->first() ?? 'empty';
     }
 }

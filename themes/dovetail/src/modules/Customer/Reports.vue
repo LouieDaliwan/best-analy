@@ -206,7 +206,7 @@ export default {
     },
 
     allReportPresent() {
-      return this.resources.data.length == 4;
+      return this.resources.data.length == 4 && this.sdmiExists != 'empty';
     },
 
     financialReportHasValue() {
@@ -258,7 +258,8 @@ export default {
           class: "muted--text text-no-wrap"
         }
       ],
-      data: []
+      data: [],
+      sdmiExists: false,
     },
 
     tabletoolbar: {
@@ -354,6 +355,8 @@ export default {
             response.data.meta,
             params
           );
+
+          this.getSdmi();
           this.resources.loading = false;
           this.$router
             .push({ query: Object.assign({}, this.$route.query, params) })
@@ -485,12 +488,24 @@ export default {
             text: err.response.data.message
           });
         });
+    },
+
+    getSdmi() {
+      let params = Object.assign(params ? params : this.$route.query, {
+        search: this.resources.search
+      });
+
+      axios.get(`/api/v1/customers/${this.$route.params.id}/sdmi`, { params })
+      .then(({data}) => {
+          this.sdmiExists = data;
+      });
     }
   },
 
   mounted() {
     this.getResource();
     this.getPaginatedData();
+    this.getSdmi();
   },
 
   watch: {

@@ -13,7 +13,7 @@
   {{-- <section class="overall-indices"> --}}
 
   <table width="100%" class="mb-5">
-    {{-- <tr>
+    <tr>
       <td valign="top" width="50%">
         <div>
           <table width="100%">
@@ -61,7 +61,7 @@
       <td valign="top" width="50%">
         @include('best::reports.pdf.overall.charts.fmpi')
       </td>
-    </tr> --}}
+    </tr>
     <tr>
       <td valign="top" width="49%">
         @include('best::reports.pdf.overall.charts.bspi')
@@ -71,17 +71,16 @@
         @include('best::reports.pdf.overall.charts.pmpi')
       </td>
     </tr>
-    {{-- <tr> --}}
-      {{-- <td valign="top" width="50%"> --}}
-        {{-- @include('best::reports.pdf.overall.charts.hrpi') --}}
-      {{-- </td> --}}
-      {{-- <td valign="top" width="50%"> --}}
-        {{-- @include('best::reports.pdf.overall.charts.fifth') --}}
-      {{-- </td> --}}
-    {{-- </tr> --}}
+    <tr>
+      <td valign="top" width="50%">
+        @include('best::reports.pdf.overall.charts.hrpi')
+      </td>
+      <td valign="top" width="50%">
+        @include('best::reports.pdf.overall.charts.fifth')
+      </td>
+    </tr>
   </table>
 
-
-    @include('best::reports.pdf.overall.charts.enablers')
+  @include('best::reports.pdf.overall.charts.enablers')
   {{-- </section> --}}
 </section>

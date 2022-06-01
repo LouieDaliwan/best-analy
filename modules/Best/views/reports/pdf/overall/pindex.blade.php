@@ -1,5 +1,5 @@
       <td colspan="50%">
-        {{-- @include('best::reports.pdf.overall.charts.fmpi') --}}
+        @include('best::reports.pdf.overall.charts.fmpi')
       </td>
     </tr>
     <tr>
@@ -12,10 +12,10 @@
     </tr>
     <tr>
       <td colspan="50%">
-        {{-- @include('best::reports.pdf.overall.charts.hrpi') --}}
+        @include('best::reports.pdf.overall.charts.hrpi')
       </td>
       <td colspan="50%">
-        {{-- @include('best::reports.pdf.overall.charts.fifth') --}}
+        @include('best::reports.pdf.overall.charts.fifth')
       </td>
     </tr>
   </table>

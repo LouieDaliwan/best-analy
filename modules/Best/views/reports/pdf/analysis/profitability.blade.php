@@ -33,7 +33,7 @@
                 <tr>
                   <td valign="top">
                     <div class="mr-3">
-                      @if (app()->getLocale() == 'ar' && $comments[2] != '')
+                      @if (app()->getLocale() == 'ar' && ! empty($data['analysis:financial']['profitability']['comments'][$key]))
                         <div class="ml-3">
                           <span style="font-size: 17px;">
                             <svg width="17px" height="17px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
@@ -49,7 +49,7 @@
                           </span>
                         </div>
                       @endif
-                      @if (app()->getLocale() == 'en' && $comments[2] != '')
+                      @if (app()->getLocale() == 'en' && ! empty($data['analysis:financial']['profitability']['comments'][$key]))
                         <span style="font-size: 17px;">
                           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512; margin-bottom: 6px;" xml:space="preserve" width="17px" height="17px"><g><g>
                             <g>

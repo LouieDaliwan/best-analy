@@ -66,7 +66,6 @@
       <td valign="top" width="49%">
         @include('best::reports.pdf.overall.charts.bspi')
       </td>
-      <td width="2%"></td>
       <td valign="top" width="49%">
         @include('best::reports.pdf.overall.charts.pmpi')
       </td>

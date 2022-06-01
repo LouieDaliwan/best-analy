@@ -28,8 +28,8 @@
       <td valign="top" width="60%">
         <div class="comment-analysis">
           <table>
-            @foreach ($data['analysis:financial']['profitability']['comment'] as $comments)
-              @if ($comments[2] != '')
+            @foreach ($data['analysis:financial']['profitability']['comment'] as $key => $comments)
+              @if(! empty($data['analysis:financial']['profitability']['comments'][$key]))  
                 <tr>
                   <td valign="top">
                     <div class="mr-3">

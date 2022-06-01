@@ -19,7 +19,7 @@ class FTranslationArabicSeeder extends Seeder
         'Very Poor' => 'ضعيف جدا',
         'Industrial' => 'مجال الصناعي',
         'Non Industrial' => 'مجال غير الصناعي',
-        'Immediate efforts should be focused on improving production processes through cost cutting automation' => '.تركيز الجهود الفورية على تحسين عمليات الإنتاج من خلال التشغيل الآلي لخفض التكاليف',
+        'Immediate efforts should be focused on improving production processes through cost cutting automation' => 'التركيز الفوري على إعادة تخطيط عملية الإنتاج والمواد الخام لضمان هامش ربح إجمالي الأصح',
         'Business sustainability is in a very serious situation, requiring immediate improvements to remain viable' => ' استدامة الأعمال التجارية في وضع بالغ الخطورة، ويحتاج إلى تحسينات فورية للحفاظ على قابلية الاستمرار',
         'Business may be in a critically difficult situation to be able to meet its short term financial obligations and will need to source for additional liquidity' => 'وقد تكون الأعمال التجارية في وضع صعب للغاية لكي تتمكن من الوفاء بالتزاماتها المالية القصيرة الأجل، وستحتاج إلى توفير سيولة إضافية',
         'With a very heavy short and long-term financial burden, business may need to resort to bring in additional business partners while improving its asset proportion' => 'مع عبء مالي ثقيل للغاية على المديين القصير والطويل، قد تحتاج الأعمال التجارية إلى الاستعانة بشركاء أعمال إضافيين مع تحسين نسبة أصولها',
@@ -109,6 +109,8 @@ class FTranslationArabicSeeder extends Seeder
         'Poor Raw Materials Margin by Industrial standards' => 'هامش الموارد الخام ضعيف حسب المعاييرمجال الصناعي',
         'Very Poor Raw Materials Margin by Non-Industrial standards' => 'هامش الموارد الخام ضعيف جدا حسب المعاييرمجال غير الصناعي',
         'Very Poor Raw Materials Margin by Industrial standards' => 'هامش الموارد الخام ضعيف جدا حسب المعاييرمجال الصناعي',
+        'Immediate focus would be to re-strategise the production process and choice of raw materials suppliers to ensure a healthier gross profit margin' => '.تركيز الجهود الفورية على تحسين عمليات الإنتاج من خلال التشغيل الآلي لخفض التكاليف',
+        
     ];    
 
     public function run() :void

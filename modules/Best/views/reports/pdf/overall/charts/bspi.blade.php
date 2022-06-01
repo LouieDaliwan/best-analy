@@ -22,7 +22,7 @@
       <td width="100%">
         <div class="mr-3" style="margin: auto;">
           {{-- <canvas id="overall-bspi" width="200px" height="200px" style="margin: auto;"></canvas> --}}
-          <canvas id="overall-bspi" width="400" height="200"></canvas>
+          <canvas id="overall-bspi" width="500" height="200"></canvas>
         </div>
       </td>
     </tr>

@@ -3,7 +3,7 @@
     <v-card-text class="pa-7">
       <div class="d-flex align-center justify-space-between mb-5">
         <h3 v-text="trans('Financial Statements')"></h3>
-        <v-btn v-if="!isEmpty" text color="primary" @click="previewRatiosReport"
+        <v-btn v-if="!isEmpty && customer.details.metadata.project_type" text color="primary" @click="previewRatiosReport"
           ><v-icon class="primary--text" small>mdi-eye</v-icon
           ><span v-text="trans('View Financial Analysis Report')"></span>
         </v-btn>
@@ -109,12 +109,12 @@
           </v-alert>
         </v-col> -->
         <!-- If no Investment Value -->
-        <v-col v-if="value.date != 'empty'" cols="12" sm="6" class="text-sm-right">
+        <v-col v-if="value.date != 'empty' && customer.details.metadata.project_type" cols="12" sm="6" class="text-sm-right">
           <b><span v-text="trans('Date')"></span>:</b>
           <span v-text="trans(value.date)"></span>
         </v-col>
       </v-row>
-      <div class="text-center mb-5">
+      <div class="text-center mb-5" v-if="customer.details.metadata.project_type">
         <ul class="pa-0" style="list-style: none">
           <template v-for="(item, i) in ratings">
             <li class="d-inline mr-3" :key="i">
@@ -131,7 +131,7 @@
           </template>
         </ul>
       </div>
-      <v-row>
+      <v-row v-if="customer.details.metadata.project_type">
         <template v-for="(item, i) in gen2Col(keyFinancialRatio)">
           <v-col :key="i">
             <v-list class="py-0">

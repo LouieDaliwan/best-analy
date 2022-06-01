@@ -19,8 +19,8 @@
 
   {{-- Chart --}}
   <!-- <script>{{ theme()->inlined(public_path('reports/js/vendor.js')) }}</script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script> --}}
   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script> --}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
 
@@ -108,7 +108,7 @@
     <div class="my-2 border-bottom"></div>
     @include('best::reports.pdf.partials.organisation-profile')
     @include('best::reports.pdf.overall.score')
-    @include('best::reports.pdf.overall.pindex')
+    {{-- @include('best::reports.pdf.overall.pindex') --}}
     @include('best::reports.pdf.partials.disclaimer')
     <table width="100%">
       <tr>

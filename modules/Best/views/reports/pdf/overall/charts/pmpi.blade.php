@@ -27,7 +27,7 @@
     </tr>
   </table> -->
 </div> --}}
-<div class="mx-4">
+<div>
   <table width="100%">
     <tr>
       <td class="p-2">

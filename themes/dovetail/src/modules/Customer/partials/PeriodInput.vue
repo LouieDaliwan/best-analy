@@ -22,8 +22,9 @@
             ].includes(label)"
       ></span>
 
-      <p class="mb-0" v-else>{{ trans(label) }}<span class=" red--text"> *</span></p>
-    
+      <!-- <p class="mb-0" v-else>{{ trans(label) }}<span class=" red--text">*</span></p> -->
+      <span v-else>{{trans(label)}} <i class=" red--text" style="decoration: none;">*</i></span>
+
       <v-menu v-if="tooltip[label]">
         <template v-slot:activator="{ on, attrs }">
           <v-btn v-bind="attrs" v-on="on" icon small>

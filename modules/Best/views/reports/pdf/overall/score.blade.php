@@ -12,8 +12,8 @@
   </div> -->
   {{-- <section class="overall-indices"> --}}
     <table width="100%" class="mb-5">
-      <tr>
-        <td width="50%">
+      {{-- <tr>
+        <td valign="top" width="50%">
           <div>
             <table width="100%">
               <tr>
@@ -57,10 +57,10 @@
             </table>
           </div>
         </td>
-        <td width="50%">
-          {{-- @include('best::reports.pdf.overall.charts.fmpi') --}}
+        <td valign="top" width="50%">
+          @include('best::reports.pdf.overall.charts.fmpi')
         </td>
-      </tr>
+      </tr> --}}
       <tr>
         <td valign="top" width="50%">
           @include('best::reports.pdf.overall.charts.bspi')
@@ -70,10 +70,10 @@
         </td>
       </tr>
       <tr>
-        <td width="50%">
+        <td valign="top" width="50%">
           {{-- @include('best::reports.pdf.overall.charts.hrpi') --}}
         </td>
-        <td width="50%">
+        <td valign="top" width="50%">
           {{-- @include('best::reports.pdf.overall.charts.fifth') --}}
         </td>
       </tr>

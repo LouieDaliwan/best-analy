@@ -12,16 +12,18 @@
     </tr>
   </table>
   <div class="border-top mb-3"></div>
-  <!-- <table>
+  <table width="100%">
     <tr>
-      <td> -->
+      {{-- <td>
+        <p class="mb-0">@lang($data['indices']['FMPI']['overall:comment:overall'])</p>
+      </td> --}}
+      <td width="100%">
+        <div class="mr-3" style="margin: auto; zoom: 0.76;">
           <canvas id="overall-fmpi" width="500px" height="200px" style="margin: auto;"></canvas>
-      <!-- </td>
-      <td>
-        <p class="mb-0 mr-3">@lang($data['indices']['FMPI']['overall:comment:overall'])</p>
+        </div>
       </td>
     </tr>
-  </table> -->
+  </table>
 </div>
 
 <script>

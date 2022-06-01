@@ -13,18 +13,18 @@
     </tr>
   </table>
   <div class="border-top mb-3"></div>
-  <!-- <table>
+  <table width="100%">
     <tr>
-      <td>
+      {{-- <td>
         <p class="mb-0">@lang($data['indices']['HRPI']['overall:comment:overall'])</p>
-      </td>
-      <td>
-        <div class="mr-3" style="width: 650px; height: 180px;"> -->
-          <canvas id="overall-hrpi" width="500px" height="200px" style="margin: auto;"></canvas>
-        <!-- </div>
+      </td> --}}
+      <td width="100%">
+        <div class="mr-3" style="margin: auto; zoom: 0.76;">
+          <canvas id="overall-hrpi" width="500" height="200" style="margin: auto;"></canvas>
+        </div>
       </td>
     </tr>
-  </table> -->
+  </table>
 </div>
 
 <script>

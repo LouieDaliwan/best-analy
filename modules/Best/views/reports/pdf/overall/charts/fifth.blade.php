@@ -13,8 +13,16 @@
     </tr>
   </table>
   <div class="border-top mb-3"></div>
+  <table width="100%">
+    <tr>
+      <td width="100%">
+        <div class="mr-3" style="margin: auto; zoom: 0.76;">
+          <canvas id="overall-fifth" width="500px" height="200px" style="margin: auto;"></canvas>
+        </div>
+      </td>
+    </tr>
+  </table>
 
-  <canvas id="overall-fifth" width="500px" height="200px" style="margin: auto;"></canvas>
 </div>
 
 <script>

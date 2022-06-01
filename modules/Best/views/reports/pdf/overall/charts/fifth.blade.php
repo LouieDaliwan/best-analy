@@ -16,7 +16,7 @@
   <table width="100%">
     <tr>
       <td width="100%">
-        <div class="mr-3" style="margin: auto; zoom: 0.76;">
+        <div class="mr-3" style="margin: auto; zoom: 0.80;">
           <canvas id="overall-fifth" width="500px" height="200px" style="margin: auto;"></canvas>
         </div>
       </td>

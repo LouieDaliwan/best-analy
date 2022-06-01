@@ -20,7 +20,7 @@
         <p class="mb-0">@lang($data['indices']['PMPI']['overall:comment:overall'])</p>
       </td> --}}
       <td width="100%">
-        <div class="mr-3" style="margin: auto; zoom: 0.76;">
+        <div class="mr-3" style="margin: auto; zoom: 0.80;">
           <canvas id="overall-pmpi" width="500" height="200" style="margin: auto;"></canvas>
         </div>
       </td>

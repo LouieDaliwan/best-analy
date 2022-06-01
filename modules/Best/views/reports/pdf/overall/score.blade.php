@@ -10,7 +10,7 @@
       </div>
     </div>
   </div> -->
-  <section class="overall-indices">
+  {{-- <section class="overall-indices"> --}}
     <table width="100%" class="mb-5">
       <tr>
         <td width="50%">
@@ -80,5 +80,5 @@
     </table>
 
     @include('best::reports.pdf.overall.charts.enablers')
-  </section>
+  {{-- </section> --}}
 </section>

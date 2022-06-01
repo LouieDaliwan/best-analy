@@ -9,9 +9,9 @@ return [
         TrafficLight::AMBER_LIGHT => 0.89,
         TrafficLight::GREEN_LIGHT => 0,
         TrafficLight::FAILED => 0,
-        TrafficLight::CORRECTIVE_ACTION => 69,
-        TrafficLight::CRITICAL => 30,
-        TrafficLight::NORMAL => 70,
+        TrafficLight::CORRECTIVE_ACTION => 0.69,
+        TrafficLight::CRITICAL => 0.30,
+        TrafficLight::NORMAL => 0.70,
     ],
 
     'key_enablers_score' => [

@@ -135,12 +135,12 @@ abstract class TrafficLight
             $result = 'green';
         }
 
-        if($score >= 1 && $score  <= self::critical()) {
+        if($score >= 0.1 && $score  <= self::critical()) {
             $comment = self::CRITICAL;
             $result = 'amber';
         }
 
-        if($score >= 31 && $score <= self::correctiveAction()){
+        if($score >= 0.31 && $score <= self::correctiveAction()){
             $comment = self::CORRECTIVE_ACTION;
             $result = 'amber';
         }

@@ -332,7 +332,7 @@ class CustomerService extends Service implements CustomerServiceInterface
         }
 
         $survey = Survey::find(1);
-        dispatch(new UpdateGeneratedReport($survey, $this->customer));
+        dispatch(new UpdateGeneratedReport($survey, $customer));
     }
 
     protected function saveCustomerDetail($customer, $attributes)

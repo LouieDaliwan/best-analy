@@ -206,7 +206,7 @@ export default {
     },
 
     allReportPresent() {
-      return this.resources.data.length == 4 && this.sdmiExists != 'empty';
+      return this.resources.data.length == 4 && this.sdmiExists != 'empty' && this.financialRatio != 'empty';
     },
 
     financialReportHasValue() {
@@ -259,7 +259,8 @@ export default {
         }
       ],
       data: [],
-      sdmiExists: false,
+      sdmiExists: '',
+      financialRatio: ''
     },
 
     tabletoolbar: {
@@ -499,6 +500,13 @@ export default {
       .then(({data}) => {
           this.sdmiExists = data;
       });
+    },
+
+    getFinancialRatio() {
+      axios.get(`/api/v1/customer/${this.$route.params.id}/financial-ratios`)
+      .then(({data}) => {
+          this.financialRatio = data.date;
+      })
     }
   },
 
@@ -506,6 +514,7 @@ export default {
     this.getResource();
     this.getPaginatedData();
     this.getSdmi();
+    this.getFinancialRatio();
   },
 
   watch: {

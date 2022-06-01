@@ -119,7 +119,10 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     {
         //Period First latest
         if ($keyRatio == 'gross_profit') {
+
+            // dd($statements);
             return $statements[0]['metadataResults']['ratioAnalysis']['profitability']['gross_profit_margin'];
+
         }
 
         return $statements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];

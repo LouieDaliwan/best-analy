@@ -1,4 +1,4 @@
-<div class="mx-4">
+<div>
   <table width="100%">
     <tr>
       <td class="p-2">
@@ -14,18 +14,19 @@
     </tr>
   </table>
   <div class="border-top mb-3"></div>
-  <!-- <table>
+  <table>
     <tr>
-      <td>
+      {{-- <td>
         <p class="mb-0">@lang($data['indices']['BSPI']['overall:comment:overall'])</p>
+      </td> --}}
+      <td>
+        <div class="mr-3" style="margin: auto;">
+          {{-- <canvas id="overall-bspi" width="200px" height="200px" style="margin: auto;"></canvas> --}}
+          <canvas id="overall-bspi" width="500px" height="200px"></canvas>
+        </div>
       </td>
-      <td> -->
-        <!-- <div class="mr-3" style="width: 500px; height: 150px;"> -->
-          <canvas id="overall-bspi" width="500px" height="200px" style="margin: auto;"></canvas>
-        <!-- </div> -->
-      <!-- </td>
     </tr>
-  </table> -->
+  </table>
 </div>
 
 <script>

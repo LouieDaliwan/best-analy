@@ -12,7 +12,7 @@
     <div class="col-md-12 chart-analysis">
       <div class="card mb-5">
         <div class="card-body">
-          <canvas id="productivity"></canvas>
+          <canvas id="productivity2"></canvas>
         </div>
       </div>
     </div>
@@ -77,7 +77,7 @@
 
 <script>
 $(document).ready(function() {
-  var ctx = document.getElementById("productivity").getContext('2d');
+  var ctx = document.getElementById("productivity2").getContext('2d');
   var chartColors = {
     primary:           'rgb(4, 75, 127, 1)',
     primaryLighten1:   'rgb(4, 75, 127, 0.8)',

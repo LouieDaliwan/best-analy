@@ -12,7 +12,7 @@
   </div> -->
   {{-- <section class="overall-indices"> --}}
 
-  <table width="90%" class="mb-5">
+  <table width="100%" class="mb-5">
     {{-- <tr>
       <td valign="top" width="50%">
         <div>

@@ -48,7 +48,7 @@
       {{-- <td>
         <p class="mb-0">@lang($data['indices']['BSPI']['overall:comment:overall'])</p>
       </td> --}}
-      <td>
+      <td width="100%">
         <div class="mr-3" style="margin: auto;">
           {{-- <canvas id="overall-bspi" width="200px" height="200px" style="margin: auto;"></canvas> --}}
           <canvas id="overall-pmpi" width="500px" height="200px"></canvas>

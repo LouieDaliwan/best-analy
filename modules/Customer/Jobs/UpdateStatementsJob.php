@@ -42,8 +42,7 @@ class UpdateStatementsJob implements ShouldQueue
             app(FinancialRatioInterface::class)->compute($this->customer, $this->setArr($statement), $statement->period);   
         }
 
-        $survey = Survey::find(1);
-        dispatch(new UpdateGeneratedReport($survey, $this->customer));
+       
     }
 
     protected function setArr($statement)

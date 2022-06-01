@@ -2,6 +2,7 @@
 
 namespace Customer\Services;
 
+use Best\Jobs\UpdateGeneratedReport;
 use Best\Models\Report;
 use Carbon\Carbon;
 use Core\Application\Service\Concerns\HaveAuthorization;
@@ -16,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Survey\Models\Survey;
 use Survey\SDMIIndexScore;
 
 class CustomerService extends Service implements CustomerServiceInterface
@@ -328,6 +330,9 @@ class CustomerService extends Service implements CustomerServiceInterface
         if ( isset($statements['metadataStatements']) && isset($statements['metadataSheets']) && $statements['metadataStatements']['period'] != null) {
             app(FinancialRatioInterface::class)->compute($customer, $statements);
         }
+
+        $survey = Survey::find(1);
+        dispatch(new UpdateGeneratedReport($survey, $this->customer));
     }
 
     protected function saveCustomerDetail($customer, $attributes)

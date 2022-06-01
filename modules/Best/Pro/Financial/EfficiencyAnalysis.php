@@ -199,7 +199,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
         $h32 = $customer->name; //to be check with jonathan
         $bj17 = 10;
 
-        if ($h43 == "" && (($h45-$h44)/$h44 > 0)) {
+        if ($h43 == "" && $h44 != 0 && (($h45-$h44)/$h44 > 0)) {
             if (($h45-$h44)/$h44 > ($bj17)) {
                 $number1 = abs(round(($h45-$h44)/$h44*100, 2));
                 $output = __("Overall trade receivables reflected a significant increasing trend by :number1%.", ['number1' => $number1]);
@@ -208,7 +208,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                 $output = __("Overall trade receivables reflected a slightly increasing trend by :number1% over the years.", ['number1' => $number1]);
             }
         } else {
-            if ($h32 == "" && (($h45-$h44)/$h44 < 0)) {
+            if ($h32 == "" && $h44 != 0 && (($h45-$h44)/$h44 < 0)) {
                 if (($h45-$h44)/$h44 < (-$bj17)) {
                     $number1 = abs(round(($h45-$h44)/$h44*100, 2));
                     $output = __("Overall trade receivables has seen a significant decline by :number1% over the years.", ['number1' => $number1]);

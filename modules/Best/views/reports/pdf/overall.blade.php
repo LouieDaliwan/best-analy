@@ -47,7 +47,7 @@
 
   <style>
     html { background: #ffffff !important; }
-    @page { size: A4 ; margin: 0; }
+    @page { size: legal ; margin: 0; }
     body { margin: 0; overflow: visible; float: none; background: #ffffff !important; }
     /*body.A4 { width: 210mm }*/
     div.sheet {

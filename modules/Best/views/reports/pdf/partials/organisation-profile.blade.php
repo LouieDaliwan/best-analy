@@ -3,7 +3,7 @@
     <td>
       <table width="100%">
         <tr>
-          <td width="25%"><h4 class="mb-1">@lang('Organisation Name'):</h4></td>
+          <td width="30%"><h4 class="mb-1">@lang('Organisation Name'):</h4></td>
           <td><p class="mb-1 mx-3">{{ __($data['organisation:profile']['name']) }}</p></td>
         </tr>
       </table>
@@ -21,7 +21,7 @@
     <td>
       <table width="100%">
         <tr>
-          <td width="25%"><h4>@lang('Site Visit Date'):</h4></td>
+          <td width="30%"><h4>@lang('Site Visit Date'):</h4></td>
           <td><p class="mb-1 mx-3">{{ $data['month:formatted'] }}</p></td>
         </tr>
       </table>

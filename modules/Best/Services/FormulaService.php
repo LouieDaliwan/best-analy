@@ -675,15 +675,15 @@ class FormulaService extends Service implements FormulaServiceInterface
             ];  
         } 
         $sdmi = $customer->sdmiComputation()->where('month_key', $monthKey)->first();
-        $scores = $sdmi->metadata;
+        $scores = $sdmi->metadata ?? null;
 
         return [   
             'data' => collect([
-                round($scores['be'], 2),
-                round($scores['ms'], 2),
-                round($scores['cu'], 2),
-                round($scores['es'], 2),
-                round($scores['ll'], 2)
+                round($scores['be'], 2) ?? 0,
+                round($scores['ms'], 2) ?? 0,
+                round($scores['cu'], 2) ?? 0,
+                round($scores['es'], 2) ?? 0,
+                round($scores['ll'], 2) ?? 0
             ]),
         ];
     }

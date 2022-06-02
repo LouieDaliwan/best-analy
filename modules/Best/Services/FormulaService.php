@@ -248,7 +248,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['financialStatementCount'] = collect($financialStatements)->count();
 
         $this->data['SDMI']['elements:charts'] = $this->getChartedGroupedAverage(null, 'sdmi', $customer, $monthkey);
-        $this->data['SDMI']['overall:total'] = cache("{$customer->id}-SDMI-{$user}");
+        $this->data['SDMI']['overall:total'] = cache("{$customer->id}-SDMI-{$user->id}");
 
         return $this->data;
     }
@@ -284,7 +284,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         $sdmiIndex = $sdmi->metadata['index'] ?? 0;
 
-        $sdmiScore = round(($sdmiIndex * 0.2), 2);
+        $sdmiScore = round(($sdmiIndex * 0.2), 2) * 100;
 
         Cache::forever($sdmiName, $sdmiScore);
         

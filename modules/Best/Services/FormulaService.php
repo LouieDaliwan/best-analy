@@ -679,11 +679,11 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         return [   
             'data' => collect([
-                round($scores['be'], 2) ?? 0,
-                round($scores['ms'], 2) ?? 0,
-                round($scores['cu'], 2) ?? 0,
-                round($scores['es'], 2) ?? 0,
-                round($scores['ll'], 2) ?? 0
+                round($scores != null ? $scores['be'] : 0, 2),
+                round($scores != null ? $scores['ms'] : 0, 2),
+                round($scores != null ? $scores['cu'] : 0, 2),
+                round($scores != null ? $scores['es'] : 0, 2),
+                round($scores != null ? $scores['ll'] : 0, 2)
             ]),
         ];
     }

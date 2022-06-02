@@ -7,7 +7,7 @@
       </td>
       <td class="p-2">
         <h4 class="mb-0 dt-secondary text-right">
-          0%
+          {{ $data['SDMI']['overall:total'] }}%
         </h4>
       </td>
     </tr>
@@ -50,7 +50,7 @@
         ],
         datasets: [
           {
-            data: {!! json_encode(collect($data['indices']['HRPI']['elements:charts']['data'])->values()->toArray()) !!},
+            data: {!! json_encode(collect($data['SDMI']['elements:charts']['data'])->values()->toArray()) !!},
             backgroundColor: gradient,
             hoverBackgroundColor: chartColors.primary,
           }

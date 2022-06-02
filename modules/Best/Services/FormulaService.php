@@ -243,9 +243,12 @@ class FormulaService extends Service implements FormulaServiceInterface
             $this->data['current:index'] = $this->data['indices'][$index->alias];
             $this->data['current:pindex'] = $this->data['indices'][$index->alias];
         }
-        
+    
         $this->data['is_single'] = collect($financialStatements)->count() < 2 ? true : false;
         $this->data['financialStatementCount'] = collect($financialStatements)->count();
+
+        $this->data['SDMI']['elements:charts'] = $this->getChartedGroupedAverage(null, 'sdmi', $customer, $monthkey);
+        $this->data['SDMI']['overall:total'] = cache("{$customer->id}-SDMI-{$user}");
 
         return $this->data;
     }
@@ -659,15 +662,29 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  array $group
      * @return array
      */
-    public function getChartedGroupedAverage($group)
+    public function getChartedGroupedAverage($group = null, $index = null, $customer = null, $monthKey = null)
     {
-        return [
-            'labels' => $group->keys()->map(function ($item) {
-                return __($item);
-            }),
-            'data' => $group->values()->map(function ($i) {
-                return $i*100;
-            }),
+        if(is_null($index)) {
+            return [
+                'labels' => $group->keys()->map(function ($item) {
+                    return __($item);
+                }),
+                'data' => $group->values()->map(function ($i) {
+                    return $i*100;
+                }),
+            ];  
+        } 
+        $sdmi = $customer->sdmiComputation()->where('month_key', $monthKey)->first();
+        $scores = $sdmi->metadata;
+
+        return [   
+            'data' => collect([
+                round($scores['be'], 2),
+                round($scores['ms'], 2),
+                round($scores['cu'], 2),
+                round($scores['es'], 2),
+                round($scores['ll'], 2)
+            ]),
         ];
     }
 

@@ -5,8 +5,8 @@
     <tr>
       <td valign="top" width="40%">
         <div class="chart-analysis">
-          <div class="mr-3" style="width: 800px; height: 400px;">
-            <canvas id="profitability" style="width: 800px; height: 400px;"></canvas>
+          <div class="mr-3" style="width: 850px; height: 400px;">
+            <canvas id="profitability" style="width: 850px; height: 400px;"></canvas>
           </div>
         </div>
 

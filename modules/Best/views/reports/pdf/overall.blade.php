@@ -275,7 +275,7 @@
         @include('best::reports.pdf.partials.organisation-profile')
         @include('best::reports.pdf.financials.ratios')
       {{-- </div> --}}
-      <div style="margin-top: 10px;">
+      <div style="margin-top: 75px;">
       @include('best::reports.pdf.partials.disclaimer')
       </div>
       <table width="100%">

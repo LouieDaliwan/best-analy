@@ -136,7 +136,7 @@ $(document).ready(function() {
           ticks: {
             fontColor: '#044b7f',
             fontFamily: 'Rubik, sans-serif',
-            fontSize: 12,
+            fontSize: 7,
             callback: function(value){return value+ "%"}
           }
         }]

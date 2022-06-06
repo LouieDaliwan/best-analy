@@ -244,6 +244,7 @@
         @include('best::reports.pdf.analysis.solvency')
         @include('best::reports.pdf.analysis.productivity')
       </div>
+    <div style="margin-top: 10px;">
     @include('best::reports.pdf.partials.disclaimer')
     <table width="100%">
       <tr>

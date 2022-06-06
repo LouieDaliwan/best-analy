@@ -206,8 +206,8 @@
   </div> --}}
 
   {{-- Analysis --}}
-  <div class="sheet" style="zoom: 0.74; line-height: 1.3;">
-    {{-- <div style="zoom: 0.76; line-height: 1;"> --}}
+  <div class="sheet">
+    <div style="zoom: 0.74; line-height: 1.3;">
       @include('best::reports.pdf.partials.header')
       <div class="my-2 border-bottom"></div>
       @include('best::reports.pdf.partials.organisation-profile')
@@ -241,7 +241,7 @@
         @include('best::reports.pdf.analysis.efficiency')
         @include('best::reports.pdf.analysis.solvency')
         @include('best::reports.pdf.analysis.productivity')
-    {{-- </div> --}}
+    </div>
     @include('best::reports.pdf.partials.disclaimer')
     <table width="100%">
       <tr>

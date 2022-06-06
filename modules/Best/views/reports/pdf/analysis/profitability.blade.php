@@ -99,7 +99,9 @@ $(document).ready(function() {
         duration: 1,
         onComplete: function () {
             var chartInstance = this.chart,
-                ctx = chartInstance.ctx;
+
+            ctx = chartInstance.ctx;
+            ctx.fontSize = "4px";
             ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
             ctx.textAlign = 'center';
             ctx.textBaseline = 'bottom';
@@ -124,7 +126,7 @@ $(document).ready(function() {
             beginAtZero: true,
             fontColor: '#044b7f',
             fontFamily: 'Rubik, sans-serif',
-            fontSize: 5,
+            fontSize: 10,
           },
         }],
         maxBarThickness: 5,
@@ -136,7 +138,7 @@ $(document).ready(function() {
           ticks: {
             fontColor: '#044b7f',
             fontFamily: 'Rubik, sans-serif',
-            fontSize: 12,
+            fontSize: 10,
             callback: function(value){return value+ "%"}
           }
         }]

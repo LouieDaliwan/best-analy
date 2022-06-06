@@ -213,7 +213,7 @@
     @include('best::reports.pdf.partials.organisation-profile')
     </div>
     @if($data['is_single'])
-      <div style="zoom: 0.76; line-height: 1.3;">
+      {{-- <div style="zoom: 0.76; line-height: 1.3;"> --}}
         @include('best::reports.pdf.financials.singleyear')
         @include('best::reports.pdf.partials.disclaimer')
         <table width="100%">
@@ -237,7 +237,7 @@
             </td>
           </tr>
         </table>
-      </div>
+      {{-- </div> --}}
     @else
       <div style="zoom: 0.73; line-height: 1.3;">
         @include('best::reports.pdf.analysis.profitability')

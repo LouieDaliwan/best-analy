@@ -1,5 +1,5 @@
 {{-- <div style="zoom: 0.76; line-height: 1;"> --}}
-<div style="line-height: 1.3;">
+<div style="zoom: 0.76; line-height: 1.3;">
   <section class="mt-3">
     <table width="100%">
       <tbody>

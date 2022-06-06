@@ -206,7 +206,7 @@
   </div> --}}
 
   {{-- Analysis --}}
-  <div class="sheet" style="zoom: 0.76; line-height: 1.3;">
+  <div class="sheet" style="zoom: 0.74; line-height: 1.3;">
     {{-- <div style="zoom: 0.76; line-height: 1;"> --}}
       @include('best::reports.pdf.partials.header')
       <div class="my-2 border-bottom"></div>

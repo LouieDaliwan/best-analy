@@ -14,11 +14,11 @@
           </td>
         </tr>
         <tr>
-          <td valign="middle" width="50%" class="p-3" >
+          <td valign="middle" width="50%" class="p-3">
             <div valign="middle" class="mt-3">
               <div class="py-5">
                 <div class="chart-analysis">
-                  <div class="mr-3" style="margin: auto;">
+                  <div class="mr-3" style="margin: auto; zoom: 0.9;">
                     <canvas id="productivityIndicators" width="550" height="200" style="margin: auto;"></canvas>
                   </div>
                   {{-- <div class="mr-3" style="width: 700px; height: 200px;">

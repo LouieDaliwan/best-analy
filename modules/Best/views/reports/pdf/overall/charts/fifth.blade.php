@@ -1,4 +1,4 @@
-<div class="mx-4">
+<div class="mx-2">
   <!-- <div style="height: 10px;"></div> -->
   <table width="100%">
     <tr>

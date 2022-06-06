@@ -15,7 +15,7 @@
   <table width="100%" class="mb-5">
     <tr>
       <td valign="top" width="50%">
-        <div class="mx-4">
+        <div class="mx-2">
           <table width="100%">
             <tr>
               <td class="p-2">

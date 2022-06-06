@@ -79,7 +79,7 @@
           </div>
           <div class="col-md-4 col-sm-12">
             <cite>
-              <small>Printed on: {{ $data['month:formatted'] }}</small>
+              <small>Printed on: <?php echo date("M d, Y"); ?></small>
             </cite>
           </div>
         </div>

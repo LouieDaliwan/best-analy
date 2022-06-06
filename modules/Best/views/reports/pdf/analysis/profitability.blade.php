@@ -124,7 +124,7 @@ $(document).ready(function() {
             beginAtZero: true,
             fontColor: '#044b7f',
             fontFamily: 'Rubik, sans-serif',
-            fontSize: 12,
+            fontSize: 5,
           },
         }],
         maxBarThickness: 5,
@@ -136,7 +136,7 @@ $(document).ready(function() {
           ticks: {
             fontColor: '#044b7f',
             fontFamily: 'Rubik, sans-serif',
-            fontSize: 7,
+            fontSize: 12,
             callback: function(value){return value+ "%"}
           }
         }]

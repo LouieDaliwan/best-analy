@@ -89,50 +89,48 @@
 
 
 <table class="table" id="listTable">
-    <tbody>
-        <tr>
-            <td>
-                <h1 class="dt-primary">@lang('Productivity Indicators')</h1> 
-                <hr>
-            </td>
-                 
-        </tr>
-        @foreach($cols as $col)
-        <tr>
-            @foreach($col as $items)
-            <td>
-                <table width="100%" class="eachIndicators">
-                    <tbody style="border: 1px solid #868e96;">
-                        <?php $countItems = 1; ?>
-                        @foreach($items as $item)
-                        <tr>
-                            <?php $count = 1; ?>
-                            @foreach($item as $data)
-                            @if($countItems == 1)
-                                @if($data != null && $count == 1)
-                                    <td bgcolor="#edf2f9" class="row1" rowspan="2">{{ $data }}</td>
-                                @else
-                                    <td class="otherRows">{{ $data }}</td>
-                                @endif
-                            @endif
-                            
-                            @if($countItems == 2)
-                                @if($data != null && $count == 3)
-                                    <td bgcolor="#edf2f9" colspan="4" class="description">{{$data}}</td>
-                                @endif
-                            @endif
-                            <?php $count++; ?>
-                            @endforeach
-                        </tr>
-                        <?php $countItems++; ?>
-                        @endforeach
-                    </tbody>
-                </table>
-            </td>
-            @endforeach
-        </tr>
-        @endforeach
-    </tbody>
+  <tbody>
+    <tr>
+      <td>
+        <h2 class="dt-secondary mb-0">@lang('Productivity Indicators')</h2>
+        <hr>
+      </td>
+    </tr>
+    @foreach($cols as $col)
+    <tr>
+      @foreach($col as $items)
+      <td>
+        <table width="100%" class="eachIndicators">
+          <tbody style="border: 1px solid #868e96;">
+              <?php $countItems = 1; ?>
+              @foreach($items as $item)
+              <tr>
+                <?php $count = 1; ?>
+                @foreach($item as $data)
+                @if($countItems == 1)
+                  @if($data != null && $count == 1)
+                    <td bgcolor="#edf2f9" class="row1" rowspan="2">{{ $data }}</td>
+                  @else
+                    <td class="otherRows">{{ $data }}</td>
+                  @endif
+                @endif
+                @if($countItems == 2)
+                  @if($data != null && $count == 3)
+                    <td bgcolor="#edf2f9" colspan="4" class="description">{{$data}}</td>
+                  @endif
+                @endif
+                <?php $count++; ?>
+                @endforeach
+              </tr>
+              <?php $countItems++; ?>
+              @endforeach
+            </tbody>
+          </table>
+        </td>
+      @endforeach
+    </tr>
+    @endforeach
+  </tbody>
 </table>
 
 <style>

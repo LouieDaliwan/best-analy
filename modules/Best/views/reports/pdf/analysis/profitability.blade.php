@@ -5,8 +5,8 @@
     <tr>
       <td valign="top" width="40%">
         <div class="chart-analysis">
-          <div class="mr-3" style="width: 700px; height: 400px;">
-            <canvas id="profitability" style="width: 700px; height: 400px;"></canvas>
+          <div class="mr-3" style="width: 800px; height: 400px;">
+            <canvas id="profitability" style="width: 800px; height: 400px;"></canvas>
           </div>
         </div>
 
@@ -25,7 +25,7 @@
         </table>
         {{-- label --}}
       </td>
-      <td valign="top" width="60%">
+      <td valign="top" width="40%">
         <div class="comment-analysis">
           <table>
             @foreach ($data['analysis:financial']['profitability']['comments'] as $key => $comments)
@@ -102,7 +102,7 @@ $(document).ready(function() {
 
             ctx = chartInstance.ctx;
             // ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-            ctx.font = Chart.helpers.fontString('1px', Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
             ctx.textAlign = 'center';
             ctx.textBaseline = 'bottom';
 

@@ -1,9 +1,10 @@
-<div style="zoom: 0.76; line-height: 1;">
+{{-- <div style="zoom: 0.76; line-height: 1;"> --}}
+<div style="line-height: 1.3;">
   <section class="mt-3">
     <table width="100%">
       <tbody>
         <tr>
-          <td class="p-3" width="50%">
+          <td class="p-3" width="40%">
             <h1 class="dt-primary " style="border">@lang('Productivity Analysis')</h1>
             <hr>
           </td>
@@ -17,9 +18,12 @@
             <div valign="middle" class="mt-3">
               <div class="py-5">
                 <div class="chart-analysis">
-                  <div class="mr-3" style="width: 700px; height: 200px;">
-                    <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>
+                  <div class="mr-3" style="margin: auto; zoom: 0.80;">
+                    <canvas id="productivityIndicators" width="550" height="200" style="margin: auto;"></canvas>
                   </div>
+                  {{-- <div class="mr-3" style="width: 700px; height: 200px;">
+                    <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>
+                  </div> --}}
                 </div>
                 {{-- label --}}
                 <div style="height: 20px;"></div>

@@ -57,7 +57,7 @@
       position: relative;
       box-sizing: border-box;
       page-break-after: always;
-      border: 1px solid red;
+      /*border: 1px solid red;*/
     }
     h1, h2, h3, h4, h5, h6 {
       font-weight: 700;
@@ -243,15 +243,24 @@
         @include('best::reports.pdf.analysis.productivity')
     {{-- </div> --}}
     @include('best::reports.pdf.partials.disclaimer')
-    @include('best::reports.pdf.partials.footer')
-    <div class="text-right">
-      <div style="font-size: 10px;">
-        {{ __('Page 8 of') }}
-        <?php if($data['is_single']): ?> {{ __('8') }}
-        <?php else: ?> {{ __('10') }}
-        <?php endif; ?>
-      </div>
-    </div>
+    <table width="100%">
+      <tr>
+        <td valign="bottom" width="50%">
+          @include('best::reports.pdf.partials.footer')
+        </td>
+        <td valign="bottom" width="50%" class="text-right">
+          <section>
+            <div class="row">
+              <div class="col-md-12">
+                <div style="font-size: 10px;">
+                  {{ __('Page 8 of 10') }}
+                </div>
+              </div>
+            </div>
+          </section>
+        </td>
+      </tr>
+    </table>
     @endif
   </div>
 
@@ -266,11 +275,25 @@
       {{-- </div> --}}
       <div style="margin-top: 10px;">
       @include('best::reports.pdf.partials.disclaimer')
-      @include('best::reports.pdf.partials.footer')
       </div>
-      <div class="text-right">
-        <div style="font-size: 10px;">{{ __('Page 9 of 10') }}</div>
-      </div>
+      <table width="100%">
+        <tr>
+          <td valign="bottom" width="50%">
+            @include('best::reports.pdf.partials.footer')
+          </td>
+          <td valign="bottom" width="50%" class="text-right">
+            <section>
+              <div class="row">
+                <div class="col-md-12">
+                  <div style="font-size: 10px;">
+                    {{ __('Page 9 of 10') }}
+                  </div>
+                </div>
+              </div>
+            </section>
+          </td>
+        </tr>
+      </table>
     </div>
 
     {{-- Indicators --}}
@@ -283,13 +306,25 @@
       {{-- </div> --}}
       <div style="margin-top: 105px;">
       @include('best::reports.pdf.partials.disclaimer')
-      @include('best::reports.pdf.partials.footer')
       </div>
-      <div class="text-right">
-        <div style="font-size: 10px;">
-          {{ __('Page 10 of 10') }}
-        </div>
-      </div>
+      <table width="100%">
+        <tr>
+          <td valign="bottom" width="50%">
+            @include('best::reports.pdf.partials.footer')
+          </td>
+          <td valign="bottom" width="50%" class="text-right">
+            <section>
+              <div class="row">
+                <div class="col-md-12">
+                  <div style="font-size: 10px;">
+                    {{ __('Page 10 of 10') }}
+                  </div>
+                </div>
+              </div>
+            </section>
+          </td>
+        </tr>
+      </table>
     </div>
     {{-- Indicators --}}
   @endif

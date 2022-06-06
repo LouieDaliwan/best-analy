@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <h1 class="mb-3 dt-secondary">@lang('Productivity Analysis')</h1>
+        <h2 class="dt-secondary mb-0">@lang('Productivity Analysis')</h2>
       </div>
     </div>
   </div>

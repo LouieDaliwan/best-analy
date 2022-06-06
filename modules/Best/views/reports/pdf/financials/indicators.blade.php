@@ -5,11 +5,11 @@
       <tbody>
         <tr>
           <td class="p-3" width="40%">
-            <h1 class="dt-primary " style="border">@lang('Productivity Analysis')</h1>
+            <h2 class="dt-secondary mb-0" style="border">@lang('Productivity Analysis')</h2>
             <hr>
           </td>
           <td class="p-3" width="50%">
-            <h1 class="dt-primary">@lang('VA Indicators')</h1>
+            <h2 class="dt-secondary mb-0">@lang('VA Indicators')</h2>
             <hr>
           </td>
         </tr>

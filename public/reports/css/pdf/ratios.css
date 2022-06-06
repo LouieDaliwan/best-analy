@@ -703,3 +703,6 @@
   }
   /*Hide empty tr*/
   
+.otherRows:nth-child(4) {
+  border: none !important;
+}

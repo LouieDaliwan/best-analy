@@ -160,7 +160,10 @@ $(document).ready(function() {
               fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',
               fontSize: 12,
-              callback: function(value){return value}
+              precision: 1,
+              callback: function(value){
+                return Number(value).toFixed(1)
+              }
             }
           }]
         }

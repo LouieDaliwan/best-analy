@@ -1,5 +1,5 @@
 @if(app()->getLocale() == 'ar')
-<div class="mx-4 mb-5" style="width: 350px; word-break: break-all;">
+<div class="mx-4 mb-5" style="width: 360px; word-break: break-all;">
 @else
 <div class="mx-4 mb-5">
 @endif

@@ -1,4 +1,4 @@
-<div class="mx-2">
+<div class="mx-2 mb-3">
   <table width="100%">
     <tr>
       <td class="p-2">

@@ -19,7 +19,7 @@
       </td> --}}
       <td width="100%">
         <div class="mr-3" style="margin: auto; zoom: 0.80;">
-          <canvas id="overall-fmpi" width="500px" height="200px" style="margin: auto;"></canvas>
+          <canvas id="overall-fmpi" width="500" height="250" style="margin: auto;"></canvas>
         </div>
       </td>
     </tr>

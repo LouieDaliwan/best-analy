@@ -207,7 +207,7 @@
 
   {{-- Analysis --}}
   <div class="sheet">
-      <div style="zoom: 0.72; line-height: 1.3;">
+    <div style="zoom: 0.76; line-height: 1.3;">
       @include('best::reports.pdf.partials.header')
       <div class="my-2 border-bottom"></div>
       @include('best::reports.pdf.partials.organisation-profile')
@@ -235,34 +235,34 @@
             </td>
           </tr>
         </table>
-      </div>
+    </div>
       @else
-      <div style="zoom: 0.72; line-height: 1.3;">
+      <div style="zoom: 0.73; line-height: 1.3;">
         @include('best::reports.pdf.analysis.profitability')
         @include('best::reports.pdf.analysis.liquidity')
         @include('best::reports.pdf.analysis.efficiency')
         @include('best::reports.pdf.analysis.solvency')
         @include('best::reports.pdf.analysis.productivity')
       </div>
-    @include('best::reports.pdf.partials.disclaimer')
-    <table width="100%">
-      <tr>
-        <td valign="bottom" width="50%">
-          @include('best::reports.pdf.partials.footer')
-        </td>
-        <td valign="bottom" width="50%" class="text-right">
-          <section>
-            <div class="row">
-              <div class="col-md-12">
-                <div style="font-size: 10px;">
-                  {{ __('Page 8 of 10') }}
+      @include('best::reports.pdf.partials.disclaimer')
+      <table width="100%">
+        <tr>
+          <td valign="bottom" width="50%">
+            @include('best::reports.pdf.partials.footer')
+          </td>
+          <td valign="bottom" width="50%" class="text-right">
+            <section>
+              <div class="row">
+                <div class="col-md-12">
+                  <div style="font-size: 10px;">
+                    {{ __('Page 8 of 10') }}
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
-        </td>
-      </tr>
-    </table>
+            </section>
+          </td>
+        </tr>
+      </table>
     @endif
   </div>
 

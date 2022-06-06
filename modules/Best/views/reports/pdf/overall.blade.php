@@ -305,12 +305,12 @@
 
     {{-- Indicators --}}
     <div class="sheet">
-      {{-- <div style="zoom: 0.7; line-height: 1;"> --}}
+      <div style="line-height: 1.3;">
         @include('best::reports.pdf.partials.header')
         <div class="my-2 border-bottom"></div>
         @include('best::reports.pdf.partials.organisation-profile')
         @include('best::reports.pdf.financials.indicators')
-      {{-- </div> --}}
+      </div>
       <div style="margin-top: 75px;">
       @include('best::reports.pdf.partials.disclaimer')
       </div>

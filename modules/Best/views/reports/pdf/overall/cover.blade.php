@@ -78,7 +78,7 @@
           <div class="mt-5">
             <cite>
               <small class="text-white">Date:</small><br />
-              <small>Printed on: <?php date(M d, Y); ?></p></small>
+              <small>Printed on: <?php date("M d, Y"); ?></p></small>
             </cite>
           </div>
         </td>

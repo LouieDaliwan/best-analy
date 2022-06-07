@@ -59,7 +59,7 @@ class CalculateSDMIScore
         foreach($event->attributes['fields'] as $field) {
             if($field['submission']['fieldKey'] == 'Business Expansion') {
                 if($field['submission']['results'] != 'NA') {
-                    $score = (int) round($field['submission']['score'] / 5, 2);
+                    $score = (float) round($field['submission']['score'] / 5, 2);
 
                     $variables['be']['score'] += $score;
                     $variables['be']['count']++;
@@ -68,7 +68,7 @@ class CalculateSDMIScore
             
             if($field['submission']['fieldKey'] == 'Marketing Strategies') {
                 if($field['submission']['results'] != 'NA') {
-                    $score = (int) round($field['submission']['score'] / 5, 2);
+                    $score = (float) round($field['submission']['score'] / 5, 2);
 
                     $variables['ms']['score'] += $score;
                     $variables['ms']['count']++;
@@ -78,7 +78,7 @@ class CalculateSDMIScore
             if($field['submission']['fieldKey'] == 'Endorsement, Certification & Standards') {
                 if($field['submission']['results'] != 'NA') {
 
-                    $score = (int) round($field['submission']['score'] / 5, 2);
+                    $score = (float) round($field['submission']['score'] / 5, 2);
                     $variables['es']['score'] += $score;
                     $variables['es']['count']++;
                 }            
@@ -86,7 +86,7 @@ class CalculateSDMIScore
 
             if($field['submission']['fieldKey'] == "Location") {
                 if($field['submission']['results'] != 'NA') {
-                    $score = (int) round($field['submission']['score'] / 5, 2);
+                    $score = (float) round($field['submission']['score'] / 5, 2);
                     $variables['ll']['score'] += $score;
                     $variables['ll']['count']++;
                 }            
@@ -94,14 +94,14 @@ class CalculateSDMIScore
 
             if($field['submission']['fieldKey'] == 'Capacity Utilisation') {
                 if($field['submission']['results'] != 'NA') {
-                    $score = (int) round($field['submission']['score'] / 5, 2);
+                    $score = (float) round($field['submission']['score'] / 5, 2);
                     $variables['cu']['score'] += $score;
                     $variables['cu']['count']++;
                 }            
             }
 
             if($field['submission']['results'] != 'NA') {
-                $score = (int) round($field['submission']['score'] / 5, 2);
+                $score = (float) round($field['submission']['score'] / 5, 2);
                 $variables['index']['score'] += $score;
                 $variables['index']['count']++;
             }            
@@ -115,7 +115,7 @@ class CalculateSDMIScore
             'month_key' => $date,
         ],[
             'taxonomy_id' => $event->survey->formable_id,
-            'metadata' => $this->metadata,
+            'metadata' => $metadata,
         ]);
     }
 
@@ -126,9 +126,11 @@ class CalculateSDMIScore
         foreach($metadata as $key => $value) {
             $score = $variables[$key]['score'];
             $divisor = $variables[$key]['count'];
-            $this->metadata[$key] += $divisor != 0 ? number_format(($score / $divisor), 3) : 0;
+            $metadata[$key] += $divisor != 0 ? number_format(($score / $divisor), 3) : 0;
+
         }
 
         return $metadata;
+
     }
 }

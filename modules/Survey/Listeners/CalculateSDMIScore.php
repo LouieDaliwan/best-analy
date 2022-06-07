@@ -95,7 +95,6 @@ class CalculateSDMIScore
             if($field['submission']['fieldKey'] == 'Capacity Utilisation') {
                 if($field['submission']['results'] != 'NA') {
                     $score = (int) round($field['submission']['score'] / 5, 2);
-
                     $variables['cu']['score'] += $score;
                     $variables['cu']['count']++;
                 }            
@@ -108,7 +107,7 @@ class CalculateSDMIScore
             }            
         }
 
-        $this->getResult($variables);
+       $metadata = $this->getResult($variables);
 
 
         SDMIIndexScore::updateOrCreate([
@@ -122,10 +121,14 @@ class CalculateSDMIScore
 
     protected function getResult($variables)
     {
-        foreach($this->metadata as $key => $value) {
+        $metadata = $this->metadata;
+
+        foreach($metadata as $key => $value) {
             $score = $variables[$key]['score'];
             $divisor = $variables[$key]['count'];
             $this->metadata[$key] += $divisor != 0 ? number_format(($score / $divisor), 3) : 0;
         }
+
+        return $metadata;
     }
 }

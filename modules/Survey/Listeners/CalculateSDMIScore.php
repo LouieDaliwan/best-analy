@@ -124,13 +124,15 @@ class CalculateSDMIScore
     {
         $metadata = $this->metadata;
 
-        foreach($metadata as $key => $value) {
+        $count = 0;        
+        foreach($metadata as $key => $value) {            
             $score = $variables[$key]['score'];
             $divisor = $variables[$key]['count'];
             $metadata[$key] += $divisor != 0 ? number_format(($score / $divisor), 3) : 0;
-            $metadata['count'] += $divisor;
-
+            $count += $divisor;
         }
+
+        $metadata['count'] = $count;
         return $metadata;
     }
 }

@@ -284,7 +284,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         $sdmiIndex = $sdmi->metadata['index'] ?? 0;
 
-        $sdmiScore = round(($sdmiIndex * 0.2), 2) * 100;
+        $sdmiScore = round(($sdmiIndex * 0.2), 2);
 
         Cache::forever($sdmiName, $sdmiIndex);
         
@@ -308,7 +308,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         })->sum(), 2);
         
-        $results = round(($totalOf4Index + $financialScore + $sdmiScore), 1);
+        $results = round(($totalOf4Index + $financialScore + $sdmiScore), 1);   
 
         Cache::forever($keyName, $results);
         

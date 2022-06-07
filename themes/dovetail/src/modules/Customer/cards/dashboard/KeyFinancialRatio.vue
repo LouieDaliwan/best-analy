@@ -143,11 +143,11 @@
                     ></v-list-item-subtitle>
                   </v-list-item-content>
                   <v-list-item-action-text
-                    v-if="subitem.label == 'Gross Profit Margin' || 'Net Profit Marging'"
+                    v-if="subitem.label == 'Gross Profit Margin' || subitem.label == 'Net Profit Margin'"
                     small
                     class="ml-2"
                     >
-                    {{subitem.score + '%'}} 
+                    {{subitem.score + '%'}}   
                   </v-list-item-action-text>
                   <v-list-item-action-text
                     v-else

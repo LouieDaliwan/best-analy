@@ -213,7 +213,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         // Retrieve Overall BEST Score.
         $this->data['overall:score'] = $overallScore = $this->getOverallScore($this->data['indices'], $customer, $monthkey);
-        $this->data['overall:percentage'] = sprintf('%s%%', $overallScore*100);
+        $this->data['overall:percentage'] = sprintf('%s%%', $overallScore);
 
         $lightScore = $this->getOverallTrafficLightScore($overallScore);
         $this->data['overall:result'] = $lightScore['result'];

@@ -84,7 +84,7 @@ class CalculateSDMIScore
                 }            
             }
 
-            if($field['submission']['fieldKey'] == "Location (Describe your level of satisfaction with your current business location's ability to serve customers)") {
+            if($field['submission']['fieldKey'] == "Location") {
                 if($field['submission']['results'] != 'NA') {
                     $score = (int) round($field['submission']['score'] / 5, 2);
                     $variables['ll']['score'] += $score;

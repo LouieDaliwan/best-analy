@@ -146,7 +146,7 @@
                     small
                     class="ml-2"
                     >
-                    {{subitem.score}} 
+                    {{subitem.score + '%'}} 
                   </v-list-item-action-text>
                   <v-list-item-action>
                     <v-icon

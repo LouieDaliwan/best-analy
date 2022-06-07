@@ -56,7 +56,6 @@ class CalculateSDMIScore
             ],
         ];
         $date = Carbon::parse($event->attributes['remarks'])->format('m-Y');
-        $count = 0;
         foreach($event->attributes['fields'] as $field) {
             if($field['submission']['fieldKey'] == 'Business Expansion') {
                 if($field['submission']['results'] != 'NA') {
@@ -105,11 +104,10 @@ class CalculateSDMIScore
                 $score = (float) round($field['submission']['score'] / 5, 2);
                 $variables['index']['score'] += $score;
                 $variables['index']['count']++;
-                $count++;
             }            
         }
 
-       $metadata = $this->getResult($variables, $count);
+       $metadata = $this->getResult($variables);
 
 
         SDMIIndexScore::updateOrCreate([
@@ -121,7 +119,7 @@ class CalculateSDMIScore
         ]);
     }
 
-    protected function getResult($variables, $count)
+    protected function getResult($variables)
     {
         $metadata = $this->metadata;
 
@@ -134,10 +132,9 @@ class CalculateSDMIScore
             $score = $variables[$key]['score'];
             $divisor = $variables[$key]['count'];
             $metadata[$key] += $divisor != 0 ? number_format(($score / $divisor), 3) : 0;
-            $count += $divisor;
         }
 
-        $metadata['count'] = $count;
+        $metadata['count'] = $variables['index']['count'];
         return $metadata;
     }
 }

@@ -59,41 +59,51 @@ class CalculateSDMIScore
         foreach($event->attributes['fields'] as $field) {
             if($field['submission']['fieldKey'] == 'Business Expansion') {
                 if($field['submission']['results'] != 'NA') {
-                    $variables['be']['score'] = (int) $field['submission']['score'];
+                    $score = (int) round($field['submission']['score'] / 5, 2);
+
+                    $variables['be']['score'] += $score;
                     $variables['be']['count']++;
                 }            
             }            
             
             if($field['submission']['fieldKey'] == 'Marketing Strategies') {
                 if($field['submission']['results'] != 'NA') {
-                    $variables['ms']['score'] = (int) $field['submission']['score'];
+                    $score = (int) round($field['submission']['score'] / 5, 2);
+
+                    $variables['ms']['score'] += $score;
                     $variables['ms']['count']++;
                 }             
             }
 
             if($field['submission']['fieldKey'] == 'Endorsement, Certification & Standards') {
                 if($field['submission']['results'] != 'NA') {
-                    $variables['es']['score'] = (int) $field['submission']['score'];
+
+                    $score = (int) round($field['submission']['score'] / 5, 2);
+                    $variables['es']['score'] += $score;
                     $variables['es']['count']++;
                 }            
             }
 
             if($field['submission']['fieldKey'] == "Location (Describe your level of satisfaction with your current business location's ability to serve customers)") {
                 if($field['submission']['results'] != 'NA') {
-                    $variables['ll']['score'] = (int) $field['submission']['score'];
+                    $score = (int) round($field['submission']['score'] / 5, 2);
+                    $variables['ll']['score'] += $score;
                     $variables['ll']['count']++;
                 }            
             }
 
             if($field['submission']['fieldKey'] == 'Capacity Utilisation') {
                 if($field['submission']['results'] != 'NA') {
-                    $variables['cu']['score'] = (int) $field['submission']['score'];
+                    $score = (int) round($field['submission']['score'] / 5, 2);
+
+                    $variables['cu']['score'] += $score;
                     $variables['cu']['count']++;
                 }            
             }
 
-            if($field['submission']['fieldKey'] != 'NA') {
-                $variables['index']['score'] += (int) $field['submission']['score'];
+            if($field['submission']['results'] != 'NA') {
+                $score = (int) round($field['submission']['score'] / 5, 2);
+                $variables['index']['score'] += $score;
                 $variables['index']['count']++;
             }            
         }

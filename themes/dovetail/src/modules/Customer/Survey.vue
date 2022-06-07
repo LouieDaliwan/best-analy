@@ -310,11 +310,11 @@ export default {
     ],
 
     sdmiRatesTwo: [
-      { number: '<10%', text: '<10%' },
-      { number: '10% - 25%', text: '10% - 25%' },
-      { number: '>25% - 50%', text: '>25% - 50%' },
-      { number: '>50% - 75%', text: '>50% - 75%' },
-      { number: '>75% - 100%', text: '>75% - 100%' },
+      { number: '1', text: '<10%' },
+      { number: '2', text: '10% - 25%' },
+      { number: '3', text: '>25% - 50%' },
+      { number: '4', text: '>50% - 75%' },
+      { number: '5', text: '>75% - 100%' },
     ],
 
     sdmiRatesThree: [
@@ -334,11 +334,11 @@ export default {
     ],
 
     extentServicesRates: [
-      { number: '<10%', text: '<10%' },
-      { number: '10% - 25%', text: '10% - 25%' },
-      { number: '>25% - 50%', text: '>25% - 50%' },
-      { number: '>50% - 75%', text: '>50% - 75%' },
-      { number: '>75% - 100%', text: '>75% - 100%' },
+      { number: '1', text: '<10%' },
+      { number: '2', text: '10% - 25%' },
+      { number: '3', text: '>25% - 50%' },
+      { number: '4', text: '>50% - 75%' },
+      { number: '5', text: '>75% - 100%' },
       { number: 'N/A', text: 'NA'} 
     ],
     answers: [],

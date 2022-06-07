@@ -131,10 +131,10 @@ class CalculateSDMIScore
 
             $score = $variables[$key]['score'];
             $divisor = $variables[$key]['count'];
-            $metadata[$key] += $divisor != 0 ? number_format(($score / $divisor), 3) : 0;
+            $metadata[$key] += $divisor != 0 ? (float) round(($score / $divisor), 3) * 100 : 0;
         }
 
-        $metadata['count'] = $variables['index']['count'];
+        // $metadata['count'] = $variables['index']['count'];
         return $metadata;
     }
 }

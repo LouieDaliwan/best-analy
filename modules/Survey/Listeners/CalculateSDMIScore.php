@@ -18,6 +18,7 @@ class CalculateSDMIScore
         'cu' => 0,
         'es' => 0,
         'll' => 0,
+        'count' => 0,
     ];
 
     /**
@@ -127,10 +128,9 @@ class CalculateSDMIScore
             $score = $variables[$key]['score'];
             $divisor = $variables[$key]['count'];
             $metadata[$key] += $divisor != 0 ? number_format(($score / $divisor), 3) : 0;
+            $metadata['count'] += $divisor;
 
         }
-
         return $metadata;
-
     }
 }

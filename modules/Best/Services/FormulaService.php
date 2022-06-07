@@ -283,8 +283,9 @@ class FormulaService extends Service implements FormulaServiceInterface
         $sdmi = $customer->sdmiComputation()->where('month_key', $monthKey)->first();
 
         $sdmiIndex = $sdmi->metadata['index'] ?? 0;
+        $sdmiCount = $sdmi->metadata['count'] ?? 0;
 
-        $sdmiScore = round(($sdmiIndex * 0.2), 2) * 100;
+        $sdmiScore = round(($sdmiIndex / $sdmiCount) * 0.2, 2) * 100;
 
         Cache::forever($sdmiName, $sdmiScore);
         

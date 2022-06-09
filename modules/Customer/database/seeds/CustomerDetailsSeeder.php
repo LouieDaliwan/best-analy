@@ -14,6 +14,8 @@ class CustomerDetailsSeeder extends Seeder
         'metadataStatements' => [],
         'metadataSheets' => [],
     ];
+
+    protected $non_actual_year = ['Year1', 'Year2', 'Year3'];
     /**
      * Run the database seeds.
      *
@@ -94,6 +96,11 @@ class CustomerDetailsSeeder extends Seeder
         $years = $customer['metadata']['years']['Years'];   
 
         foreach ($years as $key => $year) {
+            
+            if(in_array($year, $this->non_actual_year)) {
+                continue;
+            }
+
             logger($year. ' customer id '. $customer->id);
             $statements = [
                 'metadataStatements' => [],

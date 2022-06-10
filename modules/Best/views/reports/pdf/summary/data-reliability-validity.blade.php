@@ -3,7 +3,8 @@
   <div class="row">
     <div class="col-md-12">
       <p class="dt-primary mb-1 font-weight-bold">@lang('Data Reliability & Validity')</p>
-      <p>@lang('It is important that the understanding, perception and observation of an organisation cannot be relied upon from an individual only. Business Counselor is encouraged to collect observation from multiple individuals to ensure a better understanding of an organisation is achieved.')</p>
+      <p>@lang('It is important that the understanding, perception and observation of an organization cannot be relied upon from an individual only. A collective observation from multiple individuals is critical to ensure that a better understanding of an organisation is achieved. Hence, a minimum sample size of 5 to 10% of the total organisation staff strength is RECOMMENDED to complete the series of questionnaire to ensure the reliability of the report is not compromised.')</p>
+      <p>@lang('Alternatively, the inputs given by the representative of the organization can be validated through the observation and sharing of evidences with a 3rd-party Business Advisor')</p>
     </div>
   </div>
 </section>

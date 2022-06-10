@@ -20,4 +20,9 @@ return [
         "This highlights the efficiency and effectiveness of an organisation's systems and processes to harness the maximum value from their employees and equipments' capacity and capability in producing the desired products and/or services.",
         "PMPI is measured by 5 elements namely; Policies & Procedures, Quality Management, Technology & Tools, Customer Experience and Organisation Competitiveness",
     ],
+
+    'SDMI' => [
+        "This highlights the ability to translate organizational expansion strategies into concrete development interventions through effective resource utilization, marketing strategies and compliance with standards to drive business opportunities",
+        "SDMI is measured by 5 elements namely; Business Expansion, Marketing Strategies, Capacity Utilisation, Certification & Standards and Location",
+    ],
 ];

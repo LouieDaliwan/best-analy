@@ -173,9 +173,10 @@
 </template>
 
 
-
 <script>
 import $api from '@/modules/Customer/routes/api'
+import { CRM_CODE_FILE_NUMBER_DOES_NOT_EXIST } from '../config/crm'
+import store from '@/store'
 
 export default {
   props: ['customer', 'user', 'type', 'month'],
@@ -183,7 +184,11 @@ export default {
   data: () => ({
     isSending: false,
     sendAll: false,
+    searching: false,
+    token: '',
+    query: '',
     checklist: [
+      { message: '', name: trans('Check Company Details From CRM'), icon: 'mdi-file-send', status: 'pending'},
       { message: '', name: trans('Sending Financial File By No'), icon: 'mdi-file-send', status: 'pending'},
       { message: '', name: trans('Sending Update Visit Score'), icon: 'mdi-file-send', status: 'pending' },
       { message: '', name: trans('Sending Overall Document'), icon: 'mdi-file-send', status: 'pending' }, 
@@ -191,6 +196,7 @@ export default {
       // { message: '', name: trans('Sending Financial Scores'), icon: 'mdi-cube-send', status: 'pending' },
       // { message: '', name: trans('Sending Financial Document'), icon: 'mdi-file-send', status: 'pending' },
     ],
+    errors: [],
     error_trigger: false,
     dialog: false,
     dialogInfo: false,
@@ -209,6 +215,9 @@ export default {
       return this.type == 'overall-report-dashboard'
     },
   },
+  mounted() {
+    this.query = this.customer.refnum;
+  },
 
   methods: {
     sendAllScoresAndDocuments () {
@@ -218,8 +227,8 @@ export default {
       this.checklist = this.checklist.map((item) => {
         return Object.assign(item, {status: 'pending', message: ''});
       });
-
-      this.sendToCrm();
+      this.searchForCompanyInCrm(this.query);
+      
       // this.sendFinancialScores();
     },
 
@@ -232,10 +241,49 @@ export default {
         axios.get(
           `/api/v1/reports/overall/customer/${customer}/user/${user}?month=${month}`
         ).then(response => {
+          this.query = response.data.customer.refnum
           resolve(response)
         }).catch(err => {
           reject(err)
         })
+      })
+    },
+
+    searchForCompanyInCrm (query) {
+      axios.get(
+        $api.crm.search(query)
+      ).then(response => {
+        let { Code, Message, Content } = response.data
+
+        if (Code == CRM_CODE_FILE_NUMBER_DOES_NOT_EXIST) {
+          this.errors.push(Message)
+          return this.showSnackbar({
+            icon: false,
+            button: { show: true },
+            text: this.trans(Message)
+          })
+        }
+
+        if (Code == CRM_CODE_FILE_NUMBER_FOUND) {
+          this.companyFound = true
+          this.results = true
+          this.companies.push(Content)
+          this.token = this.companies.id;
+        }
+
+      }).catch((err) => {
+        this.showDialog({
+          illustration: () => import('@/components/Icons/ErrorIcon.vue'),
+          title: trans('Internal Error'),
+          width: 400,
+          text: trans('Incorrect file number input. Please try again.'),
+          buttons: {
+            cancel: false
+          }
+        })
+      }).finally(() => {
+        this.searching = false
+        this.sendToCrm();
       })
     },
 
@@ -334,7 +382,7 @@ export default {
 
         let data = {
         // Object.assign(this.getOverallScore(), this.getElements(), {
-          // Id: _.toUpper(this.resource.data.customer.token),
+          Id: _.toUpper(this.resource.data.customer.token),
           // Status: 100000006,
           // OverallScore: this.resource.data.report.value['overall:score'] * 100 || null,
           // FileContentBase64: this.resource.data.report.fileContentBase64,

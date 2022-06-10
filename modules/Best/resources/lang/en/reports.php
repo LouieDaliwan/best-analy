@@ -13,5 +13,5 @@ return [
         'Strategically assess which elements of organisational excellence will require interventions',
     ],
     ':appcode Score' => "BEST Score",
-    'Score Description' => 'The :appcode Score gives the organisation an idea of how well the core functions of the organisation are performing. Using a traffic light system, the score is organised into 3 broad categories:'
+    'Score Description' => 'The :appcode Score gives the organization an idea of how well the core functions of the organization are performing in addition to its financial performance. Through our comprehensive review, the score is organized into 4 broad categories:'
 ];

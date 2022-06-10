@@ -7,7 +7,7 @@
       <p class="dt-secondary">@lang('I.') @lang('best::reports.:appcode Score', ['appcode' => __(settings('app:code'))])</p>
       <p>@lang('best::reports.Score Description', ['appcode' => __(settings('app:code'))])</p>
 
-      <table>
+      {{-- <table>
         <tr>
           <td valign="middle"><span class="badge badge-soft-red font-weight-bold mr-2" style="color: red;">@lang('RED')</span></td>
           <td><span class="badge-bg-red mr-2" style="margin-left: 16px; width: 16px; height: 16px; display: inline-block; border-radius: 100%;">
@@ -31,6 +31,27 @@
           <td><span class="badge-bg-green mr-2" style="width: 16px; height: 16px; display: inline-block; border-radius: 100%;">
           </span></td>
           <td><span class="green mr-2">@lang('Organisation is in good shape. :appcode Elements implemented well with effective forms, processes, policies and structured systems. Recommends microscopic validation.', ['appcode' => settings('app:code')])</span></td>
+        </tr>
+      </table> --}}
+
+      <table width="100%" class="mb-3">
+        <tr valign="middle">
+          <td width="25%" valign="middle" style="text-align: center;">
+            <span class="badge-bg-red mr-2" style="width: 16px; height: 16px; display: inline-block; border-radius: 100%;"></span>
+            <span style="color: red;">@lang('Failed')</span>
+          </td>
+          <td width="25%" valign="middle" style="text-align: center;">
+            <span class="badge-bg-amber mr-2" style="width: 16px; height: 16px; display: inline-block; border-radius: 100%;"></span>
+            <span style="color: amber;">@lang('Critical')</span>
+          </td>
+          <td width="25%" valign="middle" style="text-align: center;">
+            <span class="badge-bg-green mr-2" style="width: 16px; height: 16px; display: inline-block; border-radius: 100%;"></span>
+            <span style="color: green;">@lang('Corrective Action')</span>
+          </td>
+          <td width="25%" valign="middle" style="text-align: center;">
+            <span class="mr-2" style="width: 16px; height: 16px; display: inline-block; border-radius: 100%; background-color: black;"></span>
+            <span >@lang('Corrective Action')</span>
+          </td>
         </tr>
       </table>
       {{-- Section I --}}

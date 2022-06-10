@@ -11,6 +11,7 @@
           'pmpi' => __('Productivity Management'),
           'fmpi' => __('Financial Management'),
           'hrpi' => __('Human Resource'),
+          'sdmi' => __('Strategy Development & Management'),
         ])
       </p>
     </div>

@@ -14,11 +14,9 @@
             <img height="120" src="{{ theme()->logopath() }}">
           </div>
           <div class="text-center">
-            <h1 class="display-4">@lang("SME Ratings Report")</h1>
-            {{-- <h1 class="display-4">@lang('Overall Report')</h1> --}}
+            <h1 class="display-4">@lang(settings('app:fulltitle'))</h1>
           </div>
         {{-- header --}}
-
         <div class="text-center">
           <div style="margin-top: 100px; margin-bottom: 100px;">
             <table width="100%">

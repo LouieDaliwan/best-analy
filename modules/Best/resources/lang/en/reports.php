@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'description' => "The :apptitle (:appcode) is an organisational scorecard that measures four fundamental elements of performance, namely :bspi, :pmpi, :fmpi and :hrpi. The :appcode Report provides relevant diagnostics relating to the effectiveness and impact of the organisation's functions and how well these are align to the vision and strategy of the organisation.",
+    'description' => "The :apptitle (:appcode) is an organizational scorecard that measures five fundamental elements of performance, namely :bspi, :pmpi, :fmpi and :sdmi. The :appcode provides relevant diagnostics relating to the effectiveness and impact of the organization's functions and how well these are align to the vision and strategy of the organization.",
     'objectives' => [
         'Measure and describe the organisational performance using the :appcode Framework ',
         'Evaluate the effectiveness of the various organisational enablers which impacts organisational excellence',

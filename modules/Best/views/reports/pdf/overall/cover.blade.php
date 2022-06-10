@@ -21,15 +21,11 @@
 
         <div class="text-center">
           <div style="margin-top: 100px; margin-bottom: 100px;">
-
             <table width="100%">
               <tr>
-                <td align="center"><img style="filter: hue-rotate(158deg) grayscale(0.4);" src="{{ public_path('indices/all/hue/fm2.png') }}"></td>
-                <td align="center"><img src="{{ public_path('indices/all/hue/bs2.png') }}"></td>
-              </tr>
-              <tr>
-                <td align="center"><img style="filter: hue-rotate(50deg)" src="{{ public_path('indices/all/hue/pm2.png') }}"></td>
-                <td align="center"><img style="filter: hue-rotate(201deg) grayscale(0.4);" src="{{ public_path('indices/all/hue/hr2.png') }}"></td>
+                <td align="center">
+                  <img width="80%" src="{{ public_path('indices/all/cover-image.png') }}">
+                </td>
               </tr>
             </table>
           </div>

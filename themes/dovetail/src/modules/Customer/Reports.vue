@@ -35,6 +35,18 @@
           <v-icon small left>mdi-file-chart-outline</v-icon>
           {{ __("Overall Report") }}
         </v-btn>
+        <v-btn
+          :block="$vuetify.breakpoint.smAndDown"
+          color="primary"
+          exact
+          large
+          disabled
+          v-else
+          >
+          <v-icon small left>mdi-file-chart-outline</v-icon>
+          {{ __("Overall Report") }}
+        </v-btn><br>
+        <small class="muted--text" v-text="trans('Complete all surveys to view Overall Report')"></small>
       </template>
     </page-header>
 

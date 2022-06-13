@@ -4,31 +4,31 @@ return [
     'ratings_format' => [
         'smeRatings' => [
             'bspi' => [
-                'label' => "BSPI",
+                'label' => "Business Sustainability Performance Index",
                 'score' => 0,
                 'code' => 'business-sustainability',
                 'id' => 2,
             ],
             'fmpi' => [
-                'label' => "FMPI",
+                'label' => "Financial Management Performance Index",
                 'score' => 0,
                 'code' => 'financial-management',
                 'id' => 1,
             ],
             'pmpi' => [
-                'label' => "PMPI",
+                'label' => "Productivity Management Performance Index",
                 'score' => 0,
                 'code' => 'productivity-management',
                 'id' => 3
             ],
             'hrpi' => [
-                'label' => "HRPI",
+                'label' => "Human Resource Performance Index",
                 'score' => 0,
                 'code' => 'human-resource',
                 'id' => 4,
             ],
             'sdmi' => [
-                'label' => "5th Module",
+                'label' => "Strategy Development & Management",
                 'score' => 0,
                 'code' => 'sdmi',
                 'id' => 5

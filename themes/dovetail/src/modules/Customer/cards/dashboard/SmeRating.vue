@@ -18,6 +18,7 @@
         <v-col cols="12" sm="6">
           <b><span v-text="trans('Score')"></span>:</b>
           <span
+            :style="{color: colorStatus(value.ratings.results.result)}"
             class="muted--text light rounded-1 py-1 px-3 rounded-xl"
             v-text="trans(`${value.ratings.overall_score}`)"
           ></span>
@@ -26,8 +27,9 @@
         <v-col cols="12" sm="6" class="text-sm-right">
           <b><span v-text="trans('Results')"></span>:</b>
           <span
-            class="muted--text light rounded-1 py-1 px-3 rounded-xl"
-            v-text="trans(`${value.ratings.results}`)"
+            :style="{color: colorStatus(value.ratings.results.result)}"
+            class="muted--text light rounded-1 py-1 px-3 rounded-xl"  
+            v-text="trans(`${value.ratings.results.comment}`)"
           ></span>
         </v-col>
       </v-row>
@@ -78,6 +80,7 @@ export default {
   data: () => ({
     smeRatings: [],
   }),
+
   methods: {
     initChart() {
       const chartEl = this.$refs["chart-el"];
@@ -119,6 +122,10 @@ export default {
       });  
 
       this.smeRatings = smeObject; 
+    },
+
+    colorStatus(color) {
+        return color + '!important';
     },
 
     goToCompanySurveyPage (index) {

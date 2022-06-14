@@ -221,6 +221,14 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['overall:enablers'] = $this->getOverallOrganisationEnablersMetricsComment(
             $this->data['indices'], $customer->name
         );
+
+
+        if(cache("{$customer->id}-results-{$user->id}")) {
+            Cache::forget("{$customer->id}-results-{$user->id}");
+        }
+        
+        Cache::forever("{$customer->id}-results-{$user->id}", $lightScore);
+
         $this->data['overall:enablers:orig'] = $this->getOriginalAverage($this->data['indices']);
 
         // Retrieve the metadata for the report cover.

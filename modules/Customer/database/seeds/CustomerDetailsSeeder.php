@@ -96,8 +96,7 @@ class CustomerDetailsSeeder extends Seeder
         $years = $customer['metadata']['years']['Years'];   
 
         foreach ($years as $key => $year) {
-            
-            if(in_array($year, $this->non_actual_year)) {
+            if(in_array($key, $this->non_actual_year)) {
                 continue;
             }
 

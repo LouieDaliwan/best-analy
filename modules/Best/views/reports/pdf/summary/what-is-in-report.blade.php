@@ -31,7 +31,7 @@
 
       {{-- Section II --}}
       <p class="dt-secondary">@lang('II.') @lang('best::elements.:appcode Elements', ['appcode' => settings('app:code')])</p>
-      @foreach ($indices ?? $data['indices'] ?? [] as $index)
+      @foreach ($indices ?? $data['indices'] ?? [] as $key => $index)
         <h4 class="mb-3">{{ strtoupper($index['pindex:code']) }} : {{ __($index['pindex']) }}</h4>
         @foreach (trans("best::indices/descriptions.{$index['pindex:code']}") ?? [] as $desc)
           <p>- {{ $desc }}</p>

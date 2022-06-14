@@ -252,7 +252,10 @@ export default {
       })
     },
 
-    searchForCompanyInCrm (query) {
+    searchForCompanyInCrm (query){
+      this.isSending = true;
+      this.checklist[0].status = 'updating';
+
       axios.get(
         $api.crm.search(query)
       ).then(response => {
@@ -265,6 +268,8 @@ export default {
             button: { show: true },
             text: this.trans(Message)
           })
+          this.checklist[0].status = 'error';
+          this.checklist[0].message = this.trans(Message);
         }
 
         if (Code == CRM_CODE_FILE_NUMBER_FOUND) {
@@ -285,6 +290,8 @@ export default {
           }
         })
       }).finally(() => {
+        this.sending = false;
+        this.checklist[0].status = 'done';
         this.searching = false
         this.sendToCrm();
       })
@@ -368,7 +375,7 @@ export default {
 
     sendToCrm () {
       this.isSending = true;
-      this.checklist[0].status = 'sending';
+      this.checklist[1].status = 'sending';
 
       this.$store.dispatch('snackbar/show', { button: { show: false }, timeout: 0, text: 'Sending report to CRM. Please wait...'});
 
@@ -423,13 +430,13 @@ export default {
           $api.crm.sendAddFinancialsByFileNo(), data
         ).then(response => {
           this.$store.dispatch('snackbar/hide')
-          this.checklist[0].status = 'done';
+          this.checklist[1].status = 'done';
 
           if (response.data.Code == 1) {
             this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Successfully sent to CRM')})
           } else {
-            this.checklist[0].status = 'error';
-            this.checklist[0].message = response.data.Message;
+            this.checklist[1].status = 'error';
+            this.checklist[1].message = response.data.Message;
             this.error_trigger = true;
             // this.$store.dispatch('dialog/error', {
             //   show: true,
@@ -440,8 +447,8 @@ export default {
             // })
           }
         }).catch(err => {
-          this.checklist[0].status = 'error';
-          this.checklist[0].message = err.message;
+          this.checklist[1].status = 'error';
+          this.checklist[1].message = err.message;
           this.error_trigger = true;
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
         }).finally(() => {
@@ -455,7 +462,7 @@ export default {
     
     sendUpdateVisitToCrm() {
         this.isSending = true;
-        this.checklist[1].status = 'sending';
+        this.checklist[2].status = 'sending';
 
         this.$store.dispatch('snackbar/show', { button: { show: false }, timeout: 0, text: 'Sending Update Visit Score to CRM. Please wait...'});
 
@@ -486,13 +493,13 @@ export default {
           $api.crm.sendUpdateVisit(), data
         ).then(response => {
           this.$store.dispatch('snackbar/hide')
-          this.checklist[1].status = 'done';
+          this.checklist[2].status = 'done';
 
           if (response.data.Code == 1) {
             this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('File Successfully sent to CRM')})
           } else {
-            this.checklist[1].status = 'error';
-            this.checklist[1].message = response.data.Message;
+            this.checklist[2].status = 'error';
+            this.checklist[2].message = response.data.Message;
             this.error_trigger = true;
             
             // this.$store.dispatch('dialog/error', {
@@ -504,8 +511,8 @@ export default {
             // })
           }
         }).catch(err => {
-          this.checklist[1].status = 'error';
-          this.checklist[1].message = err.message;
+          this.checklist[2].status = 'error';
+          this.checklist[2].message = err.message;
           this.error_trigger = true;
 
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
@@ -517,7 +524,7 @@ export default {
 
     sendDocumentToCrm () {
       this.isSending = true;
-      this.checklist[2].status = 'sending';
+      this.checklist[3].status = 'sending';
 
       this.getReportData().then(response => {
         this.resource.data = response.data
@@ -541,8 +548,8 @@ export default {
           if (response.data.Code == 1) {
             this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('File Successfully sent to CRM')})
           } else {
-            this.checklist[2].status = 'error';
-            this.checklist[2].message = response.data.Message;
+            this.checklist[3].status = 'error';
+            this.checklist[3].message = response.data.Message;
             this.error_trigger = true;
             // this.$store.dispatch('dialog/error', {
             //   show: true,
@@ -553,8 +560,8 @@ export default {
             // })
           }
         }).catch(err => {
-          this.checklist[2].status = 'error';
-          this.checklist[2].message = err.message;
+          this.checklist[3].status = 'error';
+          this.checklist[3].message = err.message;
           this.error_trigger = true;
 
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
@@ -574,7 +581,7 @@ export default {
     },
 
     sendFinancialScores () {
-      this.checklist[2].status = 'sending';
+      this.checklist[3].status = 'sending';
       this.$store.dispatch('snackbar/show', { button: { show: false }, timeout: 0, text: 'Sending report to CRM. Please wait...'});
 
       this.getReportData().then(response => {

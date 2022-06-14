@@ -21,22 +21,7 @@
 
         <div class="text-center">
           <div style="margin-top: 100px; margin-bottom: 100px;">
-            <div class="row justify-content-center mb-4">
-              <div class="col-md-4 col-sm-12">
-                <img style="filter: hue-rotate(158deg) grayscale(0.4);" src="{{ asset('indices/all/png/fm2.png') }}">
-              </div>
-              <div class="col-md-4 col-sm-12">
-                <img src="{{ asset('indices/all/png/bs2.png') }}">
-              </div>
-            </div>
-            <div class="row justify-content-center">
-              <div class="col-md-4 col-sm-12">
-                <img style="filter: hue-rotate(50deg)" src="{{ asset('indices/all/png/pm2.png') }}">
-              </div>
-              <div class="col-md-4 col-sm-12">
-                <img style="filter: hue-rotate(201deg) grayscale(0.4);" src="{{ asset('indices/all/png/hr2.png') }}">
-              </div>
-            </div>
+            <img width="100%" src="{{ asset('indices/all/cover-image.png') }}">
           </div>
         </div>
       </div>

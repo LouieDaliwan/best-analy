@@ -22,7 +22,7 @@
             <table width="100%">
               <tr>
                 <td align="center">
-                  <img width="80%" src="{{ public_path('indices/all/cover-image.png') }}">
+                  <img width="100%" src="{{ public_path('indices/all/cover-image.png') }}">
                 </td>
               </tr>
             </table>

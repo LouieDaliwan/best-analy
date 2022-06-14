@@ -38,12 +38,10 @@ class Score {
             $this->format['overall_score'] = 'Incomplete';
             $this->format['results'] = 'N/A';
         }
-        
-
-        
+                
         $this->format['smeRatings'] = array_values($this->format['smeRatings']);
 
-        // dd($this->format);
+        $this->checkAnsweredScore($this->format['smeRatings']);        
 
         return $this->format;
     }
@@ -61,5 +59,13 @@ class Score {
             $this->format['smeRatings']['financial_score']['score'] = $financial_score;
             $this->format['answered_index']++;
         }  
+    }
+
+    protected function checkAnsweredScore($smeRatings) {
+        foreach($smeRatings as $rating) {
+            if($rating['score'] > 0) {
+                $this->format['answered_index']++;
+            }
+        }
     }
 }

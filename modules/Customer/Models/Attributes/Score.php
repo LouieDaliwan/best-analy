@@ -33,10 +33,10 @@ class Score {
 
         if($this->customer->statements()->count() > 0) {
             $this->format['overall_score'] = cache("{$this->customer->id}-Overall-{$user}") ?? 0;
-            $this->format['results'] = cache("{$this->customer->id}-Overall-{$user}") ?  cache("{$this->customer->id}-results-{$user}") : self::SCORES_INCOMPLETE; 
+            $this->format['results'] = cache("{$this->customer->id}-Overall-{$user}") ?  cache("{$this->customer->id}-results-{$user}") : ['comment' => 'N/A']; 
         } else {
             $this->format['overall_score'] = 'Incomplete';
-            $this->format['results']['comment'] = 'N/A';
+            $this->format['results'] = ['comment' => 'N/A'];
         }
                 
         $this->format['smeRatings'] = array_values($this->format['smeRatings']);

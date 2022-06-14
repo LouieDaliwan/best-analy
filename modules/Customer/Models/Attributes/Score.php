@@ -31,7 +31,7 @@ class Score {
         $this->format['smeRatings']['hrpi']['score'] = cache("{$this->customer->id}-HRPI-{$user}") ?? 0;
         $this->format['smeRatings']['sdmi']['score'] = cache("{$this->customer->id}-SDMI-{$user}") ?? 0;
 
-        if($this->customer->statements()->count > 0) {
+        if($this->customer->statements()->count() > 0) {
             $this->format['overall_score'] = cache("{$this->customer->id}-Overall-{$user}") ?? 0;
             $this->format['results'] = cache("{$this->customer->id}-Overall-{$user}") ?  cache("{$this->customer->id}-results-{$user}") : self::SCORES_INCOMPLETE; 
         } else {

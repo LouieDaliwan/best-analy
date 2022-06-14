@@ -1,3 +1,4 @@
+@if($data['pindex:code'] != 'SDMI')
 <div class="dt-divider" style="height: 50px;"></div>
 <section class="strategic">
   <div class="row">
@@ -34,3 +35,4 @@
     @endforeach
   </div>
 </section>
+@endif

@@ -1,3 +1,4 @@
+@if($data['pindex:code'] != 'SDMI')
 <div class="dt-divider" style="height: 50px;"></div>
 <section class="key-enablers">
   <div class="row">
@@ -133,3 +134,4 @@ $(document).ready(function() {
   });
 });
 </script>
+@endif

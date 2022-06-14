@@ -48,12 +48,12 @@
       <h2 class="dt-secondary">@lang('II.') @lang('best::elements.:appcode Elements', ['appcode' => settings('app:code')])</h2>
       <div class="card mb-3">
         <div class="card-body">
-          @foreach ($indices ?? $data['indices'] ?? [] as $index)
+          @foreach ($indices ?? $data['indices'] ?? [] as $key => $index)
             <h4 class="mb-3">{{ strtoupper($index['pindex:code']) }} : {{ __($index['pindex']) }}</h4>
             @foreach (trans("best::indices/descriptions.{$index['pindex:code']}") ?? [] as $desc)
               <p>- {{ $desc }}</p>
             @endforeach
-          @endforeach
+        @endforeach
         </div>
       </div>
       {{-- Section II --}}

@@ -2,10 +2,12 @@
 <section class="pindex">
   <div class="row">
     <div class="col-md-12">
+      @if($data['pindex:code'] != 'SDMI')
       <h1 style="color: {{ $data['pindex:color'] }};">
         {{ __($data['pindex:code']) }} :
         @lang($data['pindex'])
       </h1>
+      @endif
     </div>
   </div>
 

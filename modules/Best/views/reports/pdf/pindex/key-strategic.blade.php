@@ -1,4 +1,5 @@
 {{-- <div class="dt-divider" style="height: 50px;"></div> --}}
+@if ($data['pindex:code'] != 'SDMI')
 <section class="strategic mt-2">
   <div class="row">
     <div class="col-md-12">
@@ -33,3 +34,4 @@
     @endforeach
   </table>
 </section>
+@endif

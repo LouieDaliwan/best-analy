@@ -135,6 +135,7 @@
   {{-- overall --}}
 
   @foreach ($data['indices'] as $index)
+    @if($index['pindex:code'] != 'SDMI')
     <div class="sheet" style="line-height: 1.3;">
       @include('best::reports.pdf.partials.header')
       <div class="my-2 border-bottom"></div>
@@ -166,6 +167,7 @@
         </tr>
       </table>
     </div>
+    @endif
   @endforeach
 
   {{-- comments --}}

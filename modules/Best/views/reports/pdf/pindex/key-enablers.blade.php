@@ -1,4 +1,5 @@
 {{-- <div class="dt-divider" style="height: 50px;"></div> --}}
+@if($data['pindex:code'] != 'SDMI')
 <section class="key-enablers mt-2">
   <h4 class="mb-1 dt-secondary">@lang('Key Enablers')</h4>
   <p>@lang($data['key:enablers:description'] ?? null)</p>
@@ -156,3 +157,4 @@
   });
 })();
 </script>
+@endif

@@ -109,6 +109,7 @@
     {{-- overall --}}
 
     @foreach ($data['indices'] as $index)
+      @if($index['pindex:code'] !== 'SDMI')
       <div class="container">
         <div class="main-body">
           <div class="main-content pb-3">
@@ -138,6 +139,7 @@
           </div>
         </div>
       </div>
+      @endif
     @endforeach
 
     {{-- comments --}}

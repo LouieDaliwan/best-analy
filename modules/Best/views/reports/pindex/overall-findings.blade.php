@@ -1,4 +1,5 @@
 {{-- <div class="dt-divider" style="height: 50px;"></div> --}}
+@if($data['pindex:code'] != 'SDMI')
 <section>
   <div class="row">
     <div class="col-md-12">
@@ -18,6 +19,7 @@
     </div>
   </div>
 </section>
+
 
 <script>
   function createDonut () {
@@ -203,3 +205,4 @@
   createDonut();
   createBarChart();
 </script>
+@endif

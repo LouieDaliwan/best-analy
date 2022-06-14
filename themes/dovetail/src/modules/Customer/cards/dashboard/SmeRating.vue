@@ -113,7 +113,7 @@ export default {
       
       _.map(this.value.ratings.smeRatings, function(item,) {
           const obj = {
-            'label' : item.acro,
+            'label' : item.label,
             'score': JSON.stringify(item.score),
             'code' : item.code,
             'id' : item.id

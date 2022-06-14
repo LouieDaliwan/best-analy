@@ -87,7 +87,8 @@ export default {
       const chart = new Chart(chartEl, {
         type: "line",
         data: {
-          labels: this.smeRatings.map(item => item.label),
+          // labels: this.smeRatings.map(item => item.label),
+          labels: ['BSPI', 'FMPI', 'PMPI', 'HRPI', 'SDMI', 'FS Score'],
           datasets: [
             {
               label: "Score",
@@ -112,7 +113,7 @@ export default {
       
       _.map(this.value.ratings.smeRatings, function(item,) {
           const obj = {
-            'label' : item.label,
+            'label' : item.acro,
             'score': JSON.stringify(item.score),
             'code' : item.code,
             'id' : item.id

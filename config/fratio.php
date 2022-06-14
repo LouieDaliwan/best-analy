@@ -5,36 +5,42 @@ return [
         'smeRatings' => [
             'bspi' => [
                 'label' => "Business Sustainability Performance Index",
+                'acro' => "BSPI",
                 'score' => 0,
                 'code' => 'business-sustainability',
                 'id' => 2,
             ],
             'fmpi' => [
                 'label' => "Financial Management Performance Index",
+                'acro' => "FMPI",
                 'score' => 0,
                 'code' => 'financial-management',
                 'id' => 1,
             ],
             'pmpi' => [
                 'label' => "Productivity Management Performance Index",
+                'acro' => "PMPI",
                 'score' => 0,
                 'code' => 'productivity-management',
                 'id' => 3
             ],
             'hrpi' => [
                 'label' => "Human Resource Performance Index",
+                'acro' => "HRPI",
                 'score' => 0,
                 'code' => 'human-resource',
                 'id' => 4,
             ],
             'sdmi' => [
                 'label' => "Strategy Development & Management",
+                'acro' => "SDMI",
                 'score' => 0,
                 'code' => 'sdmi',
                 'id' => 5
             ],
             'financial_score' => [
                 'label' => 'Financial Score',
+                'acro' => "FS Score",
                 'score' => 0,
                 'code' => 'financial-score',
                 'id' => 'empty'

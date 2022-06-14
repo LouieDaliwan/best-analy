@@ -248,6 +248,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['financialStatementCount'] = collect($financialStatements)->count();
 
         $this->data['indices']['SDMI']['pindex:code'] = 'SDMI';
+        $this->data['indices']['SDMI']['pindex'] = 'Strategic Development and Management Index';
         $this->data['SDMI']['elements:charts'] = $this->getChartedGroupedAverage(null, 'sdmi', $customer, $monthkey);
         $this->data['SDMI']['overall:total'] = cache("{$customer->id}-SDMI-{$user->id}");
 

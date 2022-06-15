@@ -217,6 +217,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         $lightScore = $this->getOverallTrafficLightScore($overallScore);
         $this->data['overall:result'] = $lightScore['result'];
+        $this->data['overall:backgroundResult'] = $lightScore['background'];
         $this->data['overall:comment'] = $this->getOverallComment($lightScore['comment'], $customer->name);
         $this->data['overall:enablers'] = $this->getOverallOrganisationEnablersMetricsComment(
             $this->data['indices'], $customer->name

@@ -100,10 +100,20 @@ export default {
         options: {
           scales: {
             y: {
-              beginAtZero: true
+              beginAtZero: true,
+              max: 100,
             }
           },
-          plugins: { legend: { display: false } }
+          plugins: { 
+            legend: { 
+              position: 'bottom',
+              display: false,
+              labels: {
+                fontFamily: 'Rubik, sans-serif',
+                fontSize: 12,
+              }
+            } 
+          }
         }
       });
     },

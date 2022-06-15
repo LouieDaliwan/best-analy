@@ -14,13 +14,13 @@
     <div class="col-sm-12 col-md-2">
       <div class="d-flex justify-content-md-around justify-content-between align-items-center mb-3">
         <div>
-          <span class="badge badge-soft-{{ $data['overall:result'] }} font-weight-bold" style="color: {{ $data['overall:result'] }}; font-size: 20px;">
+          <span class="badge badge-soft-{{ $data['overall:result'] }} font-weight-bold" style="color: {{ $data['overall:result'] }}; background-color: {{ $data['overall:backgroundResult']}}; font-size: 20px;">
             @if($data['overall:percentage'] == 0)
               NO DATA
             @else
               {{ round($data['overall:percentage']) }}
             @endif
-          </span>
+        </span>
         </div>
         <div class="overall-label ml-md-4 ml-0">
           @if($data['overall:percentage'] != 0)

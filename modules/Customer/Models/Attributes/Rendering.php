@@ -77,19 +77,21 @@ class Rendering
         $financial_score = 0.00;
 
         $score_descriptor = config('fratio')['score_descriptor'];
+        
+        $financial_wts = config('fratio')['financial_score_wts'];
 
         foreach ($dashboard as $key => $value) {
             
             if(!is_array($value)){
                 continue;
             }
-
-            $rating = $value['remarks'] != 'NA' ? (float) ($value['score'] * $score_descriptor[$value['remarks']]) : 0;
+            
+            $rating = $value['remarks'] != 'NA' ? (float) ($score_descriptor[$value['remarks']] * $financial_wts[$key]) : 0;
             
             $financial_score += $rating;
         }
         
-        return $financial_score;
+        return round($financial_score, 2);
     }
 
 

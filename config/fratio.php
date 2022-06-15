@@ -388,6 +388,15 @@ return [
         'Moderate' => 3,
         'Good' => 4,
         'Excellent' => 5, 
+    ],
+
+    'financial_score_wts' => [
+        'gross_margin' => 0.1,
+        'net_margin' => 0.2,
+        'roi' => 0.15,
+        'raw_materials' => 0.2,
+        'current_ratio' => 0.2,
+        'debt_ratio' => 0.15,
     ]
 ];
 

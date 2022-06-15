@@ -102,6 +102,9 @@ export default {
             y: {
               beginAtZero: true,
               max: 100,
+              ticks: {
+                fontFamily: 'Rubik, sans-serif',
+              }
             }
           },
           plugins: { 

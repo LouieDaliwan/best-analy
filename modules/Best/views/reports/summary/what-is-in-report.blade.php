@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-3 col-12">
               <span class="mr-2" style="width: 16px; height: 16px; display: inline-block; border-radius: 100%; background-color: black;"></span>
-              <span >@lang('Corrective Action')</span>
+              <span >@lang('Normal')</span>
             </div>
           </div>
 

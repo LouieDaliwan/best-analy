@@ -290,13 +290,11 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         $ratingGraph = RatingGraph::getRatings($customer);
         
-        $financialScore = ($ratingGraph['smeRatings'][5]['score'] / 5) * 0.3;
+        $financialScore = round(($ratingGraph['smeRatings'][5]['score'] / 5), 2);
         
         $sdmi = $customer->sdmiComputation()->where('month_key', $monthKey)->first();
 
         $sdmiIndex = $sdmi->metadata['index'] ?? 0;
-
-        $sdmiScore = round(($sdmiIndex * 0.2), 2);
 
         Cache::remember($sdmiName, 60*60*24*30, function() use ($sdmiIndex){
             return $sdmiIndex;
@@ -322,7 +320,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         })->sum(), 2);
         
-        $results = round(($totalOf4Index + $financialScore + $sdmiScore), 1);   
+        $results = round($totalOf4Index + round(($financialScore * 0.3), 2) + round(($sdmiIndex * 0.2), 2), 1);   
 
         return Cache::remember($keyName, 60*60*24*30, function() use ($results){
             return $results;

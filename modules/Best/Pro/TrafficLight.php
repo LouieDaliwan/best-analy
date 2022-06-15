@@ -4,10 +4,10 @@ namespace Best\Pro;
 
 abstract class TrafficLight
 {
-    const FAILED = 'failed';
-    const CRITICAL = 'critical';
-    const CORRECTIVE_ACTION = 'corrective action';
-    const NORMAL = 'normal';
+    const FAILED = 'Failed';
+    const CRITICAL = 'Critical';
+    const CORRECTIVE_ACTION = 'Corrective Action';
+    const NORMAL = 'Normal';
     const RED_LIGHT = 'red';
     const AMBER_LIGHT = 'amber';
     const GREEN_LIGHT = 'green';
@@ -129,26 +129,32 @@ abstract class TrafficLight
     {
         $comment = '';
         $result = '';
+        $background = '';
 
         if($score >= self::normal()) {
             $comment = self::NORMAL;
-            $result = 'green';
+            $result = '#000000';
+            $background = '#f3f3f3ff';
         }
 
         if($score >= 0.1 && $score  <= self::critical()) {
             $comment = self::CRITICAL;
-            $result = 'amber';
+            $result = '#FFAB40';
+            $background = '#fff2ccff ';
         }
 
         if($score >= 0.31 && $score <= self::correctiveAction()){
             $comment = self::CORRECTIVE_ACTION;
-            $result = 'amber';
+            $result = '#38761D';
+            $background = '#d9ead3ff';
         }
 
         if($score <= self::failed()){
             $comment = self::FAILED;
-            $result = 'red';
+            $result = '#E63757';
+            $background = '#f4ccccff';
         }
+
 
         // if ($score > self::red()) {
         //     if ($score > self::amber()) {
@@ -160,7 +166,7 @@ abstract class TrafficLight
         //     $comment = self::RED_LIGHT;
         // }
 
-        return ['comment' => $comment, 'result' => $result];
+        return ['comment' => $comment, 'result' => $result, 'background' => $background];
     }
 
     /**

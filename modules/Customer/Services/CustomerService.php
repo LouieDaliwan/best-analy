@@ -331,8 +331,11 @@ class CustomerService extends Service implements CustomerServiceInterface
             app(FinancialRatioInterface::class)->compute($customer, $statements);
         }
 
-        $survey = Survey::find(1);
-        dispatch(new UpdateGeneratedReport($survey, $customer));
+        if($statements != null || $customer->statements()->count() > 0) {
+            $survey = Survey::find(1);
+            dispatch(new UpdateGeneratedReport($survey, $customer));
+        }
+        
     }
 
     protected function saveCustomerDetail($customer, $attributes)

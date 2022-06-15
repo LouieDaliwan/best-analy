@@ -23,7 +23,7 @@
           </td>
           <td width="25%" valign="middle" style="text-align: center;">
             <span class="mr-2" style="width: 16px; height: 16px; display: inline-block; border-radius: 100%; background-color: black;"></span>
-            <span >@lang('Corrective Action')</span>
+            <span >@lang('Normal')</span>
           </td>
         </tr>
       </table>

@@ -18,7 +18,7 @@
         <v-col cols="12" sm="6">
           <b><span v-text="trans('Score')"></span>:</b>
           <span
-            :style="{color: colorStatus(value.ratings.results.result)}"
+            :style="{color: colorStatus(value.ratings.results.result), backgroundColor: backgroundColor(value.ratings.results.background)}"
             class="muted--text light rounded-1 py-1 px-3 rounded-xl"
             v-text="trans(`${value.ratings.overall_score}`)"
           ></span>
@@ -27,7 +27,7 @@
         <v-col cols="12" sm="6" class="text-sm-right">
           <b><span v-text="trans('Results')"></span>:</b>
           <span
-            :style="{color: colorStatus(value.ratings.results.result)}"
+            :style="{color: colorStatus(value.ratings.results.result), backgroundColor: backgroundColor(value.ratings.results.background)}"
             class="muted--text light rounded-1 py-1 px-3 rounded-xl"  
             v-text="trans(`${value.ratings.results.comment}`)"
           ></span>
@@ -126,6 +126,10 @@ export default {
     },
 
     colorStatus(color) {
+        return color + '!important';
+    },
+
+    backgroundColor(color) {
         return color + '!important';
     },
 

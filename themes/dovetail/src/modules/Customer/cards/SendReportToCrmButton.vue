@@ -11,7 +11,7 @@
             <v-list-item-content>
               <v-list-item-title v-text="item.name"></v-list-item-title>
               <div v-if="item.status == 'error'">
-                <i v-text="item.message" class="error"></i>
+                <span v-text="item.message" class="small red--text text--lighten-1"></span>
               </div>
             </v-list-item-content>
             <v-list-item-action>

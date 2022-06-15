@@ -91,7 +91,7 @@ class Rendering
             $financial_score += $rating;
         }
         
-        return round($financial_score, 2);
+        return round(($financial_score / 5) * 100, 2);
     }
 
 

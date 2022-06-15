@@ -190,7 +190,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'customer:type' => $customer->metadata['type'] ?? null,
                 'subscore:score' => $totalSubscoreScore = $this->getTotalIndexSubscoreScore($survey, $attributes['customer_id'], $monthkey),
                 'subscore:total' => $totalSubscoreTotal = $this->getTotalIndexSubscoreTotal($survey, $attributes['customer_id'], $monthkey),
-                'overall:total' => $total = $this->getOverallTotalAverage($totalSubscoreScore, $totalSubscoreTotal, $taxonomy->alias, $attributes['customer_id']),
+                'overall:total' => $total = $this->getOverallTotalAverage($totalSubscoreScore, $totalSubscoreTotal, $taxonomy->alias, $attributes['customer_id'], $monthkey),
                 $this->getIndexOverAllScoreKey($taxonomy) => $total,
                 'overall:comment' => $this->getOverallFindingsComment($taxonomy->alias, $customer->name, $total),
                 'overall:comment:overall' => $this->getOverallFindingsCommentOverall(
@@ -223,11 +223,13 @@ class FormulaService extends Service implements FormulaServiceInterface
         );
 
 
-        if(cache("{$customer->id}-results-{$user->id}")) {
-            Cache::forget("{$customer->id}-results-{$user->id}");
+        if(cache("{$customer->id}-results-{$user->id}-{$monthkey}")) {
+            Cache::forget("{$customer->id}-results-{$user->id}-{$monthkey}");   
         }
         
-        Cache::forever("{$customer->id}-results-{$user->id}", $lightScore);
+        Cache::remember("{$customer->id}-results-{$user->id}-{$monthkey}", 60*60*24*30, function() use ($lightScore){
+            return $lightScore;
+        });
 
         $this->data['overall:enablers:orig'] = $this->getOriginalAverage($this->data['indices']);
 
@@ -273,8 +275,8 @@ class FormulaService extends Service implements FormulaServiceInterface
     {
         $user = auth()->user()->id;
 
-        $keyName = "{$customer->id}-Overall-{$user}";
-        $sdmiName = "{$customer->id}-SDMI-{$user}";
+        $keyName = "{$customer->id}-Overall-{$user}-{$monthKey}";
+        $sdmiName = "{$customer->id}-SDMI-{$user}-{$monthKey}";
 
         if( cache($keyName)) {
             Cache::forget($keyName);
@@ -296,7 +298,9 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         $sdmiScore = round(($sdmiIndex * 0.2), 2);
 
-        Cache::forever($sdmiName, $sdmiIndex);
+        Cache::remember($sdmiName, 60*60*24*30, function() use ($sdmiIndex){
+            return $sdmiIndex;
+        });
         
         $exists_section_score_zero = $collect->map(function ($index) {
             return $index['subscore:score'] == 0;
@@ -320,9 +324,9 @@ class FormulaService extends Service implements FormulaServiceInterface
         
         $results = round(($totalOf4Index + $financialScore + $sdmiScore), 1);   
 
-        Cache::forever($keyName, $results);
-        
-        return cache($keyName);
+        return Cache::remember($keyName, 60*60*24*30, function() use ($results){
+            return $results;
+        });;
     }
 
     /**
@@ -796,18 +800,20 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  integer $total
      * @return mixed
      */
-    public function getOverallTotalAverage($score, $total, $taxonomy, $customerId)
+    public function getOverallTotalAverage($score, $total, $taxonomy, $customerId, $monthKey)
     {
         $results = $score == 0 ? 0 :round(($score/$total)*100, 2);
 
         $user = auth()->user()->id;
-        $keyName = "{$customerId}-{$taxonomy}-{$user}";
+        $keyName = "{$customerId}-{$taxonomy}-{$user}-{$monthKey}";
 
         if( cache($keyName)) {
             Cache::forget($keyName);
         }
-        
-        Cache::forever($keyName, $results);
+               
+        Cache::remember($keyName, 60*60*24*30, function() use ($results){
+            return $results;
+        });
 
         return $results;
     }

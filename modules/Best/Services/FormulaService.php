@@ -241,6 +241,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['analysis:financial'] = is_null($financialStatements) ? '' : $this->getFinancialAnalysisData($customer, $financialStatements);
 
         // Retrieve the Financial Ratios and Productivity Indicators.
+        dd($financialStatements);
         $this->data['ratios:financial'] = is_null($financialStatements) ? '' : $this->getFinancialRatios($customer, $financialStatements);
         $this->data['indicators:productivity'] = is_null($financialStatements) ? '' : $this->getProductivityIndicators($customer, $financialStatements);
 

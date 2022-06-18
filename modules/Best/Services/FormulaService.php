@@ -238,11 +238,11 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['cover:date'] = date(settings('formal:date', 'Y-m-d'));
 
         // Retrieve Financial Analysis data.
-        $this->data['analysis:financial'] = $this->getFinancialAnalysisData($customer, $financialStatements);
+        $this->data['analysis:financial'] = is_null($financialStatements) ? '' : $this->getFinancialAnalysisData($customer, $financialStatements);
 
         // Retrieve the Financial Ratios and Productivity Indicators.
-        $this->data['ratios:financial'] = $this->getFinancialRatios($customer, $financialStatements);
-        $this->data['indicators:productivity'] = $this->getProductivityIndicators($customer, $financialStatements);
+        $this->data['ratios:financial'] = is_null($financialStatements) ? '' : $this->getFinancialRatios($customer, $financialStatements);
+        $this->data['indicators:productivity'] = is_null($financialStatements) ? '' : $this->getProductivityIndicators($customer, $financialStatements);
 
         // User object.
         $this->data['report:user'] = $user->displayname;

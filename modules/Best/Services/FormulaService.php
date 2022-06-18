@@ -498,7 +498,7 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function getFinancialRatios(Customer $customer, $financialStatements)
     {
-        if (collect($financialStatements) > 0) {
+        if (collect($financialStatements)->count() > 0) {
             return FinancialRatios::getReport($customer, $financialStatements);
         }
 
@@ -513,7 +513,7 @@ class FormulaService extends Service implements FormulaServiceInterface
      */
     public function getProductivityIndicators($customer, $financialStatements)
     {
-        if (collect($financialStatements) > 0) {
+        if (collect($financialStatements)->count() > 0) {
             return ProductivityIndicators::getReportWithCustomer($customer, $financialStatements);
         }
 

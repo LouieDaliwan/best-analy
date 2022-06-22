@@ -46,9 +46,9 @@
                       </text>
                     </g>
                   </svg>
-                  <span class="badge badge-soft-{{ $data['overall:result'] }} font-weight-bold" style="color: {{ $data['overall:result'] }}; background-color: {{ $data['overall:backgroundResult']}}; font-size: 20px;">
-                    {{ $data['overall:percentage'] }}
-                  </span> -->
+                  {{-- <span class="badge badge-soft-{{ $data['overall:result'] }} font-weight-bold" style="color: {{ $data['overall:result'] }}; background-color: {{ $data['overall:backgroundResult']}}; font-size: 20px;"> --}}
+                    {{-- {{ $data['overall:percentage'] }} --}}
+                  {{-- </span> --> --}}
                 </div>
               </td>
               <td>

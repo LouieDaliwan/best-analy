@@ -224,15 +224,8 @@ class FormulaService extends Service implements FormulaServiceInterface
             $this->data['indices'], $customer->name
         );
 
-
-        if(cache("{$customer->id}-results-{$user->id}-{$monthkey}")) {
-            Cache::forget("{$customer->id}-results-{$user->id}-{$monthkey}");   
-        }
+        $this->cacheLightScore($customer->id, $user->id, $monthkey, $lightScore);
         
-        Cache::remember("{$customer->id}-results-{$user->id}-{$monthkey}", 60*60*24*30, function() use ($lightScore){
-            return $lightScore;
-        });
-
         $this->data['overall:enablers:orig'] = $this->getOriginalAverage($this->data['indices']);
 
         // Retrieve the metadata for the report cover.
@@ -265,6 +258,18 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['SDMI']['overall:total'] = cache("{$customer->id}-SDMI-{$user->id}");
 
         return $this->data;
+    }
+
+
+    protected function cacheLightScore($customerId, $userId, $monthKey, $lightScore)
+    {
+        if(cache("{$customerId}-results-{$userId}-{$monthKey}")) {
+            Cache::forget("{$customerId}-results-{$userId}-{$monthKey}");   
+        }
+        
+        Cache::remember("{$customerId}-results-{$userId}-{$monthKey}", 60*60*24*30, function() use ($lightScore){
+            return $lightScore;
+        });
     }
 
     /**

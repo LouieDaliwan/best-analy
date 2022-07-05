@@ -255,7 +255,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['indices']['SDMI']['pindex:code'] = 'SDMI';
         $this->data['indices']['SDMI']['pindex'] = 'Strategic Development and Management Index';
         $this->data['SDMI']['elements:charts'] = $this->getChartedGroupedAverage(null, 'sdmi', $customer, $monthkey);
-        $this->data['SDMI']['overall:total'] = cache("{$customer->id}-SDMI-{$user->id}");
+        $this->data['SDMI']['overall:total'] = cache("{$customer->id}-SDMI-{$user->id}-{$monthkey}");
 
         return $this->data;
     }
@@ -781,7 +781,8 @@ class FormulaService extends Service implements FormulaServiceInterface
         $user = auth()->user()->id;
         $keyName = "{$customerId}-{$taxonomy}-{$user}-{$monthKey}";
 
-        if( cache($keyName)) {
+        dd($keyName);
+        if(cache($keyName)) {
             Cache::forget($keyName);
         }
                

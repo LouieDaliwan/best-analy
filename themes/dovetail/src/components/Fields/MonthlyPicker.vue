@@ -35,6 +35,8 @@ export default {
       axios.get('/api/v1/reports/misc/months/all')
         .then(response => {
           this.resource.data = response.data
+          let latestDate = _.last(response.data);          
+          this.$router.push({ query: { month: latestDate.value }}).catch(err => {})
         })
     },
 

@@ -30,6 +30,7 @@ use Survey\Models\Survey;
 use User\Models\User;
 use Illuminate\Support\Facades\File;
 use Barryvdh\Snappy\Facades\SnappyPdf;
+use Carbon\Carbon;
 use Customer\Models\Attributes\Score;
 use Customer\Models\FinancialStatement;
 
@@ -126,13 +127,20 @@ class ReportService extends Service implements ReportServiceInterface
      */
     public function getMonths()
     {
-        $model = $this->model->groupBy('month')->pluck('month');
-
-        return $model->reject(function ($item) {
+        $lists = $this->model->groupBy('month')->pluck('month')
+        ->reject(function ($item) {
             return is_null($item);
         })->map(function ($item) {
             $month = date('d-m-Y', strtotime("01-{$item}"));
-            return ['value' => $item, 'text' => date('M Y', strtotime($month))];
+            return date('Y M', strtotime($month));
+        })->toArray();
+
+        sort($lists);
+
+        array_push($lists, Carbon::now()->format('Y M'));
+
+        return collect($lists)->map(function($item) {
+            return ['value' => date('m-Y', strtotime($item)), 'text' => date('M Y', strtotime($item))];
         })->toArray();
     }
 

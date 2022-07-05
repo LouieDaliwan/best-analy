@@ -785,9 +785,11 @@ class FormulaService extends Service implements FormulaServiceInterface
             Cache::forget($keyName);
         }
                
-        Cache::remember($keyName, 60*60*24*30, function() use ($results){
+        $cache = Cache::remember($keyName, 60*60*24*30, function() use ($results){
             return $results;
         });
+
+        dd($cache, 'test', $keyName);
 
         return $results;
     }

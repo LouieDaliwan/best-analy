@@ -169,13 +169,26 @@
 
                     <!-- choices -->
                     <v-item-group v-model="field.selected" active-class="primary" class="mb-4">
-                      <v-container :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'">
-                        <v-row justify="space-around" no-gutters>
-                          <v-col :id="`scrollto-${field.id+'-'+(i+1)}`" v-for="(rate, c) in getRates(f, field)" :key="c">
+                      <v-container :class="$vuetify.breakpoint.smAndUp ? '' : 'pa-0'" >
+                        <v-row justify="space-around" no-gutters :style="getDisplayBlock(field.title)">
+                          <v-col :id="`scrollto-${field.id+'-'+(i+1)}`" v-for="(rate, c) in getRates(f, field)" :key="c" :style="field.title == 'Endorsement, Certification & Standards (Hygiene, Service Quality, ISO,etc.)' ? 'padding-bottom: 15px': ''">
                             <v-tooltip bottom>
                               <template v-slot:activator="{ on }">
-                                <v-item v-slot:default="{ active, toggle }">
+                                <v-item v-slot:default="{ active, toggle }" v-if="field.title == 'Endorsement, Certification & Standards (Hygiene, Service Quality, ISO,etc.)'">
+                                  <v-btn                                    
+                                    :color="active ? 'primary' : null"
+                                    @click="choose(field, rate, f);toggle()"                                    
+                                    v-on="$vuetify.breakpoint.smAndUp ? on : null"
+                                    v-scroll-to="{ el: `#scrollto-${field.id+'-'+(parseInt(i)+1)}`, duration: 700 }"
+                                    >
+                                    <span :class="active ? 'white--text' : 'muted--text'">
+                                      {{ rate.text }}
+                                    </span>
+                                  </v-btn>
+                                </v-item>
+                                <v-item v-slot:default="{ active, toggle }" v-else>
                                   <div
+                                    small
                                     v-if="field.title == 'What is the current utilisation of your business capacity?' || field.title == 'Extent products/or services are ready to be exported'"
                                     :color="active ? 'primary' : null"
                                     @click="choose(field, rate, f);toggle()"
@@ -507,6 +520,12 @@ export default {
         } else {
            return 'dt-chip'
         }
+    },
+
+    getDisplayBlock(title) {
+      if(title !== 'Endorsement, Certification & Standards (Hygiene, Service Quality, ISO,etc.)')  return '';
+
+      return 'display: block';
     }
   },
 

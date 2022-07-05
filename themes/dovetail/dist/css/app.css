@@ -469,8 +469,21 @@ pre {
   color: var(--text);
 }
 
-.dt-chip,
 .dt-chip2 {
+  -webkit-box-align: center;
+  align-items: center;
+  border-radius: 5%;
+  cursor: pointer;
+  display: -webkit-inline-box;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+
+.dt-chip {
   -webkit-box-align: center;
   align-items: center;
   border-radius: 100%;
@@ -496,7 +509,7 @@ pre {
     border: 2px solid var(--text-muted);
     -webkit-box-flex: 0;
     flex: 0 0 55px;
-    height: 100px;
+    height: 40px;
     width: 100px;
   }
 }
@@ -514,7 +527,7 @@ pre {
     border: 1px solid var(--text-muted);
     -webkit-box-flex: 0;
     flex: 0 0 35px;
-    height: 100px;
+    height: 40px;
     width: 100px;
   }
 }

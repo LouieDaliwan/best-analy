@@ -185,7 +185,7 @@
                                     v-scroll-to="{ el: `#scrollto-${field.id+'-'+(parseInt(i)+1)}`, duration: 700 }"
                                     >
                                     <span :class="active ? 'white--text' : 'muted--text'">
-                                      {{ rate.number }}
+                                      {{ rate.text }}
                                     </span>
                                   </div>
                                   <div

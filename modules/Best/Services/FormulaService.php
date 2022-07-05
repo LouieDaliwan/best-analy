@@ -781,7 +781,6 @@ class FormulaService extends Service implements FormulaServiceInterface
         $user = auth()->user()->id;
         $keyName = "{$customerId}-{$taxonomy}-{$user}-{$monthKey}";
 
-        dd($keyName);
         if(cache($keyName)) {
             Cache::forget($keyName);
         }

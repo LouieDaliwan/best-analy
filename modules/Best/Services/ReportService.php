@@ -135,7 +135,7 @@ class ReportService extends Service implements ReportServiceInterface
             return date('Y-m', strtotime($month));
         })->toArray();
 
-        sort($lists);
+        rsort($lists);
 
         array_push($lists, Carbon::now()->format('Y-m'));
 

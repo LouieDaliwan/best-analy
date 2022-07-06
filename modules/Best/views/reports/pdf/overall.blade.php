@@ -73,7 +73,7 @@
   <div class="sheet">
     @include('best::reports.pdf.partials.header')
     <div class="my-2 border-bottom"></div>
-    <div style="zoom: 0.95;">
+    <div style="zoom: 0.93;">
       @include('best::reports.pdf.summary.about')
       @include('best::reports.pdf.summary.report-objectives')
       @include('best::reports.pdf.summary.key-benefits')

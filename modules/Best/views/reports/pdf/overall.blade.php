@@ -73,33 +73,35 @@
   <div class="sheet">
     @include('best::reports.pdf.partials.header')
     <div class="my-2 border-bottom"></div>
-    @include('best::reports.pdf.summary.about')
-    @include('best::reports.pdf.summary.report-objectives')
-    @include('best::reports.pdf.summary.key-benefits')
-    @include('best::reports.pdf.summary.what-is-in-report')
-    @include('best::reports.pdf.summary.data-reliability-validity')
-    @include('best::reports.pdf.summary.data-privacy')
-    <table width="100%">
-      <tr>
-        <td valign="bottom" width="50%">
-          @include('best::reports.pdf.partials.footer')
-        </td>
-        <td valign="bottom" width="50%" class="text-right">
-          <section>
-            <div class="row">
-              <div class="col-md-12">
-                <div style="font-size: 10px;">
-                {{ __('Page 1 of') }}
-                <?php if($data['is_single']): ?> {{ __('8') }}
-                <?php else: ?> {{ __('10') }}
-                <?php endif; ?>
+    <div style="zoom: 0.8;">
+      @include('best::reports.pdf.summary.about')
+      @include('best::reports.pdf.summary.report-objectives')
+      @include('best::reports.pdf.summary.key-benefits')
+      @include('best::reports.pdf.summary.what-is-in-report')
+      @include('best::reports.pdf.summary.data-reliability-validity')
+      @include('best::reports.pdf.summary.data-privacy')
+      <table width="100%">
+        <tr>
+          <td valign="bottom" width="50%">
+            @include('best::reports.pdf.partials.footer')
+          </td>
+          <td valign="bottom" width="50%" class="text-right">
+            <section>
+              <div class="row">
+                <div class="col-md-12">
+                  <div style="font-size: 10px;">
+                  {{ __('Page 1 of') }}
+                  <?php if($data['is_single']): ?> {{ __('8') }}
+                  <?php else: ?> {{ __('10') }}
+                  <?php endif; ?>
+                </div>
+                </div>
               </div>
-              </div>
-            </div>
-          </section>
-        </td>
-      </tr>
-    </table>
+            </section>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 
   {{-- overall --}}

@@ -5,9 +5,9 @@
         <v-banner class="dt-banner" elevation="1">
           <v-row justify="center" align="start">
           <v-col class="text-center" v-for="(rate, r) in rates" :key="r">
-            <v-avatar color="primary" size="20" class="mb-2">
-              <small class="white--text" :style="`${ rate.number === 'N/A' ? 'font-size: 10px' : ''}`">{{ rate.number }}</small>
-            </v-avatar>
+            <!-- <v-avatar color="primary" size="20" class="mb-2"> -->
+              <!-- <small class="white--text" :style="`${ rate.number === 'N/A' ? 'font-size: 10px' : ''}`">{{ rate.number }}</small> -->
+            <!-- </v-avatar> -->
             <div class="overline" v-html="trans(rate.text)"></div>
           </v-col>
           </v-row>

@@ -338,7 +338,7 @@ export default {
       { number: '1', text: 'Critical certifications and standards are acquired to maintain high standards in the business	' },
       { number: '3', text: 'Certifications and Standards acquired over and above requirements to drive business growth & innovation' },
       { number: '5', text: 'I am not aware of any industry standards or certifications required' },
-      { number: 'NA', text: 'There are no industry standardsrequired in my business' },
+      { number: 'NA', text: 'There are no industry standards required in my business' },
     ],
 
     sdmiRatesFour: [

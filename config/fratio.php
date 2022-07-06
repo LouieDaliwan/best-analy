@@ -35,7 +35,7 @@ return [
                 'label' => "Strategy Development & Management",
                 'acro' => "SDMI",
                 'score' => 0,
-                'code' => 'sdmi',
+                'code' => 'strategy-development-and-management-index',
                 'id' => 5
             ],
             'financial_score' => [

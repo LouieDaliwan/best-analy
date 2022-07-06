@@ -176,9 +176,11 @@
                               <template v-slot:activator="{ on }">
                                 <v-item v-slot:default="{ active, toggle }" v-if="field.title == 'Endorsement, Certification & Standards (Hygiene, Service Quality, ISO,etc.)'">
                                   <v-btn
-                                    block                                    
+                                    block       
+                                    :ripple="false"                             
                                     :color="active ? 'primary' : null"
                                     @click="choose(field, rate, f);toggle()"                                    
+                                    class="dt-chip3"
                                     v-on="$vuetify.breakpoint.smAndUp ? on : null"
                                     v-scroll-to="{ el: `#scrollto-${field.id+'-'+(parseInt(i)+1)}`, duration: 700 }"
                                     >

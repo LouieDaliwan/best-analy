@@ -92,7 +92,8 @@ transition: all 0.1s ease-in-out;
   }
 
   .dt-chip3 {
-    border: 2px solid var(--text-muted);
+    border: 1px solid var(--text-muted) !important;
+    background-color: none !important;
     -webkit-box-flex: 0;
           flex: 0 0 55px;
     text-align: center;

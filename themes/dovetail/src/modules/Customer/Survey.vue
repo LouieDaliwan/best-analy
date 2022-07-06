@@ -175,7 +175,8 @@
                             <v-tooltip bottom>
                               <template v-slot:activator="{ on }">
                                 <v-item v-slot:default="{ active, toggle }" v-if="field.title == 'Endorsement, Certification & Standards (Hygiene, Service Quality, ISO,etc.)'">
-                                  <v-btn                                    
+                                  <v-btn
+                                    block                                    
                                     :color="active ? 'primary' : null"
                                     @click="choose(field, rate, f);toggle()"                                    
                                     v-on="$vuetify.breakpoint.smAndUp ? on : null"

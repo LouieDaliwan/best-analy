@@ -36,8 +36,8 @@
       font:              'rgb(151, 172, 203)',
     };
     var gradient = ctx.createLinearGradient(0, 0, 0, 200);
-      gradient.addColorStop(0, '#e85c5c');
-      gradient.addColorStop(1, '#e37d7d');
+      gradient.addColorStop(0, '#D19116');
+      gradient.addColorStop(1, '#D19116');
     var barChart = new Chart(ctx, {
       type: 'bar',
       data: {

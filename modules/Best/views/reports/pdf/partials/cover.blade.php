@@ -62,10 +62,9 @@
           <div class="col-md-10">
             <table width="100%">
               <tr>
-                <td valign="top">
+               <td valign="top" width="70%">
                   <h4 class="mb-3">@lang('Prepared for'):</h4>
                   <h2 class="mb-3 dt-{{ $data['pindex:code'] }} mb-0">{{ $data['customer:name'] }}</h2>
-                  <p class="mb-0">{{ $data['cover:date'] }}</p>
                   @if ($data['customer:counselor'] ?? null)
                     <h4 class="mb-0 mt-3">@lang('Business Councelor'):</h4>
                     <p class="mb-0">{{ $data['customer:counselor'] }}</p>
@@ -77,7 +76,24 @@
                       <p>{{ $data['sitevisit:date:formatted'] }}</p>
                     </div>
                   @endif
+                </td>
+                <td valign="top" width="30%">
+                  <div>
+                    <h4 class="mb-0">@lang('Prepared by'):</h4>
+                    <div style="background: #12263f; height: 1px; margin-top: 40px;"></div>
+                    <div class="text-center mt-2">{{ $data['report:user'] ?? null }}</div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
 
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <table width="100%">
+              <tr>
+                <td valign="top" width="70%">
                   <div class="mt-5">
                     <cite>
                       <small>{{ __('Owned by') }} {{ __('Khalifa Fund for Enterprise Development') }}</small><br />
@@ -85,11 +101,12 @@
                     </cite>
                   </div>
                 </td>
-                <td valign="top">
-                  <div>
-                    <h4 class="mb-0">@lang('Prepared by'):</h4>
-                    <div style="background: #12263f; height: 1px; margin-top: 40px;"></div>
-                    <div class="text-center mt-2">{{ $data['report:user'] ?? null }}</div>
+                <td valign="top" width="30%">
+                  <div class="mt-5">
+                    <cite>
+                      <small class="text-white">Date:</small><br />
+                      <small>{{ __('Report Printed On') }}: <?php echo date("M d, Y"); ?></p></small>
+                    </cite>
                   </div>
                 </td>
               </tr>

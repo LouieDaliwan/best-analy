@@ -32,7 +32,6 @@
           <div class="col-md-6 col-sm-12">
             <h4 class="mb-0">@lang('Prepared for'):</h4>
             <h2 class="dt-primary mb-0">{{ $data['organisation:profile']['name'] }}</h2>
-            <p class="mb-0">{{ $data['cover:date'] }}</p>
             @if ($data['customer:counselor'] ?? null)
               <h4 class="mb-0 mt-3">@lang('Business Councelor'):</h4>
               <p class="mb-0">{{ $data['customer:counselor'] }}</p>
@@ -64,7 +63,7 @@
           </div>
           <div class="col-md-4 col-sm-12">
             <cite>
-              <small>Printed on: <?php echo date("M d, Y"); ?></small>
+              <small>@lang("Report Printed On"): <?php echo date("M d, Y"); ?></small>
             </cite>
           </div>
         </div>

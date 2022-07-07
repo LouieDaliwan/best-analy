@@ -138,7 +138,7 @@
              <v-card :key="f">
                <fifth-criteria-one v-if="f === 'Business Expansion'"></fifth-criteria-one>
                <fifth-criteria-sec v-if="f !== 'Business Expansion' && f !== 'Marketing Strategies' && f  !== 'Capacity Utilisation' && f !== 'Endorsement, Certification & Standards'"></fifth-criteria-sec>
-               <fifth-criteria-three v-if="f === 'Endorsement, Certification & Standards'"></fifth-criteria-three>
+               <!-- <fifth-criteria-three v-if="f === 'Endorsement, Certification & Standards'"></fifth-criteria-three> -->
 
                 <v-card-text class="text-center" :key="f">
                 <v-row justify="center">

@@ -114,8 +114,8 @@ class GrossMarginAnalysis
     protected static function getBenchMarkScore($projectType)
     {
         $benchMarks = [
-            'industrial' => 30,
-            'non-industrial' => 65,
+            'industrial' => 0.3,
+            'non-industrial' => 0.65,
         ];
 
         return $benchMarks[strtolower($projectType)];

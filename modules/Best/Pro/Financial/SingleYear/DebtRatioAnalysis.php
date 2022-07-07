@@ -18,8 +18,8 @@ class DebtRatioAnalysis
         $year = $financialStatements[0]['period'];
 
         $labels = [
-            'preview' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}%"]],
-           'pdf' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}%"]],
+            'preview' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}"]],
+           'pdf' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}"]],
         ];
         
         return [
@@ -111,8 +111,8 @@ class DebtRatioAnalysis
     protected static function getBenchMarkScore($projectType)
     {
         $benchMarks = [
-            'industrial' => 20,
-            'non-industrial' => 20,
+            'industrial' => 0.2,
+            'non-industrial' => 0.2,
         ];
 
         return $benchMarks[strtolower($projectType)];

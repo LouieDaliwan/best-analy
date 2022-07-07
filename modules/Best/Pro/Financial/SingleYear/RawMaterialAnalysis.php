@@ -20,8 +20,8 @@ class RawMaterialAnalysis
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
-            'preview' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}%"]],
-           'pdf' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}%"]],
+            'preview' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}"]],
+           'pdf' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}"]],
         ];
         
         return [
@@ -115,8 +115,8 @@ class RawMaterialAnalysis
     protected static function getBenchMarkScore($projectType)
     {
         $benchMarks = [
-            'industrial' => 35,
-            'non-industrial' => 25,
+            'industrial' => 0.35,
+            'non-industrial' => 0.25,
         ];
 
         return $benchMarks[strtolower($projectType)];

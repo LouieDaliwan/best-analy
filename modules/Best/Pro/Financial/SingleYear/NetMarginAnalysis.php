@@ -111,8 +111,8 @@ class NetMarginAnalysis
     protected static function getBenchMarkScore($projectType)
     {
         $benchMarks = [
-            'industrial' => 10,
-            'non-industrial' => 20,
+            'industrial' => 0.1,
+            'non-industrial' => 0.2,
         ];
 
         return $benchMarks[strtolower($projectType)];

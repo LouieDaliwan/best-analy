@@ -18,8 +18,8 @@ class CurrentRatioAnalysis
         $year = $financialStatements[0]['period'];
 
         $labels = [
-            'preview' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}%"]],
-           'pdf' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}%"]],
+            'preview' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}"]],
+           'pdf' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}"]],
         ];
         
         return [

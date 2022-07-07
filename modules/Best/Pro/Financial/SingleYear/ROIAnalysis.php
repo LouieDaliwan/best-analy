@@ -18,8 +18,8 @@ class ROIAnalysis
         $year = $financialStatements[0]['period'];
 
         $labels = [
-           'preview' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}%"]],
-           'pdf' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}%"]],
+           'preview' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}"]],
+           'pdf' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}"]],
         ];
         
         return [
@@ -112,8 +112,8 @@ class ROIAnalysis
     protected static function getBenchMarkScore($projectType)
     {
         $benchMarks = [
-            'industrial' => 10,
-            'non-industrial' => 15,
+            'industrial' => 0.1,
+            'non-industrial' => 0.15,
         ];
 
         return $benchMarks[strtolower($projectType)];

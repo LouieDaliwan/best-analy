@@ -135,12 +135,14 @@ class ReportService extends Service implements ReportServiceInterface
             return date('Y-m', strtotime($month));
         })->toArray();
 
+        array_push($lists, 'all');
+
         rsort($lists);
-
+                
         array_push($lists, Carbon::now()->format('Y-m'));
-
+        
         return collect($lists)->map(function($item) {
-            return ['value' => date('m-Y', strtotime($item)), 'text' => date('M Y', strtotime($item))];
+            return $item == 'all' ? ['value' => 'all', 'text' => 'All'] : ['value' => date('m-Y', strtotime($item)), 'text' => date('M Y', strtotime($item))];
         })->toArray();
     }
 

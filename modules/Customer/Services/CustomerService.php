@@ -244,17 +244,20 @@ class CustomerService extends Service implements CustomerServiceInterface
 
         $model = $this->model->whereUserId($this->auth()->id());
 
-        $monthVar = explode('-', $this->request()->get('month') ?? '');
+        if($this->request()->get('month') != 'all') {
+            $monthVar = explode('-', $this->request()->get('month') ?? '');
 
-        $month = $this->request()->get('month') ? $monthVar[0] : date('m');
-        $model = $model->whereMonth('remarks', $month);
+            $month = $this->request()->get('month') ? $monthVar[0] : date('m');
+            $model = $model->whereMonth('remarks', $month);
 
-        $year = $this->request()->get('month') ? $monthVar[1] : date('Y');
-        $model = $model->whereYear('remarks', $year);
-
+            $year = $this->request()->get('month') ? $monthVar[1] : date('Y');
+            $model = $model->whereYear('remarks', $year);
+        }
+        
         $model = $model->paginate($this->getPerPage());
 
-        $sorted = $this->sortAndOrder($model);
+        $sorted = $this->request()->get('order') != null ? $this->sortAndOrder($model): $model->sortByDesc('month');
+        
         
         return new LengthAwarePaginator($sorted, $model->total(), $model->perPage());
     }
@@ -363,12 +366,20 @@ class CustomerService extends Service implements CustomerServiceInterface
 
     public function getSdmiScore($customer)
     {
-        $monthVar = explode('-', $this->request()->get('month') ?? '');
+        $sdmi = SDMIIndexScore::whereCustomerId($customer->id);
+
+        if ($this->request()->get('month') != 'all') {
+
+            $monthVar = explode('-', $this->request()->get('month') ?? '');
         
-        $month = $this->request()->get('month') ?  $monthVar[0]: date('m');
+            $month = $this->request()->get('month') ?  $monthVar[0]: date('m');
 
-        $year = $this->request()->get('month') ? $monthVar[1] : date('Y');
+            $year = $this->request()->get('month') ? $monthVar[1] : date('Y');
 
-        return SDMIIndexScore::whereCustomerId($customer->id)->where('month_key', "{$month}-{$year}")->first() ?? 'empty';
+            return $sdmi->where('month_key', "{$month}-{$year}")->first() ?? 'empty';
+        }
+        
+
+        return  $sdmi->latest()->first() ?? 'empty';
     }
 }

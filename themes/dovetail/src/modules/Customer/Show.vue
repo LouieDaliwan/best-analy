@@ -39,11 +39,11 @@
         <div class="mb-6">
           <v-row>
             <v-col cols="4" md="2" class="py-0"><p class="mb-0 font-weight-bold">{{ trans('Staff Strength') }}:</p></v-col>
-            <v-col cols="auto" class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata && resource.data.metadata['staffstrength'] || null }}</p></v-col>
+            <v-col cols="auto" class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.latestStatement && resource.data.latestStatement['metadataStatements']['Number of Staff'] || null }}</p></v-col>
           </v-row>
           <v-row>
             <v-col cols="4" md="2" class="py-0"><p class="mb-0 font-weight-bold">{{ trans('Industry') }}:</p></v-col>
-            <v-col cols="auto" class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.metadata && resource.data.metadata['industry'] || null }}</p></v-col>
+            <v-col cols="auto" class="py-0"><p class="mb-0 font-weight-regular"> {{ resource.data.details && resource.data.details['metadata']['industry_sector'] || null }}</p></v-col>
           </v-row>
         </div>
         <p class="font-weight-regular">
@@ -63,7 +63,7 @@
                 <!-- if report is generated -->
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <div v-if="resource['is:finished']" v-on="on" style="position: absolute;">
+                    <div v-if="resource['is:finished'] && resource.report.month == current_month" v-on="on" style="position: absolute;">
                       <v-icon color="success">mdi-check-circle</v-icon>
                     </div>
                   </template>
@@ -149,7 +149,7 @@ export default {
     api: $api,
 
     resource: new Survey,
-
+    current_month: null,
     resources: {
       reports: [],
       data: [],
@@ -169,6 +169,8 @@ export default {
         $api.show(this.$route.params.id)
       ).then(response => {
         this.resource.data = response.data.data
+        this.current_month = response.data.data.current_month
+        
       }).finally(() => { this.resource.loading = false })
     },
 

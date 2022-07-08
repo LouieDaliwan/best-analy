@@ -258,7 +258,6 @@ class CustomerService extends Service implements CustomerServiceInterface
         
         return new LengthAwarePaginator($sorted, $model->total(), $model->perPage());
     }
-
     /**
      * Check if the metadata financial statement have value
      * @param  array $attributes

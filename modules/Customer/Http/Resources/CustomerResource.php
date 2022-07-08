@@ -38,8 +38,10 @@ use Survey\SDMIIndexScore;
                 'deleted' => $this->deleted,
                 'modified' => $this->modified,
                 'statements' => $this->statements,
+                'latestStatement' => $this->statements()->latest('period')->first(),
                 'applicant' => $this->applicant,
                 'details' => $this->detail,
+                'current_month' => Carbon::now()->format('m-Y'),
                 'indices' => Index::all()->map(function ($index) use ($request, $customer) {
                     $attributes = [
                         'customer_id' => $this->getKey(),
@@ -55,14 +57,14 @@ use Survey\SDMIIndexScore;
                         ];
                     } else {
                         $reportResult = [
-                            'report' => new ReportResource($report = Report::where('month', $attributes['month'])
-                                ->whereCustomerId($this->getKey())
+                            'report' => new ReportResource($report = Report::whereCustomerId($this->getKey())
                                 ->whereFormId($index->survey->getKey())
                                 ->whereUserId(user()->getKey())->latest()->first()),
                             'is:finished' => ! is_null($report),
                         ];
                     }
-                                        
+                            
+        
                     return array_merge(with(new IndexResource($index))->toArray($request), $reportResult);
                 })->toArray(),
                 'ratings' => RatingGraph::getRatings($this),

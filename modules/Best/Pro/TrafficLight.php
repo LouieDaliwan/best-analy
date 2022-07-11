@@ -125,7 +125,7 @@ abstract class TrafficLight
      * @param  float|integer $score
      * @return string
      */
-    public static function getScoreLight($score)
+    public static function getScoreLight(float $score) : array
     {
         $comment = '';
         $result = '';
@@ -137,19 +137,16 @@ abstract class TrafficLight
             $background = '#f3f3f3ff';
         }
 
-        if($score >= 1 && $score  <= (self::critical() * 100 )) {
+        if($score >= 0.1 && $score  <= (self::critical() * 100 )) {
             $comment = self::CRITICAL;
             $result = '#FFAB40';
             $background = '#fff2ccff ';
         }
-        var_dump($score);
-        if($score >= 31 && $score <= (self::correctiveAction() * 100)){
-        
+
+        if($score >= 30.1 && $score <= (self::correctiveAction() * 100)){
             $comment = self::CORRECTIVE_ACTION;
             $result = '#38761D';
             $background = '#d9ead3ff';
-
-            dd($comment, $background, 'test');
         }
 
         if($score <= self::failed()){

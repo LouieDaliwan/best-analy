@@ -143,7 +143,7 @@ abstract class TrafficLight
             $background = '#f4ccccff';
         }
 
-        if($score >= 30.1 && $score <= (self::correctiveAction() * 100)){
+        if($score >= 50.0 && $score <= (self::correctiveAction() * 100)){
             $comment = self::CORRECTIVE_ACTION;
             $result = '#38761D';
             $background = '#d9ead3ff';

@@ -142,11 +142,14 @@ abstract class TrafficLight
             $result = '#FFAB40';
             $background = '#fff2ccff ';
         }
-
+        var_dump($score);
         if($score >= 31 && $score <= (self::correctiveAction() * 100)){
+        
             $comment = self::CORRECTIVE_ACTION;
             $result = '#38761D';
             $background = '#d9ead3ff';
+
+            dd($comment, $background, 'test');
         }
 
         if($score <= self::failed()){

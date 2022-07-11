@@ -132,18 +132,26 @@ abstract class TrafficLight
         $background = '';
 
         if($score >= (self::normal() * 100)) {
+
+            dd($score, (self::normal() * 100), 'normal');
             $comment = self::NORMAL;
             $result = '#000000';
             $background = '#f3f3f3ff';
         }
 
         if($score >= 0.1 && $score  <= (self::critical() * 100 )) {
+
+            dd($score, (self::critical() * 100), 'critical');
             $comment = self::CRITICAL;
             $result = '#FFAB40';
             $background = '#fff2ccff ';
         }
 
         if($score >= 30.1 && $score <= (self::correctiveAction() * 100)){
+
+            dd($score, (self::correctiveAction() * 100), 'corrective');
+
+
             $comment = self::CORRECTIVE_ACTION;
             $result = '#38761D';
             $background = '#d9ead3ff';

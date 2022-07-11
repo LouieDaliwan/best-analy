@@ -303,7 +303,7 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @return string
      */
     public function getOverallComment($score, $customer)
-    {
+    {   
         return trans("best::grading.$score", ['name' => $customer, 'appcode' => settings('app:code')]);
     }
 
@@ -855,6 +855,7 @@ class FormulaService extends Service implements FormulaServiceInterface
             $comment = trans("best::overall.{$code}.below50", ['name' => $customer, 'appcode' => 'asfsdf']);
         }
 
+        
         return $comment;
     }
 

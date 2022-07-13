@@ -49,7 +49,7 @@
         <p class="font-weight-regular">
           {{ trans('Please select the type of survey evaluation that you would like to do for :name', {name: resource.data.name}) }}:
         </p>
-        <v-row>
+        <v-row v-if="financialRatio.date != 'empty'">
           <v-col cols="12" md="6" v-for="(resource, i) in resource.data.indices || []" :key="i">
             <v-card
               :hover="$vuetify.breakpoint.smAndUp"
@@ -94,6 +94,16 @@
                 <v-btn block large text color="primary" :to="goToCompanySurveyPage(resource)" exact>{{ __('Start Survey') }}</v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row v-else>
+          <v-col>
+            <v-card flat>
+              <v-card-text class="text-center">
+                <h3 class="muted--text" v-text="trans('No survey to Show')"></h3>
+                <p class="muted--text mb-0" v-text="trans('Start by filling out financial statement.')"></p>
+              </v-card-text>
             </v-card>
           </v-col>
         </v-row>
@@ -148,6 +158,7 @@ export default {
   data: () => ({
     api: $api,
 
+    financialRatio: '',
     resource: new Survey,
     current_month: null,
     resources: {
@@ -171,6 +182,7 @@ export default {
         this.resource.data = response.data.data
         this.current_month = response.data.data.current_month
         
+        console.log(this.resource.data);
       }).finally(() => { this.resource.loading = false })
     },
 
@@ -181,6 +193,8 @@ export default {
       ).then(response => {
         this.resources.reports = response.data.data
       }).finally(() => { this.resource.loading = false })
+
+      
     },
 
     goToCompanySurveyPage (index) {
@@ -193,11 +207,18 @@ export default {
         }
       }
     },
+    getFinancialRatio() {
+      axios.get($api.financialRatio(this.$route.params.id))
+      .then(({data}) => {
+        this.financialRatio = data;
+      })
+    }
   },
 
   mounted () {
     this.getResource()
     this.getResourceReport()
+    this.getFinancialRatio()
   },
 }
 </script>

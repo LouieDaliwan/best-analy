@@ -258,7 +258,6 @@ class CustomerService extends Service implements CustomerServiceInterface
 
         $sorted = $this->request()->get('order') != null ? $this->sortAndOrder($model): $model->sortByDesc('month');
         
-        
         return new LengthAwarePaginator($sorted, $model->total(), $model->perPage());
     }
     /**

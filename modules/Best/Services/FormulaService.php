@@ -779,6 +779,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $results = $score == 0 ? 0 :round(($score/$total)*100, 2);
 
         $user = auth()->user()->id;
+        $taxonomy = strtoupper($taxonomy);
         $keyName = "{$customerId}-{$taxonomy}-{$user}-{$monthKey}";
 
         if(cache($keyName)) {

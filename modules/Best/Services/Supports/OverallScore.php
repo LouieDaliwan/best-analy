@@ -45,16 +45,23 @@ class OverallScore
             return 0;
         }
 
-        $totalOf4Index = round($collect->map(function ($index) {
+        // $totalOf4Index = round($collect->map(function ($index) {
 
-            if ($index['subscore:score'] == 0) {
-                return 0 * $index['pindex:weightage'];
-            }
+        //     if ($index['subscore:score'] == 0) {
+        //         return 0 * $index['pindex:weightage'];
+        //     }
 
-            $avg = $index['subscore:total'] != 0 ? $index['subscore:score']/$index['subscore:total'] : 0;
-            return $avg*$index['pindex:weightage'];
+        //     $avg = $index['subscore:total'] != 0 ? $index['subscore:score']/$index['subscore:total'] : 0;
+        //     return $avg*$index['pindex:weightage'];
 
-        })->sum(), 2);
+        // })->sum(), 2);
+
+        $bspi = cache("{$customer->id}-BSPI-{$user}-{$monthKey}") ?? 0;
+        $fmpi = cache("{$customer->id}-FMPI-{$user}-{$monthKey}") ?? 0;
+        $pmpi = cache("{$customer->id}-PMPI-{$user}-{$monthKey}") ?? 0;
+        $hrpi = cache("{$customer->id}-HRPI-{$user}-{$monthKey}") ?? 0;
+
+        $totalOf4Index = ($bspi * 0.125) + ($fmpi * 0.125) + ($pmpi * 0.125) + ($hrpi * 0.125);
         
         $results = round($totalOf4Index + round(($financialScore * 0.3), 2) + round(($sdmiIndex * 0.2), 2), 1);   
 

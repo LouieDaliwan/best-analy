@@ -114,11 +114,11 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @param  array                 $attributes
      * @return mixed
      */
-    public function generate(Survey $survey, array $attributes, $taxonomy_name = null)
+    public function generate(Survey $survey, array $attributes, $taxonomy_name = null, $user = null)
     {
         $customer = Customer::find($attributes['customer_id']);
         $taxonomies = Index::all();
-        $user = $this->auth()->user();
+        $user = $this->auth()->user() ?? $user;
 
         $monthkey = $attributes['monthkey'] ?? date('m-Y', strtotime($attributes['month']));
 

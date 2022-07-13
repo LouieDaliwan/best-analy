@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Survey\Models\Survey;
+use User\Models\User;
 
 class UpdateGeneratedReport implements ShouldQueue
 {
@@ -18,15 +19,18 @@ class UpdateGeneratedReport implements ShouldQueue
     protected $customer;
 
     protected $survey;
+
+    protected $user;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Survey $survey, Customer $customer)
+    public function __construct(Survey $survey, Customer $customer, User $user)
     {
         $this->survey = $survey;
         $this->customer= $customer;
+        $this->user = $user;
     }
 
     /**
@@ -41,6 +45,6 @@ class UpdateGeneratedReport implements ShouldQueue
             'month' => date('Y-m-d H:i:s'),
         ];
 
-        $data = app(FormulaServiceInterface::class)->generate($this->survey, $attributes);
+        app(FormulaServiceInterface::class)->generate($this->survey, $attributes, null, $this->user);
     }
 }

@@ -9,6 +9,7 @@ class OverallScore
 {
     public static function compute($indices, $customer, $monthKey)
     {
+        logger('Start of Computation of Overall Score');
         $user = auth()->user()->id;
 
         $keyName = "{$customer->id}-Overall-{$user}-{$monthKey}";
@@ -27,6 +28,8 @@ class OverallScore
         $ratingGraph = RatingGraph::getRatings($customer);
         
         $financialScore = $ratingGraph['smeRatings'][5]['score'];
+        
+        logger("Financial Score {$financialScore}");
         
         $sdmi = $customer->sdmiComputation()->where('month_key', $monthKey)->first();
 

@@ -335,6 +335,7 @@ class CustomerService extends Service implements CustomerServiceInterface
         
         if($statements != null || $customer->statements()->count() > 0 || isset($attributes['metadata']['project'])) {
             $survey = Survey::find(1);
+            logger('start of UpdateGenerateReport');
             dispatch(new UpdateGeneratedReport($survey, $customer, auth()->user()));
         }
         

@@ -45,6 +45,7 @@ class UpdateGeneratedReport implements ShouldQueue
             'month' => date('Y-m-d H:i:s'),
         ];
 
+        logger('Proceed on Formula Generate');
         app(FormulaServiceInterface::class)->generate($this->survey, $attributes, null, $this->user);
     }
 }

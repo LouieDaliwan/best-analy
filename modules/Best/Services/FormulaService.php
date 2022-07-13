@@ -134,6 +134,7 @@ class FormulaService extends Service implements FormulaServiceInterface
             ->first()->value ?? null;
 
 
+        logger('Get Financial Statements');
         $financialStatements = FinancialStatement::where('customer_id', $customer->id)
         ->orderBy('period', 'desc')
         ->take(3)
@@ -141,6 +142,8 @@ class FormulaService extends Service implements FormulaServiceInterface
         ->sortBy('period')
         ->toArray();
 
+
+        logger('Start on Taxononmies');
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {
             
@@ -212,6 +215,9 @@ class FormulaService extends Service implements FormulaServiceInterface
             ];
         }//end foreach
 
+        logger('End of Taxonomies');
+
+        logger('Start of Overall score');
         // Retrieve Overall BEST Score.
         $this->data['overall:score'] = $overallScore = $this->getOverallScore($this->data['indices'], $customer, $monthkey);
         $this->data['overall:percentage'] = sprintf('%s%%', $overallScore);
@@ -257,6 +263,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['SDMI']['elements:charts'] = $this->getChartedGroupedAverage(null, 'sdmi', $customer, $monthkey);
         $this->data['SDMI']['overall:total'] = cache("{$customer->id}-SDMI-{$user->id}-{$monthkey}");
 
+        logger('End of Generate Data');
         return $this->data;
     }
 

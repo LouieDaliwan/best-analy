@@ -316,6 +316,12 @@ class CustomerService extends Service implements CustomerServiceInterface
                 ['metadata' => $attributes['metadata']['applicant']]
             );
         }
+
+        $statements = $attributes['metadata']['statement'] ?? null;
+
+        if ( isset($statements['metadataStatements']) && isset($statements['metadataSheets']) && $statements['metadataStatements']['period'] != null) {
+            app(FinancialRatioInterface::class)->compute($customer, $statements);
+        }
         
         if(isset($attributes['metadata']['project'])) {
             $customer->detail()->updateOrCreate(
@@ -327,13 +333,7 @@ class CustomerService extends Service implements CustomerServiceInterface
             //add new job? for update the computation of financial statement?
         }
         
-        $statements = $attributes['metadata']['statement'] ?? null;
-
-        if ( isset($statements['metadataStatements']) && isset($statements['metadataSheets']) && $statements['metadataStatements']['period'] != null) {
-            app(FinancialRatioInterface::class)->compute($customer, $statements);
-        }
-
-        if($statements != null || $customer->statements()->count() > 0) {
+        if($statements != null || $customer->statements()->count() > 0 || isset($attributes['metadata']['project'])) {
             $survey = Survey::find(1);
             dispatch(new UpdateGeneratedReport($survey, $customer));
         }

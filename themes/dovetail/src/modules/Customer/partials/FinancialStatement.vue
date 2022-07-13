@@ -139,7 +139,7 @@ export default {
           })
         })
         .finally(() => {
-          console.log('finally');
+           console.log('finally');
         })
     },
   }

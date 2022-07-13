@@ -323,22 +323,21 @@ class CustomerService extends Service implements CustomerServiceInterface
             app(FinancialRatioInterface::class)->compute($customer, $statements);
         }
         
-        if(isset($attributes['metadata']['project'])) {
+        if (isset($attributes['metadata']['project'])) {
+            
             $customer->detail()->updateOrCreate(
                 ['customer_id' => $id],
                 ['metadata' => $attributes['metadata']['project']]
             );
 
             dispatch(new UpdateStatementsJob($customer));
-            //add new job? for update the computation of financial statement?
         }
         
-        if($statements != null || $customer->statements()->count() > 0 || isset($attributes['metadata']['project'])) {
+        if ($statements != null || $customer->statements()->count() > 0) {
             $survey = Survey::find(1);
             logger('start of UpdateGenerateReport');
             dispatch(new UpdateGeneratedReport($survey, $customer, auth()->user()));
-        }
-        
+        }     
     }
 
     protected function saveCustomerDetail($customer, $attributes)

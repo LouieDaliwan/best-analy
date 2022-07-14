@@ -243,7 +243,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.customer.details);
     if (this.value.date == 'empty') {
       this.isEmpty = true;
     }

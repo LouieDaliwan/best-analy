@@ -20,12 +20,13 @@
           <!-- List of All Reports button -->
           <can code="customers.reports">
             <v-btn
+              
               :block="$vuetify.breakpoint.smAndDown"
               :to="{name: 'companies.reports', params: { id: $route.params.id }}"
               color="primary"
               exact
               large
-              v-if="resourcesHasReport"
+              v-if="resourcesHasReport && financialRatio.date != 'empty'"
               >
               <v-icon small left>mdi-file-chart-outline</v-icon>
               {{ __('View Reports') }}
@@ -101,8 +102,23 @@
           <v-col>
             <v-card flat>
               <v-card-text class="text-center">
-                <h3 class="muted--text" v-text="trans('No survey to Show')"></h3>
-                <p class="muted--text mb-0" v-text="trans('Start by filling out financial statement.')"></p>
+                <h3 class="muted--text mb-1" v-text="trans('Surveys will appear here')"></h3>
+                <p class="muted--text mb-2" v-text="trans('Fill out your financial statement before taking a survey.')"></p>
+
+                <v-btn
+                  :to="{
+                    name: 'companies.edit',
+                    params: { id: $route.params.id },
+                    query: { tab: 2 }
+                  }"
+                  exact
+                  color="primary"
+                  large
+                  ><v-icon small class="mr-2 incomplete--text"
+                    >mdi-pencil</v-icon
+                  >
+                  <span v-text="trans(`Financial Statement`)"></span>
+                </v-btn>
               </v-card-text>
             </v-card>
           </v-col>

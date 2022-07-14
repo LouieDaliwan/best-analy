@@ -33,7 +33,7 @@
           ></span>
         </v-col>
       </v-row>
-      <v-list v-if="value.ratings.answered_index">
+      <v-list v-if="value.latestStatement">
         <template v-for="(item, i) in smeRatings">
           <v-list-item :class="{ 'table-row': i % 2 === 1 }" :key="i">
             <v-list-item-content class="mx-0 px-0 my-0 py-0">

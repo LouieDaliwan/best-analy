@@ -125,7 +125,7 @@
             <template v-slot:item.action="{ item }">
               <div class="text-no-wrap">
                 <!-- Send Report -->
-                <v-tooltip bottom>
+                <!-- <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <span v-on="on"
                       ><send-individual-report-to-crm-button
@@ -134,11 +134,11 @@
                       ></send-individual-report-to-crm-button
                     ></span>
                     <!-- <span v-on="on"><send-report-to-crm-button :customer="item.customer.id" :user="item.user_id"></send-report-to-crm-button></span> -->
-                  </template>
+                  <!-- </template>
                   <span
                     >{{ trans("Send") }} {{ item.key }} {{ __("to CRM") }}</span
-                  >
-                </v-tooltip>
+                  > -->
+                <!-- </v-tooltip>  -->
                 <!-- Send Report -->
                 <!-- Show Reports -->
                 <v-tooltip bottom>

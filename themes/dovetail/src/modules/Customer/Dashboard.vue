@@ -49,7 +49,7 @@
         <v-col cols="12" lg="8">
           <sme-rating v-model="resource.data" class="mb-5"></sme-rating>
           <key-financial-ratio v-model="keyFinRation" :customer="resource.data" class="mb-5"></key-financial-ratio>
-          <latest-report></latest-report>
+          <latest-report v-if="resource.data.latestStatement"></latest-report>
         </v-col>
       </v-row>
     </template>

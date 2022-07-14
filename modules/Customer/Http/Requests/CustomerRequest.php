@@ -37,7 +37,7 @@ class CustomerRequest extends FormRequest
 
                 $period = $this->request->get('metadata')['statement']['metadataStatements']['period'];
 
-                if(is_null($period)) {
+                if(is_null($period) && $customer->detail->metadata['investment_value'] != null && $customer->detail->metadata['project_type'] != null) {
                     throw new Exception('Period must have a value');
                 }
                 

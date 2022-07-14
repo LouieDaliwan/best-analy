@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-text v-if="value.data.details.metadata.investment_value != 0 && value.data.details.metadata.project_type">
+    <v-card-text v-if="checkInvesmentValueAndProjectType">
       <v-row>
         <v-col cols="12" md="3">
           <v-card>
@@ -42,7 +42,7 @@
         </v-col>
       </v-row>
     </v-card-text>
-    <v-card-text>
+    <v-card-text v-if="!checkInvesmentValueAndProjectType">
           <h3 class="muted--text" v-text="trans('Financial Statement Form will appear here')"></h3>
           <p class="muted--text mb-0" v-text="trans('Update the Project Type and Investment Value in the Project Information.')"></p>
     </v-card-text>
@@ -75,7 +75,12 @@ export default {
     period: null,
     newPeriod: null,
   }),
-
+  
+  computed: {
+    checkInvesmentValueAndProjectType() {
+       return this.value.details.metadata.projectType != null && this.value.details.metadata.investment_value;
+    }
+  },
   methods: {
 
     ...mapActions({

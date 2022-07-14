@@ -270,7 +270,7 @@ class FormulaService extends Service implements FormulaServiceInterface
 
     protected function cacheLightScore($customerId, $userId, $monthKey, $lightScore)
     {
-        if(cache("{$customerId}-results-{$userId}-{$monthKey}")) {
+        if(Cache::has("{$customerId}-results-{$userId}-{$monthKey}")) {
             Cache::forget("{$customerId}-results-{$userId}-{$monthKey}");   
         }
         
@@ -789,7 +789,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $taxonomy = strtoupper($taxonomy);
         $keyName = "{$customerId}-{$taxonomy}-{$user}-{$monthKey}";
 
-        if(cache($keyName)) {
+        if(Cache::has($keyName)) {
             Cache::forget($keyName);
         }
                

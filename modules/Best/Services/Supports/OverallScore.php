@@ -15,11 +15,11 @@ class OverallScore
         $keyName = "{$customer->id}-Overall-{$user}-{$monthKey}";
         $sdmiName = "{$customer->id}-SDMI-{$user}-{$monthKey}";
 
-        if( cache($keyName)) {
+        if(Cache::has($keyName)) {
             Cache::forget($keyName);
         }
 
-        if( cache($sdmiName)) {
+        if(Cache::has($sdmiName)) {
             Cache::forget($sdmiName);
         }
       
@@ -47,17 +47,6 @@ class OverallScore
             Cache::forget($keyName);
             return 0;
         }
-
-        // $totalOf4Index = round($collect->map(function ($index) {
-
-        //     if ($index['subscore:score'] == 0) {
-        //         return 0 * $index['pindex:weightage'];
-        //     }
-
-        //     $avg = $index['subscore:total'] != 0 ? $index['subscore:score']/$index['subscore:total'] : 0;
-        //     return $avg*$index['pindex:weightage'];
-
-        // })->sum(), 2);
 
         $bspi = cache("{$customer->id}-BSPI-{$user}-{$monthKey}") ?? 0;
         $fmpi = cache("{$customer->id}-FMPI-{$user}-{$monthKey}") ?? 0;

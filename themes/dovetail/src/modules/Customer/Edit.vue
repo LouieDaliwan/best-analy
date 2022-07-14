@@ -166,6 +166,7 @@
                       :isLoading="isLoading"
                       @update="update"
                       @updateStatementLists="updateStatementLists"
+                      v-if="resource.data.details.metadata.investment_value != 0 && resource.data.details.metadata.project_type"
                     ></financial-statement>
                   </v-tab-item>
                 </template>

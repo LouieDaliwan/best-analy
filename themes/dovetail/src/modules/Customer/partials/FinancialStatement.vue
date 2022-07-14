@@ -42,7 +42,7 @@
         </v-col>
       </v-row>
     </v-card-text>
-    <v-card-text v-if="!checkInvesmentValueAndProjectType">
+    <v-card-text v-if="!checkInvesmentValueAndProjectType" class="text-center">
           <h3 class="muted--text" v-text="trans('Financial Statement Form will appear here')"></h3>
           <p class="muted--text mb-0" v-text="trans('Update the Project Type and Investment Value in the Project Information.')"></p>
     </v-card-text>

@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-text>
+    <v-card-text v-if="value.data.details.metadata.investment_value != 0 && value.data.details.metadata.project_type">
       <v-row>
         <v-col cols="12" md="3">
           <v-card>
@@ -41,6 +41,10 @@
           <period-form v-model="period" :newPeriod="newPeriod" @update="update"></period-form>
         </v-col>
       </v-row>
+    </v-card-text>
+    <v-card-text>
+          <h3 class="muted--text" v-text="trans('Financial Statement Form will appear here')"></h3>
+          <p class="muted--text mb-0" v-text="trans('Update the Project Type and Investment Value in the Project Information.')"></p>
     </v-card-text>
   </v-card>
 </template>

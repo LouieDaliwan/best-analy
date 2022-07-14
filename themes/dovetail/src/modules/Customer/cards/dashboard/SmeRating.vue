@@ -7,7 +7,7 @@
         <h3 v-text="trans('SME Rating')"></h3>
       </div>
       <v-divider class="mb-5"></v-divider>
-      <canvas class="mb-5" ref="chart-el" width="400" height="200" v-if="value.ratings.answered_index != 0"></canvas>
+      <canvas class="mb-5" ref="chart-el" width="400" height="200" v-if="value.ratings.answered_index != 0 && value.latestStatement"></canvas>
       <v-card v-else flat>
         <v-card-text class="text-center">
           <h3 class="muted--text" v-text="trans('No scores to show')"></h3>

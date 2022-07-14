@@ -55,7 +55,9 @@ class CalculateSDMIScore
                 'count' => 0,
             ],
         ];
+
         $date = Carbon::parse($event->attributes['remarks'])->format('m-Y');
+
         foreach($event->attributes['fields'] as $field) {
             if($field['submission']['fieldKey'] == 'Business Expansion') {
                 if($field['submission']['results'] != 'NA') {
@@ -84,7 +86,7 @@ class CalculateSDMIScore
                 }            
             }
 
-            if($field['submission']['fieldKey'] == "Location") {
+            if($field['submission']['fieldKey'] == "Location (Describe your level of satisfaction with your current business location's ability to serve customers)") {
                 if($field['submission']['results'] != 'NA') {
                     $score = (float) round($field['submission']['score'] / 5, 2);
                     $variables['ll']['score'] += $score;

@@ -82,6 +82,9 @@
                     <small class="overlines" v-if="resource.report">
                       {{ __('Modified') }}: {{ resource.report.modified }}
                     </small>
+                    <small class="overlines" v-else>
+                      {{ __('Modified') }}: {{ __('No survey conducted yet') }}
+                    </small>
                     <!-- <div class="mt-3" v-for="(item, i) in resources.reports" :key="i">
                       <small class="overlines" v-if="resource.id == item.value['current:index'].taxonomy.id">
                         {{ __('Modified') }}: {{ item.modified }}

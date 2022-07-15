@@ -50,6 +50,9 @@
         <p class="font-weight-regular">
           {{ trans('Please select the type of survey evaluation that you would like to do for :name', {name: resource.data.name}) }}:
         </p>
+        <small class="muted--text">
+          The <v-icon small color="success">mdi-check-circle</v-icon> icon indicates a completed survey within the current month.
+        </small>
         <v-row v-if="financialRatio.date != 'empty'">
           <v-col cols="12" md="6" v-for="(resource, i) in resource.data.indices || []" :key="i">
             <v-card

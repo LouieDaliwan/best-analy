@@ -9,7 +9,7 @@
         <canvas height="260" width="550" id="net_margin" style="margin: auto;" class="mt-5 mb-2"></canvas>
       </div>
     </div>
-    <p class="mb-0 text-center">
+    <p class="mb-0">
       @if (app()->getLocale() == 'ar')
         <span style="font-size: 17px;">
           <svg width="17px" height="17px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">

@@ -15,7 +15,7 @@ class CustomerDetailsSeeder extends Seeder
         'metadataSheets' => [],
     ];
 
-    protected $non_actual_year = ['Year1', 'Year2', 'Year3'];
+    protected $non_actual_year = ['Year 1', 'Year 2', 'Year 3', null, 'Year1', 'Year2', 'Year3'];
     /**
      * Run the database seeds.
      *
@@ -29,7 +29,7 @@ class CustomerDetailsSeeder extends Seeder
         ApplicantDetail::query()->truncate();
 
         $customers = Customer::get();
-
+        
         foreach ($customers as $customer) {
 
             if (is_null($customer['metadata']) && $customer->id == 31) {
@@ -96,11 +96,13 @@ class CustomerDetailsSeeder extends Seeder
         $years = $customer['metadata']['years']['Years'];   
 
         foreach ($years as $key => $year) {
-            if(in_array($key, $this->non_actual_year)) {
+            
+            if(in_array($year, $this->non_actual_year)) {
                 continue;
             }
-
+            
             logger($year. ' customer id '. $customer->id);
+
             $statements = [
                 'metadataStatements' => [],
                 'metadataSheets' => [],

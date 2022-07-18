@@ -50,6 +50,9 @@
         <p class="font-weight-regular">
           {{ trans('Please select the type of survey evaluation that you would like to do for :name', {name: resource.data.name}) }}:
         </p>
+        <small class="muted--text">
+          The <v-icon small color="success">mdi-check-circle</v-icon> icon indicates a completed survey within the current month.
+        </small>
         <v-row v-if="financialRatio.date != 'empty'">
           <v-col cols="12" md="6" v-for="(resource, i) in resource.data.indices || []" :key="i">
             <v-card
@@ -78,6 +81,9 @@
                     <h4 class="text-uppercase muted--text mb-0 text-md-left text-center" v-text="('Performance Index')"></h4>
                     <small class="overlines" v-if="resource.report">
                       {{ __('Modified') }}: {{ resource.report.modified }}
+                    </small>
+                    <small class="overlines" v-else>
+                      {{ __('Modified') }}: {{ __('No survey conducted yet') }}
                     </small>
                     <!-- <div class="mt-3" v-for="(item, i) in resources.reports" :key="i">
                       <small class="overlines" v-if="resource.id == item.value['current:index'].taxonomy.id">

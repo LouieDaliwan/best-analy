@@ -8,7 +8,7 @@ class FTranslationArabicSeeder extends Seeder
     protected $words = [
         'SME Ratings Report' => 'تقرير تقييم أداء المؤسسة',
         'Gross Margin' => 'الهامش الإجمالي',
-        'Net Margin after Tax ' => 'الهامش الصافي بعد الضريية',
+        'Net Margin after Tax' => 'الهامش الصافي بعد الضريية',
         'Current Ratio' => 'معامل السيولة',
         'Debt Ratio' => 'نسبة الدين',
         'ROI' => 'عائد الاستثمار',

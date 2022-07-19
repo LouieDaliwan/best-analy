@@ -3,7 +3,7 @@
 @else
 <div class="mx-4 mb-5">
 @endif
-  <h3 class="dt-BSPI py-2 text-center"style="border-bottom: 1px solid #f5f5f5;">{{ __('Net Margin after Tax ') }}</h3>
+  <h3 class="dt-BSPI py-2 text-center"style="border-bottom: 1px solid #f5f5f5;">{{ __('Net Margin after Tax') }}</h3>
     <div style="zoom: 0.76;">
       <div class="mb-3 text-center">
         <canvas height="260" width="550" id="net_margin" style="margin: auto;" class="mt-5 mb-2"></canvas>

@@ -124,13 +124,13 @@ class CustomerService extends Service implements CustomerServiceInterface
         $details->metadata = [
             'project_name' => $attributes['name'],
             'project_location' => $attributes['metadata']['ProjectLocation'] ?? null,
-            'project_type' => $attributes['metadata']['ProjectType'] ?? $customer->details->metadata['investment_value'] ?? null,
+            'project_type' => $attributes['metadata']['ProjectType'] ?? $customer->detail->metadata['project_type'] ?? null,
             'trade_name_en' => $attributes['metadata']['TradeNameEnglish'] ?? null,
             'trade_name_ar' => $attributes['metadata']['TradeNameArabic'] ?? null,
             'license_no' => $attributes['metadata']['LicenseNo'] ?? null,
             'funding_program' => null,
             'investment_value' => $customer->detail->metadata['investment_value'] ?? 0,
-            'industry_sector' => $customer->detail->metadata['investment_value'] ?? $attributes['metadata']['Sector'] ?? null,
+            'industry_sector' => $attributes['metadata']['Sector'] ?? $customer->detail->metadata['industry_sector'] ?? null,
             'business_size' => null,
             'description' => null,
         ];

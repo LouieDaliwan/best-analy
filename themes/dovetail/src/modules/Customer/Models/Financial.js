@@ -18,7 +18,7 @@ export default class extends Resource {
         "Fixed Assets": 0,
         "Current Liabilities": 0,
         "Trade Payables": 0,
-        "Other Current Liablities": 0,
+        "Other Current Liabilities": 0,
         "Non-Current Liabilities": 0,
         "Other Non-Current Liabilities": 0,
         "Stockholders' Equity": 0,

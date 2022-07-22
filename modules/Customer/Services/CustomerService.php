@@ -118,42 +118,68 @@ class CustomerService extends Service implements CustomerServiceInterface
 
     protected function updateOtherDetails($customer, $attributes) : void
     {
-        //project detail
-        $customer->detail()->update([
-            'metadata' => [
-                'project_name' => $attributes['name'],
-                'project_location' => $attributes['metadata']['ProjectLocation'] ?? null,
-                'project_type' => $attributes['metadata']['ProjectType'] ?? null,
-                'trade_name_en' => $attributes['metadata']['TradeNameEnglish'] ?? null,
-                'trade_name_ar' => $attributes['metadata']['TradeNameArabic'] ?? null,
-                'license_no' => $attributes['metadata']['LicenseNo'] ?? null,
-                'funding_program' => null,
-                'investment_value' => 0,
-                'industry_sector' => $attributes['metadata']['Sector'] ?? null,
-                'business_size' => null,
-                'description' => null,
-            ]                
-        ]);
 
+        $details = $customer->details();
+
+        $details->metadata = [
+            'project_name' => $attributes['name'],
+            'project_location' => $attributes['metadata']['ProjectLocation'] ?? null,
+            'project_type' => $customer->details->metadata['investment_value'] ?? $attributes['metadata']['ProjectType'] ?? null,
+            'trade_name_en' => $attributes['metadata']['TradeNameEnglish'] ?? null,
+            'trade_name_ar' => $attributes['metadata']['TradeNameArabic'] ?? null,
+            'license_no' => $attributes['metadata']['LicenseNo'] ?? null,
+            'funding_program' => null,
+            'investment_value' => $customer->details->metadata['investment_value'] ?? 0,
+            'industry_sector' => $customer->details->metadata['investment_value'] ?? $attributes['metadata']['Sector'] ?? null,
+            'business_size' => null,
+            'description' => null,
+        ];
+
+        //project detail
+        $details->save();
+
+        $applicant =  $customer->applicant();
+
+        $applicant->metadata = [
+            'email' => $attributes['email'] ?? $customer->applicant->metadata['email'] ?? null,
+            'address' => $attributes['address'] ?? $customer->applicant->metadata['address'] ?? null,
+            'website' => $attributes['website'] ?? $customer->applicant->metadata['website'] ?? null,
+            'staffstrength' => $attributes['staffstrength'] ?? $customer->applicant->metadata['staffstrength'] ?? null,
+            'industry' => $attributes['industry'] ?? $customer->applicant->metadata['industry'] ?? null,
+            'FileNo' => $attributes['metadata']['FileNo'] ?? $customer->applicant->metadata['FileNo'] ?? null,
+            'FundingRequestNo' => $attributes['metadata']['FundingRequestNo'] ?? $customer->applicant->metadata['FundingRequestNo'] ?? null,
+            'SiteVisitDate' => $attributes['metadata']['SiteVisitDate'] ?? $customer->applicant->metadata['SiteVistDate'] ?? null,
+            'BusinessCounselorName' => $attributes['metadata']['BusinessCounselorName'] ?? $customer->applicant->metadata['BusinessCounselorName'] ?? null,
+            'PeeBusinessCounselorName' => $attributes['metadata']['PeeBusinessCounselorName'] ?? $customer->applicant->metadata['BusinessCounselorName'] ?? null,
+            'number' =>  $attributes['metadata']['number'] ?? $customer->applicant->metadata['number'] ?? null,
+            'contact_person' => $attributes['metadata']['contact_person'] ?? $customer->applicant->metadata['contact_person'] ?? null,
+            'designation' => $attributes['metadata']['designation'] ?? $customer->applicant->metadata['designation'] ?? null,
+            'name' => $attributes['metadata']['name'] ?? $customer->applicant->metadata['name'] ?? null,
+        ];
+        
+
+        $applicant->save();
+
+        
         //applicant detail
-        $customer->applicant()->update([
-            'metadata' => [
-                'email' => $attributes['email'] ?? null,
-                'address' => $attributes['address'] ?? null,
-                'website' => $attributes['website'] ?? null,
-                'staffstrength' => $attributes['staffstrength'] ?? null,
-                'industry' => $attributes['industry'] ?? null,
-                'FileNo' => $attributes['metadata']['FileNo'] ?? null,
-                'FundingRequestNo' => $attributes['metadata']['FundingRequestNo'] ?? null,
-                'SiteVisitDate' => $attributes['metadata']['SiteVisitDate'] ?? null,
-                'BusinessCounselorName' => $attributes['metadata']['BusinessCounselorName'] ?? null,
-                'PeeBusinessCounselorName' => $attributes['metadata']['PeeBusinessCounselorName'] ?? null,
-                'number' =>  null,
-                'contact_person' => null,
-                'designation' => null,
-                'name' => null,
-            ],
-        ]);
+        // $customer->applicant()->update([
+        //     'metadata' => [
+        //         'email' => $attributes['email'] ?? null,
+        //         'address' => $attributes['address'] ?? null,
+        //         'website' => $attributes['website'] ?? null,
+        //         'staffstrength' => $attributes['staffstrength'] ?? null,
+        //         'industry' => $attributes['industry'] ?? null,
+        //         'FileNo' => $attributes['metadata']['FileNo'] ?? null,
+        //         'FundingRequestNo' => $attributes['metadata']['FundingRequestNo'] ?? null,
+        //         'SiteVisitDate' => $attributes['metadata']['SiteVisitDate'] ?? null,
+        //         'BusinessCounselorName' => $attributes['metadata']['BusinessCounselorName'] ?? null,
+        //         'PeeBusinessCounselorName' => $attributes['metadata']['PeeBusinessCounselorName'] ?? null,
+        //         'number' =>  null,
+        //         'contact_person' => null,
+        //         'designation' => null,
+        //         'name' => null,
+        //     ],
+        // ]);
     }
 
     /**

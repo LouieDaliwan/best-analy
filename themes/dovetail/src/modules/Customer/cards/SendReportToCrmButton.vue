@@ -716,6 +716,7 @@ export default {
           this.checklist[3].status = 'error';
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
         }).finally(() => {
+          this.isSending = false;
           // this.dialog = false
         })
       })

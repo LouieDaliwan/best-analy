@@ -385,14 +385,7 @@ export default {
         let date = new Date();
 
         let data = {
-        // Object.assign(this.getOverallScore(), this.getElements(), {
           Id: _.toUpper(this.resource.data.customer.token),
-          // Status: 100000006,
-          // OverallScore: this.resource.data.report.value['overall:score'] * 100 || null,
-          // FileContentBase64: this.resource.data.report.fileContentBase64,
-          // Comments: this.resource.data['overall:comment'] || 'No comment',
-          // OverallComment: this.resource.data.report.value['overall:comment'] || null,
-          // 'Lessons Learnt': this.resource.data.report.value['overall:comment'] || null,
           FileNo: this.resource.data.customer.filenumber,
           YearOfFinancial: financialStatement.period,
           SubmissionDate: date.toISOString(),
@@ -400,20 +393,19 @@ export default {
           Rent: 0,
           LicensingFees: 0,
           VisaEmploymentFees: 0,
-          CostofGoodsSold: Math.abs(parseFloat(financialStatement.metadataResults.overAllResults.profitStatements.cost_goods)),
-          OtherExpenses: Math.abs(parseFloat(financialStatement.metadataStatements['Other Expense (less Other Income)'])),
-          OperatingLossProfit: Math.abs(parseFloat(financialStatement.metadataResults.overAllResults.profitStatements.operating_loss_or_profit)),
-          Depreciation: Math.abs(parseFloat(financialStatement.metadataStatements['Depreciation'])),
-          NonOperatingExpenses: Math.abs(parseFloat(financialStatement.metadataResults.overAllResults.profitStatements.non_operating_expenses)),
-          Taxes: Math.abs(parseFloat(financialStatement.metadataResults.overAllResults.profitStatements.taxes)),
-          NetLossProfits: Math.abs(parseFloat(financialStatement.metadataResults.overAllResults.profitStatements.net_loss_profit_after_taxes)),
-          Fixedassets: Math.abs(parseFloat(financialStatement.metadataResults.overAllResults.balanceSheets.fixedassets)),
-          TotalLiabilities: Math.abs(parseFloat(financialStatement.metadataResults.overAllResults.balanceSheets.total_liabilities)),
-          StockholdersEquity: Math.abs(parseFloat(financialStatement.metadataSheets["Stockholder's Equity"])),
-          Marketing: Math.abs(parseFloat(financialStatement.metadataStatements['Marketing Costs'])),
-          Salaries: Math.abs(parseFloat(financialStatement.metadataStatements['Staff Salaries & Benefits']))
+          CostofGoodsSold: parseFloat(financialStatement.metadataResults.overAllResults.profitStatements.cost_goods),
+          OtherExpenses: parseFloat(financialStatement.metadataStatements['Other Expense (less Other Income)']),
+          OperatingLossProfit: parseFloat(financialStatement.metadataResults.overAllResults.profitStatements.operating_loss_or_profit),
+          Depreciation: parseFloat(financialStatement.metadataStatements['Depreciation']),
+          NonOperatingExpenses: parseFloat(financialStatement.metadataResults.overAllResults.profitStatements.non_operating_expenses),
+          Taxes: parseFloat(financialStatement.metadataResults.overAllResults.profitStatements.taxes),
+          NetLossProfits: parseFloat(financialStatement.metadataResults.overAllResults.profitStatements.net_loss_profit_after_taxes),
+          Fixedassets: parseFloat(financialStatement.metadataResults.overAllResults.balanceSheets.fixedassets),
+          TotalLiabilities: parseFloat(financialStatement.metadataResults.overAllResults.balanceSheets.total_liabilities),
+          StockholdersEquity: parseFloat(financialStatement.metadataSheets["Stockholder's Equity"]),
+          Marketing: parseFloat(financialStatement.metadataStatements['Marketing Costs']),
+          Salaries: parseFloat(financialStatement.metadataStatements['Staff Salaries & Benefits'])
         }
-      // )
 
         this.$store.dispatch('snackbar/show', { icon: 'mdi-spin mdi-loading', button: { show: false }, timeout: 0, text: 'Sending report to CRM. Establishing connection to CRM...'});
 
@@ -460,20 +452,20 @@ export default {
 
         let data = {
           Id: _.toUpper(this.resource.data.customer.token),
-          BSPI: Math.abs(parseFloat(scores.smeRatings[0]['score'])),
-          FMPI: Math.abs(parseFloat(scores.smeRatings[1]['score'])),
-          PMPI: Math.abs(parseFloat(scores.smeRatings[2]['score'])),
-          HRPI: Math.abs(parseFloat(scores.smeRatings[3]['score'])),  
-          FifthModule: Math.abs(parseFloat(scores.smeRatings[4]['score'])),
-          FinancialPerformance: Math.abs(parseFloat(financial.metadataResults.ratioAnalysis.dashboard.financial_score)),
-          WorkingCapital: Math.abs(parseFloat(financial.metadataResults.ratioAnalysis.liquidity.working_capital)),
-          NetProfitMargin: Math.abs(parseFloat(financial.metadataResults.ratioAnalysis.profitability.net_profit_margin)),
-          GrossProfitMargin: Math.abs(parseFloat(financial.metadataResults.ratioAnalysis.profitability.gross_profit_margin)),
-          COGSMargin: Math.abs(parseFloat(financial.metadataResults.overAllResults.profitStatements.cost_goods)),
-          CurrentRatio: Math.abs(parseFloat(financial.metadataResults.ratioAnalysis.dashboard.current_ratio.score)),
-          LongTermDebtRatio: Math.abs(parseFloat(financial.metadataResults.ratioAnalysis.dashboard.debt_ratio.score)),
-          ReturnonInvestment: Math.abs(parseFloat(financial.metadataResults.ratioAnalysis.dashboard.roi.score)),
-          SMERating: Math.abs(parseFloat(scores.overall_score)),
+          BSPI: parseFloat(scores.smeRatings[0]['score']),
+          FMPI: parseFloat(scores.smeRatings[1]['score']),
+          PMPI: parseFloat(scores.smeRatings[2]['score']),
+          HRPI: parseFloat(scores.smeRatings[3]['score']),  
+          FifthModule: parseFloat(scores.smeRatings[4]['score']),
+          FinancialPerformance: parseFloat(financial.metadataResults.ratioAnalysis.dashboard.financial_score),
+          WorkingCapital: arseFloat(financial.metadataResults.ratioAnalysis.liquidity.working_capital),
+          NetProfitMargin: parseFloat(financial.metadataResults.ratioAnalysis.profitability.net_profit_margin),
+          GrossProfitMargin: parseFloat(financial.metadataResults.ratioAnalysis.profitability.gross_profit_margin),
+          COGSMargin: parseFloat(financial.metadataResults.overAllResults.profitStatements.cost_goods),
+          CurrentRatio: parseFloat(financial.metadataResults.ratioAnalysis.dashboard.current_ratio.score),
+          LongTermDebtRatio: parseFloat(financial.metadataResults.ratioAnalysis.dashboard.debt_ratio.score),
+          ReturnonInvestment: parseFloat(financial.metadataResults.ratioAnalysis.dashboard.roi.score),
+          SMERating: parseFloat(scores.overall_score),
           BreakevenPoint: 0,
         }
 

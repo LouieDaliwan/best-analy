@@ -16,7 +16,7 @@
               'Fixed Assets',
               'Trade Payables',
               'Other Current Liablities',
-              'Other Non-Current Liablities',
+              'Other Non-Current Liabilities',
               `Stockholders' Equity`,
               'Common Shares Outstanding'
             ].includes(label)"

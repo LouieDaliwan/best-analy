@@ -40,15 +40,6 @@
         min-width="auto"
       >
         <template v-slot:activator="{ on, attrs }">
-          <!-- <v-text-field
-            v-model="formattedDate"
-            label="Period Date"
-            prepend-icon="mdi-calendar"
-            readonly
-            name="metadata[statement][metadataStatements][period]"
-            v-bind="attrs"
-            v-on="on"
-          ></v-text-field> -->
           <v-text-field
             dense
             label="Enter Financial Period"
@@ -58,26 +49,7 @@
             hide-details
           ></v-text-field>
         </template>
-        <!-- <v-date-picker
-          v-model="unFormattedDate"
-          no-title
-          scrollable
-        >
-        </v-date-picker> -->
       </v-menu>
-      <!-- <v-text-field
-        dense
-        label="Description"
-        name="metadata[statement][metadataStatements][period]"
-        outlined
-        v-model="resource.data.period"
-        hide-details
-      ></v-text-field> -->
-      <!-- <input
-        type="hidden"
-        name="metadata[statement][metadataSheets][period]"
-        :value="resource.data.period"
-      /> -->
     </validation-provider>
 
     <h4 class="mb-3 primary--text" v-else v-text="resource.data.period">
@@ -416,6 +388,8 @@ export default {
 
       this.resource.data.metadataSheets.Balance =
         total_assets - total_liabilities;
+
+        console.log(total_assets, total_liabilities);
     },
 
     sum(items) {

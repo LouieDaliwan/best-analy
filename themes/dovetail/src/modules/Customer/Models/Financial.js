@@ -20,7 +20,7 @@ export default class extends Resource {
         "Trade Payables": 0,
         "Other Current Liablities": 0,
         "Non-Current Liabilities": 0,
-        "Other Non-Current Liablities": 0,
+        "Other Non-Current Liabilities": 0,
         "Stockholders' Equity": 0,
         "Common Shares Outstanding": 0,
         

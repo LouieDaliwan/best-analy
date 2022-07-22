@@ -238,8 +238,8 @@ class CustomerDetailsSeeder extends Seeder
         }
  
         $temp_meta_arr['Cost of Good Sold'] = $temp_meta_arr['Raw Materials'] + $temp_meta_arr['Direct Production Costs']; 
-        $temp_meta_arr['Net Operating Profit/(Loss)'] = $temp_meta_arr['Sales'] - $temp_meta_arr['Cost of Good Sold'];
         $temp_meta_arr['Value Added'] = $temp_meta_arr['Sales'] - ($temp_meta_arr['Cost of Good Sold'] + $temp_meta_arr['Marketing Costs'] + $temp_meta_arr['General Management Costs']);
+        $temp_meta_arr['Net Operating Profit/(Loss)'] = $temp_meta_arr['Value Added'] - ($temp_meta_arr['Staff Salaries & Benefits'] + $temp_meta_arr['Depreciation'] + $temp_meta_arr['Other Expense (less Other Income)'] + $temp_meta_arr['Interest On Loan/Hires'] + $temp_meta_arr['Company Tax']);
         $temp_meta_arr['Operating Profit/(Loss)[EBT]'] = $temp_meta_arr['Net Operating Profit/(Loss)'];
         
         unset($temp_meta_arr['Raw Materials (direct & indirect)']);

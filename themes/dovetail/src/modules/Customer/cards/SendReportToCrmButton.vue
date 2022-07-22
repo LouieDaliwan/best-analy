@@ -543,7 +543,7 @@ export default {
           $api.crm.sendDocument(), data
         ).then(response => {
           this.$store.dispatch('snackbar/hide')
-          this.checklist[1].status = 'done';
+          this.checklist[3].status = 'done';
 
           if (response.data.Code == 1) {
             this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('File Successfully sent to CRM')})

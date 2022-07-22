@@ -402,7 +402,7 @@ export default {
           NetLossProfits: parseFloat(financialStatement.metadataResults.overAllResults.profitStatements.net_loss_profit_after_taxes),
           Fixedassets: parseFloat(financialStatement.metadataResults.overAllResults.balanceSheets.fixedassets),
           TotalLiabilities: parseFloat(financialStatement.metadataResults.overAllResults.balanceSheets.total_liabilities),
-          StockholdersEquity: parseFloat(financialStatement.metadataSheets["Stockholder's Equity"]),
+          StockholdersEquity: parseFloat(financialStatement.metadataSheets["Stockholders' Equity"]),
           Marketing: parseFloat(financialStatement.metadataStatements['Marketing Costs']),
           Salaries: parseFloat(financialStatement.metadataStatements['Staff Salaries & Benefits'])
         }

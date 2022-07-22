@@ -382,6 +382,8 @@ export default {
 
         const financialStatement = this.resource.data.latestFinancial;
 
+        let date = new Date();
+
         let data = {
         // Object.assign(this.getOverallScore(), this.getElements(), {
           Id: _.toUpper(this.resource.data.customer.token),
@@ -393,7 +395,7 @@ export default {
           // 'Lessons Learnt': this.resource.data.report.value['overall:comment'] || null,
           FileNo: this.resource.data.customer.filenumber,
           YearOfFinancial: financialStatement.period,
-          SubmissionDate: Date.now().toJson(),
+          SubmissionDate: date.toISOString(),
           Revenue: 0,
           Rent: 0,
           LicensingFees: 0,
@@ -473,8 +475,8 @@ export default {
           FinancialPerformance: financial.metadataResults.ratioAnalysis.dashboard.financial_score,
           WorkingCapital: financial.metadataResults.ratioAnalysis.liquidity.working_capital,
           NetProfitMargin: financial.metadataResults.ratioAnalysis.profitability.net_profit_margin,
-          GrossProfitMargin: Math.abs(financial.metadataResults.ratioAnalysis.profitability.gross_profit_margin),
-          COGSMargin: Math.abs(financial.metadataResults.overAllResults.profitStatements.cost_goods),
+          GrossProfitMargin: Math.abs(parseFloat(financial.metadataResults.ratioAnalysis.profitability.gross_profit_margin)),
+          COGSMargin: Math.abs(parseFloat(financial.metadataResults.overAllResults.profitStatements.cost_goods)),
           CurrentRatio: financial.metadataResults.ratioAnalysis.dashboard.current_ratio.score,
           LongTermDebtRatio: financial.metadataResults.ratioAnalysis.dashboard.debt_ratio.score,
           ReturnonInvestment: financial.metadataResults.ratioAnalysis.dashboard.roi.score,

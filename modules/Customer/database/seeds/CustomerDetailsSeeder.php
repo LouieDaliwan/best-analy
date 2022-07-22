@@ -111,6 +111,10 @@ class CustomerDetailsSeeder extends Seeder
             $statements['metadataStatements'] = $this->getResultMetaData($customer_metadata, $key);
             $statements['metadataSheets'] = $this->customerBalanceSheets($custome_bs, $key);
 
+            if($customer->id == '60') {
+                dd($statements['metadataStatements']); 
+            }
+            // dd($statements['metadataStatements']);
             $customer->statements()->updateOrCreate(
                 [
                     'period' => $year,
@@ -237,7 +241,7 @@ class CustomerDetailsSeeder extends Seeder
             }
         }
  
-        
+        $temp_meta_arr['Cost of Good Sold'] = $temp_meta_arr['Raw Materials'] + $temp_meta_arr['Direct Production Costs']; 
         $temp_meta_arr['Net Operating Profit/(Loss)'] = $temp_meta_arr['Sales'] - $temp_meta_arr['Cost of Good Sold'];
 
         unset($temp_meta_arr['Raw Materials (direct & indirect)']);

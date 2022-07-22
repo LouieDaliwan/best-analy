@@ -129,8 +129,8 @@ class CustomerService extends Service implements CustomerServiceInterface
             'trade_name_ar' => $attributes['metadata']['TradeNameArabic'] ?? null,
             'license_no' => $attributes['metadata']['LicenseNo'] ?? null,
             'funding_program' => null,
-            'investment_value' => $customer->details->metadata['investment_value'] ?? 0,
-            'industry_sector' => $customer->details->metadata['investment_value'] ?? $attributes['metadata']['Sector'] ?? null,
+            'investment_value' => $customer->detail->metadata['investment_value'] ?? 0,
+            'industry_sector' => $customer->detail->metadata['investment_value'] ?? $attributes['metadata']['Sector'] ?? null,
             'business_size' => null,
             'description' => null,
         ];

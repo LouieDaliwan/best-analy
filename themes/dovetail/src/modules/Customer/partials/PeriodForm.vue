@@ -380,7 +380,7 @@ export default {
 
       const total_liabilities = this.sum([
         metadataSheets["Trade Payables"],
-        metadataSheets["Other Current Liablities"],
+        metadataSheets["Other Current Liabilities"],
         metadataSheets["Stockholders' Equity"],
         metadataSheets["Other Non-Current Liabilities"],
         metadataSheets["Common Shares Outstanding"]

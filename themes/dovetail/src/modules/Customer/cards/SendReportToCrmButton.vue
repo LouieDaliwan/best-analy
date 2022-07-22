@@ -458,7 +458,7 @@ export default {
           HRPI: parseFloat(scores.smeRatings[3]['score']),  
           FifthModule: parseFloat(scores.smeRatings[4]['score']),
           FinancialPerformance: parseFloat(financial.metadataResults.ratioAnalysis.dashboard.financial_score),
-          WorkingCapital: arseFloat(financial.metadataResults.ratioAnalysis.liquidity.working_capital),
+          WorkingCapital: parseFloat(financial.metadataResults.ratioAnalysis.liquidity.working_capital),
           NetProfitMargin: parseFloat(financial.metadataResults.ratioAnalysis.profitability.net_profit_margin),
           GrossProfitMargin: parseFloat(financial.metadataResults.ratioAnalysis.profitability.gross_profit_margin),
           COGSMargin: parseFloat(financial.metadataResults.overAllResults.profitStatements.cost_goods),

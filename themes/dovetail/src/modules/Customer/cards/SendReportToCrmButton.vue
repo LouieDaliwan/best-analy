@@ -280,15 +280,7 @@ export default {
         }
 
       }).catch((err) => {
-        this.showDialog({
-          illustration: () => import('@/components/Icons/ErrorIcon.vue'),
-          title: trans('Internal Error'),
-          width: 400,
-          text: trans('Incorrect file number input. Please try again.'),
-          buttons: {
-            cancel: false
-          }
-        })
+        console.log(err, 'err');
       }).finally(() => {
         this.sending = false;
         this.checklist[0].status = 'done';
@@ -438,6 +430,8 @@ export default {
             this.checklist[1].status = 'error';
             this.checklist[1].message = response.data.Message;
             this.error_trigger = true;
+            this.isSending = false;
+            this.sendUpdateVisitToCrm();
             // this.$store.dispatch('dialog/error', {
             //   show: true,
             //   width: 400,
@@ -501,6 +495,8 @@ export default {
             this.checklist[2].status = 'error';
             this.checklist[2].message = response.data.Message;
             this.error_trigger = true;
+            this.isSending = false;
+            this.sendDocumentToCrm();
             
             // this.$store.dispatch('dialog/error', {
             //   show: true,
@@ -551,6 +547,7 @@ export default {
             this.checklist[3].status = 'error';
             this.checklist[3].message = response.data.Message;
             this.error_trigger = true;
+            this.isSending = false;
             // this.$store.dispatch('dialog/error', {
             //   show: true,
             //   width: 400,

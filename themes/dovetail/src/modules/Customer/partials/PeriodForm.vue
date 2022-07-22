@@ -410,7 +410,7 @@ export default {
         metadataSheets["Trade Payables"],
         metadataSheets["Other Current Liablities"],
         metadataSheets["Stockholders' Equity"],
-        metadataSheets["Other Non-Current Liablities"],
+        metadataSheets["Other Non-Current Liabilities"],
         metadataSheets["Common Shares Outstanding"]
       ]);
 

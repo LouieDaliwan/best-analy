@@ -119,12 +119,12 @@ class CustomerService extends Service implements CustomerServiceInterface
     protected function updateOtherDetails($customer, $attributes) : void
     {
 
-        $details = $customer->details;
+        $details = $customer->detail;
 
         $details->metadata = [
             'project_name' => $attributes['name'],
             'project_location' => $attributes['metadata']['ProjectLocation'] ?? null,
-            'project_type' => $customer->details->metadata['investment_value'] ?? $attributes['metadata']['ProjectType'] ?? null,
+            'project_type' => $attributes['metadata']['ProjectType'] ?? $customer->details->metadata['investment_value'] ?? null,
             'trade_name_en' => $attributes['metadata']['TradeNameEnglish'] ?? null,
             'trade_name_ar' => $attributes['metadata']['TradeNameArabic'] ?? null,
             'license_no' => $attributes['metadata']['LicenseNo'] ?? null,

@@ -17,18 +17,6 @@ class BalanceSheet {
             $key = str_replace([" ", "'", "-"], "", strtolower($key));
 
             isset($balanceSheets[$key]) ? : $balanceSheets[$key] = (float) $value;
-
-            // if (collect(['cash', 'tradereceivables', 'inventories', 'otherca'])->intersect([$key])->isNotEmpty()) {
-                // $balanceSheets['current_assets'] += $balanceSheets[$key];
-            // }
-
-            // if (collect(['tradepayables', 'othercurrentliabilities'])->intersect([$key])->isNotEmpty()) {
-            //     $balanceSheets['current_liabilities'] += $balanceSheets[$key];
-            // }
-
-            // if (collect(['stockholdersequity', 'n', 'commonsharesoutstanding'])->intersect([$key])->isNotEmpty()) {
-            //     $balanceSheets['non_current_liabilities'] += $balanceSheets[$key];
-            // }
         }
         
         $balanceSheets['current_assets'] = (float) $sheets['Current Asset'];
@@ -37,7 +25,7 @@ class BalanceSheet {
         $balanceSheets['total_assets'] = ($balanceSheets['current_assets'] + $balanceSheets['fixedassets']);
         $balanceSheets['total_liabilities'] = ($balanceSheets['current_liabilities'] + $balanceSheets['non_current_liabilities']);
         $balanceSheets['total_share_equity'] = ($balanceSheets['stockholdersequity'] + $balanceSheets['commonsharesoutstanding']);
-        $balanceSheets['total_long_term_liabilities'] = $balanceSheets['othernoncurrentliablities'];
+        $balanceSheets['total_long_term_liabilities'] = $balanceSheets['othernoncurrentliabilities'];
 
         return $balanceSheets;
     }

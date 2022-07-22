@@ -397,11 +397,11 @@ export default {
 
       metadataSheets["Current Liabilities"] = this.sum([
         metadataSheets["Trade Payables"],
-        metadataSheets["Other Current Liablities"]
+        metadataSheets["Other Current Liabilities"]
       ]);
 
       metadataSheets["Non-Current Liabilities"] = this.sum([
-        metadataSheets["Other Non-Current Liablities"],
+        metadataSheets["Other Non-Current Liabilities"],
         metadataSheets["Stockholders' Equity"],
         metadataSheets["Common Shares Outstanding"]
       ]);

@@ -171,10 +171,10 @@ class CustomerDetailsSeeder extends Seeder
                 $metadata['Current Liabilities'] += (float) $customerBS[$key][$year];
             }
 
-            if (collect(['Other Non-Current Liablities', 'Common Shares Outstanding', "Stockholders' Equity"])->intersect([$key])->isNotEmpty()) {
+            if (collect(['Other Non-Current Liabilities', 'Common Shares Outstanding', "Stockholders' Equity"])->intersect([$key])->isNotEmpty()) {
 
-                $key = $key == 'Other Non-Current Liablities' ? 'Other NCL' : $key;
-
+                $key = $key == 'Other Non-Current Liabilities' ? 'Other NCL' : $key;
+                
                 $metadata['Non-Current Liabilities'] += (float) $customerBS[$key][$year];
             }            
         }
@@ -259,8 +259,8 @@ class CustomerDetailsSeeder extends Seeder
             'Trade Payables' => 0,
             'Other Current Liabilities' => 0,
             'Non-Current Liabilities' => 0,
-            'Other Non-Current Liablities' => 0,
-            "Stockholder's Equity" => 0,
+            'Other Non-Current Liabilities' => 0,
+            "Stockholders' Equity" => 0,
             'Common Shares Outstanding' => 0,
         ];
     }

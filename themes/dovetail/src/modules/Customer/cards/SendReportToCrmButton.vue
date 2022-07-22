@@ -401,7 +401,7 @@ export default {
           // 'Lessons Learnt': this.resource.data.report.value['overall:comment'] || null,
           FileNo: this.resource.data.customer.filenumber,
           YearOfFinancial: financialStatement.period,
-          SubmissionDate: Date.now(),
+          SubmissionDate: Date.now().toJson(),
           Revenue: 0,
           Rent: 0,
           LicensingFees: 0,

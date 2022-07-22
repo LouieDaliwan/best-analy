@@ -111,9 +111,9 @@ class CustomerDetailsSeeder extends Seeder
             $statements['metadataStatements'] = $this->getResultMetaData($customer_metadata, $key);
             $statements['metadataSheets'] = $this->customerBalanceSheets($custome_bs, $key);
 
-            if($customer->id == '60') {
-                dd($statements['metadataStatements']); 
-            }
+            // if($customer->id == '60') {
+            //     dd($statements['metadataStatements']); 
+            // }
             // dd($statements['metadataStatements']);
             $customer->statements()->updateOrCreate(
                 [

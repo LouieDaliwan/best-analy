@@ -15,7 +15,7 @@
               'Other Current Assets',
               'Fixed Assets',
               'Trade Payables',
-              'Other Current Liablities',
+              'Other Current Liabilities',
               'Other Non-Current Liabilities',
               `Stockholders' Equity`,
               'Common Shares Outstanding'

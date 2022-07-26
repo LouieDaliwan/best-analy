@@ -22,23 +22,23 @@ class OverallScore
         if(Cache::has($sdmiName)) {
             Cache::forget($sdmiName);
         }
-      
+
         $collect = collect($indices);
 
         $ratingGraph = RatingGraph::getRatings($customer);
-        
+
         $financialScore = $ratingGraph['smeRatings'][5]['score'];
-        
+
         logger("Financial Score {$financialScore}");
-        
+
         $sdmi = $customer->sdmiComputation()->where('month_key', $monthKey)->first();
 
         $sdmiIndex = $sdmi->metadata['index'] ?? 0;
 
         Cache::remember($sdmiName, 60*60*24*30, function() use ($sdmiIndex){
-            return $sdmiIndex;
+            return round((float) $sdmiIndex, 2);
         });
-        
+
         $exists_section_score_zero = $collect->map(function ($index) {
             return $index['subscore:score'] == 0;
         })->contains(true);
@@ -54,8 +54,8 @@ class OverallScore
         $hrpi = cache("{$customer->id}-HRPI-{$user}-{$monthKey}") ?? 0;
 
         $totalOf4Index = ($bspi * 0.125) + ($fmpi * 0.125) + ($pmpi * 0.125) + ($hrpi * 0.125);
-        
-        $results = round($totalOf4Index + round(($financialScore * 0.3), 2) + round(($sdmiIndex * 0.2), 2), 1);   
+
+        $results = round($totalOf4Index + round(($financialScore * 0.3), 2) + round(($sdmiIndex * 0.2), 2), 1);
 
         return Cache::remember($keyName, 60*60*24*30, function() use ($results){
             return $results;

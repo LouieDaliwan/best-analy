@@ -122,7 +122,7 @@ class CustomerService extends Service implements CustomerServiceInterface
         $details = $customer->detail;
 
         $details->metadata = [
-            'project_name' => $attributes['name'],
+            'project_name' => $attributes['name'] ?? null,
             'project_location' => $attributes['metadata']['ProjectLocation'] ?? null,
             'project_type' => $attributes['metadata']['ProjectType'] ?? $customer->detail->metadata['project_type'] ?? null,
             'trade_name_en' => $attributes['metadata']['TradeNameEnglish'] ?? null,
@@ -156,11 +156,11 @@ class CustomerService extends Service implements CustomerServiceInterface
             'designation' => $attributes['metadata']['designation'] ?? $customer->applicant->metadata['designation'] ?? null,
             'name' => $attributes['metadata']['name'] ?? $customer->applicant->metadata['name'] ?? null,
         ];
-        
+
 
         $applicant->save();
 
-        
+
         //applicant detail
         // $customer->applicant()->update([
         //     'metadata' => [
@@ -279,11 +279,11 @@ class CustomerService extends Service implements CustomerServiceInterface
             $year = $this->request()->get('month') ? $monthVar[1] : date('Y');
             $model = $model->whereYear('remarks', $year);
         }
-        
+
         $model = $model->paginate($this->getPerPage());
 
         $sorted = $this->request()->get('order') != null ? $this->sortAndOrder($model): $model->sortByDesc('month');
-        
+
         return new LengthAwarePaginator($sorted, $model->total(), $model->perPage());
     }
     /**
@@ -347,9 +347,9 @@ class CustomerService extends Service implements CustomerServiceInterface
         if ( isset($statements['metadataStatements']) && isset($statements['metadataSheets']) && $statements['metadataStatements']['period'] != null) {
             app(FinancialRatioInterface::class)->compute($customer, $statements);
         }
-        
+
         if (isset($attributes['metadata']['project'])) {
-            
+
             $customer->detail()->updateOrCreate(
                 ['customer_id' => $id],
                 ['metadata' => $attributes['metadata']['project']]
@@ -357,12 +357,12 @@ class CustomerService extends Service implements CustomerServiceInterface
 
             dispatch(new UpdateStatementsJob($customer));
         }
-        
+
         if ($statements != null || $customer->statements()->count() > 0) {
             $survey = Survey::find(1);
             logger('start of UpdateGenerateReport');
             dispatch(new UpdateGeneratedReport($survey, $customer, auth()->user()));
-        }     
+        }
     }
 
     protected function saveCustomerDetail($customer, $attributes)
@@ -380,9 +380,9 @@ class CustomerService extends Service implements CustomerServiceInterface
 
         if (is_null($latestPeriod) || is_null($latestPeriod->metadataResults)) {
             $emptyDash = config('fratio')['format']['dashboard'];
-            
+
             $emptyDash['date'] = 'empty';
-            
+
             return $emptyDash;
         }
 
@@ -396,14 +396,14 @@ class CustomerService extends Service implements CustomerServiceInterface
         if ($this->request()->get('month') != 'all') {
 
             $monthVar = explode('-', $this->request()->get('month') ?? '');
-        
+
             $month = $this->request()->get('month') ?  $monthVar[0]: date('m');
 
             $year = $this->request()->get('month') ? $monthVar[1] : date('Y');
 
             return $sdmi->where('month_key', "{$month}-{$year}")->first() ?? 'empty';
         }
-        
+
 
         return  $sdmi->latest()->first() ?? 'empty';
     }

@@ -134,7 +134,8 @@ class CustomerService extends Service implements CustomerServiceInterface
         ];
 
         $customer->detail()->updateOrCreate([
-            'metadata' => $pMetadata
+            ['customer_id' => $customer->id],
+            ['metadata' => $pMetadata]
         ]);
 
         //project detail
@@ -159,7 +160,8 @@ class CustomerService extends Service implements CustomerServiceInterface
         ];
 
         $customer->applicant()->updateOrCreate([
-            'metadata' => $aMetadata
+            ['customer_id' => $customer->id],
+            ['metadata' => $aMetadata]
         ]);
 
         // $applicant->save();

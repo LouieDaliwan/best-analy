@@ -9,7 +9,9 @@ use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
 use Customer\Jobs\ComputeFinancialRatio;
 use Customer\Jobs\UpdateStatementsJob;
+use Customer\Models\ApplicantDetail;
 use Customer\Models\Customer;
+use Customer\Models\Detail;
 use Customer\Models\FinancialStatement;
 use Customer\Services\FinancialRatioInterface;
 use DateTime;
@@ -133,14 +135,13 @@ class CustomerService extends Service implements CustomerServiceInterface
             'description' => null,
         ];
 
-        $customer->detail()->updateOrCreate([
+        Detail::updateOrCreate(
             ['customer_id' => $customer->id],
-            ['metadata' => $pMetadata]
-        ]);
-
-        //project detail
-        // $details->save();
-
+            [
+                'customer_id' => $customer->id,
+                'metadata' => $pMetadata
+            ]
+        );
 
         $aMetadata = [
             'email' => $attributes['email'] ?? $customer->applicant->metadata['email'] ?? null,
@@ -159,33 +160,13 @@ class CustomerService extends Service implements CustomerServiceInterface
             'name' => $attributes['metadata']['name'] ?? $customer->applicant->metadata['name'] ?? null,
         ];
 
-        $customer->applicant()->updateOrCreate([
+        ApplicantDetail::updateOrCreate(
             ['customer_id' => $customer->id],
-            ['metadata' => $aMetadata]
-        ]);
-
-        // $applicant->save();
-
-
-        //applicant detail
-        // $customer->applicant()->update([
-        //     'metadata' => [
-        //         'email' => $attributes['email'] ?? null,
-        //         'address' => $attributes['address'] ?? null,
-        //         'website' => $attributes['website'] ?? null,
-        //         'staffstrength' => $attributes['staffstrength'] ?? null,
-        //         'industry' => $attributes['industry'] ?? null,
-        //         'FileNo' => $attributes['metadata']['FileNo'] ?? null,
-        //         'FundingRequestNo' => $attributes['metadata']['FundingRequestNo'] ?? null,
-        //         'SiteVisitDate' => $attributes['metadata']['SiteVisitDate'] ?? null,
-        //         'BusinessCounselorName' => $attributes['metadata']['BusinessCounselorName'] ?? null,
-        //         'PeeBusinessCounselorName' => $attributes['metadata']['PeeBusinessCounselorName'] ?? null,
-        //         'number' =>  null,
-        //         'contact_person' => null,
-        //         'designation' => null,
-        //         'name' => null,
-        //     ],
-        // ]);
+            [
+                'customer_id' => $customer->id,
+                'metadata' => $aMetadata
+            ]
+        );
     }
 
     /**

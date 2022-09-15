@@ -6,7 +6,7 @@
     <!-- TEST only -->
     <div v-shortkey.once="['ctrl', 'alt', '.']" @shortkey="saveDummyData"></div>
     <!-- TEST only -->
-  
+
     <form ref="survey-submission-form" @submit.prevent="submit">
 
       <page-header>
@@ -41,7 +41,7 @@
       </template>
 
       <template v-else>
-        <v-card v-if="taxonomy_item !== 'sdmi'">
+        <v-card v-if="taxonomy_item !== 'bgmi'">
           <criteria></criteria>
           <template v-for="(fields, f) in resource.data['fields:grouped']">
             <v-card-text class="text-center" :key="f">
@@ -133,7 +133,7 @@
           <!-- Submit -->
         </v-card>
 
-        <div v-if="taxonomy_item == 'sdmi'">
+        <div v-if="taxonomy_item == 'bgmi'">
           <div v-for="(fields, f) in resource.data['fields:grouped']" :key="f">
              <v-card :key="f">
                <fifth-criteria-one v-if="f === 'Business Expansion'"></fifth-criteria-one>
@@ -233,10 +233,10 @@
              </v-card>
           </div>
           <v-card>
-            <template v-if="taxonomy_item == 'sdmi'" v-for="(answer, a) in answers">
+            <template v-if="taxonomy_item == 'bgmi'" v-for="(answer, a) in answers">
               <input type="hidden" :name="`fields[${a}][id]`" :value="answer.item.id" >
-              <input type="hidden" :name="`fields[${a}][submission][fieldKey]`" :value="answer.keyField"> 
-              <input type="hidden" :name="`fields[${a}][submission][taxonomy]`" :value="'sdmi'">
+              <input type="hidden" :name="`fields[${a}][submission][fieldKey]`" :value="answer.keyField">
+              <input type="hidden" :name="`fields[${a}][submission][taxonomy]`" :value="'bgmi'">
               <input type="hidden" :name="`fields[${a}][submission][score]`" :value="answer.answer.number">
               <input type="hidden" :name="`fields[${a}][submission][results]`" :value="answer.answer.text">
               <input type="hidden" :name="`fields[${a}][submission][submissible_id]`" :value="answer.item.id">
@@ -269,7 +269,7 @@
             </v-card-text>
             <!-- Submit -->
           </v-card>
-        </div>          
+        </div>
       </template>
     </form>
 
@@ -354,7 +354,7 @@ export default {
       { number: '3', text: '>25% - 50%' },
       { number: '4', text: '>50% - 75%' },
       { number: '5', text: '>75% - 100%' },
-      { number: 'N/A', text: 'NA'} 
+      { number: 'N/A', text: 'NA'}
     ],
     answers: [],
     resource: new Survey,
@@ -372,7 +372,7 @@ export default {
     }),
 
     getRates(value, field) {
-      
+
       if((value === 'Business Expansion' || value === 'Marketing Strategies') && field.title !== 'Extent products/or services are ready to be exported') {
         return this.sdmiRatesOne;
       }
@@ -380,7 +380,7 @@ export default {
       if(field.title === 'Extent products/or services are ready to be exported'){
         return this.extentServicesRates;
       }
-      
+
       if(value === 'Capacity Utilisation') {
         return this.sdmiRatesTwo;
       }
@@ -513,7 +513,7 @@ export default {
 
     checkField(field) {
         let values = [
-          'What is the current utilisation of your business capacity?', 
+          'What is the current utilisation of your business capacity?',
           'Extent products/or services are ready to be exported'
         ];
 
@@ -534,8 +534,8 @@ export default {
   mounted () {
     this.getResource()
 
-    if (this.$route.params.taxonomy === 'strategy-development-and-management-index') {
-      this.taxonomy_item = 'sdmi'; 
+    if (this.$route.params.taxonomy === 'business-growth-and-marketing-strategy-index') {
+      this.taxonomy_item = 'bgmi';
     }
   },
 

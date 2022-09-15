@@ -28,7 +28,7 @@
           <b><span v-text="trans('Results')"></span>:</b>
           <span
             :style="{color: colorStatus(value.ratings.results.result), backgroundColor: backgroundColor(value.ratings.results.background)}"
-            class="muted--text light rounded-1 py-1 px-3 rounded-xl"  
+            class="muted--text light rounded-1 py-1 px-3 rounded-xl"
             v-text="trans(`${value.ratings.results.comment}`)"
           ></span>
         </v-col>
@@ -88,7 +88,7 @@ export default {
         type: "line",
         data: {
           // labels: this.smeRatings.map(item => item.label),
-          labels: ['BSPI', 'FMPI', 'PMPI', 'HRPI', 'SDMI', 'FS Score'],
+          labels: ['BSPI', 'FMPI', 'PMPI', 'HRPI', 'BGMI', 'FS Score'],
           datasets: [
             {
               label: "Score",
@@ -107,15 +107,15 @@ export default {
               }
             }
           },
-          plugins: { 
-            legend: { 
+          plugins: {
+            legend: {
               position: 'bottom',
               display: false,
               labels: {
                 fontFamily: 'Rubik, sans-serif',
                 fontSize: 12,
               }
-            } 
+            }
           }
         }
       });
@@ -123,7 +123,7 @@ export default {
 
     convertToArrSME() {
       var smeObject = [];
-      
+
       _.map(this.value.ratings.smeRatings, function(item,) {
           const obj = {
             'label' : item.label,
@@ -131,11 +131,11 @@ export default {
             'code' : item.code,
             'id' : item.id
           }
-          
-          smeObject.push(obj);
-      });  
 
-      this.smeRatings = smeObject; 
+          smeObject.push(obj);
+      });
+
+      this.smeRatings = smeObject;
     },
 
     colorStatus(color) {
@@ -147,7 +147,7 @@ export default {
     },
 
     goToCompanySurveyPage (index) {
-      
+
       if(index.label == 'Financial Score' || index.label == '5th Module') {
         return '';
       }

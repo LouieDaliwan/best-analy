@@ -21,8 +21,8 @@ return [
         "PMPI is measured by 5 elements namely; Policies & Procedures, Quality Management, Technology & Tools, Customer Experience and Organisation Competitiveness",
     ],
 
-    'SDMI' => [
+    'BGMI' => [
         "This highlights the ability to translate organizational expansion strategies into concrete development interventions through effective resource utilization, marketing strategies and compliance with standards to drive business opportunities",
-        "SDMI is measured by 5 elements namely; Business Expansion, Marketing Strategies, Capacity Utilisation, Certification & Standards and Location",
+        "BGMI is measured by 5 elements namely; Business Expansion, Marketing Strategies, Capacity Utilisation, Certification & Standards and Location",
     ],
 ];

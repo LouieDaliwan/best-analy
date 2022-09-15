@@ -51,7 +51,6 @@ class CustomerController extends ApiController
      */
     public function show(int $id)
     {
-        // dd(new CustomerResource($this->service()->find($id)));
         return new CustomerResource($this->service()->find($id));
     }
 

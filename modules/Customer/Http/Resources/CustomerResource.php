@@ -49,7 +49,7 @@ use Survey\SDMIIndexScore;
                         'month' => $request->get('month') ?? date('m-Y'),
                     ];
 
-                    if($index->alias == 'SDMI') {
+                    if($index->alias == 'BGMI') {
                         $answeredSurvey = SDMIIndexScore::where('customer_id', $customer['id'])->where('month_key', $attributes['month'])->first();
                         $reportResult = [
                             'report' => $answeredSurvey != null ? collect([
@@ -66,8 +66,8 @@ use Survey\SDMIIndexScore;
                             'is:finished' => ! is_null($report),
                         ];
                     }
-                            
-        
+
+
                     return array_merge(with(new IndexResource($index))->toArray($request), $reportResult);
                 })->toArray(),
                 'ratings' => RatingGraph::getRatings($this),

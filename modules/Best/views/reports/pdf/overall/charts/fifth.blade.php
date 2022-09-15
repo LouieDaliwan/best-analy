@@ -3,11 +3,11 @@
   <table width="100%">
     <tr>
       <td class="p-2">
-        <h4 class="dt-secondary mb-0">Strategy Development & Management Index</h4>
+        <h4 class="dt-secondary mb-0">Business Growth & Marketing Strategy Index</h4>
       </td>
       <td class="p-2">
         <h4 class="mb-0 dt-secondary text-right">
-          {{ $data['SDMI']['overall:total'] }}%
+          {{ $data['BGMI']['overall:total'] }}%
         </h4>
       </td>
     </tr>
@@ -50,7 +50,7 @@
         ],
         datasets: [
           {
-            data: {!! json_encode(collect($data['SDMI']['elements:charts']['data'])->values()->toArray()) !!},
+            data: {!! json_encode(collect($data['BGMI']['elements:charts']['data'])->values()->toArray()) !!},
             backgroundColor: gradient,
             hoverBackgroundColor: chartColors.primary,
           }

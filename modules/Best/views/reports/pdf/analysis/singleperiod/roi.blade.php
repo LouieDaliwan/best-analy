@@ -96,13 +96,17 @@
           maxBarThickness: 5,
           yAxes: [{
             ticks: {
+              precision: 0,
+              stepSize: 0.15,
               beginAtZero: true,
               padding: 20,
               maxTicksLimit: 5,
               fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',
               fontSize: 12,
-              callback: function( value ){ return value + "%" },
+              callback: function( value ){
+                return value + "%";
+              },
             },
           }]
         }

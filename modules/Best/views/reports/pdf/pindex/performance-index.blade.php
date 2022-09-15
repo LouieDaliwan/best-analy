@@ -2,7 +2,7 @@
 <section class="pindex">
   <div class="row">
     <div class="col-md-12">
-      @if($data['pindex:code'] != 'SDMI')
+      @if($data['pindex:code'] != 'BGMI')
       <h3 style="color: {{ $data['pindex:color'] }};">
         {{ __($data['pindex:code']) }} :
         @lang($data['pindex'])

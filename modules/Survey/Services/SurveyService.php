@@ -213,7 +213,7 @@ class SurveyService extends Service implements SurveyServiceInterface
      * @return void
      */
     public function submit(Survey $survey, $attributes)
-    {   
+    {
         foreach ($attributes['fields'] as $attribute) {
             $field = $survey->fields()->findOrFail($attribute['id']);
             $field->submit($attribute['submission'], $attributes['remarks'] ?? null);
@@ -221,8 +221,8 @@ class SurveyService extends Service implements SurveyServiceInterface
 
         /** Will optimize this @author LouieDaliwan*/
         $taxonomy = !isset($attributes['fields'][0]['submission']['taxonomy']) ? null : $attributes['fields'][0]['submission']['taxonomy'];
-        
-        if($taxonomy == 'sdmi') {
+
+        if($taxonomy == 'bgmi') {
             event(new SDMISurvey(
                 $survey,
                 $attributes ?? []

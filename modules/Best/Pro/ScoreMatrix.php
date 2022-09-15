@@ -11,7 +11,7 @@ abstract class ScoreMatrix
         '4' => 4,
         '5' => 5,
         'N/A' => 0,
-        'sdmi' => 5,
+        'bgmi' => 5,
     ];
 
     /**

@@ -7,8 +7,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Survey\SDMIIndexScore;
 
-use function PHPSTORM_META\map;
-
 class CalculateSDMIScore
 {
     protected $metadata = [
@@ -65,16 +63,16 @@ class CalculateSDMIScore
 
                     $variables['be']['score'] += $score;
                     $variables['be']['count']++;
-                }            
-            }            
-            
+                }
+            }
+
             if($field['submission']['fieldKey'] == 'Marketing Strategies') {
                 if($field['submission']['results'] != 'NA') {
                     $score = (float) round($field['submission']['score'] / 5, 2);
 
                     $variables['ms']['score'] += $score;
                     $variables['ms']['count']++;
-                }             
+                }
             }
 
             if($field['submission']['fieldKey'] == 'Endorsement, Certification & Standards') {
@@ -83,7 +81,7 @@ class CalculateSDMIScore
                     $score = (float) round($field['submission']['score'] / 5, 2);
                     $variables['es']['score'] += $score;
                     $variables['es']['count']++;
-                }            
+                }
             }
 
             if($field['submission']['fieldKey'] == "Location (Describe your level of satisfaction with your current business location's ability to serve customers)") {
@@ -91,7 +89,7 @@ class CalculateSDMIScore
                     $score = (float) round($field['submission']['score'] / 5, 2);
                     $variables['ll']['score'] += $score;
                     $variables['ll']['count']++;
-                }            
+                }
             }
 
             if($field['submission']['fieldKey'] == 'Capacity Utilisation') {
@@ -99,14 +97,14 @@ class CalculateSDMIScore
                     $score = (float) round($field['submission']['score'] / 5, 2);
                     $variables['cu']['score'] += $score;
                     $variables['cu']['count']++;
-                }            
+                }
             }
 
             if($field['submission']['results'] != 'NA') {
                 $score = (float) round($field['submission']['score'] / 5, 2);
                 $variables['index']['score'] += $score;
                 $variables['index']['count']++;
-            }            
+            }
         }
 
        $metadata = $this->getResult($variables);
@@ -135,7 +133,7 @@ class CalculateSDMIScore
             $divisor = $variables[$key]['count'];
             $metadata[$key] += $divisor != 0 ? (float) round(($score / $divisor), 3) * 100 : 0;
         }
-        
+
         return $metadata;
     }
 }

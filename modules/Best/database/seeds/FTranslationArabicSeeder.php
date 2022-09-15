@@ -63,7 +63,7 @@ class FTranslationArabicSeeder extends Seeder
         'Excellent Net Margin after Tax by Non-Industrial standards' => 'الهامش الصافي بعد الضريية ممتاز حسب المعاييرمجال غير الصناعي',
         'Excellent Net Margin after Tax by Industrial standards' => 'الهامش الصافي بعد الضريية ممتاز حسب المعاييرمجال الصناعي',
         'Good Net Margin after Tax by Non-Industrial standards' => 'الهامش الصافي بعد الضريية جيد حسب المعاييرمجال غير الصناعي',
-        'Good Net Margin after Tax by Industrial standards' => 'الهامش الصافي بعد الضريية جيد حسب المعاييرمجال الصناعي', 
+        'Good Net Margin after Tax by Industrial standards' => 'الهامش الصافي بعد الضريية جيد حسب المعاييرمجال الصناعي',
         'Moderate Net Margin after Tax by Non-Industrial standards' => 'الهامش الصافي بعد الضريية متوسط حسب المعاييرمجال غير الصناعي',
         'Moderate Net Margin after Tax by Industrial standards' => 'الهامش الصافي بعد الضريية متوسط حسب المعاييرمجال الصناعي',
         'Poor Net Margin after Tax by Non-Industrial standards' => 'الهامش الصافي بعد الضريية ضعيف حسب المعاييرمجال غير الصناعي',
@@ -71,7 +71,7 @@ class FTranslationArabicSeeder extends Seeder
         'Very Poor Net Margin after Tax by Non-Industrial standards' => 'الهامش الصافي بعد الضريية ضعيف جدا حسب المعاييرمجال غير الصناعي',
         'Very Poor Net Margin after Tax by Industrial standards' => 'الهامش الصافي بعد الضريية ضعيف جدا حسب المعاييرمجال الصناعي',
         'Excellent Current Ratio by Non-Industrial standards' => 'معامل السيولة ممتاز حسب المعاييرمجال غير الصناعي',
-        'Excellent Current Ratio by Industrial standards' => 'معامل السيولة ممتاز حسب المعاييرمجال الصناعي', 
+        'Excellent Current Ratio by Industrial standards' => 'معامل السيولة ممتاز حسب المعاييرمجال الصناعي',
         'Good Current Ratio by Non-Industrial standards' => 'معامل السيولة جيد حسب المعاييرمجال غير الصناعي',
         'Good Current Ratio by Industrial standards' => 'معامل السيولة جيد حسب المعاييرمجال الصناعي',
         'Moderate Current Ratio by Non-Industrial standards' => 'معامل السيولة متوسط حسب المعاييرمجال غير الصناعي',
@@ -113,7 +113,7 @@ class FTranslationArabicSeeder extends Seeder
         'Immediate focus would be to re-strategise the production process and choice of raw materials suppliers to ensure a healthier gross profit margin' => '.تركيز الجهود الفورية على تحسين عمليات الإنتاج من خلال التشغيل الآلي لخفض التكاليف',
         "The SME Ratings Report (SME Ratings) is an organizational scorecard that measures five fundamental elements of performance, namely Business Sustainability, Productivity & Financial Management, Human Resource and Strategy Development & Management. The Report provides relevant diagnostics relating to the effectiveness and impact of the organization's functions and how well these are align to the vision and strategy of the organization." => "تقرير تقييم أداء المؤسسة (SME Ratings)هو سجل أداء تنظيمي الذي يقيس 5 عناصر أساسية للأداء، وهي استدامة الأعمال، وإدارة الإنتاجية، وإدارة المالية، والموارد البشرية، ووضع الاستراتيجيات وإدارتها. ويقدم التقرير التشخيصات لفعّالية وتأثير وظائف المؤسسة ومدى اتساقهما مع الرؤية واستراتيجيتها.",
         "This highlights the ability to translate organizational expansion strategies into concrete development interventions through effective resource utilization, marketing strategies and compliance with standards to drive business opportunities" => "هذا يسلط الضوء على القدرة تحويل إستراتيجيات التوسع التنظيمي إلى تدخلات إنمائية من خلال الاستخدام الفعّال للموارد، واستراتيجيات التسويق، والامتثال للمعايير لدفع فرص الأعمال التجارية",
-        "SDMI is measured by 5 elements namely; Business Expansion, Marketing Strategies, Capacity Utilisation, Certification & Standards and Location" => "يقاس مؤشر SDMI ب 5 عناصر هي: توسيع الأعمال، واستراتيجيات التسويق، وإستغلال السعة، والشهادة و المقاييس، والموقع.",        
+        "SDMI is measured by 5 elements namely; Business Expansion, Marketing Strategies, Capacity Utilisation, Certification & Standards and Location" => "يقاس مؤشر SDMI ب 5 عناصر هي: توسيع الأعمال، واستراتيجيات التسويق، وإستغلال السعة، والشهادة و المقاييس، والموقع.",
         "The SME Ratings Score gives the organization an idea of how well the core functions of the organization are performing in addition to its financial performance. Through our comprehensive review, the score is organized into 4 broad categories:" => "تعطي نتيجة تقييم أداء المؤسسة (SME Ratings) فكرة عن مدى جودة وظائف الأساسية للمؤسسة بالإضافة إلى أدائها المالي. ومن خلال مراجعتنا الشاملة، يتم تنظيم النتيجة في أربع فئات عريضة:",
         "Failed" => "-فشل",
         "Critical" => "-خطير",
@@ -121,9 +121,9 @@ class FTranslationArabicSeeder extends Seeder
         "Normal" => "-عادي",
         "It is important that the understanding, perception and observation of an organization cannot be relied upon from an individual only. A collective observation from multiple individuals is critical to ensure that a better understanding of an organisation is achieved. Hence, a minimum sample size of 5 to 10% of the total organisation staff strength is RECOMMENDED to complete the series of questionnaire to ensure the reliability of the report is not compromised" => "ومن المهم، ألا يعتمد على فهم المؤسسة وتصورها وملاحظتها من جانب فرد واحد فحسب. فالمراقبة الجماعية من عدة أفراد هي أمر حاسم لضمان تحقيق فهم الأفضل للمؤسسة. ولضمان موثوقية التقرير ، يوصى باستكمال سلسلة الاستبيان بحد أدنى من حجم العينة يتراوح بين 5 و 10 في المائة من مجموع قوام موظفي المؤسسة.",
         "Alternatively, the inputs given by the representative of the organization can be validated through the observation and sharing of evidences with a 3rd-party Business Advisor" => "وبدلا من ذلك، يمكن التحقق من المدخلات المقدَّمة من ممثِّل المؤسسة من خلال مراقبة الأدلة وتبادلها مع مستشار تجاري تابع لطرف ثالث.",
-        "Report Printed on" => "تقرير طبع في"
-        
-    ];    
+        "Report Printed on" => "تقرير طبع في",
+        "Business Growth & Marketing Strategy Index" => "مؤشر استراتجية التسويق ونمو الأعمال",
+    ];
 
     public function run() :void
     {
@@ -135,10 +135,10 @@ class FTranslationArabicSeeder extends Seeder
                 'group' => '*',
                 'text' => [
                     'en' => $word,
-                    'ar' => $ar 
+                    'ar' => $ar
                 ],
             ]);
         }
-        
+
     }
 }

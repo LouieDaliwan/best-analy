@@ -107,6 +107,7 @@
           maxBarThickness: 3,
           yAxes: [{
             ticks: {
+              stepSize: 0.25,
               beginAtZero: true,
               padding: 20,
               maxTicksLimit: 5,

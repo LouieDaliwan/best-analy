@@ -8,7 +8,7 @@ use Taxonomy\Models\Taxonomy;
 
 class SDMIIndexScore extends Model
 {
-    protected $table = 'smdi_index_scores';
+    protected $table = 'smdi_index_scores'; 
 
 
     protected $fillable = [
@@ -16,14 +16,14 @@ class SDMIIndexScore extends Model
         'taxonomy_id',
         'month_key',
         'metadata',
-    ]; 
+    ];
 
     protected $casts = [
         'metadata' => 'array'
     ];
 
 
-    public function taxonomy() 
+    public function taxonomy()
     {
         return $this->belongTo(Taxonomy::class, 'taxonomy_id', 'id');
     }

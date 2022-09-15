@@ -13,7 +13,7 @@ class OverallScore
         $user = auth()->user()->id;
 
         $keyName = "{$customer->id}-Overall-{$user}-{$monthKey}";
-        $sdmiName = "{$customer->id}-SDMI-{$user}-{$monthKey}";
+        $sdmiName = "{$customer->id}-BGMI-{$user}-{$monthKey}";
 
         if(Cache::has($keyName)) {
             Cache::forget($keyName);

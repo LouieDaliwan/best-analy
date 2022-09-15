@@ -146,8 +146,8 @@ class FormulaService extends Service implements FormulaServiceInterface
         logger('Start on Taxononmies');
         // Retrieve Performance Indices data.
         foreach ($taxonomies as $i => $taxonomy) {
-            
-            if($taxonomy->alias == 'SDMI') {
+
+            if($taxonomy->alias == 'BGMI') {
                 continue;
             }
 
@@ -231,7 +231,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         );
 
         $this->cacheLightScore($customer->id, $user->id, $monthkey, $lightScore);
-        
+
         $this->data['overall:enablers:orig'] = $this->getOriginalAverage($this->data['indices']);
 
         // Retrieve the metadata for the report cover.
@@ -249,21 +249,26 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['customer:type'] = $customer->metadata['type'] ?? null;
 
         $index = Index::find($attributes['taxonomy_id'] ?? false);
-        
-        if ($index && $index->alias != 'SDMI') {
+
+        if ($index && $index->alias != 'BGMI') {
             $this->data['current:index'] = $this->data['indices'][$index->alias];
             $this->data['current:pindex'] = $this->data['indices'][$index->alias];
         }
-    
+
         $this->data['is_single'] = collect($financialStatements)->count() < 2 ? true : false;
         $this->data['financialStatementCount'] = collect($financialStatements)->count();
 
-        $this->data['indices']['SDMI']['pindex:code'] = 'SDMI';
-        $this->data['indices']['SDMI']['pindex'] = 'Strategic Development and Management Index';
-        $this->data['SDMI']['elements:charts'] = $this->getChartedGroupedAverage(null, 'sdmi', $customer, $monthkey);
-        $this->data['SDMI']['overall:total'] = cache("{$customer->id}-SDMI-{$user->id}-{$monthkey}");
+        $this->data['indices']['BGMI']['pindex:code'] = 'BGMI';
+        $this->data['indices']['BGMI']['pindex'] = 'Strategic Development and Management Index';
+        $this->data['indices']['BGMI']['pindex:color'] = $taxonomy->metadata['color'] ?? null;
+        $this->data['BGMI']['elements:charts'] = $this->getChartedGroupedAverage(null, 'bgmi', $customer, $monthkey);
+        $this->data['BGMI']['overall:total'] = cache("{$customer->id}-BGMI-{$user->id}-{$monthkey}");
+
+        $this->data['indices']['BGMI']['elements:charts'] = $this->getChartedGroupedAverage(null, 'bgmi', $customer, $monthkey);
+        $this->data['indices']['BGMI']['overall:total'] = cache("{$customer->id}-BGMI-{$user->id}-{$monthkey}");
 
         logger('End of Generate Data');
+
         return $this->data;
     }
 
@@ -271,9 +276,9 @@ class FormulaService extends Service implements FormulaServiceInterface
     protected function cacheLightScore($customerId, $userId, $monthKey, $lightScore)
     {
         if(Cache::has("{$customerId}-results-{$userId}-{$monthKey}")) {
-            Cache::forget("{$customerId}-results-{$userId}-{$monthKey}");   
+            Cache::forget("{$customerId}-results-{$userId}-{$monthKey}");
         }
-        
+
         Cache::remember("{$customerId}-results-{$userId}-{$monthKey}", 60*60*24*30, function() use ($lightScore){
             return $lightScore;
         });
@@ -310,7 +315,7 @@ class FormulaService extends Service implements FormulaServiceInterface
      * @return string
      */
     public function getOverallComment($score, $customer)
-    {   
+    {
         return trans("best::grading.$score", ['name' => $customer, 'appcode' => settings('app:code')]);
     }
 
@@ -413,7 +418,7 @@ class FormulaService extends Service implements FormulaServiceInterface
     }
 
     /**
-     * Retrieve the Financial Analysis data.
+     * Retrieve the Financial  data.
      *
      * @param  \Customer\Models\Customer $customer
      * @param  \Customer\Models\FinancialStatement $financialStatements;
@@ -430,7 +435,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                     'debt_ratio' => DebtRatioAnalysis::getReport($financialStatements),
                     'roi' => ROIAnalysis::getReport($financialStatements),
                     'raw_materials' => RawMaterialAnalysis::getReport($financialStatements),
-                ];                       
+                ];
         } else if (collect($financialStatements)->count() > 1) {
             return [
                 'profitability' => ProfitabilityAnalysis::getReport($financialStatements),
@@ -440,7 +445,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'productivity' => ProductivityAnalysis::getReport($financialStatements, $customer),
             ];
 
-        } 
+        }
 
         return  [
             'gross_ratio' => '',
@@ -667,12 +672,12 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'data' => $group->values()->map(function ($i) {
                     return $i*100;
                 }),
-            ];  
-        } 
+            ];
+        }
         $sdmi = $customer->sdmiComputation()->where('month_key', $monthKey)->first();
         $scores = $sdmi->metadata ?? null;
 
-        return [   
+        return [
             'data' => collect([
                 round($scores != null ? $scores['be'] : 0, 2),
                 round($scores != null ? $scores['ms'] : 0, 2),
@@ -792,7 +797,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         if(Cache::has($keyName)) {
             Cache::forget($keyName);
         }
-               
+
         Cache::remember($keyName, 60*60*24*30, function() use ($results){
             return $results;
         });
@@ -863,7 +868,7 @@ class FormulaService extends Service implements FormulaServiceInterface
             $comment = trans("best::overall.{$code}.below50", ['name' => $customer, 'appcode' => 'asfsdf']);
         }
 
-        
+
         return $comment;
     }
 

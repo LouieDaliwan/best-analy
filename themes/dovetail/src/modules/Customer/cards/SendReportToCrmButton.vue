@@ -194,7 +194,7 @@ export default {
       { message: '', name: trans('Check Company Details From CRM'), icon: 'mdi-file-send', status: 'pending'},
       { message: '', name: trans('Sending Financial File By No'), icon: 'mdi-file-send', status: 'pending'},
       { message: '', name: trans('Sending Update Visit Score'), icon: 'mdi-file-send', status: 'pending' },
-      { message: '', name: trans('Sending Overall Document'), icon: 'mdi-file-send', status: 'pending' }, 
+      { message: '', name: trans('Sending Overall Document'), icon: 'mdi-file-send', status: 'pending' },
       // { message: '', name: trans('Sending Overall Scores'), icon: 'mdi-cube-send', status: 'pending' },
       // { message: '', name: trans('Sending Financial Scores'), icon: 'mdi-cube-send', status: 'pending' },
       // { message: '', name: trans('Sending Financial Document'), icon: 'mdi-file-send', status: 'pending' },
@@ -231,7 +231,7 @@ export default {
         return Object.assign(item, {status: 'pending', message: ''});
       });
       this.searchForCompanyInCrm(this.query);
-      
+
       // this.sendFinancialScores();
     },
 
@@ -440,7 +440,7 @@ export default {
         console.log('err', err)
       })
     },
-    
+
     sendUpdateVisitToCrm() {
         this.isSending = true;
         this.checklist[2].status = 'sending';
@@ -455,7 +455,7 @@ export default {
           BSPI: parseFloat(scores.smeRatings[0]['score']),
           FMPI: parseFloat(scores.smeRatings[1]['score']),
           PMPI: parseFloat(scores.smeRatings[2]['score']),
-          HRPI: parseFloat(scores.smeRatings[3]['score']),  
+          HRPI: parseFloat(scores.smeRatings[3]['score']),
           FifthModule: parseFloat(scores.smeRatings[4]['score']),
           FinancialPerformance: parseFloat(financial.metadataResults.ratioAnalysis.dashboard.financial_score),
           WorkingCapital: parseFloat(financial.metadataResults.ratioAnalysis.liquidity.working_capital),
@@ -484,7 +484,7 @@ export default {
             this.error_trigger = true;
             this.isSending = false;
             this.sendDocumentToCrm();
-            
+
             // this.$store.dispatch('dialog/error', {
             //   show: true,
             //   width: 400,

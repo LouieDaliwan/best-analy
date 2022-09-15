@@ -31,11 +31,11 @@ return [
                 'code' => 'human-resource',
                 'id' => 4,
             ],
-            'sdmi' => [
-                'label' => "Strategy Development & Management",
-                'acro' => "SDMI",
+            'bgmi' => [
+                'label' => "Business Growth & Marketing Strategy Index",
+                'acro' => "BGMI",
                 'score' => 0,
-                'code' => 'strategy-development-and-management-index',
+                'code' => 'business-growth-and-marketing-strategy-index',
                 'id' => 5
             ],
             'financial_score' => [
@@ -198,7 +198,7 @@ return [
             ],
             'Moderate' => [
                 0.21,
-                0.5,  
+                0.5,
             ],
             'Poor' => [
                 0.51,
@@ -206,7 +206,7 @@ return [
             ],
             'Very Poor' => [
                 0.61,
-                0.8,                
+                0.8,
             ],
         ],
         'roi' => [
@@ -240,7 +240,7 @@ return [
             ],
             'Moderate' => [
                 0.26,
-                0.3,  
+                0.3,
             ],
             'Poor' => [
                 0.31,
@@ -327,7 +327,7 @@ return [
                             ],
             'Moderate' => [
                 0.21,
-                0.5,  
+                0.5,
             ],
             'Poor' => [
                 0.51,
@@ -335,7 +335,7 @@ return [
             ],
             'Very Poor' => [
                 0.61,
-                0.8,                
+                0.8,
             ],
         ],
         'roi' => [
@@ -369,7 +369,7 @@ return [
             ],
             'Moderate' => [
                 0.36,
-                0.45,                
+                0.45,
             ],
             'Poor' => [
                 0.55,
@@ -387,7 +387,7 @@ return [
         'Poor' => 2,
         'Moderate' => 3,
         'Good' => 4,
-        'Excellent' => 5, 
+        'Excellent' => 5,
     ],
 
     'financial_score_wts' => [

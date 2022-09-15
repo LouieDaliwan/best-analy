@@ -1,5 +1,5 @@
 {{-- <div class="dt-divider" style="height: 50px;"></div> --}}
-@if($data['pindex:code'] != 'SDMI')
+@if($data['pindex:code'] != 'BGMI')
 <section class="mt-2">
   <p class="mb-3">@lang($data['overall:comment'])
 
@@ -155,4 +155,4 @@
   });
 })();
 </script>
-@endif  
+@endif

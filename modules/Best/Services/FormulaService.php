@@ -259,7 +259,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['financialStatementCount'] = collect($financialStatements)->count();
 
         $this->data['indices']['BGMI']['pindex:code'] = 'BGMI';
-        $this->data['indices']['BGMI']['pindex'] = 'Strategic Development and Management Index';
+        $this->data['indices']['BGMI']['pindex'] = 'Business Growth & Marketing Strategy Index';
         $this->data['indices']['BGMI']['pindex:color'] = $taxonomy->metadata['color'] ?? null;
         $this->data['BGMI']['elements:charts'] = $this->getChartedGroupedAverage(null, 'bgmi', $customer, $monthkey);
         $this->data['BGMI']['overall:total'] = cache("{$customer->id}-BGMI-{$user->id}-{$monthkey}");

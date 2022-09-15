@@ -1,4 +1,4 @@
-@if($data['pindex:code'] != 'SDMI')
+@if($data['pindex:code'] != 'BGMI')
 <div class="dt-divider" style="height: 50px;"></div>
 <section>
   <p class="mb-3">@lang($data['overall:comment'])</p>

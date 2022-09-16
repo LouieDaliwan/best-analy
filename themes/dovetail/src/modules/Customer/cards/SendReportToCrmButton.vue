@@ -456,7 +456,7 @@ export default {
           FMPI: parseFloat(scores.smeRatings[1]['score']),
           PMPI: parseFloat(scores.smeRatings[2]['score']),
           HRPI: parseFloat(scores.smeRatings[3]['score']),
-          FifthModule: parseFloat(scores.smeRatings[4]['score']),
+          BGMI: parseFloat(scores.smeRatings[4]['score']),
           FinancialPerformance: parseFloat(financial.metadataResults.ratioAnalysis.dashboard.financial_score),
           WorkingCapital: parseFloat(financial.metadataResults.ratioAnalysis.liquidity.working_capital),
           NetProfitMargin: parseFloat(financial.metadataResults.ratioAnalysis.profitability.net_profit_margin),

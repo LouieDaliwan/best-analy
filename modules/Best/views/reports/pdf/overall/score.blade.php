@@ -35,13 +35,13 @@
             <tr>
               <td>
                 <div>
-                  <svg width="180px" height="180px" viewBox="0 0 42 42" class="donut" style="color: {{ $data['overall:result'] }}; background-color: {{ $data['overall:backgroundResult']}}";>
-                    <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="#fff"></circle>
-                    <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#eeeeee" stroke-width="3"></circle>
+                  <svg width="180px" height="180px" viewBox="0 0 42 42" class="donut" ;>
+                    <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="{{ $data['overall:backgroundResult'] }}"></circle>
+                    <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="{{ $data['overall:backgroundResult'] }}" stroke-width="3"></circle>
                     <circle class="donut-segment" transform="rotate(-90 0 0)
-                        translate(-42 0)" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#de9f00" stroke-dasharray="{{ round($data['overall:percentage']) }} {{ 100 - round($data['overall:percentage']) }}" stroke-dashoffset="25" stroke-width="3"></circle>
+                        translate(-42 0)" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="{{ $data['overall:backgroundResult'] }}" stroke-dasharray="{{ round($data['overall:percentage']) }} {{ 100 - round($data['overall:percentage']) }}" stroke-dashoffset="25" stroke-width="3"></circle>
                     <g class="chart-text">
-                      <text x="50%" y="55%" class="chart-number" fill="#de9f00">
+                      <text x="50%" y="55%" class="chart-number" fill="{{ $data['overall:backgroundResult'] }}">
                         {{ round($data['overall:percentage']) }}%
                       </text>
                     </g>

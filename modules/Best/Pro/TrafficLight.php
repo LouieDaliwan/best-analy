@@ -134,7 +134,7 @@ abstract class TrafficLight
         if($score >= (self::normal() * 100)) {
             $comment = self::NORMAL;
             $result = '#000000';
-            $background = '#000000';
+            $background = '#f3f3f3ff';
         }
 
         if($score >= 30.0 && $score  <= (self::critical() * 100 )) {

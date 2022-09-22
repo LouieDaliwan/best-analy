@@ -35,7 +35,7 @@
             <tr>
               <td>
                 <div>
-                  <svg width="180px" height="180px" viewBox="0 0 42 42" class="donut" ;>
+                  <svg width="180px" height="180px" viewBox="0 0 42 42" class="donut">
                     <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="{{ $data['overall:backgroundResult'] }}"></circle>
                     <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="{{ $data['overall:backgroundResult'] }}" stroke-width="3"></circle>
                     <circle class="donut-segment" transform="rotate(-90 0 0)

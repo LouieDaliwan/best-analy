@@ -134,7 +134,7 @@ abstract class TrafficLight
         if($score >= (self::normal() * 100)) {
             $comment = self::NORMAL;
             $result = '#000000';
-            $background = '#f3f3f3ff';
+            $background = '#000000';
         }
 
         if($score >= 30.0 && $score  <= (self::critical() * 100 )) {
@@ -154,17 +154,6 @@ abstract class TrafficLight
             $result = '#E63757';
             $background = '#f4ccccff';
         }
-
-
-        // if ($score > self::red()) {
-        //     if ($score > self::amber()) {
-        //         $comment = self::GREEN_LIGHT;
-        //     } else {
-        //         $comment = self::AMBER_LIGHT;
-        //     }
-        // } else {
-        //     $comment = self::RED_LIGHT;
-        // }
 
         return ['comment' => $comment, 'result' => $result, 'background' => $background];
     }

@@ -272,6 +272,7 @@
     </table>
     @endif
   </div>
+</div>
 
   @if(!$data['is_single'])
     {{-- Ratios --}}

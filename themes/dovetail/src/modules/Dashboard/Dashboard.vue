@@ -12,7 +12,7 @@
           :to="{ name: 'companies.find' }"
         >
           <v-icon small left>mdi-file-document-box-search-outline</v-icon>
-          {{ trans("Find Company") }}
+          {{ trans("Find Company")  }}
         </v-btn>
       </template>
     </page-header>

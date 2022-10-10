@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <!-- <v-form @submit.prevent="submit" ref="form"> -->
     <div class="d-flex align-center mb-3">
       <h3>Financial Period</h3>
@@ -351,7 +350,7 @@ export default {
 
     balance() {
       const metadataSheets = this.resource.data.metadataSheets;
-      
+
       const total_assets = this.sum([
         metadataSheets.Cash,
         metadataSheets["Trade Receivables"],

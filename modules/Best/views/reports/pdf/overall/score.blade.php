@@ -1,15 +1,17 @@
 {{-- <div class="dt-divider" style="height: 50px;"></div> --}}
 <section class="mt-2">
 
-  <!-- <div class="row">
+  {{-- <div class="row">
     <div class="col-md-12">
       <div>
-        <h4 class="mb-3 dt-primary text-uppercase">
-          @lang('best::reports.:appcode Score', ['appcode' => __(settings('app:code'))])
-        </h4>
+        <h4 class="mb-3 dt-primary text-uppercase"> --}}
+          {{-- @lang('best::reports.:appcode Score', ['appcode' => __(settings('app:code'))]) --}}
+          @lang(settings('app:fulltitle'))
+          {{-- @lang('SME Ratings Score') --}}
+        {{-- </h4>
       </div>
     </div>
-  </div> -->
+  </div> --}}
   {{-- <section class="overall-indices"> --}}
 
   <table width="100%" class="mb-5">
@@ -20,7 +22,8 @@
             <tr>
               <td class="p-2">
                 <h4 class="dt-secondary mb-0">
-                  @lang('best::reports.:appcode Score', ['appcode' => __(settings('app:code'))])
+                  {{-- @lang('best::reports.:appcode Score', ['appcode' => __(settings('app:code'))]) --}}
+                  @lang('SME Ratings Score')
                 </h4>
               </td>
               <td class="p-2">

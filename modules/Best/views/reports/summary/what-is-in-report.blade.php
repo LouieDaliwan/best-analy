@@ -4,7 +4,8 @@
     <div class="col-md-12">
       <h1 class="dt-primary">@lang('What\'s in the Report')</h1>
       {{-- Section I --}}
-      <h2 class="dt-secondary">@lang('I.') @lang('best::reports.:appcode Score', ['appcode' => __(settings('app:code'))])</h2>
+      {{-- <h2 class="dt-secondary">@lang('I.') @lang('best::reports.:appcode Score', ['appcode' => __(settings('app:code'))])</h2> --}}
+      <h2 class="dt-secondary">@lang('I.') @lang('SME Ratings Score')</h2>
       <p>@lang('best::reports.Score Description', ['appcode' => __(settings('app:code'))])</p>
 
       <div class="card text-center">
@@ -45,7 +46,8 @@
       {{-- Section I --}}
 
       {{-- Section II --}}
-      <h2 class="dt-secondary">@lang('II.') @lang('best::elements.:appcode Elements', ['appcode' => settings('app:code')])</h2>
+      {{-- <h2 class="dt-secondary">@lang('II.') @lang('best::elements.:appcode Elements', ['appcode' => settings('app:code')])</h2> --}}
+      <h2 class="dt-secondary">@lang('II.') @lang('SME Ratings Elements')</h2>
       <div class="card mb-3">
         <div class="card-body">
           @foreach ($indices ?? $data['indices'] ?? [] as $key => $index)

@@ -12,6 +12,6 @@ return [
         'Channel resources to address critical areas of concern, appropriately',
         'Strategically assess which elements of organisational excellence will require interventions',
     ],
-    ':appcode Score' => "BEST Score",
+    ':appcode Score' => "SME Ratings Score",
     'Score Description' => 'The :appcode Score gives the organization an idea of how well the core functions of the organization are performing in addition to its financial performance. Through our comprehensive review, the score is organized into 4 broad categories:'
 ];

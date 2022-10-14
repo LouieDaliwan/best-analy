@@ -4,7 +4,8 @@
     <div class="col-md-12">
       <p class="dt-primary mb-1 font-weight-bold">@lang('What\'s in the Report')</p>
       {{-- Section I --}}
-      <p class="dt-secondary">@lang('I.') @lang('best::reports.:appcode Score', ['appcode' => __(settings('app:code'))])</p>
+      {{-- <p class="dt-secondary">@lang('I.') @lang('best::reports.:appcode Score', ['appcode' => __(settings('app:code'))])</p> --}}
+      <h2 class="dt-secondary">@lang('I.') @lang('SME Ratings Score')</h2>
       <p>@lang('best::reports.Score Description', ['appcode' => __(settings('app:code'))])</p>
 
       <table width="100%" class="mb-3">
@@ -30,7 +31,8 @@
       {{-- Section I --}}
 
       {{-- Section II --}}
-      <p class="dt-secondary">@lang('II.') @lang('best::elements.:appcode Elements', ['appcode' => settings('app:code')])</p>
+      {{-- <p class="dt-secondary">@lang('II.') @lang('best::elements.:appcode Elements', ['appcode' => settings('app:code')])</p> --}}
+      <h2 class="dt-secondary">@lang('II.') @lang('SME Ratings Elements')</h2>
       @foreach ($indices ?? $data['indices'] ?? [] as $key => $index)
         <h4 class="mb-3">{{ strtoupper($index['pindex:code']) }} : {{ __($index['pindex']) }}</h4>
         @foreach (trans("best::indices/descriptions.{$index['pindex:code']}") ?? [] as $desc)

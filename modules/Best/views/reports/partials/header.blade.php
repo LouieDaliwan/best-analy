@@ -7,7 +7,7 @@
       </div>
       <div class="col">
         <div class="text-center text-md-left">
-          <h1 class="my-0">@lang("SME Ratings") &nbsp; </h1>
+          <h1 class="my-0">@lang("SME Ratings Report") &nbsp; </h1>
         </div>
       </div>
     </div>

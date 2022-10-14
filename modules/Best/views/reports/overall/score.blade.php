@@ -4,7 +4,8 @@
     <div class="col-md-12">
       <div>
         <h1 class="mb-5 dt-primary text-uppercase">
-          @lang('best::reports.:appcode Score', ['appcode' => __(settings('app:code'))])
+          {{-- @lang('best::reports.:appcode Score', ['appcode' => __(settings('app:code'))]) --}}
+          @lang('SME Ratings Score')
         </h1>
       </div>
     </div>

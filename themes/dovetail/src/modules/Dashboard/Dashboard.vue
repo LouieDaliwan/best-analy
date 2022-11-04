@@ -27,6 +27,7 @@
           downloadable
           trashable
           @update:search="search"
+          @export:resource="exportResource"
           @update:trash="bulkTrashResource"
         >
         </toolbar-menu>
@@ -421,6 +422,10 @@ export default {
       axios.post($api.crm.save(), data).then(response => {
         console.log(response);
       });
+    },
+
+    exportResource() {
+
     },
 
     bulkTrashResource() {

@@ -9,7 +9,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Project Name')"
           autofocus
@@ -29,7 +29,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Project Location')"
           class="dt-text-field"
@@ -47,7 +47,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Trade Name (English)')"
           class="dt-text-field"
@@ -65,7 +65,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Trade Name (Arabic)')"
           class="dt-text-field"
@@ -83,7 +83,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('License No.')"
           class="dt-text-field"
@@ -101,7 +101,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Funding Program')"
           class="dt-text-field"

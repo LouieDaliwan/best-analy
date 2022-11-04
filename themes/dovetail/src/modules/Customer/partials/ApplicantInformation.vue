@@ -8,7 +8,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Applicant Name')"
           autofocus
@@ -28,7 +28,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Mobile No.')"
           autofocus
@@ -49,7 +49,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Applicant Email')"
           autofocus
@@ -69,7 +69,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Contact Person (Nominated)')"
           autofocus
@@ -89,7 +89,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Designation (Nominated Contact)')"
           autofocus
@@ -109,7 +109,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Mobile No.')"
           autofocus

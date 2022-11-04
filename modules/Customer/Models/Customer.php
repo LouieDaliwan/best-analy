@@ -14,6 +14,7 @@ use Core\Models\Relations\BelongsToUser;
 use Core\Models\Accessors\CommonAttributes;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Best\Pro\Financial\ProfitAndLossStatement;
+use Survey\Models\Submission;
 use Survey\SDMIIndexScore;
 
 class Customer extends Model
@@ -112,6 +113,16 @@ class Customer extends Model
         return array_merge($this->toArray(), [
             'metadata' => json_encode($this->metadata),
         ]);
+    }
+
+    /**
+     * Relation of Submission
+     *
+     * @return \Survey\Models\Submission
+     */
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
     }
 
     /**

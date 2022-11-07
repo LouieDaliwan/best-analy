@@ -28,9 +28,18 @@
           trashable
           @update:search="search"
           @export:resource="exportResource"
-          @update:trash="bulkTrashResource"
+          @update:trash="bulkTrashResourceconsole.log('test');"
         >
         </toolbar-menu>
+        <download-excel
+          :data="resources.selected"
+          :fields="rowFields"
+          :name="`Company.xls`"
+          class="btn btn-default d-none"
+          worksheet="Company"
+          ref="excel-export"
+        >
+        </download-excel>
         <v-slide-y-reverse-transition mode="out-in">
           <v-data-table
             :headers="resources.headers"
@@ -233,11 +242,14 @@ import man from "@/components/Icons/ManThrowingAwayPaperIcon.vue";
 import SendReportToCrmButton from "@/modules/Customer/cards/SendReportToCrmButton.vue";
 import { mapActions } from "vuex";
 import TeamIndex from "./cards/Teams.vue";
+import JsonExcel from "vue-json-excel";
+
 
 export default {
   components: {
     SendReportToCrmButton,
-    TeamIndex
+    TeamIndex,
+    DownloadExcel: JsonExcel,
   },
 
   computed: {
@@ -265,6 +277,14 @@ export default {
 
   data: () => ({
     api: $api,
+
+    rowFields: {
+      "Company Name": "name",
+      "File No.": "filenumber",
+      "Business Counselor": "counselor",
+      "Peer BC": "author",
+      "Last modified": "modified",
+    },
 
     resources: {
       loading: true,
@@ -425,7 +445,8 @@ export default {
     },
 
     exportResource() {
-
+      const exportExcel = this.$refs['excel-export']
+      exportExcel.$el.click()
     },
 
     bulkTrashResource() {

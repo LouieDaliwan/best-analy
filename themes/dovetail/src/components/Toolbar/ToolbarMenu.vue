@@ -59,7 +59,7 @@
               <span v-if="items.toggleBulkEdit">
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <v-btn class="mr-2" v-on="on" @click="askUserToExportResources" v-if="downloadable" icon :disabled="!items.toggleBulkEdit">
+                    <v-btn class="mr-2" v-on="on" @click="emitExportButtonClicked" v-if="downloadable" icon :disabled="!items.toggleBulkEdit">
                       <v-icon small>mdi-download</v-icon>
                     </v-btn>
                   </template>
@@ -298,11 +298,6 @@ export default {
         })
       }
     },
-    askUserToExportResources() {
-      if (this.items.bulkCount) {
-
-      }
-    },
     askUserToBulkPermanentlyDeleteResources () {
       if (this.items.bulkCount) {
         this.$store.dispatch('dialog/prompt', {
@@ -349,6 +344,16 @@ export default {
     },
 
     emitExportButtonClicked() {
+      if (!this.items.bulkCount) {
+        this.$store.dispatch('snackbar/show', {
+          text: trans_choice('Select an item from the list first', this.items.bulkCount),
+          button: {
+            text: trans('Okay'),
+          },
+        })
+      }
+
+      console.log('export');
       this.$emit('export:resource')
     },
     emitDeleteButtonClicked () {

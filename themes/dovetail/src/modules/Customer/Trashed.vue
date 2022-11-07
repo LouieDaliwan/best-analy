@@ -369,7 +369,15 @@ export default {
   },
 
   mounted: function () {
-    this.changeOptionsFromRouterQueries()
+    axios.post('/api/v1/customers/check-temp-trashed', {})
+    .then(({data}) => {
+      this.changeOptionsFromRouterQueries();
+    })
+    .catch((err) => {
+      console.log(err);
+    }).finally(() => {
+      this.changeOptionsFromRouterQueries();
+    });
   },
 
   watch: {

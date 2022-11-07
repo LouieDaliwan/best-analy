@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn
-      v-if="localeIsEn"
+      v-if="localSet == 'en'"
       block
       color="accent"
       large
@@ -12,7 +12,7 @@
       </template>
     </v-btn>
     <v-btn
-      v-else
+      v-if="localSet == 'ar'"
       block
       color="accent"
       large
@@ -27,6 +27,7 @@
 
 <script>
 export default {
+
   computed: {
     localeIsEn () {
       return this.locale == null || this.locale == 'null' || this.locale == 'en'
@@ -50,12 +51,14 @@ export default {
     items: Object.entries($app.language.supported).map(([value, text]) => {
       return { value, text }
     }),
+    localSet: localStorage.getItem('app:locale'),
   }),
 
   methods: {
     change: function () {
       this.$store.dispatch('app/locale', this.locale)
       this.$vuetify.rtl = is_rtl(this.locale)
+      localStorage.setItem('app:locale', this.lang)
       this.reload()
     },
 
@@ -63,6 +66,8 @@ export default {
       this.lang = 'ar'
       this.$store.dispatch('app/locale', this.locale)
       this.$vuetify.rtl = is_rtl(this.locale)
+      localStorage.setItem('app:locale', this.lang)
+      this.localSet = this.lang;
       this.reload()
     },
 
@@ -70,6 +75,8 @@ export default {
       this.lang = 'en'
       this.$store.dispatch('app/locale', this.locale)
       this.$vuetify.rtl = is_rtl(this.locale)
+      localStorage.setItem('app:locale', this.lang);
+      this.localSet = this.lang;
       this.reload()
     },
 

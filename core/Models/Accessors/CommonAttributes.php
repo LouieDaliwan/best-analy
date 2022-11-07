@@ -15,7 +15,7 @@ trait CommonAttributes
      */
     public function getAuthorAttribute()
     {
-        return $this->user->displayname;
+        return $this->user->displayname ?? $this->user->name ?? null;
     }
 
     /**
@@ -97,7 +97,7 @@ trait CommonAttributes
         try {
             $svg = file_get_contents(storage_path($this->svg ?? $this->image));
         } catch (\Exception $e) {
-            return Avatar::create($this->title ?? $this->name ?? $this->displayname)
+            return Avatar::create($this->title ?? $this->name ?? $this->displayname ?? $this->user->name ?? null)
                 ->setShape('circle')
                 ->setBackground('transparent')
                 ->setForeground('black')

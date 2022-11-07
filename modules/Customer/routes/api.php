@@ -23,4 +23,5 @@ Route::prefix('v1')->middleware(['auth:api', 'json.force'])->group(function () {
 
 Route::prefix('v1')->group(function () {
     Route::get('crm/customers/{crmnumber}/financial/ratios', 'Api\Crm\GetCustomerFinancialRatios');
+    Route::post('customers/check-temp-trashed', 'Api\CheckCustomerTrashedController@store');
 });

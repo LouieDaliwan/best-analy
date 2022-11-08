@@ -28,10 +28,20 @@
           bulk
           downloadable
           trashable
+          @export:resource="exportResource"
           @update:search="search"
           @update:trash="bulkTrashResource"
           >
         </toolbar-menu>
+        <download-excel
+          :data="resources.selected"
+          :fields="rowFields"
+          :name="`Teams.xls`"
+          class="btn btn-default d-none"
+          worksheet="Teams"
+          ref="excel-export"
+        >
+        </download-excel>
         <v-slide-y-reverse-transition mode="out-in">
           <v-data-table
             :headers="resources.headers"
@@ -150,8 +160,13 @@ import $api from './routes/api'
 import $auth from '@/core/Auth/auth'
 import man from '@/components/Icons/ManThrowingAwayPaperIcon.vue'
 import { mapActions } from 'vuex'
+import JsonExcel from "vue-json-excel";
 
 export default {
+  components :{
+    DownloadExcel: JsonExcel,
+  },
+
   computed: {
     resourcesIsNotEmpty () {
       return !this.resourcesIsEmpty
@@ -211,6 +226,12 @@ export default {
       toggleBulkEdit: false,
       toggleTrash: false,
       verticaldiv: false,
+    },
+
+    rowFields: {
+      "Name": "name",
+      "Manager": "manager.displayname",
+      "Last Modified": "modified",
     },
   }),
 
@@ -279,6 +300,11 @@ export default {
 
     focusSearchBar () {
       this.$refs['tablesearch'].focus()
+    },
+
+    exportResource() {
+      const exportExcel = this.$refs['excel-export']
+      exportExcel.$el.click()
     },
 
     bulkTrashResource () {

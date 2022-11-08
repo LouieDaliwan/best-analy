@@ -27,7 +27,11 @@
 
 <script>
 export default {
-
+   mounted() {
+     if (localStorage.getItem('app:locale') == null) {
+       this.changeToEn();
+     }
+   },
   computed: {
     localeIsEn () {
       return this.locale == null || this.locale == 'null' || this.locale == 'en'

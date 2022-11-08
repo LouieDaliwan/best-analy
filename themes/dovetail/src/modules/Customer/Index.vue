@@ -130,7 +130,7 @@
                         :to="{
                           name: 'companies.edit',
                           params: { id: item.id },
-                          query: { tab: 1 },
+                          query: { tab: 2 },
                         }"
                         icon
                         v-on="on"

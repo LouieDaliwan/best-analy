@@ -26,7 +26,7 @@ class AllCustomerResource extends JsonResource
             'status' => $this->status,
             'user_id' => $this->user_id,
             'author' => $this->author,
-            'counselor' => $this->counselor,
+            'counselor' => $this->detail->metadata,
             'created' => $this->created,
             'deleted' => $this->deleted,
             'modified' => $this->submissions()->latest()->first()->updated_at->diffForHumans(),

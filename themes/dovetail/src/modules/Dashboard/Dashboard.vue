@@ -99,7 +99,7 @@
 
             <!-- Counselor. -->
             <template v-slot:item.counselor="{ item }">
-              <span class="text-no-wrap" v-text="item.counselor"></span>
+              <span class="text-no-wrap" v-text="item.counselor.business_counselor"></span>
             </template>
             <!-- Counselor. -->
 

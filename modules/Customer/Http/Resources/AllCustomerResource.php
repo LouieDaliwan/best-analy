@@ -17,7 +17,14 @@ class AllCustomerResource extends JsonResource
     public function toArray($request)
     {
         $latestSubmission = $this->submissions()->latest('updated_at')->first() ?? null;
-        dd($latestSubmission);
+        $date = "";
+
+        if($latestSubmission->updated_at) {
+            $date = $latestSubmission->updated_at->diffForHumans();
+        } else {
+            $date = null;
+        }
+
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -31,7 +38,7 @@ class AllCustomerResource extends JsonResource
             'counselor' => $this->detail->metadata,
             'created' => $this->created,
             'deleted' => $this->deleted,
-            'modified' => $latestSubmission->updated_at->diffForHumans() ?? null,
+            'modified' => $date
         ];
     }
 }

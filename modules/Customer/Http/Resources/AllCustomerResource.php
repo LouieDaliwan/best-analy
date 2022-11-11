@@ -29,7 +29,7 @@ class AllCustomerResource extends JsonResource
             'counselor' => $this->detail->metadata,
             'created' => $this->created,
             'deleted' => $this->deleted,
-            'modified' => $this->submissions()->latest()->first()->updated_at->diffForHumans(),
+            'modified' => $this->submissions()->latest()->first()->updated_at->diffForHumans() ?? null,
         ];
     }
 }

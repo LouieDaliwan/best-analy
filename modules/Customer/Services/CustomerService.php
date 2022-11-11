@@ -122,14 +122,14 @@ class CustomerService extends Service implements CustomerServiceInterface
     {
 
         $pMetadata = [
-            'project_name' => $attributes['name'] ?? null,
-            'project_location' => $attributes['metadata']['ProjectLocation'] ?? null,
+            'project_name' => $attributes['name'] ?? $customer->detail->metadata['project_location'] ??  null,
+            'project_location' => $attributes['metadata']['ProjectLocation'] ?? $customer->detail->metadata['project_location'] ?? null,
             'project_type' => $attributes['metadata']['ProjectType'] ?? $customer->detail->metadata['project_type'] ?? null,
-            'trade_name_en' => $attributes['metadata']['TradeNameEnglish'] ?? null,
-            'trade_name_ar' => $attributes['metadata']['TradeNameArabic'] ?? null,
-            'license_no' => $attributes['metadata']['LicenseNo'] ?? null,
-            'funding_program' => null,
-            'investment_value' => $customer->detail->metadata['investment_value'] ?? 0,
+            'trade_name_en' => $attributes['metadata']['TradeNameEnglish'] ?? $customer->detail->metadata['trade_name_en'] ?? null,
+            'trade_name_ar' => $attributes['metadata']['TradeNameArabic'] ??  $customer->detail->metadata['trade_name_ar'] ?? null,
+            'license_no' => $attributes['metadata']['LicenseNo'] ?? $customer->detail->metadata['license_no'] ?? null,
+            'funding_program' => $attributes['metadata']['Program'] ?? $customer->detail->metadata['funding_program'] ?? null,
+            'investment_value' => $customer->detail->metadata['investment_value'] ?? $customer->detail->metadata['investment_value'] ?? 0,
             'industry_sector' => $attributes['metadata']['Sector'] ?? $customer->detail->metadata['industry_sector'] ?? null,
             'business_size' => null,
             'description' => null,

@@ -143,6 +143,8 @@ class CustomerService extends Service implements CustomerServiceInterface
             ]
         );
 
+        dd($attributes);
+
         $aMetadata = [
             'email' => $attributes['email'] ?? $customer->applicant->metadata['email'] ?? null,
             'address' => $attributes['address'] ?? $customer->applicant->metadata['address'] ?? null,

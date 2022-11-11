@@ -200,8 +200,8 @@ export default {
                 icon: "mdi-account-star-outline"
               },
               {
-                label: "Mobile Number",
-                value: this.value.applicant.metadata.number,
+                label: "Contact Person Mobile Number",
+                value: this.value.applicant.metadata.contact_person_mobile,
                 icon: "mdi-phone-incoming-outline"
               }
             ]

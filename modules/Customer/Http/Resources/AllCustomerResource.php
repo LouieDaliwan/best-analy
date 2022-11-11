@@ -19,7 +19,7 @@ class AllCustomerResource extends JsonResource
         $latestSubmission = $this->submissions()->latest('updated_at')->first() ?? null;
         $date = "";
 
-        if($latestSubmission->updated_at) {
+        if($latestSubmission) {
             $date = $latestSubmission->updated_at->diffForHumans();
         } else {
             $date = null;

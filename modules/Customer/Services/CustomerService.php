@@ -157,6 +157,7 @@ class CustomerService extends Service implements CustomerServiceInterface
             'number' =>  $attributes['metadata']['ApplicantMobile'] ?? $customer->applicant->metadata['number'] ?? null,
             'contact_person' => $attributes['metadata']['contact_person'] ?? $customer->applicant->metadata['contact_person'] ?? null,
             'designation' => $attributes['metadata']['designation'] ?? $customer->applicant->metadata['designation'] ?? null,
+            'contact_person_mobile' => $attributes['metadata']['contact_person_mobile'] ?? $customer->applicant->metadata['contact_person_mobile'] ?? null,
             'name' => $attributes['metadata']['ApplicantName'] ?? $customer->applicant->metadata['name'] ?? null,
         ];
 

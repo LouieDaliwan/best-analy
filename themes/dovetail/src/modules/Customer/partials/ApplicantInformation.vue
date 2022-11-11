@@ -111,13 +111,13 @@
           :dense="isDense"
           :disabled="true"
           :error-messages="errors"
-          :label="trans('Mobile No.')"
+          :label="trans('Contact Mobile No.')"
           autofocus
           class="dt-text-field"
-          name="metadata[applicant][number]"
+          name="metadata[applicant][contact_person_mobile]"
           outlined
           prepend-inner-icon="mdi-phone"
-          v-model="dataset.applicant.metadata.number"
+          v-model="dataset.applicant.metadata.contact_person_mobile"
         >
         </v-text-field>
       </validation-provider>

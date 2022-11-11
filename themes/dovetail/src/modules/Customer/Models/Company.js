@@ -10,6 +10,7 @@ class Company {
         customer_id: null,
         metadata: {
           BusinessCounselorName: null,
+          contact_person_mobile: null,
           FileNo: null,
           FundingRequestNo: null,
           PeeBusinessCounselorName: null,

@@ -317,13 +317,13 @@ export default {
         {
           text: trans("Business Counselor"),
           align: "left",
-          value: "counselor",
+          value: "counselor.BusinessCounselorName",
           class: "text-no-wrap"
         },
         {
           text: trans("Peer BC"),
           align: "left",
-          value: "author",
+          value: "counselor.PeeBusinessCounselorName",
           class: "text-no-wrap"
         },
         {

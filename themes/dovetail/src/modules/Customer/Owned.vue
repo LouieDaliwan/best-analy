@@ -116,7 +116,7 @@
                 <can code="customers.edit">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn :to="{name: 'companies.edit', params: { id: item.id }, query: { tab: 1 } }" icon v-on="on">
+                      <v-btn :to="{name: 'companies.edit', params: { id: item.id }, query: { tab: 2 } }" icon v-on="on">
                         <v-icon small>mdi-pencil-outline</v-icon>
                       </v-btn>
                     </template>

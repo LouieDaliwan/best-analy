@@ -119,7 +119,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Industry Sector')"
           class="dt-text-field"

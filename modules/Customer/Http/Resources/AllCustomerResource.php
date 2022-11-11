@@ -17,7 +17,7 @@ class AllCustomerResource extends JsonResource
     public function toArray($request)
     {
         $latestSubmission = $this->submissions()->latest('updated_at')->first() ?? null;
-
+        dd($latestSubmission);
         return [
             'id' => $this->id,
             'name' => $this->name,

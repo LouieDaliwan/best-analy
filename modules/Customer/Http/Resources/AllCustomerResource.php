@@ -35,7 +35,7 @@ class AllCustomerResource extends JsonResource
             'status' => $this->status,
             'user_id' => $this->user_id,
             'author' => $this->author,
-            'counselor' => $this->detail->metadata,
+            'counselor' => $this->applicant->metadata,
             'created' => $this->created,
             'deleted' => $this->deleted,
             'modified' => $date

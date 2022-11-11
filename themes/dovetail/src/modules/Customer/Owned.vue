@@ -87,7 +87,7 @@
 
             <!-- Counselor -->
             <template v-slot:item.counselor="{ item }">
-              <span class="text-no-wrap" v-text="item.counselor.business_counselor"></span>
+              <span class="text-no-wrap" v-text="item.counselor.BusinessCounselorName"></span>
             </template>
             <!-- Counselor -->
 
@@ -246,8 +246,8 @@ export default {
       headers: [
         { text: trans('Company Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
         { text: trans('File No.'), align: 'left', value: 'filenumber', class: 'text-no-wrap' },
-        { text: trans('Business Counselor'), align: 'left', value: 'counselor.business_counselor', class: 'text-no-wrap' },
-        { text: trans('Peer BC'), align: 'left', value: 'author', class: 'text-no-wrap' },
+        { text: trans('Business Counselor'), align: 'left', value: 'counselor.BusinessCounselorName', class: 'text-no-wrap' },
+        { text: trans('Peer BC'), align: 'left', value: 'counselor.PeeBusinessCounselorName', class: 'text-no-wrap' },
         { text: trans('Last Modified'), value: 'updated_at', class: 'text-no-wrap' },
         { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },
       ],

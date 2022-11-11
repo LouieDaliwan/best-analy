@@ -95,7 +95,7 @@
 
             <!-- Counselor -->
             <template v-slot:item.counselor="{ item }">
-              <span class="text-no-wrap" v-text="item.counselor.business_counselor"></span>
+              <span class="text-no-wrap" v-text="item.counselor.BusinessCounselorName"></span>
             </template>
             <!-- Counselor -->
 
@@ -274,13 +274,13 @@ export default {
         {
           text: trans("Business Counselor"),
           align: "left",
-          value: "counselor",
+          value: "counselor.BusinessCounselorName",
           class: "text-no-wrap",
         },
         {
           text: trans("Peer BC"),
           align: "left",
-          value: "author",
+          value: "counselor.PeeBusinessCounselorName",
           class: "text-no-wrap",
         },
         {

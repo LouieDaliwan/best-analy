@@ -99,7 +99,7 @@
 
             <!-- Counselor. -->
             <template v-slot:item.counselor="{ item }">
-              <span class="text-no-wrap" v-text="item.counselor.business_counselor"></span>
+              <span class="text-no-wrap" v-text="item.counselor.BusinessCounselorName"></span>
             </template>
             <!-- Counselor. -->
 
@@ -281,8 +281,8 @@ export default {
     rowFields: {
       "Company Name": "name",
       "File No.": "filenumber",
-      "Business Counselor": "counselor",
-      "Peer BC": "author",
+      "Business Counselor": "counselor.BusinessCounselorName",
+      "Peer BC": "counselor.PeeBusinessCounselorName",
       "Last modified": "modified",
     },
 

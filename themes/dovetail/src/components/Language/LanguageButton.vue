@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn
+    <!-- <v-btn
       v-if="localSet == 'en'"
       block
       color="accent"
@@ -10,8 +10,8 @@
       <template>
         {{ trans('Switch to Arabic') }}
       </template>
-    </v-btn>
-    <v-btn
+    </v-btn> -->
+    <!-- <v-btn
       v-if="localSet == 'ar'"
       block
       color="accent"
@@ -21,7 +21,7 @@
       <template>
         {{ trans('Switch to English') }}
       </template>
-    </v-btn>
+    </v-btn> -->
   </div>
 </template>
 

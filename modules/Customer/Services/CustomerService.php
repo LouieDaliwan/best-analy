@@ -143,10 +143,8 @@ class CustomerService extends Service implements CustomerServiceInterface
             ]
         );
 
-        dd($attributes);
-
         $aMetadata = [
-            'email' => $attributes['email'] ?? $customer->applicant->metadata['email'] ?? null,
+            'email' => $attributes['metadata']['ApplicantEmail'] ?? $customer->applicant->metadata['email'] ?? null,
             'address' => $attributes['address'] ?? $customer->applicant->metadata['address'] ?? null,
             'website' => $attributes['website'] ?? $customer->applicant->metadata['website'] ?? null,
             'staffstrength' => $attributes['staffstrength'] ?? $customer->applicant->metadata['staffstrength'] ?? null,
@@ -156,10 +154,10 @@ class CustomerService extends Service implements CustomerServiceInterface
             'SiteVisitDate' => $attributes['metadata']['SiteVisitDate'] ?? $customer->applicant->metadata['SiteVistDate'] ?? null,
             'BusinessCounselorName' => $attributes['metadata']['BusinessCounselorName'] ?? $customer->applicant->metadata['BusinessCounselorName'] ?? null,
             'PeeBusinessCounselorName' => $attributes['metadata']['PeeBusinessCounselorName'] ?? $customer->applicant->metadata['BusinessCounselorName'] ?? null,
-            'number' =>  $attributes['metadata']['number'] ?? $customer->applicant->metadata['number'] ?? null,
+            'number' =>  $attributes['metadata']['ApplicantMobile'] ?? $customer->applicant->metadata['number'] ?? null,
             'contact_person' => $attributes['metadata']['contact_person'] ?? $customer->applicant->metadata['contact_person'] ?? null,
             'designation' => $attributes['metadata']['designation'] ?? $customer->applicant->metadata['designation'] ?? null,
-            'name' => $attributes['metadata']['name'] ?? $customer->applicant->metadata['name'] ?? null,
+            'name' => $attributes['metadata']['ApplicantName'] ?? $customer->applicant->metadata['name'] ?? null,
         ];
 
         ApplicantDetail::updateOrCreate(

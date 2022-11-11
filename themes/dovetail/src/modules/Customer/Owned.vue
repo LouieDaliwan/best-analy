@@ -246,7 +246,7 @@ export default {
       headers: [
         { text: trans('Company Name'), align: 'left', value: 'name', class: 'text-no-wrap' },
         { text: trans('File No.'), align: 'left', value: 'filenumber', class: 'text-no-wrap' },
-        { text: trans('Business Counselor'), align: 'left', value: 'counselor', class: 'text-no-wrap' },
+        { text: trans('Business Counselor'), align: 'left', value: 'counselor.business_counselor', class: 'text-no-wrap' },
         { text: trans('Peer BC'), align: 'left', value: 'author', class: 'text-no-wrap' },
         { text: trans('Last Modified'), value: 'updated_at', class: 'text-no-wrap' },
         { text: trans('Actions'), align: 'center', value: 'action', sortable: false, class: 'muted--text text-no-wrap' },

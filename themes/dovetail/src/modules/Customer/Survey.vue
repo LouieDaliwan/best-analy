@@ -182,9 +182,16 @@
                                       v-on="$vuetify.breakpoint.smAndUp ? on : null"
                                       v-scroll-to="{ el: `#scrollto-${field.id+'-'+(parseInt(i)+1)}`, duration: 700 }"
                                       >
-                                      <span :class="active ? 'white--text' : 'muted--text'">
-                                        {{ rate.text }}
-                                      </span>
+                                      <div>
+                                        <span :class="active ? 'white--text' : 'muted--text'">
+                                          {{ rate.text }}
+                                        </span>
+                                      </div>
+                                      <div>
+                                        <span :class="active ? 'white--text' : 'muted--text'">
+                                        {{ rate.arabic }}
+                                        </span>
+                                      </div>
                                     </a>
                                   </div>
                                 </v-item>
@@ -317,11 +324,11 @@ export default {
     ],
 
     sdmiRatesOne: [
-      { number: '1', text: 'Strongly Disagree' },
-      { number: '2', text: 'Disagree' },
-      { number: '3', text: 'Moderately Agree' },
-      { number: '4', text: 'Agree' },
-      { number: '5', text: 'Strongly Agree' },
+      { number: '1', text: 'Strongly Disagree', arabic: 'غير موافق بشدة'},
+      { number: '2', text: 'Disagree', arabic: 'غير موافق' },
+      { number: '3', text: 'Moderately Agree', arabic: 'موافق باعتدال' },
+      { number: '4', text: 'Agree', arabic: 'موافق' },
+      { number: '5', text: 'Strongly Agree', arabic: 'موافق بشدة' },
     ],
 
     sdmiRatesTwo: [
@@ -333,19 +340,19 @@ export default {
     ],
 
     sdmiRatesThree: [
-      { number: '1', text: 'Minimum standards required by the authorities are met' },
-      { number: '1', text: 'Critical certifications and standards are acquired to maintain high standards in the business	' },
-      { number: '3', text: 'Certifications and Standards acquired over and above requirements to drive business growth & innovation' },
-      { number: '5', text: 'I am not aware of any industry standards or certifications required' },
-      { number: 'NA', text: 'There are no industry standards required in my business' },
+      { number: '1', text: 'Minimum standards required by the authorities are met', arabic: 'استيفاء أدنى الحد من المقاييس التي تطلبها الهيئات' },
+      { number: '1', text: 'Critical certifications and standards are acquired to maintain high standards in the business', arabic: 'يتم الحصول على الشهادات والمقاييس الهامة للمحافظة على مستويات عالية في الأعمال' },
+      { number: '3', text: 'Certifications and Standards acquired over and above requirements to drive business growth & innovation', arabic: 'الشهادات والمعايير التي تم الحصول عليها فوق المتطلبات لتحفيز نمو الأعمال والابتكار' },
+      { number: '5', text: 'I am not aware of any industry standards or certifications required', arabic: 'ليس لدي علم بأي معايير الصناعية أو شهادات المطلوبة لهذا النطاق' },
+      { number: 'NA', text: 'There are no industry standards required in my business', arabic: 'لا توجد معايير الصناعية المطلوبة في شركتي' },
     ],
 
     sdmiRatesFour: [
-      { number: '1', text: 'Least Satisfied' },
-      { number: '2', text: 'Least Satisfied' },
+      { number: '1', text: 'Least Satisfied', arabic: 'أقل رضا'},
+      { number: '2', text: 'Least Satisfied', arabic: 'أقل رضا' },
       { number: '3', text: 'Satisfied' },
       { number: '4', text: 'Satisfied' },
-      { number: '5', text: 'Very Satisfied' },
+      { number: '5', text: 'Very Satisfied', arabic: 'راض جدا'},
     ],
 
     extentServicesRates: [

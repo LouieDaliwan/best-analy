@@ -9,6 +9,7 @@
               <small class="white--text" :style="`${ rate.number === 'N/A' ? 'font-size: 10px' : ''}`">{{ rate.number }}</small>
             </v-avatar>
             <div class="overline" v-html="trans(rate.text)"></div>
+            <div class="overline" v-html="trans(rate.arabic)"></div>
           </v-col>
           </v-row>
         </v-banner>
@@ -21,11 +22,11 @@
   export default {
     data: () => ({
       rates: [
-        { number: '1', text: 'Least Satisfied' },
+        { number: '1', text: 'Least Satisfied', arabic: 'أقل رضا'},
         { number: '2', text: '' },
         { number: '3', text: '' },
         { number: '4', text: '' },
-        { number: '5', text: 'Very Satisfied' },
+        { number: '5', text: 'Very Satisfied', arabic: 'راض جدا' },
       ],
     })
   }

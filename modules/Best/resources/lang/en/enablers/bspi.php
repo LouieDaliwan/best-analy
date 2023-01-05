@@ -7,13 +7,15 @@ return [
         'greaterThan90' => ':name has an excellent documentation practice. Continue reviewing how existing practices can be improved.',
 		'50to90' => ':name has a very good documentation policies & practices in place. Advisable to look into how :item1 can be better executed.',
         '30to50' => ':name has fair documentation procedures and practices in place. Advisable to look into how well :item1 and :item2 can be better implemented.',
-        'less30' => ':name poor documentation practices recorded. & Organisation to start implementing a comprehensive review & systematic documentation relating to matters such as operating procedures and strategic plans.',
+        'less30' => "Poor documentation practices recorded. Organisation to start implementing a comprehensive review & systematic documentation relating to matters such as operating procedures and strategic plans."
+        // 'less30' => 'Poor documentation practices recorded. & Organisation to start implementing a comprehensive review & systematic documentation relating to matters such as operating procedures and strategic plans.',
 	],
 	'talent' => [
         'greaterThan90' => 'Excellent employee development and management practices. Keeping employees up to date is desirable for all organisations. Continue to review organisational culture to retain talent.',
 		'50to90' => "Very good employee management and development. An area to consider focusing is on :item1.",
 		'30to50' => 'Fair involvement of employees in strategic matters. Organisation is recommended to focus on how employees can be better involved by looking into :item1 & :item2.',
-		'less30' => 'Poor talent development processes and practices recorded. More can be done across all areas impacting employees directly to uplift their work satisfaction.',
+        'less30' => 'Poor talent development processes and practices recorded. More can be done across all areas impacting employees directly to uplift their involvement and satisfaction.',
+		// 'less30' => 'Poor talent development processes and practices recorded. More can be done across all areas impacting employees directly to uplift their work satisfaction.',
 	],
 	'technology' => [
         'greaterThan90' => "Excellent ICT implementation. Continue to upkeep the ICT to further organisation's operational and management needs.",

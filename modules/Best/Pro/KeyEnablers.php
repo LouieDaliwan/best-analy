@@ -99,6 +99,7 @@ class KeyEnablers
     protected static function getComment($indexObject, $indexValue, $index, $code, $customer)
     {
         if ($indexValue == 0) return self::getNAComment($index);
+
         $indexSubscore = $indexObject->sortBy('metadata.subscore')->take(3)->values();
         $hasGreaterThan90 = config("modules.best.scores.has_greaterThan90_value.$code");
 

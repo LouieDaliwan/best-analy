@@ -7,7 +7,7 @@ return [
         'greaterThan90' => ':name has excellent documentation practices. Continue to assess how existing practices can be improved',
 		'50to90' => ':name has a very good documentation policies & practices in place. Advisable to look into how well :item1 can be better executed.',
         '30to50' => ':name has a fair documentation procedures and practices in place. Advisable to look into how well :item1 and :item2 can be better executed.',
-        'less30' => 'poor documentation practices recorded. :name has to start implementing a comprehensive review & systematic documentation of productivity practices & reporting within this immediate term.',
+        'less30' => 'Poor documentation practices recorded. :name has to start implementing a comprehensive review & systematic documentation of productivity practices & reporting within this immediate term.',
 	],
 	'talent' => [
         'greaterThan90' => 'Excellent employee development and management practices. This should be maintained to ensure everyone is onboard with the productivity drive.',

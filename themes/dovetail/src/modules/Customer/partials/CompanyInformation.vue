@@ -143,7 +143,7 @@
           :disabled="isLoading"
           :error-messages="errors"
           :items="['Industrial', 'Non Industrial']"
-          :label="'Project Type *'"
+          :label="trans('Project Type *')"
           color="blue"
           append-icon="mdi-chevron-down"
           background-color="selects"
@@ -167,7 +167,7 @@
           :dense="isDense"
           :disabled="isLoading"
           :error-messages="errors"
-          :label="trans('Investment Value')"
+          :label="trans('Investment Value *')"
           class="dt-text-field"
           name="metadata[project][investment_value]"
           outlined

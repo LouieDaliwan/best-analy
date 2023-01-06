@@ -13,7 +13,8 @@ return [
         'greaterThan90' => "Excellent employee development and management practices. Continue to maintain and review favourable talent development and retention strategies.",
         '50to90' => "Very good employee management and development. An area to consider focusing is on :item1.",
         '30to50' => 'Fair HR management practices and processes. Organisation is recommended to focus on how employees can be better managed by looking into :item1 & :item2.',
-        'less30' => 'Poor talent development processes and practices recorded. More can be done across all areas impacting employees directly to uplift their work satisfaction.',
+        // 'less30' => 'Poor talent development processes and practices recorded. More can be done across all areas impacting employees directly to uplift their work satisfaction.',
+        'less30' => 'Lack of talent development processes and practices recorded. & More can be done across all areas impacting employees directly to uplift their work satisfaction.',
     ],
     'technology' => [
         'greaterThan90' => "Excellent ICT implementation. Continue to upkeep the ICT to further organisation's personnel growth.",

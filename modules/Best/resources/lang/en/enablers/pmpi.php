@@ -20,11 +20,14 @@ return [
 		'50to90' => 'Very good technology adoption. Greater technology adoption across the organisation is advisable to measure and monitor productivity initiatives and performances.',
 		'30to50' => 'Fair ICT system is in place. :name should focus on how the system is being streamlined to reflect better usability, especially in terms of :item1.',
 		'less30' => 'Poor ICT implementation reported. Significant technology improvements highly recommended to improve organisational productivity.',
+        'less30' => "Absence of digital adoption observed. & Significant investment into technology highly recommended to improve organizational productivity."
 	],
 	'workflow' => [
         'greaterThan90' => 'Excellent workflow processes. Ensure continuous monitoring to maintain effective execution of roles and functions.',
 		'50to90' => 'Very good productivity processes in place. Immediate efforts should be channeled towards :item1 & :item2.',
-		'30to50' => 'Fair implementation of process within :name. More could still be done to ensure that its desired outcome is achieved relating to :item1, :item2 & :item3.',
-		'less30' => "Poor workflow processes recorded. Clearer processes with timely communication processes are critical within the immediate period.",
+		// '30to50' => 'Fair implementation of process within :name. More could still be done to ensure that its desired outcome is achieved relating to :item1, :item2 & :item3.',
+        '30to50' => "Decent implementation of processes within :name. More could still be done to ensure that its desired outcome is achieved relating to :item1, :item2 & :item3.",
+		// 'less30' => "Poor workflow processes recorded. Clearer processes with timely communication processes are critical within the immediate period.",
+        'less30' => "Poor workflow processes recorded. & Clearer processes with timely communication processes are critically required within the immediate period."
 	],
 ];

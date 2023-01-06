@@ -1,6 +1,9 @@
-<template>
+  <template>
   <v-card>
     <v-card-text>
+      <div class="ml-2 mb-4">
+        <small><span class="red--text">*</span> Denotes compulsory items</small>
+      </div>
       <validation-provider
         vid="name"
         :name="trans('Name')"
@@ -140,7 +143,8 @@
           :disabled="isLoading"
           :error-messages="errors"
           :items="['Industrial', 'Non Industrial']"
-          :label="trans('Project Type')"
+          :label="'Project Type *'"
+          color="blue"
           append-icon="mdi-chevron-down"
           background-color="selects"
           class="dt-text-field"

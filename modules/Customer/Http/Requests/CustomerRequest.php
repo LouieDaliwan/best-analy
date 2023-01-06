@@ -31,26 +31,34 @@ class CustomerRequest extends FormRequest
         //validation for period
         $customer = Customer::find($this->route('customer'));
 
+        dd($this->request->all());
+
         if (! empty($this->request->get('metadata')['statement'])){
 
             if($this->request->get('metadata')['setMethod'] == 'add' && isset($this->request->get('metadata')['statement']['metadataStatements'])) {
 
                 $period = $this->request->get('metadata')['statement']['metadataStatements']['period'];
 
-                if(is_null($period) && $customer->detail->metadata['investment_value'] != null && $customer->detail->metadata['project_type'] != null) {
-                    throw new Exception('Period must have a value');
-                }
-                
-                if (isset($customer->statements)) {
-                    $periods = collect($customer->statements()->get('period')->toArray())
-                    ->flatten()->flip()->keys();
 
-                    if ($periods->intersect([$period])->count() > 0) {
-                        throw new Exception('The financial period already exists.');
+                $project = $this->request->get('metadata')['project'];
+                $customerDetail = $customer->detail;
+
+
+                if ($customerDetail->metadata['investment_value'] == $project['investment_value'] && $customerDetail->metadata['project_type'] == $project['project_type']) {
+                    if(is_null($period) && $customer->detail->metadata['investment_value'] != null && $customer->detail->metadata['project_type'] != null) {
+                        throw new Exception('Period must have a value');
+                    }
+
+                    if (isset($customer->statements)) {
+                        $periods = collect($customer->statements()->get('period')->toArray())
+                        ->flatten()->flip()->keys();
+
+                        if ($periods->intersect([$period])->count() > 0) {
+                            throw new Exception('The financial period already exists.');
+                        }
                     }
                 }
-                
-            }            
+            }
         }
 
         if ($customer->statements()->count() < 1) {
@@ -58,8 +66,8 @@ class CustomerRequest extends FormRequest
             if(!isset($this->request->get('metadata')['project'])) {
                 if($customer->detail->metadata['project_type'] == null) {
                     throw new Exception('Project Type must have a value');
-                }            
-    
+                }
+
                 if($customer->detail->metadata['investment_value'] == null) {
                     throw new Exception('Project Type must have a value');
                 }
@@ -67,11 +75,11 @@ class CustomerRequest extends FormRequest
                 if ($this->request->get('metadata')['project']['investment_value'] == "0") {
                     throw new Exception('Investment Value must have a value');
                 }
-    
+
                 if ($this->request->get('metadata')['project']['project_type'] == null) {
                     throw new Exception('Project Type must have a value');
                 }
-            }            
+            }
         }
 
         return $this->container->make(

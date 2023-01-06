@@ -31,8 +31,6 @@ class CustomerRequest extends FormRequest
         //validation for period
         $customer = Customer::find($this->route('customer'));
 
-        dd($this->request->all());
-
         if (! empty($this->request->get('metadata')['statement'])){
 
             if($this->request->get('metadata')['setMethod'] == 'add' && isset($this->request->get('metadata')['statement']['metadataStatements'])) {
@@ -43,21 +41,28 @@ class CustomerRequest extends FormRequest
                 $project = $this->request->get('metadata')['project'];
                 $customerDetail = $customer->detail;
 
+                $isUpdateProjectValue = false;
 
-                if ($customerDetail->metadata['investment_value'] == $project['investment_value'] && $customerDetail->metadata['project_type'] == $project['project_type']) {
-                    if(is_null($period) && $customer->detail->metadata['investment_value'] != null && $customer->detail->metadata['project_type'] != null) {
+                if($customerDetail->metadata['investment_value'] != $project['investment_value'] || $customerDetail->metadata['project_type'] != $project['project_type']){
+                    $isUpdateProjectValue = true;
+                }
+
+
+                if(is_null($period) && $customer->detail->metadata['investment_value'] != null && $customer->detail->metadata['project_type'] != null) {
+                    if (!$isUpdateProjectValue) {
                         throw new Exception('Period must have a value');
                     }
+                }
 
-                    if (isset($customer->statements)) {
-                        $periods = collect($customer->statements()->get('period')->toArray())
-                        ->flatten()->flip()->keys();
+                if (isset($customer->statements)) {
+                    $periods = collect($customer->statements()->get('period')->toArray())
+                    ->flatten()->flip()->keys();
 
-                        if ($periods->intersect([$period])->count() > 0) {
-                            throw new Exception('The financial period already exists.');
-                        }
+                    if ($periods->intersect([$period])->count() > 0) {
+                        throw new Exception('The financial period already exists.');
                     }
                 }
+
             }
         }
 

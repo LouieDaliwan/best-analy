@@ -4,6 +4,8 @@ namespace User\Models;
 
 use Core\Models\Accessors\CommonAttributes;
 use Core\Models\Scopes\Typeable;
+use Customer\Models\Customer;
+use Customer\Models\CustomerUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -81,5 +83,10 @@ class User extends Authenticatable implements MustVerifyEmail
                 'params' => ['id' => $this->getKey()]
             ],
         ];
+    }
+
+    public function customers()
+    {
+        return $this->belongsToMany(Customer::class)->using(CustomerUser::class);
     }
 }

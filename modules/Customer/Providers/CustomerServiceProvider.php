@@ -14,6 +14,7 @@ use Customer\Support\Crm\Crm;
 use Customer\Support\Crm\CrmApi;
 use Customer\Support\Crm\FileNumber;
 use GuzzleHttp\Client as GuzzleClient;
+use Customer\Providers\EventServiceProvider;
 
 class CustomerServiceProvider extends BaseServiceProvider
 {
@@ -22,7 +23,9 @@ class CustomerServiceProvider extends BaseServiceProvider
      *
      * @var array
      */
-    protected $providers = [];
+    protected $providers = [
+        EventServiceProvider::class
+    ];
 
     /**
      * Register services.

@@ -29,7 +29,7 @@ class CustomerController extends ApiController
      */
     public function index()
     {
-        return AllCustomerResource::collection($this->service()->list());
+        return AllCustomerResource::collection($this->service()->listCompany());
     }
 
     /**
@@ -122,6 +122,6 @@ class CustomerController extends ApiController
      */
     public function owned()
     {
-        return AllCustomerResource::collection($this->service()->list());
+        return AllCustomerResource::collection($this->service()->listCompany());
     }
 }

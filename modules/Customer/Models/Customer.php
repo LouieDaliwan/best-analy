@@ -14,12 +14,14 @@ use Core\Models\Relations\BelongsToUser;
 use Core\Models\Accessors\CommonAttributes;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Best\Pro\Financial\ProfitAndLossStatement;
+use Customer\Models\Attributes\HasManyUser;
 use Survey\Models\Submission;
 use Survey\SDMIIndexScore;
 
 class Customer extends Model
 {
-    use BelongsToUser,
+    use HasManyUser,
+        // BelongsToUser,
         CommonAttributes,
         Searchable,
         SoftDeletes;

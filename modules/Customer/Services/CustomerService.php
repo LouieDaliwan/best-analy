@@ -10,6 +10,8 @@ use Core\Application\Service\Service;
 use Customer\Jobs\ComputeFinancialRatio;
 use Customer\Jobs\UpdateStatementsJob;
 use Customer\Models\ApplicantDetail;
+use Customer\Models\Attributes\HaveOwnCompany;
+use Customer\Models\Attributes\HavePaginationCompany;
 use Customer\Models\Customer;
 use Customer\Models\Detail;
 use Customer\Models\FinancialStatement;
@@ -24,7 +26,7 @@ use Survey\SDMIIndexScore;
 
 class CustomerService extends Service implements CustomerServiceInterface
 {
-    use HaveAuthorization;
+    use HaveAuthorization, HavePaginationCompany, HaveOwnCompany;
 
     /**
      * The property on class instances.
@@ -114,6 +116,7 @@ class CustomerService extends Service implements CustomerServiceInterface
 
         $this->updateOtherDetails($customer, $attributes);
 
+        dd('test');
         return $customer;
     }
 

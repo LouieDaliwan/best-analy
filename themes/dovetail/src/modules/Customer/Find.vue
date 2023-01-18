@@ -3,8 +3,8 @@
     <metatag :title="trans('Find Company')"></metatag>
 
     <!-- TEST only -->
-    <div v-shortkey.once="['ctrl', 'alt', '.']" @shortkey="saveDummyCompany"></div>
-    <!-- <v-btn @click.prevent="saveDummyCompany" color="primary">{{ trans('Dummy') }}</v-btn> -->
+    <!-- <div v-shortkey.once="['ctrl', 'alt', '.']" @shortkey="saveDummyCompany"></div> -->
+    <v-btn @click.prevent="saveDummyCompany" color="primary">{{ trans('Dummy') }}</v-btn>
     <!-- TEST only -->
 
     <v-row>
@@ -189,7 +189,7 @@ export default {
         code: this.slugify('Dummy Company ' + Math.random()),
         refnum: query,
         status: 'Pending',
-        token: '09-09090909-090909-0909-dummy',
+        token: '09-09090909-090909-0909-dummysdsds',
         user_id: $auth.getId(),
         metadata: Object.assign({
           FileNo: query,
@@ -252,7 +252,7 @@ export default {
           button: { show: true },
           text: trans('Company successfully saved'),
         })
-        this.goToCompanyShowPage(response.data.id)
+        // this.goToCompanyShowPage(response.data.id)
       })
     },
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use User\Http\Requests\DeleteUserRequest;
 use User\Http\Requests\UserRequest;
 use User\Http\Resources\User as UserResource;
+use User\Models\User;
 use User\Services\UserServiceInterface;
 
 class UserController extends ApiController
@@ -74,6 +75,12 @@ class UserController extends ApiController
      */
     public function destroy(DeleteUserRequest $request, $id)
     {
+
+        //detach all company
+        $user = User::findOrFail($id);
+
+        $user->customers()->detach();
+
         return $this->service()->destroy(
             $request->has('id') ? $request->input('id') : $id
         );

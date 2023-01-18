@@ -2,6 +2,7 @@
 
 namespace Customer\Models;
 
+use Customer\Events\ApplicantSaved;
 use Customer\Models\Customer;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,4 +22,8 @@ class ApplicantDetail extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
+
+    protected $dispatchesEvents = [
+        'saved' => ApplicantSaved::class
+    ];
 }

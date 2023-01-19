@@ -20,7 +20,7 @@
           <!-- List of All Reports button -->
           <can code="customers.reports">
             <v-btn
-              
+
               :block="$vuetify.breakpoint.smAndDown"
               :to="{name: 'companies.reports', params: { id: $route.params.id }}"
               color="primary"
@@ -79,12 +79,23 @@
                   <v-col>
                     <h3 class="mt-5 font-weight-bold text-uppercase mb-2 mt-2 text-md-left text-center" v-text="resource.name"></h3>
                     <h4 class="text-uppercase muted--text mb-0 text-md-left text-center" v-text="('Performance Index')"></h4>
-                    <small class="overlines" v-if="resource.report">
+                    <div v-if="resource.report">
+                      <small class="overlines" >
                       {{ __('Modified') }}: {{ resource.report.modified }}
-                    </small>
-                    <small class="overlines" v-else>
+                      </small>
+                    </div>
+                    <div v-if="resource.report">
+                      <small class="overlines" >
+                       {{ __('Last modified by') }}: {{ resource.report.author}}
+                       </small>
+                    </div>
+
+                    <div v-if="! resource.report">
+                      <small class="overlines" >
                       {{ __('Modified') }}: {{ __('No survey conducted yet') }}
                     </small>
+                    </div>
+
                     <!-- <div class="mt-3" v-for="(item, i) in resources.reports" :key="i">
                       <small class="overlines" v-if="resource.id == item.value['current:index'].taxonomy.id">
                         {{ __('Modified') }}: {{ item.modified }}
@@ -203,7 +214,7 @@ export default {
       ).then(response => {
         this.resource.data = response.data.data
         this.current_month = response.data.data.current_month
-        
+
         console.log(this.resource.data);
       }).finally(() => { this.resource.loading = false })
     },
@@ -216,7 +227,7 @@ export default {
         this.resources.reports = response.data.data
       }).finally(() => { this.resource.loading = false })
 
-      
+
     },
 
     goToCompanySurveyPage (index) {

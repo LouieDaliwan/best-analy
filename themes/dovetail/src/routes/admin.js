@@ -10,7 +10,7 @@ const routes = []
 const requireRoute = require.context(
   // The relative path of the routes folder
   '@/modules',
-  // Whether or not to look in subfolders
+  // Whether or not to look in sucbfolders
   true,
   // The regular expression used to match base route filenames
   /routes\/admin\.js$/

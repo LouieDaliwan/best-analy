@@ -68,7 +68,6 @@ class SaveGeneratedReport implements ShouldQueue
                 'month' => $month,
                 'customer_id' => $event->data['organisation:profile']['id'],
                 'form_id' => $event->data['survey:id'],
-                'user_id' => $event->data['user:id'],
             ], [
                 'key' => trans($event->data['current:index']['pindex'].' Report'),
                 'value' => array_merge(['filepath' => $this->save($event)], $event->data),

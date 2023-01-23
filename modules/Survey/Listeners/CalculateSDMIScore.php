@@ -109,13 +109,13 @@ class CalculateSDMIScore
 
        $metadata = $this->getResult($variables);
 
-
         SDMIIndexScore::updateOrCreate([
             'customer_id' => (int)$event->attributes['fields'][0]['submission']['customer_id'],
             'month_key' => $date,
         ],[
             'taxonomy_id' => $event->survey->formable_id,
             'metadata' => $metadata,
+            'last_modified_by' => $event->user->fullname
         ]);
     }
 

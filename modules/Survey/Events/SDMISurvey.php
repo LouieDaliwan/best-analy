@@ -10,6 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Survey\Models\Survey;
+use User\Models\User;
 
 class SDMISurvey
 {
@@ -28,6 +29,7 @@ class SDMISurvey
      * @var \Survey\Models\Submission
      */
     public $survey;
+    public $user;
 
     /**
      * Create a new event instance.
@@ -36,10 +38,11 @@ class SDMISurvey
      * @param  \Survey\Models\Survey $survey
      * @return void
      */
-    public function __construct(Survey $survey, $attributes)
+    public function __construct(Survey $survey, User $user,$attributes)
     {
         $this->survey = $survey;
         $this->attributes = $attributes;
+        $this->user = $user;
     }
 
     /**

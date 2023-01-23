@@ -262,7 +262,7 @@ class CustomerService extends Service implements CustomerServiceInterface
             );
         }
 
-        $model = $this->model->whereUserId($this->auth()->id());
+        $model = $this->model;
 
         if($this->request()->get('month') != 'all') {
             $monthVar = explode('-', $this->request()->get('month') ?? '');

@@ -225,6 +225,7 @@ class SurveyService extends Service implements SurveyServiceInterface
         if($taxonomy == 'bgmi') {
             event(new SDMISurvey(
                 $survey,
+                auth()->user(),
                 $attributes ?? []
             ));
         }

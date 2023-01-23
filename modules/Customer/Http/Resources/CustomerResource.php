@@ -55,14 +55,15 @@ use Survey\SDMIIndexScore;
                             'report' => $answeredSurvey != null ? collect([
                                 'modified' => $answeredSurvey->updated_at->diffForHumans(),
                                 'month' => $answeredSurvey->month_key,
+                                'author' => $answeredSurvey->last_modified_by,
                             ]): null,
                             'is:finished' => $answeredSurvey != null ? : false,
                         ];
                     } else {
                         $reportResult = [
                             'report' => new ReportResource($report = Report::whereCustomerId($this->getKey())
-                                ->whereFormId($index->survey->getKey())
-                                ->whereUserId(user()->getKey())->latest()->first()),
+                                ->whereFormId($index->survey->getKey())->first()),
+                                // ->whereUserId(user()->getKey())->latest()->first()),
                             'is:finished' => ! is_null($report),
                         ];
                     }

@@ -185,8 +185,8 @@ export default {
       // }
 
       let attributes = {
-        name: 'Dummy Company ' + Math.random(),
-        code: this.slugify('Dummy Company ' + Math.random()),
+        name: 'Dummy Company',
+        code: this.slugify('Dummy Company'),
         refnum: query,
         status: 'Pending',
         token: '09-09090909-090909-0909-dummysdsds',
@@ -195,8 +195,10 @@ export default {
           FileNo: query,
           FundingRequestNo: query,
           SiteVisitDate: new Date,
-          BusinessCounselorName: Math.random(),
-          PeeBusinessCounselorName: Math.random(),
+          BusinessCounselorName: 'Test Business Counselor Name',
+          PeeBusinessCounselorName: 'Test Peer Business Counselor Name',
+          BusinessCounselorEmail: 'test@test.com',
+          PeerBusinessCounselorEmail: 'test2@test.com',
           TradeNameEnglish: 'dummy english name',
           TradeNameArabic: 'dummy arabic name',
           ApplicantName: 'dummy arabic name',

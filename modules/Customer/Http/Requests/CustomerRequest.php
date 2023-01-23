@@ -16,6 +16,7 @@ class CustomerRequest extends FormRequest
      */
     public function authorize()
     {
+
         return $this->container->make(
             CustomerServiceInterface::class
         )->authorize($this->customer);

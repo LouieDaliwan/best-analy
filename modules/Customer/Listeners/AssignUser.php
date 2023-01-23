@@ -16,7 +16,7 @@ class AssignUser
      */
     public function handle($event)
     {
-        $keys = ['BusinessCounselorEmail', 'PeeBusinessCounselorEmail'];
+        $keys = ['BusinessCounselorEmail', 'PeerBusinessCounselorEmail'];
 
         $customer = $event->customer;
 
@@ -24,8 +24,11 @@ class AssignUser
 
         $metadata = $event->applicant->metadata;
 
+
         foreach ($keys as $key) {
-            if ($metadata[$key] != null) {
+            if(!isset($metadata[$key])) continue;
+
+            if ($metadata[$key] != null ) {
                 $user = User::whereEmail($metadata[$key])->first();
 
                 if ($user) {

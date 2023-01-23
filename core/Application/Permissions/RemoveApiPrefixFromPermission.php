@@ -13,6 +13,7 @@ trait RemoveApiPrefixFromPermission
      */
     protected function removeApiPrefixFromPermission($permission): string
     {
+
         return str_replace('api.', '', $permission);
     }
 }

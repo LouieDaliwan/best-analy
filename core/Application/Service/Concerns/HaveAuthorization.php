@@ -29,6 +29,16 @@ trait HaveAuthorization
             return $unrestricted;
         }
 
+
+        if ((string) $model) {
+            return $this->auth()->user()->can(
+                $this->removeApiPrefixFromPermission(
+                    $this->request->route()->getName()
+                )
+            );
+        }
+
+
         if (is_object($model) && ! is_null($model->user)) {
             return $this->auth()->user()->getKey() === $model->user->getKey();
         }

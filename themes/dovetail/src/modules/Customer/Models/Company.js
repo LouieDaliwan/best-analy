@@ -14,6 +14,8 @@ class Company {
           FileNo: null,
           FundingRequestNo: null,
           PeeBusinessCounselorName: null,
+          PeerBusinessCounselorName: null,
+          BusinessCounselorName: null,
           SiteVisitDate: null,
           address: null,
           contact_person: null,

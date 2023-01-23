@@ -2,7 +2,6 @@
 
 Route::prefix('v1')->middleware(['auth:api', 'json.force', 'auth.permissions'])->group(function () {
     Route::get('customers/{customer}/reports', 'Api\GetCustomerReportsList')->name('customers.reports');
-    Route::get('customer/{customer}/financial-ratios', 'Api\CustomerFinancialRatiosController')->name('customers.financialRatios');
     Route::get('customers/{customer}/sdmi', 'Api\CustomerSdmiController');
     Route::softDeletes('customers', 'Api\CustomerController');
     Route::ownedResource('customers', 'Api\CustomerController@owned');
@@ -12,6 +11,7 @@ Route::prefix('v1')->middleware(['auth:api', 'json.force', 'auth.permissions'])-
 });
 
 Route::prefix('v1')->middleware(['auth:api', 'json.force'])->group(function () {
+    Route::get('customer/{customer}/financial-ratios', 'Api\CustomerFinancialRatiosController')->name('customers.financialRatios');
     Route::post('crm/customers/update', 'Api\Crm\SaveFoundCustomerFromCrm')->name('crm.update');
     Route::post('crm/report/send', 'Api\Crm\SendReportDocumentToCrm')->name('crm.report');
     Route::post('crm/financial/send', 'Api\Crm\SendFinancialDataToCrm')->name('crm.financial');

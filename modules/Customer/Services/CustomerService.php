@@ -92,18 +92,20 @@ class CustomerService extends Service implements CustomerServiceInterface
      */
     public function saveFromCrm($attributes)
     {
-        $customer = $this->checkCode(Str::slug($attributes['code']));
+        // $customer = $this->checkCode(Str::slug($attributes['code']));
 
-        if ($customer) {
-            $customer->name = $attributes['name'];
-            $customer->metadata = $this->updateMetadata($customer, $attributes);
-            $customer->refnum = $attributes['refnum'];
-            $customer->status = $attributes['status'];
-            $customer->token = $attributes['token'];
-            $customer->save();
-        } else {
+        // if ($customer) {
+            // $customer->name = $attributes['name'];
+            // $customer->metadata = $this->updateMetadata($customer, $attributes);
+            // $customer->refnum = $attributes['refnum'];
+            // $customer->status = $attributes['status'];
+            // $customer->token = $attributes['token'];
+            // $customer->save();
+        // } else {
 
-            $customer = Customer::firstOrCreate([
+            $customer = Customer::updateOrCreate(
+                ['name' => $attributes['name']],
+                [
                 'name' => $attributes['name'],
                 'metadata' => $attributes['metadata'],
                 'refnum' => $attributes['refnum'],
@@ -112,11 +114,10 @@ class CustomerService extends Service implements CustomerServiceInterface
                 'token' => $attributes['token'],
                 'code' => $this->handleCode(Str::slug($attributes['code']))
             ]);
-        }
+        // }
 
         $this->updateOtherDetails($customer, $attributes);
 
-        dd('test');
         return $customer;
     }
 
@@ -157,6 +158,8 @@ class CustomerService extends Service implements CustomerServiceInterface
             'SiteVisitDate' => $attributes['metadata']['SiteVisitDate'] ?? $customer->applicant->metadata['SiteVistDate'] ?? null,
             'BusinessCounselorName' => $attributes['metadata']['BusinessCounselorName'] ?? $customer->applicant->metadata['BusinessCounselorName'] ?? null,
             'PeeBusinessCounselorName' => $attributes['metadata']['PeeBusinessCounselorName'] ?? $customer->applicant->metadata['BusinessCounselorName'] ?? null,
+            'PeerBusinessCounselorEmail' => $attributes['metadata']['PeerBusinessCounselorEmail'] ?? $customer->applicant->metadata['PeerBusinessCounselorEmail'] ?? null,
+            'BusinessCounselorEmail' => $attributes['metadata']['BusinessCounselorEmail'] ?? $customer->applicant->metadata['BusinessCounselorEmail'] ?? null,
             'number' =>  $attributes['metadata']['ApplicantMobile'] ?? $customer->applicant->metadata['number'] ?? null,
             'contact_person' => $attributes['metadata']['contact_person'] ?? $customer->applicant->metadata['contact_person'] ?? null,
             'designation' => $attributes['metadata']['designation'] ?? $customer->applicant->metadata['designation'] ?? null,
@@ -327,9 +330,11 @@ class CustomerService extends Service implements CustomerServiceInterface
         $this->saveCustomerDetail($customer, $attributes);
 
         if (isset($attributes['metadata']['applicant'])) {
+            $oldMetadata = $customer->applicant->metadata;
+
             $customer->applicant()->updateOrCreate(
                 ['customer_id' => $id],
-                ['metadata' => $attributes['metadata']['applicant']]
+                ['metadata' => array_merge($oldMetadata, $attributes['metadata']['applicant'])]
             );
         }
 

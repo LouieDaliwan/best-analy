@@ -63,6 +63,10 @@
           <!-- Actions -->
           <template v-slot:item.actions="{ item }">
             <v-btn @click.prevent="goToNextStep(item)" color="primary">{{ trans('Start') }}</v-btn>
+
+
+
+
           </template>
           <!-- Actions -->
         </v-data-table>
@@ -86,6 +90,7 @@ export default {
     results: false,
     searching: false,
     companyFound: false,
+    auth: $auth,
     query: '',
     errors: [],
     headers: [
@@ -162,6 +167,23 @@ export default {
     },
 
     goToNextStep (item) {
+
+      let user = JSON.parse(localStorage.getItem('user'));
+
+      if(! user['is:superadmin']) {
+        if(! item.metadata.PeerBusinessCounselorEmail != user.email || item.metadata.BusinessCounselorEmail != user.email) {
+          this.showDialog({
+            illustration: () => import('@/components/Icons/ErrorIcon.vue'),
+            title: trans('Internal Error'),
+            width: 400,
+            text: trans("You do not have permission to save this company"),
+            buttons: {
+              cancel: false
+            }
+          })
+        }
+      }
+
       this.prepFoundCompany(item)
     },
 
@@ -185,7 +207,7 @@ export default {
       // }
 
       let attributes = {
-        name: 'Dummy Company',
+        name: 'Dummy Company 2',
         code: this.slugify('Dummy Company'),
         refnum: query,
         status: 'Pending',
@@ -197,7 +219,7 @@ export default {
           SiteVisitDate: new Date,
           BusinessCounselorName: 'Test Business Counselor Name',
           PeeBusinessCounselorName: 'Test Peer Business Counselor Name',
-          BusinessCounselorEmail: 'test@test.com',
+          BusinessCounselorEmail: 'test23@test.com',
           PeerBusinessCounselorEmail: 'test2@test.com',
           TradeNameEnglish: 'dummy english name',
           TradeNameArabic: 'dummy arabic name',
@@ -212,7 +234,25 @@ export default {
         }, this.company.metadata),
       }
 
-      this.saveFoundCompany(attributes)
+      let user = JSON.parse(localStorage.getItem('user'));
+
+      if(! user['is:superadmin']) {
+        if(attributes.metadata.PeerBusinessCounselorEmail == user.email || attributes.metadata.BusinessCounselorEmail == user.email) {
+          this.saveFoundCompany(attributes);
+        } else {
+          this.showDialog({
+            illustration: () => import('@/components/Icons/ErrorIcon.vue'),
+            title: trans('Internal Error'),
+            width: 400,
+            text: trans("You do not have permission to save this company"),
+            buttons: {
+              cancel: false
+            }
+          })
+
+          return;
+        }
+      }
     },
 
     prepFoundCompany (data) {

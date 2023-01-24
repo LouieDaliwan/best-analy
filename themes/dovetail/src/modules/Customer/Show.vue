@@ -67,7 +67,7 @@
                 <!-- if report is generated -->
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <div v-if="resource['is:finished'] && resource.report.month == current_month" v-on="on" style="position: absolute;">
+                    <div v-if="resource['is:finished']" v-on="on" style="position: absolute;">
                       <v-icon color="success">mdi-check-circle</v-icon>
                     </div>
                   </template>

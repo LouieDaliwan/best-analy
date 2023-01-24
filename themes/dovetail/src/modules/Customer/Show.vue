@@ -81,19 +81,24 @@
                     <h4 class="text-uppercase muted--text mb-0 text-md-left text-center" v-text="('Performance Index')"></h4>
                     <div v-if="resource.report">
                       <small class="overlines" >
-                      {{ __('Modified') }}: {{ resource.report.modified }}
+                      {{ __('Last Modified') }}: {{ resource.report.modified }}
                       </small>
                     </div>
                     <div v-if="resource.report">
                       <small class="overlines" >
-                       {{ __('Last modified by') }}: {{ resource.report.author}}
+                       {{ __('Last Modified By') }}: {{ resource.report.author}}
                        </small>
                     </div>
 
                     <div v-if="! resource.report">
                       <small class="overlines" >
-                      {{ __('Modified') }}: {{ __('No survey conducted yet') }}
-                    </small>
+                      {{ __('Last Modified') }}: {{ __('-') }}
+                      </small>
+                    </div>
+                    <div v-if="! resource.report">
+                      <small class="overlines" >
+                       {{ __('Last Modified By') }}: {{ __('-')}}
+                       </small>
                     </div>
 
                     <!-- <div class="mt-3" v-for="(item, i) in resources.reports" :key="i">

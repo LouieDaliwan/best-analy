@@ -207,7 +207,7 @@ export default {
       // }
 
       let attributes = {
-        name: 'Dummy Company 2',
+        name: 'Dummy Company',
         code: this.slugify('Dummy Company'),
         refnum: query,
         status: 'Pending',
@@ -239,12 +239,13 @@ export default {
       if(! user['is:superadmin']) {
         if(attributes.metadata.PeerBusinessCounselorEmail == user.email || attributes.metadata.BusinessCounselorEmail == user.email) {
           this.saveFoundCompany(attributes);
+          return;
         } else {
           this.showDialog({
             illustration: () => import('@/components/Icons/ErrorIcon.vue'),
-            title: trans('Internal Error'),
+            title: trans('Permission Error'),
             width: 400,
-            text: trans("You do not have permission to save this company"),
+            text: trans("You do not have permission to save this company. Only the registered  Business Counselor or Peer Business Counser of this company in the CRM can save this. Please contact your CRM administrator."),
             buttons: {
               cancel: false
             }
@@ -253,6 +254,8 @@ export default {
           return;
         }
       }
+
+      this.saveFoundCompany(attributes);
     },
 
     prepFoundCompany (data) {
@@ -294,7 +297,7 @@ export default {
           button: { show: true },
           text: trans('Company successfully saved'),
         })
-        // this.goToCompanyShowPage(response.data.id)
+        this.goToCompanyShowPage(response.data.id)
       })
     },
 

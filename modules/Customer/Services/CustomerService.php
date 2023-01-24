@@ -104,7 +104,10 @@ class CustomerService extends Service implements CustomerServiceInterface
         // } else {
 
             $customer = Customer::updateOrCreate(
-                ['name' => $attributes['name']],
+                [
+                    'name' => $attributes['name'],
+                    'code' => $this->handleCode(Str::slug($attributes['code']))
+                ],
                 [
                 'name' => $attributes['name'],
                 'metadata' => $attributes['metadata'],

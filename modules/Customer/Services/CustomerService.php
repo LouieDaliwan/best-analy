@@ -7,6 +7,7 @@ use Best\Models\Report;
 use Carbon\Carbon;
 use Core\Application\Service\Concerns\HaveAuthorization;
 use Core\Application\Service\Service;
+use Core\Exceptions\CustomerCreateException;
 use Customer\Jobs\ComputeFinancialRatio;
 use Customer\Jobs\UpdateStatementsJob;
 use Customer\Models\ApplicantDetail;
@@ -92,17 +93,7 @@ class CustomerService extends Service implements CustomerServiceInterface
      */
     public function saveFromCrm($attributes)
     {
-        // $customer = $this->checkCode(Str::slug($attributes['code']));
-
-        // if ($customer) {
-            // $customer->name = $attributes['name'];
-            // $customer->metadata = $this->updateMetadata($customer, $attributes);
-            // $customer->refnum = $attributes['refnum'];
-            // $customer->status = $attributes['status'];
-            // $customer->token = $attributes['token'];
-            // $customer->save();
-        // } else {
-
+        try {
             $customer = Customer::updateOrCreate(
                 [
                     'name' => $attributes['name'],
@@ -117,7 +108,9 @@ class CustomerService extends Service implements CustomerServiceInterface
                 'token' => $attributes['token'],
                 'code' => str_replace(" ", "-", $attributes['code'])
             ]);
-        // }
+        } catch(\Exception $e) {
+            throw new CustomerCreateException();
+        }
 
         $this->updateOtherDetails($customer, $attributes);
 

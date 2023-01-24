@@ -106,7 +106,7 @@ class CustomerService extends Service implements CustomerServiceInterface
             $customer = Customer::updateOrCreate(
                 [
                     'name' => $attributes['name'],
-                    'code' => $this->handleCode(Str::slug($attributes['code']))
+                    'code' => str_replace(" ", "-", $attributes['code'])
                 ],
                 [
                 'name' => $attributes['name'],
@@ -115,7 +115,7 @@ class CustomerService extends Service implements CustomerServiceInterface
                 'status' => $attributes['status'],
                 'user_id' => $attributes['user_id'],
                 'token' => $attributes['token'],
-                'code' => $this->handleCode(Str::slug($attributes['code']))
+                'code' => str_replace(" ", "-", $attributes['code'])
             ]);
         // }
 

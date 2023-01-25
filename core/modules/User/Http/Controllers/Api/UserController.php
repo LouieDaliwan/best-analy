@@ -96,9 +96,9 @@ class UserController extends ApiController
             $applicant->save();
         });
 
-        // return $this->service()->destroy(
-        //     $request->has('id') ? $request->input('id') : $id
-        // );
+        return $this->service()->destroy(
+            $request->has('id') ? $request->input('id') : $id
+        );
     }
 
     /**

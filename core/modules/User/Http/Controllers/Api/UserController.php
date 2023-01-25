@@ -75,27 +75,6 @@ class UserController extends ApiController
      */
     public function destroy(DeleteUserRequest $request, $id)
     {
-        //TODO modify this
-        //detach all company
-        $user = User::findOrFail($id);
-
-        $user->customers->map(function($customer) use ($user) {
-            $applicant = $customer->applicant()->first();
-
-            $metadata = $applicant->metadata;
-
-            //Fetch key like "PeerBusinessCounselorEmail" and "BusinessCounselorEmail"
-            $key = array_search($user->email, $metadata);
-
-            $metadata[$key] = "";
-
-            $metadata[substr_replace(strstr($key, 'B', true), "", -1).'BusinessCounselorName'] = "";
-
-            $applicant->metadata = $metadata;
-
-            $applicant->save();
-        });
-
         return $this->service()->destroy(
             $request->has('id') ? $request->input('id') : $id
         );
@@ -134,6 +113,10 @@ class UserController extends ApiController
      */
     public function delete(DeleteUserRequest $request, $id = null)
     {
+        $user = User::findOrFail($id);
+
+        $user->customers()->detach();
+
         return $this->service()->delete(
             $request->has('id') ? $request->input('id') : $id
         );

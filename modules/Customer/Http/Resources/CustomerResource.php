@@ -62,7 +62,7 @@ use Survey\SDMIIndexScore;
                     } else {
                         $reportResult = [
                             'report' => new ReportResource($report = Report::whereCustomerId($this->getKey())
-                                ->whereFormId($index->survey->getKey())->first()),
+                                ->whereFormId($index->survey->getKey())->latest()->first()),
                                 // ->whereUserId(user()->getKey())->latest()->first()),
                             'is:finished' => ! is_null($report),
                         ];

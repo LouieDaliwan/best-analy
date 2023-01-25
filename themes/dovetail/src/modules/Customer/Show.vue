@@ -85,8 +85,8 @@
                       </small>
                     </div>
                     <div v-if="resource.report">
-                      <small class="overlines" >
-                       {{ __('Last Modified By') }}: {{ resource.report.author}}
+                      <small class="overlines">
+                       {{ __('Last Modified By') }}: {{ resource.report.last_modified_by}}
                        </small>
                     </div>
 

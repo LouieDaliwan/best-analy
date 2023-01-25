@@ -126,6 +126,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $this->data['organisation:profile'] = $customer->toArray();
         $this->data['survey:id'] = $survey->getKey();
         $this->data['user:id'] = $user->getKey();
+        $this->data['user:name'] = $user->fullname;
         $this->data['month'] = $attributes['month'] ?? date('m-Y');
         $this->data['monthkey'] = $monthkey;
         $this->data['month:formatted'] = date('M Y', strtotime($attributes['month'] ?? date('M Y')));

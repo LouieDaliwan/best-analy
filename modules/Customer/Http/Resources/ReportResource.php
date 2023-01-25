@@ -25,6 +25,7 @@ class ReportResource extends JsonResource
             'created' => $this->created,
             'deleted' => $this->deleted,
             'modified' => $this->modified,
+            'last_modified_by' => $this->last_modified_by,
             'fileContentBase64' => $this->file,
         ]));
     }

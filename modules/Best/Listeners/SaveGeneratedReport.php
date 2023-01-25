@@ -76,6 +76,7 @@ class SaveGeneratedReport implements ShouldQueue
                 'customer_id' => $event->data['organisation:profile']['id'],
                 'form_id' => $event->data['survey:id'],
                 'user_id' => $event->data['user:id'],
+                'last_modified_by' => $event->data['user:name'],
             ]);
 
             $allFourReportsForTheMonth = $this->service

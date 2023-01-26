@@ -121,7 +121,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $taxonomies = Index::all();
         $user = $this->auth()->user() ?? $user;
 
-        $m = ! is_string($attributes) ? $attributes['month']->format('m-Y') : $attributes['month'];
+        $m = ! is_string($attributes['month']) ? $attributes['month']->format('m-Y') : Carbon::parse($attributes['month'])->format('m-Y');
 
         $report = Report::where('month', $m)->whereCustomerId($customer->id)->first();
 

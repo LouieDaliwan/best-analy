@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use User\Models\User;
 use Index\Models\Index;
 use Best\Models\Formula;
+use Best\Models\Report;
 use Best\Pro\KeyEnablers;
 use Survey\Models\Survey;
 use Best\Pro\TrafficLight;
@@ -120,13 +121,15 @@ class FormulaService extends Service implements FormulaServiceInterface
         $taxonomies = Index::all();
         $user = $this->auth()->user() ?? $user;
 
+        $report = Report::where('month',$attributes['month']->format('m-Y'))->whereCustomerId($customer->id)->first();
+
         $monthkey = $attributes['monthkey'] ?? date('m-Y', strtotime($attributes['month']));
 
         // Retrieve the Customer array.
         $this->data['organisation:profile'] = $customer->toArray();
         $this->data['survey:id'] = $survey->getKey();
         $this->data['user:id'] = $user->getKey();
-        $this->data['user:name'] = $user->fullname;
+        $this->data['user:name'] = $report->last_modified_by ?? $user->fullname;
         $this->data['month'] = $attributes['month'] ?? date('m-Y');
         $this->data['monthkey'] = $monthkey;
         $this->data['month:formatted'] = date('M Y', strtotime($attributes['month'] ?? date('M Y')));
@@ -190,7 +193,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'customer:name' => $customer->name,
                 'customer:refnum' => $customer->refnum,
                 'customer:industry' => $customer->metadata['industry'] ?? null,
-                'customer:counselor' => $customer->metadata['BusinessCounselorName'] ?? null,
+                'customer:counselor' => $customer->applicant->metadata['BusinessCounselorName'] ?? null,
                 'customer:staffstrength' => $customer->metadata['staffstrength'] ?? null,
                 'customer:type' => $customer->metadata['type'] ?? null,
                 'subscore:score' => $totalSubscoreScore = $this->getTotalIndexSubscoreScore($survey, $attributes['customer_id'], $monthkey),
@@ -210,7 +213,7 @@ class FormulaService extends Service implements FormulaServiceInterface
                 'key:recommendations' => $this->getKeyStrategicRecommendations($enablers, $taxonomy->alias, $survey->fields, $attributes['month'], $customer->id, $user->id),
                 'has:reports' => $this->reports->count(),
                 'reports' => $this->reports,
-                'report:user' => $user->displayname,
+                'report:user' => $report->last_modified_by ?? $user->displayname,
                 'sitevisit:date' => $attributes['month'] ?? date('m-Y'),
                 'sitevisit:date:formatted' => date('M Y', strtotime($attributes['month'] ?? date('M Y'))),
             ];

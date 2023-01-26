@@ -117,7 +117,8 @@
 
             <!-- Author -->
             <template v-slot:item.user_id="{ item }">
-              <span class="text-no-wrap" v-text="item.author"></span>
+              <span class="text-no-wrap" v-if="item.last_modified_by" v-text="item.last_modified_by"></span>
+              <span class="text-no-wrap" v-else v-text="item.author"></span>
             </template>
             <!-- Author -->
 

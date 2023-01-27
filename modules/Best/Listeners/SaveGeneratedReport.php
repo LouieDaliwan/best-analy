@@ -64,6 +64,7 @@ class SaveGeneratedReport implements ShouldQueue
         if($taxonomy->alias != 'BGMI') {
             $month = $event->data['monthkey'] ?? $event->data['month'] ?? date('m-Y');
             $remarks = $event->data['month'] ?? date('Y-m-d H:i:s');
+
             $this->service->updateOrCreate([
                 'month' => $month,
                 'customer_id' => $event->data['organisation:profile']['id'],

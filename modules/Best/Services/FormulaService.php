@@ -125,13 +125,15 @@ class FormulaService extends Service implements FormulaServiceInterface
 
         $report = Report::where('month', $m)->whereCustomerId($customer->id)->first();
 
+        $fullname = $report->last_modified_by != $user->fullname ? $user->fullname : $report->last_modified_by;
+
         $monthkey = $attributes['monthkey'] ?? date('m-Y', strtotime($attributes['month']));
 
         // Retrieve the Customer array.
         $this->data['organisation:profile'] = $customer->toArray();
         $this->data['survey:id'] = $survey->getKey();
         $this->data['user:id'] = $user->getKey();
-        $this->data['user:name'] = $report->last_modified_by ?? $user->fullname;
+        $this->data['user:name'] = $fullname;
         $this->data['month'] = $attributes['month'] ?? date('m-Y');
         $this->data['monthkey'] = $monthkey;
         $this->data['month:formatted'] = date('M Y', strtotime($attributes['month'] ?? date('M Y')));

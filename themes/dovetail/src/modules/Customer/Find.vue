@@ -207,8 +207,8 @@ export default {
       // }
 
       let attributes = {
-        name: 'Dummy Company',
-        code: this.slugify('Dummy Company'),
+        name: '2 Dummy Company',
+        code: this.slugify('2 Dummy Company'),
         refnum: query,
         status: 'Pending',
         token: '09-09090909-090909-0909-dummysdsds',
@@ -219,7 +219,7 @@ export default {
           SiteVisitDate: new Date,
           BusinessCounselorName: 'Test Business Counselor Name',
           PeeBusinessCounselorName: 'Test Peer Business Counselor Name',
-          BusinessCounselorEmail: 'test23@test.com',
+          BusinessCounselorEmail: 'test@test.com',
           PeerBusinessCounselorEmail: 'test2@test.com',
           TradeNameEnglish: 'dummy english name',
           TradeNameArabic: 'dummy arabic name',

@@ -171,8 +171,8 @@ class FormulaService extends Service implements FormulaServiceInterface
                 $taxonomy->getKey()
             )->whereFormId(
                 $survey->getKey()
-            )->whereUserId(
-                $user->getKey()
+            // )->whereUserId(
+            //     $user->getKey()
             )->where(
                 'monthkey',
                 $monthkey

@@ -29,7 +29,7 @@ trait MorphManySubmissions
     public function submissionBy(User $user, int $customer_id, int $submissible_id, String $monthkey)
     {
         return $this->submissions()
-            ->where('user_id', $user->getKey())
+            // ->where('user_id', $user->getKey())
             ->where('customer_id', $customer_id)
             ->where('submissible_id', $submissible_id)
             ->where('monthkey', $monthkey)
@@ -49,7 +49,7 @@ trait MorphManySubmissions
         $remarks = is_null($remarks ?? null)
             ? date('Y-m-d H:i:s')
             : date('Y-m-d H:i:s', strtotime(date('Y-m-d', strtotime($remarks))));
-        $monthkey = date('m-Y', strtotime($remarks));     
+        $monthkey = date('m-Y', strtotime($remarks));
         $submission = $this->submissions()->updateOrCreate([
             'monthkey' => $monthkey,
             'submissible_id' => $attributes['submissible_id'] ?? null,
@@ -59,7 +59,7 @@ trait MorphManySubmissions
             ['remarks' => $remarks, 'monthkey' => $monthkey], $attributes
         ));
         $this->fireModelEvent('submitted', false, $submission);
-        
+
         return $this;
     }
 }

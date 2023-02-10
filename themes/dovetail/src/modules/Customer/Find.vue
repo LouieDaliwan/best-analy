@@ -4,7 +4,7 @@
 
     <!-- TEST only -->
     <!-- <div v-shortkey.once="['ctrl', 'alt', '.']" @shortkey="saveDummyCompany"></div> -->
-    <v-btn @click.prevent="saveDummyCompany" color="primary">{{ trans('Dummy') }}</v-btn>
+    <!-- <v-btn @click.prevent="saveDummyCompany" color="primary">{{ trans('Dummy') }}</v-btn> -->
     <!-- TEST only -->
 
     <v-row>

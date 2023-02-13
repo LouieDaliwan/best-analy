@@ -237,7 +237,7 @@ export default {
       let user = JSON.parse(localStorage.getItem('user'));
 
       if(! user['is:superadmin']) {
-        if(attributes.metadata.PeerBusinessCounselorEmail == user.email || attributes.metadata.BusinessCounselorEmail == user.email) {
+        if(attributes.metadata.PeeBusinessCounselorEmail == user.email || attributes.metadata.BusinessCounselorEmail == user.email) {
           this.saveFoundCompany(attributes);
           return;
         } else {

@@ -16,7 +16,7 @@ class AssignUser
      */
     public function handle($event)
     {
-        $keys = ['BusinessCounselorEmail', 'PeerBusinessCounselorEmail'];
+        $keys = ['BusinessCounselorEmail', 'PeeBusinessCounselorEmail'];
 
         $customer = $event->customer;
 

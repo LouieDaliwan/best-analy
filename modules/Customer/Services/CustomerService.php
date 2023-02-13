@@ -154,7 +154,7 @@ class CustomerService extends Service implements CustomerServiceInterface
             'SiteVisitDate' => $attributes['metadata']['SiteVisitDate'] ?? $customer->applicant->metadata['SiteVistDate'] ?? null,
             'BusinessCounselorName' => $attributes['metadata']['BusinessCounselorName'] ?? $customer->applicant->metadata['BusinessCounselorName'] ?? null,
             'PeeBusinessCounselorName' => $attributes['metadata']['PeeBusinessCounselorName'] ?? $customer->applicant->metadata['BusinessCounselorName'] ?? null,
-            'PeerBusinessCounselorEmail' => $attributes['metadata']['PeerBusinessCounselorEmail'] ?? $customer->applicant->metadata['PeerBusinessCounselorEmail'] ?? null,
+            'PeeBusinessCounselorEmail' => $attributes['metadata']['PeeBusinessCounselorEmail'] ?? $customer->applicant->metadata['PeeBusinessCounselorEmail'] ?? null,
             'BusinessCounselorEmail' => $attributes['metadata']['BusinessCounselorEmail'] ?? $customer->applicant->metadata['BusinessCounselorEmail'] ?? null,
             'number' =>  $attributes['metadata']['ApplicantMobile'] ?? $customer->applicant->metadata['number'] ?? null,
             'contact_person' => $attributes['metadata']['contact_person'] ?? $customer->applicant->metadata['contact_person'] ?? null,

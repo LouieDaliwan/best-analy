@@ -171,7 +171,7 @@ export default {
       let user = JSON.parse(localStorage.getItem('user'));
 
       if(! user['is:superadmin']) {
-        if(! item.metadata.PeerBusinessCounselorEmail != user.email || item.metadata.BusinessCounselorEmail != user.email) {
+        if(! item.metadata.PeeBusinessCounselorEmail != user.email || item.metadata.BusinessCounselorEmail != user.email) {
           this.showDialog({
             illustration: () => import('@/components/Icons/ErrorIcon.vue'),
             title: trans('Internal Error'),
@@ -245,7 +245,7 @@ export default {
             illustration: () => import('@/components/Icons/ErrorIcon.vue'),
             title: trans('Permission Error'),
             width: 400,
-            text: trans("You do not have permission to save this company. Only the registered  Business Counselor or Peer Business Counser of this company in the CRM can save this. Please contact your CRM administrator."),
+            text: trans("You do not have permission to save this company. Only the registered  Business Counselor or Pee Business Counser of this company in the CRM can save this. Please contact your CRM administrator."),
             buttons: {
               cancel: false
             }

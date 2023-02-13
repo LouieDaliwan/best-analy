@@ -39,7 +39,7 @@ class CustomerRequest extends FormRequest
                 $period = $this->request->get('metadata')['statement']['metadataStatements']['period'];
 
 
-                $project = $this->request->get('metadata')['project'];
+                $project =  isset($this->request->get('metadata')['project']) ? $this->request->get('metadata')['project']: null;
                 $customerDetail = $customer->detail;
 
                 $isUpdateProjectValue = false;

@@ -44,10 +44,11 @@ class CustomerRequest extends FormRequest
 
                 $isUpdateProjectValue = false;
 
-                if($customerDetail->metadata['investment_value'] != $project['investment_value'] || $customerDetail->metadata['project_type'] != $project['project_type']){
-                    $isUpdateProjectValue = true;
+                if($project != null) {
+                    if($customerDetail->metadata['investment_value'] != $project['investment_value'] || $customerDetail->metadata['project_type'] != $project['project_type']){
+                        $isUpdateProjectValue = true;
+                    }
                 }
-
 
                 if(is_null($period) && $customer->detail->metadata['investment_value'] != null && $customer->detail->metadata['project_type'] != null) {
                     if (!$isUpdateProjectValue) {

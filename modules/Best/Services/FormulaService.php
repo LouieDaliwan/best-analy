@@ -126,7 +126,7 @@ class FormulaService extends Service implements FormulaServiceInterface
         $report = Report::where('month', $m)->whereCustomerId($customer->id)->first();
 
         if($report){
-            $fullname = $report->last_modified_by != $user->fullname ? $user->fullname : $report->last_modified_by ?? '';
+            $fullname = $report->last_modified_by != $user->fullname ? $user->fullname : $report->last_modified_by;
         } else {
             $fullname = '';
         }

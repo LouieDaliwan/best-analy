@@ -340,11 +340,13 @@ class CustomerService extends Service implements CustomerServiceInterface
             app(FinancialRatioInterface::class)->compute($customer, $statements);
         }
 
+        $project = array_merge($customer->details->metadata, $attributes['metadata']['project']);
+
         if (isset($attributes['metadata']['project'])) {
 
             $customer->detail()->updateOrCreate(
                 ['customer_id' => $id],
-                ['metadata' => $attributes['metadata']['project']]
+                ['metadata' => $project]
             );
 
             dispatch(new UpdateStatementsJob($customer));

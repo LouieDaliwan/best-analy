@@ -170,10 +170,8 @@ export default {
 
       let user = JSON.parse(localStorage.getItem('user'));
 
-      console.log(item);
-
       if(! user['is:superadmin']) {
-        if(! item.metadata.PeeBusinessCounselorEmail != user.email || item.metadata.BusinessCounselorEmail != user.email) {
+        if(! item.PeeBusinessCounselorEmail != user.email || item.BusinessCounselorEmail != user.email) {
           this.showDialog({
             illustration: () => import('@/components/Icons/ErrorIcon.vue'),
             title: trans('Internal Error'),

@@ -276,6 +276,8 @@ export default {
           SiteVisitDate: data.SiteVisitDate || null,
           BusinessCounselorName: data.BusinessCounselorName,
           PeeBusinessCounselorName: data.PeeBusinessCounselorName,
+          PeeBusinessCounselorEmail: data.PeeBusinessCounselorEmail,
+          BusinessCounselorEmail: data.BusinessCounselorEmail,
           TradeNameEnglish: data.TradeNameEnglish,
           TradeNameArabic: data.TradeNameArabic,
           ApplicantName: data.ApplicantName,

@@ -296,12 +296,12 @@ export default {
       axios.post(
         $api.crm.update(), attributes
       ).then(response => {
-        this.showSnackbar({
-          icon: false,
-          button: { show: true },
-          text: trans('Company successfully saved'),
-        })
-        this.goToCompanyShowPage(response.data.id)
+        // this.showSnackbar({
+        //   icon: false,
+        //   button: { show: true },
+        //   text: trans('Company successfully saved'),
+        // })
+        // this.goToCompanyShowPage(response.data.id)
       })
     },
 

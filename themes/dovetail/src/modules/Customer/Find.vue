@@ -170,6 +170,8 @@ export default {
 
       let user = JSON.parse(localStorage.getItem('user'));
 
+      console.log(item.metadata);
+
       if(! user['is:superadmin']) {
         if(! item.metadata.PeeBusinessCounselorEmail != user.email || item.metadata.BusinessCounselorEmail != user.email) {
           this.showDialog({

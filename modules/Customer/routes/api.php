@@ -6,8 +6,10 @@ Route::prefix('v1')->middleware(['auth:api', 'json.force', 'auth.permissions'])-
     Route::softDeletes('customers', 'Api\CustomerController');
     Route::ownedResource('customers', 'Api\CustomerController@owned');
     Route::apiResource('customers', 'Api\CustomerController');
-    Route::delete('customers/{customer}/ratios/{ratio}/delete', 'Api\CustomerStatementsController@destroy');
+});
 
+Route::prefix('v1')->middleware(['auth:api', 'json.force'])->group(function () {
+    Route::delete('customers/{customer}/ratios/{ratio}/delete', 'Api\CustomerStatementsController@destroy');
 });
 
 Route::prefix('v1')->middleware(['auth:api', 'json.force'])->group(function () {

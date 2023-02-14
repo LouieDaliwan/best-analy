@@ -56,6 +56,7 @@ use Survey\SDMIIndexScore;
                                 'modified' => $answeredSurvey->updated_at->diffForHumans(),
                                 'month' => $answeredSurvey->month_key,
                                 'author' => $answeredSurvey->last_modified_by,
+                                'last_modified_by' => $answeredSurvey->last_modified_by,
                             ]): null,
                             'is:finished' => $answeredSurvey != null ? : false,
                         ];

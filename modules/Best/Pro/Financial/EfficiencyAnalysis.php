@@ -173,7 +173,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                     $output = __("Overall trade receivables recorded an improvement over the 3 years.");
                 }
             } else {
-                if (($h45-$h43)/$h43 < (-$bi17)) {
+                if (($h45-$h43)/$h43 < (-$bi17) && $h43 != 0) {
                     $output = __("Overall trade receivables has seen a significant downward trend over the years.");
                 } else {
                     $output = __("Overall trade receivables has seen a drop over the years.");
@@ -217,7 +217,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                     $output = __("Overall trade receivables has seen a marginal decline by :number1% over the years.", ['number1' => $number1]);
                 }
             } else {
-                if ($h45 > $h44) {
+                if ($h45 > $h44 && $h44 != 0) {
                     $number1 = abs(round(($h45-$h44)/$h44*100, 2));
                     $output = __("Experienced a year on year increase by :number1% from the recent year to the previous year.", ['number1' => $number1]);
                 } else {
@@ -354,14 +354,14 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
         if ($l43 == '') {
             $output = '';
         } else {
-            if (($l45-$l43)/$l43 > 0) {
+            if (($l45-$l43)/$l43 > 0 && $l43 != 0) {
                 if (($l45-$l43)/$l43 > $bi18) {
                     $output = __("Overall trade payables recorded significant improvement over the 3 years.");
                 } else {
                     $output = __("Overall trade payables recorded an improvement over the 3 years.");
                 }
             } else {
-                if (($l45-$l43)/$l43 < (-$bi18)) {
+                if (($l45-$l43)/$l43 < (-$bi18) $l43 != 0) {
                     $output = __("Overall trade payables has seen a significant downward trend over the years.");
                 } else {
                     $output = __("Overall trade payables has seen a drop over the years.");
@@ -389,19 +389,19 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
 
         if ($l43 == '' && (($l45-$l44) > 0)) {
             if (($l45-$l44) > $bj18) {
-                $number1 = round(($l45-$l44)/$l44*100, 2);
+                $number1 = $l44 != 0 ? round(($l45-$l44)/$l44*100, 2) : 0;
                 $output = __("Overall trade payables reflected a significant increasing trend by :number1%.", ['number1' => $number1]);
             } else {
-                $number1 = round(($l45-$l44)/$l44*100, 2);
+                $number1 = $l44 != 0 ? round(($l45-$l44)/$l44*100, 2) : 0;
                 $output = __("Overall trade payables reflected a slightly increasing trend by :number1%.", ['number1' => $number1]);
             }
         } else {
             if ($l43 == '' && (($l45-$l44) < 0)) {
                 if (($l45-$l44) < (-$bj18)) {
-                    $number1 = round(($l45-$l44)/$l44*100, 2);
+                    $number1 = $l44 != 0 ? round(($l45-$l44)/$l44*100, 2) : 0;
                     $output = __("Overall trade payables has seen a significant decline by :number1% over the years.", ['number1' => $number1]);
                 } else {
-                    $number1 = round(($l45-$l44)/$l44*100, 2);
+                    $number1 = $l44 != 0 ? round(($l45-$l44)/$l44*100, 2) : 0;
                     $output = __("Experienced a year on year decrease by :number1% from the recent year to the previous year.", ['number1' => $number1]);
                 }
             }
@@ -432,7 +432,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                 if (($l44-$l43) > 10) {
                     $item1 = $d19;
                     $item2 = $d20;
-                    $number1 = round(($l44-$l43)/$l43*100, 2);
+                    $number1 = $l43 != 0 ? round(($l44-$l43)/$l43*100, 2) : 0;
                     $output = __("Records have also indicated that from :item1 to :item2, payables saw a significant year on year increase by :number1%.", [
                         'item1' => $item1,
                         'item2' => $item2,
@@ -441,7 +441,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                 } else {
                     $item1 = $d19;
                     $item2 = $d20;
-                    $number1 = round(($l44-$l43)/$l43*100, 2);
+                    $number1 = $l43 != 0 ? round(($l44-$l43)/$l43*100, 2) : 0;
                     $output = __("Records have also indicated that from :item1 to :item2, payables saw a year on year increase by :number1%.", [
                         'item1' => $item1,
                         'item2' => $item2,
@@ -453,7 +453,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                     if (($l44-$l43) < (-10)) {
                         $item1 = $d19;
                         $item2 = $d20;
-                        $number1 = round(($l44-$l43)/$l43*100, 2);
+                        $number1 = $l43 != 0 ? round(($l44-$l43)/$l43*100, 2) : 0;
                         $output = __("Records have also indicated that from :item1 to :item2, payables saw a significant year on year decrease by :number1%.", [
                             'item1' => $item1,
                             'item2' => $item2,
@@ -462,7 +462,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                     } else {
                         $item1 = $d19;
                         $item2 = $d20;
-                        $number1 = round(($l44-$l43)/$l43*100, 2);
+                        $number1 = $l43 != 0 ? round(($l44-$l43)/$l43*100, 2) : 0;
                         $output = __("Records have also indicated that from :item1 to :item2, payables saw a year on year decrease by :number1%.", [
                             'item1' => $item1,
                             'item2' => $item2,
@@ -530,7 +530,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
         $p45 = $statements[1]['metadataResults']['ratioAnalysis']['efficiency']['assets_turnover_ratio'];
         $bi19 = 0.3;
 
-        if ($p43 == "") {
+        if ($p43 == "" || $p43 == 0) {
             $output = "";
         } else {
             if (($p45-$p43) / $p43 > 0) {
@@ -567,24 +567,24 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
 
         if ($p43 == "" && (($p45-$p44) > 0)) {
             if (($p45-$p44) > ($bj19)) {
-                $number1 = abs(round(($p45-$p44)/$p44*100, 2));
+                $number1 = $p44 != 0 ? abs(round(($p45-$p44)/$p44*100, 2)) : 0;
                 $output = __("Overall asset turnover reflected a significant increasing trend by :number1%.", ['number1' => $number1]);
             } else {
-                $number1 = abs(round(($p45-$p44)/$p44*100, 2));
+                $number1 = $p44 != 0 ? abs(round(($p45-$p44)/$p44*100, 2)) : 0;
                 $output = __("Overall asset turnover reflected an increasing trend by :number1%.", ['number1' => $number1]);
             }
         } else {
             if ($p43 == "" && (($p45-$p44) < 0)) {
                 if (($p45-$p44) < (-$bj19)) {
-                    $number1 = abs(round(($p45-$p44)/$p44*100, 2));
+                    $number1 = $p44 != 0 ? abs(round(($p45-$p44)/$p44*100, 2)) : 0;
                     $output = __("Overall asset turnover has seen a significant decline by :number1% over the years.", ['number1' => $number1]);
                 } else {
-                    $number1 = abs(round(($p45-$p44)/$p44*100, 2));
+                    $number1 = $p44 != 0 ? abs(round(($p45-$p44)/$p44*100, 2)) : 0;
                     $output = __("Overall asset turnover has seen a decline by :number1% over the years.", ['number1' => $number1]);
                 }
             } else {
                 if ($p45 > $p44) {
-                    $number1 = abs(round(($p45-$p44)/$p44*100, 2));
+                    $number1 = $p44 != 0 ? abs(round(($p45-$p44)/$p44*100, 2)) : 0;
                     $output = __("An increase of :number1% was recorded from the recent year to the previous year.", ['number1' => $number1]);
                 } else {
                     $number1 = $p44 != 0 ? abs(round(($p45-$p44)/$p44*100, 2)) : 0;
@@ -618,7 +618,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                 if (($p44-$p43) > ($bk19)) {
                     $item1 = $d19;
                     $item2 = $d20;
-                    $number1 = abs(round(($p44-$p43)/$p43*100, 2));
+                    $number1 = $p43 != 0  ? abs(round(($p44-$p43)/$p43*100, 2)) : 0;
                     $output = __("Records have also indicated that from :item1 to :item2, asset turnover saw a significant year on year increase by :number1%.", [
                         'item1' => $item1,
                         'item2' => $item2,
@@ -627,7 +627,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                 } else {
                     $item1 = $d19;
                     $item2 = $d20;
-                    $number1 = abs(round(($p44-$p43)/$p43*100, 2));
+                    $number1 = $p43 != 0  ? abs(round(($p44-$p43)/$p43*100, 2)) : 0;
                     $output = __("Records have also indicated that from :item1 to :item2, asset turnover saw a year on year increase by :number1%.", [
                         'item1' => $item1,
                         'item2' => $item2,
@@ -639,7 +639,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                     if (($p44-$p43) < (-$bk19)) {
                         $item1 = $d19;
                         $item2 = $d20;
-                        $number1 = abs(round(($p44-$p43)/$p43*100, 2));
+                        $number1 = $p43 != 0  ? abs(round(($p44-$p43)/$p43*100, 2)) : 0;
                         $output = __("Records have also indicated that from :item1 to :item2, asset turnover saw a significant year on year decrease by :number1%.", [
                             'item1' => $item1,
                             'item2' => $item2,
@@ -648,7 +648,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                     } else {
                         $item1 = $d19;
                         $item2 = $d20;
-                        $number1 = abs(round(($p44-$p43)/$p43*100, 2));
+                        $number1 = $p43 != 0  ? abs(round(($p44-$p43)/$p43*100, 2)) : 0;
                         $output = __("Records have also indicated that from :item1 to :item2, asset turnover saw a year on year decrease by :number1%.", [
                             'item1' => $item1,
                             'item2' => $item2,
@@ -715,7 +715,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
         $t45 = $statements[2]['metadataResults']['ratioAnalysis']['efficiency']['inventory_turnover_ratio'];
         $bi20 = 0.3;
 
-        if ($t43 == '') {
+        if ($t43 == '' || $t43 != 0) {
             $output = '';
         } else {
             if (($t45-$t43)/$t43 > 0) {
@@ -754,24 +754,24 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
 
         if ($t43 == '' && (($t45-$t44) > 0)) {
             if (($t45-$t44) > $bj20) {
-                $number1 = abs(round(($t45-$t44)/$t44*100, 2));
+                $number1 = $t44 != 0 ? abs(round(($t45-$t44)/$t44*100, 2)): 0;
                 $output = __("Overall inventory turnover reflected a significant improvement trend, increasing by :number1%.", ['number1' => $number1]);
             } else {
-                $number1 = abs(round(($t45-$t44)/$t44*100, 2));
+                $number1 = $t44 != 0 ? abs(round(($t45-$t44)/$t44*100, 2)): 0;
                 $output = __("Overall inventory turnover reflected improvements, increasing by :number1%.", ['number1' => $number1]);
             }
         } else {
             if ($q32 == '' && ($t45-$t44) < 0) {
                 if (($t45-$t44) < (-$bj20)) {
-                    $number1 = abs(round(($t45-$t44)/$t44*100, 2));
+                    $number1 = $t44 != 0 ? abs(round(($t45-$t44)/$t44*100, 2)): 0;
                     $output = __("Overall inventory turnover has seen a significant dip in demand, declining by :number1% over the years.", ['number1' => $number1]);
                 } else {
-                    $number1 = abs(round(($t45-$t44)/$t44*100, 2));
+                    $number1 = $t44 != 0 ? abs(round(($t45-$t44)/$t44*100, 2)): 0;
                     $output = __("Overall dip in demand has seen inventory turnover decline by :number1% over the years.", ['number1' => $number1]);
                 }
             } else {
                 if ($t45 > $t44) {
-                    $number1 = abs(round(($t45-$t44)/$t44*100, 2));
+                    $number1 = $t44 != 0 ? abs(round(($t45-$t44)/$t44*100, 2)): 0;
                     $output = __("A :number1% increase was observed from the recent year to the previous year.", ['number1' => $number1]);
                 } else {
                     $number1 = $t44 != 0 ? abs(round(($t45-$t44)/$t44*100, 2)) : 0;
@@ -815,7 +815,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                 } else {
                     $item1 = $d19;
                     $item2 = $d20;
-                    $number1 = abs(round(($t44-$t43)/$t43*100, 2));
+                    $number1 = $t43 != 0 ? abs(round(($t44-$t43)/$t43*100, 2)) : 0;
                     $output = __("Records have also indicated that from :item1 to :item2, inventory turnover saw a year on year decrease by :number1%.", [
                         'item1' => $item1,
                         'item2' => $item2,
@@ -827,7 +827,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                     if (($t44-$t43) < (-$bk20)) {
                         $item1 = $d19;
                         $item2 = $d20;
-                        $number1 = abs(round(($t44-$t43)/$t43*100, 2));
+                        $number1 = $t43 != 0 ? abs(round(($t44-$t43)/$t43*100, 2)) : 0;
                         $output = __("Records have also indicated that from :item1 to :item2, inventory turnover saw a significant year on year decrease by :number1%.", [
                             'item1' => $item1,
                             'item2' => $item2,
@@ -836,7 +836,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                     } else {
                         $item1 = $d19;
                         $item2 = $d20;
-                        $number1 = abs(round(($t44-$t43)/$t43*100, 2));
+                        $number1 = $t43 != 0 ? abs(round(($t44-$t43)/$t43*100, 2)) : 0;
                         $output = __("Records have also indicated that from :item1 to :item2, inventory turnover saw a year on year decrease by :number1%.", [
                             'item1' => $item1,
                             'item2' => $item2,

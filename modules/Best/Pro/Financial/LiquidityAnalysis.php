@@ -268,7 +268,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
 
         if ($ai19 == "" && ($ai21-$ai20) > 0) {
             if (($ai21-$ai20)>$bj12) {
-                if($ai20 != 0 || ($ai21-$ai20 != 0)) {
+                if($ai20 != 0 && $ai21-$ai20 != 0) {
                     $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
                 } else {
                     $number1 = 0;
@@ -276,7 +276,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
                 // $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
                 $output = __("Overall current ratio reflected a significant increasing trend by :number1%.", ['number1' => $number1]);
             } else {
-                if($ai20 != 0 || ($ai21-$ai20 != 0)) {
+                if($ai20 != 0 && $ai21-$ai20 != 0) {
                     $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
                 } else {
                     $number1 = 0;

@@ -417,24 +417,48 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
 
         if ($am19 == "" && ($am21-$am20) > 0) {
             if (($am21-$am20) > $bj13) {
-                $number1 = abs(round(($am21-$am20)/$am20*100, 2));
+                if($am20 != 0 && $am21-$am20 != 0) {
+                    $number1 = abs(round(($am21-$am20)/$am20*100, 2));
+                } else {
+                    $number1 = 0;
+                }
                 $output = __("Overall cash ratio margin reflected a significant increasing trend by :number1%.", ['number1' => $number1]);
             } else {
-                $number1 = abs(round(($am21-$am20)/$am20*100, 2));
+                if($am20 != 0 && $am21-$am20 != 0) {
+                    $number1 = abs(round(($am21-$am20)/$am20*100, 2));
+                } else {
+                    $number1 = 0;
+                }
+                // $number1 = abs(round(($am21-$am20)/$am20*100, 2));
                 $output = __("Overall cash ratio reflected an increasing trend by :number1%.", ['number1' => $number1]);
             }
         } else {
             if ($am19 == "" && ($am21-$am20) < 0) {
                 if (($am21-$am20) < (-$bj13)) {
-                    $number1 = abs(round(($am21-$am20)/$am20*100, 2));
+                    if($am20 != 0 && $am21-$am20 != 0) {
+                        $number1 = abs(round(($am21-$am20)/$am20*100, 2));
+                    } else {
+                        $number1 = 0;
+                    }
+                    // $number1 = abs(round(($am21-$am20)/$am20*100, 2));
                     $output = __("Overall cash ratio has seen a significant decline by :number1% over the years.", ['number1' => $number1]);
                 } else {
-                    $number1 = abs(round(($am21-$am20)/$am20*100, 2));
+                    if($am20 != 0 && $am21-$am20 != 0) {
+                        $number1 = abs(round(($am21-$am20)/$am20*100, 2));
+                    } else {
+                        $number1 = 0;
+                    }
+                    // $number1 = abs(round(($am21-$am20)/$am20*100, 2));
                     $output = __("Overall cash ratio has seen a decline by :number1% over the years.", ['number1' => $number1]);
                 }
             } else {
                 if ($am21-$am20>0) {
-                    $number1 = abs(round(($am21-$am20)/$am20*100, 2));
+                    // $number1 = abs(round(($am21-$am20)/$am20*100, 2));
+                    if($am20 != 0 && $am21-$am20 != 0) {
+                        $number1 = abs(round(($am21-$am20)/$am20*100, 2));
+                    } else {
+                        $number1 = 0;
+                    }
                     $output = __("Year on year increase of :number1% was recorded from the recent year to the previous year.", ['number1' => $number1]);
                 } else {
                     $number1 = $am20 != 0 ? abs(round(($am21-$am20)/$am20*100, 2)) : 0;

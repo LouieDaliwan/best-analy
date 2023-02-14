@@ -268,16 +268,32 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
 
         if ($ai19 == "" && ($ai21-$ai20) > 0) {
             if (($ai21-$ai20)>$bj12) {
-                $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
+                if($ai20 != 0) {
+                    $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
+                } else {
+                    $number1 = 0;
+                }
+                // $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
                 $output = __("Overall current ratio reflected a significant increasing trend by :number1%.", ['number1' => $number1]);
             } else {
-                $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
+                if($ai20 != 0) {
+                    $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
+                } else {
+                    $number1 = 0;
+                }
+
+                // $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
                 $output = __("Overall current ratio reflected an increasing trend by :number1%.", ['number1' => $number1]);
             }
         } else {
             if($ai19 == "" && ($ai21-$ai20) < 0) {
                 if (($ai21-$ai20) < (-$bj12)) {
-                    $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
+                    if($ai20 != 0) {
+                        $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
+                    } else {
+                        $number1 = 0;
+                    }
+                    // $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
                     $output = __("Overall current ratio has seen a significant decline by :number1% over the years.", ['number1' => $number1]);
                 } else {
                     $number1 = $ai20 != 0 ? abs(round(($ai21-$ai20)/$ai20*100, 2)) : 0;
@@ -285,7 +301,12 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
                 }
             } else {
                 if($ai21 > $ai20) {
-                    $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
+                    if($ai20 != 0) {
+                        $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
+                    } else {
+                        $number1 = 0;
+                    }
+                    // $number1 = abs(round(($ai21-$ai20)/$ai20*100, 2));
                     $output = __(":customer experienced a year on year increase by :number1% from the recent year to the previous year.", [
                         'customer' => $customer,
                         'number1' => $number1,

@@ -41,7 +41,7 @@
         :loading="loading"
         x-large block
         >
-        {{ $t('Sign in') }}
+        {{ $t('Admin Sign In') }}
         <template v-slot:loader>
           <v-slide-x-transition><v-icon dark class="mdi-spin mr-3">mdi-loading</v-icon></v-slide-x-transition>
           <span>{{ $t('Signing in...') }}</span>

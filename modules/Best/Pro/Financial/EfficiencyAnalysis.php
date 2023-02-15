@@ -361,7 +361,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                     $output = __("Overall trade payables recorded an improvement over the 3 years.");
                 }
             } else {
-                if (($l45-$l43)/$l43 < (-$bi18) $l43 != 0) {
+                if (($l45-$l43)/$l43 < (-$bi18) && $l43 != 0) {
                     $output = __("Overall trade payables has seen a significant downward trend over the years.");
                 } else {
                     $output = __("Overall trade payables has seen a drop over the years.");

@@ -488,7 +488,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
         $d20 = $statements[1]['period'];
         $item1 = $d19;
         $item2 = $d20;
-        $number1 = abs(round(($am20-$am19)/$am19*100, 2));
+        $number1 = $am19 != 0 ? abs(round(($am20-$am19)/$am19*100, 2)) : 0;
 
         if (($am20-$am19)>0) {
             if (($am20-$am19)>$bk13) {
@@ -571,7 +571,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
 
         $bi14 = 0.3;
 
-        if($aq19 == "") {
+        if($aq19 == "" || $aq19 == 0) {
             $output = "";
         } else {
             if(($aq21-$aq19)/$aq19>0) {

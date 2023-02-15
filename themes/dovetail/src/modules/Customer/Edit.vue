@@ -93,7 +93,7 @@
               v-slot="{ errors }"
               vid="metadata[type]"
             >
-              <div>
+              <!-- <div>
                 <label>Audited Financials</label>
                 <input
                   :checked="resource.data.metadata.type == 'Audited'"
@@ -109,7 +109,7 @@
                   type="radio"
                   value="In-House"
                 />
-              </div>
+              </div> -->
             </validation-provider>
           </template>
         </page-header>

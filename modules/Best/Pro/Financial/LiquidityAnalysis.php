@@ -652,7 +652,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
 
         $item1 = $d19;
         $item2 = $d20;
-        $number1 = abs(round(($aq20-$aq19)/$aq19*100, 2));
+        $number1 = $aq19 != 0 ? abs(round(($aq20-$aq19)/$aq19*100, 2)) : 0;
         if (($aq20-$aq19) > 0) {
             if (($n28-$n27) > $bk14) {
                 $output = __("Records have also indicated that the working capital turnover notched a significant year on year increase by :number1% from :item1 to :item2.", [

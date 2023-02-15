@@ -33,6 +33,7 @@ trait MorphManySubmissions
             ->where('customer_id', $customer_id)
             ->where('submissible_id', $submissible_id)
             ->where('monthkey', $monthkey)
+            ->latest('updated_at')
             ->first();
     }
 

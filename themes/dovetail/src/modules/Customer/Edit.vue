@@ -86,14 +86,14 @@
               })
             }}
           </template>
-          <template v-slot:action>
+          <!-- <template v-slot:action>
             <validation-provider
               :name="trans('Type')"
               rules="email"
               v-slot="{ errors }"
               vid="metadata[type]"
             >
-              <!-- <div>
+              <div>
                 <label>Audited Financials</label>
                 <input
                   :checked="resource.data.metadata.type == 'Audited'"
@@ -109,9 +109,9 @@
                   type="radio"
                   value="In-House"
                 />
-              </div> -->
+              </div>
             </validation-provider>
-          </template>
+          </template> -->
         </page-header>
 
         <!-- Alertbox -->

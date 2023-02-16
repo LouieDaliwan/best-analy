@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-between align-items-center">
-      <h2 class="dt-secondary mb-0">@lang($data['indices']['FMPI']['pindex']) {{ __('Performance Index') }}</h2>
+      <h2 class="dt-secondary mb-0">@lang($data['indices']['BGMI']['pindex']) {{ __('Performance Index') }}</h2>
       <h2 class="mb-0 dt-secondary">
         {{ $data['indices']['BGMI']['overall:total'] }}%
       </h2>
@@ -69,7 +69,7 @@
               color: chartColors.muted,
             },
             ticks: {
-              fontColor: '#044b7f',
+              fontColor: '#D19116',
               fontFamily: 'Rubik, sans-serif',
               fontSize: 13,
             },
@@ -86,7 +86,7 @@
               beginAtZero: true,
               padding: 20,
               maxTicksLimit: 5,
-              fontColor: '#044b7f',
+              fontColor: '#D19116',
               fontFamily: 'Rubik, sans-serif',
               fontSize: 13,
               // min: -100,

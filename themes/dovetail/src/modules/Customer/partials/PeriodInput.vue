@@ -9,16 +9,16 @@
               'Depreciation',
               'Interest On Loan/Hires',
               'Company Tax',
-              /*'Cash',
-              'Trade Receivables',
-              'Inventories',
+              //'Cash',
+              //'Trade Receivables',
+              //'Inventories',
               'Other Current Assets',
-              'Fixed Assets',
-              'Trade Payables',
-              'Other Current Liabilities',
+              //'Fixed Assets',
+              //'Trade Payables',
+              //'Other Current Liabilities',
               'Other Non-Current Liabilities',
-              `Stockholders' Equity`,
-              'Common Shares Outstanding'*/
+              //`Stockholders' Equity`,
+              'Common Shares Outstanding'
             ].includes(label)"
       ></span>
 

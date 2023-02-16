@@ -4,5 +4,6 @@
   @include('best::reports.overall.charts.bspi')
   @include('best::reports.overall.charts.pmpi')
   @include('best::reports.overall.charts.hrpi')
+  @include('best::reports.overall.charts.bgmi')
   @include('best::reports.overall.charts.enablers')
 </section>

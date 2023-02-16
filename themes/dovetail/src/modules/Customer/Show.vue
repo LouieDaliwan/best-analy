@@ -7,7 +7,7 @@
     </template>
 
     <template v-else>
-      <page-header :back="{ to: { name: 'companies.owned' }, text: trans('Back') }">
+      <page-header :back="{ to: { name: 'companies.dashboard', params: { id: $route.params.id }}, text: trans('Back') }">
         <template v-slot:title>
           <span :class="$vuetify.breakpoint.smAndUp ? '' : 'title font-weight-bold'" class="mb-3">{{ resource.data.name }}</span>
         </template>

@@ -1,5 +1,24 @@
 <template>
   <v-card>
+      <div class="mt-5 ml-10">
+          <label>Audited Financials</label>
+          <input
+            :checked="value.metadata.type == 'Audited'"
+            name="metadata[type]"
+            type="radio"
+            value="Audited"
+            @click="changeAudit('Audited')"
+          />
+          <span class="d-inline-block mx-3"></span>
+          <label>In-House Financials</label>
+          <input
+            :checked="value.metadata.type == 'In-House'"
+            name="metadata[type]"
+            type="radio"
+            value="In-House"
+            @click="changeAudit('In-House')"
+          />
+      </div>
     <v-card-text v-if="checkInvesmentValueAndProjectType">
     <!-- <v-card-text > -->
       <v-row>
@@ -82,6 +101,18 @@ export default {
   }),
 
   methods: {
+
+    changeAudit(value)
+    {
+      axios.post(`/api/v1/customers/${this.value.id}/update-audit`, {
+        type: value,
+        name: this.value.name,
+        refnum: this.value.refnum,
+        code: this.value.code
+      }).then(({data}) => {
+        console.log(data);
+      });
+    },
 
     ...mapActions({
       errorDialog: 'dialog/error',

@@ -7,6 +7,7 @@ use Customer\Http\Requests\CustomerRequest;
 use Customer\Http\Requests\OwnedCustomerRequest;
 use Customer\Http\Resources\AllCustomerResource;
 use Customer\Http\Resources\CustomerResource;
+use Customer\Models\Customer;
 use Customer\Services\CustomerServiceInterface;
 use Illuminate\Http\Request;
 
@@ -123,5 +124,10 @@ class CustomerController extends ApiController
     public function owned()
     {
         return AllCustomerResource::collection($this->service()->listCompany());
+    }
+
+    public function updateAudit(Request $request, $id)
+    {
+        return $this->service()->updateDetails($id, $request->all());
     }
 }

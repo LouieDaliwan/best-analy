@@ -325,6 +325,10 @@ class CustomerService extends Service implements CustomerServiceInterface
 
         $this->saveCustomerDetail($customer, $attributes);
 
+        if(isset($attributes['type'])) {
+            return 'true';
+        }
+
         if (isset($attributes['metadata']['applicant'])) {
             $oldMetadata = $customer->applicant->metadata;
 
@@ -362,6 +366,11 @@ class CustomerService extends Service implements CustomerServiceInterface
 
     protected function saveCustomerDetail($customer, $attributes)
     {
+        if(isset($attributes['type'])) {
+            $customer->metadata = array_merge($customer->metadata, [
+                'type' => $attributes['type']
+            ]);
+        }
         $customer->name = $attributes['name'];
         $customer->code = $attributes['code'];
         $customer->refnum = $attributes['refnum'];

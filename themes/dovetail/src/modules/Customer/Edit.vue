@@ -86,32 +86,6 @@
               })
             }}
           </template>
-          <!-- <template v-slot:action>
-            <validation-provider
-              :name="trans('Type')"
-              rules="email"
-              v-slot="{ errors }"
-              vid="metadata[type]"
-            >
-              <div>
-                <label>Audited Financials</label>
-                <input
-                  :checked="resource.data.metadata.type == 'Audited'"
-                  name="metadata[type]"
-                  type="radio"
-                  value="Audited"
-                />
-                <span class="d-inline-block mx-3"></span>
-                <label>In-House Financials</label>
-                <input
-                  :checked="resource.data.metadata.type == 'In-House'"
-                  name="metadata[type]"
-                  type="radio"
-                  value="In-House"
-                />
-              </div>
-            </validation-provider>
-          </template> -->
         </page-header>
 
         <!-- Alertbox -->
@@ -241,7 +215,7 @@ export default {
     isFinancialStatementHasValue: false,
     resource: new Company(),
     loading: true,
-    tabsModel: 1
+    tabsModel: 1,
   }),
 
   methods: {
@@ -324,7 +298,6 @@ export default {
       let data = _.clone(item);
       let formData = new FormData(this.$refs["updateform-form"].$el);
 
-      console.log(formData);
       formData.append("_method", "put");
 
       data = formData;

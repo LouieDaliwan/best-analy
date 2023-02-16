@@ -27,8 +27,8 @@
       font:              'rgb(151, 172, 203)',
     };
     var gradient = ctx.createLinearGradient(0, 0, 0, 200);
-      gradient.addColorStop(0, '#f48b3c');
-      gradient.addColorStop(1, '#e5a676');
+      gradient.addColorStop(0, '#D19116');
+      gradient.addColorStop(1, '#D19116');
     var barChart = new Chart(ctx, {
       type: 'bar',
       data: {
@@ -69,7 +69,7 @@
               color: chartColors.muted,
             },
             ticks: {
-              fontColor: '#D19116',
+              fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',
               fontSize: 13,
             },
@@ -86,7 +86,7 @@
               beginAtZero: true,
               padding: 20,
               maxTicksLimit: 5,
-              fontColor: '#D19116',
+              fontColor: '#044b7f',
               fontFamily: 'Rubik, sans-serif',
               fontSize: 13,
               // min: -100,

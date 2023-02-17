@@ -26,7 +26,7 @@ return [
             '13' => ['Process' => 'Improve alignment of financial management system to business operations'],
             '15' => ['Process' => 'Review financial operational processes to maintain relevance'],
             '17' => ['Process' => 'Implement financial planning practices'],
-            '22' => ['Process' => 'Integrate financial manag    ement systems effectively'],
+            '22' => ['Process' => 'Integrate financial management systems effectively'],
             '24' => ['Process' => 'Conduct comprehensive 3rd party due diligence'],
             '25' => ['Process' => 'Conduct periodic risk assessments'],
             '26' => ['Process' => 'Conduct regular internal audits'],

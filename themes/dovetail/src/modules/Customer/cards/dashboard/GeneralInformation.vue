@@ -172,10 +172,10 @@ export default {
             ]
           },
           {
-            title: "Applicant Details",
+            title: "Entrepreneurs Details",
             details: [
               {
-                label: "Applicant Name",
+                label: "Entrepreneur Name",
                 value: this.value.applicant.metadata.name,
                 icon: "mdi-account-outline"
               },

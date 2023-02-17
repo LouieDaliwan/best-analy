@@ -172,7 +172,7 @@ export default {
             ]
           },
           {
-            title: "Entrepreneurs Details",
+            title: "Entrepreneur Details",
             details: [
               {
                 label: "Entrepreneur Name",

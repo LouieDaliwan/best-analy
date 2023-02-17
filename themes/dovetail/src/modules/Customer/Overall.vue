@@ -25,7 +25,7 @@
           {{ trans('View Report in English') }}
         </a>
         <div class="mb-3">
-          <div v-if="resource.data.customer && isInEnglish">
+          <div v-if="resource.data.customer">
             <send-report-to-crm-button
               type="overall"
               with-file
@@ -36,7 +36,7 @@
               :month="resource.data.report.month"
             ></send-report-to-crm-button>
 
-          <!-- 
+          <!--
             <send-financial-data-to-crm-button
               v-if="resource.data.customer.is_fs_has_no_zero_value && isInEnglish"
               class="mt-4"

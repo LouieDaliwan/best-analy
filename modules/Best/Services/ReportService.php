@@ -138,9 +138,9 @@ class ReportService extends Service implements ReportServiceInterface
         array_push($lists, 'all');
 
         rsort($lists);
-                
+
         array_push($lists, Carbon::now()->format('Y-m'));
-        
+
         return collect($lists)->map(function($item) {
             return $item == 'all' ? ['value' => 'all', 'text' => 'All'] : ['value' => date('m-Y', strtotime($item)), 'text' => date('M Y', strtotime($item))];
         })->toArray();
@@ -155,7 +155,7 @@ class ReportService extends Service implements ReportServiceInterface
      */
     public function getOverallReportFromUser(User $user, Customer $customer)
     {
-        $model = $this->model->whereUserId($user->getKey())->whereCustomerId($customer->getKey());
+        $model = $this->model->whereCustomerId($customer->getKey());
 
         $date = $this->request()->get('month') != 'null'  ?  $this->request()->get('month') : date('m-Y');
 

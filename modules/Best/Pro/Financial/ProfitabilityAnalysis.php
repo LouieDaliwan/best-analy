@@ -446,7 +446,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
         } else {
             if ($k20 < $k19) {
                 if (($k20-$k19) < (-$bk5)) {
-                    $output = __("Records have also indicated that operating profits experienced a significant year on year decrease by :number1% from :item1 to :item2.", [
+                    $output = __("Records have also indicated that operating profits experienced a significant year on year decrease by :number1% from :item1 to :item2", [
                         'item1' => $item1,
                         'item2' => $item2,
                         'number1' => $number1,

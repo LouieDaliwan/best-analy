@@ -165,7 +165,7 @@
       >
         <v-text-field
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Investment Value *')"
           class="dt-text-field"
@@ -208,7 +208,7 @@
       >
         <v-textarea
           :dense="isDense"
-          :disabled="isLoading"
+          :disabled="true"
           :error-messages="errors"
           :label="trans('Description')"
           class="dt-text-field"

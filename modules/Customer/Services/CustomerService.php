@@ -132,7 +132,7 @@ class CustomerService extends Service implements CustomerServiceInterface
             'investment_value' => $customer->detail->metadata['investment_value'] ?? $attributes['metadata']['AmountInvested'] ?? null,
             'industry_sector' => $attributes['metadata']['Sector'] ?? $customer->detail->metadata['industry_sector'] ?? null,
             'business_size' => null,
-            'description' => $attributes['metadata']['ProjectIdea'] ?? null,
+            'description' => $customer->detail->metadata['description'] ?? $attributes['metadata']['ProjectIdea'] ?? null,
         ];
 
         Detail::updateOrCreate(

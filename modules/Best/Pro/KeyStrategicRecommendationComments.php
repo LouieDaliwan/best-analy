@@ -77,7 +77,7 @@ abstract class KeyStrategicRecommendationComments
 
             $addPriorityAsterisk = $priority == true ? '<span style="color: #F48B3C">* </span>' : ''; //get the value of the asterissk
 
-            $comment = $addPriorityAsterisk .''. array_values($reco)[0];
+            $comment = $addPriorityAsterisk .''. __(array_values($reco)[0]);
 
             if (array_key_exists('Empty', $temp_categories_recom[$keyword])) {
                 unset($temp_categories_recom[$keyword]['Empty']);

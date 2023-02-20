@@ -283,9 +283,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                         $item1 = $d19;
                         $item2 = $d20;
                         $number1 = abs(round(($h44-$h43)*100, 2));
-                        //Records have also indicated that from :item1 to :item2, receivables saw a year on year decrease by :number1%.
-
-                        $output = __("كما أشارت السجلات إلى أن الذمم المدينة شهدت انخفاضًا كبيرًا من عام إلى آخر بنسبة 32.77٪ خلال الفترة من 2021 إلى 2019.", [                            'item1' => $item1,
+                        $output = __("Records have also indicated that from :item1 to :item2, receivables saw a year on year decrease by :number1%.", [                            'item1' => $item1,
                             'item2' => $item2,
                             'number1' => $number1,
                         ]);
@@ -464,8 +462,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                         $item1 = $d19;
                         $item2 = $d20;
                         $number1 = $l43 != 0 ? round(($l44-$l43)/$l43*100, 2) : 0;
-                        //Records have also indicated that from :item1 to :item2, payables saw a year on year decrease by :number1%.
-                        $output = __("كما أشارت السجلات إلى أن الذمم الدائنة شهدت انخفاضًا ملحوظًا من عام 2021 إلى عام 2019 بنسبة 32.77٪.", [
+                        $output = __("Records have also indicated that from :item1 to :item2, payables saw a year on year decrease by :number1%.", [
                             'item1' => $item1,
                             'item2' => $item2,
                             'number1' => $number1,

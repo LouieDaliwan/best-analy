@@ -257,6 +257,7 @@
   "Records have also indicated that from :item1 to :item2, receivables saw a year on year decrease by :number1%.": "وأشارت السجلات أيضا إلى أن من :item1 إلى :item2, وشهدت المستحقات انخفاضا في عام لآخر بنسبة % :number1",
   "Records have also indicated that from :item1 to :item2, payables saw a year on year decrease by :number1%.": "وأشارت السجلات أيضا إلى أن من :item1 إلى :item2, شهدت المدفوعات انخفاضا في عام لآخر بنسبة % :number1",
   "No changes were recorded from Year 1 to Year 2.": "لم تسجل أي تغييرات من السنة ١ إلى السنة ٢",
+  "Records have also indicated that from :item1 to :item2, payables saw a significant year on year decrease by :number1%.": "وأشارت السجلات أيضا إلى أن من :item1 إلى :item2, شهدت المدفوعات انخفاضا كبيرا في عام لآخر بنسبة % :number1.",
   "Asset Turnover Ratio": "نسبة دوران الأصول",
   "Average Trade Payable": "متوسط المدفوعات التجارية",
   "Average Trade Receivable": "متوسط المستحقات التجارية",

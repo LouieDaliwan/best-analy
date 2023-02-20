@@ -77,7 +77,7 @@
           class="d-none"
         ></button>
         <page-header
-          :back="{ to: { name: 'companies.owned' }, text: trans('Companies') }"
+          :back="{to: { name: 'companies.dashboard', params: { id: $route.params.id }}, text: trans('Company Dashboard') }"
         >
           <template v-slot:title>
             {{

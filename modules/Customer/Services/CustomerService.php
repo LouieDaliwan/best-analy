@@ -129,10 +129,10 @@ class CustomerService extends Service implements CustomerServiceInterface
             'trade_name_ar' => $attributes['metadata']['TradeNameArabic'] ??  $customer->detail->metadata['trade_name_ar'] ?? null,
             'license_no' => $attributes['metadata']['LicenseNo'] ?? $customer->detail->metadata['license_no'] ?? null,
             'funding_program' => $attributes['metadata']['Program'] ?? $customer->detail->metadata['funding_program'] ?? null,
-            'investment_value' => $customer->detail->metadata['investment_value'] ?? $customer->detail->metadata['investment_value'] ?? 0,
+            'investment_value' => $customer->detail->metadata['investment_value'] ?? $attributes['metadata']['AmountInvested'] ?? null,
             'industry_sector' => $attributes['metadata']['Sector'] ?? $customer->detail->metadata['industry_sector'] ?? null,
             'business_size' => null,
-            'description' => null,
+            'description' => $attributes['metadata']['ProjectIdea'] ?? null,
         ];
 
         Detail::updateOrCreate(
@@ -142,6 +142,8 @@ class CustomerService extends Service implements CustomerServiceInterface
                 'metadata' => $pMetadata
             ]
         );
+
+        dispatch(new UpdateStatementsJob($customer));
 
         $aMetadata = [
             'email' => $attributes['metadata']['ApplicantEmail'] ?? $customer->applicant->metadata['email'] ?? null,

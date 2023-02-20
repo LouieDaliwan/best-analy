@@ -4,7 +4,7 @@
 
     <!-- TEST only -->
     <!-- <div v-shortkey.once="['ctrl', 'alt', '.']" @shortkey="saveDummyCompany"></div> -->
-    <!-- <v-btn @click.prevent="saveDummyCompany" color="primary">{{ trans('Dummy') }}</v-btn> -->
+    <v-btn @click.prevent="saveDummyCompany" color="primary">{{ trans('Dummy') }}</v-btn>
     <!-- TEST only -->
 
     <v-row>
@@ -211,8 +211,8 @@ export default {
       // }
 
       let attributes = {
-        name: '2 Dummy Company',
-        code: this.slugify('2 Dummy Company'),
+        name: '25 Dummy Company',
+        code: this.slugify('25 Dummy Company'),
         refnum: query,
         status: 'Pending',
         token: '09-09090909-090909-0909-dummysdsds',
@@ -235,6 +235,8 @@ export default {
           LicenseNo: Math.random(),
           ProjectLocation: null,
           ProjectType: null,
+          ProjectIdea: 'Project Description',
+          AmountInvested: 100000000090909,
         }, this.company.metadata),
       }
 
@@ -288,6 +290,8 @@ export default {
           LicenseNo: data.LicenseNo,
           ProjectLocation: data.ProjectLocation,
           ProjectType: data.ProjectType,
+          ProjectIdea: data.ProjectIdea,
+          AmountInvested: data.AmountInvested,
         }, this.company.metadata),
       }
 

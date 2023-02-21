@@ -1,58 +1,58 @@
 <?php
     $details = $data['indicators:productivity']['detail'];
     $cols = [];
-    
+
     array_push($cols, [
         [
-            $details[0], 
+            $details[0],
             $details[1]
         ],
         [
-            $details[15], 
+            $details[15],
             $details[16]
         ]
     ]);
 
     array_push($cols, [
         [
-            $details[3], 
+            $details[3],
             $details[4]
         ],
         [
-            $details[18], 
+            $details[18],
             $details[19]
         ]
     ]);
-    
+
     array_push($cols, [
         [
-            $details[6], 
+            $details[6],
             $details[7]
         ],
         [
-            $details[21], 
+            $details[21],
             $details[22]
         ]
     ]);
 
     array_push($cols, [
         [
-            $details[9], 
+            $details[9],
             $details[10]
         ],
         [
-            $details[24], 
+            $details[24],
             $details[25]
         ]
     ]);
 
     array_push($cols, [
         [
-            $details[12], 
+            $details[12],
             $details[13]
         ],
         [
-            $details[27], 
+            $details[27],
             $details[28]
         ]
     ]);
@@ -70,15 +70,15 @@
     }
 
     #listTable td {
-        border-top: 0 !important; 
+        border-top: 0 !important;
     }
 
     .row1 .otherRows{
         /*background-color:  #dbd9d9; */
     }
 
-    
-    .otherRows {        
+
+    .otherRows {
         /*padding: 0 !important;
         padding-top: 20px !important;
         text-align: center;
@@ -109,14 +109,14 @@
                 @foreach($item as $data)
                 @if($countItems == 1)
                   @if($data != null && $count == 1)
-                    <td bgcolor="#edf2f9" class="row1" rowspan="2">{{ $data }}</td>
+                    <td bgcolor="#edf2f9" class="row1" rowspan="2">{{ __($data) }}</td>
                   @else
-                    <td class="otherRows">{{ $data }}</td>
+                    <td class="otherRows">{{ __($data) }}</td>
                   @endif
                 @endif
                 @if($countItems == 2)
                   @if($data != null && $count == 3)
-                    <td bgcolor="#edf2f9" colspan="4" class="description">{{$data}}</td>
+                    <td bgcolor="#edf2f9" colspan="4" class="description">{{ __($data) }}</td>
                   @endif
                 @endif
                 <?php $count++; ?>

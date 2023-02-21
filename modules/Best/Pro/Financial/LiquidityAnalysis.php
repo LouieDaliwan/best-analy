@@ -19,7 +19,7 @@ abstract class LiquidityAnalysis extends AbstractAnalysis
      */
     public static function getReport($statements, $customer)
     {
-        $labels = ['Current Ratio', 'Cash Ratio', 'Working K to Total Assets'];
+        $labels = [__('Current Ratio'), __('Cash Ratio'), __('Working K to Total Assets')];
 
         return [
             'chart' => [

@@ -19,7 +19,7 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
      */
     public static function getReport($statements)
     {
-        $labels = ['Labour Cost Competitiveness'];
+        $labels = [__('Labour Cost Competitiveness')];
         return [
             'charts' => [
                 'labels' => $labels,

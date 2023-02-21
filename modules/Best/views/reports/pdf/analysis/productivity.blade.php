@@ -18,7 +18,7 @@
               <td>
                 <span class="circular p-2" style="background: {{ $resource['bg'] }};"></span>
                 &nbsp;
-                <span>{{ $resource['label'] }}</span>
+                <span>{{ __($resource['label']) }}</span>
               </td>
             @endforeach
           </tr>
@@ -29,7 +29,7 @@
         <div class="comment-analysis">
           <table>
             @foreach ($data['analysis:financial']['productivity']['comments'] as $key => $comments)
-              @if(! empty($data['analysis:financial']['productivity']['comments'][$key]))  
+              @if(! empty($data['analysis:financial']['productivity']['comments'][$key]))
                 <tr>
                   <td valign="top">
                     <div class="mr-3">
@@ -62,7 +62,7 @@
                   </td>
                   <td valign="top">
                     @foreach ($comments as $comment)
-                      <p class="mb-1">{{ $comment }}</p>
+                      <p class="mb-1">{{ __($comment) }}</p>
                     @endforeach
                   </td>
                 </tr>

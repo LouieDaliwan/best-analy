@@ -6,8 +6,8 @@
 
 
   array_push($cols, array_merge(array_slice($data, 0, 2), array_slice($data, 4,1), array_slice($data, 3, 1)));
-  
-  array_push($cols, array_merge(array_slice($data, 0,1), array_slice($data, 2, 1),array_slice($data, 5, 1)));  
+
+  array_push($cols, array_merge(array_slice($data, 0,1), array_slice($data, 2, 1),array_slice($data, 5, 1)));
 ?>
 {{-- <div style="zoom: 0.76; line-height: 1;"> --}}
 <div style="zoom: 0.76; line-height: 1;">
@@ -22,7 +22,7 @@
                   @if($key != '')
                   <div class="child-resp-table-row title title1{{ $key }}">
                     <span class="child-table-cell">
-                      <h3 class="mb-0" style="padding: 4px; font-weight: regular;">{{ __($key) }}</h3>
+                      <h3 class="mb-0" style="padding: 4px; font-weight: regular;">{{ @lang($key) }}</h3>
                     </span>
                     <span style="padding: 4px;" class="child-table-cell"></span>
                     <span style="padding: 4px;" class="child-table-cell"></span>
@@ -113,7 +113,7 @@
 {{-- <table>
   <tr>
     @foreach ($cols as $col)
-      <td valign="top" width="50%"> 
+      <td valign="top" width="50%">
         <table class="table">
           <tbody>
             @foreach ($col as $key => $d)

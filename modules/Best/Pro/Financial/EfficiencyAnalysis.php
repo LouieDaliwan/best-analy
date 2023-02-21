@@ -453,7 +453,7 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
                         $item1 = $d19;
                         $item2 = $d20;
                         $number1 = $l43 != 0 ? round(($l44-$l43)/$l43*100, 2) : 0;
-                        $output = __("Records have also indicated that from :item1 to :item2, payables saw a significant year on year decrease by :number1%.", [
+                        $output = __("Records have also indicated that from :item1 to :item2, payables saw a significant year on year decrease by :number1%", [
                             'item1' => $item1,
                             'item2' => $item2,
                             'number1' => $number1,

@@ -22,7 +22,7 @@
                   @if($key != '')
                   <div class="child-resp-table-row title title1{{ $key }}">
                     <span class="child-table-cell">
-                      <h3 class="mb-0" style="padding: 4px; font-weight: regular;">{{ @lang($key) }}</h3>
+                      <h3 class="mb-0" style="padding: 4px; font-weight: regular;">{{ __(($key)) }}</h3>
                     </span>
                     <span style="padding: 4px;" class="child-table-cell"></span>
                     <span style="padding: 4px;" class="child-table-cell"></span>

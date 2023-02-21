@@ -269,6 +269,7 @@
   "Cash and cash equivalents (C&CE)": "النقد وما في حكمه",
   "Cash Ratio": "نسبة النقدية",
   "COGS": "تكلفة البضاعة المباعة",
+  "Raw Materials Margin": "هامش الموارد الخام",
   "Common Shares Outstanding": "الأسهم العادية القائمة",
   "Current Asset": "الأصول المتداولة (CA)",
   "Current Assets (CA)": "الأصول المتداولة (CA)",
@@ -292,6 +293,8 @@
   "Net (Loss)/Profits After Taxes": "صافي الربح/(الخسارة) بعد الضرائب",
   "Net Profit Margin": "هامش صافي الربح",
   "Gross Profit (GP) Margin": "هامش الربح الإجمالي (GP)",
+  "Net Margin After Tax": "الهامش الصافي بعد الضريية",
+
   "Direct Costs": "تكلفة مباشرة",
   "Operating Profit Margin": "هامش ربح التشغيل هو",
   "The Operating Ratio is:": "نسبة التشغيل هي:",

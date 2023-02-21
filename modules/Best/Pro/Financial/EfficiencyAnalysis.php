@@ -20,7 +20,12 @@ abstract class EfficiencyAnalysis extends AbstractAnalysis
      */
     public static function getReport($statements, $customer)
     {
-        $labels = ['Trade Receivables (days)', 'Trade Payable (days)', 'Asset Turnover', 'Inventory Turnover'];
+        $labels = [
+            __('Trade Receivables (days)'),
+            __('Trade Payable (days)'),
+            __('Asset Turnover'),
+            __('Inventory Turnover')
+        ];
 
         return [
             'charts' => [

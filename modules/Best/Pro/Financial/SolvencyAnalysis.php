@@ -21,7 +21,10 @@ abstract class SolvencyAnalysis extends AbstractAnalysis
     public static function getReport($statements, $customer)
     {
         $spreadsheet = self::getSpreadsheet($customer);
-        $labels = ['Debt to Equity Ratio', 'Debt Ratio'];
+        $labels = [
+            __('Debt to Equity Ratio'),
+            __('Debt Ratio')
+        ];
 
         return [
             'charts' => [

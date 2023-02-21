@@ -39,11 +39,11 @@ class ProfitabilityData
     protected function getGrossProfit($financialStatements) : void
     {
         $lists = [
-            'Gross Profit (GP) Margin' => null,
-            'Turnover' => 'sales',
-            'Direct Costs' => 'cost_goods',
+            __('Gross Profit (GP) Margin') => null,
+            __('Turnover') => 'sales',
+            __('Direct Costs') => 'cost_goods',
             'empty' => null,
-            'The Gross Profit Margin is:' => 'gross_profit_margin',
+            __('The Gross Profit Margin is:') => 'gross_profit_margin',
             'empty1' => null,
         ];
 
@@ -79,9 +79,9 @@ class ProfitabilityData
     protected function getOperatingProfit($financialStatements) : void
     {
         $lists = [
-            'Operating Profit Margin' => null,
-            'Operating (loss)/profit' => 'operating_loss_or_profit',
-            'Turnover' => 'sales',
+            __('Operating Profit Margin') => null,
+            __('Operating (loss)/profit') => 'operating_loss_or_profit',
+            __('Turnover') => 'sales',
             'empty' => null,
             'The Operating Profit Margin is:' => 'operating_profit_margin',
             'empty1' => null,

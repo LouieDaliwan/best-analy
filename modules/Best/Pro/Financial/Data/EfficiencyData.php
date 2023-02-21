@@ -75,12 +75,12 @@ class EfficiencyData
     protected function getPayables($financialStatements)
     {
         $lists = [
-            'Trade Payable Turnover' => null,
-            'COGS' => 'cost_goods',
-            'Average Trade Payable' => 'avg_trade_payable_turnover',
-            'The Trade Payable turnover is:' => 'trade_payable_turnover',
+            __('Trade Payable Turnover') => null,
+            __('COGS') => 'cost_goods',
+            __('Average Trade Payable') => 'avg_trade_payable_turnover',
+            __('The Trade Payable turnover is:') => 'trade_payable_turnover',
             'empty' => null,
-            'Avg. Trade Payable Turnover (days)' => 'avg_trade_payable_turnover_days',
+            __('Avg. Trade Payable Turnover (days)') => 'avg_trade_payable_turnover_days',
             'empty1' => null,
         ];
 
@@ -116,10 +116,10 @@ class EfficiencyData
     protected function getAssets($financialStatements)
     {
         $lists = [
-            'Asset Turnover Ratio' => null,
-            'Turnover (T)' => 'sales',
-            'Total Assets' => 'total_assets',
-            'The Asset Turnover ratio is:' => 'assets_turnover_ratio',
+            __('Asset Turnover Ratio') => null,
+            __('Turnover (T)') => 'sales',
+            __('Total Assets') => 'total_assets',
+            __('The Asset Turnover ratio is:') => 'assets_turnover_ratio',
             'empty' => null,
         ];
 
@@ -159,10 +159,10 @@ class EfficiencyData
     protected function getInventory($financialStatements)
     {
         $lists = [
-            'Inventory Turnover Ratio' => null,
-            'COGS' => 'cost_goods',
-            'Inventory' => 'inventories',
-            'The Inventory Turnover ratio is:' => 'inventory_turnover_ratio',
+            __('Inventory Turnover Ratio') => null,
+            __('COGS') => 'cost_goods',
+            __('Inventory') => 'inventories',
+            __('The Inventory Turnover ratio is:') => 'inventory_turnover_ratio',
         ];
 
         foreach($lists as $key => $list) {

@@ -83,7 +83,7 @@ class ProfitabilityData
             __('Operating (loss)/profit') => 'operating_loss_or_profit',
             __('Turnover') => 'sales',
             'empty' => null,
-            'The Operating Profit Margin is:' => 'operating_profit_margin',
+            __('The Operating Profit Margin is:') => 'operating_profit_margin',
             'empty1' => null,
         ];
 
@@ -118,11 +118,11 @@ class ProfitabilityData
     protected function getNetProfit($financialStatements) : void
     {
         $lists = [
-            'Net Profit Margin' => null,
-            'Net (Loss)/Profits After Taxes' => 'net_loss_profit_after_taxes',
-            'Turnover' => 'sales',
+            __('Net Profit Margin') => null,
+            __('Net (Loss)/Profits After Taxes') => 'net_loss_profit_after_taxes',
+            __('Turnover') => 'sales',
             'empty' => null,
-            'The Net Profit Margin is:' => 'net_profit_margin',
+            __('The Net Profit Margin is:') => 'net_profit_margin',
             'empty1' => null,
         ];
 
@@ -158,11 +158,11 @@ class ProfitabilityData
     protected function getROA($financialStatements) : void
     {
         $lists = [
-            'Return on Assets (ROA)' => null,
-            'Net (Loss)/Profits After Taxes' => 'net_loss_profit_after_taxes',
-            'Total Assets' => 'total_assets',
+            __('Return on Assets (ROA)') => null,
+            __('Net (Loss)/Profits After Taxes') => 'net_loss_profit_after_taxes',
+            __('Total Assets') => 'total_assets',
             'empty' => null,
-            'The Return on Assets is:' => 'return_on_assets',
+            __('The Return on Assets is:') => 'return_on_assets',
             'empty1' => null,
         ];
 
@@ -202,11 +202,11 @@ class ProfitabilityData
     protected function getROE($financialStatements)
     {
         $lists = [
-            'Return on Equity (ROE)' => null,
-            'Net (Loss)/Profits After Taxes' => 'net_loss_profit_after_taxes',
-            "Stockholders' Equity" => 'stockholdersequity',
+            __('Return on Equity (ROE)') => null,
+            __('Net (Loss)/Profits After Taxes') => 'net_loss_profit_after_taxes',
+            __("Stockholders' Equity") => 'stockholdersequity',
             'empty' => null,
-            'The Return on Equity is:' => 'return_on_equity',
+            __('The Return on Equity is:') => 'return_on_equity',
             'empty1' => null,
         ];
 
@@ -246,11 +246,11 @@ class ProfitabilityData
     protected function getEPS($financialStatements)
     {
         $lists = [
-            'Earnings Per Share (EPS)' => null,
-            "Earnings Available to Common Stockholders'" => 'net_loss_profit_after_taxes',
-            'Common Shares Outstanding' => 'commonsharesoutstanding',
+            __('Earnings Per Share (EPS)') => null,
+            __("Earnings Available to Common Stockholders'") => 'net_loss_profit_after_taxes',
+            __('Common Shares Outstanding') => 'commonsharesoutstanding',
             'empty' => null,
-            'The Earnings per Share are:' => 'earnings_per_share',
+            __('The Earnings per Share are:') => 'earnings_per_share',
             'empty1' => null,
         ];
 
@@ -290,12 +290,12 @@ class ProfitabilityData
     protected function getOperatingRatio($financialStatements)
     {
         $lists = [
-            'Operating Ratio' => null,
-            "Operating expenses (OE)" => 'operating_expenses',
-            'Turnover (T)' => 'sales',
+            __('Operating Ratio') => null,
+            __("Operating expenses (OE)") => 'operating_expenses',
+            __('Turnover (T)') => 'sales',
             'empty' => null,
             'empty1' => null,
-            'The Operating Ratio is:' => 'operating_ratio'
+            __('The Operating Ratio is:') => 'operating_ratio'
         ];
 
         foreach($lists as $key => $list) {

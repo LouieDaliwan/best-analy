@@ -31,12 +31,12 @@ class LiquidityData
     protected function getCurrentRatio($financialStatements) : void
     {
         $lists = [
-            'Current Ratio' => null,
-            'Current Assets (CA)' => 'current_assets',
-            'Current Liabilities (CL)' => 'current_liabilities',
+            __('Current Ratio') => null,
+            __('Current Assets (CA)') => 'current_assets',
+            __('Current Liabilities (CL)') => 'current_liabilities',
             'empty' => null,
             'empty1' => null,
-            'The Current Ratio is:' => 'current_ratio',
+            __('The Current Ratio is:') => 'current_ratio',
             'empty2' => null,
         ];
 
@@ -73,12 +73,12 @@ class LiquidityData
     protected function getCashRatio($financialStatements) : void
     {
         $lists = [
-            'Cash Ratio' => null,
-            'Cash and cash equivalents (C&CE)' => 'cash',
-            'Current Liabilities (CL)' => 'current_liabilities',
+            __('Cash Ratio') => null,
+            __('Cash and cash equivalents (C&CE)') => 'cash',
+            __('Current Liabilities (CL)') => 'current_liabilities',
             'empty' => null,
             'empty1' => null,
-            'The Cash Ratio is:' => 'cash_ratio',
+            __('The Cash Ratio is:') => 'cash_ratio',
             'empty2' => null,
 
         ];
@@ -117,14 +117,14 @@ class LiquidityData
     protected function getWorkingCapital($financialStatements)
     {
         $lists = [
-            'Working Capital Turnover' => null,
-            'Current Asset' => 'current_assets',
-            'Current Liabilities (CL)' => 'current_liabilities',
-            'Recommended Current Ratio' => 1.50,
+            __('Working Capital Turnover') => null,
+            __('Current Asset') => 'current_assets',
+            __('Current Liabilities (CL)') => 'current_liabilities',
+            __('Recommended Current Ratio') => 1.50,
             'empty' => null,
-            'The Working Capital is:' => 'working_capital',
+            __('The Working Capital is:') => 'working_capital',
             'empty1' => null,
-            'The Working Capital Turnover is:' => 'working_capital_turnover'
+            __('The Working Capital Turnover is:') => 'working_capital_turnover'
         ];
 
         foreach($lists as $key => $list) {

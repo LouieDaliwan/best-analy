@@ -29,13 +29,13 @@ class SolvencyData
     protected function getDebtEquityRatio($financialStatements) : void
     {
         $lists = [
-            'Debt to Equity Ratio' => null,
-            'Total Liabilities' => 'total_liabilities',
-            'Equity' => "Stockholders' Equity",
-            'The Debt to Equity ratio is:' => 'debt_to_equity_ratio',
+            __('Debt to Equity Ratio') => null,
+            __('Total Liabilities') => 'total_liabilities',
+            __('Equity') => "Stockholders' Equity",
+            __('The Debt to Equity ratio is:') => 'debt_to_equity_ratio',
             'empty' => null,
         ];
-        
+
         foreach($lists as $key => $list) {
 
             $temp_data = [];
@@ -71,10 +71,10 @@ class SolvencyData
     protected function getDebtRatio($financialStatements)
     {
         $lists = [
-            'Debt Ratio' => null,
-            'Total Liabilities' => 'total_liabilities',
-            'Total Assets' => 'total_assets',
-            'The Debt Ratio' => 'debt_ratio',
+            __('Debt Ratio') => null,
+            __('Total Liabilities') => 'total_liabilities',
+            __('Total Assets') => 'total_assets',
+            __('The Debt Ratio')=> 'debt_ratio',
         ];
 
         foreach($lists as $key => $list) {

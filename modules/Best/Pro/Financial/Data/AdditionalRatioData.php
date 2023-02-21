@@ -35,10 +35,10 @@ class AdditionalRatioData
     protected function getDebtEquityRatio($financialStatements)
     {
         $lists = [
-            'Raw Materials Margin' => null,
-            'Raw Materials' => 'Raw Materials',
-            'Turnover (T)' => 'sales',
-            'The Debt to Equity ratio is:' => 'raw_materials_margin',
+            __('Raw Materials Margin') => null,
+            __('Raw Materials') => 'Raw Materials',
+            __('Turnover (T)') => 'sales',
+            __('The Debt to Equity ratio is:') => 'raw_materials_margin',
             'empty' => null,
         ];
 
@@ -79,10 +79,10 @@ class AdditionalRatioData
     protected function getROI($financialStatements)
     {
         $lists = [
-            'Return on Investment' => null,
-            'Net (Loss)/Profits After Taxes' => 'net_loss_profit_after_taxes',
-            'Investments' => 'investment_value',
-            'The Debt ratio is:' => 'roi'
+            __('Return on Investment') => null,
+            __('Net (Loss)/Profits After Taxes') => 'net_loss_profit_after_taxes',
+            __('Investments') => 'investment_value',
+            __('The Debt ratio is:') => 'roi'
         ];
 
         foreach($lists as $key => $list) {

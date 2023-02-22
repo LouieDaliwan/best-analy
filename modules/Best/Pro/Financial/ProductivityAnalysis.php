@@ -69,7 +69,7 @@ abstract class ProductivityAnalysis extends AbstractAnalysis
 
             $bgColor = $color[$count];
 
-            $isMostRecent = count($data) == ($count + 1) ? ' (most recent)' : '';
+            $isMostRecent = count($data) == ($count + 1) ? ' (' . __('most recent') . ')' : '';
 
             $year = "{$period}{$isMostRecent}";
 

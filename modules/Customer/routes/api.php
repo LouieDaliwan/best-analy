@@ -19,7 +19,7 @@ Route::prefix('v1')->middleware(['auth:api', 'json.force'])->group(function () {
     Route::post('crm/report/send', 'Api\Crm\SendReportDocumentToCrm')->name('crm.report');
     Route::post('crm/financial/send', 'Api\Crm\SendFinancialDataToCrm')->name('crm.financial');
     Route::post('crm/customers/save', 'Api\Crm\SaveUpdatedCustomerDataToCrm')->name('crm.save');
-    Route::post('crm/financial-file-no/send', 'Api\Crm\SendVisitUpdateToCrm')->name('crm.financialByFile');
+    Route::post('crm/financial-file-no/send', 'Api\Crm\SendFinancialByFileNoToCrm')->name('crm.financialByFile');
     Route::post('crm/visit-update/send', 'Api\Crm\SendVisitUpdateToCrm')->name('crm.visitUpdate');
     Route::get('crm/customers/search/{crmnumber}', 'Api\Crm\FindCustomerFromCrm')->name('crm.search');
 });

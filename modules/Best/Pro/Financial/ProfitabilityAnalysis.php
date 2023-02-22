@@ -33,7 +33,7 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
             [__('Net Margin'), __('After Tax')],
             __('ROA'),
             __('ROE'),
-            [__('Op.'), __('Ratio')]
+            [__('Operating'), __('Ratio')]
         ];
 
         return [

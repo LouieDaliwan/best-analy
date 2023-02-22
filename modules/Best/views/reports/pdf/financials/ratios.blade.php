@@ -7,7 +7,7 @@
 
   array_push($cols, array_merge(array_slice($data, 0, 2), array_slice($data, 4,1), array_slice($data, 3, 1)));
 
-  array_push($cols, array_merge(array_slice($data, 0,1), array_slice($data, 2, 1),array_slice($data, 5, 1)));
+  array_push($cols, array_merge(array_slice($data, 0,1), array_slice($data, 2, 1), array_slice($data, 5, 1)));
 ?>
 {{-- <div style="zoom: 0.76; line-height: 1;"> --}}
 <div style="zoom: 0.76; line-height: 1;">

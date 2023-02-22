@@ -28,12 +28,12 @@ abstract class ProfitabilityAnalysis extends AbstractAnalysis
     public static function getReport($statements)
     {
         $labels = [
-            __('Gross Margin'),
-            __('Operating Margin'),
-            __('Net Margin After Tax'),
+            [__('Gross'), __('Margin')],
+            [__('Operating'), __('Margin')],
+            [__('Net Margin'), __('After Tax')],
             __('ROA'),
             __('ROE'),
-            __('Op. Ratio')
+            [__('Op.'), __('Ratio')]
         ];
 
         return [

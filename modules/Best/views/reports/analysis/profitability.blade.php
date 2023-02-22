@@ -18,7 +18,7 @@
     </div>
     <div class="col-md-12 comment-analysis">
       @foreach ($data['analysis:financial']['profitability']['comments'] as $key => $comments)
-        @if(! empty($data['analysis:financial']['profitability']['comments'][$key]))  
+        @if(! empty($data['analysis:financial']['profitability']['comments'][$key]))
           <div class="row">
             <div class="col-auto mt-1">
               <span style="font-size: 17px;">
@@ -65,17 +65,17 @@ $(document).ready(function() {
   var barChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      {{-- labels: {!! json_encode(collect(
+      labels: {!! json_encode(collect(
         $data['analysis:financial']['profitability']['chart']['labels'])->values()->toArray()
-      ) !!}, --}}
-      labels: [
-        ["Gross", "Margin"],
-        ["Operating", "Margin"],
-        ["Net Margin", "after Tax"],
-        "ROA",
-        "ROE",
-        "Op. Ratio",
-      ],
+      ) !!},
+      // labels: [
+      //   ["Gross", "Margin"],
+      //   ["Operating", "Margin"],
+      //   ["Net Margin", "after Tax"],
+      //   "ROA",
+      //   "ROE",
+      //   "Op. Ratio",
+      // ],
       datasets: dataset,
     },
     options: {

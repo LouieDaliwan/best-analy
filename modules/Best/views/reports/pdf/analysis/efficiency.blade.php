@@ -85,9 +85,9 @@ $(document).ready(function() {
     data: {
       labels: [
         ['{{ __("Trade") }}', '{{ __("Receivables - days") }}'],
-        ["Trade", "Payable - days"],
-        ["Asset", "Turnover"],
-        ["Inventory", "Turnover"],
+        ['{{ __("Trade") }}', '{{ __("Payable - days")}}'],
+        ['{{ __("Asset") }}', '{{ __("Turnover")}}'],
+        ['{{ __("Inventory") }}', '{{ __("Turnover")}}'],
       ],
       datasets: dataset
     },

@@ -62,7 +62,7 @@ $(document).ready(function() {
         gradient.addColorStop(1, item.backgroundColor[1]);
 
     return Object.assign({}, item, {
-      backgroundColor: gradient,
+    backgroundColor: gradient,
       hoverBackgroundColor: chartColors.primary
     })
   });
@@ -74,9 +74,9 @@ $(document).ready(function() {
       ) !!}, --}}
       labels: [
         ['{{ __("Trade") }}', '{{ __("Receivables - days") }}'],
-        ["Trade", "Payable - days"],
-        ["Asset", "Turnover"],
-        ["Inventory", "Turnover"],
+        ['{{ __("Trade") }}', '{{ __("Payable - days")}}'],
+        ['{{ __("Asset") }}', '{{ __("Turnover")}}'],
+        ['{{ __("Inventory") }}', '{{ __("Turnover")}}'],
       ],
       datasets: dataset,
     },

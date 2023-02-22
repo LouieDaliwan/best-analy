@@ -5,7 +5,7 @@
     <div class="col-md-12">
       <div class="mb-3">
         <h4 class="mb-0 dt-secondary">@lang('Key Strategic Recommendations')</h4>
-        <p><span style="color:#F48B3C">*</span> Denotes immediate intervention</p>
+        <p><span style="color:#F48B3C">*</span> {{ __('Denotes Immediate intervention') }}</p>
       </div>
     </div>
   </div>

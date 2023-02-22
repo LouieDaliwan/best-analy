@@ -81,9 +81,10 @@ class CustomerRequest extends FormRequest
                     throw new Exception('Project Type must have a value');
                 }
             } else {
-                if ($this->request->get('metadata')['project']['investment_value'] == "0") {
-                    throw new Exception('Investment Value must have a value');
-                }
+
+                // if ($this->request->get('metadata')['project']['investment_value'] == "0") {
+                //     throw new Exception('Investment Value must have a value');
+                // }
 
                 if ($this->request->get('metadata')['project']['project_type'] == null) {
                     throw new Exception('Project Type must have a value');

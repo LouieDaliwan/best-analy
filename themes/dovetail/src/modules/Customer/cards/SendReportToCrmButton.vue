@@ -387,6 +387,7 @@ export default {
         let data = {
           Id: _.toUpper(this.resource.data.customer.token),
           FileNo: this.resource.data.customer.filenumber,
+          TypeofStatementText: this.resource.data.customer.metadata['type'] + ' Financials',
           YearOfFinancial: financialStatement.period,
           SubmissionDate: date.toISOString(),
           Revenue: 0,

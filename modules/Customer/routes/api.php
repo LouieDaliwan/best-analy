@@ -2,7 +2,6 @@
 
 Route::prefix('v1')->middleware(['auth:api', 'json.force', 'auth.permissions'])->group(function () {
     Route::get('customers/{customer}/reports', 'Api\GetCustomerReportsList')->name('customers.reports');
-    Route::get('customers/{customer}/sdmi', 'Api\CustomerSdmiController');
     Route::softDeletes('customers', 'Api\CustomerController');
     Route::ownedResource('customers', 'Api\CustomerController@owned');
     Route::apiResource('customers', 'Api\CustomerController');
@@ -11,6 +10,7 @@ Route::prefix('v1')->middleware(['auth:api', 'json.force', 'auth.permissions'])-
 Route::prefix('v1')->middleware(['auth:api', 'json.force'])->group(function () {
     Route::delete('customers/{customer}/ratios/{ratio}/delete', 'Api\CustomerStatementsController@destroy');
     Route::post('customers/{customer}/update-audit', 'Api\CustomerController@updateAudit');
+    Route::get('customers/{customer}/sdmi', 'Api\CustomerSdmiController');
 });
 
 Route::prefix('v1')->middleware(['auth:api', 'json.force'])->group(function () {

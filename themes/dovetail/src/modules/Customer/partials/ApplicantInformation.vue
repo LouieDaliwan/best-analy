@@ -10,7 +10,7 @@
           :dense="isDense"
           :disabled="true"
           :error-messages="errors"
-          :label="trans('Applicant Name')"
+          :label="trans('Entrepreneur Name')"
           autofocus
           class="dt-text-field"
           name="metadata[applicant][name]"
@@ -51,7 +51,7 @@
           :dense="isDense"
           :disabled="true"
           :error-messages="errors"
-          :label="trans('Applicant Email')"
+          :label="trans('Entrepreneur Email')"
           autofocus
           class="dt-text-field"
           name="metadata[applicant][email]"
@@ -123,7 +123,7 @@
       </validation-provider>
       <v-divider></v-divider>
 
-      <h3 class="my-5">Applicant Cooperation</h3>
+      <h3 class="my-5">Entrepreneur Cooperation</h3>
 
       <validation-provider
         vid="metadata[applicant][cooperation][Reachable]"

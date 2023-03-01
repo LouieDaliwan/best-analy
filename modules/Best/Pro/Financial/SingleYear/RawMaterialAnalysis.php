@@ -8,10 +8,10 @@ class RawMaterialAnalysis
     {
         $projectType = strtolower(
             str_replace(
-            ' ', 
-            '-', 
+            ' ',
+            '-',
             $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'])
-        ); 
+        );
 
         $result = $financialStatements[0]['metadataResults']['ratioAnalysis']['additional_ratios']['raw_materials_margin'] * 100;
         $score = round($result, 3);
@@ -20,10 +20,10 @@ class RawMaterialAnalysis
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
-            'preview' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}"]],
-           'pdf' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}"]],
+            'preview' => [["{$year}", "{$score}"], [__("Recommended"), "{$goodScore}"]],
+           'pdf' => [["{$year}", "{$score}"], [__("Recommended"), "{$goodScore}"]],
         ];
-        
+
         return [
             'chart' => [
                 'labels' => $labels,
@@ -62,7 +62,7 @@ class RawMaterialAnalysis
     protected static function getComment($financialStatements)
     {
         $projectType = str_replace(
-            ' ', 
+            ' ',
             '-',
             $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']
         );
@@ -89,7 +89,7 @@ class RawMaterialAnalysis
 
         foreach ($data as $period => $datum) {
 
-            $isMostRecent = count($data) == ($count + 1) ? ' (most recent)' : '';
+            $isMostRecent = count($data) == ($count + 1) ? '(' . __('most recent') . ')' : '';
 
             $year = "{$period}{$isMostRecent}";
 

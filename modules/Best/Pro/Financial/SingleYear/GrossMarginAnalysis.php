@@ -8,22 +8,22 @@ class GrossMarginAnalysis
     {
         $projectType = strtolower(
             str_replace(
-            ' ', 
-            '-', 
+            ' ',
+            '-',
             $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'])
-        ); 
-        
+        );
+
         $result = $financialStatements[0]['metadataResults']['ratioAnalysis']['profitability']['gross_profit_margin'] * 100;
         $score = round($result, 2);
         $year = $financialStatements[0]['period'];
-        
+
         $goodScore = self::getBenchMarkScore($projectType);
 
         $labels = [
-            'preview' => [["{$year}", "{$score}%"], ["Recommended", "{$goodScore}%"]],
-            'pdf' => [["{$year}", "{$score}%"], ["Recommended", "{$goodScore}%"]],
+            'preview' => [["{$year}", "{$score}%"], [__("Recommended"), "{$goodScore}%"]],
+            'pdf' => [["{$year}", "{$score}%"], [__("Recommended"), "{$goodScore}%"]],
         ];
-        
+
         return [
             'chart' => [
                 'labels' => $labels,
@@ -55,17 +55,17 @@ class GrossMarginAnalysis
 
             $data[$statement['period']] = $tempData;
         }
-        
+
         return self::dataSet($data, $projectType);
     }
 
     protected static function getComment($financialStatements)
     {
         $projectType = str_replace(
-            ' ', 
+            ' ',
             '-',
             $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']
-        ); 
+        );
 
         $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['gross_margin']['remarks'];
 
@@ -87,7 +87,7 @@ class GrossMarginAnalysis
         $count = 0;
         foreach ($data as $period => $datum) {
 
-            $isMostRecent = count($data) == ($count + 1) ? ' (most recent)' : '';
+            $isMostRecent = count($data) == ($count + 1) ? '(' . __('most recent') . ')' : '';
 
             $year = "{$period}{$isMostRecent}";
 
@@ -107,7 +107,7 @@ class GrossMarginAnalysis
 
             $count++;
         }
-        
+
         return $dataSet;
     }
 

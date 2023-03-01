@@ -8,20 +8,20 @@ class DebtRatioAnalysis
     {
         $projectType = strtolower(
             str_replace(
-            ' ', 
-            '-', 
+            ' ',
+            '-',
             $financialStatements[0]['metadataResults']['ratioAnalysis']['dashboard']['project_type'])
-        ); 
+        );
 
-        $score =  $financialStatements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio']; 
+        $score =  $financialStatements[0]['metadataResults']['ratioAnalysis']['solvency']['debt_ratio'];
         $goodScore = self::getBenchMarkScore($projectType);
         $year = $financialStatements[0]['period'];
 
         $labels = [
-            'preview' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}"]],
-           'pdf' => [["{$year}", "{$score}"], ["Recommended", "{$goodScore}"]],
+            'preview' => [["{$year}", "{$score}"], [__("Recommended"), "{$goodScore}"]],
+           'pdf' => [["{$year}", "{$score}"], [__("Recommended"), "{$goodScore}"]],
         ];
-        
+
         return [
             'chart' => [
                 'labels' => $labels,
@@ -60,11 +60,11 @@ class DebtRatioAnalysis
     protected static function getComment($financialStatements)
     {
         $projectType = str_replace(
-            ' ', 
+            ' ',
             '-',
             $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['project_type']
         );
-        
+
         $remarks = $financialStatements['metadataResults']['ratioAnalysis']['dashboard']['debt_ratio']['remarks'];
 
         $comments = [
@@ -74,7 +74,7 @@ class DebtRatioAnalysis
             'Good' => 'Business is in a steadfast situation while keeping long term obligations within sufficient means',
             'Excellent' => 'Recommended to maintaindebt levels'
         ];
-       
+
         return __("{$remarks} Debt Ratio by {$projectType} standards"). '. ' . __($comments[$remarks]);
     }
 
@@ -86,7 +86,7 @@ class DebtRatioAnalysis
 
         foreach ($data as $period => $datum) {
 
-            $isMostRecent = count($data) == ($count + 1) ? ' (most recent)' : '';
+            $isMostRecent = count($data) == ($count + 1) ? '(' . __('most recent') . ')' : '';
 
             $year = "{$period}{$isMostRecent}";
 

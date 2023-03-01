@@ -9,7 +9,6 @@ class OverallScore
 {
     public static function compute($indices, $customer, $monthKey)
     {
-        logger('Start of Computation of Overall Score');
         $user = auth()->user()->id;
 
         $keyName = "{$customer->id}-Overall-{$user}-{$monthKey}";

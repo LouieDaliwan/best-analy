@@ -1,8 +1,10 @@
 <template>
   <v-card>
-      <small><span class="red--text">*</span> Denotes compulsory items</small>
       <div class="mt-5 ml-10">
-          <label>Audited Financials</label>
+        <small><span class="red--text">*</span> Denotes compulsory items</small>
+      </div>
+      <div class="mt-1 ml-10">
+          <label>Audited Financials <span class="red--text">*</span></label>
           <input
             :checked="value.metadata.type == 'Audited'"
             name="metadata[type]"
@@ -11,7 +13,7 @@
             @click="changeAudit('Audited')"
           />
           <span class="d-inline-block mx-3"></span>
-          <label>In-House Financials</label>
+          <label>In-House Financials <span class="red--text">*</span></label>
           <input
             :checked="value.metadata.type == 'In-House'"
             name="metadata[type]"

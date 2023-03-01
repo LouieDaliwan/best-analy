@@ -12,6 +12,6 @@ return [
         'get' => 'SiteVisit/GetSiteVisitByFileNo?FileNo=%s',
         'post' => 'SiteVisit/UpdateSiteVisitById',
         'document' => 'SiteVisit/UpdateSiteVisitDocumentById',
-        'financial' => 'SiteVisit/AddFinancialsByFileNo',
+        'financial' => 'SiteVisit/AddFinancialsByFileNo12',
     ],
 ];

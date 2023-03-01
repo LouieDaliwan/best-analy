@@ -110,6 +110,7 @@ class Crm implements Contracts\CrmInterface
      */
     public function sendFinancialByFileNo(array $attributes):? object
     {
+        // dd($attributes);
         return json_decode($this->api->post(
             $this->config['financial'], ['form_params' => $attributes]
         )->getBody());

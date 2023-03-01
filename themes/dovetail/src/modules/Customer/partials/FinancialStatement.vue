@@ -1,9 +1,12 @@
 <template>
   <v-card>
-      <div class="mt-5 ml-10">
-        <small><span class="red--text">*</span> Denotes compulsory items</small>
-      </div>
-      <div class="mt-1 ml-10">
+    <div class="mt-5 ml-5">
+      <small><span class="red--text">*</span> Denotes compulsory items</small>
+    </div>
+    <v-card-text>
+      <v-card>
+        <v-card-text>
+          <h3 class="mb-2">Type of Statement <span class="red--text">*</span></h3>
           <label>Audited Financials</label>
           <input
             :checked="value.metadata.type == 'Audited'"
@@ -21,7 +24,10 @@
             value="In-House"
             @click="changeAudit('In-House')"
           />
-      </div>
+        </v-card-text>
+      </v-card>
+    </v-card-text>
+
     <v-card-text v-if="checkInvesmentValueAndProjectType">
     <!-- <v-card-text > -->
       <v-row>

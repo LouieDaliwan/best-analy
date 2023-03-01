@@ -4,7 +4,7 @@
         <small><span class="red--text">*</span> Denotes compulsory items</small>
       </div>
       <div class="mt-1 ml-10">
-          <label>Audited Financials <span class="red--text">*</span></label>
+          <label>Audited Financials</label>
           <input
             :checked="value.metadata.type == 'Audited'"
             name="metadata[type]"
@@ -13,7 +13,7 @@
             @click="changeAudit('Audited')"
           />
           <span class="d-inline-block mx-3"></span>
-          <label>In-House Financials <span class="red--text">*</span></label>
+          <label>In-House Financials</label>
           <input
             :checked="value.metadata.type == 'In-House'"
             name="metadata[type]"
@@ -67,7 +67,7 @@
     </v-card-text>
     <v-card-text v-else class="text-center">
           <h3 class="muted--text" v-text="trans('Financial Statement Form will appear here')"></h3>
-          <p class="muted--text mb-0" v-text="trans('Update the Project Type and Investment Value in the Project Information.')"></p>
+          <p class="muted--text mb-0" v-text="trans('Update the Project Type in the Project Information.')"></p>
     </v-card-text>
   </v-card>
 </template>
@@ -94,7 +94,7 @@ export default {
     },
 
     checkInvesmentValueAndProjectType() {
-       return this.value.details.metadata.project_type != null && this.value.details.metadata.investment_value;
+       return this.value.details.metadata.project_type != null;
     }
   },
 

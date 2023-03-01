@@ -1,5 +1,6 @@
 <template>
   <v-card>
+      <small><span class="red--text">*</span> Denotes compulsory items</small>
       <div class="mt-5 ml-10">
           <label>Audited Financials</label>
           <input

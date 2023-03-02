@@ -1,34 +1,34 @@
 <template>
   <v-card>
-    <div class="mt-5 ml-5">
-      <small><span class="red--text">*</span> Denotes compulsory items</small>
-    </div>
-    <v-card-text>
-      <v-card>
-        <v-card-text>
-          <h3 class="mb-2">Type of Statement <span class="red--text">*</span></h3>
-          <label>Audited Financials</label>
-          <input
-            :checked="value.metadata.type == 'Audited'"
-            name="metadata[type]"
-            type="radio"
-            value="Audited"
-            @click="changeAudit('Audited')"
-          />
-          <span class="d-inline-block mx-3"></span>
-          <label>In-House Financials</label>
-          <input
-            :checked="value.metadata.type == 'In-House'"
-            name="metadata[type]"
-            type="radio"
-            value="In-House"
-            @click="changeAudit('In-House')"
-          />
-        </v-card-text>
-      </v-card>
-    </v-card-text>
-
     <v-card-text v-if="checkInvesmentValueAndProjectType">
+      <div class="mt-5 ml-5">
+        <small><span class="red--text">*</span> Denotes compulsory items</small>
+      </div>
+      <v-card-text>
+        <v-card>
+          <v-card-text>
+            <h3 class="mb-2">Type of Statement <span class="red--text">*</span></h3>
+            <label>Audited Financials</label>
+            <input
+              :checked="value.metadata.type == 'Audited'"
+              name="metadata[type]"
+              type="radio"
+              value="Audited"
+              @click="changeAudit('Audited')"
+            />
+            <span class="d-inline-block mx-3"></span>
+            <label>In-House Financials</label>
+            <input
+              :checked="value.metadata.type == 'In-House'"
+              name="metadata[type]"
+              type="radio"
+              value="In-House"
+              @click="changeAudit('In-House')"
+            />
+          </v-card-text>
+        </v-card>
+      </v-card-text>
+
     <!-- <v-card-text > -->
       <v-row>
         <v-col cols="12" md="3">

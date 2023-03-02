@@ -65,6 +65,8 @@ class SaveGeneratedReport implements ShouldQueue
             $month = $event->data['monthkey'] ?? $event->data['month'] ?? date('m-Y');
             $remarks = $event->data['month'] ?? date('Y-m-d H:i:s');
 
+            $auth = auth()->user()->fullname;
+
             $this->service->updateOrCreate([
                 'month' => $month,
                 'customer_id' => $event->data['organisation:profile']['id'],
@@ -77,7 +79,7 @@ class SaveGeneratedReport implements ShouldQueue
                 'customer_id' => $event->data['organisation:profile']['id'],
                 'form_id' => $event->data['survey:id'],
                 'user_id' => $event->data['user:id'],
-                'last_modified_by' => $event->data['user:name'],
+                'last_modified_by' => $auth ?? $event->data['user:name'],
             ]);
 
             $allFourReportsForTheMonth = $this->service

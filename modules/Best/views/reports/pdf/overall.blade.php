@@ -57,7 +57,7 @@
       position: relative;
       box-sizing: border-box;
       page-break-after: always;
-      zoom: 1.45;
+      zoom: 1.2;
       /*border: 1px solid red;*/
     }
     h1, h2, h3, h4, h5, h6 {

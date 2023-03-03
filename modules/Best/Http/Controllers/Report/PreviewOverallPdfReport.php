@@ -53,6 +53,8 @@ class PreviewOverallPdfReport extends Controller
             ->setPaper('legal')
             ->setOption('enable-javascript', true)
             ->setOption('debug-javascript', true)
+            ->setOption('disable-smart-shrinking', true)
+            ->setOption('enable-smart-shrinking', false)
             ->stream("$name.pdf");
     }
 }

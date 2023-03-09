@@ -97,7 +97,8 @@ class CustomerService extends Service implements CustomerServiceInterface
             $customer = Customer::updateOrCreate(
                 [
                     'name' => $attributes['name'],
-                    'code' => str_replace(" ", "-", $attributes['code'])
+                    // 'code' => str_replace(" ", "-", $attributes['code'])
+                    'code' => $attributes['refnum']
                 ],
                 [
                 'name' => $attributes['name'],

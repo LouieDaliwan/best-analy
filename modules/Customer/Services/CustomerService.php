@@ -370,10 +370,17 @@ class CustomerService extends Service implements CustomerServiceInterface
     protected function saveCustomerDetail($customer, $attributes)
     {
         if(isset($attributes['type'])) {
+            $type_code = [
+                'Audited' => '100000000',
+                'In-House' => '100000001',
+            ];
+
             $customer->metadata = array_merge($customer->metadata, [
-                'type' => $attributes['type']
+                'type' => $attributes['type'],
+                'type_code' => $type_code[$attributes['type']]
             ]);
         }
+        
         $customer->name = $attributes['name'];
         $customer->code = $attributes['code'];
         $customer->refnum = $attributes['refnum'];

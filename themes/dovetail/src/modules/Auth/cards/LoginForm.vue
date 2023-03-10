@@ -4,7 +4,7 @@
       <validation-provider name="username" rules="required" v-slot="{ errors }">
         <v-text-field
           :error-messages="errors"
-          :label="$t('Username or email')"
+          :label="$t('Username')"
           autofocus
           class="mb-3"
           outlined

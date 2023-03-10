@@ -192,6 +192,7 @@ class ReportService extends Service implements ReportServiceInterface
                 ->first()->value ?? null,
             'latestFinancial' => $latestFS,
             'scores' => $scoreResults,
+            'visitStatus' => cache("{$customer->id}-results-{$user->id}-{$date}"),
         ];
     }
 

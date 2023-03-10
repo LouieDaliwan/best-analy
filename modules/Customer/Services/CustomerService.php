@@ -107,7 +107,7 @@ class CustomerService extends Service implements CustomerServiceInterface
                 'status' => $attributes['status'],
                 'user_id' => $attributes['user_id'],
                 'token' => $attributes['token'],
-                'code' => str_replace(" ", "-", $attributes['code'])
+                'code' => $attributes['refnum']
             ]);
         } catch(\Exception $e) {
             throw new CustomerCreateException();
@@ -380,7 +380,7 @@ class CustomerService extends Service implements CustomerServiceInterface
                 'type_code' => $type_code[$attributes['type']]
             ]);
         }
-        
+
         $customer->name = $attributes['name'];
         $customer->code = $attributes['code'];
         $customer->refnum = $attributes['refnum'];

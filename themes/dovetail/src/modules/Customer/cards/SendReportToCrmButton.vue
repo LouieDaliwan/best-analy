@@ -388,7 +388,7 @@ export default {
           Id: _.toUpper(this.resource.data.customer.token),
           FileNo: this.resource.data.customer.filenumber,
           TypeofStatementText: this.resource.data.customer.metadata['type'] + ' Financials',
-          TypeofStatement: this.resrouce.data.customer.metadata['type_code'],
+          TypeofStatement: this.resource.data.customer.metadata['type_code'],
           YearOfFinancial: financialStatement.period,
           SubmissionDate: date.toISOString(),
           Revenue: 0,

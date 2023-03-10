@@ -181,6 +181,15 @@ class ReportService extends Service implements ReportServiceInterface
         $score = new Score($customer);
         $scoreResults = $score->check();
 
+        $commentCode = [
+            'Normal' => 100000004,
+            'Critical' => 100000006,
+            'Corrective Action' => 100000005,
+            'Failed' => 100000007
+        ];
+
+        $lightScore = cache("{$customer->id}-results-{$user->id}-{$date}");
+
         return [
             'overall:report' => $path ? Report::encodeToBase64(storage_path($path->pathname)) : null,
             'report:financial' => $financialReportPath ? Report::encodeToBase64(storage_path($financialReportPath->pathname)) : null,
@@ -192,7 +201,7 @@ class ReportService extends Service implements ReportServiceInterface
                 ->first()->value ?? null,
             'latestFinancial' => $latestFS,
             'scores' => $scoreResults,
-            'visitStatus' => cache("{$customer->id}-results-{$user->id}-{$date}"),
+            'visitStatus' => $commentCode[$lightScore['comment']],
         ];
     }
 

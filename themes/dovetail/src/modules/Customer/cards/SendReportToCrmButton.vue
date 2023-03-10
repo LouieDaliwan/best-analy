@@ -469,7 +469,7 @@ export default {
           ReturnonInvestment: parseFloat(financial.metadataResults.ratioAnalysis.dashboard.roi.score),
           SMERating: parseFloat(scores.overall_score),
           BreakevenPoint: 0,
-          VisitStatus: this.resource.data.visitStatus.comment,
+          VisitStatus: this.resource.data.visitStatus,
         }
 
 

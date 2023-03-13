@@ -4,7 +4,6 @@
     <div class="wave"></div>
     <div class="wave"></div>
   </div>
-
   <div class="container">
     <div class="row align-items-center justify-content-center">
       <div class="col-md-10 col-sm-12">
@@ -31,7 +30,6 @@
         </div>
       </div>
     </div>
-
     <table width="100%">
       <tr>
         <td valign="top" width="70%">
@@ -52,13 +50,12 @@
         <td valign="top" width="30%">
           <div>
             <h4 class="mb-0">@lang('Prepared by'):</h4>
-            <div style="background: #12263f; height: 1px; margin-top: 40px;"></div>
+            <div style="background: #12263F; height: 1px; margin-top: 40px;"></div>
             <p class="text-center mt-2">{{ $data['report:user'] ?? null }}</p>
           </div>
         </td>
       </tr>
     </table>
-
     <table width="100%">
       <tr>
         <td valign="top" width="70%">
@@ -70,15 +67,11 @@
           </div>
         </td>
         <td valign="top" width="70%">
-          <div class="mt-5"
-            @if (app()->getLocale() == 'ar')
-              style="text-align: left !important;"
-            @endif
-            >
-            <cite>
+          <div class="mt-5">
+            <!-- <cite> -->
               <small class="text-white">Date:</small><br />
-              <small>{{ __('Report Printed On') }}: <?php echo date("M d, Y"); ?></p></small>
-            </cite>
+              <small>@lang('Report Printed On') : <?php echo date("M d, Y"); ?></p></small>
+            <!-- </cite> -->
           </div>
         </td>
       </tr>

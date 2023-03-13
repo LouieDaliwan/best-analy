@@ -388,6 +388,7 @@ export default {
           Id: _.toUpper(this.resource.data.customer.token),
           FileNo: this.resource.data.customer.filenumber,
           TypeofStatementText: this.resource.data.customer.metadata['type'] + ' Financials',
+          TypeofStatement: parseInt(this.resource.data.customer.metadata['type_code']),
           YearOfFinancial: financialStatement.period,
           SubmissionDate: date.toISOString(),
           Revenue: 0,
@@ -468,6 +469,7 @@ export default {
           ReturnonInvestment: parseFloat(financial.metadataResults.ratioAnalysis.dashboard.roi.score),
           SMERating: parseFloat(scores.overall_score),
           BreakevenPoint: 0,
+          VisitStatus: parseInt(this.resource.data.visitStatus),
         }
 
 

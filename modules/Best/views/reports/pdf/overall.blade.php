@@ -62,6 +62,7 @@
     h1, h2, h3, h4, h5, h6 {
       font-weight: 700;
     }
+    small { font-size: 10px; }
   </style>
 </head>
 
@@ -88,13 +89,17 @@
           <td valign="bottom" width="50%" class="text-right">
             <section>
               <div class="row">
-                <div class="col-md-12">
-                  <div style="font-size: 10px;">
-                  {{ __('Page 1 of') }}
-                  <?php if($data['is_single']): ?> {{ __('8') }}
-                  <?php else: ?> {{ __('10') }}
-                  <?php endif; ?>
-                </div>
+                <div class="col-md-12"
+                  @if (app()->getLocale() == 'ar')
+                    style="text-align: left !important;"
+                  @endif
+                  >
+                  <small>
+                    {{ __('Page 1 of') }}
+                    <?php if($data['is_single']): ?> {{ __('8') }}
+                    <?php else: ?> {{ __('10') }}
+                    <?php endif; ?>
+                  </small>
                 </div>
               </div>
             </section>
@@ -120,13 +125,17 @@
         <td valign="bottom" width="50%" class="text-right">
           <section>
             <div class="row">
-              <div class="col-md-12">
-                <div style="font-size: 10px;">
+              <div class="col-md-12"
+                @if (app()->getLocale() == 'ar')
+                  style="text-align: left !important;"
+                @endif
+                >
+                <small>
                   {{ __('Page 2 of') }}
                   <?php if($data['is_single']): ?> {{ __('8') }}
                   <?php else: ?> {{ __('10') }}
                   <?php endif; ?>
-                </div>
+                </small>
               </div>
             </div>
           </section>
@@ -152,16 +161,20 @@
           <td valign="bottom" width="50%" class="text-right">
             <section>
               <div class="row">
-                <div class="col-md-12">
-                  <div style="font-size: 10px;">
+                <div class="col-md-12"
+                  @if (app()->getLocale() == 'ar')
+                    style="text-align: left !important;"
+                  @endif
+                  >
+                  <small>
                     Page
-                    <span style="display: none;" class="text-white">-</span>
+                    <span style="display: none; font-size: 10px;" class="text-white">-</span>
                     {{ $index['page'] }}
                     <span style="display: none;" class="text-white">-</span> of
                     <?php if($data['is_single']): ?> {{ __('8') }}
                     <?php else: ?> {{ __('10') }}
                     <?php endif; ?>
-                  </div>
+                  </small>
                 </div>
               </div>
             </section>
@@ -189,13 +202,17 @@
         <td valign="bottom" width="50%" class="text-right">
           <section>
             <div class="row">
-              <div class="col-md-12">
-                <div style="font-size: 10px;">
+              <div class="col-md-12"
+                @if (app()->getLocale() == 'ar')
+                  style="text-align: left !important;"
+                @endif
+                >
+                <small>
                   {{ __('Page 7 of') }}
                   <?php if($data['is_single']): ?> {{ __('8') }}
                   <?php else: ?> {{ __('10') }}
                   <?php endif; ?>
-                </div>
+                </small>
               </div>
             </div>
           </section>
@@ -228,13 +245,17 @@
             <td valign="bottom" width="50%" class="text-right">
               <section>
                 <div class="row">
-                  <div class="col-md-12">
-                    <div style="font-size: 10px;">
+                  <div class="col-md-12"
+                    @if (app()->getLocale() == 'ar')
+                      style="text-align: left !important;"
+                    @endif
+                    >
+                    <small>
                       {{ __('Page 8 of') }}
                       <?php if($data['is_single']): ?> {{ __('8') }}
                       <?php else: ?> {{ __('10') }}
                       <?php endif; ?>
-                    </div>
+                    </small>
                   </div>
                 </div>
               </section>
@@ -260,10 +281,14 @@
         <td valign="bottom" width="50%" class="text-right">
           <section>
             <div class="row">
-              <div class="col-md-12">
-                <div style="font-size: 10px;">
+              <div class="col-md-12"
+                @if (app()->getLocale() == 'ar')
+                  style="text-align: left !important;"
+                @endif
+                >
+                <small>
                   {{ __('Page 8 of 10') }}
-                </div>
+                </small>
               </div>
             </div>
           </section>
@@ -296,10 +321,14 @@
           <td valign="bottom" width="50%" class="text-right">
             <section>
               <div class="row">
-                <div class="col-md-12">
-                  <div style="font-size: 10px;">
-                    {{ __('Page 9 of 10') }}
-                  </div>
+                <div class="col-md-12"
+                  @if (app()->getLocale() == 'ar')
+                    style="text-align: left !important;"
+                  @endif
+                  >
+                  <small>
+                   {{ __('Page 9 of 10') }}
+                  </small>
                 </div>
               </div>
             </section>
@@ -327,10 +356,14 @@
           <td valign="bottom" width="50%" class="text-right">
             <section>
               <div class="row">
-                <div class="col-md-12">
-                  <div style="font-size: 10px;">
+                <div class="col-md-12"
+                  @if (app()->getLocale() == 'ar')
+                    style="text-align: left !important;"
+                  @endif
+                  >
+                  <small>
                     {{ __('Page 10 of 10') }}
-                  </div>
+                  </small>
                 </div>
               </div>
             </section>

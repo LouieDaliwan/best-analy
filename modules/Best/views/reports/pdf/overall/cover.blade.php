@@ -70,7 +70,11 @@
           </div>
         </td>
         <td valign="top" width="70%">
-          <div class="mt-5">
+          <div class="mt-5"
+            @if (app()->getLocale() == 'ar')
+              style="text-align: left !important;"
+            @endif
+            >
             <cite>
               <small class="text-white">Date:</small><br />
               <small>{{ __('Report Printed On') }}: <?php echo date("M d, Y"); ?></p></small>

@@ -9,7 +9,7 @@
 }
 
 .ratiosummary-3 .summary-3:nth-child(1) {
-  border-top: 1px solid #868e96;
+/*  border-top: 1px solid #868e96;*/
 }
 
 .title:not(:nth-child(1)) {
@@ -126,7 +126,7 @@
 .summary-6:nth-child(1),
 .summary-7:nth-child(1),
 .summary-8:nth-child(1) {
-  border-left: 1px solid #868e96;
+/*  border-left: 1px solid #868e96;*/
 }
 
 .detail-0:nth-child(4),
@@ -164,7 +164,7 @@
 .summary-6:nth-child(4),
 .summary-7:nth-child(4),
 .summary-8:nth-child(4) {
-  border-right: 1px solid #868e96;
+/*  border-right: 1px solid #868e96;*/
 }
 
 .detail-0:not(:nth-child(1)),
@@ -201,7 +201,7 @@
 
 .summary-0:not(:nth-child(1)):not(:nth-child(2)) {
   font-weight: 500;
-  border-bottom: 1px solid #868e96;
+/*  border-bottom: 1px solid #868e96;*/
 }
 
 /*only first child is font-bold*/
@@ -228,13 +228,13 @@
 /*last row on title*/
 .detail-28,
 .summary-8 {
-  border-bottom: 1px solid #868e96;
+/*  border-bottom: 1px solid #868e96;*/
 }
 /*last row on title*/
 
 /*first row on title*/
 .summary-3 {
-  border-top: 1px solid #868e96;
+/*  border-top: 1px solid #868e96;*/
 }
 /*first row on title*/
 

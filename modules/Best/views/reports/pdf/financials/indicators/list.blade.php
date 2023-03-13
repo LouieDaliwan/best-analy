@@ -59,32 +59,32 @@
 ?>
 
 <style>
-    table .row1 {
-        vertical-align: inherit !important;
-        align-self: auto;
-        width: 25% !important;
-    }
+  table .row1 {
+    vertical-align: inherit !important;
+    align-self: auto;
+    width: 25% !important;
+  }
 
-    .eachIndicators {
-        /*background-color: #e5e3e3 !important;*/
-    }
+  .eachIndicators {
+      /*background-color: #e5e3e3 !important;*/
+  }
 
-    #listTable td {
-        border-top: 0 !important;
-    }
+  #listTable td {
+  /* border-top: 0 !important;*/
+  }
 
-    .row1 .otherRows{
-        /*background-color:  #dbd9d9; */
-    }
+  .row1 .otherRows{
+    /*background-color:  #dbd9d9; */
+  }
 
 
-    .otherRows {
-        /*padding: 0 !important;
-        padding-top: 20px !important;
-        text-align: center;
-        vertical-align: top;
-        margin-top: 10px;*/
-    }
+  .otherRows {
+    /*padding: 0 !important;
+    padding-top: 20px !important;
+    text-align: center;
+    vertical-align: top;
+    margin-top: 10px;*/
+  }
 </style>
 
 
@@ -100,8 +100,8 @@
     <tr>
       @foreach($col as $items)
       <td>
-        <table width="100%" class="eachIndicators">
-          <tbody style="border: 1px solid #868e96;">
+        <table width="100%" class="eachIndicators" style="border: 1px solid #868e96;">
+          <tbody>
               <?php $countItems = 1; ?>
               @foreach($items as $item)
               <tr>
@@ -109,14 +109,14 @@
                 @foreach($item as $data)
                 @if($countItems == 1)
                   @if($data != null && $count == 1)
-                    <td bgcolor="#edf2f9" class="row1" rowspan="2">{{ __($data) }}</td>
+                    <td style="padding: 20px 10px;" bgcolor="#edf2f9" class="row1" rowspan="2">{{ __($data) }}</td>
                   @else
-                    <td class="otherRows">{{ __($data) }}</td>
+                    <td style="padding: 20px 10px;" class="otherRows">{{ __($data) }}</td>
                   @endif
                 @endif
                 @if($countItems == 2)
                   @if($data != null && $count == 3)
-                    <td bgcolor="#edf2f9" colspan="4" class="description">{{ __($data) }}</td>
+                    <td style="padding: 20px 10px;" bgcolor="#edf2f9" colspan="4" class="description">{{ __($data) }}</td>
                   @endif
                 @endif
                 <?php $count++; ?>
@@ -135,6 +135,6 @@
 
 <style>
   .otherRows:nth-child(4) {
-    border-right: 1px solid #868e96;
+/*    border-right: 1px solid #868e96;*/
   }
 </style>

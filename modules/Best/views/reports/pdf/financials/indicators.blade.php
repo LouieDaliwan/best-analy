@@ -16,17 +16,17 @@
         <tr>
           <td valign="middle" width="50%" class="p-3">
             <div valign="middle" class="mt-3">
-              <div class="py-5">
+              <div class="pb-5">
                 <div class="chart-analysis">
-                  <div class="mr-3" style="margin: auto; zoom: 0.9;">
-                    <canvas id="productivityIndicators" width="550" height="200" style="margin: auto;"></canvas>
+                  <div class="mr-3" style="margin: auto;">
+                    <canvas id="productivityIndicators" width="600" height="300" style="margin: auto;"></canvas>
                   </div>
                   {{-- <div class="mr-3" style="width: 700px; height: 200px;">
                     <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>
                   </div> --}}
                 </div>
                 {{-- label --}}
-                <div style="height: 20px;"></div>
+                <div style="height: 10px;"></div>
                 <table class="indiLabels" width="50%" align="center">
                   <tr>
                     @foreach ($data['analysis:financial']['productivity']['charts']['dataset'] as $resource)
@@ -53,21 +53,21 @@
               </div>
             </div>
           </td>
-          <td valign="top" width="50%" class="p-3" >
-            <table class="table table-indicator-main">
+          <td valign="top" width="50%" >
+            <table class="table table-indicator-main" style="border: 1px solid #868e96;">
               <tbody>
                 @foreach ($data['indicators:productivity'] as $key => $d)
-                  <tr class="title table-indicator">
+                  <tr class="title table-indicator" style="border: 1px solid #868e96;">
                     <td colspan="5">{{ __($key) }}</td>
                   </tr>
                   @foreach ($d as $i => $vs)
                     @if($key == 'summary')
-                      <tr class="ratio{{ $key }}-{{ $i }}">
+                      <tr class="ratio{{ $key }}-{{ $i }}" style="border: 1px solid #868e96;">
                         @php
                         $l = 0;
                         @endphp
                         @foreach ($vs as $j => $v)
-                            <td class="{{ empty($v) ? "empty-$l" : null }} {{ $key }}-{{ $i }}">{{ __($v) }}</td>
+                            <td style="padding: 20px 10px;" class="{{ empty($v) ? "empty-$l" : null }} {{ $key }}-{{ $i }}">{{ __($v) }}</td>
                         @endforeach
                       </tr>
                     @endif
@@ -93,7 +93,7 @@
   }*/
 
   td[colspan=3], td.colspan-text, .colspan-text {
-    border-right: 1px solid #868e96 !important;
+/*    border-right: 1px solid #868e96 !important;*/
   }
   .empty-1:empty {
     display: none;

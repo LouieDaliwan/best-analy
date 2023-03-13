@@ -68,11 +68,11 @@
 </head>
 
 <body class="A4 lang-{{ app()->getLocale() ?: 'en' }}">
-  <div class="sheet">
+  <div class="sheet" style="zoom: .90;">
     @include('best::reports.pdf.overall.cover')
   </div>
 
-  <div class="sheet">
+  <div class="sheet"style="zoom: .75;">
     @include('best::reports.pdf.partials.header')
     <div class="my-2 border-bottom"></div>
     <div style="zoom: 0.90;">

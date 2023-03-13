@@ -1,5 +1,5 @@
 {{-- <div style="zoom: 0.76; line-height: 1;"> --}}
-<div style="zoom: 0.76; line-height: 1.3;">
+<div style="zoom: 0.90; line-height: 1.3;">
   <section class="mt-3">
     <table width="100%">
       <tbody>
@@ -19,7 +19,7 @@
               <div class="pb-5">
                 <div class="chart-analysis">
                   <div class="mr-3" style="margin: auto;">
-                    <canvas id="productivityIndicators" width="600" height="300" style="margin: auto;"></canvas>
+                    <canvas id="productivityIndicators" width="550" height="200" style="margin: auto;"></canvas>
                   </div>
                   {{-- <div class="mr-3" style="width: 700px; height: 200px;">
                     <canvas id="productivityIndicators" style="width: 700px; height: 200px;"></canvas>

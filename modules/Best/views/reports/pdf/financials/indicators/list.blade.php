@@ -99,7 +99,7 @@
     @foreach($cols as $col)
     <tr>
       @foreach($col as $items)
-      <td>
+      <td style="padding: 20px 10px;">
         <table width="100%" class="eachIndicators" style="border: 1px solid #868e96;">
           <tbody>
               <?php $countItems = 1; ?>

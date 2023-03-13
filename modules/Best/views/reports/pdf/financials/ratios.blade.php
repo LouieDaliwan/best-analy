@@ -90,6 +90,7 @@
     width: -webkit-fill-available;
     width: 97%;
     margin: 0 20px 0 0;
+    border: 1px solid #868e96 !important;
   }
 
   .child-resp-table-row{
@@ -106,7 +107,7 @@
   }
 
   .bottom-right {
-    border-right: 1px solid #868e96;
+/*    border-right: 1px solid #868e96;*/
   }
 </style>
 

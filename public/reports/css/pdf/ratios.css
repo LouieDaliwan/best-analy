@@ -131,7 +131,7 @@
   .PROFITABILITY-39:nth-child(4),
   .PROFITABILITY-40:nth-child(4),
   .PROFITABILITY-41:nth-child(4) {
-    border-right: 1px solid #868e96;
+/*    border-right: 1px solid #868e96;*/
   }
   
   .RATIOS-0:nth-child(1),
@@ -242,7 +242,7 @@
   .PROFITABILITY-39:nth-child(1),
   .PROFITABILITY-40:nth-child(1),
   .PROFITABILITY-41:nth-child(1) {
-    border-left: 1px solid #868e96;
+/*    border-left: 1px solid #868e96;*/
   }
   
   /*only first child is font-bold*/
@@ -285,6 +285,8 @@
   /* .PROFITABILITY-34:not(:nth-child(1)) */
   {
     background: #edf2f9;
+
+    border: 1px solid #868e96;
   }
   /*with background color except first*/
   
@@ -310,6 +312,7 @@
   .PROFITABILITY-41 {
     font-weight: 500;
     background: #edf2f9;
+    border: 1px solid #868e96;
   }
   
   
@@ -627,9 +630,9 @@
   .PROFITABILITY-34:not(:nth-child(1)),
   .PROFITABILITY-41:not(:nth-child(1))
    {
-    border-top: 1px solid #868e96;
-    border-right: 1px solid #868e96;
-    border-bottom: 1px solid #868e96;
+/*    border-top: 1px solid #868e96;*/
+/*    border-right: 1px solid #868e96;*/
+/*    border-bottom: 1px solid #868e96;*/
   }
   
   .RATIOS-3:nth-child(2),
@@ -664,7 +667,7 @@
   .SOLVENCY-8,
   .PRODUCTIVITY-3,
   .PROFITABILITY-41 {
-    border-bottom: 1px solid #868e96;
+/*    border-bottom: 1px solid #868e96;*/
   }
   /*last row on title*/
   

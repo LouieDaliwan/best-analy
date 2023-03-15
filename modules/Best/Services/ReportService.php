@@ -173,8 +173,12 @@ class ReportService extends Service implements ReportServiceInterface
 
         $remarks = $model->month;
 
-        $pathEn = Library::where('name', "overall:report:$remarks en")->first();
-        $pathAr = Library::where('name', "overall:report:$remarks ar")->first();
+        $lib = Library::whereIn('name', ["overall:report:{$remarks}_en", "overall:report:{$remarks}_ar"])
+        ->get()
+        ->toArray();
+
+        $pathNameEn = $lib ? $lib[0]['pathname'] : null ;
+        $pathNameAr = $lib ? $lib[1]['pathname'] : null;
 
         $financialReportPath = Library::where('name', "overall:financialratio:$remarks")->first();
 
@@ -193,8 +197,8 @@ class ReportService extends Service implements ReportServiceInterface
         $lightScore = cache("{$customer->id}-results-{$user->id}-{$date}");
 
         return [
-            'overall:report_en' => $pathEn ? Report::encodeToBase64(storage_path($pathEn->pathname)) : null,
-            'overall:report_ar' => $pathAr ? Report::encodeToBase64(storage_path($pathAr->pathname)) : null,
+            'overall:report_en' => $pathNameEn ? Report::encodeToBase64(storage_path($pathNameEn)) : null,
+            'overall:report_ar' => $pathNameAr ? Report::encodeToBase64(storage_path($pathNameAr)) : null,
             'report:financial' => $financialReportPath ? Report::encodeToBase64(storage_path($financialReportPath->pathname)) : null,
             'report' => $model,
             'customer' => new CustomerResource($customer),

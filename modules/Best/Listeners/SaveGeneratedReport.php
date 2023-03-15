@@ -183,7 +183,7 @@ class SaveGeneratedReport implements ShouldQueue
 
             $type = 'overall';
             $report = $reports->first();
-            $remarks = "{$report->month} {$locale}";
+            $remarks = "{$report->month}_{$locale}";
             $user = $report->user;
             $hash = date('d-m-Y');
             $date = date('Y-m-d');

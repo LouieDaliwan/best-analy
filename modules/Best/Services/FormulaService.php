@@ -228,9 +228,6 @@ class FormulaService extends Service implements FormulaServiceInterface
             ];
         }//end foreach
 
-        logger('End of Taxonomies');
-
-        logger('Start of Overall score');
         // Retrieve Overall BEST Score.
         $this->data['overall:score'] = $overallScore = $this->getOverallScore($this->data['indices'], $customer, $monthkey);
         $this->data['overall:percentage'] = sprintf('%s%%', $overallScore);

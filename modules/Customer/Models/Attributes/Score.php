@@ -23,7 +23,6 @@ class Score {
 
     public function check()
     {
-        // dd(auth()->user());
         $user = auth()->user()->id;
 
         $monthKey = Carbon::now()->format('m-Y');

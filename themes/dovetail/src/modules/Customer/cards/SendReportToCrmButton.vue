@@ -518,7 +518,8 @@ export default {
         let data = {
           Id: _.toUpper(this.resource.data.customer.token),
           FileName: "Overall Scores",
-          FileContentBase64: this.resource.data['overall:report'] || 'empty',
+          FileContentBase64: this.resource.data['overall:report_en'] || 'empty',
+          FileContentBase64Ar: this.resource.data['overall:report_ar'] || 'empty',
         }
 
         console.log('Sending overall document...', data);

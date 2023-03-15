@@ -176,56 +176,60 @@ class SaveGeneratedReport implements ShouldQueue
      */
     protected function generateOverallReport($reports)
     {
-        app()->setLocale(request()->get('lang') ?: 'en');
+        $locales = ['en', 'ar'];
 
-        $type = 'overall';
-        $report = $reports->first();
-        $remarks = $report->month;
-        $user = $report->user;
-        $hash = date('d-m-Y');
-        $date = date('Y-m-d');
+        foreach ($locales as $locale) {
+            app()->setLocale($locale);
 
-        $attributes = [
-            'customer_id' => $report->customer->getKey(),
-            'taxonomy_id' => null,
-            'month' => $report->remarks,
-        ];
+            $type = 'overall';
+            $report = $reports->first();
+            $remarks = "{$report->month} {$locale}";
+            $user = $report->user;
+            $hash = date('d-m-Y');
+            $date = date('Y-m-d');
 
-        $data = app(FormulaServiceInterface::class)->generate($report->survey, $attributes);
-        $data['month:formatted'] = date('M d, Y', strtotime($data['month'] ?? date('Y-m-d')));
-        $data['current:pindex']['sitevisit:date:formatted'] = date('M d, Y', strtotime($data['month']));
-        $name = sprintf("BEST Overall Report - %s (%s)", $report->customer->name, $remarks);
+            $attributes = [
+                'customer_id' => $report->customer->getKey(),
+                'taxonomy_id' => null,
+                'month' => $report->remarks,
+            ];
 
-        $html = view("best::reports.pdf.$type", ['data' => $data])->render();
+            $data = app(FormulaServiceInterface::class)->generate($report->survey, $attributes);
+            $data['month:formatted'] = date('M d, Y', strtotime($data['month'] ?? date('Y-m-d')));
+            $data['current:pindex']['sitevisit:date:formatted'] = date('M d, Y', strtotime($data['month']));
+            $name = sprintf("BEST Overall Report - %s (%s)", $report->customer->name, $remarks);
 
-        if (! File::exists(storage_path("modules/reports/$date"))) {
-            File::makeDirectory(storage_path("modules/reports/$date"), 0755, true, true);
+            $html = view("best::reports.pdf.$type", ['data' => $data])->render();
+
+            if (! File::exists(storage_path("modules/reports/$date"))) {
+                File::makeDirectory(storage_path("modules/reports/$date"), 0755, true, true);
+            }
+
+            file_put_contents(storage_path("modules/reports/$date/$name.html"), $html);
+
+            $pdf = SnappyPdf::loadFile(storage_path("modules/reports/$date/$name.html"));
+
+            $path = storage_path("modules/reports/$date/$name.pdf");
+
+            if (file_exists($path)) {
+                File::delete($path);
+            }
+
+            if (! file_exists($path)) {
+                $pdf
+                    ->setPaper('legal')
+                    ->setOption('enable-javascript', true)
+                    ->setOption('javascript-delay', 2000)
+                    ->setOption('debug-javascript', true)
+                    ->save($path);
+            }
+
+            Library::updateOrCreate([
+                'name' => "overall:report:$remarks",
+            ], [
+                'pathname' => "modules/reports/$date/$name.pdf",
+                'url' => url("modules/reports/$date/$name.pdf"),
+            ]);
         }
-
-        file_put_contents(storage_path("modules/reports/$date/$name.html"), $html);
-
-        $pdf = SnappyPdf::loadFile(storage_path("modules/reports/$date/$name.html"));
-
-        $path = storage_path("modules/reports/$date/$name.pdf");
-
-        if (file_exists($path)) {
-            File::delete($path);
-        }
-
-        if (! file_exists($path)) {
-            $pdf
-                ->setPaper('legal')
-                ->setOption('enable-javascript', true)
-                ->setOption('javascript-delay', 2000)
-                ->setOption('debug-javascript', true)
-                ->save($path);
-        }
-
-        Library::updateOrCreate([
-            'name' => "overall:report:$remarks",
-        ], [
-            'pathname' => "modules/reports/$date/$name.pdf",
-            'url' => url("modules/reports/$date/$name.pdf"),
-        ]);
     }
 }

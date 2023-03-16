@@ -194,7 +194,8 @@ export default {
       { message: '', name: trans('Check Company Details From CRM'), icon: 'mdi-file-send', status: 'pending'},
       { message: '', name: trans('Sending Financial File By No'), icon: 'mdi-file-send', status: 'pending'},
       { message: '', name: trans('Sending Update Visit Score'), icon: 'mdi-file-send', status: 'pending' },
-      { message: '', name: trans('Sending Overall Document'), icon: 'mdi-file-send', status: 'pending' },
+      { message: '', name: trans('Sending Overall Document English'), icon: 'mdi-file-send', status: 'pending' },
+      { message: '', name: trans('Sending Overall Document Arabic'), icon: 'mdi-file-send', status: 'pending' },
       // { message: '', name: trans('Sending Overall Scores'), icon: 'mdi-cube-send', status: 'pending' },
       // { message: '', name: trans('Sending Financial Scores'), icon: 'mdi-cube-send', status: 'pending' },
       // { message: '', name: trans('Sending Financial Document'), icon: 'mdi-file-send', status: 'pending' },
@@ -517,9 +518,8 @@ export default {
 
         let data = {
           Id: _.toUpper(this.resource.data.customer.token),
-          FileName: "Overall Scores",
+          FileName: "Overall Scores English",
           FileContentBase64: this.resource.data['overall:report_en'] || 'empty',
-          FileContentBase64Ar: this.resource.data['overall:report_ar'] || 'empty',
         }
 
         console.log('Sending overall document...', data);
@@ -555,6 +555,61 @@ export default {
           this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
         }).finally(() => {
           this.isSending = false;
+          this.sendDocumentToCrmAr();
+          // if (this.sendAll) {
+          //   this.sendFinancialScores();
+          // }
+        })
+      });
+    },
+
+
+    sendDocumentToCrmAr () {
+      this.isSending = true;
+      this.checklist[4].status = 'sending';
+
+      this.getReportData().then(response => {
+        this.resource.data = response.data
+
+        let data = {
+          Id: _.toUpper(this.resource.data.customer.token),
+          FileName: "Overall Scores Arabic",
+          FileContentBase64: this.resource.data['overall:report_ar'] || 'empty',
+        }
+
+        console.log('Sending overall document...', data);
+
+        this.$store.dispatch('snackbar/show', { icon: 'mdi-spin mdi-loading', button: { show: false }, timeout: 0, text: 'Sending Overall Report Document to CRM. Establishing connection to CRM...'});
+
+        axios.post(
+          $api.crm.sendDocument(), data
+        ).then(response => {
+          this.$store.dispatch('snackbar/hide')
+          this.checklist[4].status = 'done';
+
+          if (response.data.Code == 1) {
+            this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('File Successfully sent to CRM')})
+          } else {
+            this.checklist[4].status = 'error';
+            this.checklist[4].message = response.data.Message;
+            this.error_trigger = true;
+            this.isSending = false;
+            // this.$store.dispatch('dialog/error', {
+            //   show: true,
+            //   width: 400,
+            //   buttons: { cancel: { show: false } },
+            //   title: 'Returned a Code ' + response.data.Code,
+            //   text: response.data.Message,
+            // })
+          }
+        }).catch(err => {
+          this.checklist[4].status = 'error';
+          this.checklist[4].message = err.message;
+          this.error_trigger = true;
+
+          this.$store.dispatch('snackbar/show', { icon: false, timeout: 8000, button: {show: true}, text: trans('Unable to connect to CRM. Please check your network connection')})
+        }).finally(() => {
+          this.isSending = false;
 
           // if (this.sendAll) {
           //   this.sendFinancialScores();
@@ -562,6 +617,7 @@ export default {
         })
       });
     },
+
 
     sendBothDataToCrm () {
       this.sendBothScoresAndFile = true

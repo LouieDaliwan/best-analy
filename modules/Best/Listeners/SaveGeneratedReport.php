@@ -197,7 +197,7 @@ class SaveGeneratedReport implements ShouldQueue
             $data = app(FormulaServiceInterface::class)->generate($report->survey, $attributes);
             $data['month:formatted'] = date('M d, Y', strtotime($data['month'] ?? date('Y-m-d')));
             $data['current:pindex']['sitevisit:date:formatted'] = date('M d, Y', strtotime($data['month']));
-            $name = sprintf("BEST Overall Report - %s (%s)", $report->customer->name, $remarks);
+            $name = sprintf("BEST Overall Report - %s (%s)", $report->customer->refnum, $remarks);
 
             $html = view("best::reports.pdf.$type", ['data' => $data])->render();
 

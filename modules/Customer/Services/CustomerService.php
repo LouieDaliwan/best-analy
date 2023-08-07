@@ -110,6 +110,7 @@ class CustomerService extends Service implements CustomerServiceInterface
                 'code' => $attributes['refnum']
             ]);
         } catch(\Exception $e) {
+            logger($e->getMessage());
             throw new CustomerCreateException();
         }
 

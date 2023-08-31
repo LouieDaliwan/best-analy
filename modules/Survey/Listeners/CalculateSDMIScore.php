@@ -99,7 +99,7 @@ class CalculateSDMIScore
                 }
             }
 
-            if($field['submission']['results'] != 'NA') {
+            if($field['submission']['results'] != 'NA' && $field['submission']['score'] != 'NA') {
                 $score = (float) round($field['submission']['score'] / 5, 2);
                 $variables['index']['score'] += $score;
                 $variables['index']['count']++;

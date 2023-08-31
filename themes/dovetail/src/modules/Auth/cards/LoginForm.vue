@@ -4,11 +4,11 @@
       <validation-provider name="username" rules="required" v-slot="{ errors }">
         <v-text-field
           :error-messages="errors"
-          :label="$t('Username')"
+          :label="$t('Email')"
           autofocus
           class="mb-3"
           outlined
-          v-model="auth.username"
+          v-model="auth.email"
           clear-icon="mdi mdi-close-circle-outline"
           clearable
         ></v-text-field>
@@ -31,20 +31,21 @@
       </validation-provider>
 
       <!-- <microsoft-login></microsoft-login> -->
-      <sso-active-directory-login-button v-model="auth"></sso-active-directory-login-button>
+      <sso-active-directory-login-button
+        v-model="auth"
+      ></sso-active-directory-login-button>
 
       <v-divider class="my-4"></v-divider>
 
-      <v-btn
-        type="submit"
-        :disabled="loading"
-        :loading="loading"
-        x-large block
-        >
-        {{ $t('Admin Sign In') }}
+      <v-btn type="submit" :disabled="loading" :loading="loading" x-large block>
+        {{ $t("Admin Sign In") }}
         <template v-slot:loader>
-          <v-slide-x-transition><v-icon dark class="mdi-spin mr-3">mdi-loading</v-icon></v-slide-x-transition>
-          <span>{{ $t('Signing in...') }}</span>
+          <v-slide-x-transition
+            ><v-icon dark class="mdi-spin mr-3"
+              >mdi-loading</v-icon
+            ></v-slide-x-transition
+          >
+          <span>{{ $t("Signing in...") }}</span>
         </template>
       </v-btn>
     </v-form>
@@ -52,55 +53,55 @@
 </template>
 
 <script>
-import $api from '@/routes/api'
-import $auth from '@/core/Auth/auth'
+import $api from "@/routes/api";
+import $auth from "@/core/Auth/auth";
 
 export default {
-  name: 'Login',
+  name: "Login",
 
   data: () => ({
     auth: {
-      username: '',
-      password: '',
+      email: "",
+      password: ""
     },
     loading: false,
-    showPassword: false,
+    showPassword: false
   }),
 
   computed: {
-    isMobile: function () {
+    isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
     }
   },
 
   methods: {
-    load (val = true) {
-      this.loading = val
+    load(val = true) {
+      this.loading = val;
     },
 
-    submit (e) {
-      const { username, password } = this.auth
+    submit(e) {
+      const { email, password } = this.auth;
 
-      this.load()
+      this.load();
       this.$store
-        .dispatch('auth/login', { username, password })
+        .dispatch("auth/login", { email, password })
         .then(() => {
-          this.$router.push({name: 'dashboard'})
-          this.$store.dispatch('snackbar/show', {
-            text: $t('Welcome back, ') + $auth.getUser().firstname
-          })
+          this.$router.push({ name: "dashboard" });
+          this.$store.dispatch("snackbar/show", {
+            text: $t("Welcome back, ") + $auth.getUser().firstname
+          });
         })
         .catch(err => {
           if (err.response) {
-            this.$refs['signin-form'].setErrors(err.response.data.errors)
+            this.$refs["signin-form"].setErrors(err.response.data.errors);
           }
         })
         .finally(() => {
-          this.load(false)
-        })
+          this.load(false);
+        });
 
-      e.preventDefault()
+      e.preventDefault();
     }
-  },
-}
+  }
+};
 </script>

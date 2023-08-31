@@ -37,7 +37,7 @@ class LoginController extends ApiController
      */
     public function username()
     {
-        return 'username';
+        return 'email';
     }
 
     /**

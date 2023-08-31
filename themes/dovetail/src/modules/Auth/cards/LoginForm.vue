@@ -4,11 +4,11 @@
       <validation-provider name="username" rules="required" v-slot="{ errors }">
         <v-text-field
           :error-messages="errors"
-          :label="$t('Email')"
+          :label="$t('Username')"
           autofocus
           class="mb-3"
           outlined
-          v-model="auth.email"
+          v-model="auth.username"
           clear-icon="mdi mdi-close-circle-outline"
           clearable
         ></v-text-field>
@@ -61,7 +61,7 @@ export default {
 
   data: () => ({
     auth: {
-      email: "",
+      username: "",
       password: ""
     },
     loading: false,
@@ -80,11 +80,11 @@ export default {
     },
 
     submit(e) {
-      const { email, password } = this.auth;
+      const { username, password } = this.auth;
 
       this.load();
       this.$store
-        .dispatch("auth/login", { email, password })
+        .dispatch("auth/login", { username, password })
         .then(() => {
           this.$router.push({ name: "dashboard" });
           this.$store.dispatch("snackbar/show", {

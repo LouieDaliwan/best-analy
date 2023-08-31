@@ -76,8 +76,7 @@ class CalculateSDMIScore
             }
 
             if($field['submission']['fieldKey'] == 'Endorsement, Certification & Standards') {
-                if($field['submission']['results'] != 'NA') {
-
+                if($field['submission']['results'] != 'NA' && $field['submission']['score'] != 'NA')  {
                     $score = (float) round($field['submission']['score'] / 5, 2);
                     $variables['es']['score'] += $score;
                     $variables['es']['count']++;

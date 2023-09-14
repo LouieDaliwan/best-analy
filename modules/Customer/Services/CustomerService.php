@@ -111,7 +111,7 @@ class CustomerService extends Service implements CustomerServiceInterface
             ]);
         } catch(\Exception $e) {
             logger($e->getMessage());
-            throw new CustomerCreateException();
+//            throw new CustomerCreateException();
         }
 
         $this->updateOtherDetails($customer, $attributes);

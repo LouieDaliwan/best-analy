@@ -5,12 +5,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
   {{-- Chart --}}
-  <!-- <script>{!! file_get_contents('http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js') !!}</script>
-  <script>{!! file_get_contents('http://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js') !!}</script> -->
+  {{-- <!-- <script>{!! file_get_contents('http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js') !!}</script> --}}
+  {{-- <script>{!! file_get_contents('http://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js') !!}</script> --> --}}
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
-
+  <script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
   <script type="text/javascript">
     Chart.register(chartjs-plugin-annotation);
   </script>

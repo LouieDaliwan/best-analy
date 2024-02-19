@@ -241,6 +241,8 @@ class ReportService extends Service implements ReportServiceInterface
 
         $pdf = SnappyPdf::loadFile(storage_path("modules/reports/$date/$name.html"));
 
+        $pdf->setTimeout(600);  // 600 seconds
+
         $path = storage_path("modules/reports/$date/$name.pdf");
 
         if (file_exists($path)) {
